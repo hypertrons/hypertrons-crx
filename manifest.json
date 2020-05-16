@@ -1,0 +1,39 @@
+{
+  "name": "Hypertrons Mini Dashboard",
+  "manifest_version": 2,
+  "version": "1.0",
+  "author": "frank-zsy",
+  "description": "Hypertrons 迷你面板",
+  "browser_action": {
+    "default_icon": "logo.png",
+    "default_title": "Hypertrons helper",
+    "default_popup": "popup/popup.html"
+  },
+  "background": {
+    "scripts": [
+      "common/background/util.js"
+    ]
+  },
+  "permissions": [
+    "notifications",
+    "http://hypertrons.io/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.github.com/*"
+      ],
+      "js": [
+        "third-party/jquery-3.5.0.min.js",
+        "third-party/echarts.simple.min.js",
+        "common/content-script/util.js",
+        "common/content-script/hypertrons-dashboard.js",
+        "github/content-script/github-script.js"
+      ],
+      "css": [
+        "common/css/style.css"
+      ],
+      "run_at": "document_end"
+    }
+  ]
+}
