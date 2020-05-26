@@ -16,9 +16,9 @@
   margin-bottom: 10px;
 }
 
-.hypertron-graph {
-  height: 150px;
-  width: 50% !important;
+.hypertrons-graph {
+  height: 400px;
+  width: 100% !important;
   padding: 10px;
   display: inline-block;
 }

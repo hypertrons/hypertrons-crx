@@ -28,6 +28,7 @@
         "third-party/echarts.simple.min.js",
         "common/content-script/util.js",
         "common/content-script/hypertrons-dashboard.js",
+        "common/content-script/simple-graph.js",
         "github/content-script/github-script.js"
       ],
       "css": [
