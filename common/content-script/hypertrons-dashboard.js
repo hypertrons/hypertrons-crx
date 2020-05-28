@@ -1,8 +1,4 @@
-class SimpleTable {
-}
-
-class SimpleGraph {
-}
+class SimpleTable {}
 
 class HypertronsDashboard {
   options;
@@ -14,10 +10,10 @@ class HypertronsDashboard {
     if (repoName) {
       msg += `welcome to ${repoName}. `;
     } else {
-      msg += 'welcome. '
+      msg += 'welcome. ';
     }
     if (role) {
-      msg += `You are ${role} of this repo.`
+      msg += `You are ${role} of this repo.`;
     }
     return msg;
   };
@@ -69,7 +65,21 @@ class HypertronsDashboard {
     }
     const root = this.getRoot();
     if (root) {
-      root.prepend(`<div id="${this.welcomeIdAndClass}" class="${this.welcomeIdAndClass}">${msg}</div>`);
+      root.prepend(
+        `<div id="${this.welcomeIdAndClass}" class="${this.welcomeIdAndClass}">${msg}</div>`
+      );
     }
+  }
+
+  addGraph(option, parentElement, style) {
+    if (isNull(option) || isNull(parentElement)) return;
+    var graphStyle = style || 'hypertrons-graph';
+    // generate unique id
+    var graphElementId = graphStyle + '-' + new Date().getTime().toString(36);
+    parentElement.append(
+      `<div id="${graphElementId}" class="${graphStyle}"></div>`
+    );
+    const graph = new SimpleGraph(graphElementId, option);
+    return graph;
   }
 }
