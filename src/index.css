@@ -1,0 +1,5 @@
+@import '~antd/dist/antd.css';
+body {
+    width: 576px;
+    height: 200px;
+}

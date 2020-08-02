@@ -5,13 +5,13 @@
   "author": "frank-zsy",
   "description": "Hypertrons 迷你面板",
   "browser_action": {
-    "default_icon": "logo.png",
+    "default_icon": "favicon.ico",
     "default_title": "Hypertrons helper",
-    "default_popup": "popup/popup.html"
+    "default_popup": "index.html"
   },
   "background": {
     "scripts": [
-      "common/background/util.js"
+      "js/background.js"
     ]
   },
   "permissions": [
@@ -24,15 +24,7 @@
         "https://*.github.com/*"
       ],
       "js": [
-        "third-party/jquery-3.5.0.min.js",
-        "third-party/echarts.simple.min.js",
-        "common/content-script/util.js",
-        "common/content-script/hypertrons-dashboard.js",
-        "common/content-script/simple-graph.js",
-        "github/content-script/github-script.js"
-      ],
-      "css": [
-        "common/css/style.css"
+        "js/content.js"
       ],
       "run_at": "document_end"
     }
