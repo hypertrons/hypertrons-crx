@@ -4,7 +4,7 @@ This project is Hypertrons Chrome extension which help users to improve their us
 
 ## Functions
 
-The main purpose of this project is to enhance Chrome to show dashboard and commandline on web pages of certain hosting service like GitHub, GitLab and Gitee. And this extension is used to 
+The main purpose of this project is to enhance Chrome to show dashboard and commandline on web pages of certain hosting service like GitHub, GitLab and Gitee. And this extension is used to
 
 ### Welcome information
 

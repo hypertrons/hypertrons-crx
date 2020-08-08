@@ -1,14 +1,31 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
-import { elementExists } from '../../utils/utils'
-import $ from 'jquery'
-import Welcome from '../components/Welcome/index'
+import ReactDOM from 'react-dom';
+import $ from 'jquery';
+import { elementExists } from '../../utils/utils';
+import Welcome from '../components/Welcome/index';
+
 export class HypertronsDashboard {
-  options: { getInsertElement?: any; insertType?: any; welcome?: any; getWelcome?: any; userName?: any; repoName?: any; role?: any; };
+  options: {
+    getInsertElement?: any;
+    insertType?: any;
+    welcome?: any;
+    getWelcome?: any;
+    userName?: any;
+    repoName?: any;
+    role?: any;
+  };
 
   dashboardIdAndClass = 'hypertrons-mini-dashboard';
 
-  constructor(options: { getInsertElement?: any; insertType?: any; welcome?: any; getWelcome?: any; userName?: any; repoName?: any; role?: any; }) {
+  constructor(options: {
+    getInsertElement?: any;
+    insertType?: any;
+    welcome?: any;
+    getWelcome?: any;
+    userName?: any;
+    repoName?: any;
+    role?: any;
+  }) {
     this.options = options;
 
     this.init();
@@ -28,6 +45,8 @@ export class HypertronsDashboard {
           break;
         case 'after':
           ele.after(insertItem);
+          break;
+        default:
           break;
       }
     }
@@ -53,12 +72,22 @@ export class HypertronsDashboard {
       const welcomeDiv = document.createElement('div');
       welcomeDiv.id = 'hypertrons-welcome-container';
       if (this.options.getWelcome) {
-        ReactDOM.render(<Welcome userName={userName} repoName={repoName} role={role} welcomeMsg={this.options.getWelcome} />, welcomeDiv);
+        ReactDOM.render(
+          <Welcome
+            userName={userName}
+            repoName={repoName}
+            role={role}
+            welcomeMsg={this.options.getWelcome}
+          />,
+          welcomeDiv,
+        );
       } else {
-        ReactDOM.render(<Welcome userName={userName} repoName={repoName} role={role} />, welcomeDiv);
+        ReactDOM.render(
+          <Welcome userName={userName} repoName={repoName} role={role} />,
+          welcomeDiv,
+        );
       }
       root.prepend(welcomeDiv);
     }
   }
-
 }

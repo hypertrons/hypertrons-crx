@@ -1,4 +1,2 @@
-import './index.css'
-import './github/index'
-
-console.log('---9999999999999991----');
+import './index.css';
+import './github/index';
