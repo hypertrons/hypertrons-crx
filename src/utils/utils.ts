@@ -1,5 +1,5 @@
-export function elementExists(obj: any) {
-  return Number.isInteger(obj.length) && obj.length > 0;
+export function elementExists(obj: null | JQuery) {
+  return obj !== null && obj.length > 0;
 }
 
 export function getMetaContent(index: any) {
