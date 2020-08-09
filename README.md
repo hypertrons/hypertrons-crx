@@ -1,5 +1,7 @@
 # Hypertrons Chrome Extension
 
+[![CLA assistant](https://cla-assistant.io/readme/badge/hypertrons/hypertrons-crx)](https://cla-assistant.io/hypertrons/hypertrons-crx)
+
 This project is Hypertrons Chrome extension which help users to improve their user experience of Hypertrons.
 
 ## Quick Start
