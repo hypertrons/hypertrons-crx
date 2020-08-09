@@ -27,10 +27,16 @@ The output files are under `build` directory. Now you can [load it into the brow
 
 ### How to run test
 
-We use [`Jest`](https://jestjs.io/) to do unit test. All of the test files are under [`test`](./test) directory.
+We use [`Jest`](https://jestjs.io/) to do unit test. We put the test files next to the code they are testing so that relative imports appear shorter. Refer to [Running Tests in Create React App](https://create-react-app.dev/docs/running-tests/#writing-tests).
 
 ```bash
 $ npm run test
+```
+
+If you want to generate coverage report, run:
+
+```bash
+$ npm run test -- --coverage
 ```
 
 #### VSCode Extension

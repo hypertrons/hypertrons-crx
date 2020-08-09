@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { elementExists, getMetaContent, isNull } from '../../src/utils/utils';
+import { elementExists, getMetaContent, isNull } from './utils';
 
 describe('Test elementExists', () => {
   test('Element Exists', () => {
@@ -46,7 +46,7 @@ describe('Test isNull', () => {
     expect(isNull(obj)).toBe(true);
   });
   test('If the object is empty array', () => {
-    const obj = [];
+    const obj: never[] = [];
     expect(isNull(obj)).toBe(true);
   });
   test('If the object is NOT null', () => {

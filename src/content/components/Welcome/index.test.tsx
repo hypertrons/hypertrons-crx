@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Welcome from '../../src/content/components/Welcome/index';
+import Welcome from './index';
 
 it('renders correctly', () => {
   const tree = renderer

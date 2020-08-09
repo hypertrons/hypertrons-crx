@@ -73,7 +73,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint"
+      "pre-commit": "npm run lint && npm run test"
     }
   },
   "eslintConfig": {
@@ -93,7 +93,7 @@
   },
   "jest": {
     "roots": [
-      "<rootDir>/test"
+      "<rootDir>/src"
     ],
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
@@ -103,8 +103,8 @@
       "react-app-polyfill/jsdom"
     ],
     "testMatch": [
-      "<rootDir>/test/**/__tests__/**/*.{js,jsx,ts,tsx}",
-      "<rootDir>/test/**/*.{spec,test}.{js,jsx,ts,tsx}"
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
+      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
     ],
     "testEnvironment": "jest-environment-jsdom-fourteen",
     "transform": {
