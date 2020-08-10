@@ -10,19 +10,12 @@
     "default_popup": "popup/popup.html"
   },
   "background": {
-    "scripts": [
-      "common/background/util.js"
-    ]
+    "scripts": ["common/background/util.js"]
   },
-  "permissions": [
-    "notifications",
-    "http://hypertrons.io/*"
-  ],
+  "permissions": ["notifications", "http://hypertrons.io/*"],
   "content_scripts": [
     {
-      "matches": [
-        "https://*.github.com/*"
-      ],
+      "matches": ["https://*.github.com/*"],
       "js": [
         "third-party/jquery-3.5.0.min.js",
         "third-party/echarts.simple.min.js",
@@ -31,9 +24,7 @@
         "common/content-script/simple-graph.js",
         "github/content-script/github-script.js"
       ],
-      "css": [
-        "common/css/style.css"
-      ],
+      "css": ["common/css/style.css"],
       "run_at": "document_end"
     }
   ]

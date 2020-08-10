@@ -39,21 +39,13 @@
         "name": "kind/community",
         "description": "Community related issue or pull",
         "color": "99ff66",
-        "keywords": [
-          "community"
-        ]
+        "keywords": ["community"]
       },
       {
         "name": "kind/CICD",
         "description": "CI/CD related issue or pull",
         "color": "0099ff",
-        "keywords": [
-          "continuous integration",
-          "continuous delivery",
-          "[ci]",
-          "[cd]",
-          "[ci/cd]"
-        ]
+        "keywords": ["continuous integration", "continuous delivery", "[ci]", "[cd]", "[ci/cd]"]
       }
     ]
   },
@@ -67,61 +59,38 @@
       {
         "name": "committer",
         "description": "Committer of the project",
-        "users": [
-          "frank-zsy",
-          "heming6666"
-        ],
-        "commands": [
-          "/difficulty",
-          "/rerun",
-          "/complete-checklist",
-          "/start-vote"
-        ]
+        "users": ["frank-zsy", "heming6666"],
+        "commands": ["/difficulty", "/rerun", "/complete-checklist", "/start-vote"]
       },
       {
         "name": "replier",
         "description": "Replier is responsible for reply issues in time",
-        "users": [
-          "frank-zsy",
-          "heming6666"
-        ],
+        "users": ["frank-zsy", "heming6666"],
         "commands": []
       },
       {
         "name": "approver",
         "description": "After approvers' approve, pulls should be merged automatically",
-        "users": [
-          "frank-zsy",
-          "heming6666"
-        ],
-        "commands": [
-          "/approve"
-        ]
+        "users": ["frank-zsy", "heming6666"],
+        "commands": ["/approve"]
       },
       {
         "name": "author",
         "description": "Author of the issue or pull",
         "users": [],
-        "commands": [
-          "/rerun"
-        ]
+        "commands": ["/rerun"]
       },
       {
         "name": "notauthor",
         "description": "Not author of the issue or pull",
         "users": [],
-        "commands": [
-          "/approve"
-        ]
+        "commands": ["/approve"]
       },
       {
         "name": "anyone",
         "description": "Anyone",
         "users": [],
-        "commands": [
-          "/self-assign",
-          "/vote"
-        ]
+        "commands": ["/self-assign", "/vote"]
       }
     ]
   },
@@ -130,11 +99,7 @@
     "commands": [
       {
         "name": "/approve",
-        "scopes": [
-          "review",
-          "review_comment",
-          "pull_comment"
-        ]
+        "scopes": ["review", "review_comment", "pull_comment"]
       }
     ]
   },

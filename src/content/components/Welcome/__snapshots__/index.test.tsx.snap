@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="hypertrons-welcome-div"
+>
+  Welcome to hypertrons/hypertrons-crx, heming6666, commiter of this repo.
+</div>
+`;
