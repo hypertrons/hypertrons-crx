@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^4.2.2",
     "antd": "^4.5.1",
     "axios": "^0.19.2",
     "babel-eslint": "10.1.0",
@@ -73,7 +74,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm run test"
+      "pre-commit": "npm run prettier && npm run lint && npm run test -- --watchAll=false --coverage"
     }
   },
   "eslintConfig": {
