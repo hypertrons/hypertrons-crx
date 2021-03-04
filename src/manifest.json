@@ -1,0 +1,24 @@
+{
+  "name": "Hypertrons",
+  "icons": {
+    "128": "128.png"
+  },
+  "content_scripts": [{
+    "matches": ["*://github.com/*"],
+    "js": ["contentScript.bundle.js"],
+    "css": ["content.styles.css"]
+  }],
+  "web_accessible_resources": [
+    "content.styles.css",
+    "128.png"
+  ],
+  "permissions": [
+    "*://github.com/*",
+    "storage",
+    "notifications",
+    "alarms",
+    "tabs"
+  ],
+  "manifest_version": 2,
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
