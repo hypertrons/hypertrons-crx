@@ -1,0 +1,18 @@
+.header {
+  position: relative;
+  flex-shrink: 0;
+  background-color: #0084FF;
+  color: rgb(255, 255, 255);
+  padding: 50px 0px;
+  overflow: hidden;
+}
+
+body {
+  font-family: -apple-system, "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  margin: 0px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(242, 243, 245);
+  padding: 0px;
+  transition: all 0.3s ease 0s;
+}
