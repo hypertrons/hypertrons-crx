@@ -4,70 +4,57 @@
 
 This project is Hypertrons Chrome extension which help users to improve their user experience of Hypertrons.
 
-## Quick Start
+## Functions
 
-### Install
+The main purpose of this project is to enhance Chrome to show dashboard on web pages of certain hosting service like GitHub, GitLab and Gitee.
 
-```bash
-$ git clone git@github.com:hypertrons/hypertrons-crx.git
-$ cd hypertrons-crx
-$ npm install
-$ npm start
-```
+Currently we have the following default dashboard components:
 
-Open your browser and visit http://127.0.0.1:3000 . You can see some `popup` pages and even `content` pages.
+- [ ] Developer Collaboration Network
+  - [ ] Developer Collaboration Network for a developer for the past week.
+  - [ ] The 10 most participated projects and their connection network.
+- [ ] Project Correlation Network
+  - [ ] Developer Collaboration Network within the project for the past week.
+  - [ ] Network that shows the 10 most correlated projects for the past week.
 
-### Build
+## Install
 
-```bash
-$ npm run build
-```
+Coming soon...
 
-The output files are under `build` directory. Now you can [load it into the browser](https://www.smashingmagazine.com/2017/04/browser-extension-edge-chrome-firefox-opera-brave-vivaldi/#google-chrome-opera-vivaldi).
-
-### How to run test
-
-We use [`Jest`](https://jestjs.io/) to do unit test. We put the test files next to the code they are testing so that relative imports appear shorter. Refer to [Running Tests in Create React App](https://create-react-app.dev/docs/running-tests/#writing-tests).
+## Quickstart
 
 ```bash
-$ npm run test
+git clone git@github.com:hypertrons/hypertrons-crx.git
+cd hypertrons-crx
+npm install
 ```
 
-If you want to generate coverage report, run:
+Then you can try `npm run start` and visit `http://127.0.0.1:3000` to see some popup pages and options pages.
 
 ```bash
-$ npm run test -- --coverage
+npm run start
 ```
 
-#### VSCode Extension
+If you want to run and test the whole extension, try the following commands:
 
-If you use `VSCode`, it's recommended to install [vscode-jest](https://marketplace.visualstudio.com/items?itemName=Orta.vscode-jest) extension to get a comprehensive experience. It provides:
+```bash
+npm run watch
+npm run web-ext
+```
 
-- Useful IDE based Feedback
-- Session based test watching
+[web-ext](https://github.com/mozilla/web-ext) would open `Chrome` and load `Hypertrons-crx` into the browser automatically. And the deault configuration of `web-ext` can be found in [package.json](https://github.com/hypertrons/hypertrons-crx/blob/master/package.json):
 
-## Features
-
-The main purpose of this project is to enhance Chrome to show dashboard and commandline on web pages of certain hosting service like GitHub, GitLab and Gitee. And this extension is used to
-
-### Welcome information
-
-In the first `div` of the `hypertrons-mini-dashboard`, you can setup your own welcome information to developers visit your front page. The default information is `Hello, ${user-login}, welcome to ${repo-name}. You are ${role} of this repo.`.
-
-### Dashboard
-
-There are two kinds of default dashboard components supported, `line chart` and `table`.
-
-#### Line chart
-
-We use simple `echarts` library to support chart functions. So you can refer to `echarts` documentation to checkout how to use it to customize your own charts.
-
-You can set simple data to `line chart` to get a default dashboard component.
-
-#### Table
-
-You can set simple data to `table` component to get a default dashboard component.
-
-### Commandline
-
-After user setup his platform token, the `commandline` will turn on. User can use commandline to send valid command to Hypertrons backend to interact with other platforms or automation process.
+```json
+{
+  "webExt": {
+      "sourceDir": "distribution",
+      "run": {
+        "keepProfileChanges": true,
+        "chromiumProfile": "./test/web-ext-profile",
+        "startUrl": [
+          "https://github.com/"
+        ]
+      }
+    }
+  }
+```
