@@ -27,3 +27,5 @@ secrets.*.js
 
 # logs
 yarn-error.log
+
+/utils/web-ext-profile
