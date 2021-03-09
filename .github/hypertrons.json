@@ -51,7 +51,7 @@
   },
   "weekly_report": {
     "version": 1,
-    "generateTime": "0 0 12 * * 1"
+    "generateTime": "0 0 12 * * 3"
   },
   "role": {
     "version": 1,
@@ -59,19 +59,19 @@
       {
         "name": "committer",
         "description": "Committer of the project",
-        "users": ["frank-zsy", "heming6666"],
+        "users": ["frank-zsy", "heming6666", "LiuChangFreeman"],
         "commands": ["/difficulty", "/rerun", "/complete-checklist", "/start-vote"]
       },
       {
         "name": "replier",
         "description": "Replier is responsible for reply issues in time",
-        "users": ["frank-zsy", "heming6666"],
+        "users": ["heming6666", "LiuChangFreeman", "xiaoya-Esther"],
         "commands": []
       },
       {
         "name": "approver",
         "description": "After approvers' approve, pulls should be merged automatically",
-        "users": ["frank-zsy", "heming6666"],
+        "users": ["frank-zsy", "heming6666", "LiuChangFreeman"],
         "commands": ["/approve"]
       },
       {

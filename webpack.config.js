@@ -1,11 +1,11 @@
 var webpack = require('webpack'),
-  path = require('path'),
-  fileSystem = require('fs-extra'),
-  env = require('./utils/env'),
-  { CleanWebpackPlugin } = require('clean-webpack-plugin'),
-  CopyWebpackPlugin = require('copy-webpack-plugin'),
-  HtmlWebpackPlugin = require('html-webpack-plugin'),
-  WriteFilePlugin = require('write-file-webpack-plugin');
+path = require('path'),
+fileSystem = require('fs-extra'),
+env = require('./utils/env'),
+{ CleanWebpackPlugin } = require('clean-webpack-plugin'),
+CopyWebpackPlugin = require('copy-webpack-plugin'),
+HtmlWebpackPlugin = require('html-webpack-plugin'),
+WriteFilePlugin = require('write-file-webpack-plugin');
 
 // load the secrets
 var alias = {
