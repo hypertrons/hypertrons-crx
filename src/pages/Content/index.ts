@@ -1,2 +1,3 @@
 import './index.css';
-import './github/index';
+import './common/DashboardService';
+import './common/ConfigService';
