@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Suspense }from 'react';
 import { render } from 'react-dom';
 import { elementExists } from '../../../utils/utils';
-import DeveloperCollabrationNetwork from '../components/DeveloperCollabrationNetwork';
+// import DeveloperCollabrationNetwork from '../components/DeveloperCollabrationNetwork';
 
 type ElementFunction = () => JQuery<HTMLElement>;
 type InsertType = 'before' | 'after';
@@ -42,16 +42,24 @@ export const renderDashboard = (componentsConf: ComponentConfig[]) => {
     const insertItem = document.createElement('div');
     insertItem.id = name;
 
-    switch (name) {
-      case 'DeveloperCollabrationNetwork':
-        render(
-          <DeveloperCollabrationNetwork props={props} />,
-          insertItem,
-        );
-        break;
-      default:
-        break;
-    }
+    // switch (name) {
+    //   case 'DeveloperCollabrationNetwork':
+    //     render(
+    //       <DeveloperCollabrationNetwork props={props} />,
+    //       insertItem,
+    //     );
+    //     break;
+    //   default:
+    //     break;
+    // }
+    const Component = React.lazy(() => import(`../components/${name}`));
+    render(
+      <Suspense fallback={<div>Loading...</div>}>
+        <Component props={props} />
+      </Suspense>
+      ,
+      insertItem,
+    );
  
     switch (insertType) {
       case 'before':

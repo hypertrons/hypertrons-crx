@@ -42,6 +42,7 @@ var options = {
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: '[name].bundle.js',
+    publicPath: path.join(__dirname, 'build/'),
   },
   module: {
     rules: [
