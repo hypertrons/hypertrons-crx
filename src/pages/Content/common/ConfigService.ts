@@ -1,7 +1,8 @@
 import $ from 'jquery';
+import {ComponentConfig} from './DashboardService'
 
-export const loadConfigFromGithub = async (): Promise<any> => {
-  const config = [{
+export const loadConfigFromGithub = (): ComponentConfig[] => {
+  const config:ComponentConfig={
     name: 'DeveloperCollabrationNetwork',
     enable: true,
     insertElement: () => $('.js-pinned-items-reorder-container').parent(),
@@ -9,6 +10,6 @@ export const loadConfigFromGithub = async (): Promise<any> => {
     props: {
       developerLogin: 'testDeveloperLogin'
     }
-  }];
-  return config;
+  }
+  return [config];
 }
