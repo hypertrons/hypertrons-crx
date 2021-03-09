@@ -6,7 +6,7 @@ import DeveloperCollabrationNetwork from '../components/DeveloperCollabrationNet
 type ElementFunction = () => JQuery<HTMLElement>;
 type InsertType = 'before' | 'after';
 
-interface ComponentConfig {
+export interface ComponentConfig {
   name: string,
   enable: boolean,
   insertElement?: ElementFunction,

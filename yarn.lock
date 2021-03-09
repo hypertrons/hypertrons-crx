@@ -2411,10 +2411,11 @@ bluebird@~2.9.24:
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-2.9.34.tgz#2f7b4ec80216328a9fddebdf69c8d4942feff7d8"
   integrity sha1-L3tOyAIWMoqf3evfacjUlC/v99g=
 
-bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.11.9:
-  version "4.12.0"
-  resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.12.0.tgz#775b3f278efbb9718eec7361f483fb36fbbfea88"
-  integrity sha512-c98Bf3tPniI+scsdk237ku1Dc3ujXQTSgyiPUDEOe7tRkhrqridvh8klBv0HCEso1OLOYcHuCv/cS6DNxKH+ZA==
+bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.4.0:
+  version "4.11.9"
+  resolved "https://registry.npm.taobao.org/bn.js/download/bn.js-4.11.9.tgz#26d556829458f9d1e81fc48952493d0ba3507828"
+  integrity sha1-JtVWgpRY+dHoH8SJUkk9C6NQeCg=
+
 
 bn.js@^5.1.1:
   version "5.1.2"
