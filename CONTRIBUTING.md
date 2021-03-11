@@ -1,4 +1,4 @@
-# Contributing to hypertrons-crx
+# Contributing to `hypertrons-crx`
 
 It is warmly welcomed if you have interest to contribute to `hypertrons-crx` and help make it even better than it is today! The following is a set of guidelines for contributing to `hypertrons-crx`.
 
@@ -171,57 +171,6 @@ After your pull request is merged, you can safely delete your branch and pull th
   ```shell
   git pull --ff upstream master
   ```
-
-## <a name="rules"></a> Code Rules
-
-To ensure consistency throughout the source code, you need to pass ESLint checking and add apache license header.
-
-- [ESLint Checking](#eslint-checking)
-- [Apache License Header](#apache-license-header)
-
-### ESLint Checking
-
-We use [`Husky`](https://github.com/typicode/husky) to do the lint check before you commit your code. In `hypertrons-crx`, We use [`umi-fabric`](https://github.com/umijs/fabric) which provides some presets for `eslint` , `stylelint` and `prettier` to improve code quality.
-
-So if you fail to commit, you may need to check your code and run `npm run prettier` to formmat the code. And then run `git add` and `git commit`.
-
-### Apache License Header
-
-If you add a new `ts` file in your modification, please make sure you add Apache License Header to all new files.
-
-```text
-// Copyright 2019 - present Xlab
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-```
-
-If you use VSCode as your IDE, you may do the following steps to add Apache License Header automatically.
-
-- install plugin `licenser`
-
-- set the following content in .vscode/settings.json
-
-  ```json
-  {
-    "licenser.author": "Xlab",
-    "licenser.projectName": "hypertrons-crx",
-    "licenser.useSingleLineStyle": true,
-    "licenser.disableAutoHeaderInsertion": false,
-    "licenser.license": "AL2"
-  }
-  ```
-
-- restart VSCode
 
 ## <a name="cla"></a> Signing the CLA
 
