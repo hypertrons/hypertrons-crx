@@ -124,7 +124,7 @@ In GitHub, send a pull request to `hypertrons:hypertrons-crx`.
 
 Please sign our [Contributor License Agreement (CLA)](#cla) before sending PRs.
 
-To make sure we can easily recap what happened previously, we have prepared a [pull request template][pr-template] and you need to fill out the PR template.
+To make sure we can easily recap what happened previously, we have prepared a [pull request template][pr-template] and you need to fill out the PR template. If you feel that some part of the template is redundant and your description is clear enough, you can just keep the necessary parts.
 
 The core team is monitoring for pull requests. We will review your pull request and either merge it, request changes to it, or close it with an explanation.
 
