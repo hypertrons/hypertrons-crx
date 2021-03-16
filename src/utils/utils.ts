@@ -21,3 +21,21 @@ export function isNull(object: any) {
   }
   return false;
 }
+
+export async function chrome_set(key:string,value:any){
+  const items: { [key: string] : any; } = {};
+  items[key]=value;
+  return new Promise<void>((resolve, reject) => {
+    chrome.storage.local.set(items, ()=>{
+      resolve();
+    })
+  });
+}
+
+export async function chrome_get(key:string){
+  return new Promise((resolve, reject) => {
+    chrome.storage.local.get(key, (result)=>{
+      resolve(result);
+    })
+  });
+}
