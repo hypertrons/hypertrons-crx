@@ -1,0 +1,14 @@
+{
+  "manifest_appDescription": {
+    "message": "Hypertrons，您的最佳Github助手"
+  },
+  "manifest_appName": {
+    "message": "Hypertrons机器人"
+  },
+  "manifest_iconTitle": {
+    "message": "[载入中……]"
+  },
+  "component_developerCollabrationNetwork_title": {
+    "message": "开发人员合作网络图"
+  }
+}

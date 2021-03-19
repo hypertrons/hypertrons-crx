@@ -40,7 +40,7 @@ const DeveloperCollabrationNetwork: React.FC<DeveloperCollabrationNetworkProps> 
         });
         const options = {
           title: {
-            text: 'Developer Collabration Network',
+            text: chrome.i18n.getMessage("component_developerCollabrationNetwork_title"),
             textStyle: {
               fontSize: 14,
               fontWeight: 400,

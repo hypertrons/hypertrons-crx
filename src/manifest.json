@@ -1,5 +1,6 @@
 {
   "name": "Hypertrons",
+  "default_locale": "zh_CN",
   "icons": {
     "128": "128.png"
   },
