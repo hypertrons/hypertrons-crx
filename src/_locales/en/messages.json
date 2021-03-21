@@ -1,0 +1,14 @@
+{
+  "manifest_appDescription": {
+    "message": "Hypertrons，your best Github helper"
+  },
+  "manifest_appName": {
+    "message": "Hypertrons Robot"
+  },
+  "manifest_iconTitle": {
+    "message": "[loading……]"
+  },
+  "component_developerCollabrationNetwork_title": {
+    "message": "Developer Collabration Network"
+  }
+}

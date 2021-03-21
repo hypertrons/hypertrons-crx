@@ -136,6 +136,19 @@ var options = {
         copyUnmodified: true,
       }
     ),
+    new CopyWebpackPlugin(
+      [
+        {
+          from: 'src/_locales',
+          to: path.join(__dirname, 'build','_locales'),
+          force: true,
+        },
+      ],
+      {
+        logLevel: 'info',
+        copyUnmodified: true,
+      }
+    ),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'pages', 'Options', 'index.html'),
       filename: 'options.html',
