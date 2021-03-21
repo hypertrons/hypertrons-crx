@@ -9,6 +9,9 @@
 # production
 /build
 
+# release
+/release
+
 # jetbrains
 /.idea
 
