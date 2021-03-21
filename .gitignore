@@ -25,6 +25,9 @@
 .env.test.local
 .env.production.local
 
+# yarn lock file
+yarn.lock
+
 # secrets
 secrets.*.js
 
