@@ -9,6 +9,9 @@
 # production
 /build
 
+# release
+/release
+
 # jetbrains
 /.idea
 
@@ -21,6 +24,9 @@
 .env.development.local
 .env.test.local
 .env.production.local
+
+# yarn lock file
+yarn.lock
 
 # secrets
 secrets.*.js

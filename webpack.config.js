@@ -5,7 +5,8 @@ env = require('./utils/env'),
 { CleanWebpackPlugin } = require('clean-webpack-plugin'),
 CopyWebpackPlugin = require('copy-webpack-plugin'),
 HtmlWebpackPlugin = require('html-webpack-plugin'),
-WriteFilePlugin = require('write-file-webpack-plugin');
+WriteFilePlugin = require('write-file-webpack-plugin'),
+CrxWebpackPlugin = require("crx-webpack-plugin");
 
 // load the secrets
 var alias = {
@@ -160,6 +161,12 @@ var options = {
       chunks: ['popup'],
     }),
     new WriteFilePlugin(),
+    new CrxWebpackPlugin({
+      keyFile: 'build.pem',
+      contentPath: 'build',
+      outputPath: 'release',
+      name: 'hypertrons'
+    })
   ],
 };
 
