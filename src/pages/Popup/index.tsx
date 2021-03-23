@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
+import PopupPage from '../../components/PopupPage/index'
 
 import './index.css';
 
-render(<div />, window.document.querySelector('#app-container'));
+render(<PopupPage />, window.document.querySelector('#app-container'));
