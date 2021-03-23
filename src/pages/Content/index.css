@@ -1,34 +1,6 @@
-.hypertrons-mini-dashboard {
-  height: auto;
-  width: 100%;
-  display: block;
-  border: 1px solid #dfe2e5;
-  border-radius: 3px;
-  margin-bottom: 10px;
+.hypertrons-crx-border {
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: 6px;
 }
 
-.hypertrons-graph {
-  height: 400px;
-  width: 100% !important;
-  padding: 10px;
-  display: inline-block;
-}
-
-.hypertrons-table {
-  border: 1px solid #dfe2e5;
-  border-radius: 3px;
-  height: 150px;
-  width: 50% !important;
-  padding: 10px;
-  display: inline-block;
-}
-
-.hypertrons-cli-input-label {
-  width: 5% !important;
-  padding-left: 10px;
-}
-
-.hypertrons-cli-input {
-  width: 80% !important;
-  margin-left: 30px;
-}

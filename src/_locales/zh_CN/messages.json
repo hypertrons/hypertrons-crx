@@ -14,6 +14,12 @@
   "component_developerCollabrationNetwork_title": {
     "message": "开发人员合作网络图"
   },
+  "component_projectCorrelationNetwork_title": {
+    "message": "项目关系网络图"
+  },
+  "component_mostParticipatedProjects_title": {
+    "message": "活跃项目网络图"
+  },
   "options_header_settings": {
     "message": "设置"
   },

@@ -1,0 +1,1 @@
+export const isPerceptor = (): boolean => window.location.search.includes('perceptor');
