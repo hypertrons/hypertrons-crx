@@ -39,3 +39,7 @@ export async function chrome_get(key:string){
     })
   });
 }
+
+export function getMessageI18n(key:string){
+  return chrome.i18n.getMessage(key);
+}

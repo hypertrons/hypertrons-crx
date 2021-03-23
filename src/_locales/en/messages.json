@@ -8,7 +8,25 @@
   "manifest_iconTitle": {
     "message": "[loading……]"
   },
+  "global_btn_ok": {
+    "message": "ok"
+  },
   "component_developerCollabrationNetwork_title": {
     "message": "Developer Collabration Network"
+  },
+  "options_header_settings": {
+    "message": "Settings"
+  },
+  "options_header_commandLine": {
+    "message": "Commandline"
+  },
+  "options_toggle_checkForUpdates": {
+    "message": "check updates"
+  },
+  "options_toggle_checkForUpdates_onText": {
+    "message": "on"
+  },
+  "options_toggle_checkForUpdates_offText": {
+    "message": "off"
   }
 }
