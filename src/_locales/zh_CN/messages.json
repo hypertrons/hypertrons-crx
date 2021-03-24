@@ -8,7 +8,25 @@
   "manifest_iconTitle": {
     "message": "[载入中……]"
   },
+  "global_btn_ok": {
+    "message": "确定"
+  },
   "component_developerCollabrationNetwork_title": {
     "message": "开发人员合作网络图"
+  },
+  "options_header_settings": {
+    "message": "设置"
+  },
+  "options_header_commandLine": {
+    "message": "命令行"
+  },
+  "options_toggle_checkForUpdates": {
+    "message": "自动检测更新"
+  },
+  "options_toggle_checkForUpdates_onText": {
+    "message": "开"
+  },
+  "options_toggle_checkForUpdates_offText": {
+    "message": "关"
   }
 }
