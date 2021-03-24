@@ -3,10 +3,9 @@ import { render } from 'react-dom';
 import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
 import features from '.';
-import ForceNetwork from '../components/Network/ForceNetwork';
+import ForceNetwork from '../../../components/Network/ForceNetwork';
 import { getMessageI18n } from '../../../utils/utils'
 import { getDeveloperData, getProjectData, onChartClick } from './project-network';
-
 
 const init = async (): Promise<void | false> => {
 
