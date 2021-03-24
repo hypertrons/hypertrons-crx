@@ -11,18 +11,19 @@ export function getMetaContent(index: any) {
 }
 
 export function isNull(object: any) {
-  if (
+  if(
     object === null ||
     typeof object === 'undefined' ||
     object === '' ||
-    JSON.stringify(object) === '[]'
+    JSON.stringify(object) === '[]'||
+    JSON.stringify(object) === '{}'
   ) {
     return true;
   }
   return false;
 }
 
-export async function chrome_set(key:string,value:any){
+export async function chromeSet(key:string, value:any){
   const items: { [key: string] : any; } = {};
   items[key]=value;
   return new Promise<void>((resolve, reject) => {
@@ -32,10 +33,10 @@ export async function chrome_set(key:string,value:any){
   });
 }
 
-export async function chrome_get(key:string){
-  return new Promise((resolve, reject) => {
+export async function chromeGet(key:string){
+  return new Promise<{ [key: string] : any; }>((resolve, reject) => {
     chrome.storage.local.get(key, (result)=>{
-      resolve(result);
+      resolve(result[key]);
     })
   });
 }
