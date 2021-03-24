@@ -2,8 +2,8 @@ import React from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
 import features from '.';
-import PerceptorLayout from '../components/PerceptorLayout';
-import { isPerceptor } from '../common/PageDetect';
+import PerceptorLayout from '../../../components/PerceptorLayout';
+import { isPerceptor } from '../../../utils/utils';
 
 const init = async (): Promise<void | false> => {
   // remove the original container

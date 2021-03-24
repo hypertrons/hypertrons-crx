@@ -2,8 +2,7 @@
 import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
 import features from '.';
-import { isPerceptor } from '../common/PageDetect';
-
+import { isPerceptor } from '../../../utils/utils';
 
 const init = async (): Promise<void> => {
   const settingsTab = $('.js-repo-nav [data-ga-click="Repository, Navigation click, Settings tab"]').parent();

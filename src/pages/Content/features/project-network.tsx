@@ -2,8 +2,8 @@ import React from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
 import features from '.';
-import ForceNetwork from '../components/Network/ForceNetwork';
-import { isPerceptor } from '../common/PageDetect';
+import ForceNetwork from '../../../components/Network/ForceNetwork';
+import { isPerceptor } from '../../../utils/utils';
 import { developerData } from '../mock/developer.data';
 import { projectData } from '../mock/project.data';
 import { getMessageI18n } from '../../../utils/utils'

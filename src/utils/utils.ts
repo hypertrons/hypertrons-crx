@@ -43,3 +43,5 @@ export async function chrome_get(key:string){
 export function getMessageI18n(key:string){
   return chrome.i18n.getMessage(key);
 }
+
+export const isPerceptor = (): boolean => window.location.search.includes('perceptor');
