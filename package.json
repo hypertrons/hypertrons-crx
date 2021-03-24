@@ -19,6 +19,8 @@
     "copy-to-clipboard": "^3.3.1",
     "echarts": "^5.0.2",
     "echarts-for-react": "^3.0.1",
+    "element-ready": "^5.0.0",
+    "github-url-detection": "^4.10.0",
     "jquery": "^3.6.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

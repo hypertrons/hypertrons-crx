@@ -14,6 +14,12 @@
   "component_developerCollabrationNetwork_title": {
     "message": "Developer Collabration Network"
   },
+  "component_projectCorrelationNetwork_title": {
+    "message": "Project Correlation Network"
+  },
+  "component_mostParticipatedProjects_title": {
+    "message": "Most Participated Projects"
+  },
   "options_header_settings": {
     "message": "Settings"
   },
