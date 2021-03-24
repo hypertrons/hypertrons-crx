@@ -3,7 +3,7 @@ import {
   Pivot, PivotItem, PivotLinkFormat,Stack, Toggle,DefaultButton
 } from 'office-ui-fabric-react';
 import { initializeIcons } from '@uifabric/icons';
-import {getMessageI18n,chromeGet,chromeSet} from '../../utils/utils'
+import {getMessageI18n,chromeGet,chromeSet,isNull} from '../../utils/utils'
 import Settings from "../../utils/settings"
 import './index.css';
 
@@ -16,7 +16,10 @@ const OptionsPage: React.FC = () => {
 
   useEffect(() => {
     const initSettings=async ()=> {
-      const obj=await chromeGet("settings");
+      let obj=await chromeGet("settings");
+      if(isNull(obj)){
+        obj={};
+      }
       settings.loadFromJson(obj);
       setSettings(settings);
       setInited(true);

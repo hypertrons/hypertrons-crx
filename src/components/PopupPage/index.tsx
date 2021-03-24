@@ -5,7 +5,7 @@ import {
 import { initializeIcons } from '@uifabric/icons';
 import './index.css';
 import Settings from '../../utils/settings';
-import { chromeGet } from '../../utils/utils';
+import { chromeGet,isNull} from '../../utils/utils';
 
 initializeIcons();
 
@@ -16,7 +16,10 @@ const PopupPage: React.FC = () => {
 
   useEffect(() => {
     const initSettings=async ()=> {
-      const obj=await chromeGet("settings");
+      let obj=await chromeGet("settings");
+      if(isNull(obj)){
+        obj={};
+      }
       settings.loadFromJson(obj);
       setSettings(settings);
       setInited(true);
