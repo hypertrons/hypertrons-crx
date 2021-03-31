@@ -2,14 +2,14 @@ import React from 'react';
 import ReactECharts from 'echarts-for-react';
 
 interface ForceNetworkProps {
-  title: string;
   data: any;
+  title?: string;
   onChartClick?: any;
 }
 
 const ForceNetwork: React.FC<ForceNetworkProps> = ({
-  title,
   data,
+  title = '',
   onChartClick = (param: any, echarts: any) => {
     const url = 'https://github.com/' + param.data.name;
     window.location.href = url;
@@ -18,10 +18,6 @@ const ForceNetwork: React.FC<ForceNetworkProps> = ({
   const options = {
     title: {
       text: title,
-      textStyle: {
-        fontSize: 14,
-        fontWeight: 400,
-      },
     },
     tooltip: {},
     series: [

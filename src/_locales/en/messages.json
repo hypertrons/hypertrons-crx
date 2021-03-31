@@ -11,6 +11,15 @@
   "global_btn_ok": {
     "message": "ok"
   },
+  "global_developer": {
+    "message": "Develpoer"
+  },
+  "global_project": {
+    "message": "Project"
+  },
+  "global_activity": {
+    "message": "Activity"
+  },
   "component_developerCollabrationNetwork_title": {
     "message": "Developer Collabration Network"
   },

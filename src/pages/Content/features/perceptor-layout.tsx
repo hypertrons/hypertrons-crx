@@ -21,7 +21,7 @@ const init = async (): Promise<void | false> => {
   parentContainer.prepend(percepterContainer);
 }
 
-void features.add('perceptor-layout', {
+void features.add('perceptorLayout', {
   include: [
     isPerceptor
   ],
