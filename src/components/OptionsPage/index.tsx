@@ -1,9 +1,9 @@
-import React,{useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  Pivot, PivotItem, PivotLinkFormat,Stack, Toggle,DefaultButton
+  Pivot, PivotItem, PivotLinkFormat, Stack, Toggle, DefaultButton, Checkbox
 } from 'office-ui-fabric-react';
 import { initializeIcons } from '@uifabric/icons';
-import {getMessageI18n,chromeGet,chromeSet,isNull} from '../../utils/utils'
+import { getMessageI18n, chromeGet, chromeSet, isNull } from '../../utils/utils'
 import Settings from "../../utils/settings"
 import './index.css';
 
@@ -11,28 +11,33 @@ initializeIcons();
 
 const OptionsPage: React.FC = () => {
 
-  const [settings,setSettings]= useState(new Settings());
+  const [settings, setSettings] = useState(new Settings());
   const [inited, setInited] = useState(false);
 
   useEffect(() => {
-    const initSettings=async ()=> {
-      let obj=await chromeGet("settings");
-      if(isNull(obj)){
-        obj={};
+    const initSettings = async () => {
+      let obj = await chromeGet("settings");
+      if (isNull(obj)) {
+        obj = {};
       }
       settings.loadFromJson(obj);
       setSettings(settings);
       setInited(true);
     }
     initSettings();
-  },[settings]);
+  }, [settings]);
 
-
-  if(!inited){
-    return (<div/>);
+  const saveSettings = async () => {
+    setSettings(settings);
+    const obj = settings.toJson();
+    await chromeSet("settings", obj);
   }
 
-  return(
+  if (!inited) {
+    return (<div />);
+  }
+
+  return (
     <Stack>
       <Stack horizontalAlign="center">
         <h1>HYPERTRONS</h1>
@@ -41,18 +46,34 @@ const OptionsPage: React.FC = () => {
       <Stack horizontalAlign="center">
         <div className="container">
           <Pivot
-            style={{margin:"3px"}}
+            style={{ margin: "3px" }}
             linkFormat={PivotLinkFormat.tabs}
           >
             <PivotItem headerText={getMessageI18n("options_header_settings")} itemIcon="Settings">
               <Stack
                 horizontalAlign="space-around"
                 verticalAlign='center'
-                style={{margin:"5px",padding:"3px"}}
+                style={{ margin: "5px", padding: "3px" }}
                 tokens={{
                   childrenGap: 10
                 }}
               >
+                <Checkbox
+                  label={getMessageI18n("component_developerCollabrationNetwork_title")}
+                  defaultChecked={settings.developerNetwork}
+                  onChange={async (e, checked) => {
+                    settings.developerNetwork = checked;
+                    await saveSettings();
+                  }}
+                />
+                <Checkbox
+                  label={getMessageI18n("component_projectCorrelationNetwork_title")}
+                  defaultChecked={settings.projectNetwork}
+                  onChange={async (e, checked) => {
+                    settings.projectNetwork = checked;
+                    await saveSettings();
+                  }}
+                />
                 <Stack
                   horizontalAlign="start"
                   verticalAlign='center'
@@ -62,9 +83,8 @@ const OptionsPage: React.FC = () => {
                   }}
                 >
                   <DefaultButton
-                    style={{width:100}}
-                    onClick={()=>{
-
+                    style={{ width: 100 }}
+                    onClick={() => {
                     }}
                   >
                     {getMessageI18n("global_btn_ok")}
@@ -75,11 +95,9 @@ const OptionsPage: React.FC = () => {
                   defaultChecked={settings.checkForUpdates}
                   onText={getMessageI18n('options_toggle_checkForUpdates_onText')}
                   offText={getMessageI18n('options_toggle_checkForUpdates_offText')}
-                  onChange={async (e,checked)=>{
-                    settings.checkForUpdates=checked;
-                    setSettings(settings);
-                    const obj=settings.toJson();
-                    await chromeSet("settings",obj);
+                  onChange={async (e, checked) => {
+                    settings.checkForUpdates = checked;
+                    await saveSettings();
                   }}
                 />
 
@@ -89,12 +107,11 @@ const OptionsPage: React.FC = () => {
               <Stack
                 horizontalAlign="space-around"
                 verticalAlign='center'
-                style={{margin:"5px",padding:"3px"}}
+                style={{ margin: "5px", padding: "3px" }}
                 tokens={{
                   childrenGap: 10
                 }}
               >
-
               </Stack>
             </PivotItem>
           </Pivot>

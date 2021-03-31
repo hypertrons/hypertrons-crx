@@ -31,7 +31,7 @@ const init = async (): Promise<void> => {
   insightsTab.after(perceptorTab);
 }
 
-void features.add('perceptor-tab', {
+void features.add('perceptorTab', {
   include: [
 		pageDetect.isRepo
 	],

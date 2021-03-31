@@ -90,7 +90,7 @@ const init = async (): Promise<void | false> => {
   perceptorContainer.prepend(ProjectNetworkDiv);
 }
 
-void features.add('project-network', {
+void features.add('projectNetwork', {
   include: [
     isPerceptor
   ],

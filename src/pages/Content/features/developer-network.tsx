@@ -98,7 +98,7 @@ const init = async (): Promise<void | false> => {
   pinnedReposDiv.before(DeveloperNetworkDiv);
 }
 
-void features.add('developer-network', {
+void features.add('developerNetwork', {
   include: [
     pageDetect.isUserProfileMainTab
   ],

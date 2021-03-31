@@ -1,5 +1,6 @@
 import elementReady from 'element-ready';
 import * as pageDetect from 'github-url-detection';
+import { chromeGet } from '../../../utils/utils'
 
 const globalReady = async (): Promise<void> => {
 
@@ -9,9 +10,13 @@ const globalReady = async (): Promise<void> => {
     return;
   }
 }
-
+const defaultComponent = ['perceptorTab', 'perceptorLayout'];
 const add = async (name: string, loader: any): Promise<void> => {
   await globalReady();
+  const settings = await chromeGet("settings");
+  if (!defaultComponent.includes(name) && (settings && !settings[name])) {
+    return;
+  }
   const {
     include = [() => true], // Default: every page
     init
