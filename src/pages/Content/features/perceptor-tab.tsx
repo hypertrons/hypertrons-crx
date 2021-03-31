@@ -5,19 +5,19 @@ import features from '.';
 import { isPerceptor } from '../../../utils/utils';
 
 const init = async (): Promise<void> => {
-  const settingsTab = $('.js-repo-nav [data-ga-click="Repository, Navigation click, Settings tab"]').parent();
+  const insightsTab = $('.js-repo-nav [data-ga-click="Repository, Navigation click, Insights tab"]').parent();
 
-  // copy Settings tab
-  const perceptorTab = settingsTab.clone(true);
+  // copy Insights tab
+  const perceptorTab = insightsTab.clone(true);
 
   // Un-select one of the tabs if necessary
-  const settingsLink = $('a', settingsTab);
+  const insightsLink = $('a', insightsTab);
   const perceptorLink = $('a', perceptorTab);
 
-  if (settingsLink.hasClass('selected')) {
+  if (insightsLink.hasClass('selected')) {
     if (isPerceptor()) {
-      settingsLink.removeClass('selected');
-      settingsLink.removeAttr('aria-current');
+      insightsLink.removeClass('selected');
+      insightsLink.removeAttr('aria-current');
     } else {
       perceptorLink.removeClass('selected');
       perceptorLink.removeAttr('aria-current');
@@ -25,10 +25,10 @@ const init = async (): Promise<void> => {
   }
 
   // Update
-  perceptorLink.attr("href", "https://github.com/hypertrons/hypertrons-crx/settings?redirect=perceptor");
-  $('span[data-content="Settings"]', perceptorLink).text('Perceptor');
+  perceptorLink.attr("href", "https://github.com/hypertrons/hypertrons-crx/pulse?redirect=perceptor");
+  $('span[data-content="Insights"]', perceptorLink).text('Perceptor');
 
-  settingsTab.after(perceptorTab);
+  insightsTab.after(perceptorTab);
 }
 
 void features.add('perceptor-tab', {

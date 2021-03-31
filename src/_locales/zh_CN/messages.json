@@ -11,8 +11,17 @@
   "global_btn_ok": {
     "message": "确定"
   },
+  "global_developer": {
+    "message": "开发者"
+  },
+  "global_project": {
+    "message": "项目"
+  },
+  "global_activity": {
+    "message": "活跃度"
+  },
   "component_developerCollabrationNetwork_title": {
-    "message": "开发人员合作网络图"
+    "message": "开发者合作网络图"
   },
   "component_projectCorrelationNetwork_title": {
     "message": "项目关系网络图"
