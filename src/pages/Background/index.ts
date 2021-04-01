@@ -1,6 +1,5 @@
-import { compareVersion, getBrowserType} from '../../utils/utils';
-import { getUpdateInfor } from "../../services/background"
-import { loadSettings } from '../../utils/settings';
+import {compareVersion,getBrowserType} from "../../utils/utils"
+import {getUpdateInfor} from "../../services/background"
 
 export enum BackgroundTasks {
   update = 'check_for_updates'
@@ -10,33 +9,34 @@ chrome.alarms.create(BackgroundTasks.update,{periodInMinutes:0.1});
 
 chrome.alarms.onAlarm.addListener(async (alarm) => {
   const name=alarm.name;
-
-  const settings=await loadSettings();
-
-  if(name===BackgroundTasks.update ){
-    if(settings.checkForUpdates){
-      // @ts-ignore :we must ignore here
-      const details=chrome.app.getDetails();
-      const currentVersion=details["version"];
-      const browserType=getBrowserType();
-      const updateInformation=await getUpdateInfor();
-      let latestVersion;
-
-      if("key" in details){
-        // the store-version installation
-        if(browserType==="Edge"){
-          latestVersion=updateInformation["edge"]["latest_version"];
-        }
-        else{
-          latestVersion=updateInformation["chrome"]["latest_version"];
+  if(name===BackgroundTasks.update){
+    // @ts-ignore :we must ignore here
+    const details=chrome.app.getDetails();
+    const currentVersion=details["version"];
+    const browserType=getBrowserType();
+    const updateInformation=await getUpdateInfor();
+    if("key" in details){
+      // the store-version installation
+      if(browserType==="Edge"){
+        const edgeUpdateInformation=updateInformation["edge"];
+        const latestVersion=edgeUpdateInformation["latest_version"];
+        if(compareVersion(currentVersion,latestVersion)===-1){
+          console.log("new edge update available");
         }
       }
       else{
-        latestVersion=updateInformation["develop"]["latest_version"];
+        const chromeUpdateInformation=updateInformation["chrome"];
+        const latestVersion=chromeUpdateInformation["latest_version"];
+        if(compareVersion(currentVersion,latestVersion)===-1){
+          console.log("new chrome update available");
+        }
       }
-
+    }
+    else{
+      const developUpdateInformation=updateInformation["develop"];
+      const latestVersion=developUpdateInformation["latest_version"];
       if(compareVersion(currentVersion,latestVersion)===-1){
-        console.log(`new ${browserType} update available, version:${latestVersion}`);
+        console.log("new develop update available");
       }
     }
   }
