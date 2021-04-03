@@ -3,7 +3,7 @@
   "default_locale": "zh_CN",
   "options_page": "options.html",
   "icons": {
-    "128": "128.png"
+    "128": "main.png"
   },
   "background": {
     "scripts": ["background.bundle.js"],
@@ -11,7 +11,7 @@
   },
   "browser_action": {
     "default_popup": "popup.html",
-    "default_icon": "128.png"
+    "default_icon": "main.png"
   },
   "content_scripts": [{
     "matches": ["*://github.com/*"],
@@ -20,7 +20,7 @@
   }],
   "web_accessible_resources": [
     "content.styles.css",
-    "128.png"
+    "main.png"
   ],
   "permissions": [
     "*://github.com/*",
