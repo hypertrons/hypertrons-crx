@@ -4,7 +4,7 @@ import {
 } from 'office-ui-fabric-react';
 import { initializeIcons } from '@uifabric/icons';
 import { getMessageI18n, chromeGet, chromeSet, isNull } from '../../utils/utils'
-import Settings from "../../utils/settings"
+import Settings,{ loadSettings } from "../../utils/settings"
 import './index.css';
 
 initializeIcons();
@@ -13,21 +13,25 @@ const OptionsPage: React.FC = () => {
 
   const [settings, setSettings] = useState(new Settings());
   const [inited, setInited] = useState(false);
+  const [version, setVersion] = useState("0.0.0");
 
   useEffect(() => {
     const initSettings = async () => {
-      let obj = await chromeGet("settings");
-      if (isNull(obj)) {
-        obj = {};
-      }
-      settings.loadFromJson(obj);
-      setSettings(settings);
+      const temp=await loadSettings();
+      setSettings(temp);
       setInited(true);
     }
     initSettings();
   }, [settings]);
 
-  const saveSettings = async () => {
+  useEffect(() => {
+    // @ts-ignore
+    const details=chrome.app.getDetails();
+    setVersion(details["version"]);
+
+  }, [version]);
+
+  const saveSettings = async (settings:Settings) => {
     setSettings(settings);
     const obj = settings.toJson();
     await chromeSet("settings", obj);
@@ -41,7 +45,7 @@ const OptionsPage: React.FC = () => {
     <Stack>
       <Stack horizontalAlign="center">
         <h1>HYPERTRONS</h1>
-        <sub>version 0.1.2</sub>
+        <sub>{`version ${version}`}</sub>
       </Stack>
       <Stack horizontalAlign="center">
         <div className="container">
@@ -58,38 +62,6 @@ const OptionsPage: React.FC = () => {
                   childrenGap: 10
                 }}
               >
-                <Checkbox
-                  label={getMessageI18n("component_developerCollabrationNetwork_title")}
-                  defaultChecked={settings.developerNetwork}
-                  onChange={async (e, checked) => {
-                    settings.developerNetwork = checked;
-                    await saveSettings();
-                  }}
-                />
-                <Checkbox
-                  label={getMessageI18n("component_projectCorrelationNetwork_title")}
-                  defaultChecked={settings.projectNetwork}
-                  onChange={async (e, checked) => {
-                    settings.projectNetwork = checked;
-                    await saveSettings();
-                  }}
-                />
-                <Stack
-                  horizontalAlign="start"
-                  verticalAlign='center'
-                  horizontal
-                  tokens={{
-                    childrenGap: 10
-                  }}
-                >
-                  <DefaultButton
-                    style={{ width: 100 }}
-                    onClick={() => {
-                    }}
-                  >
-                    {getMessageI18n("global_btn_ok")}
-                  </DefaultButton>
-                </Stack>
                 <Toggle
                   label={getMessageI18n('options_toggle_checkForUpdates')}
                   defaultChecked={settings.checkForUpdates}
@@ -97,9 +69,26 @@ const OptionsPage: React.FC = () => {
                   offText={getMessageI18n('options_toggle_checkForUpdates_offText')}
                   onChange={async (e, checked) => {
                     settings.checkForUpdates = checked;
-                    await saveSettings();
+                    await saveSettings(settings);
                   }}
                 />
+                <Checkbox
+                  label={getMessageI18n("component_developerCollabrationNetwork_title")}
+                  defaultChecked={settings.developerNetwork}
+                  onChange={async (e, checked) => {
+                    settings.developerNetwork = checked;
+                    await saveSettings(settings);
+                  }}
+                />
+                <Checkbox
+                  label={getMessageI18n("component_projectCorrelationNetwork_title")}
+                  defaultChecked={settings.projectNetwork}
+                  onChange={async (e, checked) => {
+                    settings.projectNetwork = checked;
+                    await saveSettings(settings);
+                  }}
+                />
+
 
               </Stack>
             </PivotItem>
