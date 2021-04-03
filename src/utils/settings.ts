@@ -1,3 +1,5 @@
+import { chromeGet, isNull } from './utils';
+
 class Settings {
   checkForUpdates: boolean | undefined;
   developerNetwork: boolean | undefined;
@@ -29,6 +31,16 @@ class Settings {
 
     return result;
   }
+}
+
+export const loadSettings=async ()=>{
+  const settings=new Settings()
+  let obj = await chromeGet("settings");
+  if (isNull(obj)) {
+    obj = {};
+  }
+  settings.loadFromJson(obj);
+  return settings
 }
 
 export default Settings;

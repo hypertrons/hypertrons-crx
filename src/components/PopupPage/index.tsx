@@ -4,8 +4,7 @@ import {
 } from 'office-ui-fabric-react';
 import { initializeIcons } from '@uifabric/icons';
 import './index.css';
-import Settings from '../../utils/settings';
-import { chromeGet,isNull} from '../../utils/utils';
+import Settings,{ loadSettings } from '../../utils/settings';
 
 initializeIcons();
 
@@ -16,12 +15,8 @@ const PopupPage: React.FC = () => {
 
   useEffect(() => {
     const initSettings=async ()=> {
-      let obj=await chromeGet("settings");
-      if(isNull(obj)){
-        obj={};
-      }
-      settings.loadFromJson(obj);
-      setSettings(settings);
+      const temp=await loadSettings();
+      setSettings(temp);
       setInited(true);
     }
     initSettings();
