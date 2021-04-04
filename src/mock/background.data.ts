@@ -10,7 +10,7 @@ export const updateInformation = {
     "url":"https://github.com/hypertrons/hypertrons-crx/releases"
   },
   "develop": {
-    "latest_version":"0.1.2",
+    "latest_version":"0.1.3",
     "date":"2021-3-27",
     "url":"https://github.com/hypertrons/hypertrons-crx/releases"
   }

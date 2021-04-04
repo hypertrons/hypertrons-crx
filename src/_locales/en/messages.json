@@ -36,12 +36,36 @@
     "message": "Commandline"
   },
   "options_toggle_checkForUpdates": {
-    "message": "check updates"
+    "message": "Auto check updates"
   },
   "options_toggle_checkForUpdates_onText": {
-    "message": "on"
+    "message": "On"
   },
   "options_toggle_checkForUpdates_offText": {
-    "message": "off"
+    "message": "Off"
+  },
+  "options_text_showDifferentComponent": {
+    "message": "Components"
+  },
+  "options_text_checkUpdate": {
+    "message": "Check"
+  },
+  "options_text_checking": {
+    "message": "checking for updates"
+  },
+  "options_text_updateStatusYes": {
+    "message": "new update availabe"
+  },
+  "options_text_updateStatusNo": {
+    "message": "up to date"
+  },
+  "options_text_goGetUpdate": {
+    "message": "get the update"
+  },
+  "notification_title_newUpdate":{
+    "message": "new update available"
+  },
+  "notification_message_newUpdate":{
+    "message": "version: %v"
   }
 }

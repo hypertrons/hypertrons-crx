@@ -5,21 +5,21 @@ class Settings {
   developerNetwork: boolean | undefined;
   projectNetwork: boolean | undefined;
 
+  constructor() {
+    this.checkForUpdates = true;
+    this.developerNetwork = true;
+    this.projectNetwork = true;
+  }
+
   loadFromJson(data: { [key: string]: any; }): void {
     if ("checkForUpdates" in data) {
       this.checkForUpdates = data["checkForUpdates"];
-    } else {
-      this.checkForUpdates = true;
     }
     if ("developerNetwork" in data) {
       this.developerNetwork = data["developerNetwork"];
-    } else {
-      this.developerNetwork = true;
     }
     if ("projectNetwork" in data) {
       this.projectNetwork = data["projectNetwork"];
-    } else {
-      this.projectNetwork = true;
     }
   }
 
