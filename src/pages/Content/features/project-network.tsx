@@ -41,7 +41,7 @@ const ProjectNetwork: React.FC<ProjectNetworkProps> = ({ id, title, data, onChar
   ];
   return (
     <div className="hypertrons-crx-border mt-4">
-      <h3>{title}</h3>
+      <p className="hypertrons-crx-title">{title}</p>
       <Stack horizontal>
         <Stack.Item className='verticalStackItemStyle'>
           <DetailsList
