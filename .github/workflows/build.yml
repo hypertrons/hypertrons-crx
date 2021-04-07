@@ -28,6 +28,7 @@ jobs:
         run: |
           yarn install
           npm run build
+          zip release/hypertrons.zip -r build/*
 
       - name: Test output
         shell: pwsh
@@ -42,3 +43,14 @@ jobs:
           title: "Development Build"
           files: |
             release/hypertrons.crx
+            release/hypertrons.zip
+
+      - name: Update oss
+        uses: tvrcgo/upload-to-oss@master
+        with:
+          key-id: ${{ secrets.accessKeyId }}
+          key-secret: ${{ secrets.accessKeySecret }}
+          region: ${{ secrets.region }}
+          bucket: ${{ secrets.bucket }}
+          asset-path: ./src/mock
+          target-path: ${{ secrets.deployPath }}
