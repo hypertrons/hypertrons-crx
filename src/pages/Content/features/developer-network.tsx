@@ -8,8 +8,6 @@ import ForceNetwork from '../../../components/Network/ForceNetwork';
 import { getGraphData } from '../../../api/index';
 import { getMessageI18n } from '../../../utils/utils';
 
-import './developer-network.css';
-
 interface DeveloperNetworkProps {
   id: string;
   title: string;

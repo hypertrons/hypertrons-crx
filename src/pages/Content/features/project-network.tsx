@@ -1,14 +1,14 @@
 import React from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
-import { Stack, Separator, DetailsList, SelectionMode, Link, Shimmer } from 'office-ui-fabric-react';
+import { Stack, Separator, DetailsList, SelectionMode, Link } from 'office-ui-fabric-react';
 import features from '.';
+import { utils } from 'github-url-detection';
 import ForceNetwork from '../../../components/Network/ForceNetwork';
 import ErrorPage from '../../../components/ExceptionPage/index';
 import { isPerceptor } from '../../../utils/utils';
 import { getGraphData } from '../../../api/index';
 import { getMessageI18n } from '../../../utils/utils';
-import './project-network.css';
 
 const onProjectChartClick = (param: any, echarts: any) => {
   const url = 'https://github.com/' + param.data.name + '/pulse?type=perceptor';
@@ -71,7 +71,7 @@ const init = async (): Promise<void | false> => {
   ProjectNetworkDiv.id = 'project-network';
   ProjectNetworkDiv.style.width = "100%";
   try {
-    const projectGraphData = await getGraphData('https://hypertrons.oss-cn-shanghai.aliyuncs.com/repo/kubernetes/kubernetes.json');
+    const projectGraphData = await getGraphData(`https://hypertrons.oss-cn-shanghai.aliyuncs.com/repo/${utils.getRepositoryInfo(window.location)!.nameWithOwner}.json`);
     render(
       < ProjectNetwork
         id='project'
