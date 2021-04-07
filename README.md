@@ -19,7 +19,7 @@ Currently we have the following default dashboard components:
 
 ## Install
 
-Coming soon...
+Please refer to [Installation Guide](INSTALLATION.md).
 
 ## Quickstart
 
