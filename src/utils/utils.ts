@@ -1,6 +1,3 @@
-import { developerData } from '../mock/developer.data';
-import { projectData } from '../mock/project.data';
-
 export function elementExists(obj: null | JQuery) {
   return obj !== null && obj.length > 0;
 }
@@ -50,40 +47,6 @@ export function getMessageI18n(key: string) {
 
 export const isPerceptor = (): boolean => window.location.search.includes('perceptor');
 
-export const getGraphData = async (url: string) => {
-  // const response = await fetch(url);
-  // const data = await response.json();
-  let data: any = {};
-  if(url.includes('repo')){
-    data = projectData;
-  }else{
-    data = developerData;
-  }
-
-  data.nodes.forEach((node: any) => {
-    node['id'] = node.id.toString();
-    node['symbolSize'] = node.value;
-    node['itemStyle'] = {
-      color: '#28a745'
-    };
-  });
-  minMaxRange(data.nodes, 'symbolSize', 10, 50);
-  data.edges.forEach((edge: any) => {
-    edge['source'] = edge.source.toString();
-    edge['target'] = edge.target.toString();
-    edge['value'] = edge.weight;
-  });
-  minMaxRange(data.edges, 'weight', 1, 10);
-  data.edges.forEach((edge: any) => {
-    edge['lineStyle'] = {
-      width: edge.weight,
-      color: 'green'
-    };
-  });
-  
-  return data;
-}
-
 function getMaxV(data: any, key: string) {
   let max = 0;
   for (let item of data) {
@@ -93,7 +56,6 @@ function getMaxV(data: any, key: string) {
   return max
 }
 
-// 获取最小值
 function getMinV(data: any, key: string) {
   let min = 1000000
   for (let item of data) {

@@ -1,11 +1,13 @@
 import React from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
-import { Stack, Separator, DetailsList, SelectionMode, Link } from 'office-ui-fabric-react';
+import { Stack, Separator, DetailsList, SelectionMode, Link, Shimmer } from 'office-ui-fabric-react';
 import features from '.';
 import ForceNetwork from '../../../components/Network/ForceNetwork';
+import ErrorPage from '../../../components/ExceptionPage/index';
 import { isPerceptor } from '../../../utils/utils';
-import { getMessageI18n, getGraphData } from '../../../utils/utils'
+import { getGraphData } from '../../../api/index';
+import { getMessageI18n } from '../../../utils/utils';
 import './project-network.css';
 
 const onProjectChartClick = (param: any, echarts: any) => {
@@ -68,25 +70,25 @@ const init = async (): Promise<void | false> => {
   const ProjectNetworkDiv = document.createElement('div');
   ProjectNetworkDiv.id = 'project-network';
   ProjectNetworkDiv.style.width = "100%";
-  const developerGraphData = await getGraphData('https://hypertrons.oss-cn-shanghai.aliyuncs.com/actor/GulajavaMinistudio.json');
-  const projectGraphData = await getGraphData('https://hypertrons.oss-cn-shanghai.aliyuncs.com/repo/kubernetes/kubernetes.json');
-
-  render(
-    <div>
-      < ProjectNetwork
-        id='developer'
-        data={developerGraphData}
-        title={getMessageI18n('component_developerCollabrationNetwork_title')}
-      />
+  try {
+    const projectGraphData = await getGraphData('https://hypertrons.oss-cn-shanghai.aliyuncs.com/repo/kubernetes/kubernetes.json');
+    render(
       < ProjectNetwork
         id='project'
         data={projectGraphData}
         title={getMessageI18n('component_mostParticipatedProjects_title')}
         onChartClick={onProjectChartClick}
-      />
-    </div>,
-    ProjectNetworkDiv,
-  );
+      />,
+      ProjectNetworkDiv,
+    );
+  } catch (error) {
+    console.log(error);
+    render(
+      <ErrorPage />,
+      ProjectNetworkDiv,
+    );
+  }
+
   perceptorContainer.prepend(ProjectNetworkDiv);
 }
 
