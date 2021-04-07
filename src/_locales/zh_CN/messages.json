@@ -8,6 +8,12 @@
   "manifest_iconTitle": {
     "message": "[载入中……]"
   },
+  "global_error_message": {
+    "message": "抱歉，hypertrons 插件崩溃了，请刷新重试..."
+  },
+  "global_search": {
+    "message": "查找"
+  },
   "global_btn_ok": {
     "message": "确定"
   },

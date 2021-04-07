@@ -1,6 +1,29 @@
+import React from 'react';
+import { render } from 'react-dom';
+import $ from 'jquery';
 import elementReady from 'element-ready';
 import * as pageDetect from 'github-url-detection';
 import { chromeGet } from '../../../utils/utils'
+import ErrorMessageBar from '../../../components/ExceptionPage/ErrorMessageBar'
+
+const log = (name: string, message: Error | string | unknown, ...extras: unknown[]): void => {
+  if (process.env.NODE_ENV !== 'production') {
+    console.log(
+      `✅ Hypertrons-crx → ${name} →`,
+      message,
+      ...extras
+    );
+  }
+}
+
+const logError = (name: string, error: Error | string | unknown, ...extras: unknown[]): void => {
+  console.error(
+    `❌ Hypertrons-crx → ${name} →`,
+    error,
+    ...extras
+  );
+  render(<ErrorMessageBar />, document.getElementById('htpertrons-crx'))
+}
 
 const globalReady = async (): Promise<void> => {
 
@@ -10,7 +33,7 @@ const globalReady = async (): Promise<void> => {
     return;
   }
 }
-const defaultComponent = ['perceptorTab', 'perceptorLayout'];
+const defaultComponent = ['hypertrons-crx', 'perceptorTab', 'perceptorLayout'];
 const add = async (name: string, loader: any): Promise<void> => {
   await globalReady();
   const settings = await chromeGet("settings");
@@ -26,14 +49,22 @@ const add = async (name: string, loader: any): Promise<void> => {
     return;
   }
   try {
-    console.log('loading ', name);
     await init();
+    log(name, 'loaded.');
   } catch (error: unknown) {
-    console.error(error)
+    logError(name, error)
   }
 }
 
+void add('hypertrons-crx', {
+  init: async () => {
+    const hypertronsCrxDiv = document.createElement('div');
+    hypertronsCrxDiv.id = 'htpertrons-crx';
+    $('#js-repo-pjax-container').prepend(hypertronsCrxDiv);
+  }
+})
 const features = {
-  add
+  add,
+  error: logError
 };
 export default features;
