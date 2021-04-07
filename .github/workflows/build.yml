@@ -52,5 +52,5 @@ jobs:
           key-secret: ${{ secrets.accessKeySecret }}
           region: ${{ secrets.region }}
           bucket: ${{ secrets.bucket }}
-          asset-path: ./src/mock
+          asset-path: ./publish
           target-path: ${{ secrets.deployPath }}
