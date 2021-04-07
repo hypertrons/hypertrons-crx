@@ -82,7 +82,7 @@ const init = async (): Promise<void | false> => {
       ProjectNetworkDiv,
     );
   } catch (error) {
-    console.log(error);
+    features.error('projectNetwork', error);
     render(
       <ErrorPage />,
       ProjectNetworkDiv,

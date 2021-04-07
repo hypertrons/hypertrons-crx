@@ -8,6 +8,12 @@
   "manifest_iconTitle": {
     "message": "[loading……]"
   },
+  "global_error_message": {
+    "message": "Sorry，an error occurred while loading hypertrons-crx extention..."
+  },
+  "global_search": {
+    "message": "Search"
+  },
   "global_btn_ok": {
     "message": "ok"
   },
@@ -68,10 +74,10 @@
   "options_text_goGetUpdate": {
     "message": "get the update"
   },
-  "notification_title_newUpdate":{
+  "notification_title_newUpdate": {
     "message": "new update available"
   },
-  "notification_message_newUpdate":{
+  "notification_message_newUpdate": {
     "message": "version: %v"
   }
 }

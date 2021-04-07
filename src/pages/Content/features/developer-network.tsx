@@ -63,27 +63,31 @@ const init = async (): Promise<void | false> => {
   DeveloperNetworkDiv.id = 'developer-network';
   DeveloperNetworkDiv.style.width = "100%";
   const developerLogin = $('.p-nickname.vcard-username.d-block').text().trim();
-  const developerGraphData = await getGraphData(`https://hypertrons.oss-cn-shanghai.aliyuncs.com/actor/${developerLogin}.json`);
+  try {
+    const developerGraphData = await getGraphData(`https://hypertrons.oss-cn-shanghai.aliyuncs.com/actor/${developerLogin}.json`);
+    developerGraphData.nodes.forEach((node: any) => {
+      if (node.name === developerLogin) {
+        node['itemStyle'] = {
+          color: '#fb8532'
+        };
+      }
+    });
 
-  developerGraphData.nodes.forEach((node: any) => {
-    if (node.name === developerLogin) {
-      node['itemStyle'] = {
-        color: '#fb8532'
-      };
-    }
-  });
-
-  render(
-    <div>
-      < DeveloperNetwork
-        id='developer'
-        data={developerGraphData}
-        title={getMessageI18n('component_developerCollabrationNetwork_title')}
-      />
-    </div>,
-    DeveloperNetworkDiv,
-  );
-  pinnedReposDiv.before(DeveloperNetworkDiv);
+    render(
+      <div>
+        < DeveloperNetwork
+          id='developer'
+          data={developerGraphData}
+          title={getMessageI18n('component_developerCollabrationNetwork_title')}
+        />
+      </div>,
+      DeveloperNetworkDiv,
+    );
+    pinnedReposDiv.before(DeveloperNetworkDiv);
+  } catch (error) {
+    features.error('developerNetwork', error);
+    return;
+  }
 }
 
 void features.add('developerNetwork', {
