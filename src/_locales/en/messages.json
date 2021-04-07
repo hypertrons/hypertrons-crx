@@ -11,6 +11,9 @@
   "global_btn_ok": {
     "message": "ok"
   },
+  "global_btn_goBack": {
+    "message": "Go back"
+  },
   "global_developer": {
     "message": "Develpoer"
   },
@@ -19,6 +22,9 @@
   },
   "global_activity": {
     "message": "Activity"
+  },
+  "component_error_message": {
+    "message": "Sorry, an error occurred while loading this component ..."
   },
   "component_developerCollabrationNetwork_title": {
     "message": "Developer Collabration Network"

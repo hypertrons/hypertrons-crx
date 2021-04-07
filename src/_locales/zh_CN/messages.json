@@ -11,6 +11,9 @@
   "global_btn_ok": {
     "message": "确定"
   },
+  "global_btn_goBack": {
+    "message": "返回"
+  },
   "global_developer": {
     "message": "开发者"
   },
@@ -19,6 +22,9 @@
   },
   "global_activity": {
     "message": "活跃度"
+  },
+  "component_error_message": {
+    "message": "抱歉，该组件出现了一点问题..."
   },
   "component_developerCollabrationNetwork_title": {
     "message": "开发者合作网络图"

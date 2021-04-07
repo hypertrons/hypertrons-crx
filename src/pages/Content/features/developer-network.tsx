@@ -5,21 +5,17 @@ import * as pageDetect from 'github-url-detection';
 import { Stack, Separator, DetailsList, SelectionMode, Link } from 'office-ui-fabric-react';
 import features from '.';
 import ForceNetwork from '../../../components/Network/ForceNetwork';
-import { getMessageI18n, getGraphData } from '../../../utils/utils'
-import './developer-network.css';
+import { getGraphData } from '../../../api/index';
+import { getMessageI18n } from '../../../utils/utils';
 
-const onProjectChartClick = (param: any, echarts: any) => {
-  const url = 'https://github.com/' + param.data.name + '/pulse?type=perceptor';
-  window.location.href = url;
-};
+import './developer-network.css';
 
 interface DeveloperNetworkProps {
   id: string;
   title: string;
   data: any;
-  onChartClick?: any;
 }
-const DeveloperNetwork: React.FC<DeveloperNetworkProps> = ({ id, title, data, onChartClick }) => {
+const DeveloperNetwork: React.FC<DeveloperNetworkProps> = ({ id, title, data }) => {
   const list = data.nodes.slice(0, 5);
   const columns = [
     {
@@ -54,7 +50,6 @@ const DeveloperNetwork: React.FC<DeveloperNetworkProps> = ({ id, title, data, on
         <Stack.Item className='verticalStackItemStyle'>
           <ForceNetwork
             data={data}
-            onChartClick={onChartClick}
           />
         </Stack.Item>
       </Stack>
@@ -67,10 +62,9 @@ const init = async (): Promise<void | false> => {
   const DeveloperNetworkDiv = document.createElement('div');
   DeveloperNetworkDiv.id = 'developer-network';
   DeveloperNetworkDiv.style.width = "100%";
-  const developerGraphData = await getGraphData('https://hypertrons.oss-cn-shanghai.aliyuncs.com/actor/GulajavaMinistudio.json');
-  const projectGraphData = await getGraphData('https://hypertrons.oss-cn-shanghai.aliyuncs.com/repo/kubernetes/kubernetes.json');
-
   const developerLogin = $('.p-nickname.vcard-username.d-block').text().trim();
+  const developerGraphData = await getGraphData(`https://hypertrons.oss-cn-shanghai.aliyuncs.com/actor/${developerLogin}.json`);
+
   developerGraphData.nodes.forEach((node: any) => {
     if (node.name === developerLogin) {
       node['itemStyle'] = {
@@ -85,12 +79,6 @@ const init = async (): Promise<void | false> => {
         id='developer'
         data={developerGraphData}
         title={getMessageI18n('component_developerCollabrationNetwork_title')}
-      />
-      < DeveloperNetwork
-        id='project'
-        data={projectGraphData}
-        title={getMessageI18n('component_mostParticipatedProjects_title')}
-        onChartClick={onProjectChartClick}
       />
     </div>,
     DeveloperNetworkDiv,
