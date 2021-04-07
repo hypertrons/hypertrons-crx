@@ -65,6 +65,7 @@ void add('hypertrons-crx', {
 })
 const features = {
   add,
-  error: logError
+  error: logError,
+  log
 };
 export default features;
