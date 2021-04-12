@@ -146,17 +146,17 @@ const OptionsPage: React.FC = () => {
                 </Text>
                 <Checkbox
                   label={getMessageI18n("component_developerCollabrationNetwork_title")}
-                  defaultChecked={settings.developerNetwork}
+                  defaultChecked={settings.DeveloperNetwork}
                   onChange={async (e, checked) => {
-                    settings.developerNetwork = checked;
+                    settings.DeveloperNetwork = checked;
                     await saveSettings(settings);
                   }}
                 />
                 <Checkbox
                   label={getMessageI18n("component_projectCorrelationNetwork_title")}
-                  defaultChecked={settings.projectNetwork}
+                  defaultChecked={settings.ProjectNetwork}
                   onChange={async (e, checked) => {
-                    settings.projectNetwork = checked;
+                    settings.ProjectNetwork = checked;
                     await saveSettings(settings);
                   }}
                 />

@@ -74,7 +74,7 @@ export const minMaxRange = (data: any, key: string, MIN: number, MAX: number) =>
   return data;
 }
 
-export const compareVersion=(version_1:string,version_2:string)=>{
+export const compareVersion = (version_1: string, version_2: string) => {
   const v1 = version_1.split('.');
   const v2 = version_2.split('.');
   const len = Math.max(v1.length, v2.length);
@@ -101,7 +101,7 @@ export const compareVersion=(version_1:string,version_2:string)=>{
   return 0;
 }
 
-export const getBrowserType=()=> {
+export const getBrowserType = () => {
   var userAgent = navigator.userAgent;
   var isOpera = userAgent.indexOf("Opera") > -1;
   var isEdge = userAgent.indexOf("Edge") > -1;
@@ -126,12 +126,21 @@ export const getBrowserType=()=> {
   else if (isChrome) {
     return "Chrome";
   }
-  else{
+  else {
     return "Unknown";
   }
 
 }
 
-export async function sleep(ms:number) {
+export async function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+export function Inject(modules: any) {
+  return function (target: any) {
+    modules.forEach((module: any) => {
+      const instance = new module();
+      target.features.set(instance.constructor.name, instance)
+    });
+  };
 }
