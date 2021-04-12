@@ -2,32 +2,32 @@ import { chromeGet, chromeSet, isNull } from './utils';
 
 class Settings {
   checkForUpdates: boolean | undefined;
-  DeveloperNetwork: boolean | undefined;
-  ProjectNetwork: boolean | undefined;
+  developerNetwork: boolean | undefined;
+  projectNetwork: boolean | undefined;
 
   constructor() {
     this.checkForUpdates = true;
-    this.DeveloperNetwork = true;
-    this.ProjectNetwork = true;
+    this.developerNetwork = true;
+    this.projectNetwork = true;
   }
 
   loadFromJson(data: { [key: string]: any; }): void {
     if ("checkForUpdates" in data) {
       this.checkForUpdates = data["checkForUpdates"];
     }
-    if ("DeveloperNetwork" in data) {
-      this.DeveloperNetwork = data["DeveloperNetwork"];
+    if ("developerNetwork" in data) {
+      this.developerNetwork = data["developerNetwork"];
     }
-    if ("ProjectNetwork" in data) {
-      this.ProjectNetwork = data["ProjectNetwork"];
+    if ("projectNetwork" in data) {
+      this.projectNetwork = data["projectNetwork"];
     }
   }
 
   toJson(): { [key: string]: any; } {
     const result: { [key: string]: any; } = {};
     result["checkForUpdates"] = this.checkForUpdates;
-    result["DeveloperNetwork"] = this.DeveloperNetwork;
-    result["ProjectNetwork"] = this.ProjectNetwork;
+    result["developerNetwork"] = this.developerNetwork;
+    result["projectNetwork"] = this.projectNetwork;
 
     return result;
   }

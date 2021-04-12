@@ -58,6 +58,7 @@ class Perceptor extends PerceptorBase {
       const owner = utils.getRepositoryInfo(window.location)!.owner;
       const repo = utils.getRepositoryInfo(window.location)!.name;
       const configFromGithub = await getConfigFromGithub(owner, repo);
+      this.logger.info('The configurations are: ', configFromGithub);
       this.settings = await mergeSettings(configFromGithub);
     } else {
       this.settings = await loadSettings();

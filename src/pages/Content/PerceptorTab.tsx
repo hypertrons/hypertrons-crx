@@ -1,6 +1,7 @@
 // import React from 'react';
 import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
+import { utils } from 'github-url-detection';
 import { isPerceptor } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
 
@@ -32,7 +33,7 @@ export default class PerceptorTab extends PerceptorBase {
     }
 
     // Update
-    perceptorLink.attr("href", "https://github.com/hypertrons/hypertrons-crx/pulse?redirect=perceptor");
+    perceptorLink.attr("href", `https://github.com/${utils.getRepositoryInfo(window.location)!.nameWithOwner}/pulse?redirect=perceptor`);
     $('span[data-content="Insights"]', perceptorLink).text('Perceptor');
 
     insightsTab.after(perceptorTab);
