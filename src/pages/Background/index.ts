@@ -9,7 +9,12 @@ export enum BackgroundTasks {
 }
 
 // in develop-version, we can do this every 0.1 min, but not in store-version
-chrome.alarms.create(BackgroundTasks.update,{periodInMinutes:0.1});
+if (process.env.NODE_ENV !== 'production') {
+  chrome.alarms.create(BackgroundTasks.update, { periodInMinutes: 0.1 });
+}
+else{
+  chrome.alarms.create(BackgroundTasks.update, { periodInMinutes: 30 });
+}
 
 chrome.alarms.onAlarm.addListener(async (alarm) => {
   const name=alarm.name;
@@ -21,23 +26,38 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
   if(name===BackgroundTasks.update){
     if(settings.checkForUpdates){
       console.log("check for updates");
-      const [currentVersion,latestVersion]=await checkUpdate();
+      const [currentVersion,latestVersion,updateUrl]=await checkUpdate();
       if(compareVersion(currentVersion,latestVersion)===-1){
         const timeNow=new Date().valueOf();
         const duration=timeNow-metaData.timeLastNoticeNewUpdate;
         console.log(duration);
         if(duration>=24*60*60*1000){
           // only notice people once within 24 hours
-          createNotification('check_for_updates', {
-            type: 'basic',
-            iconUrl: 'main.png',
-            title: getMessageI18n('notification_title_newUpdate'),
-            message: getMessageI18n('notification_message_newUpdate').replace('%v', latestVersion),
-          })
+          metaData.updateUrl=updateUrl;
           metaData.timeLastNoticeNewUpdate=timeNow;
           await chromeSet("meta_data", metaData.toJson());
+          createNotification('check_for_updates',
+            {
+              type: 'basic',
+              iconUrl: 'main.png',
+              title: getMessageI18n('notification_title_newUpdate'),
+              message: getMessageI18n('notification_message_newUpdate').replace('%v', latestVersion),
+            }
+          )
         }
       }
     }
   }
+});
+
+chrome.notifications.onClicked.addListener(async function(notificationId){
+  switch (notificationId){
+    case "check_for_updates":
+      const metaData=await loadMetaData();
+      chrome.tabs.create({url:metaData.updateUrl});
+      break;
+    default:
+      break;
+  }
+  chrome.notifications.clear(notificationId);
 });
