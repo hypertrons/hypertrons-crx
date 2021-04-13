@@ -14,6 +14,7 @@
   "dependencies": {
     "@fluentui/react": "^7.121.1",
     "@hot-loader/react-dom": "^16.13.0",
+    "@octokit/core": "^3.4.0",
     "@types/chrome": "0.0.104",
     "@types/react": "^17.0.2",
     "copy-to-clipboard": "^3.3.1",

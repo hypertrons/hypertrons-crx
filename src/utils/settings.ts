@@ -1,4 +1,4 @@
-import { chromeGet, isNull } from './utils';
+import { chromeGet, chromeSet, isNull } from './utils';
 
 class Settings {
   checkForUpdates: boolean | undefined;
@@ -33,14 +33,24 @@ class Settings {
   }
 }
 
-export const loadSettings=async ()=>{
-  const settings=new Settings()
+export const loadSettings = async () => {
+  const settings = new Settings();
   let obj = await chromeGet("settings");
   if (isNull(obj)) {
     obj = {};
-  }
+  };
   settings.loadFromJson(obj);
-  return settings
+  return settings;
 }
+
+export const mergeSettings = async (data: { [key: string]: any; }) => {
+  const settings = await loadSettings();
+  if (!isNull(data)) {
+    settings.loadFromJson(data);
+    await chromeSet("settings", settings.toJson());
+  }
+  return settings;
+}
+
 
 export default Settings;
