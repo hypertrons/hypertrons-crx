@@ -1,13 +1,17 @@
 import { updateInformation } from '../mock/background.data';
 import { sleep } from "../utils/utils"
-const url_update="";
+const url_update="http://static.liuchangfreeman.xyz/files/static/update_information.json";
 
 export const getUpdateInfor = async () => {
   let result=null;
-  // const response = await fetch(url_update);
-  // return await response.json();
-  await sleep(1000);
-  result=updateInformation;
+  if (process.env.NODE_ENV !== 'production') {
+    await sleep(1000);
+    result=updateInformation;
+  }
+  else{
+    const response = await fetch(url_update);
+    result= await response.json();
+  }
   return result;
 }
 

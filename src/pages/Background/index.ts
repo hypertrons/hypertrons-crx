@@ -9,7 +9,12 @@ export enum BackgroundTasks {
 }
 
 // in develop-version, we can do this every 0.1 min, but not in store-version
-chrome.alarms.create(BackgroundTasks.update,{periodInMinutes:0.1});
+if (process.env.NODE_ENV !== 'production') {
+  chrome.alarms.create(BackgroundTasks.update, { periodInMinutes: 0.1 });
+}
+else{
+  chrome.alarms.create(BackgroundTasks.update, { periodInMinutes: 30 });
+}
 
 chrome.alarms.onAlarm.addListener(async (alarm) => {
   const name=alarm.name;
