@@ -10,12 +10,13 @@ The main purpose of this project is to enhance Chrome to show dashboard on web p
 
 Currently we have the following default dashboard components:
 
-- [ ] Developer Collaboration Network
-  - [ ] Developer Collaboration Network for a developer for the past week.
-  - [ ] The 10 most participated projects and their connection network.
-- [ ] Project Correlation Network
-  - [ ] Developer Collaboration Network within the project for the past week.
-  - [ ] Network that shows the 10 most correlated projects for the past week.
+- Developer Collaboration Network
+  - [x] Developer Collaboration Network for a developer.
+  - [x] The 10 most participated projects and their connection network.
+- Project Correlation Network
+  - [x] Network that shows the 10 most correlated projects.
+  - [x] Developer Collaboration Network within the project.
+ 
 
 ## Install
 
