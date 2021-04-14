@@ -26,20 +26,32 @@
   "global_project": {
     "message": "项目"
   },
+  "global_repo": {
+    "message": "仓库"
+  },
+  "global_correlation": {
+    "message": "关联度"
+  },
   "global_activity": {
     "message": "活跃度"
+  },
+  "global_contribution": {
+    "message": "贡献度"
   },
   "component_error_message": {
     "message": "抱歉，该组件出现了一点问题..."
   },
   "component_developerCollabrationNetwork_title": {
-    "message": "开发者合作网络图"
+    "message": "开发者协作网络图"
   },
   "component_projectCorrelationNetwork_title": {
     "message": "项目关系网络图"
   },
   "component_mostParticipatedProjects_title": {
-    "message": "活跃项目网络图"
+    "message": "活跃仓库网络图"
+  },
+  "component_activeDeveloperCollabrationNetwork_title": {
+    "message": "项目活跃开发者协作网络图"
   },
   "options_header_settings": {
     "message": "设置"
