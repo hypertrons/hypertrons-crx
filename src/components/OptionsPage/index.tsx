@@ -164,17 +164,17 @@ const OptionsPage: React.FC = () => {
 
               </Stack>
             </PivotItem>
-            <PivotItem headerText={getMessageI18n("options_header_commandLine")} itemIcon="CommandPrompt">
-              <Stack
-                horizontalAlign="space-around"
-                verticalAlign='center'
-                style={{ margin: "5px", padding: "3px" }}
-                tokens={{
-                  childrenGap: 10
-                }}
-              >
-              </Stack>
-            </PivotItem>
+            {/*<PivotItem headerText={getMessageI18n("options_header_commandLine")} itemIcon="CommandPrompt">*/}
+            {/*  <Stack*/}
+            {/*    horizontalAlign="space-around"*/}
+            {/*    verticalAlign='center'*/}
+            {/*    style={{ margin: "5px", padding: "3px" }}*/}
+            {/*    tokens={{*/}
+            {/*      childrenGap: 10*/}
+            {/*    }}*/}
+            {/*  >*/}
+            {/*  </Stack>*/}
+            {/*</PivotItem>*/}
           </Pivot>
         </div>
       </Stack>

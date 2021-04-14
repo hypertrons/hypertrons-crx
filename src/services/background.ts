@@ -1,6 +1,6 @@
 import { updateInformation } from '../mock/background.data';
 import { sleep } from "../utils/utils"
-const url_update="http://static.liuchangfreeman.xyz/files/static/update_information.json";
+const url_update="https://hypertrons.oss-cn-shanghai.aliyuncs.com/crx-release/update_information.json";
 
 export const getUpdateInfor = async () => {
   let result=null;
@@ -9,7 +9,7 @@ export const getUpdateInfor = async () => {
     result=updateInformation;
   }
   else{
-    const response = await fetch(url_update);
+    const response = await fetch(url_update,{mode:"cors"});
     result= await response.json();
   }
   return result;

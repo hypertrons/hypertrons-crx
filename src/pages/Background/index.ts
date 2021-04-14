@@ -13,7 +13,7 @@ if (process.env.NODE_ENV !== 'production') {
   chrome.alarms.create(BackgroundTasks.update, { periodInMinutes: 0.1 });
 }
 else{
-  chrome.alarms.create(BackgroundTasks.update, { periodInMinutes: 30 });
+  chrome.alarms.create(BackgroundTasks.update, { periodInMinutes: 10 });
 }
 
 chrome.alarms.onAlarm.addListener(async (alarm) => {
