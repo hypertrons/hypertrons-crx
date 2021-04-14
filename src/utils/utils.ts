@@ -47,29 +47,11 @@ export function getMessageI18n(key: string) {
 
 export const isPerceptor = (): boolean => window.location.search.includes('perceptor');
 
-function getMaxV(data: any, key: string) {
-  let max = 0;
-  for (let item of data) {
-    if (max < item[key])
-      max = item[key]
-  }
-  return max
-}
-
-function getMinV(data: any, key: string) {
-  let min = 1000000
-  for (let item of data) {
-    if (min > item[key])
-      min = item[key]
-  }
-  return min
-}
-
-export const minMaxRange = (data: any, key: string, MIN: number, MAX: number) => {
-  const min = getMinV(data, key);
-  const max = getMaxV(data, key);
-  for (let item of data) {
-    item[key] = ((item[key] - min) / (1.0 * (max - min))) * (MAX - MIN) + MIN;
+export const minMaxRange = (data: Map<string, number>, MIN: number, MAX: number) => {
+  const min = Math.min(...data.values());
+  const max = Math.max(...data.values());
+  for (let key of data.keys()) {
+    data.set(key, ((data.get(key)! - min) / (1.0 * (max - min))) * (MAX - MIN) + MIN);
   }
   return data;
 }
@@ -143,4 +125,30 @@ export function Inject(modules: any) {
       target.features.set(instance.constructor.name, instance)
     });
   };
+}
+
+export function generateGraphDataMap(rawData: any) {
+  const nodeMap = new Map<string, number>();
+  const nodeMap2Range = new Map<string, number>();
+  const edgeMap = new Map<string, number>();
+  const edgeMap2Range = new Map<string, number>();
+
+  rawData.nodes.forEach((node: any) => {
+    nodeMap.set(node.name, node.value);
+    nodeMap2Range.set(node.name, node.value);
+  });
+  rawData.edges.forEach((edge: any) => {
+    edgeMap.set(`${edge.source} ${edge.target}`, edge.weight);
+    edgeMap2Range.set(`${edge.source} ${edge.target}`, edge.weight);
+  });
+
+  minMaxRange(nodeMap2Range, 10, 50);
+  minMaxRange(edgeMap2Range, 1, 10);
+
+  return {
+    nodeMap,
+    edgeMap,
+    nodeMap2Range,
+    edgeMap2Range,
+  }
 }

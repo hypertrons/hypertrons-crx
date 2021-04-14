@@ -1,3 +1,9 @@
+.hypertrons-crx-container {
+  margin-top: 24px!important;
+  overflow: auto;
+  height: 396px;
+}
+
 .hypertrons-crx-border {
   background-color: var(--color-bg-primary);
   border: 1px solid var(--color-border-primary);
@@ -23,6 +29,6 @@
 
 .verticalSeparatorStyle {
   margin-top: 25px;
-  height: 250px;
+  height: 332px;
 }
 

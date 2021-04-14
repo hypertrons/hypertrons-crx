@@ -26,6 +26,15 @@
   "global_project": {
     "message": "Project"
   },
+  "global_repo": {
+    "message": "Repo"
+  },
+  "global_correlation": {
+    "message": "Correlation"
+  },
+  "global_contribution": {
+    "message": "Contribution"
+  },
   "global_activity": {
     "message": "Activity"
   },
@@ -39,7 +48,10 @@
     "message": "Project Correlation Network"
   },
   "component_mostParticipatedProjects_title": {
-    "message": "Most Participated Projects"
+    "message": "Most Participated Repos"
+  },
+  "component_activeDeveloperCollabrationNetwork_title": {
+    "message": "Active Developer Collabration Network"
   },
   "options_header_settings": {
     "message": "Settings"
