@@ -5,13 +5,15 @@ import * as pageDetect from 'github-url-detection';
 import { Link } from 'office-ui-fabric-react';
 import GraphWithList from '../../components/Graph/GraphWithList';
 import { getGraphData } from '../../api/index';
-import { getMessageI18n, generateGraphDataMap } from '../../utils/utils';
+import { runsWhen, getMessageI18n, generateGraphDataMap } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
+import { inject2Perceptor } from './Perceptor';
 
-export default class DeveloperNetwork extends PerceptorBase {
+@runsWhen([pageDetect.isUserProfileMainTab])
+class DeveloperNetwork extends PerceptorBase {
   private _currentDeveloper: string;
-  private _ForceGraphData: NetworkData;
-  private _CircularGraphData: NetworkData;
+  private _forceGraphData: NetworkData;
+  private _circularGraphData: NetworkData;
 
   private _developerListData: any[];
   private _repoListData: any[];
@@ -25,15 +27,12 @@ export default class DeveloperNetwork extends PerceptorBase {
 
   constructor() {
     super();
-    this.include = [
-      pageDetect.isUserProfileMainTab
-    ];
     this._currentDeveloper = '';
-    this._ForceGraphData = {
+    this._forceGraphData = {
       nodes: [],
       edges: [],
     };
-    this._CircularGraphData = {
+    this._circularGraphData = {
       nodes: [],
       edges: [],
     };
@@ -99,14 +98,14 @@ export default class DeveloperNetwork extends PerceptorBase {
           < GraphWithList
             layout='force'
             title={getMessageI18n('component_developerCollabrationNetwork_title')}
-            graphData={this._ForceGraphData}
+            graphData={this._forceGraphData}
             columns={developerColumns}
             listData={this._developerListData}
           />
           < GraphWithList
             layout='circular'
             title={getMessageI18n('component_mostParticipatedProjects_title')}
-            graphData={this._CircularGraphData}
+            graphData={this._circularGraphData}
             columns={repoColumns}
             listData={this._repoListData}
           />
@@ -132,7 +131,7 @@ export default class DeveloperNetwork extends PerceptorBase {
           color: name === this._currentDeveloper ? this._forceGraphMasterNodeColor : this._forceGraphNodeColor,
         }
       }
-      this._ForceGraphData.nodes.push(n);
+      this._forceGraphData.nodes.push(n);
     }
     for (let [name, value] of edgeMap.entries()) {
       const source = name.split(' ')[0];
@@ -146,7 +145,7 @@ export default class DeveloperNetwork extends PerceptorBase {
           color: this._forceGraphEdgeColor,
         }
       }
-      this._ForceGraphData.edges.push(e);
+      this._forceGraphData.edges.push(e);
 
       // generate list data
       const listItem = {
@@ -170,7 +169,7 @@ export default class DeveloperNetwork extends PerceptorBase {
           color: this._circularGraphNodeColor
         }
       }
-      this._CircularGraphData.nodes.push(n);
+      this._circularGraphData.nodes.push(n);
     }
     for (let [name, value] of edgeMap.entries()) {
       const source = name.split(' ')[0];
@@ -184,9 +183,11 @@ export default class DeveloperNetwork extends PerceptorBase {
           color: this._circularGraphEdgeColor,
         }
       }
-      this._CircularGraphData.edges.push(e);
+      this._circularGraphData.edges.push(e);
     }
 
     this._repoListData = rawData.nodes;
   }
 }
+
+inject2Perceptor(DeveloperNetwork);

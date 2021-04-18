@@ -118,12 +118,9 @@ export async function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-export function Inject(modules: any) {
-  return function (target: any) {
-    modules.forEach((module: any) => {
-      const instance = new module();
-      target.features.set(instance.constructor.name, instance)
-    });
+export function runsWhen(rules: any[]) {
+  return (constructor: Function) => {
+    constructor.prototype.include = rules;
   };
 }
 

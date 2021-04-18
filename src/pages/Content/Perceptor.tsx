@@ -3,21 +3,10 @@ import elementReady from 'element-ready';
 import { utils, isRepo } from 'github-url-detection';
 import { loadSettings, mergeSettings } from '../../utils/settings'
 import { getConfigFromGithub } from '../../api/github';
-import { Inject } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
-import PerceptorTab from './PerceptorTab';
-import PerceptorLayout from './PerceptorLayout';
-import DeveloperNetwork from './DeveloperNetwork';
-import ProjectNetwork from './ProjectNetwork';
 
-@Inject([
-  PerceptorTab,
-  PerceptorLayout,
-  DeveloperNetwork,
-  ProjectNetwork
-])
-class Perceptor extends PerceptorBase {
-  public static features: Map<string, any> = new Map();
+export class Perceptor extends PerceptorBase {
+  public static Features: Map<string, any> = new Map();
   public settings: any;
 
   public async run(): Promise<void> {
@@ -33,17 +22,19 @@ class Perceptor extends PerceptorBase {
     await this.checkSettings();
 
     // run every features
-    Perceptor.features.forEach(async (feature, name) => {
+    Perceptor.Features.forEach(async (Feature, name) => {
       this.logger.info('trying to load ', name)
       if (this.settings.toJson()[name] === false) {
         this.logger.info(name, 'is disabled');
         return;
       }
-      if (feature.include.every((c: () => any) => !c())) {
+      if (Feature.prototype.include.every((c: () => any) => !c())) {
+        this.logger.info(name, 'does NOT run on this page')
         return;
       }
       try {
         this.logger.info('running ', name)
+        const feature = new Feature();
         await feature.run();
       } catch (error: unknown) {
         this.logger.error(name, error)
@@ -64,8 +55,9 @@ class Perceptor extends PerceptorBase {
       this.settings = await loadSettings();
     }
   }
-
 }
 
-export default Perceptor;
+export const inject2Perceptor = (constructor: Function): void => {
+  Perceptor.Features.set(constructor.name, constructor)
+}
 

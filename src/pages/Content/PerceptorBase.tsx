@@ -4,7 +4,6 @@ import ErrorMessageBar from '../../components/ExceptionPage/ErrorMessageBar';
 
 export default abstract class PerceptorBase {
   public logger: any;
-  public include: any[];
 
   constructor() {
     this.logger = {
@@ -19,7 +18,6 @@ export default abstract class PerceptorBase {
         render(<ErrorMessageBar />, document.getElementById('perceptor'))
       }
     };
-    this.include = [() => true]
   }
 
   public abstract run(): Promise<void>;

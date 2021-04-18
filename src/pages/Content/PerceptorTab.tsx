@@ -1,17 +1,12 @@
-// import React from 'react';
 import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
 import { utils } from 'github-url-detection';
-import { isPerceptor } from '../../utils/utils';
+import { isPerceptor, runsWhen } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
+import { inject2Perceptor } from './Perceptor';
 
-export default class PerceptorTab extends PerceptorBase {
-  constructor() {
-    super();
-    this.include = [
-      pageDetect.isRepo
-    ];
-  }
+@runsWhen([pageDetect.isRepo])
+class PerceptorTab extends PerceptorBase {
   public async run(): Promise<void> {
     const insightsTab = $('.js-repo-nav [data-ga-click="Repository, Navigation click, Insights tab"]').parent();
 
@@ -39,3 +34,5 @@ export default class PerceptorTab extends PerceptorBase {
     insightsTab.after(perceptorTab);
   }
 }
+
+inject2Perceptor(PerceptorTab);

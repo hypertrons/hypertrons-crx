@@ -5,20 +5,22 @@ import { Link } from 'office-ui-fabric-react';
 import { utils } from 'github-url-detection';
 import GraphWithList from '../../components/Graph/GraphWithList';
 import ErrorPage from '../../components/ExceptionPage/index';
-import { isPerceptor } from '../../utils/utils';
+import { isPerceptor, runsWhen } from '../../utils/utils';
 import { getGraphData } from '../../api/index';
 import { getMessageI18n, generateGraphDataMap } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
+import { inject2Perceptor } from './Perceptor';
 
 const onProjectChartClick = (param: any, echarts: any) => {
   const url = 'https://github.com/' + param.data.name + '/pulse?type=perceptor';
   window.location.href = url;
 };
 
-export default class ProjectNetwork extends PerceptorBase {
+@runsWhen([isPerceptor])
+class ProjectNetwork extends PerceptorBase {
   private _currentRepo: string;
-  private _ForceGraphData: NetworkData;
-  private _CircularGraphData: NetworkData;
+  private _forceGraphData: NetworkData;
+  private _circularGraphData: NetworkData;
 
   private _developerListData: any[];
   private _repoListData: any[];
@@ -32,15 +34,12 @@ export default class ProjectNetwork extends PerceptorBase {
 
   constructor() {
     super();
-    this.include = [
-      isPerceptor
-    ];
     this._currentRepo = '';
-    this._ForceGraphData = {
+    this._forceGraphData = {
       nodes: [],
       edges: [],
     };
-    this._CircularGraphData = {
+    this._circularGraphData = {
       nodes: [],
       edges: [],
     };
@@ -106,15 +105,15 @@ export default class ProjectNetwork extends PerceptorBase {
           < GraphWithList
             layout='force'
             title={getMessageI18n('component_projectCorrelationNetwork_title')}
-            graphData={this._ForceGraphData}
+            graphData={this._forceGraphData}
             columns={repoColumns}
             listData={this._repoListData}
             onChartClick={onProjectChartClick}
           />
           < GraphWithList
-            layout='circular'
+            layout='force'
             title={getMessageI18n('component_activeDeveloperCollabrationNetwork_title')}
-            graphData={this._CircularGraphData}
+            graphData={this._circularGraphData}
             columns={developerColumns}
             listData={this._developerListData}
           />
@@ -143,7 +142,7 @@ export default class ProjectNetwork extends PerceptorBase {
           color: name === this._currentRepo ? this._forceGraphMasterNodeColor : this._forceGraphNodeColor,
         }
       }
-      this._ForceGraphData.nodes.push(n);
+      this._forceGraphData.nodes.push(n);
     }
     for (let [name, value] of edgeMap.entries()) {
       const source = name.split(' ')[0];
@@ -157,7 +156,7 @@ export default class ProjectNetwork extends PerceptorBase {
           color: this._forceGraphEdgeColor,
         }
       }
-      this._ForceGraphData.edges.push(e);
+      this._forceGraphData.edges.push(e);
 
       // generate list data
       const listItem = {
@@ -181,7 +180,7 @@ export default class ProjectNetwork extends PerceptorBase {
           color: this._circularGraphNodeColor
         }
       }
-      this._CircularGraphData.nodes.push(n);
+      this._circularGraphData.nodes.push(n);
     }
     for (let [name, value] of edgeMap.entries()) {
       const source = name.split(' ')[0];
@@ -195,9 +194,11 @@ export default class ProjectNetwork extends PerceptorBase {
           color: this._circularGraphEdgeColor,
         }
       }
-      this._CircularGraphData.edges.push(e);
+      this._circularGraphData.edges.push(e);
     }
 
     this._developerListData = rawData.nodes;
   }
 }
+
+inject2Perceptor(ProjectNetwork);
