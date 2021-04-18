@@ -2,22 +2,17 @@ import React from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
 import { Stack } from 'office-ui-fabric-react';
-import { isPerceptor } from '../../utils/utils';
+import { isPerceptor, runsWhen } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
+import { inject2Perceptor } from './Perceptor';
 
 const PerceptorLayoutView: React.FC<{}> = () => {
   return (
     <Stack horizontalAlign="center" />
   )
 }
-
-export default class PerceptorLayout extends PerceptorBase {
-  constructor() {
-    super();
-    this.include = [
-      isPerceptor
-    ];
-  }
+@runsWhen([isPerceptor])
+class PerceptorLayout extends PerceptorBase {
   public async run(): Promise<void> {
     // remove the original container
     const parentContainer = $('.container-xl.clearfix.new-discussion-timeline');
@@ -34,3 +29,5 @@ export default class PerceptorLayout extends PerceptorBase {
     parentContainer.prepend(percepterContainer);
   }
 }
+
+inject2Perceptor(PerceptorLayout);
