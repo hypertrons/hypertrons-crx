@@ -56,8 +56,8 @@
   "options_header_settings": {
     "message": "设置"
   },
-  "options_header_commandLine": {
-    "message": "命令行"
+  "options_header_my": {
+    "message": "我的"
   },
   "options_toggle_checkForUpdates": {
     "message": "自动检测更新"
@@ -85,6 +85,18 @@
   },
   "options_text_goGetUpdate": {
     "message": "获取更新"
+  },
+  "options_dialog_token_title": {
+    "message": "请输入github token"
+  },
+  "options_dialog_token_message": {
+    "message": "如何生成github token?"
+  },
+  "options_dialog_token_checking": {
+    "message": "检测中"
+  },
+  "options_dialog_token_error": {
+    "message": "无效的token"
   },
   "notification_title_newUpdate":{
     "message": "新版本更新可用"
