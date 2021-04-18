@@ -23,21 +23,22 @@ export class Perceptor extends PerceptorBase {
 
     // run every features
     Perceptor.Features.forEach(async (Feature, name) => {
-      this.logger.info('trying to load ', name)
-      if (this.settings.toJson()[name] === false) {
-        this.logger.info(name, 'is disabled');
+      const featureId = name.replace(name[0],name[0].toLowerCase());
+      this.logger.info('trying to load ', featureId)
+      if (this.settings.toJson()[featureId] === false) {
+        this.logger.info(featureId, 'is disabled');
         return;
       }
       if (Feature.prototype.include.every((c: () => any) => !c())) {
-        this.logger.info(name, 'does NOT run on this page')
+        this.logger.info(featureId, 'does NOT run on this page')
         return;
       }
       try {
-        this.logger.info('running ', name)
+        this.logger.info('running ', featureId)
         const feature = new Feature();
         await feature.run();
       } catch (error: unknown) {
-        this.logger.error(name, error)
+        this.logger.error(featureId, error)
       }
     }, this)
   }
