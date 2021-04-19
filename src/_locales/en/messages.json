@@ -56,8 +56,8 @@
   "options_header_settings": {
     "message": "Settings"
   },
-  "options_header_commandLine": {
-    "message": "Commandline"
+  "options_header_my": {
+    "message": "My"
   },
   "options_toggle_checkForUpdates": {
     "message": "Auto check updates"
@@ -85,6 +85,18 @@
   },
   "options_text_goGetUpdate": {
     "message": "get the update"
+  },
+  "options_dialog_token_title": {
+    "message": "please enter your github token"
+  },
+  "options_dialog_token_message": {
+    "message": "How to generate a github token?"
+  },
+  "options_dialog_token_checking": {
+    "message": "checking"
+  },
+  "options_dialog_token_error": {
+    "message": "bad token"
   },
   "notification_title_newUpdate": {
     "message": "new update available"

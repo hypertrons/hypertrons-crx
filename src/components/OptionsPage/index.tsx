@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import {
   Pivot, PivotItem, PivotLinkFormat, Stack,
   Toggle, DefaultButton, Checkbox,Text,Link,
-  Spinner, SpinnerSize, MessageBar, MessageBarType,
+  Spinner, MessageBar, MessageBarType,
+  Dialog,DialogType,TextField,
+  Image,ImageFit
 } from 'office-ui-fabric-react';
 import { initializeIcons } from '@uifabric/icons';
 import { getMessageI18n, chromeSet, compareVersion } from '../../utils/utils';
+import { checkUpdate,checkIsTokenAvailabe } from '../../services/common';
 import Settings,{ loadSettings } from "../../utils/settings"
-import { checkUpdate } from '../../services/common';
+import MetaData, { loadMetaData } from '../../utils/metadata';
 import './index.css';
 
 initializeIcons();
@@ -19,24 +22,41 @@ export enum UpdateStatus {
 const OptionsPage: React.FC = () => {
 
   const [settings, setSettings] = useState(new Settings());
+  const [metaData, setMetaData] = useState(new MetaData());
   const [inited, setInited] = useState(false);
   const [version, setVersion] = useState("0.0.0");
-  const [checking, setChecking] = useState(false);
+  const [checkingUpdate, setCheckingUpdate] = useState(false);
+  const [token, setToken] = useState("");
+  const [checkingToken, setCheckingToken] = useState(false);
+  const [showDialogToken, setShowDialogToken] = useState(false);
+  const [showDialogTokenError, setShowDialogTokenError] = useState(false);
   const [updateStatus, setUpdateStatus] = useState(UpdateStatus.undefine);
 
   useEffect(() => {
     const initSettings = async () => {
       const temp=await loadSettings();
       setSettings(temp);
-      setInited(true);
     }
     initSettings();
   }, [settings]);
 
   useEffect(() => {
+    const initMetaData = async () => {
+      const temp=await loadMetaData();
+      setMetaData(temp);
+      if(temp.token!==""){
+        setToken(temp.token);
+      }
+      console.log("init meta")
+    }
+    initMetaData();
+  }, []);
+
+  useEffect(() => {
     // @ts-ignore
     const details=chrome.app.getDetails();
     setVersion(details["version"]);
+    setInited(true);
   }, [version]);
 
   const saveSettings = async (settings:Settings) => {
@@ -46,7 +66,7 @@ const OptionsPage: React.FC = () => {
 
   const checkUpdateManually= async ()=>{
     setUpdateStatus(UpdateStatus.undefine);
-    setChecking(true);
+    setCheckingUpdate(true);
     const [currentVersion,latestVersion]=await checkUpdate();
     if(compareVersion(currentVersion,latestVersion)===-1) {
       setUpdateStatus(UpdateStatus.yes);
@@ -54,15 +74,88 @@ const OptionsPage: React.FC = () => {
     else{
       setUpdateStatus(UpdateStatus.no);
     }
-    setChecking(false);
+    setCheckingUpdate(false);
   }
 
   if (!inited) {
-    return (<div />);
+    return (<div/>);
   }
 
   return (
     <Stack>
+      {
+        showDialogToken&&
+        <Dialog
+          hidden={!showDialogToken}
+          onDismiss={() => {
+            setShowDialogToken(false);
+          }}
+          dialogContentProps={{
+            type: DialogType.normal,
+            title: getMessageI18n("options_dialog_token_title")
+          }}
+        >
+          <Stack horizontal style={{fontSize:16,margin:5}}>
+            <Link href="https://github.com/settings/tokens" target="_blank" underline>
+              {getMessageI18n("options_dialog_token_message")}
+            </Link>
+          </Stack>
+          {
+            checkingToken&&
+            <Spinner label={getMessageI18n("options_dialog_token_checking")} />
+          }
+          {
+            showDialogTokenError&&
+            <MessageBar
+              messageBarType={MessageBarType.error}
+            >
+              {getMessageI18n("options_dialog_token_error")}
+            </MessageBar>
+          }
+          <Stack
+            horizontal
+            horizontalAlign="space-around"
+            verticalAlign="end"
+            style={{margin:"10px"}}
+            tokens={{
+              childrenGap: 15
+            }}
+          >
+            <TextField
+              style={{width:"200px"}}
+              value={token}
+              defaultValue={token}
+              onChange={(e,value)=>{
+                if(value){
+                  setShowDialogTokenError(false);
+                  setToken(value);
+                }
+              }}
+            />
+            <DefaultButton
+              disabled={checkingToken}
+              onClick={async ()=>{
+                setCheckingToken(true);
+                const result=await checkIsTokenAvailabe(token);
+                setCheckingToken(false)
+                if("id" in result){
+                  metaData.token=token;
+                  metaData.avatar=result["avatar_url"]
+                  metaData.name=result["name"]
+                  metaData.id=result["id"]
+                  setMetaData(metaData);
+                  await chromeSet("meta_data", metaData.toJson());
+                  setShowDialogToken(false);
+                }else{
+                  setShowDialogTokenError(true);
+                }
+              }}
+            >
+              {getMessageI18n("global_btn_ok")}
+            </DefaultButton>
+          </Stack>
+        </Dialog>
+      }
       <Stack horizontalAlign="center">
         <h1>HYPERTRONS</h1>
         <sub>{`version ${version}`}</sub>
@@ -102,7 +195,7 @@ const OptionsPage: React.FC = () => {
                   }}
                 >
                   {
-                    checking&&
+                    checkingUpdate&&
                     <Stack horizontalAlign="start">
                       <Spinner label={getMessageI18n("options_text_checking")} />
                     </Stack>
@@ -132,7 +225,7 @@ const OptionsPage: React.FC = () => {
                     style={{
                       width:120
                     }}
-                    disabled={checking}
+                    disabled={checkingUpdate}
                     onClick={async ()=>{
                       await checkUpdateManually();
                     }}
@@ -164,17 +257,54 @@ const OptionsPage: React.FC = () => {
 
               </Stack>
             </PivotItem>
-            {/*<PivotItem headerText={getMessageI18n("options_header_commandLine")} itemIcon="CommandPrompt">*/}
-            {/*  <Stack*/}
-            {/*    horizontalAlign="space-around"*/}
-            {/*    verticalAlign='center'*/}
-            {/*    style={{ margin: "5px", padding: "3px" }}*/}
-            {/*    tokens={{*/}
-            {/*      childrenGap: 10*/}
-            {/*    }}*/}
-            {/*  >*/}
-            {/*  </Stack>*/}
-            {/*</PivotItem>*/}
+            <PivotItem headerText={getMessageI18n("options_header_My")} itemIcon="Signin">
+              <Stack
+                horizontalAlign="space-around"
+                verticalAlign='center'
+                style={{ margin: "5px", padding: "3px" }}
+                tokens={{
+                  childrenGap: 10
+                }}
+              >
+                {
+                  metaData.token!==""&&
+                  <Stack
+                    horizontal
+                    verticalAlign="center"
+                    style={{
+                      margin: "5px", padding: "3px", width: "300px",
+                      boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.2)",
+                    }}
+                    tokens={{
+                      childrenGap: 5
+                    }}
+                  >
+                    <Image
+                      width={75}
+                      height={75}
+                      src={metaData.avatar}
+                      imageFit={ImageFit.centerCover}
+                    />
+                    <Text
+                      variant="large"
+                      style={{marginLeft:25,maxWidth:200,wordWrap:"break-word"}}
+                    >
+                      {metaData.name}
+                    </Text>
+                  </Stack>
+                }
+                <DefaultButton
+                  onClick={()=>{
+                    setShowDialogToken(true);
+                  }}
+                  style={{
+                    width:120
+                  }}
+                >
+                  设置token
+                </DefaultButton>
+              </Stack>
+            </PivotItem>
           </Pivot>
         </div>
       </Stack>
