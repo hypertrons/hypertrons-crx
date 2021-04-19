@@ -20,6 +20,9 @@
   "global_btn_goBack": {
     "message": "Go back"
   },
+  "global_btn_setToken": {
+    "message": "set token"
+  },
   "global_developer": {
     "message": "Develpoer"
   },

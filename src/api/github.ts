@@ -1,7 +1,15 @@
 import { Octokit } from "@octokit/core";
+import { loadMetaData } from '../utils/metadata';
 
 export const getConfigFromGithub = async (owner: string, repo: string) => {
-  const octokit = new Octokit();
+  const metaData=await loadMetaData();
+  let octokit;
+  if(metaData.token!==""){
+    octokit = new Octokit({ auth:metaData.token });
+  }
+  else{
+    octokit = new Octokit();
+  }
   try {
     const response = await octokit.request('GET /repos/{owner}/{repo}/contents/.github/hypertrons.json', { owner, repo });
     const res = response.data as any;
