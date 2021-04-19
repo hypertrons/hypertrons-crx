@@ -47,7 +47,6 @@ const OptionsPage: React.FC = () => {
       if(temp.token!==""){
         setToken(temp.token);
       }
-      console.log("init meta")
     }
     initMetaData();
   }, []);
@@ -301,7 +300,7 @@ const OptionsPage: React.FC = () => {
                     width:120
                   }}
                 >
-                  设置token
+                  {getMessageI18n("global_btn_setToken")}
                 </DefaultButton>
               </Stack>
             </PivotItem>

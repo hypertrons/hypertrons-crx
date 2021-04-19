@@ -20,6 +20,9 @@
   "global_btn_goBack": {
     "message": "返回"
   },
+  "global_btn_setToken": {
+    "message": "设置token"
+  },
   "global_developer": {
     "message": "开发者"
   },
