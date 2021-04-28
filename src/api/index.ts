@@ -1,4 +1,4 @@
-const URL_PREFIX = 'https://hypertrons.oss-cn-shanghai.aliyuncs.com'
+const URL_PREFIX = 'http://hypertrons-oss.x-lab.info/'
 
 export const getGraphData = async (path: string) => {
   const url = URL_PREFIX + path;
