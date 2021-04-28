@@ -3,11 +3,11 @@ import {
   Pivot, PivotItem, PivotLinkFormat, Stack,
   Toggle, DefaultButton, Checkbox,Text,Link,
   Spinner, MessageBar, MessageBarType,
-  Dialog,DialogType,TextField,
+  Dialog,DialogType,TextField,ChoiceGroup, IChoiceGroupOption,
   Image,ImageFit
 } from 'office-ui-fabric-react';
 import { initializeIcons } from '@uifabric/icons';
-import { getMessageI18n, chromeSet, compareVersion } from '../../utils/utils';
+import { getMessageI18n, chromeSet, compareVersion, GraphType } from '../../utils/utils';
 import { checkUpdate,checkIsTokenAvailabe } from '../../services/common';
 import Settings,{ loadSettings } from "../../utils/settings"
 import MetaData, { loadMetaData } from '../../utils/metadata';
@@ -32,10 +32,30 @@ const OptionsPage: React.FC = () => {
   const [showDialogTokenError, setShowDialogTokenError] = useState(false);
   const [updateStatus, setUpdateStatus] = useState(UpdateStatus.undefine);
 
+  const options: IChoiceGroupOption[] = [
+    {
+      key: GraphType.antv,
+      imageSrc: "./antv.png",
+      imageAlt: 'Antv',
+      selectedImageSrc: "./antv.png",
+      imageSize: { width: 48, height: 48 },
+      text: 'Antv'
+    },
+    {
+      key: GraphType.echarts,
+      imageSrc: "./echarts.png",
+      imageAlt: 'Echarts',
+      selectedImageSrc: "./echarts.png",
+      imageSize: { width: 48, height: 48 },
+      text: 'Echarts'
+    }
+  ];
+
   useEffect(() => {
     const initSettings = async () => {
       const temp=await loadSettings();
       setSettings(temp);
+      setInited(true);
     }
     initSettings();
   }, [settings]);
@@ -55,7 +75,6 @@ const OptionsPage: React.FC = () => {
     // @ts-ignore
     const details=chrome.app.getDetails();
     setVersion(details["version"]);
-    setInited(true);
   }, [version]);
 
   const saveSettings = async (settings:Settings) => {
@@ -184,7 +203,6 @@ const OptionsPage: React.FC = () => {
                     await saveSettings(settings);
                   }}
                 />
-
                 <Stack
                   style={{
                     maxWidth:240
@@ -232,7 +250,15 @@ const OptionsPage: React.FC = () => {
                     {getMessageI18n("options_text_checkUpdate")}
                   </DefaultButton>
                 </Stack>
-
+                <ChoiceGroup
+                  label={getMessageI18n("options_text_defaultGraphType")}
+                  defaultSelectedKey={settings.graphType}
+                  options={options}
+                  onChanged={async (option)=>{
+                    settings.graphType=option.key;
+                    await saveSettings(settings);
+                  }}
+                />
                 <Text variant="xxLarge">
                   {getMessageI18n("options_text_showDifferentComponent")}
                 </Text>

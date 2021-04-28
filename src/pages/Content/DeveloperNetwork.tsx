@@ -4,16 +4,19 @@ import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
 import { Link } from 'office-ui-fabric-react';
 import GraphWithList from '../../components/Graph/GraphWithList';
-import { getGraphData } from '../../api/index';
+import { getGraphData } from '../../api';
 import { runsWhen, getMessageI18n, generateGraphDataMap } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
 import { inject2Perceptor } from './Perceptor';
+import { loadSettings } from '../../utils/settings';
 
 @runsWhen([pageDetect.isUserProfileMainTab])
 class DeveloperNetwork extends PerceptorBase {
   private _currentDeveloper: string;
   private _forceGraphData: NetworkData;
   private _circularGraphData: NetworkData;
+  private _forceGraphDataGraphin: NetworkData;
+  private _circularGraphDataGraphin: NetworkData;
 
   private _developerListData: any[];
   private _repoListData: any[];
@@ -36,6 +39,14 @@ class DeveloperNetwork extends PerceptorBase {
       nodes: [],
       edges: [],
     };
+    this._forceGraphDataGraphin = {
+      nodes: [],
+      edges: [],
+    };
+    this._circularGraphDataGraphin = {
+      nodes: [],
+      edges: [],
+    };
     this._developerListData = [];
     this._repoListData = [];
 
@@ -53,6 +64,7 @@ class DeveloperNetwork extends PerceptorBase {
     DeveloperNetworkDiv.id = 'developer-network';
     DeveloperNetworkDiv.style.width = "100%";
     this._currentDeveloper = $('.p-nickname.vcard-username.d-block').text().trim();
+    const settings=await loadSettings();
     try {
       const forceGraphDataRaw = await getGraphData(`/actor/${this._currentDeveloper}.json`);
       await this.generateForceGraphData(forceGraphDataRaw);
@@ -97,15 +109,19 @@ class DeveloperNetwork extends PerceptorBase {
         <div>
           < GraphWithList
             layout='force'
+            graphType={settings.graphType}
             title={getMessageI18n('component_developerCollabrationNetwork_title')}
             graphData={this._forceGraphData}
+            graphDataGraphin={this._forceGraphDataGraphin}
             columns={developerColumns}
             listData={this._developerListData}
           />
           < GraphWithList
             layout='circular'
+            graphType={settings.graphType}
             title={getMessageI18n('component_mostParticipatedProjects_title')}
             graphData={this._circularGraphData}
+            graphDataGraphin={this._circularGraphDataGraphin}
             columns={repoColumns}
             listData={this._repoListData}
           />
@@ -123,7 +139,7 @@ class DeveloperNetwork extends PerceptorBase {
     const { nodeMap, nodeMap2Range, edgeMap, edgeMap2Range } = generateGraphDataMap(rawData);
 
     for (let [name, value] of nodeMap.entries()) {
-      const n = {
+      const node = {
         name,
         value,
         symbolSize: nodeMap2Range.get(name),
@@ -131,12 +147,36 @@ class DeveloperNetwork extends PerceptorBase {
           color: name === this._currentDeveloper ? this._forceGraphMasterNodeColor : this._forceGraphNodeColor,
         }
       }
-      this._forceGraphData.nodes.push(n);
+      this._forceGraphData.nodes.push(node);
+
+      const nodeGraphin = {
+        id:name,
+        type:"graphin-circle",
+        style:{
+          label:{
+            value:name
+          },
+          keyshape: {
+            size: nodeMap2Range.get(name),
+            fill: name === this._currentDeveloper ? this._forceGraphMasterNodeColor : this._forceGraphNodeColor,
+          },
+          badges: [
+            {
+              position: 'RT',
+              type: 'text',
+              value: value.toFixed(2),
+              size: [20, 20],
+              color: '#000'
+            },
+          ],
+        }
+      }
+      this._forceGraphDataGraphin.nodes.push(nodeGraphin);
     }
     for (let [name, value] of edgeMap.entries()) {
       const source = name.split(' ')[0];
       const target = name.split(' ')[1];
-      const e = {
+      const edge = {
         source,
         target,
         value,
@@ -145,7 +185,19 @@ class DeveloperNetwork extends PerceptorBase {
           color: this._forceGraphEdgeColor,
         }
       }
-      this._forceGraphData.edges.push(e);
+      this._forceGraphData.edges.push(edge);
+
+      const edgeGraphin = {
+        source,
+        target,
+        style:{
+          keyshape:{
+            lineWidth:edgeMap2Range.get(name),
+            stroke: this._forceGraphEdgeColor
+          }
+        }
+      }
+      this._forceGraphDataGraphin.edges.push(edgeGraphin);
 
       // generate list data
       const listItem = {
@@ -161,7 +213,7 @@ class DeveloperNetwork extends PerceptorBase {
     const { nodeMap, nodeMap2Range, edgeMap, edgeMap2Range } = generateGraphDataMap(rawData);
 
     for (let [name, value] of nodeMap.entries()) {
-      const n = {
+      const node = {
         name,
         value,
         symbolSize: nodeMap2Range.get(name),
@@ -169,12 +221,36 @@ class DeveloperNetwork extends PerceptorBase {
           color: this._circularGraphNodeColor
         }
       }
-      this._circularGraphData.nodes.push(n);
+      this._circularGraphData.nodes.push(node);
+
+      const nodeGraphin = {
+        id:name,
+        type:"graphin-circle",
+        style:{
+          label:{
+            value:name
+          },
+          keyshape: {
+            size: nodeMap2Range.get(name),
+            fill: name === this._currentDeveloper ? this._forceGraphMasterNodeColor : this._forceGraphNodeColor,
+          },
+          badges: [
+            {
+              position: 'RT',
+              type: 'text',
+              value: value.toFixed(2),
+              size: [20, 20],
+              color: '#000'
+            },
+          ],
+        }
+      }
+      this._circularGraphDataGraphin.nodes.push(nodeGraphin);
     }
     for (let [name, value] of edgeMap.entries()) {
       const source = name.split(' ')[0];
       const target = name.split(' ')[1];
-      const e = {
+      const edge = {
         source,
         target,
         value,
@@ -183,7 +259,19 @@ class DeveloperNetwork extends PerceptorBase {
           color: this._circularGraphEdgeColor,
         }
       }
-      this._circularGraphData.edges.push(e);
+      this._circularGraphData.edges.push(edge);
+
+      const edgeGraphin = {
+        source,
+        target,
+        style:{
+          keyshape:{
+            lineWidth:edgeMap2Range.get(name),
+            stroke: this._forceGraphEdgeColor
+          }
+        }
+      }
+      this._circularGraphDataGraphin.edges.push(edgeGraphin);
     }
 
     this._repoListData = rawData.nodes;

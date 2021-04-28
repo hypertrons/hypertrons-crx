@@ -124,6 +124,10 @@ export function runsWhen(rules: any[]) {
   };
 }
 
+export enum GraphType {
+  antv = "antv", echarts = "echarts"
+}
+
 export function generateGraphDataMap(rawData: any) {
   const nodeMap = new Map<string, number>();
   const nodeMap2Range = new Map<string, number>();

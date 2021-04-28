@@ -71,6 +71,9 @@
   "options_toggle_checkForUpdates_offText": {
     "message": "Off"
   },
+  "options_text_defaultGraphType": {
+    "message": "Default graph type"
+  },
   "options_text_showDifferentComponent": {
     "message": "Components"
   },

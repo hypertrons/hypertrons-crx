@@ -71,6 +71,9 @@
   "options_toggle_checkForUpdates_offText": {
     "message": "关"
   },
+  "options_text_defaultGraphType": {
+    "message": "默认图表类型"
+  },
   "options_text_showDifferentComponent": {
     "message": "显示组件"
   },
