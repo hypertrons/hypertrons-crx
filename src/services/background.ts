@@ -1,6 +1,6 @@
 import { updateInformation } from '../mock/background.data';
 import { sleep } from "../utils/utils"
-const url_update="https://hypertrons.oss-cn-shanghai.aliyuncs.com/crx-release/update_information.json";
+const url_update = "http://hypertrons-oss.x-lab.info/crx-release/update_information.json";
 
 export const getUpdateInfor = async () => {
   let result=null;
