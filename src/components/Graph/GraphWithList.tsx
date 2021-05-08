@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactECharts from 'echarts-for-react';
-import Graphin, { Utils, Behaviors } from '@antv/graphin';
+import Graphin, { Utils } from '@antv/graphin';
 import { Stack, Separator, DetailsList, SelectionMode } from 'office-ui-fabric-react';
 import { GraphType } from "../../utils/utils"
 

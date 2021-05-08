@@ -44,6 +44,9 @@
   "component_error_message": {
     "message": "抱歉，该组件出现了一点问题..."
   },
+  "component_projectNetwork_title": {
+    "message": "Hypertorns网络图"
+  },
   "component_developerCollabrationNetwork_title": {
     "message": "开发者协作网络图"
   },
