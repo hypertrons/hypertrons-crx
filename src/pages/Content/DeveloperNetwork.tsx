@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
-import { Link } from 'office-ui-fabric-react';
-import GraphWithList from '../../components/Graph/GraphWithList';
+import { Image, Link, Modal } from 'office-ui-fabric-react';
+import ProjectBase from './ProjectBase';
 import { getGraphData } from '../../api';
 import { runsWhen, getMessageI18n, generateGraphDataMap } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
@@ -106,26 +106,18 @@ class DeveloperNetwork extends PerceptorBase {
         { key: 'column2', name: getMessageI18n('global_contribution'), fieldName: 'value', minWidth: 100, maxWidth: 200, isResizable: true },
       ];
       render(
-        <div>
-          < GraphWithList
-            layout='force'
+          <ProjectBase
             graphType={settings.graphType}
-            title={getMessageI18n('component_developerCollabrationNetwork_title')}
-            graphData={this._forceGraphData}
-            graphDataGraphin={this._forceGraphDataGraphin}
-            columns={developerColumns}
-            listData={this._developerListData}
+            forceGraphData={this._forceGraphData}
+            forceGraphDataGraphin={this._forceGraphDataGraphin}
+            circularGraphData={this._circularGraphData}
+            circularGraphDataGraphin={this._circularGraphDataGraphin}
+            repoColumns={repoColumns}
+            developerColumns={developerColumns}
+            developerListData={this._developerListData}
+            repoListData={this._repoListData}
           />
-          < GraphWithList
-            layout='circular'
-            graphType={settings.graphType}
-            title={getMessageI18n('component_mostParticipatedProjects_title')}
-            graphData={this._circularGraphData}
-            graphDataGraphin={this._circularGraphDataGraphin}
-            columns={repoColumns}
-            listData={this._repoListData}
-          />
-        </div>,
+          ,
         DeveloperNetworkDiv,
       );
       pinnedReposDiv.before(DeveloperNetworkDiv);

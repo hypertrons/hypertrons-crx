@@ -16,11 +16,13 @@
   "content_scripts": [{
     "matches": ["*://github.com/*"],
     "js": ["contentScript.bundle.js"],
-    "css": ["content.styles.css"]
+    "css": ["content.styles.css"],
+    "run_at":"document_end"
   }],
   "web_accessible_resources": [
     "content.styles.css",
-    "main.png"
+    "main.png",
+    "charts.png"
   ],
   "permissions": [
     "*://github.com/*",

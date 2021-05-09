@@ -44,6 +44,9 @@
   "component_error_message": {
     "message": "Sorry, an error occurred while loading this component ..."
   },
+  "component_projectNetwork_title": {
+    "message": "Hypertorns Network"
+  },
   "component_developerCollabrationNetwork_title": {
     "message": "Developer Collabration Network"
   },
