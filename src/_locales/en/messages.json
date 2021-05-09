@@ -112,5 +112,17 @@
   },
   "notification_message_newUpdate": {
     "message": "version: %v"
+  },
+  "teachingBubble_text_ok": {
+    "message": "Got it"
+  },
+  "teachingBubble_text_disable": {
+    "message": "Don't show this again"
+  },
+  "teachingBubble_text_headline": {
+    "message": "Explore Hypertrons charts"
+  },
+  "teachingBubble_text_content": {
+    "message": "Click here to see statistics data"
   }
 }
