@@ -4,7 +4,7 @@ import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
 import { Image, Link, Modal } from 'office-ui-fabric-react';
 import ProjectBase from './ProjectBase';
-import { getGraphData } from '../../api';
+import { getDeveloperCollabration, getParticipatedProjects } from '../../api/developer';
 import { runsWhen, getMessageI18n, generateGraphDataMap } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
 import { inject2Perceptor } from './Perceptor';
@@ -64,12 +64,12 @@ class DeveloperNetwork extends PerceptorBase {
     DeveloperNetworkDiv.id = 'developer-network';
     DeveloperNetworkDiv.style.width = "100%";
     this._currentDeveloper = $('.p-nickname.vcard-username.d-block').text().trim();
-    const settings=await loadSettings();
+    const settings = await loadSettings();
     try {
-      const forceGraphDataRaw = await getGraphData(`/actor/${this._currentDeveloper}.json`);
+      const forceGraphDataRaw = await getDeveloperCollabration(this._currentDeveloper);
       await this.generateForceGraphData(forceGraphDataRaw);
 
-      const circularGraphDataRaw = await getGraphData(`/actor/${this._currentDeveloper}_top.json`);
+      const circularGraphDataRaw = await getParticipatedProjects(this._currentDeveloper);
       await this.generateCircularGraphData(circularGraphDataRaw);
 
       const developerColumns = [
@@ -106,18 +106,18 @@ class DeveloperNetwork extends PerceptorBase {
         { key: 'column2', name: getMessageI18n('global_contribution'), fieldName: 'value', minWidth: 100, maxWidth: 200, isResizable: true },
       ];
       render(
-          <ProjectBase
-            graphType={settings.graphType}
-            forceGraphData={this._forceGraphData}
-            forceGraphDataGraphin={this._forceGraphDataGraphin}
-            circularGraphData={this._circularGraphData}
-            circularGraphDataGraphin={this._circularGraphDataGraphin}
-            repoColumns={repoColumns}
-            developerColumns={developerColumns}
-            developerListData={this._developerListData}
-            repoListData={this._repoListData}
-          />
-          ,
+        <ProjectBase
+          graphType={settings.graphType}
+          forceGraphData={this._forceGraphData}
+          forceGraphDataGraphin={this._forceGraphDataGraphin}
+          circularGraphData={this._circularGraphData}
+          circularGraphDataGraphin={this._circularGraphDataGraphin}
+          repoColumns={repoColumns}
+          developerColumns={developerColumns}
+          developerListData={this._developerListData}
+          repoListData={this._repoListData}
+        />
+        ,
         DeveloperNetworkDiv,
       );
       pinnedReposDiv.before(DeveloperNetworkDiv);
@@ -142,11 +142,11 @@ class DeveloperNetwork extends PerceptorBase {
       this._forceGraphData.nodes.push(node);
 
       const nodeGraphin = {
-        id:name,
-        type:"graphin-circle",
-        style:{
-          label:{
-            value:name
+        id: name,
+        type: "graphin-circle",
+        style: {
+          label: {
+            value: name
           },
           keyshape: {
             size: nodeMap2Range.get(name),
@@ -182,9 +182,9 @@ class DeveloperNetwork extends PerceptorBase {
       const edgeGraphin = {
         source,
         target,
-        style:{
-          keyshape:{
-            lineWidth:edgeMap2Range.get(name),
+        style: {
+          keyshape: {
+            lineWidth: edgeMap2Range.get(name),
             stroke: this._forceGraphEdgeColor
           }
         }
@@ -216,11 +216,11 @@ class DeveloperNetwork extends PerceptorBase {
       this._circularGraphData.nodes.push(node);
 
       const nodeGraphin = {
-        id:name,
-        type:"graphin-circle",
-        style:{
-          label:{
-            value:name
+        id: name,
+        type: "graphin-circle",
+        style: {
+          label: {
+            value: name
           },
           keyshape: {
             size: nodeMap2Range.get(name),
@@ -256,9 +256,9 @@ class DeveloperNetwork extends PerceptorBase {
       const edgeGraphin = {
         source,
         target,
-        style:{
-          keyshape:{
-            lineWidth:edgeMap2Range.get(name),
+        style: {
+          keyshape: {
+            lineWidth: edgeMap2Range.get(name),
             stroke: this._forceGraphEdgeColor
           }
         }
