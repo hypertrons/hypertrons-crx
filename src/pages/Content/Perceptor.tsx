@@ -10,6 +10,8 @@ export class Perceptor extends PerceptorBase {
   public settings: any;
 
   public async run(): Promise<void> {
+    this.logger.info('start.');
+
     // wait until <body> element is ready
     await elementReady('body', { waitForChildren: false });
     this.logger.info('body element is ready.');
@@ -23,7 +25,7 @@ export class Perceptor extends PerceptorBase {
 
     // run every features
     Perceptor.Features.forEach(async (Feature, name) => {
-      const featureId = name.replace(name[0],name[0].toLowerCase());
+      const featureId = name.replace(name[0], name[0].toLowerCase());
       this.logger.info('trying to load ', featureId)
       if (this.settings.toJson()[featureId] === false) {
         this.logger.info(featureId, 'is disabled');
@@ -37,6 +39,14 @@ export class Perceptor extends PerceptorBase {
         this.logger.info('running ', featureId)
         const feature = new Feature();
         await feature.run();
+        /**
+         * @zh-CN 检测到页面更新加载时，自动重新运行一次
+         * @en-US addEventListener
+         */
+        document.addEventListener('pjax:end', async () => {
+          await feature.run();
+        });
+
       } catch (error: unknown) {
         this.logger.error(featureId, error)
       }
