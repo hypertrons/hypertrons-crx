@@ -6,7 +6,7 @@ import { utils } from 'github-url-detection';
 import GraphWithList from '../../components/Graph/GraphWithList';
 import ErrorPage from '../../components/ExceptionPage/index';
 import { isPerceptor, runsWhen } from '../../utils/utils';
-import { getGraphData } from '../../api';
+import { getRepoCorrelation,  getDevelopersByRepo} from '../../api/repo';
 import { getMessageI18n, generateGraphDataMap } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
 import { inject2Perceptor } from './Perceptor';
@@ -71,10 +71,10 @@ class ProjectNetwork extends PerceptorBase {
     ProjectNetworkDiv.style.width = "100%";
     this._currentRepo = utils.getRepositoryInfo(window.location)!.nameWithOwner;
     try {
-      const forceGraphDataRaw = await getGraphData(`/repo/${this._currentRepo}.json`);
+      const forceGraphDataRaw = await getRepoCorrelation(this._currentRepo);
       await this.generateForceGraphData(forceGraphDataRaw);
 
-      const circularGraphDataRaw = await getGraphData(`/repo/${this._currentRepo}_top.json`);
+      const circularGraphDataRaw = await getDevelopersByRepo(this._currentRepo);
       await this.generateCircularGraphData(circularGraphDataRaw);
       const settings=await loadSettings();
 
