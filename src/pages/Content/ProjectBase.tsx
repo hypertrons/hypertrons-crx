@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import GraphWithList from '../../components/Graph/GraphWithList';
-import { Dialog,DialogType,ResponsiveMode,Image } from 'office-ui-fabric-react';
-import { getMessageI18n } from '../../utils/utils';
+import {
+  Dialog,DialogType, IButtonProps,Image,TeachingBubble
+} from 'office-ui-fabric-react';
+import { useBoolean } from '@fluentui/react-hooks';
+import { chromeSet, getMessageI18n } from '../../utils/utils';
+import MetaData, { loadMetaData } from '../../utils/metadata';
 
 export interface ProjectBaseProps {
   graphType:string,
@@ -27,7 +31,39 @@ const ProjectBase: React.FC<ProjectBaseProps> =
      developerListData,
      repoListData,
  }) => {
+  const [metaData, setMetaData] = useState(new MetaData());
   const [showDialog, setShowDialog] = useState(false);
+  const [inited, setInited] = useState(false);
+  const [teachingBubbleVisible, { toggle: toggleTeachingBubbleVisible }] = useBoolean(true);
+  useEffect(() => {
+    const initMetaData = async () => {
+      const temp=await loadMetaData();
+      setMetaData(temp);
+      setInited(true);
+    }
+    initMetaData();
+  }, []);
+  
+  const disableButtonProps: IButtonProps = React.useMemo(
+    () => ({
+      children: getMessageI18n('teachingBubble_text_disable'),
+      onClick: async ()=>{
+        metaData.showTeachingBubble=false;
+        await chromeSet("meta_data", metaData.toJson());
+        toggleTeachingBubbleVisible();
+      },
+    }),
+    [metaData, toggleTeachingBubbleVisible],
+  );
+  
+  const confirmButtonProps: IButtonProps = React.useMemo(
+    () => ({
+      children: getMessageI18n("teachingBubble_text_ok"),
+      onClick: toggleTeachingBubbleVisible,
+    }),
+    [toggleTeachingBubbleVisible],
+  );
+
   return (
     <div
       style={{
@@ -38,6 +74,7 @@ const ProjectBase: React.FC<ProjectBaseProps> =
         Hypertrons network
       </h2>
       <Image
+        id="charts_icon"
         src={chrome.runtime.getURL("charts.png")}
         height={50}
         width={50}
@@ -45,6 +82,18 @@ const ProjectBase: React.FC<ProjectBaseProps> =
           setShowDialog(true)
         }}
       />
+      {
+        teachingBubbleVisible &&metaData.showTeachingBubble &&inited &&
+        <TeachingBubble
+          target="#charts_icon"
+          primaryButtonProps={disableButtonProps}
+          secondaryButtonProps={confirmButtonProps}
+          onDismiss={toggleTeachingBubbleVisible}
+          headline={getMessageI18n('teachingBubble_text_headline')}
+        >
+          {getMessageI18n('teachingBubble_text_content')}
+        </TeachingBubble>
+      }
       <Dialog
         hidden={!showDialog}
         onDismiss={() => {
@@ -54,7 +103,6 @@ const ProjectBase: React.FC<ProjectBaseProps> =
           type: DialogType.normal,
           title: getMessageI18n("component_projectNetwork_title")
         }}
-        responsiveMode={ResponsiveMode.large}
       >
         <div >
           < GraphWithList

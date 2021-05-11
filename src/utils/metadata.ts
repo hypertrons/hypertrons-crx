@@ -7,6 +7,7 @@ class MetaData {
   avatar:string;
   name:string;
   id:string;
+  showTeachingBubble:boolean;
 
   constructor() {
     this.timeLastNoticeNewUpdate=new Date().valueOf()-24*60*60*1000;
@@ -15,6 +16,7 @@ class MetaData {
     this.avatar="";
     this.name="";
     this.id="";
+    this.showTeachingBubble=true;
   }
 
   loadFromJson(data: { [key: string]: any; }): void {
@@ -36,6 +38,9 @@ class MetaData {
     if ("id" in data) {
       this.id = data["id"];
     }
+    if("showTeachingBubble" in data){
+      this.showTeachingBubble=data["showTeachingBubble"];
+    }
   }
 
   toJson(): { [key: string]: any; } {
@@ -46,6 +51,7 @@ class MetaData {
     result["avatar"] = this.avatar;
     result["name"] = this.name;
     result["id"] = this.id;
+    result["showTeachingBubble"]=this.showTeachingBubble;
     return result;
   }
 }
