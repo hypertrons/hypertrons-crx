@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import GraphWithList from '../../components/Graph/GraphWithList';
+import Graph from '../../components/Graph/Graph';
 import {
   Dialog,DialogType, IButtonProps,Image,TeachingBubble
 } from 'office-ui-fabric-react';
@@ -9,27 +9,15 @@ import MetaData, { loadMetaData } from '../../utils/metadata';
 
 export interface ProjectBaseProps {
   graphType:string,
-  forceGraphData:NetworkData,
-  forceGraphDataGraphin:NetworkData,
-  circularGraphData:NetworkData,
-  circularGraphDataGraphin:NetworkData,
-  developerColumns:any,
-  repoColumns:any,
-  developerListData:any,
-  repoListData:any,
+  developerCollabrationData:NetworkData,
+  participatedProjectsData:NetworkData,
 }
 
 const ProjectBase: React.FC<ProjectBaseProps> =
   ({
      graphType,
-     forceGraphData,
-     forceGraphDataGraphin,
-     circularGraphData,
-     circularGraphDataGraphin,
-     developerColumns,
-     repoColumns,
-     developerListData,
-     repoListData,
+     developerCollabrationData,
+     participatedProjectsData,
  }) => {
   const [metaData, setMetaData] = useState(new MetaData());
   const [showDialog, setShowDialog] = useState(false);
@@ -105,23 +93,15 @@ const ProjectBase: React.FC<ProjectBaseProps> =
         }}
       >
         <div >
-          < GraphWithList
-            layout='force'
-            graphType={graphType}
+          < Graph
             title={getMessageI18n('component_developerCollabrationNetwork_title')}
-            graphData={forceGraphData}
-            graphDataGraphin={forceGraphDataGraphin}
-            columns={developerColumns}
-            listData={developerListData}
-          />
-          < GraphWithList
-            layout='circular'
             graphType={graphType}
+            data={developerCollabrationData}
+          />
+          < Graph
             title={getMessageI18n('component_mostParticipatedProjects_title')}
-            graphData={circularGraphData}
-            graphDataGraphin={circularGraphDataGraphin}
-            columns={repoColumns}
-            listData={repoListData}
+            graphType={graphType}
+            data={participatedProjectsData}
           />
         </div>
       </Dialog>
