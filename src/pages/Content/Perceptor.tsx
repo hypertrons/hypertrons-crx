@@ -1,5 +1,3 @@
-import $ from 'jquery';
-import elementReady from 'element-ready';
 import { utils, isRepo } from 'github-url-detection';
 import { loadSettings, mergeSettings } from '../../utils/settings'
 import { getConfigFromGithub } from '../../api/github';
@@ -16,7 +14,7 @@ export class Perceptor extends PerceptorBase {
     await this.loadFeatures();
     /**
      * @zh-CN 检测到页面更新加载时，自动重新运行一次
-     * @en-US addEventListener
+     * @en-US Automatically rerun once when page update loading is detected
     */
     document.addEventListener('pjax:end', async () => {
       await this.loadFeatures();
@@ -72,4 +70,3 @@ export class Perceptor extends PerceptorBase {
 export const inject2Perceptor = (constructor: Function): void => {
   Perceptor.Features.set(constructor.name, constructor)
 }
-

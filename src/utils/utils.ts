@@ -47,15 +47,6 @@ export function getMessageI18n(key: string) {
 
 export const isPerceptor = (): boolean => window.location.search.includes('perceptor');
 
-export const minMaxRange = (data: Map<string, number>, MIN: number, MAX: number) => {
-  const min = Math.min(...data.values());
-  const max = Math.max(...data.values());
-  for (let key of data.keys()) {
-    data.set(key, ((data.get(key)! - min) / (1.0 * (max - min))) * (MAX - MIN) + MIN);
-  }
-  return data;
-}
-
 export const compareVersion = (version_1: string, version_2: string) => {
   const v1 = version_1.split('.');
   const v2 = version_2.split('.');
@@ -128,28 +119,13 @@ export enum GraphType {
   antv = "antv", echarts = "echarts"
 }
 
-export function generateGraphDataMap(rawData: any) {
-  const nodeMap = new Map<string, number>();
-  const nodeMap2Range = new Map<string, number>();
-  const edgeMap = new Map<string, number>();
-  const edgeMap2Range = new Map<string, number>();
-
-  rawData.nodes.forEach((node: any) => {
-    nodeMap.set(node.name, node.value);
-    nodeMap2Range.set(node.name, node.value);
-  });
-  rawData.edges.forEach((edge: any) => {
-    edgeMap.set(`${edge.source} ${edge.target}`, edge.weight);
-    edgeMap2Range.set(`${edge.source} ${edge.target}`, edge.weight);
-  });
-
-  minMaxRange(nodeMap2Range, 10, 50);
-  minMaxRange(edgeMap2Range, 1, 10);
-
-  return {
-    nodeMap,
-    edgeMap,
-    nodeMap2Range,
-    edgeMap2Range,
+export function mockSuccessResponse(data: any) {
+  if (process.env.NODE_ENV !== 'production') {
+    return {
+      status: 200,
+      statusText: 'ok',
+      data: data,
+    };
   }
+  return null;
 }
