@@ -30,7 +30,7 @@ class DeveloperNetwork extends PerceptorBase {
   }
 
   public async run(): Promise<void> {
-    const pinnedReposDiv = $('.js-pinned-items-reorder-container').parent();
+    const profileArea=$('.js-profile-editable-area').parent();
     const DeveloperNetworkDiv = document.createElement('div');
     DeveloperNetworkDiv.id = 'developer-network';
     DeveloperNetworkDiv.style.width = "100%";
@@ -49,7 +49,7 @@ class DeveloperNetwork extends PerceptorBase {
         ,
         DeveloperNetworkDiv,
       );
-      pinnedReposDiv.before(DeveloperNetworkDiv);
+      profileArea.after(DeveloperNetworkDiv);
     } catch (error) {
       this.logger.error('DeveloperNetwork', error);
       return;
