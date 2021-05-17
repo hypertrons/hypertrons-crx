@@ -1,4 +1,4 @@
-const API_TARGET = 'http://hypertrons-oss.x-lab.info'
+const API_TARGET = 'https://hypertrons-oss.x-lab.info'
 
 /**
  * @zh-CN 处理网络请求
