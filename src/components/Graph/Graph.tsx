@@ -1,11 +1,15 @@
-import React from 'react';
-import ReactECharts from 'echarts-for-react';
+import React, { useState, CSSProperties } from 'react';
+import EChartsWrapper from './Echarts/index';
 import { fastLerp, stringify } from '../../utils/color';
-import Graphin, { Utils } from '@antv/graphin';
-import { Stack, Separator } from 'office-ui-fabric-react';
-import { GraphType } from "../../utils/utils"
+import Graphin from '@antv/graphin';
+import { Stack, Toggle } from 'office-ui-fabric-react';
+import { getMessageI18n, GraphType } from "../../utils/utils"
 import { linearMap } from '../../utils/number';
 
+enum ThemeType {
+  light = 'light',
+  dark = 'dark'
+}
 export interface VisualMapOption {
   node: {
     min: number,
@@ -20,15 +24,14 @@ export interface VisualMapOption {
 }
 
 interface GraphProps {
-  title: string;
   graphType: string;
   data: NetworkData;
   visualMapOption?: VisualMapOption;
+  style?: CSSProperties;
   onChartClick?: any;
 }
 
 const Graph: React.FC<GraphProps> = ({
-  title,
   graphType,
   data,
   visualMapOption = {
@@ -43,11 +46,14 @@ const Graph: React.FC<GraphProps> = ({
       width: [1, 3]
     }
   },
+  style,
   onChartClick = (param: any, echarts: any) => {
     const url = 'https://github.com/' + param.data.name;
     window.location.href = url;
   },
 }) => {
+
+  const [theme, setTheme] = useState(ThemeType.light);
 
   const generateEchartsData = (data: any): any => {
     const generateNodes = (nodes: any[]): any => {
@@ -130,26 +136,36 @@ const Graph: React.FC<GraphProps> = ({
       graphData = generateEchartsData(data);
       graphOption = {
         tooltip: {},
+        animation: true,
+        animationDuration: 3000,
         series: [
           {
             type: 'graph',
             layout: 'force',
             nodes: graphData.nodes,
             edges: graphData.edges,
-            draggable: true,
+            // Enable mouse zooming and translating. See: https://echarts.apache.org/en/option.html#series-graph.roam
             roam: true,
             label: {
               position: 'right'
             },
             force: {
-              repulsion: 150,
-              edgeLength: 150
+              repulsion: 50,
+              edgeLength: [1, 100],
+              // Disable the iteration animation of layout. See: https://echarts.apache.org/en/option.html#series-graph.force.layoutAnimation
+              layoutAnimation: false,
             },
-            zoom: 0.9,
             lineStyle: {
-              curveness: 0.2,
+              curveness: 0.3,
               opacity: 0.7
-            }
+            },
+            emphasis: {
+              focus: 'adjacency',
+              label: {
+                position: 'right',
+                show: true
+              }
+            },
           }
         ]
       };
@@ -161,48 +177,54 @@ const Graph: React.FC<GraphProps> = ({
       break;
   }
 
-  return (
-    <div className="hypertrons-crx-border hypertrons-crx-container">
-      <p className="hypertrons-crx-title">{title}</p>
-      <Stack horizontal>
 
-        <Stack.Item className='verticalStackItemStyle'>
-          {
-            graphType === GraphType.echarts &&
-            <ReactECharts
-              option={graphOption}
-              onEvents={{
-                'click': onChartClick,
-              }}
-              style={{
-                height: '332px',
-                width: '100%'
-              }}
-            />
-          }
-          {
-            graphType === GraphType.antv &&
-            <div
-              style={{
-                width: '100%',
-                overflow: 'hidden',
-                height: '332px'
-              }}
-            >
-              <Graphin
-                data={graphData}
-              >
-              </Graphin>
-            </div>
-          }
-        </Stack.Item>
-        <Stack.Item className='verticalSeparatorStyle'>
-          <Separator vertical />
-        </Stack.Item>
-        <Stack.Item className='verticalStackItemStyle'>
-        </Stack.Item>
+  return (
+    <Stack>
+      <Stack
+        horizontal
+        style={{ margin: "5px", padding: "3px" }}
+        tokens={{
+          childrenGap: 10
+        }}
+      >
+        <Toggle
+          defaultChecked={theme === ThemeType.dark}
+          onText={getMessageI18n("component_darkMode")}
+          offText={getMessageI18n("component_darkMode")}
+          onChange={(e, checked) => {
+            checked ? setTheme(ThemeType.dark) : setTheme(ThemeType.light);
+          }}
+        />
       </Stack>
-    </div>
+      <Stack className='hypertrons-crx-border'>
+        {
+          graphType === GraphType.echarts &&
+          <EChartsWrapper
+            option={graphOption}
+            onEvents={{
+              'click': onChartClick,
+            }}
+            theme={theme}
+            style={style}
+          />
+        }
+        {
+          graphType === GraphType.antv &&
+          <div
+            style={{
+              width: '100%',
+              overflow: 'hidden',
+              height: '332px'
+            }}
+          >
+            <Graphin
+              data={graphData}
+            >
+            </Graphin>
+          </div>
+        }
+      </Stack>
+    </Stack>
   )
 };
 

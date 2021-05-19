@@ -41,6 +41,21 @@
   "global_contribution": {
     "message": "贡献度"
   },
+  "global_period": {
+    "message": "周期"
+  },
+  "global_day": {
+    "message": "天"
+  },
+  "global_week": {
+    "message": "周"
+  },
+  "global_month": {
+    "message": "月"
+  },
+  "global_here": {
+    "message": "这里"
+  },
   "component_error_message": {
     "message": "抱歉，该组件出现了一点问题..."
   },
@@ -50,14 +65,56 @@
   "component_developerCollabrationNetwork_title": {
     "message": "开发者协作网络图"
   },
+  "component_developerCollabrationNetwork_description": {
+    "message": "开发者协作网络图展示了在给定的时间段内，开发者与开发者之间的协作关系"
+  },
+  "component_developerCollabrationNetwork_description_node": {
+    "message": "节点：开发者，节点大小表示开发者活跃度"
+  },
+  "component_developerCollabrationNetwork_description_edge": {
+    "message": "边：开发者与开发者之间的协作关系，边的粗细表示开发者间联系的紧密程度"
+  },
+  "component_activity_description": {
+    "message": "活跃度定义: 请参考"
+  },
   "component_projectCorrelationNetwork_title": {
     "message": "项目关系网络图"
+  },
+  "component_projectCorrelationNetwork_description": {
+    "message": "项目关系网络图展示了在给定的时间段内，项目与项目之间的连接关系"
+  },
+  "component_projectCorrelationNetwork_description_node": {
+    "message": "节点：项目，节点大小表示项目活跃度"
+  },
+  "component_projectCorrelationNetwork_description_edge": {
+    "message": "边：项目与项目之间的连接关系，边的粗细表示项目间联系的紧密程度"
   },
   "component_mostParticipatedProjects_title": {
     "message": "活跃仓库网络图"
   },
+  "component_mostParticipatedProjects_description": {
+    "message": "活跃仓库网络图展示了在给定的时间段内，开发者的活跃项目"
+  },
+  "component_mostParticipatedProjects_description_node": {
+    "message": "节点：项目，节点大小表示项目活跃度"
+  },
+  "component_mostParticipatedProjects_description_edge": {
+    "message": "边：项目与项目之间的连接关系，边的粗细表示项目间联系的紧密程度"
+  },
   "component_activeDeveloperCollabrationNetwork_title": {
     "message": "项目活跃开发者协作网络图"
+  },
+  "component_activeDeveloperCollabrationNetwork_description": {
+    "message": "项目活跃开发者协作网络图展示了在给定的时间段内，项目内活跃的开发者之间的协作关系"
+  },
+  "component_activeDeveloperCollabrationNetwork_description_node": {
+    "message": "节点：开发者，节点大小表示开发者对项目活跃度的贡献值"
+  },
+  "component_activeDeveloperCollabrationNetwork_description_edge": {
+    "message": "边：开发者与开发者之间的连接关系，边的粗细表示开发者间联系的紧密程度"
+  },
+  "component_darkMode": {
+    "message": "深色模式"
   },
   "options_header_settings": {
     "message": "设置"
