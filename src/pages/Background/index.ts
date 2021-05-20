@@ -25,7 +25,6 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
 
   if(name===BackgroundTasks.update){
     if(settings.checkForUpdates){
-      console.log("check for updates");
       const [currentVersion,latestVersion,updateUrl]=await checkUpdate();
       if(compareVersion(currentVersion,latestVersion)===-1){
         const timeNow=new Date().valueOf();

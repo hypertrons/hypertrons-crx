@@ -4,13 +4,14 @@ import {
   Toggle, DefaultButton, Checkbox,Text,Link,
   Spinner, MessageBar, MessageBarType,
   Dialog,DialogType,TextField,ChoiceGroup, IChoiceGroupOption,
-  Image,ImageFit
+  Image,ImageFit,DialogFooter, PrimaryButton
 } from 'office-ui-fabric-react';
 import { initializeIcons } from '@uifabric/icons';
 import { getMessageI18n, chromeSet, compareVersion, GraphType } from '../../utils/utils';
 import { checkUpdate,checkIsTokenAvailabe } from '../../services/common';
 import Settings,{ loadSettings } from "../../utils/settings"
 import MetaData, { loadMetaData } from '../../utils/metadata';
+import { getNotificationInformation } from '../../services/background';
 import './index.css';
 
 initializeIcons();
@@ -30,6 +31,9 @@ const OptionsPage: React.FC = () => {
   const [checkingToken, setCheckingToken] = useState(false);
   const [showDialogToken, setShowDialogToken] = useState(false);
   const [showDialogTokenError, setShowDialogTokenError] = useState(false);
+  const [showDialogNotification, setShowDialogNotification] = useState(false);
+  const [notificationId,setNotificationId]= useState(0);
+  const [notification,setNotification]= useState("");
   const [updateStatus, setUpdateStatus] = useState(UpdateStatus.undefine);
 
   const options: IChoiceGroupOption[] = [
@@ -62,10 +66,22 @@ const OptionsPage: React.FC = () => {
 
   useEffect(() => {
     const initMetaData = async () => {
-      const temp=await loadMetaData();
-      setMetaData(temp);
-      if(temp.token!==""){
-        setToken(temp.token);
+      const tempMetaData=await loadMetaData();
+      setMetaData(tempMetaData);
+      if(tempMetaData.token!==""){
+        setToken(tempMetaData.token);
+      }
+      const notificationInformation =await getNotificationInformation();
+      if(notificationInformation.is_published&&tempMetaData.idLastNotication<notificationInformation.id){
+        const language=chrome.i18n.getUILanguage();
+        if(language.startsWith("zh")){
+          setNotification(notificationInformation.content.zh);
+        }
+        else{
+          setNotification(notificationInformation.content.en);
+        }
+        setNotificationId(notificationInformation.id);
+        setShowDialogNotification(true);
       }
     }
     initMetaData();
@@ -101,6 +117,42 @@ const OptionsPage: React.FC = () => {
 
   return (
     <Stack>
+      {
+        showDialogNotification&&
+        <Dialog
+          hidden={!showDialogNotification}
+          onDismiss={() => {
+            setShowDialogNotification(false);
+          }}
+          dialogContentProps={{
+            type: DialogType.normal,
+            title: getMessageI18n("global_notificationTitle")
+          }}
+        >
+          <Text variant="mediumPlus">
+            {notification}
+          </Text>
+          <DialogFooter>
+            <DefaultButton
+              onClick={() => {
+                setShowDialogNotification(false);
+              }}
+            >
+              {getMessageI18n("global_btn_ok")}
+            </DefaultButton>
+            <PrimaryButton
+              onClick={async () => {
+                metaData.idLastNotication=notificationId;
+                setMetaData(metaData);
+                await chromeSet("meta_data", metaData.toJson());
+                setShowDialogNotification(false);
+              }}
+            >
+              {getMessageI18n("global_btn_disable")}
+            </PrimaryButton>
+          </DialogFooter>
+        </Dialog>
+      }
       {
         showDialogToken&&
         <Dialog

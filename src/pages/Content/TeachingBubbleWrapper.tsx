@@ -28,7 +28,7 @@ const TeachingBubbleWrapper: React.FC<TeachingBubbleProps> =
 
     const disableButtonProps: IButtonProps = React.useMemo(
       () => ({
-        children: getMessageI18n('teachingBubble_text_disable'),
+        children: getMessageI18n('global_btn_disable'),
         onClick: async ()=>{
           metaData.showTeachingBubble=false;
           await chromeSet("meta_data", metaData.toJson());
@@ -40,7 +40,7 @@ const TeachingBubbleWrapper: React.FC<TeachingBubbleProps> =
 
     const confirmButtonProps: IButtonProps = React.useMemo(
       () => ({
-        children: getMessageI18n("teachingBubble_text_ok"),
+        children: getMessageI18n("global_btn_ok"),
         onClick: toggleTeachingBubbleVisible,
       }),
       [toggleTeachingBubbleVisible],
