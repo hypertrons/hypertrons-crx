@@ -2,6 +2,7 @@ import { chromeGet, isNull } from './utils';
 
 class MetaData {
   timeLastNoticeNewUpdate: number;
+  idLastNotication: number;
   updateUrl:string;
   token:string;
   avatar:string;
@@ -9,8 +10,10 @@ class MetaData {
   id:string;
   showTeachingBubble:boolean;
 
+
   constructor() {
     this.timeLastNoticeNewUpdate=new Date().valueOf()-24*60*60*1000;
+    this.idLastNotication=0;
     this.updateUrl="https://github.com/hypertrons/hypertrons-crx";
     this.token="";
     this.avatar="";
@@ -22,6 +25,9 @@ class MetaData {
   loadFromJson(data: { [key: string]: any; }): void {
     if ("timeLastNoticeNewUpdate" in data) {
       this.timeLastNoticeNewUpdate = data["timeLastNoticeNewUpdate"];
+    }
+    if ("idLastNotication" in data) {
+      this.idLastNotication = data["idLastNotication"];
     }
     if ("updateUrl" in data) {
       this.updateUrl = data["updateUrl"];
@@ -46,6 +52,7 @@ class MetaData {
   toJson(): { [key: string]: any; } {
     const result: { [key: string]: any; } = {};
     result["timeLastNoticeNewUpdate"] = this.timeLastNoticeNewUpdate;
+    result["idLastNotication"]=this.idLastNotication;
     result["updateUrl"] = this.updateUrl;
     result["token"] = this.token;
     result["avatar"] = this.avatar;

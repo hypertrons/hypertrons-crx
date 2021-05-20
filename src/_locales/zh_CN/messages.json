@@ -17,6 +17,9 @@
   "global_btn_ok": {
     "message": "确定"
   },
+  "global_btn_disable": {
+    "message": "不再提示"
+  },
   "global_btn_goBack": {
     "message": "返回"
   },
@@ -55,6 +58,9 @@
   },
   "global_here": {
     "message": "这里"
+  },
+  "global_notificationTitle": {
+    "message": "开发者通知"
   },
   "component_error_message": {
     "message": "抱歉，该组件出现了一点问题..."
@@ -169,12 +175,6 @@
   },
   "notification_message_newUpdate":{
     "message": "版本号: %v"
-  },
-  "teachingBubble_text_ok": {
-    "message": "确定"
-  },
-  "teachingBubble_text_disable": {
-    "message": "不再提示"
   },
   "teachingBubble_text_headline": {
     "message": "探索Hypertrons图表"

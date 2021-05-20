@@ -6,7 +6,7 @@
     "message": "Hypertrons Robot"
   },
   "manifest_iconTitle": {
-    "message": "[loading……]"
+    "message": "[Loading……]"
   },
   "global_error_message": {
     "message": "Sorry，an error occurred while loading hypertrons-crx extention..."
@@ -15,7 +15,10 @@
     "message": "Search"
   },
   "global_btn_ok": {
-    "message": "ok"
+    "message": "Ok"
+  },
+  "global_btn_disable": {
+    "message": "Don't show this again"
   },
   "global_btn_goBack": {
     "message": "Go back"
@@ -55,6 +58,9 @@
   },
   "global_here": {
     "message": "here"
+  },
+  "global_notificationTitle": {
+    "message": "Messages from the developers"
   },
   "component_error_message": {
     "message": "Sorry, an error occurred while loading this component ..."
@@ -144,40 +150,34 @@
     "message": "Check"
   },
   "options_text_checking": {
-    "message": "checking for updates"
+    "message": "Checking for updates"
   },
   "options_text_updateStatusYes": {
-    "message": "new update availabe"
+    "message": "New update availabe"
   },
   "options_text_updateStatusNo": {
-    "message": "up to date"
+    "message": "Up to date"
   },
   "options_text_goGetUpdate": {
-    "message": "get the update"
+    "message": "Get the update"
   },
   "options_dialog_token_title": {
-    "message": "please enter your github token"
+    "message": "Please enter your github token"
   },
   "options_dialog_token_message": {
     "message": "How to generate a github token?"
   },
   "options_dialog_token_checking": {
-    "message": "checking"
+    "message": "Checking"
   },
   "options_dialog_token_error": {
-    "message": "bad token"
+    "message": "Bad token"
   },
   "notification_title_newUpdate": {
-    "message": "new update available"
+    "message": "New update available"
   },
   "notification_message_newUpdate": {
-    "message": "version: %v"
-  },
-  "teachingBubble_text_ok": {
-    "message": "Got it"
-  },
-  "teachingBubble_text_disable": {
-    "message": "Don't show this again"
+    "message": "Version: %v"
   },
   "teachingBubble_text_headline": {
     "message": "Explore Hypertrons charts"
