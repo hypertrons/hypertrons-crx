@@ -8,7 +8,7 @@ import { runsWhen, getMessageI18n } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
 import { inject2Perceptor } from './Perceptor';
 import { loadSettings } from '../../utils/settings';
-import Graph, { VisualMapOption } from '../../components/Graph/Graph';
+import Graph from '../../components/Graph/Graph';
 import TeachingBubbleWrapper from './TeachingBubbleWrapper'
 
 interface DeveloperNetworkViewProps {
@@ -48,19 +48,6 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
     window.location.href = url;
   };
 
-  const visualMapOption: VisualMapOption = {
-    node: {
-      min: 0,
-      max: 30,
-      symbolSize: [5, 10]
-    },
-    edge: {
-      min: 0,
-      max: 20,
-      width: [1, 3]
-    }
-  }
-
   const dropdownStyles: Partial<IDropdownStyles> = {
     dropdown: { width: 120 }
   }
@@ -89,7 +76,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
 
   const graphStyle = {
     width: '400px',
-    height: '260px'
+    height: '380px'
   }
 
   const activityDefinitionLink = 'https://github.com/X-lab2017/open-digger/';
@@ -202,7 +189,6 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
               < Graph
                 graphType={graphType}
                 data={participatedProjectsData!}
-                visualMapOption={visualMapOption}
                 onChartClick={onProjectChartClick}
                 style={graphStyle}
               />

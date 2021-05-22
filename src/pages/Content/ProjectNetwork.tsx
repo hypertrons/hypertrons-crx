@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import $ from 'jquery';
 import { utils } from 'github-url-detection';
 import { Stack, Dropdown, IDropdownStyles, IDropdownOption, Link } from 'office-ui-fabric-react';
-import Graph, { VisualMapOption } from '../../components/Graph/Graph';
+import Graph from '../../components/Graph/Graph';
 import ErrorPage from '../../components/ExceptionPage/index';
 import { isPerceptor, runsWhen } from '../../utils/utils';
 import { getRepoCorrelation, getDevelopersByRepo } from '../../api/repo';
@@ -48,19 +48,6 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
     window.location.href = url;
   };
 
-  const visualMapOption: VisualMapOption = {
-    node: {
-      min: 0,
-      max: 30,
-      symbolSize: [5, 10]
-    },
-    edge: {
-      min: 0,
-      max: 20,
-      width: [1, 3]
-    }
-  }
-
   const dropdownStyles: Partial<IDropdownStyles> = {
     dropdown: { width: 120 }
   }
@@ -89,7 +76,7 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
 
   const graphStyle = {
     width: '500px',
-    height: '260px'
+    height: '380px'
   }
 
   const activityDefinitionLink = 'https://github.com/X-lab2017/open-digger/';
@@ -173,7 +160,6 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
             < Graph
               graphType={graphType}
               data={developersByRepoData!}
-              visualMapOption={visualMapOption}
               style={graphStyle}
             />
           </Stack>
@@ -205,20 +191,10 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
 @runsWhen([isPerceptor])
 class ProjectNetwork extends PerceptorBase {
   private _currentRepo: string;
-  private _repoCorrelationData: NetworkData;
-  private _developersByRepoData: NetworkData;
 
   constructor() {
     super();
     this._currentRepo = '';
-    this._repoCorrelationData = {
-      nodes: [],
-      edges: [],
-    };
-    this._developersByRepoData = {
-      nodes: [],
-      edges: [],
-    };
   }
   public async run(): Promise<void> {
     const perceptorContainer = $('#perceptor-layout').children();

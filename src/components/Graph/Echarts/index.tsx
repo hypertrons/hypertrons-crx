@@ -15,9 +15,7 @@ interface EChartsWrapperProps {
   */
   readonly className?: string;
   /**
-   * echarts theme config, can be:
-   * 1. theme name string
-   * 2. theme object
+   * echarts theme config
    */
   readonly theme?: 'light' | 'dark';
   /**
@@ -33,7 +31,7 @@ const EChartsWrapper: React.FC<EChartsWrapperProps> = ({
     height: 300
   },
   className,
-  theme = 'light',
+  theme,
   onEvents = {}
 }) => {
   let ele: HTMLDivElement;
