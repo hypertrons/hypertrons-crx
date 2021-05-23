@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import {
   Pivot, PivotItem, PivotLinkFormat, Stack,
-  Toggle, DefaultButton, Checkbox,Text,Link,
+  Toggle, DefaultButton, Checkbox, Text, Link,
   Spinner, MessageBar, MessageBarType,
-  Dialog,DialogType,TextField,ChoiceGroup, IChoiceGroupOption,
-  Image,ImageFit,DialogFooter, PrimaryButton
+  Dialog, DialogType, TextField, ChoiceGroup, IChoiceGroupOption,
+  Image, ImageFit, DialogFooter, PrimaryButton
 } from 'office-ui-fabric-react';
 import { initializeIcons } from '@uifabric/icons';
 import { getMessageI18n, chromeSet, compareVersion, GraphType } from '../../utils/utils';
-import { checkUpdate,checkIsTokenAvailabe } from '../../services/common';
-import Settings,{ loadSettings } from "../../utils/settings"
+import { checkUpdate, checkIsTokenAvailabe } from '../../services/common';
+import Settings, { loadSettings } from "../../utils/settings"
 import MetaData, { loadMetaData } from '../../utils/metadata';
 import { getNotificationInformation } from '../../services/background';
 import './index.css';
@@ -32,8 +32,8 @@ const OptionsPage: React.FC = () => {
   const [showDialogToken, setShowDialogToken] = useState(false);
   const [showDialogTokenError, setShowDialogTokenError] = useState(false);
   const [showDialogNotification, setShowDialogNotification] = useState(false);
-  const [notificationId,setNotificationId]= useState(0);
-  const [notification,setNotification]= useState("");
+  const [notificationId, setNotificationId] = useState(0);
+  const [notification, setNotification] = useState("");
   const [updateStatus, setUpdateStatus] = useState(UpdateStatus.undefine);
 
   const options: IChoiceGroupOption[] = [
@@ -57,7 +57,7 @@ const OptionsPage: React.FC = () => {
 
   useEffect(() => {
     const initSettings = async () => {
-      const temp=await loadSettings();
+      const temp = await loadSettings();
       setSettings(temp);
       setInited(true);
     }
@@ -66,18 +66,18 @@ const OptionsPage: React.FC = () => {
 
   useEffect(() => {
     const initMetaData = async () => {
-      const tempMetaData=await loadMetaData();
+      const tempMetaData = await loadMetaData();
       setMetaData(tempMetaData);
-      if(tempMetaData.token!==""){
+      if (tempMetaData.token !== "") {
         setToken(tempMetaData.token);
       }
-      const notificationInformation =await getNotificationInformation();
-      if(notificationInformation.is_published&&tempMetaData.idLastNotication<notificationInformation.id){
-        const language=chrome.i18n.getUILanguage();
-        if(language.startsWith("zh")){
+      const notificationInformation = await getNotificationInformation();
+      if (notificationInformation.is_published && tempMetaData.idLastNotication < notificationInformation.id) {
+        const language = chrome.i18n.getUILanguage();
+        if (language.startsWith("zh")) {
           setNotification(notificationInformation.content.zh);
         }
-        else{
+        else {
           setNotification(notificationInformation.content.en);
         }
         setNotificationId(notificationInformation.id);
@@ -89,36 +89,36 @@ const OptionsPage: React.FC = () => {
 
   useEffect(() => {
     // @ts-ignore
-    const details=chrome.app.getDetails();
+    const details = chrome.app.getDetails();
     setVersion(details["version"]);
   }, [version]);
 
-  const saveSettings = async (settings:Settings) => {
+  const saveSettings = async (settings: Settings) => {
     setSettings(settings);
     await chromeSet("settings", settings.toJson());
   }
 
-  const checkUpdateManually= async ()=>{
+  const checkUpdateManually = async () => {
     setUpdateStatus(UpdateStatus.undefine);
     setCheckingUpdate(true);
-    const [currentVersion,latestVersion]=await checkUpdate();
-    if(compareVersion(currentVersion,latestVersion)===-1) {
+    const [currentVersion, latestVersion] = await checkUpdate();
+    if (compareVersion(currentVersion, latestVersion) === -1) {
       setUpdateStatus(UpdateStatus.yes);
     }
-    else{
+    else {
       setUpdateStatus(UpdateStatus.no);
     }
     setCheckingUpdate(false);
   }
 
   if (!inited) {
-    return (<div/>);
+    return (<div />);
   }
 
   return (
     <Stack>
       {
-        showDialogNotification&&
+        showDialogNotification &&
         <Dialog
           hidden={!showDialogNotification}
           onDismiss={() => {
@@ -142,7 +142,7 @@ const OptionsPage: React.FC = () => {
             </DefaultButton>
             <PrimaryButton
               onClick={async () => {
-                metaData.idLastNotication=notificationId;
+                metaData.idLastNotication = notificationId;
                 setMetaData(metaData);
                 await chromeSet("meta_data", metaData.toJson());
                 setShowDialogNotification(false);
@@ -154,7 +154,7 @@ const OptionsPage: React.FC = () => {
         </Dialog>
       }
       {
-        showDialogToken&&
+        showDialogToken &&
         <Dialog
           hidden={!showDialogToken}
           onDismiss={() => {
@@ -165,17 +165,17 @@ const OptionsPage: React.FC = () => {
             title: getMessageI18n("options_dialog_token_title")
           }}
         >
-          <Stack horizontal style={{fontSize:16,margin:5}}>
+          <Stack horizontal style={{ fontSize: 16, margin: 5 }}>
             <Link href="https://github.com/settings/tokens" target="_blank" underline>
               {getMessageI18n("options_dialog_token_message")}
             </Link>
           </Stack>
           {
-            checkingToken&&
+            checkingToken &&
             <Spinner label={getMessageI18n("options_dialog_token_checking")} />
           }
           {
-            showDialogTokenError&&
+            showDialogTokenError &&
             <MessageBar
               messageBarType={MessageBarType.error}
             >
@@ -186,17 +186,17 @@ const OptionsPage: React.FC = () => {
             horizontal
             horizontalAlign="space-around"
             verticalAlign="end"
-            style={{margin:"10px"}}
+            style={{ margin: "10px" }}
             tokens={{
               childrenGap: 15
             }}
           >
             <TextField
-              style={{width:"200px"}}
+              style={{ width: "200px" }}
               value={token}
               defaultValue={token}
-              onChange={(e,value)=>{
-                if(value){
+              onChange={(e, value) => {
+                if (value) {
                   setShowDialogTokenError(false);
                   setToken(value);
                 }
@@ -204,19 +204,19 @@ const OptionsPage: React.FC = () => {
             />
             <DefaultButton
               disabled={checkingToken}
-              onClick={async ()=>{
+              onClick={async () => {
                 setCheckingToken(true);
-                const result=await checkIsTokenAvailabe(token);
+                const result = await checkIsTokenAvailabe(token);
                 setCheckingToken(false)
-                if("id" in result){
-                  metaData.token=token;
-                  metaData.avatar=result["avatar_url"]
-                  metaData.name=result["name"]
-                  metaData.id=result["id"]
+                if ("id" in result) {
+                  metaData.token = token;
+                  metaData.avatar = result["avatar_url"]
+                  metaData.name = result["name"]
+                  metaData.id = result["id"]
                   setMetaData(metaData);
                   await chromeSet("meta_data", metaData.toJson());
                   setShowDialogToken(false);
-                }else{
+                } else {
                   setShowDialogTokenError(true);
                 }
               }}
@@ -226,164 +226,185 @@ const OptionsPage: React.FC = () => {
           </Stack>
         </Dialog>
       }
-      <Stack horizontalAlign="center">
+      <Stack
+        horizontalAlign="center"
+        style={{ paddingBottom: '10px' }}
+      >
         <h1>HYPERTRONS</h1>
         <sub>{`version ${version}`}</sub>
       </Stack>
-      <Stack horizontalAlign="center">
-        <div className="container">
-          <Pivot
-            style={{ margin: "3px" }}
-            linkFormat={PivotLinkFormat.tabs}
+      <Stack
+        horizontalAlign="center"
+        tokens={{
+          childrenGap: 30
+        }}
+      >
+        <Stack.Item className='Box'>
+          <Stack.Item className='Box-header'>
+            <h2 className='Box-title'>
+              {getMessageI18n("options_text_showDifferentComponent")}
+            </h2>
+          </Stack.Item>
+          <Stack
+            style={{ margin: '10px 25px' }}
+            tokens={{
+              childrenGap: 10
+            }}
           >
-            <PivotItem headerText={getMessageI18n("options_header_settings")} itemIcon="Settings">
+            <Checkbox
+              label={getMessageI18n("component_developerCollabrationNetwork_title")}
+              defaultChecked={settings.developerNetwork}
+              onChange={async (e, checked) => {
+                settings.developerNetwork = checked;
+                await saveSettings(settings);
+              }}
+            />
+            <Checkbox
+              label={getMessageI18n("component_projectCorrelationNetwork_title")}
+              defaultChecked={settings.projectNetwork}
+              onChange={async (e, checked) => {
+                settings.projectNetwork = checked;
+                await saveSettings(settings);
+              }}
+            />
+          </Stack>
+        </Stack.Item>
+        <Stack.Item className='Box'>
+          <Stack.Item className='Box-header'>
+            <h2 className='Box-title'>
+              {getMessageI18n("options_text_defaultGraphType")}
+            </h2>
+          </Stack.Item>
+          <Stack
+            style={{ margin: '10px 25px' }}
+            tokens={{
+              childrenGap: 10
+            }}
+          >
+            <ChoiceGroup
+              // label={getMessageI18n("options_text_defaultGraphType")}
+              defaultSelectedKey={settings.graphType}
+              options={options}
+              onChanged={async (option) => {
+                settings.graphType = option.key;
+                await saveSettings(settings);
+              }}
+            />
+          </Stack>
+        </Stack.Item>
+        <Stack.Item className='Box'>
+          <Stack.Item className='Box-header'>
+            <h2 className='Box-title'>
+              {getMessageI18n("options_text_checking")}
+            </h2>
+          </Stack.Item>
+          <Stack
+            style={{ margin: '10px 25px' }}
+            tokens={{
+              childrenGap: 10
+            }}
+          >
+            <Toggle
+              label={getMessageI18n('options_toggle_checkForUpdates')}
+              defaultChecked={settings.checkForUpdates}
+              onText={getMessageI18n('options_toggle_checkForUpdates_onText')}
+              offText={getMessageI18n('options_toggle_checkForUpdates_offText')}
+              onChange={async (e, checked) => {
+                settings.checkForUpdates = checked;
+                await saveSettings(settings);
+              }}
+            />
+            {
+              checkingUpdate &&
+              <Stack horizontalAlign="start">
+                <Spinner label={getMessageI18n("options_text_checking")} />
+              </Stack>
+            }
+            {
+              updateStatus === UpdateStatus.yes &&
+              <MessageBar
+                messageBarType={MessageBarType.success}
+                isMultiline={false}
+              >
+                {getMessageI18n("options_text_updateStatusYes")}
+                <Link href="https://github.com/hypertrons/hypertrons-crx/" target="_blank" underline>
+                  {getMessageI18n("options_text_goGetUpdate")}
+                </Link>
+              </MessageBar>
+            }
+            {
+              updateStatus === UpdateStatus.no &&
+              <MessageBar
+                messageBarType={MessageBarType.info}
+                isMultiline={false}
+              >
+                {getMessageI18n("options_text_updateStatusNo")}
+              </MessageBar>
+            }
+            <DefaultButton
+              style={{
+                width: 120
+              }}
+              disabled={checkingUpdate}
+              onClick={async () => {
+                await checkUpdateManually();
+              }}
+            >
+              {getMessageI18n("options_text_checkUpdate")}
+            </DefaultButton>
+          </Stack>
+        </Stack.Item>
+        <Stack.Item className='Box'>
+          <Stack.Item className='Box-header'>
+            <h2 className='Box-title'>
+              GitHub Token
+            </h2>
+          </Stack.Item>
+          <Stack
+            style={{ margin: '10px 25px' }}
+            tokens={{
+              childrenGap: 10
+            }}
+          >
+            {
+              metaData.token !== "" &&
               <Stack
-                horizontalAlign="space-around"
-                verticalAlign='center'
-                style={{ margin: "5px", padding: "3px" }}
+                horizontal
+                verticalAlign="center"
+                style={{
+                  margin: "5px", padding: "3px", width: "300px",
+                  boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.2)",
+                }}
                 tokens={{
-                  childrenGap: 10
+                  childrenGap: 5
                 }}
               >
-                <Toggle
-                  label={getMessageI18n('options_toggle_checkForUpdates')}
-                  defaultChecked={settings.checkForUpdates}
-                  onText={getMessageI18n('options_toggle_checkForUpdates_onText')}
-                  offText={getMessageI18n('options_toggle_checkForUpdates_offText')}
-                  onChange={async (e, checked) => {
-                    settings.checkForUpdates = checked;
-                    await saveSettings(settings);
-                  }}
+                <Image
+                  width={75}
+                  height={75}
+                  src={metaData.avatar}
+                  imageFit={ImageFit.centerCover}
                 />
-                <Stack
-                  style={{
-                    maxWidth:240
-                  }}
-                  tokens={{
-                    childrenGap:10
-                  }}
+                <Text
+                  variant="large"
+                  style={{ marginLeft: 25, maxWidth: 200, wordWrap: "break-word" }}
                 >
-                  {
-                    checkingUpdate&&
-                    <Stack horizontalAlign="start">
-                      <Spinner label={getMessageI18n("options_text_checking")} />
-                    </Stack>
-                  }
-                  {
-                    updateStatus===UpdateStatus.yes&&
-                    <MessageBar
-                      messageBarType={MessageBarType.success}
-                      isMultiline={false}
-                    >
-                      {getMessageI18n("options_text_updateStatusYes")}
-                      <Link href="https://github.com/hypertrons/hypertrons-crx/" target="_blank" underline>
-                        {getMessageI18n("options_text_goGetUpdate")}
-                      </Link>
-                    </MessageBar>
-                  }
-                  {
-                    updateStatus===UpdateStatus.no&&
-                    <MessageBar
-                      messageBarType={MessageBarType.info}
-                      isMultiline={false}
-                    >
-                      {getMessageI18n("options_text_updateStatusNo")}
-                    </MessageBar>
-                  }
-                  <DefaultButton
-                    style={{
-                      width:120
-                    }}
-                    disabled={checkingUpdate}
-                    onClick={async ()=>{
-                      await checkUpdateManually();
-                    }}
-                  >
-                    {getMessageI18n("options_text_checkUpdate")}
-                  </DefaultButton>
-                </Stack>
-                <ChoiceGroup
-                  label={getMessageI18n("options_text_defaultGraphType")}
-                  defaultSelectedKey={settings.graphType}
-                  options={options}
-                  onChanged={async (option)=>{
-                    settings.graphType=option.key;
-                    await saveSettings(settings);
-                  }}
-                />
-                <Text variant="xxLarge">
-                  {getMessageI18n("options_text_showDifferentComponent")}
+                  {metaData.name}
                 </Text>
-                <Checkbox
-                  label={getMessageI18n("component_developerCollabrationNetwork_title")}
-                  defaultChecked={settings.developerNetwork}
-                  onChange={async (e, checked) => {
-                    settings.developerNetwork = checked;
-                    await saveSettings(settings);
-                  }}
-                />
-                <Checkbox
-                  label={getMessageI18n("component_projectCorrelationNetwork_title")}
-                  defaultChecked={settings.projectNetwork}
-                  onChange={async (e, checked) => {
-                    settings.projectNetwork = checked;
-                    await saveSettings(settings);
-                  }}
-                />
-
-
               </Stack>
-            </PivotItem>
-            <PivotItem headerText={getMessageI18n("options_header_My")} itemIcon="Signin">
-              <Stack
-                horizontalAlign="space-around"
-                verticalAlign='center'
-                style={{ margin: "5px", padding: "3px" }}
-                tokens={{
-                  childrenGap: 10
-                }}
-              >
-                {
-                  metaData.token!==""&&
-                  <Stack
-                    horizontal
-                    verticalAlign="center"
-                    style={{
-                      margin: "5px", padding: "3px", width: "300px",
-                      boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.2)",
-                    }}
-                    tokens={{
-                      childrenGap: 5
-                    }}
-                  >
-                    <Image
-                      width={75}
-                      height={75}
-                      src={metaData.avatar}
-                      imageFit={ImageFit.centerCover}
-                    />
-                    <Text
-                      variant="large"
-                      style={{marginLeft:25,maxWidth:200,wordWrap:"break-word"}}
-                    >
-                      {metaData.name}
-                    </Text>
-                  </Stack>
-                }
-                <DefaultButton
-                  onClick={()=>{
-                    setShowDialogToken(true);
-                  }}
-                  style={{
-                    width:120
-                  }}
-                >
-                  {getMessageI18n("global_btn_setToken")}
-                </DefaultButton>
-              </Stack>
-            </PivotItem>
-          </Pivot>
-        </div>
+            }
+            <DefaultButton
+              onClick={() => {
+                setShowDialogToken(true);
+              }}
+              style={{
+                width: 120
+              }}
+            >
+              {getMessageI18n("global_btn_setToken")}
+            </DefaultButton>
+          </Stack>
+        </Stack.Item>
       </Stack>
     </Stack>
   )
