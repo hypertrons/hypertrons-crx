@@ -100,41 +100,31 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
             />
           </div>
         </Stack>
-        <Stack
-          horizontal
-          tokens={{
-            childrenGap: 15
-          }}>
-          <Stack
-            horizontal
-            style={{ margin: '10px 0 20px 20px', width: '50%' }}>
-            < Graph
-              graphType={graphType}
-              data={repoCorrelationData!}
-              onChartClick={onProjectChartClick}
-              style={graphStyle}
-            />
-          </Stack>
-          <Stack
-            style={{
-              position: 'relative',
-              width: '50%',
-              margin: '55px',
-              fontSize: '16px!important',
-              lineHeight: '28px'
-            }}
-          >
-            <p>{getMessageI18n('component_projectCorrelationNetwork_description')}</p>
-            <ul style={{ margin: '0px 0 10px 15px' }}>
-              <li>{getMessageI18n('component_projectCorrelationNetwork_description_node')}</li>
-              <li>{getMessageI18n('component_projectCorrelationNetwork_description_edge')}</li>
-            </ul>
-            <div>
-              <span>{getMessageI18n('component_activity_description')}</span>
-              <Link href={activityDefinitionLink} underline>{getMessageI18n('global_here')}</Link>
+        <div className="d-flex flex-wrap flex-items-center">
+          <div className="col-12 col-md-6">
+            <div style={{ margin: '10px 0 20px 20px' }}>
+              < Graph
+                graphType={graphType}
+                data={repoCorrelationData!}
+                onChartClick={onProjectChartClick}
+                style={graphStyle}
+              />
             </div>
-          </Stack>
-        </Stack>
+          </div>
+          <div className="col-12 col-md-6">
+            <div className="color-text-secondary" style={{ marginLeft: '55px' }}>
+              <p>{getMessageI18n('component_projectCorrelationNetwork_description')}</p>
+              <ul style={{ margin: '0px 0 10px 15px' }}>
+                <li>{getMessageI18n('component_projectCorrelationNetwork_description_node')}</li>
+                <li>{getMessageI18n('component_projectCorrelationNetwork_description_edge')}</li>
+              </ul>
+              <div>
+                <span>{getMessageI18n('component_activity_description')}</span>
+                <Link href={activityDefinitionLink} underline>{getMessageI18n('global_here')}</Link>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div className="hypertrons-crx-border hypertrons-crx-container">
         <Stack className="hypertrons-crx-title">
@@ -149,40 +139,30 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
             />
           </div>
         </Stack>
-        <Stack
-          horizontal
-          tokens={{
-            childrenGap: 15
-          }}>
-          <Stack
-            horizontal
-            style={{ margin: '10px 0 20px 20px', width: '50%' }}>
-            < Graph
-              graphType={graphType}
-              data={developersByRepoData!}
-              style={graphStyle}
-            />
-          </Stack>
-          <Stack
-            style={{
-              position: 'relative',
-              width: '50%',
-              margin: '55px',
-              fontSize: '16px!important',
-              lineHeight: '28px'
-            }}
-          >
-            <p>{getMessageI18n('component_activeDeveloperCollabrationNetwork_description')}</p>
-            <ul style={{ margin: '0px 0 10px 15px' }}>
-              <li>{getMessageI18n('component_activeDeveloperCollabrationNetwork_description_node')}</li>
-              <li>{getMessageI18n('component_activeDeveloperCollabrationNetwork_description_edge')}</li>
-            </ul>
-            <div>
-              <span>{getMessageI18n('component_activity_description')}</span>
-              <Link href={activityDefinitionLink} underline>{getMessageI18n('global_here')}</Link>
+        <div className="d-flex flex-wrap flex-items-center">
+          <div className="col-12 col-md-6">
+            <div style={{ margin: '10px 0 20px 20px' }}>
+              < Graph
+                graphType={graphType}
+                data={developersByRepoData!}
+                style={graphStyle}
+              />
             </div>
-          </Stack>
-        </Stack>
+          </div>
+          <div className="col-12 col-md-6">
+            <div className="color-text-secondary" style={{ marginLeft: '55px' }}>
+              <p>{getMessageI18n('component_activeDeveloperCollabrationNetwork_description')}</p>
+              <ul style={{ margin: '0px 0 10px 15px' }}>
+                <li>{getMessageI18n('component_activeDeveloperCollabrationNetwork_description_node')}</li>
+                <li>{getMessageI18n('component_activeDeveloperCollabrationNetwork_description_edge')}</li>
+              </ul>
+              <div>
+                <span>{getMessageI18n('component_activity_description')}</span>
+                <Link href={activityDefinitionLink} underline>{getMessageI18n('global_here')}</Link>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )

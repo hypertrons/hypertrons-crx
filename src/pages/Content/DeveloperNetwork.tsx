@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
-import { Dialog, DialogType, Image, Stack, Dropdown, IDropdownStyles, IDropdownOption, Link } from 'office-ui-fabric-react';
+import { Dialog, Stack, Dropdown, IDropdownStyles, IDropdownOption, Link, Text, ActionButton } from 'office-ui-fabric-react';
 import { getDeveloperCollabration, getParticipatedProjects } from '../../api/developer';
 import { runsWhen, getMessageI18n } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
@@ -21,8 +21,10 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
   const [participatedProjectsData, setParticipatedProjectsData] = useState<NetworkData | undefined>();
   const [developerPeriod, setDeveloperPeriod] = useState<string | number | undefined>(180);
   const [repoPeriod, setRepoPeriod] = useState<string | number | undefined>(180);
-  const [showDialog, setShowDialog] = useState(false);
+  const [showDeveloperDialog, setShowDeveloperDialog] = useState(false);
+  const [showProjectDialog, setShowProjectDialog] = useState(false);
 
+  // get developercollabration data
   useEffect(() => {
     const getDeveloperCollabrationData = async () => {
       const res = await getDeveloperCollabration(currentDeveloper);
@@ -33,6 +35,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
     getDeveloperCollabrationData();
   }, [developerPeriod]);
 
+  // get participated projects data
   useEffect(() => {
     const getParticipatedProjectsData = async () => {
       const res = await getParticipatedProjects(currentDeveloper);
@@ -74,6 +77,18 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
     setDeveloperPeriod(option!.key);
   }
 
+  const dialogProps = {
+    styles: {
+      main: {
+        color: 'var(--color-text-primary)',
+        backgroundColor: 'var(--color-bg-overlay)',
+      },
+      title: {
+        padding: 0,
+      }
+    },
+  };
+
   const graphStyle = {
     width: '400px',
     height: '380px'
@@ -85,33 +100,50 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
     return (<div />);
   }
   return (
-    <div
-      className="border-top color-border-secondary pt-3 mt-3"
-    >
-      <h2 className="h4 mb-2">
-        Hypertrons
-        </h2>
-      <Image
-        id="charts_icon"
-        src={chrome.runtime.getURL("charts.png")}
-        height={50}
-        width={50}
-        onClick={() => {
-          setShowDialog(true)
-        }}
-      />
-      <TeachingBubbleWrapper target="#charts_icon" />
+    <div className="border-top color-border-secondary pt-3 mt-3">
+      <h2 className="h4 mb-2">Hypertrons</h2>
+      <ul className="vcard-details">
+        <li className="vcard-detail pt-1 css-truncate css-truncate-target" style={{ margin: '-5px -30px' }}>
+          <ActionButton
+            iconProps={{ iconName: 'Group' }}
+            onClick={() => {
+              setShowDeveloperDialog(true)
+            }}>
+            <span
+              title={`${getMessageI18n('global_clickToshow')} ${getMessageI18n('component_developerCollabrationNetwork_title')}`}
+              className='Label'
+              style={{ marginLeft: '5px!important', color: 'var(--color-text-link)' }}
+            >
+              {getMessageI18n('component_developerCollabrationNetwork_title')}
+            </span>
+          </ActionButton>
+        </li>
+        <li className="vcard-detail pt-1 css-truncate css-truncate-target" style={{ margin: '-5px -30px' }}>
+          <ActionButton
+            iconProps={{ iconName: 'BranchMerge' }}
+            onClick={() => {
+              setShowProjectDialog(true)
+            }}>
+            <span
+              title={`${getMessageI18n('global_clickToshow')} ${getMessageI18n('component_mostParticipatedProjects_title')}`}
+              className='Label'
+              style={{ marginLeft: '5px!important', color: 'var(--color-text-link)' }}
+            >
+              {getMessageI18n('component_mostParticipatedProjects_title')}
+            </span>
+          </ActionButton>
+        </li>
+      </ul>
+      <TeachingBubbleWrapper target="#developer-network" />
+
       <Dialog
-        hidden={!showDialog}
+        hidden={!showDeveloperDialog}
         onDismiss={() => {
-          setShowDialog(false);
+          setShowDeveloperDialog(false);
         }}
-        dialogContentProps={{
-          type: DialogType.normal,
-          title: getMessageI18n("component_projectNetwork_title")
-        }}
+        modalProps={dialogProps}
       >
-        <div className="hypertrons-crx-border hypertrons-crx-container">
+        <div>
           <Stack className="hypertrons-crx-title">
             <span>{getMessageI18n('component_developerCollabrationNetwork_title')}</span>
             <div className='hypertrons-crx-title-extra'>
@@ -124,45 +156,40 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
               />
             </div>
           </Stack>
-          <Stack
-            horizontal
-            tokens={{
-              childrenGap: 15
-            }}>
-            <Stack
-              horizontal
-              style={{
-                margin: '5px 0 10px 10px',
-                width: '50%'
-              }}>
-              < Graph
-                graphType={graphType}
-                data={developerCollabrationData!}
-                style={graphStyle}
-              />
-            </Stack>
-            <Stack
-              style={{
-                position: 'relative',
-                width: '50%',
-                margin: '45px',
-                fontSize: '16px!important',
-                lineHeight: '25px'
-              }}
-            >
-              <p>{getMessageI18n('component_developerCollabrationNetwork_description')}</p>
-              <ul style={{ margin: '0px 0 10px 15px' }}>
-                <li>{getMessageI18n('component_developerCollabrationNetwork_description_node')}</li>
-                <li>{getMessageI18n('component_developerCollabrationNetwork_description_edge')}</li>
-              </ul>
-              <div>
-                <span>{getMessageI18n('component_activity_description')}</span>
-                <Link href={activityDefinitionLink} underline>{getMessageI18n('global_here')}</Link>
+          <div className="d-flex flex-wrap flex-items-center">
+            <div className="col-12 col-md-6">
+              <div style={{ margin: '10px 0 20px 20px' }}>
+                < Graph
+                  graphType={graphType}
+                  data={developerCollabrationData!}
+                  style={graphStyle}
+                />
               </div>
-            </Stack>
-          </Stack>
+            </div>
+            <div className="col-12 col-md-6">
+              <div className="color-text-secondary" style={{ marginLeft: '55px' }}>
+                <p>{getMessageI18n('component_developerCollabrationNetwork_description')}</p>
+                <ul style={{ margin: '0px 0 10px 15px' }}>
+                  <li>{getMessageI18n('component_developerCollabrationNetwork_description_node')}</li>
+                  <li>{getMessageI18n('component_developerCollabrationNetwork_description_edge')}</li>
+                </ul>
+                <div>
+                  <span>{getMessageI18n('component_activity_description')}</span>
+                  <Link href={activityDefinitionLink} underline>{getMessageI18n('global_here')}</Link>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="hypertrons-crx-border hypertrons-crx-container">
+      </Dialog>
+      <Dialog
+        hidden={!showProjectDialog}
+        onDismiss={() => {
+          setShowProjectDialog(false);
+        }}
+        modalProps={dialogProps}
+      >
+        <div>
           <Stack className="hypertrons-crx-title">
             <span>{getMessageI18n('component_mostParticipatedProjects_title')}</span>
             <div className='hypertrons-crx-title-extra'>
@@ -175,44 +202,31 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
               />
             </div>
           </Stack>
-          <Stack
-            horizontal
-            tokens={{
-              childrenGap: 15
-            }}>
-            <Stack
-              horizontal
-              style={{
-                margin: '5px 0 10px 10px',
-                width: '50%'
-              }}>
-              < Graph
-                graphType={graphType}
-                data={participatedProjectsData!}
-                onChartClick={onProjectChartClick}
-                style={graphStyle}
-              />
-            </Stack>
-            <Stack
-              style={{
-                position: 'relative',
-                width: '50%',
-                margin: '55px',
-                fontSize: '16px!important',
-                lineHeight: '28px'
-              }}
-            >
-              <p>{getMessageI18n('component_mostParticipatedProjects_description')}</p>
-              <ul style={{ margin: '0px 0 10px 15px' }}>
-                <li>{getMessageI18n('component_mostParticipatedProjects_description_node')}</li>
-                <li>{getMessageI18n('component_mostParticipatedProjects_description_edge')}</li>
-              </ul>
-              <div>
-                <span>{getMessageI18n('component_activity_description')}</span>
-                <Link href={activityDefinitionLink} underline>{getMessageI18n('global_here')}</Link>
+          <div className="d-flex flex-wrap flex-items-center">
+            <div className="col-12 col-md-6">
+              <div style={{ margin: '10px 0 20px 20px' }}>
+                < Graph
+                  graphType={graphType}
+                  data={participatedProjectsData!}
+                  onChartClick={onProjectChartClick}
+                  style={graphStyle}
+                />
               </div>
-            </Stack>
-          </Stack>
+            </div>
+            <div className="col-12 col-md-6">
+              <div className="color-text-secondary" style={{ marginLeft: '55px' }}>
+                <p>{getMessageI18n('component_mostParticipatedProjects_description')}</p>
+                <ul style={{ margin: '0px 0 10px 15px' }}>
+                  <li>{getMessageI18n('component_mostParticipatedProjects_description_node')}</li>
+                  <li>{getMessageI18n('component_mostParticipatedProjects_description_edge')}</li>
+                </ul>
+                <div>
+                  <span>{getMessageI18n('component_activity_description')}</span>
+                  <Link href={activityDefinitionLink} underline>{getMessageI18n('global_here')}</Link>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </Dialog>
     </div>
@@ -237,7 +251,6 @@ class DeveloperNetwork extends PerceptorBase {
     this._currentDeveloper = $('.p-nickname.vcard-username.d-block').text().trim();
     const settings = await loadSettings();
     try {
-
       render(
         <DeveloperNetworkView
           currentDeveloper={this._currentDeveloper}

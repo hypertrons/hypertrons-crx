@@ -11,39 +11,11 @@ enum ThemeType {
 
 const GITHUB_THEME = getGithubTheme();
 
-const NODE_SIZE = [5, 7, 10, 14, 18, 23];
-
-const NODE_COLOR = GITHUB_THEME === ThemeType.light ? ['#9EB9A8', '#40C463', '#30A14E', '#216E39'] : ['#0E4429', '#006D32', '#26A641', '#39D353'];
-
-const THRESHOLD = [10, 40, 160, 640, 2560];
-
 interface GraphProps {
   graphType: string;
   data: NetworkData;
   style?: CSSProperties;
   onChartClick?: any;
-}
-
-const getSizeMap = (value: number): number => {
-  const length = Math.min(THRESHOLD.length, NODE_SIZE.length - 1);
-  let i = 0;
-  for (; i < length; i++) {
-    if (value < THRESHOLD[i]) {
-      return NODE_SIZE[i];
-    }
-  }
-  return NODE_SIZE[i];
-}
-
-const getColorMap = (value: number): string => {
-  const length = Math.min(THRESHOLD.length, NODE_COLOR.length - 1);
-  let i = 0;
-  for (; i < length; i++) {
-    if (value < THRESHOLD[i]) {
-      return NODE_COLOR[i];
-    }
-  }
-  return NODE_COLOR[i];
 }
 
 const Graph: React.FC<GraphProps> = ({
@@ -58,6 +30,32 @@ const Graph: React.FC<GraphProps> = ({
 
   const [theme, setTheme] = useState<any>(GITHUB_THEME);
 
+  const NODE_SIZE = [5, 7, 10, 14, 18, 23];
+
+  const NODE_COLOR = theme === ThemeType.light ? ['#9EB9A8', '#40C463', '#30A14E', '#216E39'] : ['#0E4429', '#006D32', '#26A641', '#39D353'];
+  const THRESHOLD = [10, 40, 160, 640, 2560];
+
+  const getSizeMap = (value: number): number => {
+    const length = Math.min(THRESHOLD.length, NODE_SIZE.length - 1);
+    let i = 0;
+    for (; i < length; i++) {
+      if (value < THRESHOLD[i]) {
+        return NODE_SIZE[i];
+      }
+    }
+    return NODE_SIZE[i];
+  }
+
+  const getColorMap = (value: number): string => {
+    const length = Math.min(THRESHOLD.length, NODE_COLOR.length - 1);
+    let i = 0;
+    for (; i < length; i++) {
+      if (value < THRESHOLD[i]) {
+        return NODE_COLOR[i];
+      }
+    }
+    return NODE_COLOR[i];
+  }
   const generateEchartsData = (data: any): any => {
     const generateNodes = (nodes: any[]): any => {
       return nodes.map((n: any) => {

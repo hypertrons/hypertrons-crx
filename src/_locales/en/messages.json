@@ -11,6 +11,9 @@
   "global_error_message": {
     "message": "Sorry，an error occurred while loading hypertrons-crx extention..."
   },
+  "global_close": {
+    "message": "Close"
+  },
   "global_search": {
     "message": "Search"
   },
@@ -58,6 +61,9 @@
   },
   "global_here": {
     "message": "here"
+  },
+  "global_clickToshow": {
+    "message": "Click to show"
   },
   "global_notificationTitle": {
     "message": "Messages from the developers"
