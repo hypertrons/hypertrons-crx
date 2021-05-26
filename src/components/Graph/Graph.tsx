@@ -1,32 +1,19 @@
 import React, { useState, CSSProperties } from 'react';
 import EChartsWrapper from './Echarts/index';
-import { fastLerp, stringify } from '../../utils/color';
-import Graphin from '@antv/graphin';
-import { Stack, Toggle } from 'office-ui-fabric-react';
-import { getMessageI18n, GraphType } from "../../utils/utils"
-import { linearMap } from '../../utils/number';
+import GraphinWrapper from './Graphin/index'
+import { Stack, Toggle, SwatchColorPicker } from 'office-ui-fabric-react';
+import { getMessageI18n, GraphType, getGithubTheme } from "../../utils/utils"
 
 enum ThemeType {
   light = 'light',
   dark = 'dark'
 }
-export interface VisualMapOption {
-  node: {
-    min: number,
-    max: number,
-    symbolSize: [number, number]
-  },
-  edge: {
-    min: number,
-    max: number,
-    width: [number, number]
-  }
-}
+
+const GITHUB_THEME = getGithubTheme();
 
 interface GraphProps {
   graphType: string;
   data: NetworkData;
-  visualMapOption?: VisualMapOption;
   style?: CSSProperties;
   onChartClick?: any;
 }
@@ -34,18 +21,6 @@ interface GraphProps {
 const Graph: React.FC<GraphProps> = ({
   graphType,
   data,
-  visualMapOption = {
-    node: {
-      min: 0,
-      max: 500,
-      symbolSize: [5, 10]
-    },
-    edge: {
-      min: 0,
-      max: 20,
-      width: [1, 3]
-    }
-  },
   style,
   onChartClick = (param: any, echarts: any) => {
     const url = 'https://github.com/' + param.data.name;
@@ -53,23 +28,43 @@ const Graph: React.FC<GraphProps> = ({
   },
 }) => {
 
-  const [theme, setTheme] = useState(ThemeType.light);
+  const [theme, setTheme] = useState<any>(GITHUB_THEME);
 
+  const NODE_SIZE = [5, 7, 10, 14, 18, 23];
+
+  const NODE_COLOR = theme === ThemeType.light ? ['#9EB9A8', '#40C463', '#30A14E', '#216E39'] : ['#0E4429', '#006D32', '#26A641', '#39D353'];
+  const THRESHOLD = [10, 40, 160, 640, 2560];
+
+  const getSizeMap = (value: number): number => {
+    const length = Math.min(THRESHOLD.length, NODE_SIZE.length - 1);
+    let i = 0;
+    for (; i < length; i++) {
+      if (value < THRESHOLD[i]) {
+        return NODE_SIZE[i];
+      }
+    }
+    return NODE_SIZE[i];
+  }
+
+  const getColorMap = (value: number): string => {
+    const length = Math.min(THRESHOLD.length, NODE_COLOR.length - 1);
+    let i = 0;
+    for (; i < length; i++) {
+      if (value < THRESHOLD[i]) {
+        return NODE_COLOR[i];
+      }
+    }
+    return NODE_COLOR[i];
+  }
   const generateEchartsData = (data: any): any => {
     const generateNodes = (nodes: any[]): any => {
       return nodes.map((n: any) => {
         return {
           name: n.name,
           value: n.value,
-          symbolSize: linearMap(n.value, [visualMapOption.node.min, visualMapOption.node.max], visualMapOption.node.symbolSize),
+          symbolSize: getSizeMap(n.value),
           itemStyle: {
-            color: stringify(
-              fastLerp(
-                linearMap(n.value, [visualMapOption.node.min, visualMapOption.node.max], [0, 1]),
-                [[33, 110, 57, 1], [165, 42, 42, 1]]
-              ),
-              'rgba'
-            )
+            color: getColorMap(n.value)
           }
         }
       })
@@ -79,10 +74,7 @@ const Graph: React.FC<GraphProps> = ({
         return {
           source: e.source,
           target: e.target,
-          value: e.weight,
-          lineStyle: {
-            width: linearMap(e.weight, [visualMapOption.edge.min, visualMapOption.edge.max], visualMapOption.edge.width),
-          }
+          value: e.weight
         }
       })
     }
@@ -95,22 +87,17 @@ const Graph: React.FC<GraphProps> = ({
   const generateGraphinData = (data: any): any => {
     const generateNodes = (nodes: any[]): any => {
       return nodes.map((n: any) => {
+        const color = getColorMap(n.value);
         return {
           id: n.name,
-          type: "graphin-circle",
+          value: n.value,
           style: {
-            label: {
-              value: n.name
+            keyshape: {
+              size: getSizeMap(n.value),
+              stroke: color,
+              fill: color,
+              fillOpacity: 1,
             },
-            badges: [
-              {
-                position: 'RT',
-                type: 'text',
-                value: n.value.toFixed(2),
-                size: [20, 20],
-                color: '#000'
-              },
-            ],
           }
         }
       })
@@ -120,6 +107,15 @@ const Graph: React.FC<GraphProps> = ({
         return {
           source: e.source,
           target: e.target,
+          value: e.weight,
+          style: {
+            keyshape: {
+              type: 'poly',
+              poly: {
+                distance: 40,
+              },
+            },
+          },
         }
       })
     }
@@ -151,7 +147,7 @@ const Graph: React.FC<GraphProps> = ({
             },
             force: {
               repulsion: 50,
-              edgeLength: [1, 100],
+              edgeLength: [1, 150],
               // Disable the iteration animation of layout. See: https://echarts.apache.org/en/option.html#series-graph.force.layoutAnimation
               layoutAnimation: false,
             },
@@ -177,24 +173,48 @@ const Graph: React.FC<GraphProps> = ({
       break;
   }
 
+  const colorCellsExample1 = [
+    { id: 'L0', label: `< ${THRESHOLD[0]}`, color: NODE_COLOR[0] },
+    { id: 'L1', label: `${THRESHOLD[0]} - ${THRESHOLD[1]}`, color: NODE_COLOR[1] },
+    { id: 'L2', label: `${THRESHOLD[1]} - ${THRESHOLD[2]}`, color: NODE_COLOR[2] },
+    { id: 'L3', label: `> ${THRESHOLD[2]}`, color: NODE_COLOR[3] },
+  ];
 
   return (
     <Stack>
       <Stack
         horizontal
-        style={{ margin: "5px", padding: "3px" }}
+        horizontalAlign="space-between"
+        style={{ padding: "3px" }}
         tokens={{
           childrenGap: 10
         }}
       >
         <Toggle
           defaultChecked={theme === ThemeType.dark}
+          // Note: Graphin is currently unable to switch the theme. See: https://graphin.antv.vision/en-US/graphin/render/theme/
+          disabled={graphType === GraphType.antv}
           onText={getMessageI18n("component_darkMode")}
           offText={getMessageI18n("component_darkMode")}
           onChange={(e, checked) => {
             checked ? setTheme(ThemeType.dark) : setTheme(ThemeType.light);
           }}
         />
+        <Stack
+          horizontal
+          horizontalAlign="space-between"
+        >
+          <span>Less</span>
+          <div style={{ marginTop: "-12px", maxWidth: '80px' }}>
+            <SwatchColorPicker
+              columnCount={4}
+              cellShape={'square'}
+              cellHeight={10}
+              cellWidth={10}
+              colorCells={colorCellsExample1} />
+          </div>
+          <span>More</span>
+        </Stack>
       </Stack>
       <Stack className='hypertrons-crx-border'>
         {
@@ -204,24 +224,21 @@ const Graph: React.FC<GraphProps> = ({
             onEvents={{
               'click': onChartClick,
             }}
-            theme={theme}
             style={style}
+            theme={theme}
           />
         }
         {
           graphType === GraphType.antv &&
-          <div
-            style={{
-              width: '100%',
-              overflow: 'hidden',
-              height: '332px'
+          <GraphinWrapper
+            data={graphData}
+            layoutOption={{
+              type: 'force',
+              linkDistance: 150,
             }}
-          >
-            <Graphin
-              data={graphData}
-            >
-            </Graphin>
-          </div>
+            style={style}
+            theme={theme}
+          />
         }
       </Stack>
     </Stack>

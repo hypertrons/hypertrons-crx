@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@antv/graphin": "^2.0.6",
+    "@antv/graphin-components": "^2.0.7",
     "@fluentui/react": "^7.121.1",
     "@fluentui/react-hooks": "^8.2.0",
     "@hot-loader/react-dom": "^16.13.0",
@@ -21,7 +22,6 @@
     "@types/react": "^17.0.2",
     "copy-to-clipboard": "^3.3.1",
     "echarts": "^5.0.2",
-    "echarts-for-react": "^3.0.1",
     "element-ready": "^5.0.0",
     "github-url-detection": "^4.10.0",
     "jquery": "^3.6.0",

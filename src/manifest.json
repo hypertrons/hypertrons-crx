@@ -21,8 +21,7 @@
   }],
   "web_accessible_resources": [
     "content.styles.css",
-    "main.png",
-    "charts.png"
+    "main.png"
   ],
   "permissions": [
     "*://github.com/*",

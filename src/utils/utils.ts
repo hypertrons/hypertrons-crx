@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 export function elementExists(obj: null | JQuery) {
   return obj !== null && obj.length > 0;
 }
@@ -128,4 +130,8 @@ export function mockSuccessResponse(data: any) {
     };
   }
   return null;
+}
+
+export function getGithubTheme() {
+  return $('[data-color-mode]')[0].dataset['colorMode'];
 }

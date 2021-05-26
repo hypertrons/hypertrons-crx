@@ -1,7 +1,7 @@
 .hypertrons-crx-container {
   margin-top: 24px!important;
   overflow: auto;
-  height: 400px;
+  height: 520px;
 }
 
 .hypertrons-crx-border {
@@ -19,7 +19,7 @@
   background-color: var(--color-bg-tertiary);
   border: 1px solid var(--color-border-primary);
   border-bottom: 0;
-  border-radius: 6px 6px 0 0;
+  border-radius: 6px;
 }
 
 .hypertrons-crx-title-extra {
