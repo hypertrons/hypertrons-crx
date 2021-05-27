@@ -53,7 +53,7 @@ chrome.notifications.onClicked.addListener(async function(notificationId){
   switch (notificationId){
     case "check_for_updates":
       const metaData=await loadMetaData();
-      chrome.tabs.create({url:metaData.updateUrl});
+      window.open(metaData.updateUrl);
       break;
     default:
       break;
