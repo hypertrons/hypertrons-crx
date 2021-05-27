@@ -1,15 +1,15 @@
 {
   "manifest_appDescription": {
-    "message": "Hypertrons，您的最佳Github助手"
+    "message": "Hypertrons-crx，您的最佳Github助手"
   },
   "manifest_appName": {
-    "message": "Hypertrons机器人"
+    "message": "Hypertrons-crx 机器人"
   },
   "manifest_iconTitle": {
     "message": "[载入中……]"
   },
   "global_error_message": {
-    "message": "抱歉，hypertrons 插件崩溃了，请刷新重试..."
+    "message": "抱歉，Hypertrons-crx 插件崩溃了，请刷新重试..."
   },
   "global_close": {
     "message": "关闭"
@@ -183,7 +183,7 @@
     "message": "版本号: %v"
   },
   "teachingBubble_text_headline": {
-    "message": "探索Hypertrons图表"
+    "message": "探索 Perceptor 图表"
   },
   "teachingBubble_text_content": {
     "message": "点击以查看统计数据"

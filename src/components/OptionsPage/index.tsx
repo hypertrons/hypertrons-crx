@@ -234,7 +234,7 @@ const OptionsPage: React.FC = () => {
         horizontalAlign="center"
         style={{ paddingBottom: '10px' }}
       >
-        <h1>HYPERTRONS</h1>
+        <h1>PERCEPTOR</h1>
         <sub>{`version ${version}`}</sub>
       </Stack>
       <Stack
