@@ -19,8 +19,8 @@ export const updateInformation = {
 export const notificationInformation = {
   "id": 2021052301,
     "content": {
-      "zh": "欢迎使用Hypertrons!",
-      "en": "Welcome to Hypertrons!"
+      "zh": "欢迎使用 Hypertrons-crx !",
+      "en": "Welcome to Hypertrons-crx !"
   },
   "is_published": true
 }

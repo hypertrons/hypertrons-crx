@@ -101,7 +101,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
   }
   return (
     <div className="border-top color-border-secondary pt-3 mt-3">
-      <h2 className="h4 mb-2">Hypertrons</h2>
+      <h2 className="h4 mb-2">Perceptor</h2>
       <ul className="vcard-details">
         <li className="vcard-detail pt-1 css-truncate css-truncate-target" style={{ margin: '-5px -30px' }}>
           <ActionButton

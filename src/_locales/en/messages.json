@@ -1,15 +1,15 @@
 {
   "manifest_appDescription": {
-    "message": "Hypertrons，your best Github helper"
+    "message": "Hypertrons-crx, your best GitHub helper"
   },
   "manifest_appName": {
-    "message": "Hypertrons Robot"
+    "message": "Hypertrons-crx Robot"
   },
   "manifest_iconTitle": {
     "message": "[Loading……]"
   },
   "global_error_message": {
-    "message": "Sorry，an error occurred while loading hypertrons-crx extention..."
+    "message": "Sorry，an error occurred while loading Hypertrons-crx extention..."
   },
   "global_close": {
     "message": "Close"
@@ -186,7 +186,7 @@
     "message": "Version: %v"
   },
   "teachingBubble_text_headline": {
-    "message": "Explore Hypertrons charts"
+    "message": "Explore Hypertrons-crx charts"
   },
   "teachingBubble_text_content": {
     "message": "Click here to see statistics data"

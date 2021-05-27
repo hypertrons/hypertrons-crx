@@ -41,7 +41,7 @@ const PopupPage: React.FC = () => {
 
   return(
       <Stack horizontalAlign="center">
-        <h1>Hypertrons</h1>
+        <h1>Hypertrons-crx</h1>
         <Stack
           horizontalAlign="space-around"
           verticalAlign='center'

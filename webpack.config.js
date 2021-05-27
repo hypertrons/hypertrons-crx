@@ -165,7 +165,7 @@ var options = {
       keyFile: 'build.pem',
       contentPath: 'build',
       outputPath: 'release',
-      name: 'hypertrons'
+      name: 'hypertrons-crx'
     })
   ],
 };
