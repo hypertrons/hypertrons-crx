@@ -78,7 +78,7 @@ const OptionsPage: React.FC = () => {
     if(!inited){
       initMetaData();
     }
-  }, [metaData]);
+  }, [inited, metaData]);
 
   useEffect(() => {
     const initSettings = async () => {
@@ -89,7 +89,7 @@ const OptionsPage: React.FC = () => {
     if(!inited){
       initSettings();
     }
-  }, [settings]);
+  }, [inited, settings]);
 
   useEffect(() => {
     // @ts-ignore
