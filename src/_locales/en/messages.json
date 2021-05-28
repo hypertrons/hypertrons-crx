@@ -155,6 +155,9 @@
   "options_text_checkUpdate": {
     "message": "Check"
   },
+  "options_text_update": {
+    "message": "Update"
+  },
   "options_text_checking": {
     "message": "Checking for updates"
   },
@@ -190,5 +193,17 @@
   },
   "teachingBubble_text_content": {
     "message": "Click here to see statistics data"
+  },
+  "options_toolTip_components": {
+    "message": "You can choose which component will be shown on github's page"
+  },
+  "options_toolTip_graphType": {
+    "message": "You can choose the rendering type of component，antv or echarts"
+  },
+  "options_toolTip_update": {
+    "message": "Keep up to date to get more components"
+  },
+  "options_toolTip_token": {
+    "message": "Github token will be used to visit files of a repository"
   }
 }
