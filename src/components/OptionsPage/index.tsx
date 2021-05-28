@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Pivot, PivotItem, PivotLinkFormat, Stack,
+  TooltipHost, Stack,
   Toggle, DefaultButton, Checkbox, Text, Link,
   Spinner, MessageBar, MessageBarType,
   Dialog, DialogType, TextField, ChoiceGroup, IChoiceGroupOption,
@@ -78,7 +78,7 @@ const OptionsPage: React.FC = () => {
     if(!inited){
       initMetaData();
     }
-  }, [metaData]);
+  }, [inited, metaData]);
 
   useEffect(() => {
     const initSettings = async () => {
@@ -89,7 +89,7 @@ const OptionsPage: React.FC = () => {
     if(!inited){
       initSettings();
     }
-  }, [settings]);
+  }, [inited, settings]);
 
   useEffect(() => {
     // @ts-ignore
@@ -244,11 +244,15 @@ const OptionsPage: React.FC = () => {
         }}
       >
         <Stack.Item className='Box'>
-          <Stack.Item className='Box-header'>
-            <h2 className='Box-title'>
-              {getMessageI18n("options_text_showDifferentComponent")}
-            </h2>
-          </Stack.Item>
+          <TooltipHost
+            content={getMessageI18n("options_toolTip_components")}
+          >
+            <Stack.Item className='Box-header'>
+              <h2 className='Box-title'>
+                {getMessageI18n("options_text_showDifferentComponent")}
+              </h2>
+            </Stack.Item>
+          </TooltipHost>
           <Stack
             style={{ margin: '10px 25px' }}
             tokens={{
@@ -274,11 +278,15 @@ const OptionsPage: React.FC = () => {
           </Stack>
         </Stack.Item>
         <Stack.Item className='Box'>
-          <Stack.Item className='Box-header'>
-            <h2 className='Box-title'>
-              {getMessageI18n("options_text_defaultGraphType")}
-            </h2>
-          </Stack.Item>
+          <TooltipHost
+            content={getMessageI18n("options_toolTip_graphType")}
+          >
+            <Stack.Item className='Box-header'>
+              <h2 className='Box-title'>
+                {getMessageI18n("options_text_defaultGraphType")}
+              </h2>
+            </Stack.Item>
+          </TooltipHost>
           <Stack
             style={{ margin: '10px 25px' }}
             tokens={{
@@ -297,11 +305,15 @@ const OptionsPage: React.FC = () => {
           </Stack>
         </Stack.Item>
         <Stack.Item className='Box'>
-          <Stack.Item className='Box-header'>
-            <h2 className='Box-title'>
-              {getMessageI18n("options_text_checking")}
-            </h2>
-          </Stack.Item>
+          <TooltipHost
+            content={getMessageI18n("options_toolTip_update")}
+          >
+            <Stack.Item className='Box-header'>
+              <h2 className='Box-title'>
+                {getMessageI18n("options_text_update")}
+              </h2>
+            </Stack.Item>
+          </TooltipHost>
           <Stack
             style={{ margin: '10px 25px' }}
             tokens={{
@@ -359,11 +371,15 @@ const OptionsPage: React.FC = () => {
           </Stack>
         </Stack.Item>
         <Stack.Item className='Box'>
-          <Stack.Item className='Box-header'>
-            <h2 className='Box-title'>
-              GitHub Token
-            </h2>
-          </Stack.Item>
+          <TooltipHost
+            content={getMessageI18n("options_toolTip_token")}
+          >
+            <Stack.Item className='Box-header'>
+              <h2 className='Box-title'>
+                GitHub Token
+              </h2>
+            </Stack.Item>
+          </TooltipHost>
           <Stack
             style={{ margin: '10px 25px' }}
             tokens={{

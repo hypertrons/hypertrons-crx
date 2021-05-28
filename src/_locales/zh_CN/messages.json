@@ -152,6 +152,9 @@
   "options_text_checkUpdate": {
     "message": "检查更新"
   },
+  "options_text_update": {
+    "message": "更新"
+  },
   "options_text_checking": {
     "message": "正在检查更新"
   },
@@ -187,5 +190,17 @@
   },
   "teachingBubble_text_content": {
     "message": "点击以查看统计数据"
+  },
+  "options_toolTip_components": {
+    "message": "您可以在此次选择在github中展示的图表组件"
+  },
+  "options_toolTip_graphType": {
+    "message": "可选择图表组件的渲染方式，antv或者echarts"
+  },
+  "options_toolTip_update": {
+    "message": "始终保持插件状态为最新将为您呈现更丰富的内容"
+  },
+  "options_toolTip_token": {
+    "message": "Github凭据将被用于repository文件的访问"
   }
 }
