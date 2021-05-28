@@ -56,15 +56,6 @@ const OptionsPage: React.FC = () => {
   ];
 
   useEffect(() => {
-    const initSettings = async () => {
-      const temp = await loadSettings();
-      setSettings(temp);
-      setInited(true);
-    }
-    initSettings();
-  }, [settings]);
-
-  useEffect(() => {
     const initMetaData = async () => {
       const tempMetaData = await loadMetaData();
       setMetaData(tempMetaData);
@@ -84,8 +75,21 @@ const OptionsPage: React.FC = () => {
         setShowDialogNotification(true);
       }
     }
-    initMetaData();
-  }, []);
+    if(!inited){
+      initMetaData();
+    }
+  }, [metaData]);
+
+  useEffect(() => {
+    const initSettings = async () => {
+      const temp = await loadSettings();
+      setSettings(temp);
+      setInited(true);
+    }
+    if(!inited){
+      initSettings();
+    }
+  }, [settings]);
 
   useEffect(() => {
     // @ts-ignore
