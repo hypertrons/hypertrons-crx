@@ -17,8 +17,8 @@ interface DeveloperNetworkViewProps {
 }
 
 const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeveloper, graphType }) => {
-  const [developerCollabrationData, setDeveloperCollabrationData] = useState<NetworkData | undefined>();
-  const [participatedProjectsData, setParticipatedProjectsData] = useState<NetworkData | undefined>();
+  const [developerCollabrationData, setDeveloperCollabrationData] = useState<IGraphData | undefined>();
+  const [participatedProjectsData, setParticipatedProjectsData] = useState<IGraphData | undefined>();
   const [developerPeriod, setDeveloperPeriod] = useState<string | number | undefined>(180);
   const [repoPeriod, setRepoPeriod] = useState<string | number | undefined>(180);
   const [showDeveloperDialog, setShowDeveloperDialog] = useState(false);
@@ -208,7 +208,6 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
                 < Graph
                   graphType={graphType}
                   data={participatedProjectsData!}
-                  onChartClick={onProjectChartClick}
                   style={graphStyle}
                 />
               </div>

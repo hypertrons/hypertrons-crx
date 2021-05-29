@@ -18,8 +18,8 @@ interface ProjectNetworkViewProps {
 }
 
 const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, graphType }) => {
-  const [repoCorrelationData, setRepoCorrelationData] = useState<NetworkData | undefined>();
-  const [developersByRepoData, setDevelopersByRepoData] = useState<NetworkData | undefined>();
+  const [repoCorrelationData, setRepoCorrelationData] = useState<IGraphData | undefined>();
+  const [developersByRepoData, setDevelopersByRepoData] = useState<IGraphData | undefined>();
   const [repoPeriod, setRepoPeriod] = useState<string | number | undefined>(180);
   const [developerPeriod, setDeveloperPeriod] = useState<string | number | undefined>(180);
 
@@ -106,7 +106,6 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
               < Graph
                 graphType={graphType}
                 data={repoCorrelationData!}
-                onChartClick={onProjectChartClick}
                 style={graphStyle}
               />
             </div>

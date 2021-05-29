@@ -2,7 +2,7 @@ import React, { useState, CSSProperties } from 'react';
 import EChartsWrapper from './Echarts/index';
 import GraphinWrapper from './Graphin/index'
 import { Stack, Toggle, SwatchColorPicker } from 'office-ui-fabric-react';
-import { getMessageI18n, GraphType, getGithubTheme } from "../../utils/utils"
+import { getMessageI18n, GraphType, getGithubTheme, isNull } from "../../utils/utils"
 
 enum ThemeType {
   light = 'light',
@@ -12,26 +12,35 @@ enum ThemeType {
 const GITHUB_THEME = getGithubTheme();
 
 interface GraphProps {
-  graphType: string;
-  data: NetworkData;
-  style?: CSSProperties;
-  onChartClick?: any;
+  /**
+   * data
+   */
+  readonly data: IGraphData;
+  /**
+   * graphType, default is Echarts
+   */
+  readonly graphType?: string;
+  /**
+   * `style` for graph container
+   */
+  readonly style?: CSSProperties;
+  /**
+   * callback function when click node
+   */
+  readonly onNodeClick?: NodeClickFunc;
 }
 
 const Graph: React.FC<GraphProps> = ({
-  graphType,
   data,
-  style,
-  onChartClick = (param: any, echarts: any) => {
-    const url = 'https://github.com/' + param.data.name;
+  graphType = GraphType.echarts,
+  style = {},
+  onNodeClick = (node: INode) => {
+    const url = 'https://github.com/' + node.id;
     window.location.href = url;
   },
 }) => {
-
   const [theme, setTheme] = useState<any>(GITHUB_THEME);
-
   const NODE_SIZE = [5, 7, 10, 14, 18, 23];
-
   const NODE_COLOR = theme === ThemeType.light ? ['#9EB9A8', '#40C463', '#30A14E', '#216E39'] : ['#0E4429', '#006D32', '#26A641', '#39D353'];
   const THRESHOLD = [10, 40, 160, 640, 2560];
 
@@ -180,6 +189,9 @@ const Graph: React.FC<GraphProps> = ({
     { id: 'L3', label: `> ${THRESHOLD[2]}`, color: NODE_COLOR[3] },
   ];
 
+  if (isNull(data)) {
+    return (<div />)
+  }
   return (
     <Stack>
       <Stack
@@ -222,7 +234,7 @@ const Graph: React.FC<GraphProps> = ({
           <EChartsWrapper
             option={graphOption}
             onEvents={{
-              'click': onChartClick,
+              'click': onNodeClick,
             }}
             style={style}
             theme={theme}
@@ -232,12 +244,9 @@ const Graph: React.FC<GraphProps> = ({
           graphType === GraphType.antv &&
           <GraphinWrapper
             data={graphData}
-            layoutOption={{
-              type: 'force',
-              linkDistance: 150,
-            }}
             style={style}
             theme={theme}
+            onNodeClick={onNodeClick}
           />
         }
       </Stack>
