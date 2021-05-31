@@ -9,7 +9,7 @@
     "message": "[Loading……]"
   },
   "global_error_message": {
-    "message": "Sorry，an error occurred while loading Hypertrons-crx extention..."
+    "message": "Sorry，an error occurred while loading Hypertrons-crx extention. Error Code is "
   },
   "global_close": {
     "message": "Close"

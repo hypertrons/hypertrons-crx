@@ -7,7 +7,7 @@ import {
   Image, ImageFit, DialogFooter, PrimaryButton
 } from 'office-ui-fabric-react';
 import { initializeIcons } from '@uifabric/icons';
-import { getMessageI18n, chromeSet, compareVersion, GraphType } from '../../utils/utils';
+import { getMessageI18n, chromeSet, compareVersion } from '../../utils/utils';
 import { checkUpdate, checkIsTokenAvailabe } from '../../services/common';
 import Settings, { loadSettings } from "../../utils/settings"
 import MetaData, { loadMetaData } from '../../utils/metadata';
@@ -38,7 +38,7 @@ const OptionsPage: React.FC = () => {
 
   const options: IChoiceGroupOption[] = [
     {
-      key: GraphType.antv,
+      key: 'antv',
       imageSrc: "./antv.png",
       imageAlt: 'Antv',
       selectedImageSrc: "./antv.png",
@@ -46,7 +46,7 @@ const OptionsPage: React.FC = () => {
       text: 'Antv'
     },
     {
-      key: GraphType.echarts,
+      key: 'echarts',
       imageSrc: "./echarts.png",
       imageAlt: 'Echarts',
       selectedImageSrc: "./echarts.png",
@@ -298,7 +298,7 @@ const OptionsPage: React.FC = () => {
               defaultSelectedKey={settings.graphType}
               options={options}
               onChanged={async (option) => {
-                settings.graphType = option.key;
+                settings.graphType = option.key as GraphType;
                 await saveSettings(settings);
               }}
             />
