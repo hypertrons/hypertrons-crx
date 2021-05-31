@@ -1,7 +1,7 @@
 var webpack = require('webpack'),
 path = require('path'),
 fileSystem = require('fs-extra'),
-env = require('./utils/env'),
+ENV = require('./utils/env'),
 { CleanWebpackPlugin } = require('clean-webpack-plugin'),
 CopyWebpackPlugin = require('copy-webpack-plugin'),
 HtmlWebpackPlugin = require('html-webpack-plugin'),
@@ -13,7 +13,7 @@ var alias = {
   'react-dom': '@hot-loader/react-dom',
 };
 
-var secretsPath = path.join(__dirname, 'secrets.' + env.NODE_ENV + '.js');
+var secretsPath = path.join(__dirname, 'secrets.' + ENV.NODE_ENV + '.js');
 
 var fileExtensions = [
   'jpg',
@@ -33,7 +33,7 @@ if (fileSystem.existsSync(secretsPath)) {
 }
 
 var options = {
-  mode: process.env.NODE_ENV || 'development',
+  mode: ENV.NODE_ENV,
   entry: {
     options: path.join(__dirname, 'src', 'pages', 'Options', 'index.tsx'),
     popup: path.join(__dirname, 'src', 'pages', 'Popup', 'index.tsx'),
@@ -87,7 +87,7 @@ var options = {
       cleanStaleWebpackAssets: false,
     }),
     // expose and write the allowed env vars on the compiled bundle
-    new webpack.EnvironmentPlugin(['NODE_ENV']),
+    new webpack.EnvironmentPlugin(['NODE_ENV', 'MOCK']),
     new CopyWebpackPlugin(
       [
         {
@@ -170,7 +170,7 @@ var options = {
   ],
 };
 
-if (env.NODE_ENV === 'development') {
+if (ENV.NODE_ENV === 'development') {
   options.devtool = 'cheap-module-eval-source-map';
 }
 
