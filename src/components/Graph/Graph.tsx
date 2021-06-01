@@ -2,7 +2,7 @@ import React, { useState, CSSProperties } from 'react';
 import EChartsWrapper from './Echarts/index';
 import GraphinWrapper from './Graphin/index'
 import { Stack, Toggle, SwatchColorPicker } from 'office-ui-fabric-react';
-import { getMessageI18n, getGithubTheme, isNull } from "../../utils/utils"
+import { getMessageI18n, getGithubTheme, isNull, getMinMax, linearMap } from "../../utils/utils"
 
 const GITHUB_THEME = getGithubTheme();
 
@@ -35,20 +35,9 @@ const Graph: React.FC<GraphProps> = ({
   },
 }) => {
   const [theme, setTheme] = useState<any>(GITHUB_THEME);
-  const NODE_SIZE = [5, 7, 10, 14, 18, 23];
+  const NODE_SIZE = [10, 30];
   const NODE_COLOR = theme === 'light' ? ['#9EB9A8', '#40C463', '#30A14E', '#216E39'] : ['#0E4429', '#006D32', '#26A641', '#39D353'];
-  const THRESHOLD = [10, 40, 160, 640, 2560];
-
-  const getSizeMap = (value: number): number => {
-    const length = Math.min(THRESHOLD.length, NODE_SIZE.length - 1);
-    let i = 0;
-    for (; i < length; i++) {
-      if (value < THRESHOLD[i]) {
-        return NODE_SIZE[i];
-      }
-    }
-    return NODE_SIZE[i];
-  }
+  const THRESHOLD = [10, 100, 1000];
 
   const getColorMap = (value: number): string => {
     const length = Math.min(THRESHOLD.length, NODE_COLOR.length - 1);
@@ -62,11 +51,13 @@ const Graph: React.FC<GraphProps> = ({
   }
   const generateEchartsData = (data: any): any => {
     const generateNodes = (nodes: any[]): any => {
+      const minMax = getMinMax(nodes);
       return nodes.map((n: any) => {
         return {
+          id: n.name,
           name: n.name,
           value: n.value,
-          symbolSize: getSizeMap(n.value),
+          symbolSize: linearMap(n.value, minMax, NODE_SIZE),
           itemStyle: {
             color: getColorMap(n.value)
           }
@@ -90,6 +81,7 @@ const Graph: React.FC<GraphProps> = ({
 
   const generateGraphinData = (data: any): any => {
     const generateNodes = (nodes: any[]): any => {
+      const minMax = getMinMax(nodes);
       return nodes.map((n: any) => {
         const color = getColorMap(n.value);
         return {
@@ -97,7 +89,7 @@ const Graph: React.FC<GraphProps> = ({
           value: n.value,
           style: {
             keyshape: {
-              size: getSizeMap(n.value),
+              size: linearMap(n.value, minMax, NODE_SIZE),
               stroke: color,
               fill: color,
               fillOpacity: 1,
@@ -144,15 +136,15 @@ const Graph: React.FC<GraphProps> = ({
             layout: 'force',
             nodes: graphData.nodes,
             edges: graphData.edges,
-            // Enable mouse zooming and translating. See: https://echarts.apache.org/en/option.html#series-graph.roam
+            // Enable mouse zooming and translating
             roam: true,
             label: {
               position: 'right'
             },
             force: {
               repulsion: 50,
-              edgeLength: [1, 150],
-              // Disable the iteration animation of layout. See: https://echarts.apache.org/en/option.html#series-graph.force.layoutAnimation
+              edgeLength: [1, 100],
+              // Disable the iteration animation of layout
               layoutAnimation: false,
             },
             lineStyle: {
@@ -228,11 +220,11 @@ const Graph: React.FC<GraphProps> = ({
           graphType === 'echarts' &&
           <EChartsWrapper
             option={graphOption}
+            style={style}
+            theme={theme}
             onEvents={{
               'click': onNodeClick,
             }}
-            style={style}
-            theme={theme}
           />
         }
         {
