@@ -86,7 +86,7 @@ const PopupPage: React.FC = () => {
                 width:120
               }}
             >
-              {getMessageI18n("global_btn_setToken")}
+              {getMessageI18n("options_token_title")}
             </DefaultButton>
           }
         </Stack>

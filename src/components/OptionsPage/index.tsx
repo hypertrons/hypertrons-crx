@@ -286,7 +286,6 @@ const OptionsPage: React.FC = () => {
           >
             <p>{getMessageI18n("options_graphType_toolTip")} :</p>
             <ChoiceGroup
-              // label={getMessageI18n("options_graphType_default")}
               defaultSelectedKey={settings.graphType}
               options={options}
               onChanged={async (option) => {
@@ -415,7 +414,7 @@ const OptionsPage: React.FC = () => {
                 width: 120
               }}
             >
-              {getMessageI18n("global_btn_setToken")}
+              {getMessageI18n("options_token_btn_setToken")}
             </DefaultButton>
           </Stack>
         </Stack.Item>
