@@ -9,7 +9,7 @@
     "message": "[载入中……]"
   },
   "global_error_message": {
-    "message": "抱歉，Hypertrons-crx 插件崩溃了，请刷新重试..."
+    "message": "抱歉，Hypertrons-crx 插件加载时遇到了一点问题。错误代码为："
   },
   "global_close": {
     "message": "关闭"

@@ -3,22 +3,26 @@ import { render } from 'react-dom';
 import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
 import { Dialog, Stack, Dropdown, IDropdownStyles, IDropdownOption, Link, Text, ActionButton } from 'office-ui-fabric-react';
+import { initializeIcons } from '@uifabric/icons';
 import { getDeveloperCollabration, getParticipatedProjects } from '../../api/developer';
 import { runsWhen, getMessageI18n } from '../../utils/utils';
+import { ACTIVITY_DEFINITION_LINK } from '../../constant';
 import PerceptorBase from './PerceptorBase';
 import { inject2Perceptor } from './Perceptor';
 import { loadSettings } from '../../utils/settings';
 import Graph from '../../components/Graph/Graph';
 import TeachingBubbleWrapper from './TeachingBubbleWrapper'
 
+initializeIcons();
+
 interface DeveloperNetworkViewProps {
   currentDeveloper: string;
-  graphType: any;
+  graphType: GraphType;
 }
 
 const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeveloper, graphType }) => {
-  const [developerCollabrationData, setDeveloperCollabrationData] = useState<NetworkData | undefined>();
-  const [participatedProjectsData, setParticipatedProjectsData] = useState<NetworkData | undefined>();
+  const [developerCollabrationData, setDeveloperCollabrationData] = useState<IGraphData | undefined>();
+  const [participatedProjectsData, setParticipatedProjectsData] = useState<IGraphData | undefined>();
   const [developerPeriod, setDeveloperPeriod] = useState<string | number | undefined>(180);
   const [repoPeriod, setRepoPeriod] = useState<string | number | undefined>(180);
   const [showDeveloperDialog, setShowDeveloperDialog] = useState(false);
@@ -93,8 +97,6 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
     width: '400px',
     height: '380px'
   }
-
-  const activityDefinitionLink = 'https://github.com/X-lab2017/open-digger/';
 
   if (!developerCollabrationData || !participatedProjectsData) {
     return (<div />);
@@ -175,7 +177,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
                 </ul>
                 <div>
                   <span>{getMessageI18n('component_activity_description')}</span>
-                  <Link href={activityDefinitionLink} underline>{getMessageI18n('global_here')}</Link>
+                  <Link href={ACTIVITY_DEFINITION_LINK} underline>{getMessageI18n('global_here')}</Link>
                 </div>
               </div>
             </div>
@@ -208,7 +210,6 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
                 < Graph
                   graphType={graphType}
                   data={participatedProjectsData!}
-                  onChartClick={onProjectChartClick}
                   style={graphStyle}
                 />
               </div>
@@ -222,7 +223,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
                 </ul>
                 <div>
                   <span>{getMessageI18n('component_activity_description')}</span>
-                  <Link href={activityDefinitionLink} underline>{getMessageI18n('global_here')}</Link>
+                  <Link href={ACTIVITY_DEFINITION_LINK} underline>{getMessageI18n('global_here')}</Link>
                 </div>
               </div>
             </div>
@@ -250,20 +251,15 @@ class DeveloperNetwork extends PerceptorBase {
     DeveloperNetworkDiv.style.width = "100%";
     this._currentDeveloper = $('.p-nickname.vcard-username.d-block').text().trim();
     const settings = await loadSettings();
-    try {
-      render(
-        <DeveloperNetworkView
-          currentDeveloper={this._currentDeveloper}
-          graphType={settings.graphType}
-        />
-        ,
-        DeveloperNetworkDiv,
-      );
-      profileArea.after(DeveloperNetworkDiv);
-    } catch (error) {
-      this.logger.error('DeveloperNetwork', error);
-      return;
-    }
+    render(
+      <DeveloperNetworkView
+        currentDeveloper={this._currentDeveloper}
+        graphType={settings.graphType}
+      />
+      ,
+      DeveloperNetworkDiv,
+    );
+    profileArea.after(DeveloperNetworkDiv);
   }
 }
 

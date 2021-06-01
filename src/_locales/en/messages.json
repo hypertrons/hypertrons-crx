@@ -9,7 +9,7 @@
     "message": "[Loading……]"
   },
   "global_error_message": {
-    "message": "Sorry，an error occurred while loading Hypertrons-crx extention..."
+    "message": "Sorry，an error occurred while loading Hypertrons-crx extention. Error Code is "
   },
   "global_close": {
     "message": "Close"
@@ -94,7 +94,7 @@
     "message": "Project Correlation Network"
   },
   "component_projectCorrelationNetwork_description": {
-    "message": "Project Correlation Network shows the Correlation between projects for a given time period"
+    "message": "Project Correlation Network shows the correlation between projects for a given time period"
   },
   "component_projectCorrelationNetwork_description_node": {
     "message": "Node: Project, node size indicates project activity"

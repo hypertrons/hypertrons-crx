@@ -4,7 +4,7 @@ class Settings {
   checkForUpdates: boolean | undefined;
   developerNetwork: boolean | undefined;
   projectNetwork: boolean | undefined;
-  graphType:string;
+  graphType:GraphType;
 
   constructor() {
     this.checkForUpdates = true;

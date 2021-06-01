@@ -4,22 +4,22 @@ import $ from 'jquery';
 import { utils } from 'github-url-detection';
 import { Stack, Dropdown, IDropdownStyles, IDropdownOption, Link } from 'office-ui-fabric-react';
 import Graph from '../../components/Graph/Graph';
-import ErrorPage from '../../components/ExceptionPage/index';
 import { isPerceptor, runsWhen } from '../../utils/utils';
 import { getRepoCorrelation, getDevelopersByRepo } from '../../api/repo';
 import { getMessageI18n } from '../../utils/utils';
+import { ACTIVITY_DEFINITION_LINK } from '../../constant';
 import PerceptorBase from './PerceptorBase';
 import { inject2Perceptor } from './Perceptor';
 import { loadSettings } from '../../utils/settings';
 
 interface ProjectNetworkViewProps {
   currentRepo: string;
-  graphType: any;
+  graphType: GraphType;
 }
 
 const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, graphType }) => {
-  const [repoCorrelationData, setRepoCorrelationData] = useState<NetworkData | undefined>();
-  const [developersByRepoData, setDevelopersByRepoData] = useState<NetworkData | undefined>();
+  const [repoCorrelationData, setRepoCorrelationData] = useState<IGraphData | undefined>();
+  const [developersByRepoData, setDevelopersByRepoData] = useState<IGraphData | undefined>();
   const [repoPeriod, setRepoPeriod] = useState<string | number | undefined>(180);
   const [developerPeriod, setDeveloperPeriod] = useState<string | number | undefined>(180);
 
@@ -42,11 +42,6 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
     }
     getDevelopersByRepoData();
   }, [developerPeriod]);
-
-  const onProjectChartClick = (param: any, echarts: any) => {
-    const url = 'https://github.com/' + param.data.name + '/pulse?type=perceptor';
-    window.location.href = url;
-  };
 
   const dropdownStyles: Partial<IDropdownStyles> = {
     dropdown: { width: 120 }
@@ -79,8 +74,6 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
     height: '380px'
   }
 
-  const activityDefinitionLink = 'https://github.com/X-lab2017/open-digger/';
-
   if (!repoCorrelationData || !developersByRepoData) {
     return (<div />);
   }
@@ -106,7 +99,6 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
               < Graph
                 graphType={graphType}
                 data={repoCorrelationData!}
-                onChartClick={onProjectChartClick}
                 style={graphStyle}
               />
             </div>
@@ -120,7 +112,7 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
               </ul>
               <div>
                 <span>{getMessageI18n('component_activity_description')}</span>
-                <Link href={activityDefinitionLink} underline>{getMessageI18n('global_here')}</Link>
+                <Link href={ACTIVITY_DEFINITION_LINK} underline>{getMessageI18n('global_here')}</Link>
               </div>
             </div>
           </div>
@@ -158,7 +150,7 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
               </ul>
               <div>
                 <span>{getMessageI18n('component_activity_description')}</span>
-                <Link href={activityDefinitionLink} underline>{getMessageI18n('global_here')}</Link>
+                <Link href={ACTIVITY_DEFINITION_LINK} underline>{getMessageI18n('global_here')}</Link>
               </div>
             </div>
           </div>
@@ -182,22 +174,14 @@ class ProjectNetwork extends PerceptorBase {
     ProjectNetworkDiv.id = 'project-network';
     ProjectNetworkDiv.style.width = "100%";
     this._currentRepo = utils.getRepositoryInfo(window.location)!.nameWithOwner;
-    try {
-      const settings = await loadSettings();
-      render(
-        <ProjectNetworkView
-          currentRepo={this._currentRepo}
-          graphType={settings.graphType}
-        />,
-        ProjectNetworkDiv,
-      );
-    } catch (error) {
-      this.logger.error('projectNetwork', error);
-      render(
-        <ErrorPage />,
-        ProjectNetworkDiv,
-      );
-    }
+    const settings = await loadSettings();
+    render(
+      <ProjectNetworkView
+        currentRepo={this._currentRepo}
+        graphType={settings.graphType}
+      />,
+      ProjectNetworkDiv,
+    );
     perceptorContainer.prepend(ProjectNetworkDiv);
   }
 }

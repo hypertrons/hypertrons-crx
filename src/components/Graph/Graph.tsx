@@ -2,37 +2,41 @@ import React, { useState, CSSProperties } from 'react';
 import EChartsWrapper from './Echarts/index';
 import GraphinWrapper from './Graphin/index'
 import { Stack, Toggle, SwatchColorPicker } from 'office-ui-fabric-react';
-import { getMessageI18n, GraphType, getGithubTheme } from "../../utils/utils"
-
-enum ThemeType {
-  light = 'light',
-  dark = 'dark'
-}
+import { getMessageI18n, getGithubTheme, isNull } from "../../utils/utils"
 
 const GITHUB_THEME = getGithubTheme();
 
 interface GraphProps {
-  graphType: string;
-  data: NetworkData;
-  style?: CSSProperties;
-  onChartClick?: any;
+  /**
+   * data
+   */
+  readonly data: IGraphData;
+  /**
+   * graphType, default is Echarts
+   */
+  readonly graphType?: GraphType;
+  /**
+   * `style` for graph container
+   */
+  readonly style?: CSSProperties;
+  /**
+   * callback function when click node
+   */
+  readonly onNodeClick?: NodeClickFunc;
 }
 
 const Graph: React.FC<GraphProps> = ({
-  graphType,
   data,
-  style,
-  onChartClick = (param: any, echarts: any) => {
-    const url = 'https://github.com/' + param.data.name;
+  graphType = 'echarts',
+  style = {},
+  onNodeClick = (node: INode) => {
+    const url = 'https://github.com/' + node.id;
     window.location.href = url;
   },
 }) => {
-
   const [theme, setTheme] = useState<any>(GITHUB_THEME);
-
   const NODE_SIZE = [5, 7, 10, 14, 18, 23];
-
-  const NODE_COLOR = theme === ThemeType.light ? ['#9EB9A8', '#40C463', '#30A14E', '#216E39'] : ['#0E4429', '#006D32', '#26A641', '#39D353'];
+  const NODE_COLOR = theme === 'light' ? ['#9EB9A8', '#40C463', '#30A14E', '#216E39'] : ['#0E4429', '#006D32', '#26A641', '#39D353'];
   const THRESHOLD = [10, 40, 160, 640, 2560];
 
   const getSizeMap = (value: number): number => {
@@ -128,7 +132,7 @@ const Graph: React.FC<GraphProps> = ({
   let graphData: any;
   let graphOption: any;
   switch (graphType) {
-    case GraphType.echarts:
+    case 'echarts':
       graphData = generateEchartsData(data);
       graphOption = {
         tooltip: {},
@@ -166,7 +170,7 @@ const Graph: React.FC<GraphProps> = ({
         ]
       };
       break;
-    case GraphType.antv:
+    case 'antv':
       graphData = generateGraphinData(data);
       break;
     default:
@@ -180,6 +184,9 @@ const Graph: React.FC<GraphProps> = ({
     { id: 'L3', label: `> ${THRESHOLD[2]}`, color: NODE_COLOR[3] },
   ];
 
+  if (isNull(data)) {
+    return (<div />)
+  }
   return (
     <Stack>
       <Stack
@@ -191,13 +198,13 @@ const Graph: React.FC<GraphProps> = ({
         }}
       >
         <Toggle
-          defaultChecked={theme === ThemeType.dark}
+          defaultChecked={theme === 'dark'}
           // Note: Graphin is currently unable to switch the theme. See: https://graphin.antv.vision/en-US/graphin/render/theme/
-          disabled={graphType === GraphType.antv}
+          disabled={graphType === 'antv'}
           onText={getMessageI18n("component_darkMode")}
           offText={getMessageI18n("component_darkMode")}
           onChange={(e, checked) => {
-            checked ? setTheme(ThemeType.dark) : setTheme(ThemeType.light);
+            checked ? setTheme('dark') : setTheme('light');
           }}
         />
         <Stack
@@ -218,26 +225,23 @@ const Graph: React.FC<GraphProps> = ({
       </Stack>
       <Stack className='hypertrons-crx-border'>
         {
-          graphType === GraphType.echarts &&
+          graphType === 'echarts' &&
           <EChartsWrapper
             option={graphOption}
             onEvents={{
-              'click': onChartClick,
+              'click': onNodeClick,
             }}
             style={style}
             theme={theme}
           />
         }
         {
-          graphType === GraphType.antv &&
+          graphType === 'antv' &&
           <GraphinWrapper
             data={graphData}
-            layoutOption={{
-              type: 'force',
-              linkDistance: 150,
-            }}
             style={style}
             theme={theme}
+            onNodeClick={onNodeClick}
           />
         }
       </Stack>

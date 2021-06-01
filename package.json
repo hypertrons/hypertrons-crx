@@ -6,9 +6,10 @@
   "license": "Apache",
   "scripts": {
     "start": "node utils/webserver.js",
-    "watch": "node utils/watch.js",
+    "watch": "cross-env NODE_ENV=development node utils/build.js",
+    "watch:mock": "cross-env NODE_ENV=development MOCK=true node utils/build.js",
     "web-ext": "web-ext run --target=chromium",
-    "build": "node utils/build.js",
+    "build": "cross-env NODE_ENV=production node utils/build.js",
     "prettier": "prettier --write '**/*.{js,jsx,css,html}'"
   },
   "dependencies": {
@@ -22,7 +23,6 @@
     "@types/react": "^17.0.2",
     "copy-to-clipboard": "^3.3.1",
     "echarts": "^5.0.2",
-    "element-ready": "^5.0.0",
     "github-url-detection": "^4.10.0",
     "jquery": "^3.6.0",
     "react": "^16.13.1",
@@ -46,6 +46,7 @@
     "babel-preset-react-app": "^9.1.2",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.1.1",
+    "cross-env": "^7.0.3",
     "crx-webpack-plugin": "^0.1.6",
     "css-loader": "^3.4.2",
     "eslint": "^6.8.0",

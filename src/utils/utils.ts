@@ -117,21 +117,6 @@ export function runsWhen(rules: any[]) {
   };
 }
 
-export enum GraphType {
-  antv = "antv", echarts = "echarts"
-}
-
-export function mockSuccessResponse(data: any) {
-  if (process.env.NODE_ENV !== 'production') {
-    return {
-      status: 200,
-      statusText: 'ok',
-      data: data,
-    };
-  }
-  return null;
-}
-
 export function getGithubTheme() {
   return $('[data-color-mode]')[0].dataset['colorMode'];
 }
