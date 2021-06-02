@@ -36,6 +36,7 @@ const OptionsPage: React.FC = () => {
   const [notificationId, setNotificationId] = useState(0);
   const [notification, setNotification] = useState("");
   const [updateStatus, setUpdateStatus] = useState(UpdateStatus.undefine);
+  const [updateUrl, setUpdateUrl] = useState("https://github.com/hypertrons/hypertrons-crx/releases");
 
   const options: IChoiceGroupOption[] = [
     {
@@ -98,8 +99,9 @@ const OptionsPage: React.FC = () => {
   const checkUpdateManually = async () => {
     setUpdateStatus(UpdateStatus.undefine);
     setCheckingUpdate(true);
-    const [currentVersion, latestVersion] = await checkUpdate();
+    const [currentVersion, latestVersion,updateUrl] = await checkUpdate();
     if (compareVersion(currentVersion, latestVersion) === -1) {
+      setUpdateUrl(updateUrl);
       setUpdateStatus(UpdateStatus.yes);
     }
     else {
@@ -335,7 +337,7 @@ const OptionsPage: React.FC = () => {
                 isMultiline={false}
               >
                 {getMessageI18n("options_update_btn_updateStatusYes")}
-                <Link href="https://github.com/hypertrons/hypertrons-crx/" target="_blank" underline>
+                <Link href={updateUrl} target="_blank" underline>
                   {getMessageI18n("options_update_btn_getUpdate")}
                 </Link>
               </MessageBar>
