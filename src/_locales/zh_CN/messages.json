@@ -1,6 +1,6 @@
 {
   "manifest_appDescription": {
-    "message": "Hypertrons-crx，您的最佳Github助手"
+    "message": "Hypertrons-crx，追踪和挖掘和洞察感兴趣的 GitHub 项目与开发者与"
   },
   "manifest_appName": {
     "message": "Hypertrons-crx 机器人"
@@ -26,9 +26,7 @@
   "global_btn_goBack": {
     "message": "返回"
   },
-  "global_btn_setToken": {
-    "message": "设置token"
-  },
+
   "global_developer": {
     "message": "开发者"
   },
@@ -66,25 +64,22 @@
     "message": "点击查看"
   },
   "global_notificationTitle": {
-    "message": "开发者通知"
+    "message": "欢迎"
   },
   "component_error_message": {
     "message": "抱歉，该组件出现了一点问题..."
-  },
-  "component_projectNetwork_title": {
-    "message": "Hypertorns网络图"
   },
   "component_developerCollabrationNetwork_title": {
     "message": "开发者协作网络图"
   },
   "component_developerCollabrationNetwork_description": {
-    "message": "开发者协作网络图展示了在给定的时间段内，开发者与开发者之间的协作关系"
+    "message": "开发者协作网络图展示了在给定的时间段内，开发者与开发者之间的协作关系, 用于开发者关系的追踪与挖掘。从该网络图中，可以找出与该开发者联系较为紧密的其他开发者。"
   },
   "component_developerCollabrationNetwork_description_node": {
-    "message": "节点：开发者，节点大小表示开发者活跃度"
+    "message": "节点：一个节点表示开发者，节点大小与颜色的深浅表示开发者活跃度的大小。"
   },
   "component_developerCollabrationNetwork_description_edge": {
-    "message": "边：开发者与开发者之间的协作关系，边的粗细表示开发者间联系的紧密程度"
+    "message": "边：开发者与开发者之间的协作关系，值的大小表示开发者间联系的紧密程度。"
   },
   "component_activity_description": {
     "message": "活跃度定义: 请参考"
@@ -93,91 +88,93 @@
     "message": "项目关系网络图"
   },
   "component_projectCorrelationNetwork_description": {
-    "message": "项目关系网络图展示了在给定的时间段内，项目与项目之间的连接关系"
+    "message": "项目关系网络图展示了在给定的时间段内，项目与项目之间的联结关系，用于项目间关系的追踪与挖掘。从该网络图中，可以找出与该项目有联结关系的其他项目。"
   },
   "component_projectCorrelationNetwork_description_node": {
-    "message": "节点：项目，节点大小表示项目活跃度"
+    "message": "节点：一个节点表示一个项目，节点大小与颜色的深浅表示项目活跃度的大小。"
   },
   "component_projectCorrelationNetwork_description_edge": {
-    "message": "边：项目与项目之间的连接关系，边的粗细表示项目间联系的紧密程度"
+    "message": "边：表示项目与项目之间存在联结关系，值的大小表示项目间联系的紧密程度。"
   },
   "component_mostParticipatedProjects_title": {
     "message": "活跃仓库网络图"
   },
   "component_mostParticipatedProjects_description": {
-    "message": "活跃仓库网络图展示了在给定的时间段内，开发者的活跃项目"
+    "message": "活跃仓库网络图展示了在给定的时间段内，开发者的活跃项目，用于开发者行为的追踪与挖掘。从该网络图中，可以找出该开发者在哪些项目中活跃。"
   },
   "component_mostParticipatedProjects_description_node": {
-    "message": "节点：项目，节点大小表示项目活跃度"
+    "message": "节点：一个节点表示一个项目，节点大小与颜色的深浅表示开发者对该项目活跃度的贡献值。"
   },
   "component_mostParticipatedProjects_description_edge": {
-    "message": "边：项目与项目之间的连接关系，边的粗细表示项目间联系的紧密程度"
+    "message": "边：项目与项目之间的连接关系，值的大小表示项目间联系的紧密程度。"
   },
+
   "component_activeDeveloperCollabrationNetwork_title": {
     "message": "项目活跃开发者协作网络图"
   },
   "component_activeDeveloperCollabrationNetwork_description": {
-    "message": "项目活跃开发者协作网络图展示了在给定的时间段内，项目内活跃的开发者之间的协作关系"
+    "message": "项目活跃开发者协作网络图展示了在给定的时间段内，项目内部活跃的开发者之间的协作关系，用于项目内部开发者关系的追踪与挖掘。从该网络图中，可以找出该项目中最活跃的开发者，及开发者之间的协作关系。"
   },
   "component_activeDeveloperCollabrationNetwork_description_node": {
-    "message": "节点：开发者，节点大小表示开发者对项目活跃度的贡献值"
+    "message": "节点：一个节点表示一个开发者，节点大小与颜色的深浅表示开发者对项目活跃度的贡献值。"
   },
   "component_activeDeveloperCollabrationNetwork_description_edge": {
-    "message": "边：开发者与开发者之间的连接关系，边的粗细表示开发者间联系的紧密程度"
+    "message": "边：开发者与开发者之间的连接关系，值的大小表示开发者间联系的紧密程度。"
   },
   "component_darkMode": {
     "message": "深色模式"
   },
-  "options_header_settings": {
-    "message": "设置"
+
+  "teachingBubble_text_headline": {
+    "message": "探索 Perceptor 图表"
   },
-  "options_header_my": {
-    "message": "我的"
+  "teachingBubble_text_content": {
+    "message": "点击以查看统计数据"
   },
-  "options_toggle_checkForUpdates": {
-    "message": "自动检测更新"
+
+  "options_components_title": {
+    "message": "选择组件"
   },
-  "options_toggle_checkForUpdates_onText": {
-    "message": "开"
+  "options_components_toolTip": {
+    "message": "您可以在此选择要启用的图表组件"
   },
-  "options_toggle_checkForUpdates_offText": {
-    "message": "关"
+
+  "options_graphType_title": {
+    "message": "图表类型"
   },
-  "options_text_defaultGraphType": {
-    "message": "默认图表类型"
+  "options_graphType_toolTip": {
+    "message": "可选择图表组件的渲染方式，Antv 或者 Echarts"
   },
-  "options_text_showDifferentComponent": {
-    "message": "显示组件"
-  },
-  "options_text_checkUpdate": {
-    "message": "检查更新"
-  },
-  "options_text_update": {
+
+  "options_update_title": {
     "message": "更新"
   },
-  "options_text_checking": {
+  "options_update_toolTip": {
+    "message": "始终保持插件状态为最新将为您呈现更丰富的内容"
+  },
+  "options_update_toggle_autoCheck": {
+    "message": "自动检测更新"
+  },
+  "options_update_toggle_autoCheck_onText": {
+    "message": "开"
+  },
+  "options_update_toggle_autoCheck_offText": {
+    "message": "关"
+  },
+  "options_update_btn_checkUpdate": {
+    "message": "检查更新"
+  },
+  "options_update_checking": {
     "message": "正在检查更新"
   },
-  "options_text_updateStatusYes": {
+  "options_update_btn_updateStatusYes": {
     "message": "新更新可用"
   },
-  "options_text_updateStatusNo": {
-    "message": "暂无更新"
+  "options_update_btn_updateStatusNo": {
+    "message": "已是最新版本"
   },
-  "options_text_goGetUpdate": {
+  "options_update_btn_getUpdate": {
     "message": "获取更新"
-  },
-  "options_dialog_token_title": {
-    "message": "请输入github token"
-  },
-  "options_dialog_token_message": {
-    "message": "如何生成github token?"
-  },
-  "options_dialog_token_checking": {
-    "message": "检测中"
-  },
-  "options_dialog_token_error": {
-    "message": "无效的token"
   },
   "notification_title_newUpdate":{
     "message": "新版本更新可用"
@@ -185,22 +182,39 @@
   "notification_message_newUpdate":{
     "message": "版本号: %v"
   },
-  "teachingBubble_text_headline": {
-    "message": "探索 Perceptor 图表"
+
+  "options_token_title": {
+    "message": "设置 Token"
   },
-  "teachingBubble_text_content": {
-    "message": "点击以查看统计数据"
+  "options_token_dialog_title": {
+    "message": "设置 GitHub token"
   },
-  "options_toolTip_components": {
-    "message": "您可以在此次选择在github中展示的图表组件"
+  "options_token_toolTip": {
+    "message": "Github 凭据将被用于 repository 文件的访问"
   },
-  "options_toolTip_graphType": {
-    "message": "可选择图表组件的渲染方式，antv或者echarts"
+  "options_token_btn_setToken": {
+    "message": "设置 token"
   },
-  "options_toolTip_update": {
-    "message": "始终保持插件状态为最新将为您呈现更丰富的内容"
+  "options_token_dialog_message": {
+    "message": "如何生成 GitHub token?"
   },
-  "options_toolTip_token": {
-    "message": "Github凭据将被用于repository文件的访问"
+  "options_token_dialog_checking": {
+    "message": "检测中"
+  },
+  "options_token_dialog_error": {
+    "message": "无效的 Token"
+  },
+
+  "options_about_title": {
+    "message": "关于"
+  },
+  "options_about_toolTip": {
+    "message": "关于 Perceptor"
+  },
+  "options_about_description": {
+    "message": "Perceptor 用于 GitHub 项目与开发者关系的追踪、挖掘与洞察。通过可视化图表展示各类丰富的行为数据，方便用户快速洞察开发者与项目相关信息。"
+  },
+  "options_about_description_website": {
+    "message": "欢迎访问我们的网站获取更多信息："
   }
 }

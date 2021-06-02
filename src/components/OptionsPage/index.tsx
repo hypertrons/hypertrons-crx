@@ -12,6 +12,7 @@ import { checkUpdate, checkIsTokenAvailabe } from '../../services/common';
 import Settings, { loadSettings } from "../../utils/settings"
 import MetaData, { loadMetaData } from '../../utils/metadata';
 import { getNotificationInformation } from '../../services/background';
+import { HYPERTRONS_CRX_WEBSITE } from '../../constant';
 import './index.css';
 
 initializeIcons();
@@ -39,18 +40,10 @@ const OptionsPage: React.FC = () => {
   const options: IChoiceGroupOption[] = [
     {
       key: 'antv',
-      imageSrc: "./antv.png",
-      imageAlt: 'Antv',
-      selectedImageSrc: "./antv.png",
-      imageSize: { width: 48, height: 48 },
       text: 'Antv'
     },
     {
       key: 'echarts',
-      imageSrc: "./echarts.png",
-      imageAlt: 'Echarts',
-      selectedImageSrc: "./echarts.png",
-      imageSize: { width: 48, height: 48 },
       text: 'Echarts'
     }
   ];
@@ -75,7 +68,7 @@ const OptionsPage: React.FC = () => {
         setShowDialogNotification(true);
       }
     }
-    if(!inited){
+    if (!inited) {
       initMetaData();
     }
   }, [inited, metaData]);
@@ -86,7 +79,7 @@ const OptionsPage: React.FC = () => {
       setSettings(temp);
       setInited(true);
     }
-    if(!inited){
+    if (!inited) {
       initSettings();
     }
   }, [inited, settings]);
@@ -166,24 +159,24 @@ const OptionsPage: React.FC = () => {
           }}
           dialogContentProps={{
             type: DialogType.normal,
-            title: getMessageI18n("options_dialog_token_title")
+            title: getMessageI18n("options_token_dialog_title")
           }}
         >
           <Stack horizontal style={{ fontSize: 16, margin: 5 }}>
             <Link href="https://github.com/settings/tokens" target="_blank" underline>
-              {getMessageI18n("options_dialog_token_message")}
+              {getMessageI18n("options_token_dialog_message")}
             </Link>
           </Stack>
           {
             checkingToken &&
-            <Spinner label={getMessageI18n("options_dialog_token_checking")} />
+            <Spinner label={getMessageI18n("options_token_dialog_checking")} />
           }
           {
             showDialogTokenError &&
             <MessageBar
               messageBarType={MessageBarType.error}
             >
-              {getMessageI18n("options_dialog_token_error")}
+              {getMessageI18n("options_token_dialog_error")}
             </MessageBar>
           }
           <Stack
@@ -245,11 +238,11 @@ const OptionsPage: React.FC = () => {
       >
         <Stack.Item className='Box'>
           <TooltipHost
-            content={getMessageI18n("options_toolTip_components")}
+            content={getMessageI18n("options_components_toolTip")}
           >
             <Stack.Item className='Box-header'>
               <h2 className='Box-title'>
-                {getMessageI18n("options_text_showDifferentComponent")}
+                {getMessageI18n("options_components_title")}
               </h2>
             </Stack.Item>
           </TooltipHost>
@@ -259,6 +252,7 @@ const OptionsPage: React.FC = () => {
               childrenGap: 10
             }}
           >
+            <p>{getMessageI18n("options_components_toolTip")} :</p>
             <Checkbox
               label={getMessageI18n("component_developerCollabrationNetwork_title")}
               defaultChecked={settings.developerNetwork}
@@ -279,22 +273,19 @@ const OptionsPage: React.FC = () => {
         </Stack.Item>
         <Stack.Item className='Box'>
           <TooltipHost
-            content={getMessageI18n("options_toolTip_graphType")}
+            content={getMessageI18n("options_graphType_toolTip")}
           >
             <Stack.Item className='Box-header'>
               <h2 className='Box-title'>
-                {getMessageI18n("options_text_defaultGraphType")}
+                {getMessageI18n("options_graphType_title")}
               </h2>
             </Stack.Item>
           </TooltipHost>
           <Stack
             style={{ margin: '10px 25px' }}
-            tokens={{
-              childrenGap: 10
-            }}
           >
+            <p>{getMessageI18n("options_graphType_toolTip")} :</p>
             <ChoiceGroup
-              // label={getMessageI18n("options_text_defaultGraphType")}
               defaultSelectedKey={settings.graphType}
               options={options}
               onChanged={async (option) => {
@@ -306,11 +297,11 @@ const OptionsPage: React.FC = () => {
         </Stack.Item>
         <Stack.Item className='Box'>
           <TooltipHost
-            content={getMessageI18n("options_toolTip_update")}
+            content={getMessageI18n("options_update_toolTip")}
           >
             <Stack.Item className='Box-header'>
               <h2 className='Box-title'>
-                {getMessageI18n("options_text_update")}
+                {getMessageI18n("options_update_title")}
               </h2>
             </Stack.Item>
           </TooltipHost>
@@ -320,11 +311,12 @@ const OptionsPage: React.FC = () => {
               childrenGap: 10
             }}
           >
+            <p>{getMessageI18n("options_update_toolTip")}.</p>
             <Toggle
-              label={getMessageI18n('options_toggle_checkForUpdates')}
+              label={getMessageI18n('options_update_toggle_autoCheck')}
               defaultChecked={settings.checkForUpdates}
-              onText={getMessageI18n('options_toggle_checkForUpdates_onText')}
-              offText={getMessageI18n('options_toggle_checkForUpdates_offText')}
+              onText={getMessageI18n('options_update_toggle_autoCheck_onText')}
+              offText={getMessageI18n('options_update_toggle_autoCheck_offText')}
               onChange={async (e, checked) => {
                 settings.checkForUpdates = checked;
                 await saveSettings(settings);
@@ -333,7 +325,7 @@ const OptionsPage: React.FC = () => {
             {
               checkingUpdate &&
               <Stack horizontalAlign="start">
-                <Spinner label={getMessageI18n("options_text_checking")} />
+                <Spinner label={getMessageI18n("options_update_checking")} />
               </Stack>
             }
             {
@@ -342,9 +334,9 @@ const OptionsPage: React.FC = () => {
                 messageBarType={MessageBarType.success}
                 isMultiline={false}
               >
-                {getMessageI18n("options_text_updateStatusYes")}
+                {getMessageI18n("options_update_btn_updateStatusYes")}
                 <Link href="https://github.com/hypertrons/hypertrons-crx/" target="_blank" underline>
-                  {getMessageI18n("options_text_goGetUpdate")}
+                  {getMessageI18n("options_update_btn_getUpdate")}
                 </Link>
               </MessageBar>
             }
@@ -354,7 +346,7 @@ const OptionsPage: React.FC = () => {
                 messageBarType={MessageBarType.info}
                 isMultiline={false}
               >
-                {getMessageI18n("options_text_updateStatusNo")}
+                {getMessageI18n("options_update_btn_updateStatusNo")}
               </MessageBar>
             }
             <DefaultButton
@@ -366,17 +358,17 @@ const OptionsPage: React.FC = () => {
                 await checkUpdateManually();
               }}
             >
-              {getMessageI18n("options_text_checkUpdate")}
+              {getMessageI18n("options_update_btn_checkUpdate")}
             </DefaultButton>
           </Stack>
         </Stack.Item>
         <Stack.Item className='Box'>
           <TooltipHost
-            content={getMessageI18n("options_toolTip_token")}
+            content={getMessageI18n("options_token_toolTip")}
           >
             <Stack.Item className='Box-header'>
               <h2 className='Box-title'>
-                GitHub Token
+                {getMessageI18n("options_token_title")}
               </h2>
             </Stack.Item>
           </TooltipHost>
@@ -386,6 +378,7 @@ const OptionsPage: React.FC = () => {
               childrenGap: 10
             }}
           >
+            <p>{getMessageI18n("options_token_toolTip")} :</p>
             {
               metaData.token !== "" &&
               <Stack
@@ -421,10 +414,32 @@ const OptionsPage: React.FC = () => {
                 width: 120
               }}
             >
-              {getMessageI18n("global_btn_setToken")}
+              {getMessageI18n("options_token_btn_setToken")}
             </DefaultButton>
           </Stack>
         </Stack.Item>
+        <Stack.Item className='Box'>
+          <TooltipHost
+            content={getMessageI18n("options_about_toolTip")}
+          >
+            <Stack.Item className='Box-header'>
+              <h2 className='Box-title'>
+                {getMessageI18n("options_about_title")}
+              </h2>
+            </Stack.Item>
+          </TooltipHost>
+          <Stack
+            style={{ margin: '10px 25px' }}
+
+          >
+            <p>{getMessageI18n("options_about_description")}</p>
+            <p>{getMessageI18n("options_about_description_website")}</p>
+            <Link href={HYPERTRONS_CRX_WEBSITE} target="_blank" underline>
+              {HYPERTRONS_CRX_WEBSITE}
+            </Link>
+          </Stack>
+        </Stack.Item>
+
       </Stack>
     </Stack>
   )
