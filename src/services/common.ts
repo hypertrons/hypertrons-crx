@@ -33,7 +33,6 @@ export const checkUpdate= async ()=>{
     latestVersion=updateInformation["develop"]["latest_version"];
     updateUrl=updateInformation["develop"]["url"];
   }
-  console.log(currentVersion,latestVersion,updateUrl);
   return [currentVersion,latestVersion,updateUrl];
 }
 
