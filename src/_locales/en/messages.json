@@ -140,7 +140,12 @@
   "options_components_toolTip": {
     "message": "You can choose which component will be shown on github's page"
   },
-
+  "options_locale_title": {
+    "message": "Language"
+  },
+  "options_locale_toolTip": {
+    "message": "Choose the dispaly language"
+  },
   "options_graphType_title": {
     "message": "Default graph type"
   },

@@ -138,7 +138,12 @@
   "options_components_toolTip": {
     "message": "您可以在此选择要启用的图表组件"
   },
-
+  "options_locale_title": {
+    "message": "语言"
+  },
+  "options_locale_toolTip": {
+    "message": "选择以何种语言显示信息"
+  },
   "options_graphType_title": {
     "message": "图表类型"
   },

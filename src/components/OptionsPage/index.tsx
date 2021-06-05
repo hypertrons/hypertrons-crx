@@ -7,7 +7,7 @@ import {
   Image, ImageFit, DialogFooter, PrimaryButton
 } from 'office-ui-fabric-react';
 import { initializeIcons } from '@uifabric/icons';
-import { getMessageI18n, chromeSet, compareVersion, getLocale } from '../../utils/utils';
+import { getMessageI18n, chromeSet, compareVersion } from '../../utils/utils';
 import { checkUpdate, checkIsTokenAvailabe } from '../../services/common';
 import Settings, { loadSettings } from "../../utils/settings"
 import MetaData, { loadMetaData } from '../../utils/metadata';
@@ -38,7 +38,7 @@ const OptionsPage: React.FC = () => {
   const [updateStatus, setUpdateStatus] = useState(UpdateStatus.undefine);
   const [updateUrl, setUpdateUrl] = useState("https://github.com/hypertrons/hypertrons-crx/releases");
 
-  const options: IChoiceGroupOption[] = [
+  const graphOptions: IChoiceGroupOption[] = [
     {
       key: 'antv',
       text: 'Antv'
@@ -48,6 +48,33 @@ const OptionsPage: React.FC = () => {
       text: 'Echarts'
     }
   ];
+  const locale=settings.locale;
+  let localeOptions: IChoiceGroupOption[];
+  if(locale==="en"){
+    localeOptions = [
+      {
+        key: 'en',
+        text: 'English'
+      },
+      {
+        key: 'zh_CN',
+        text: 'Chinese'
+      }
+    ];
+  }
+  else{
+    localeOptions = [
+      {
+        key: 'en',
+        text: '英语'
+      },
+      {
+        key: 'zh_CN',
+        text: '汉语'
+      }
+    ];
+  }
+
 
   useEffect(() => {
     const initMetaData = async () => {
@@ -58,7 +85,6 @@ const OptionsPage: React.FC = () => {
       }
       const notificationInformation = await getNotificationInformation();
       if (notificationInformation.is_published && tempMetaData.idLastNotication < notificationInformation.id) {
-        const locale=getLocale();
         if (locale==="zh_CN") {
           setNotification(notificationInformation.content.zh);
         }
@@ -240,6 +266,31 @@ const OptionsPage: React.FC = () => {
       >
         <Stack.Item className='Box'>
           <TooltipHost
+            content={getMessageI18n("options_locale_toolTip")}
+          >
+            <Stack.Item className='Box-header'>
+              <h2 className='Box-title'>
+                {getMessageI18n("options_locale_title")}
+              </h2>
+            </Stack.Item>
+          </TooltipHost>
+          <Stack
+            style={{ margin: '10px 25px' }}
+          >
+            <p>{getMessageI18n("options_locale_toolTip")} :</p>
+            <ChoiceGroup
+              // @ts-ignore
+              defaultSelectedKey={settings.locale}
+              options={localeOptions}
+              onChanged={async (option) => {
+                settings.locale = option.key;
+                await saveSettings(settings);
+              }}
+            />
+          </Stack>
+        </Stack.Item>
+        <Stack.Item className='Box'>
+          <TooltipHost
             content={getMessageI18n("options_components_toolTip")}
           >
             <Stack.Item className='Box-header'>
@@ -289,7 +340,7 @@ const OptionsPage: React.FC = () => {
             <p>{getMessageI18n("options_graphType_toolTip")} :</p>
             <ChoiceGroup
               defaultSelectedKey={settings.graphType}
-              options={options}
+              options={graphOptions}
               onChanged={async (option) => {
                 settings.graphType = option.key as GraphType;
                 await saveSettings(settings);

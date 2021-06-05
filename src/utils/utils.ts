@@ -1,7 +1,6 @@
 import $ from 'jquery';
 import messages_en from '../_locales/en/messages.json';
 import messages_zh_CN from '../_locales/zh_CN/messages.json';
-import Settings from './settings';
 
 const messages_locale={
   "en":messages_en,
@@ -51,24 +50,13 @@ export async function chromeGet(key: string) {
   });
 }
 
-export function getLocale(){
-  let locale=localStorage.getItem("locale");
-  if(isNull(locale)){
-    const language = chrome.i18n.getUILanguage();
-    if (language.startsWith("zh")) {
-      locale="zh_CN";
-    }
-    else {
-      locale="en";
-    }
-  }
-  return locale
+export function getMessageByLocale(key: string,locale:string) {
+  // @ts-ignore
+  return messages_locale[locale][key]["message"];
 }
 
 export function getMessageI18n(key: string) {
-  const locale=getLocale();
-  // @ts-ignore
-  return messages_locale[locale][key]["message"];
+  return chrome.i18n.getMessage(key);
 }
 
 export const isPerceptor = (): boolean => window.location.search.includes('perceptor');
