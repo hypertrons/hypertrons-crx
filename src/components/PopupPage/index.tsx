@@ -22,15 +22,17 @@ const PopupPage: React.FC = () => {
     const initSettings=async ()=> {
       const temp=await loadSettings();
       setSettings(temp);
+      setInited(true);
     }
-    initSettings();
+    if(!inited){
+      initSettings();
+    }
   },[settings]);
 
   useEffect(() => {
     const initMetaData = async () => {
       const temp=await loadMetaData();
       setMetaData(temp);
-      setInited(true);
     }
     initMetaData();
   }, []);
