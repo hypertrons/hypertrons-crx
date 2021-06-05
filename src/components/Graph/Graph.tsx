@@ -1,8 +1,9 @@
-import React, { useState, CSSProperties } from 'react';
+import React, { useState, CSSProperties, useEffect } from 'react';
 import EChartsWrapper from './Echarts/index';
 import GraphinWrapper from './Graphin/index'
 import { Stack, Toggle, SwatchColorPicker } from 'office-ui-fabric-react';
-import { getMessageI18n, getGithubTheme, isNull, getMinMax, linearMap } from "../../utils/utils"
+import { getGithubTheme, isNull, getMinMax, linearMap, getMessageByLocale } from '../../utils/utils';
+import Settings, { loadSettings } from '../../utils/settings';
 
 const GITHUB_THEME = getGithubTheme();
 
@@ -38,6 +39,19 @@ const Graph: React.FC<GraphProps> = ({
   const NODE_SIZE = [10, 30];
   const NODE_COLOR = theme === 'light' ? ['#9EB9A8', '#40C463', '#30A14E', '#216E39'] : ['#0E4429', '#006D32', '#26A641', '#39D353'];
   const THRESHOLD = [10, 100, 1000];
+  const [inited, setInited] = useState(false);
+  const [settings, setSettings] = useState(new Settings());
+
+  useEffect(() => {
+    const initSettings = async () => {
+      const temp = await loadSettings();
+      setSettings(temp);
+      setInited(true);
+    }
+    if (!inited) {
+      initSettings();
+    }
+  }, [inited, settings]);
 
   const getColorMap = (value: number): string => {
     const length = Math.min(THRESHOLD.length, NODE_COLOR.length - 1);
@@ -193,8 +207,8 @@ const Graph: React.FC<GraphProps> = ({
           defaultChecked={theme === 'dark'}
           // Note: Graphin is currently unable to switch the theme. See: https://graphin.antv.vision/en-US/graphin/render/theme/
           disabled={graphType === 'antv'}
-          onText={getMessageI18n("component_darkMode")}
-          offText={getMessageI18n("component_darkMode")}
+          onText={getMessageByLocale("component_darkMode",settings.locale)}
+          offText={getMessageByLocale("component_darkMode",settings.locale)}
           onChange={(e, checked) => {
             checked ? setTheme('dark') : setTheme('light');
           }}

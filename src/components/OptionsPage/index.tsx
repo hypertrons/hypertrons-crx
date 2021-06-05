@@ -7,7 +7,7 @@ import {
   Image, ImageFit, DialogFooter, PrimaryButton
 } from 'office-ui-fabric-react';
 import { initializeIcons } from '@uifabric/icons';
-import { getMessageI18n, chromeSet, compareVersion } from '../../utils/utils';
+import { getMessageByLocale, chromeSet, compareVersion } from '../../utils/utils';
 import { checkUpdate, checkIsTokenAvailabe } from '../../services/common';
 import Settings, { loadSettings } from "../../utils/settings"
 import MetaData, { loadMetaData } from '../../utils/metadata';
@@ -151,7 +151,7 @@ const OptionsPage: React.FC = () => {
           }}
           dialogContentProps={{
             type: DialogType.normal,
-            title: getMessageI18n("global_notificationTitle")
+            title: getMessageByLocale("global_notificationTitle",settings.locale)
           }}
         >
           <Text variant="mediumPlus">
@@ -163,7 +163,7 @@ const OptionsPage: React.FC = () => {
                 setShowDialogNotification(false);
               }}
             >
-              {getMessageI18n("global_btn_ok")}
+              {getMessageByLocale('global_btn_ok', settings.locale)}
             </DefaultButton>
             <PrimaryButton
               onClick={async () => {
@@ -173,7 +173,7 @@ const OptionsPage: React.FC = () => {
                 setShowDialogNotification(false);
               }}
             >
-              {getMessageI18n("global_btn_disable")}
+              {getMessageByLocale('global_btn_disable', settings.locale)}
             </PrimaryButton>
           </DialogFooter>
         </Dialog>
@@ -187,24 +187,24 @@ const OptionsPage: React.FC = () => {
           }}
           dialogContentProps={{
             type: DialogType.normal,
-            title: getMessageI18n("options_token_dialog_title")
+            title: getMessageByLocale('options_token_dialog_title', settings.locale)
           }}
         >
           <Stack horizontal style={{ fontSize: 16, margin: 5 }}>
             <Link href="https://github.com/settings/tokens" target="_blank" underline>
-              {getMessageI18n("options_token_dialog_message")}
+              {getMessageByLocale('options_token_dialog_message', settings.locale)}
             </Link>
           </Stack>
           {
             checkingToken &&
-            <Spinner label={getMessageI18n("options_token_dialog_checking")} />
+            <Spinner label={getMessageByLocale('options_token_dialog_checking', settings.locale)} />
           }
           {
             showDialogTokenError &&
             <MessageBar
               messageBarType={MessageBarType.error}
             >
-              {getMessageI18n("options_token_dialog_error")}
+              {getMessageByLocale('options_token_dialog_error', settings.locale)}
             </MessageBar>
           }
           <Stack
@@ -246,7 +246,7 @@ const OptionsPage: React.FC = () => {
                 }
               }}
             >
-              {getMessageI18n("global_btn_ok")}
+              {getMessageByLocale('global_btn_ok', settings.locale)}
             </DefaultButton>
           </Stack>
         </Dialog>
@@ -266,20 +266,19 @@ const OptionsPage: React.FC = () => {
       >
         <Stack.Item className='Box'>
           <TooltipHost
-            content={getMessageI18n("options_locale_toolTip")}
+            content={getMessageByLocale('options_locale_toolTip', settings.locale)}
           >
             <Stack.Item className='Box-header'>
               <h2 className='Box-title'>
-                {getMessageI18n("options_locale_title")}
+                {getMessageByLocale('options_locale_title', settings.locale)}
               </h2>
             </Stack.Item>
           </TooltipHost>
           <Stack
             style={{ margin: '10px 25px' }}
           >
-            <p>{getMessageI18n("options_locale_toolTip")} :</p>
+            <p>{getMessageByLocale('options_locale_toolTip', settings.locale)} :</p>
             <ChoiceGroup
-              // @ts-ignore
               defaultSelectedKey={settings.locale}
               options={localeOptions}
               onChanged={async (option) => {
@@ -291,11 +290,11 @@ const OptionsPage: React.FC = () => {
         </Stack.Item>
         <Stack.Item className='Box'>
           <TooltipHost
-            content={getMessageI18n("options_components_toolTip")}
+            content={getMessageByLocale('options_components_toolTip', settings.locale)}
           >
             <Stack.Item className='Box-header'>
               <h2 className='Box-title'>
-                {getMessageI18n("options_components_title")}
+                {getMessageByLocale('options_components_title', settings.locale)}
               </h2>
             </Stack.Item>
           </TooltipHost>
@@ -305,9 +304,9 @@ const OptionsPage: React.FC = () => {
               childrenGap: 10
             }}
           >
-            <p>{getMessageI18n("options_components_toolTip")} :</p>
+            <p>{getMessageByLocale('options_components_toolTip', settings.locale)} :</p>
             <Checkbox
-              label={getMessageI18n("component_developerCollabrationNetwork_title")}
+              label={getMessageByLocale('component_developerCollabrationNetwork_title', settings.locale)}
               defaultChecked={settings.developerNetwork}
               onChange={async (e, checked) => {
                 settings.developerNetwork = checked;
@@ -315,7 +314,7 @@ const OptionsPage: React.FC = () => {
               }}
             />
             <Checkbox
-              label={getMessageI18n("component_projectCorrelationNetwork_title")}
+              label={getMessageByLocale('component_projectCorrelationNetwork_title', settings.locale)}
               defaultChecked={settings.projectNetwork}
               onChange={async (e, checked) => {
                 settings.projectNetwork = checked;
@@ -326,18 +325,18 @@ const OptionsPage: React.FC = () => {
         </Stack.Item>
         <Stack.Item className='Box'>
           <TooltipHost
-            content={getMessageI18n("options_graphType_toolTip")}
+            content={getMessageByLocale('options_graphType_toolTip', settings.locale)}
           >
             <Stack.Item className='Box-header'>
               <h2 className='Box-title'>
-                {getMessageI18n("options_graphType_title")}
+                {getMessageByLocale('options_graphType_title', settings.locale)}
               </h2>
             </Stack.Item>
           </TooltipHost>
           <Stack
             style={{ margin: '10px 25px' }}
           >
-            <p>{getMessageI18n("options_graphType_toolTip")} :</p>
+            <p>{getMessageByLocale('options_graphType_toolTip', settings.locale)} :</p>
             <ChoiceGroup
               defaultSelectedKey={settings.graphType}
               options={graphOptions}
@@ -350,11 +349,11 @@ const OptionsPage: React.FC = () => {
         </Stack.Item>
         <Stack.Item className='Box'>
           <TooltipHost
-            content={getMessageI18n("options_update_toolTip")}
+            content={getMessageByLocale('options_update_toolTip', settings.locale)}
           >
             <Stack.Item className='Box-header'>
               <h2 className='Box-title'>
-                {getMessageI18n("options_update_title")}
+                {getMessageByLocale('options_update_title', settings.locale)}
               </h2>
             </Stack.Item>
           </TooltipHost>
@@ -364,12 +363,12 @@ const OptionsPage: React.FC = () => {
               childrenGap: 10
             }}
           >
-            <p>{getMessageI18n("options_update_toolTip")}.</p>
+            <p>{getMessageByLocale('options_update_toolTip', settings.locale)}.</p>
             <Toggle
-              label={getMessageI18n('options_update_toggle_autoCheck')}
+              label={getMessageByLocale('options_update_toggle_autoCheck', settings.locale)}
               defaultChecked={settings.checkForUpdates}
-              onText={getMessageI18n('options_update_toggle_autoCheck_onText')}
-              offText={getMessageI18n('options_update_toggle_autoCheck_offText')}
+              onText={getMessageByLocale('options_update_toggle_autoCheck_onText', settings.locale)}
+              offText={getMessageByLocale('options_update_toggle_autoCheck_offText', settings.locale)}
               onChange={async (e, checked) => {
                 settings.checkForUpdates = checked;
                 await saveSettings(settings);
@@ -378,7 +377,7 @@ const OptionsPage: React.FC = () => {
             {
               checkingUpdate &&
               <Stack horizontalAlign="start">
-                <Spinner label={getMessageI18n("options_update_checking")} />
+                <Spinner label={getMessageByLocale('options_update_checking', settings.locale)} />
               </Stack>
             }
             {
@@ -387,9 +386,9 @@ const OptionsPage: React.FC = () => {
                 messageBarType={MessageBarType.success}
                 isMultiline={false}
               >
-                {getMessageI18n("options_update_btn_updateStatusYes")}
+                {getMessageByLocale('options_update_btn_updateStatusYes', settings.locale)}
                 <Link href={updateUrl} target="_blank" underline>
-                  {getMessageI18n("options_update_btn_getUpdate")}
+                  {getMessageByLocale('options_update_btn_getUpdate', settings.locale)}
                 </Link>
               </MessageBar>
             }
@@ -399,7 +398,7 @@ const OptionsPage: React.FC = () => {
                 messageBarType={MessageBarType.info}
                 isMultiline={false}
               >
-                {getMessageI18n("options_update_btn_updateStatusNo")}
+                {getMessageByLocale('options_update_btn_updateStatusNo', settings.locale)}
               </MessageBar>
             }
             <DefaultButton
@@ -411,17 +410,17 @@ const OptionsPage: React.FC = () => {
                 await checkUpdateManually();
               }}
             >
-              {getMessageI18n("options_update_btn_checkUpdate")}
+              {getMessageByLocale('options_update_btn_checkUpdate', settings.locale)}
             </DefaultButton>
           </Stack>
         </Stack.Item>
         <Stack.Item className='Box'>
           <TooltipHost
-            content={getMessageI18n("options_token_toolTip")}
+            content={getMessageByLocale('options_token_toolTip', settings.locale)}
           >
             <Stack.Item className='Box-header'>
               <h2 className='Box-title'>
-                {getMessageI18n("options_token_title")}
+                {getMessageByLocale('options_token_title', settings.locale)}
               </h2>
             </Stack.Item>
           </TooltipHost>
@@ -431,7 +430,7 @@ const OptionsPage: React.FC = () => {
               childrenGap: 10
             }}
           >
-            <p>{getMessageI18n("options_token_toolTip")} :</p>
+            <p>{getMessageByLocale('options_token_toolTip', settings.locale)} :</p>
             {
               metaData.token !== "" &&
               <Stack
@@ -467,17 +466,17 @@ const OptionsPage: React.FC = () => {
                 width: 120
               }}
             >
-              {getMessageI18n("options_token_btn_setToken")}
+              {getMessageByLocale('options_token_btn_setToken', settings.locale)}
             </DefaultButton>
           </Stack>
         </Stack.Item>
         <Stack.Item className='Box'>
           <TooltipHost
-            content={getMessageI18n("options_about_toolTip")}
+            content={getMessageByLocale('options_about_toolTip', settings.locale)}
           >
             <Stack.Item className='Box-header'>
               <h2 className='Box-title'>
-                {getMessageI18n("options_about_title")}
+                {getMessageByLocale('options_about_title', settings.locale)}
               </h2>
             </Stack.Item>
           </TooltipHost>
@@ -485,8 +484,8 @@ const OptionsPage: React.FC = () => {
             style={{ margin: '10px 25px' }}
 
           >
-            <p>{getMessageI18n("options_about_description")}</p>
-            <p>{getMessageI18n("options_about_description_website")}</p>
+            <p>{getMessageByLocale('options_about_description', settings.locale)}</p>
+            <p>{getMessageByLocale('options_about_description_website', settings.locale)}</p>
             <Link href={HYPERTRONS_CRX_WEBSITE} target="_blank" underline>
               {HYPERTRONS_CRX_WEBSITE}
             </Link>

@@ -1,9 +1,10 @@
-import React, { useEffect, useContext, CSSProperties } from 'react';
+import React, { useEffect, useContext, CSSProperties, useState } from 'react';
 import Graphin, { GraphinContext, Behaviors, IG6GraphEvent } from '@antv/graphin';
 import { Tooltip } from '@antv/graphin-components';
 import { INode as G6INode, NodeConfig } from '@antv/g6';
 import { Persona, PersonaSize } from '@fluentui/react/lib/Persona';
-import { getMessageI18n } from "../../../utils/utils"
+import { getMessageByLocale } from '../../../utils/utils';
+import Settings, { loadSettings } from '../../../utils/settings';
 
 
 interface GraphinWrapperProps {
@@ -35,12 +36,26 @@ const TooltipForNode = () => {
   const { item } = context;
   const model = item && item.getModel();
 
+  const [inited, setInited] = useState(false);
+  const [settings, setSettings] = useState(new Settings());
+
+  useEffect(() => {
+    const initSettings = async () => {
+      const temp = await loadSettings();
+      setSettings(temp);
+      setInited(true);
+    }
+    if (!inited) {
+      initSettings();
+    }
+  }, [inited, settings]);
+
   return (
     <div style={{ border: "1px solid", borderRadius: "6px" }}>
       <div style={{ margin: '5px' }}>
         <Persona
           text={model.id}
-          secondaryText={`${getMessageI18n("global_activity")}: ${model.value.toString()}`}
+          secondaryText={`${getMessageByLocale("global_activity",settings.locale)}: ${model.value.toString()}`}
           size={PersonaSize.size24}
           showSecondaryText={true}
         />

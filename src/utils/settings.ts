@@ -4,7 +4,7 @@ class Settings {
   checkForUpdates: boolean | undefined;
   developerNetwork: boolean | undefined;
   projectNetwork: boolean | undefined;
-  locale:string|undefined;
+  locale:string;
   graphType:GraphType;
 
   constructor() {

@@ -50,7 +50,7 @@ export async function chromeGet(key: string) {
   });
 }
 
-export function getMessageByLocale(key: string,locale:string) {
+export function getMessageByLocale(key: string, locale: string) {
   // @ts-ignore
   return messages_locale[locale][key]["message"];
 }

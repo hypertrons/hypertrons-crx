@@ -6,11 +6,11 @@ import { Stack, Dropdown, IDropdownStyles, IDropdownOption, Link } from 'office-
 import Graph from '../../components/Graph/Graph';
 import { isPerceptor, runsWhen } from '../../utils/utils';
 import { getRepoCorrelation, getDevelopersByRepo } from '../../api/repo';
-import { getMessageI18n } from '../../utils/utils';
+import { getMessageByLocale } from '../../utils/utils';
 import { ACTIVITY_DEFINITION_LINK } from '../../constant';
 import PerceptorBase from './PerceptorBase';
 import { inject2Perceptor } from './Perceptor';
-import { loadSettings } from '../../utils/settings';
+import Settings, { loadSettings } from '../../utils/settings';
 
 interface ProjectNetworkViewProps {
   currentRepo: string;
@@ -22,6 +22,8 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
   const [developersByRepoData, setDevelopersByRepoData] = useState<IGraphData | undefined>();
   const [repoPeriod, setRepoPeriod] = useState<string | number | undefined>(180);
   const [developerPeriod, setDeveloperPeriod] = useState<string | number | undefined>(180);
+  const [inited, setInited] = useState(false);
+  const [settings, setSettings] = useState(new Settings());
 
   useEffect(() => {
     const getRepoCorrelationData = async () => {
@@ -43,19 +45,30 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
     getDevelopersByRepoData();
   }, [developerPeriod]);
 
+  useEffect(() => {
+    const initSettings = async () => {
+      const temp = await loadSettings();
+      setSettings(temp);
+      setInited(true);
+    }
+    if (!inited) {
+      initSettings();
+    }
+  }, [inited, settings]);
+
   const dropdownStyles: Partial<IDropdownStyles> = {
     dropdown: { width: 120 }
   }
 
   const periodOptions: IDropdownOption[] = [
-    { key: 180, text: `180 ${getMessageI18n("global_day")}` }
+    { key: 180, text: `180 ${getMessageByLocale("global_day",settings.locale)}` }
   ]
 
   const onRenderPeriodDropdownTitle = (options: IDropdownOption[] | undefined): JSX.Element => {
     const option = options![0];
     return (
       <div>
-        <span>{getMessageI18n("global_period")}: </span>
+        <span>{getMessageByLocale("global_period",settings.locale)}: </span>
         <span>{option!.text}</span>
       </div>
     );
@@ -82,7 +95,7 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
     <div>
       <div className="hypertrons-crx-border hypertrons-crx-container">
         <Stack className="hypertrons-crx-title">
-          <span>{getMessageI18n('component_projectCorrelationNetwork_title')}</span>
+          <span>{getMessageByLocale('component_projectCorrelationNetwork_title',settings.locale)}</span>
           <div className='hypertrons-crx-title-extra'>
             <Dropdown
               defaultSelectedKey={repoPeriod}
@@ -105,14 +118,14 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
           </div>
           <div className="col-12 col-md-6">
             <div className="color-text-secondary" style={{ marginLeft: '55px' }}>
-              <p>{getMessageI18n('component_projectCorrelationNetwork_description')}</p>
+              <p>{getMessageByLocale('component_projectCorrelationNetwork_description',settings.locale)}</p>
               <ul style={{ margin: '0px 0 10px 15px' }}>
-                <li>{getMessageI18n('component_projectCorrelationNetwork_description_node')}</li>
-                <li>{getMessageI18n('component_projectCorrelationNetwork_description_edge')}</li>
+                <li>{getMessageByLocale('component_projectCorrelationNetwork_description_node',settings.locale)}</li>
+                <li>{getMessageByLocale('component_projectCorrelationNetwork_description_edge',settings.locale)}</li>
               </ul>
               <div>
-                <span>{getMessageI18n('component_activity_description')}</span>
-                <Link href={ACTIVITY_DEFINITION_LINK} underline>{getMessageI18n('global_here')}</Link>
+                <span>{getMessageByLocale('component_activity_description',settings.locale)}</span>
+                <Link href={ACTIVITY_DEFINITION_LINK} underline>{getMessageByLocale('global_here',settings.locale)}</Link>
               </div>
             </div>
           </div>
@@ -120,7 +133,7 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
       </div>
       <div className="hypertrons-crx-border hypertrons-crx-container">
         <Stack className="hypertrons-crx-title">
-          <span>{getMessageI18n('component_activeDeveloperCollabrationNetwork_title')}</span>
+          <span>{getMessageByLocale('component_activeDeveloperCollabrationNetwork_title',settings.locale)}</span>
           <div className='hypertrons-crx-title-extra'>
             <Dropdown
               defaultSelectedKey={developerPeriod}
@@ -143,14 +156,14 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
           </div>
           <div className="col-12 col-md-6">
             <div className="color-text-secondary" style={{ marginLeft: '55px' }}>
-              <p>{getMessageI18n('component_activeDeveloperCollabrationNetwork_description')}</p>
+              <p>{getMessageByLocale('component_activeDeveloperCollabrationNetwork_description',settings.locale)}</p>
               <ul style={{ margin: '0px 0 10px 15px' }}>
-                <li>{getMessageI18n('component_activeDeveloperCollabrationNetwork_description_node')}</li>
-                <li>{getMessageI18n('component_activeDeveloperCollabrationNetwork_description_edge')}</li>
+                <li>{getMessageByLocale('component_activeDeveloperCollabrationNetwork_description_node',settings.locale)}</li>
+                <li>{getMessageByLocale('component_activeDeveloperCollabrationNetwork_description_edge',settings.locale)}</li>
               </ul>
               <div>
-                <span>{getMessageI18n('component_activity_description')}</span>
-                <Link href={ACTIVITY_DEFINITION_LINK} underline>{getMessageI18n('global_here')}</Link>
+                <span>{getMessageByLocale('component_activity_description',settings.locale)}</span>
+                <Link href={ACTIVITY_DEFINITION_LINK} underline>{getMessageByLocale('global_here',settings.locale)}</Link>
               </div>
             </div>
           </div>
