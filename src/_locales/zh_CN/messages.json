@@ -5,8 +5,8 @@
   "manifest_appName": {
     "message": "Hypertrons-crx 机器人"
   },
-  "manifest_iconTitle": {
-    "message": "[载入中……]"
+  "golbal_loading": {
+    "message": "载入中......"
   },
   "global_error_message": {
     "message": "抱歉，Hypertrons-crx 插件加载时遇到了一点问题。错误代码为："

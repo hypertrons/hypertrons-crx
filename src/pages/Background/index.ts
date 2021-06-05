@@ -39,8 +39,8 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
             {
               type: 'basic',
               iconUrl: 'main.png',
-              title: getMessageByLocale('notification_title_newUpdate',settings.locale),
-              message: getMessageByLocale('notification_message_newUpdate',settings.locale).replace('%v', latestVersion),
+              title: getMessageByLocale('notification_title_newUpdate', settings.locale),
+              message: getMessageByLocale('notification_message_newUpdate', settings.locale).replace('%v', latestVersion),
             }
           )
         }
