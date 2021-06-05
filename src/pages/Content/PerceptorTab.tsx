@@ -7,6 +7,7 @@ import { inject2Perceptor } from './Perceptor';
 import { render } from 'react-dom';
 import React from 'react';
 import TeachingBubbleWrapper from './TeachingBubbleWrapper'
+import logger from '../../utils/logger';
 
 @runsWhen([pageDetect.isRepo])
 class PerceptorTab extends PerceptorBase {
@@ -14,8 +15,15 @@ class PerceptorTab extends PerceptorBase {
   public async run(): Promise<void> {
     const insightsTab = $('.js-repo-nav [data-ga-click="Repository, Navigation click, Insights tab"]').parent();
 
+    // avoid redundant clone
+    let perceptorTab=$("#perceptor_tab")
+    if(perceptorTab.length>0){
+      logger.info("perceptor tab already exists")
+      return
+    }
+
     // copy Insights tab
-    const perceptorTab = insightsTab.clone(true);
+    perceptorTab = insightsTab.clone(true);
     perceptorTab.attr('id','perceptor_tab');
 
     // Un-select one of the tabs if necessary
