@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
 import { utils } from 'github-url-detection';
-import { Stack, Dropdown, IDropdownStyles, IDropdownOption, Link } from 'office-ui-fabric-react';
+import { Stack, Dropdown, IDropdownStyles, IDropdownOption, Link, Spinner } from 'office-ui-fabric-react';
 import Graph from '../../components/Graph/Graph';
 import { isPerceptor, runsWhen } from '../../utils/utils';
 import { getRepoCorrelation, getDevelopersByRepo } from '../../api/repo';
@@ -87,7 +87,12 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
   }
 
   if (!repoCorrelationData || !developersByRepoData) {
-    return (<div />);
+    return (
+      <Spinner
+        id="spinner_perceptor_layout"
+        label={getMessageByLocale("golbal_loading", settings.locale)}
+      />
+    );
   }
 
   return (

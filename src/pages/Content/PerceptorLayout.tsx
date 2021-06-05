@@ -1,29 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
-import { Spinner } from 'office-ui-fabric-react';
-import { getMessageByLocale, isPerceptor, runsWhen } from '../../utils/utils';
+import { isPerceptor, runsWhen } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
 import { inject2Perceptor } from './Perceptor';
-import Settings, { loadSettings } from '../../utils/settings';
 
 const PerceptorLayoutView: React.FC<{}> = () => {
-  const [settings,setSettings]= useState(new Settings());
-  const [inited, setInited] = useState(false);
-
-  useEffect(() => {
-    const initSettings=async ()=> {
-      const temp=await loadSettings();
-      setSettings(temp);
-      setInited(true);
-    }
-    if(!inited){
-      initSettings();
-    }
-  },[inited,settings]);
-
   return (
-    <Spinner label={getMessageByLocale("golbal_loading", settings.locale)} />
+    <div />
   )
 }
 @runsWhen([isPerceptor])
