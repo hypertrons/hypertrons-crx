@@ -7,7 +7,7 @@ import {
   Image, ImageFit, DialogFooter, PrimaryButton
 } from 'office-ui-fabric-react';
 import { initializeIcons } from '@uifabric/icons';
-import { getMessageI18n, chromeSet, compareVersion } from '../../utils/utils';
+import { getMessageI18n, chromeSet, compareVersion, getLocale } from '../../utils/utils';
 import { checkUpdate, checkIsTokenAvailabe } from '../../services/common';
 import Settings, { loadSettings } from "../../utils/settings"
 import MetaData, { loadMetaData } from '../../utils/metadata';
@@ -58,8 +58,8 @@ const OptionsPage: React.FC = () => {
       }
       const notificationInformation = await getNotificationInformation();
       if (notificationInformation.is_published && tempMetaData.idLastNotication < notificationInformation.id) {
-        const language = chrome.i18n.getUILanguage();
-        if (language.startsWith("zh")) {
+        const locale=getLocale();
+        if (locale==="zh_CN") {
           setNotification(notificationInformation.content.zh);
         }
         else {
