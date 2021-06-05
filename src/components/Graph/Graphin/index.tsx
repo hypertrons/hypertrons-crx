@@ -55,7 +55,7 @@ const TooltipForNode = () => {
       <div style={{ margin: '5px' }}>
         <Persona
           text={model.id}
-          secondaryText={`${getMessageByLocale("global_activity",settings.locale)}: ${model.value.toString()}`}
+          secondaryText={`${getMessageByLocale("global_activity", settings.locale)}: ${model.value.toString()}`}
           size={PersonaSize.size24}
           showSecondaryText={true}
         />

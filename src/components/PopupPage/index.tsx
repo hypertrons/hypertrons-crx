@@ -88,7 +88,7 @@ const PopupPage: React.FC = () => {
                 width:120
               }}
             >
-              {getMessageByLocale("options_token_title",settings.locale)}
+              {getMessageByLocale("options_token_title", settings.locale)}
             </DefaultButton>
           }
         </Stack>

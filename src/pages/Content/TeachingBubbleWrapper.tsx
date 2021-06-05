@@ -41,7 +41,7 @@ const TeachingBubbleWrapper: React.FC<TeachingBubbleProps> =
 
     const disableButtonProps: IButtonProps = React.useMemo(
       () => ({
-        children: getMessageByLocale('global_btn_disable',settings.locale),
+        children: getMessageByLocale('global_btn_disable', settings.locale),
         onClick: async ()=>{
           metaData.showTeachingBubble=false;
           await chromeSet("meta_data", metaData.toJson());
@@ -53,7 +53,7 @@ const TeachingBubbleWrapper: React.FC<TeachingBubbleProps> =
 
     const confirmButtonProps: IButtonProps = React.useMemo(
       () => ({
-        children: getMessageByLocale("global_btn_ok",settings.locale),
+        children: getMessageByLocale("global_btn_ok", settings.locale),
         onClick: toggleTeachingBubbleVisible,
       }),
       [settings.locale, toggleTeachingBubbleVisible],
@@ -68,9 +68,9 @@ const TeachingBubbleWrapper: React.FC<TeachingBubbleProps> =
             primaryButtonProps={disableButtonProps}
             secondaryButtonProps={confirmButtonProps}
             onDismiss={toggleTeachingBubbleVisible}
-            headline={getMessageByLocale('teachingBubble_text_headline',settings.locale)}
+            headline={getMessageByLocale('teachingBubble_text_headline', settings.locale)}
           >
-            {getMessageByLocale('teachingBubble_text_content',settings.locale)}
+            {getMessageByLocale('teachingBubble_text_content', settings.locale)}
           </TeachingBubble>
         }
       </div>

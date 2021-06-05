@@ -33,11 +33,11 @@ const ErrorPage: React.FC = () => {
         <FontIcon iconName="Error" />
       </Stack.Item>
       <Stack.Item align="center">
-        <Text>{getMessageByLocale("component_error_message",settings.locale)}</Text>
+        <Text>{getMessageByLocale("component_error_message", settings.locale)}</Text>
       </Stack.Item>
       <Stack.Item align="center">
         <DefaultButton
-          text={getMessageByLocale("global_btn_goBack",settings.locale)}
+          text={getMessageByLocale("global_btn_goBack", settings.locale)}
           iconProps={navigateBackIcon}
           onClick={onButtonClick}
         />

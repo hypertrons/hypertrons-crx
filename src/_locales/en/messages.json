@@ -5,8 +5,8 @@
   "manifest_appName": {
     "message": "Hypertrons-crx Robot"
   },
-  "manifest_iconTitle": {
-    "message": "[Loading……]"
+  "golbal_loading": {
+    "message": "Loading……"
   },
   "global_error_message": {
     "message": "Sorry，an error occurred while loading Hypertrons-crx extention. Error Code is: "

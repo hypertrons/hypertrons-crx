@@ -151,7 +151,7 @@ const OptionsPage: React.FC = () => {
           }}
           dialogContentProps={{
             type: DialogType.normal,
-            title: getMessageByLocale("global_notificationTitle",settings.locale)
+            title: getMessageByLocale("global_notificationTitle", settings.locale)
           }}
         >
           <Text variant="mediumPlus">

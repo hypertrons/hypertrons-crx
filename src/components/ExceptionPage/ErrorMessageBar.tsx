@@ -35,9 +35,9 @@ const ErrorMessageBar: React.FC<ErrorMessageBarProps> = ({
           isMultiline={false}
           dismissButtonAriaLabel="Close"
         >
-          {getMessageByLocale("global_error_message",settings.locale)}{errorCode}.
+          {getMessageByLocale("global_error_message", settings.locale)}{errorCode}.
           <Link href={url} target="_blank" underline>
-            {getMessageByLocale("global_clickToshow",settings.locale)} Issue.
+            {getMessageByLocale("global_clickToshow", settings.locale)} Issue.
           </Link>
         </MessageBar>
       </Stack.Item>
