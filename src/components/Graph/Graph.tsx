@@ -1,7 +1,7 @@
 import React, { useState, CSSProperties, useEffect } from 'react';
 import EChartsWrapper from './Echarts/index';
 import GraphinWrapper from './Graphin/index'
-import { Stack, Toggle, SwatchColorPicker } from 'office-ui-fabric-react';
+import { Stack, SwatchColorPicker, Link } from 'office-ui-fabric-react';
 import { getGithubTheme, isNull, getMinMax, linearMap, getMessageByLocale } from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
 
@@ -35,9 +35,8 @@ const Graph: React.FC<GraphProps> = ({
     window.location.href = url;
   },
 }) => {
-  const [theme, setTheme] = useState<any>(GITHUB_THEME);
   const NODE_SIZE = [10, 30];
-  const NODE_COLOR = theme === 'light' ? ['#9EB9A8', '#40C463', '#30A14E', '#216E39'] : ['#0E4429', '#006D32', '#26A641', '#39D353'];
+  const NODE_COLOR = GITHUB_THEME === 'light' ? ['#9EB9A8', '#40C463', '#30A14E', '#216E39'] : ['#0E4429', '#006D32', '#26A641', '#39D353'];
   const THRESHOLD = [10, 100, 1000];
   const [inited, setInited] = useState(false);
   const [settings, setSettings] = useState(new Settings());
@@ -195,6 +194,26 @@ const Graph: React.FC<GraphProps> = ({
   }
   return (
     <Stack>
+      <Stack className='hypertrons-crx-border'>
+        {
+          graphType === 'echarts' &&
+          <EChartsWrapper
+            option={graphOption}
+            style={style}
+            onEvents={{
+              'click': onNodeClick,
+            }}
+          />
+        }
+        {
+          graphType === 'antv' &&
+          <GraphinWrapper
+            data={graphData}
+            style={style}
+            onNodeClick={onNodeClick}
+          />
+        }
+      </Stack>
       <Stack
         horizontal
         horizontalAlign="space-between"
@@ -202,17 +221,9 @@ const Graph: React.FC<GraphProps> = ({
         tokens={{
           childrenGap: 10
         }}
-      >
-        <Toggle
-          defaultChecked={theme === 'dark'}
-          // Note: Graphin is currently unable to switch the theme. See: https://graphin.antv.vision/en-US/graphin/render/theme/
-          disabled={graphType === 'antv'}
-          onText={getMessageByLocale("component_darkMode",settings.locale)}
-          offText={getMessageByLocale("component_darkMode",settings.locale)}
-          onChange={(e, checked) => {
-            checked ? setTheme('dark') : setTheme('light');
-          }}
-        />
+      ><Link href={getMessageByLocale("component_activity_definition_link", settings.locale)} target="_blank">
+          {getMessageByLocale("component_activity_definition", settings.locale)}
+        </Link>
         <Stack
           horizontal
           horizontalAlign="space-between"
@@ -228,28 +239,6 @@ const Graph: React.FC<GraphProps> = ({
           </div>
           <span>More</span>
         </Stack>
-      </Stack>
-      <Stack className='hypertrons-crx-border'>
-        {
-          graphType === 'echarts' &&
-          <EChartsWrapper
-            option={graphOption}
-            style={style}
-            theme={theme}
-            onEvents={{
-              'click': onNodeClick,
-            }}
-          />
-        }
-        {
-          graphType === 'antv' &&
-          <GraphinWrapper
-            data={graphData}
-            style={style}
-            theme={theme}
-            onNodeClick={onNodeClick}
-          />
-        }
       </Stack>
     </Stack>
   )

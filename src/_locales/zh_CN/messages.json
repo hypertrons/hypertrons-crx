@@ -81,8 +81,11 @@
   "component_developerCollabrationNetwork_description_edge": {
     "message": "边：开发者与开发者之间的协作关系，值的大小表示开发者间联系的紧密程度。"
   },
-  "component_activity_description": {
-    "message": "活跃度定义: 请参考"
+  "component_activity_definition": {
+    "message": "查看如何定义活跃度"
+  },
+  "component_activity_definition_link": {
+    "message": "http://oss.x-lab.info/github-insight-report-2020.pdf"
   },
   "component_projectCorrelationNetwork_title": {
     "message": "项目关系网络图"

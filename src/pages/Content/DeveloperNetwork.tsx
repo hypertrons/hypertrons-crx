@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
-import { Dialog, Stack, Dropdown, IDropdownStyles, IDropdownOption, Link, Text, ActionButton } from 'office-ui-fabric-react';
+import { Dialog, Stack, Dropdown, IDropdownStyles, IDropdownOption, ActionButton } from 'office-ui-fabric-react';
 import { initializeIcons } from '@uifabric/icons';
 import { getDeveloperCollabration, getParticipatedProjects } from '../../api/developer';
 import { runsWhen, getMessageByLocale } from '../../utils/utils';
-import { ACTIVITY_DEFINITION_LINK } from '../../constant';
 import PerceptorBase from './PerceptorBase';
 import { inject2Perceptor } from './Perceptor';
 import Settings, { loadSettings } from '../../utils/settings';
@@ -73,14 +72,14 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
   }
 
   const periodOptions: IDropdownOption[] = [
-    { key: 180, text: `180 ${getMessageByLocale("global_day",settings.locale)}` }
+    { key: 180, text: `180 ${getMessageByLocale("global_day", settings.locale)}` }
   ]
 
   const onRenderPeriodDropdownTitle = (options: IDropdownOption[] | undefined): JSX.Element => {
     const option = options![0];
     return (
       <div>
-        <span>{getMessageByLocale("global_period",settings.locale)}: </span>
+        <span>{getMessageByLocale("global_period", settings.locale)}: </span>
         <span>{option!.text}</span>
       </div>
     );
@@ -125,11 +124,11 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
               setShowDeveloperDialog(true)
             }}>
             <span
-              title={`${getMessageByLocale('global_clickToshow',settings.locale)} ${getMessageByLocale('component_developerCollabrationNetwork_title',settings.locale)}`}
+              title={`${getMessageByLocale('global_clickToshow', settings.locale)} ${getMessageByLocale('component_developerCollabrationNetwork_title', settings.locale)}`}
               className='Label'
               style={{ marginLeft: '5px!important', color: 'var(--color-text-link)' }}
             >
-              {getMessageByLocale('component_developerCollabrationNetwork_title',settings.locale)}
+              {getMessageByLocale('component_developerCollabrationNetwork_title', settings.locale)}
             </span>
           </ActionButton>
         </li>
@@ -140,11 +139,11 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
               setShowProjectDialog(true)
             }}>
             <span
-              title={`${getMessageByLocale('global_clickToshow',settings.locale)} ${getMessageByLocale('component_mostParticipatedProjects_title',settings.locale)}`}
+              title={`${getMessageByLocale('global_clickToshow', settings.locale)} ${getMessageByLocale('component_mostParticipatedProjects_title', settings.locale)}`}
               className='Label'
               style={{ marginLeft: '5px!important', color: 'var(--color-text-link)' }}
             >
-              {getMessageByLocale('component_mostParticipatedProjects_title',settings.locale)}
+              {getMessageByLocale('component_mostParticipatedProjects_title', settings.locale)}
             </span>
           </ActionButton>
         </li>
@@ -160,7 +159,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
       >
         <div>
           <Stack className="hypertrons-crx-title">
-            <span>{getMessageByLocale('component_developerCollabrationNetwork_title',settings.locale)}</span>
+            <span>{getMessageByLocale('component_developerCollabrationNetwork_title', settings.locale)}</span>
             <div className='hypertrons-crx-title-extra'>
               <Dropdown
                 defaultSelectedKey={developerPeriod}
@@ -183,15 +182,11 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
             </div>
             <div className="col-12 col-md-6">
               <div className="color-text-secondary" style={{ marginLeft: '55px' }}>
-                <p>{getMessageByLocale('component_developerCollabrationNetwork_description',settings.locale)}</p>
+                <p>{getMessageByLocale('component_developerCollabrationNetwork_description', settings.locale)}</p>
                 <ul style={{ margin: '0px 0 10px 15px' }}>
-                  <li>{getMessageByLocale('component_developerCollabrationNetwork_description_node',settings.locale)}</li>
-                  <li>{getMessageByLocale('component_developerCollabrationNetwork_description_edge',settings.locale)}</li>
+                  <li>{getMessageByLocale('component_developerCollabrationNetwork_description_node', settings.locale)}</li>
+                  <li>{getMessageByLocale('component_developerCollabrationNetwork_description_edge', settings.locale)}</li>
                 </ul>
-                <div>
-                  <span>{getMessageByLocale('component_activity_description',settings.locale)}</span>
-                  <Link href={ACTIVITY_DEFINITION_LINK} underline>{getMessageByLocale('global_here',settings.locale)}</Link>
-                </div>
               </div>
             </div>
           </div>
@@ -206,7 +201,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
       >
         <div>
           <Stack className="hypertrons-crx-title">
-            <span>{getMessageByLocale('component_mostParticipatedProjects_title',settings.locale)}</span>
+            <span>{getMessageByLocale('component_mostParticipatedProjects_title', settings.locale)}</span>
             <div className='hypertrons-crx-title-extra'>
               <Dropdown
                 defaultSelectedKey={repoPeriod}
@@ -229,15 +224,11 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
             </div>
             <div className="col-12 col-md-6">
               <div className="color-text-secondary" style={{ marginLeft: '55px' }}>
-                <p>{getMessageByLocale('component_mostParticipatedProjects_description',settings.locale)}</p>
+                <p>{getMessageByLocale('component_mostParticipatedProjects_description', settings.locale)}</p>
                 <ul style={{ margin: '0px 0 10px 15px' }}>
-                  <li>{getMessageByLocale('component_mostParticipatedProjects_description_node',settings.locale)}</li>
-                  <li>{getMessageByLocale('component_mostParticipatedProjects_description_edge',settings.locale)}</li>
+                  <li>{getMessageByLocale('component_mostParticipatedProjects_description_node', settings.locale)}</li>
+                  <li>{getMessageByLocale('component_mostParticipatedProjects_description_edge', settings.locale)}</li>
                 </ul>
-                <div>
-                  <span>{getMessageByLocale('component_activity_description',settings.locale)}</span>
-                  <Link href={ACTIVITY_DEFINITION_LINK} underline>{getMessageByLocale('global_here',settings.locale)}</Link>
-                </div>
               </div>
             </div>
           </div>
