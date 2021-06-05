@@ -81,8 +81,11 @@
   "component_developerCollabrationNetwork_description_edge": {
     "message": "Edge: Collaborative relationship between developers, the value of the edge indicates the closeness of the connection between developers."
   },
-  "component_activity_description": {
-    "message": "Activity definition: Please refer to"
+  "component_activity_definition": {
+    "message": "Learn how we count activity"
+  },
+  "component_activity_definition_link": {
+    "message": "http://oss.x-lab.info/github-insight-report-2020-en.pdf"
   },
 
   "component_projectCorrelationNetwork_title": {
