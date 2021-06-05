@@ -3,8 +3,9 @@ import {
   IButtonProps,TeachingBubble
 } from 'office-ui-fabric-react';
 import { useBoolean } from '@fluentui/react-hooks';
-import { chromeSet, getMessageI18n } from '../../utils/utils';
+import { chromeSet, getMessageByLocale } from '../../utils/utils';
 import MetaData, { loadMetaData } from '../../utils/metadata';
+import Settings, { loadSettings } from '../../utils/settings';
 
 export interface TeachingBubbleProps {
   target:string
@@ -16,36 +17,48 @@ const TeachingBubbleWrapper: React.FC<TeachingBubbleProps> =
    }) => {
     const [metaData, setMetaData] = useState(new MetaData());
     const [inited, setInited] = useState(false);
+    const [settings, setSettings] = useState(new Settings());
     const [teachingBubbleVisible, { toggle: toggleTeachingBubbleVisible }] = useBoolean(true);
+
+    useEffect(() => {
+      const initSettings = async () => {
+        const temp = await loadSettings();
+        setSettings(temp);
+        setInited(true);
+      }
+      if (!inited) {
+        initSettings();
+      }
+    }, [settings]);
+
     useEffect(() => {
       const initMetaData = async () => {
         const temp=await loadMetaData();
         setMetaData(temp);
-        setInited(true);
       }
       initMetaData();
     }, []);
 
     const disableButtonProps: IButtonProps = React.useMemo(
       () => ({
-        children: getMessageI18n('global_btn_disable'),
+        children: getMessageByLocale('global_btn_disable',settings.locale),
         onClick: async ()=>{
           metaData.showTeachingBubble=false;
           await chromeSet("meta_data", metaData.toJson());
           toggleTeachingBubbleVisible();
         },
       }),
-      [metaData, toggleTeachingBubbleVisible],
+      [metaData, settings.locale, toggleTeachingBubbleVisible],
     );
 
     const confirmButtonProps: IButtonProps = React.useMemo(
       () => ({
-        children: getMessageI18n("global_btn_ok"),
+        children: getMessageByLocale("global_btn_ok",settings.locale),
         onClick: toggleTeachingBubbleVisible,
       }),
-      [toggleTeachingBubbleVisible],
+      [settings.locale, toggleTeachingBubbleVisible],
     );
-
+    
     return (
       <div>
         {
@@ -55,9 +68,9 @@ const TeachingBubbleWrapper: React.FC<TeachingBubbleProps> =
             primaryButtonProps={disableButtonProps}
             secondaryButtonProps={confirmButtonProps}
             onDismiss={toggleTeachingBubbleVisible}
-            headline={getMessageI18n('teachingBubble_text_headline')}
+            headline={getMessageByLocale('teachingBubble_text_headline',settings.locale)}
           >
-            {getMessageI18n('teachingBubble_text_content')}
+            {getMessageByLocale('teachingBubble_text_content',settings.locale)}
           </TeachingBubble>
         }
       </div>

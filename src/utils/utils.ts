@@ -1,4 +1,11 @@
 import $ from 'jquery';
+import messages_en from '../_locales/en/messages.json';
+import messages_zh_CN from '../_locales/zh_CN/messages.json';
+
+const messages_locale={
+  "en":messages_en,
+  "zh_CN":messages_zh_CN
+}
 
 export function elementExists(obj: null | JQuery) {
   return obj !== null && obj.length > 0;
@@ -41,6 +48,11 @@ export async function chromeGet(key: string) {
       resolve(result[key]);
     })
   });
+}
+
+export function getMessageByLocale(key: string, locale: string) {
+  // @ts-ignore
+  return messages_locale[locale][key]["message"];
 }
 
 export function getMessageI18n(key: string) {

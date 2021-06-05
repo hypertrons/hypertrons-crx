@@ -1,4 +1,4 @@
-import { chromeSet, compareVersion, getMessageI18n } from '../../utils/utils';
+import { chromeSet, compareVersion, getMessageByLocale } from '../../utils/utils';
 import { createNotification } from "../../services/background"
 import { checkUpdate } from "../../services/common"
 import { loadSettings } from '../../utils/settings';
@@ -39,8 +39,8 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
             {
               type: 'basic',
               iconUrl: 'main.png',
-              title: getMessageI18n('notification_title_newUpdate'),
-              message: getMessageI18n('notification_message_newUpdate').replace('%v', latestVersion),
+              title: getMessageByLocale('notification_title_newUpdate',settings.locale),
+              message: getMessageByLocale('notification_message_newUpdate',settings.locale).replace('%v', latestVersion),
             }
           )
         }

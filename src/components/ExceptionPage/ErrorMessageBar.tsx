@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Stack, MessageBar, Link, MessageBarType } from 'office-ui-fabric-react';
-import { getMessageI18n } from '../../utils/utils';
+import { getMessageByLocale } from '../../utils/utils';
 import { ErrorCode, HYPERTRONS_CRX_ISSUES_LINK } from '../../constant';
+import Settings, { loadSettings } from '../../utils/settings';
 
 interface ErrorMessageBarProps {
   errorCode?: number;
@@ -12,6 +13,20 @@ const ErrorMessageBar: React.FC<ErrorMessageBarProps> = ({
   errorCode = ErrorCode.UNKNOWN,
   url = HYPERTRONS_CRX_ISSUES_LINK
 }) => {
+  const [inited, setInited] = useState(false);
+  const [settings, setSettings] = useState(new Settings());
+
+  useEffect(() => {
+    const initSettings = async () => {
+      const temp = await loadSettings();
+      setSettings(temp);
+      setInited(true);
+    }
+    if (!inited) {
+      initSettings();
+    }
+  }, [inited, settings]);
+
   return (
     <Stack >
       <Stack.Item align="center">
@@ -20,9 +35,9 @@ const ErrorMessageBar: React.FC<ErrorMessageBarProps> = ({
           isMultiline={false}
           dismissButtonAriaLabel="Close"
         >
-          {getMessageI18n("global_error_message")}{errorCode}.
+          {getMessageByLocale("global_error_message",settings.locale)}{errorCode}.
           <Link href={url} target="_blank" underline>
-            {getMessageI18n("global_clickToshow")} Issue.
+            {getMessageByLocale("global_clickToshow",settings.locale)} Issue.
           </Link>
         </MessageBar>
       </Stack.Item>

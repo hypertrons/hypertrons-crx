@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import {
   DefaultButton,
-  Image, ImageFit, PivotItem,
+  Image, ImageFit,
   Stack, Text,
 } from 'office-ui-fabric-react';
 import { initializeIcons } from '@uifabric/icons';
 import './index.css';
 import Settings,{ loadSettings } from '../../utils/settings';
 import MetaData, { loadMetaData } from '../../utils/metadata';
-import { getMessageI18n } from '../../utils/utils';
+import { getMessageByLocale } from '../../utils/utils';
 
 initializeIcons();
 
@@ -22,15 +22,17 @@ const PopupPage: React.FC = () => {
     const initSettings=async ()=> {
       const temp=await loadSettings();
       setSettings(temp);
+      setInited(true);
     }
-    initSettings();
+    if(!inited){
+      initSettings();
+    }
   },[settings]);
 
   useEffect(() => {
     const initMetaData = async () => {
       const temp=await loadMetaData();
       setMetaData(temp);
-      setInited(true);
     }
     initMetaData();
   }, []);
@@ -86,7 +88,7 @@ const PopupPage: React.FC = () => {
                 width:120
               }}
             >
-              {getMessageI18n("options_token_title")}
+              {getMessageByLocale("options_token_title",settings.locale)}
             </DefaultButton>
           }
         </Stack>

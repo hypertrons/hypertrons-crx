@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Stack, Text, FontIcon, IIconProps, DefaultButton, IStackTokens } from 'office-ui-fabric-react';
 import { initializeIcons } from '@uifabric/icons';
-import { getMessageI18n } from '../../utils/utils';
+import { getMessageByLocale } from '../../utils/utils';
+import Settings, { loadSettings } from '../../utils/settings';
 
 initializeIcons();
 
@@ -12,17 +13,31 @@ const ErrorPage: React.FC = () => {
   const onButtonClick = () => {
     history.go(-1);
   }
+
+  const [inited, setInited] = useState(false);
+  const [settings, setSettings] = useState(new Settings());
+  useEffect(() => {
+    const initSettings = async () => {
+      const temp = await loadSettings();
+      setSettings(temp);
+      setInited(true);
+    }
+    if (!inited) {
+      initSettings();
+    }
+  }, [inited, settings]);
+
   return (
     <Stack tokens={stackTokens}>
       <Stack.Item align="center">
         <FontIcon iconName="Error" />
       </Stack.Item>
       <Stack.Item align="center">
-        <Text>{getMessageI18n("component_error_message")}</Text>
+        <Text>{getMessageByLocale("component_error_message",settings.locale)}</Text>
       </Stack.Item>
       <Stack.Item align="center">
         <DefaultButton
-          text={getMessageI18n("global_btn_goBack")}
+          text={getMessageByLocale("global_btn_goBack",settings.locale)}
           iconProps={navigateBackIcon}
           onClick={onButtonClick}
         />

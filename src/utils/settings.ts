@@ -4,12 +4,20 @@ class Settings {
   checkForUpdates: boolean | undefined;
   developerNetwork: boolean | undefined;
   projectNetwork: boolean | undefined;
+  locale:string;
   graphType:GraphType;
 
   constructor() {
     this.checkForUpdates = true;
     this.developerNetwork = true;
     this.projectNetwork = true;
+    const language = chrome.i18n.getUILanguage();
+    if (language.startsWith("zh")) {
+      this.locale="zh_CN"
+    }
+    else {
+      this.locale="en"
+    }
     this.graphType="echarts";
   }
 
@@ -23,6 +31,9 @@ class Settings {
     if ("projectNetwork" in data) {
       this.projectNetwork = data["projectNetwork"];
     }
+    if ("locale" in data) {
+      this.locale = data["locale"];
+    }
     if ("graphType" in data) {
       this.graphType = data["graphType"];
     }
@@ -33,8 +44,8 @@ class Settings {
     result["checkForUpdates"] = this.checkForUpdates;
     result["developerNetwork"] = this.developerNetwork;
     result["projectNetwork"] = this.projectNetwork;
+    result["locale"] = this.locale;
     result["graphType"]=this.graphType;
-
     return result;
   }
 }
