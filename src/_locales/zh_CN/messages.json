@@ -26,7 +26,6 @@
   "global_btn_goBack": {
     "message": "返回"
   },
-
   "global_developer": {
     "message": "开发者"
   },
@@ -66,8 +65,20 @@
   "global_notificationTitle": {
     "message": "欢迎"
   },
-  "component_error_message": {
-    "message": "抱歉，该组件出现了一点问题..."
+  "global_sendFeedback": {
+    "message": "将您的问题反馈给我们。"
+  },
+  "global_error_message_404": {
+    "message": {
+      "status": "嗯... 获取数据时出错了",
+      "measure": {
+        "text": "请尝试：",
+        "tips": [
+          "刷新页面重试",
+          "检查您的网络连接"
+        ]
+      }
+    }
   },
   "component_developerCollabrationNetwork_title": {
     "message": "开发者协作网络图"
@@ -111,7 +122,6 @@
   "component_mostParticipatedProjects_description_edge": {
     "message": "边：项目与项目之间的连接关系，值的大小表示项目间联系的紧密程度。"
   },
-
   "component_activeDeveloperCollabrationNetwork_title": {
     "message": "项目活跃开发者协作网络图"
   },
@@ -127,14 +137,12 @@
   "component_darkMode": {
     "message": "深色模式"
   },
-
   "teachingBubble_text_headline": {
     "message": "探索 Perceptor 图表"
   },
   "teachingBubble_text_content": {
     "message": "点击以查看统计数据"
   },
-
   "options_components_title": {
     "message": "选择组件"
   },
@@ -153,7 +161,6 @@
   "options_graphType_toolTip": {
     "message": "可选择图表组件的渲染方式，Antv 或者 Echarts"
   },
-
   "options_update_title": {
     "message": "更新"
   },
@@ -184,13 +191,12 @@
   "options_update_btn_getUpdate": {
     "message": "获取更新"
   },
-  "notification_title_newUpdate":{
+  "notification_title_newUpdate": {
     "message": "新版本更新可用"
   },
-  "notification_message_newUpdate":{
+  "notification_message_newUpdate": {
     "message": "版本号: %v"
   },
-
   "options_token_title": {
     "message": "设置 Token"
   },
@@ -212,7 +218,6 @@
   "options_token_dialog_error": {
     "message": "无效的 Token"
   },
-
   "options_about_title": {
     "message": "关于"
   },

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Stack, MessageBar, Link, MessageBarType } from 'office-ui-fabric-react';
 import { getMessageByLocale } from '../../utils/utils';
-import { ErrorCode, HYPERTRONS_CRX_ISSUES_LINK } from '../../constant';
+import { ErrorCode, HYPERTRONS_CRX_NEW_ISSUE  } from '../../constant';
 import Settings, { loadSettings } from '../../utils/settings';
 
 interface ErrorMessageBarProps {
@@ -11,7 +11,7 @@ interface ErrorMessageBarProps {
 
 const ErrorMessageBar: React.FC<ErrorMessageBarProps> = ({
   errorCode = ErrorCode.UNKNOWN,
-  url = HYPERTRONS_CRX_ISSUES_LINK
+  url = HYPERTRONS_CRX_NEW_ISSUE 
 }) => {
   const [inited, setInited] = useState(false);
   const [settings, setSettings] = useState(new Settings());

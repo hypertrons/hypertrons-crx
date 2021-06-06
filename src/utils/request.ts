@@ -1,6 +1,6 @@
+
 import ENV from '../../utils/env';
 import { ErrorCode, API_TARGET } from '../constant';
-import logger from '../utils/logger';
 
 /**
  * @zh-CN 处理网络请求
@@ -10,7 +10,7 @@ const request = async (path: string) => {
   const url = new URL(path, API_TARGET);
   const response = await fetch(url.href);
   if (!response.ok) {
-    logger.error(ErrorCode.NOT_FOUND, response);
+    throw ErrorCode.NOT_FOUND
   }
   const data = await response.json();
   return {

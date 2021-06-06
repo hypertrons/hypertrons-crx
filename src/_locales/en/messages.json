@@ -26,7 +26,6 @@
   "global_btn_goBack": {
     "message": "Go back"
   },
-
   "global_developer": {
     "message": "Develpoer"
   },
@@ -66,8 +65,20 @@
   "global_notificationTitle": {
     "message": "Messages from the developers"
   },
-  "component_error_message": {
-    "message": "Sorry, an error occurred while loading this component ..."
+  "global_sendFeedback": {
+    "message": "Send the feedback to us."
+  },
+  "global_error_message_404": {
+    "message": {
+      "status": "Hmmm... error while getting data",
+      "measure": {
+        "text": "Try:",
+        "tips": [
+          "Refresh the page",
+          "Check the network"
+        ]
+      }
+    }
   },
   "component_developerCollabrationNetwork_title": {
     "message": "Developer Collabration Network"
@@ -87,7 +98,6 @@
   "component_activity_definition_link": {
     "message": "http://oss.x-lab.info/github-insight-report-2020-en.pdf"
   },
-
   "component_projectCorrelationNetwork_title": {
     "message": "Project Correlation Network"
   },
@@ -100,7 +110,6 @@
   "component_projectCorrelationNetwork_description_edge": {
     "message": "Edge: Connection between projects, the value indicates the closeness of the connection between projects."
   },
-
   "component_mostParticipatedProjects_title": {
     "message": "Most Participated Repos"
   },
@@ -113,7 +122,6 @@
   "component_mostParticipatedProjects_description_edge": {
     "message": "Edge: Connection between projects, the value of the edge indicates the closeness of the connection between projects."
   },
-
   "component_activeDeveloperCollabrationNetwork_title": {
     "message": "Active Developer Collabration Network"
   },
@@ -129,14 +137,12 @@
   "component_darkMode": {
     "message": "Dark mode"
   },
-
   "teachingBubble_text_headline": {
     "message": "Explore Hypertrons-crx charts"
   },
   "teachingBubble_text_content": {
     "message": "Click here to see statistics data"
   },
-
   "options_components_title": {
     "message": "Select Components"
   },
@@ -155,8 +161,6 @@
   "options_graphType_toolTip": {
     "message": "You can choose the rendering type of component，Antv or Echarts"
   },
-
-
   "options_update_title": {
     "message": "Update"
   },
@@ -187,13 +191,12 @@
   "options_update_btn_getUpdate": {
     "message": "Get the update"
   },
-  "notification_title_newUpdate":{
+  "notification_title_newUpdate": {
     "message": "New update available"
   },
-  "notification_message_newUpdate":{
+  "notification_message_newUpdate": {
     "message": "Version: %v"
   },
-
   "options_token_title": {
     "message": "Set token"
   },
@@ -215,7 +218,6 @@
   "options_token_dialog_error": {
     "message": "Bad token"
   },
-
   "options_about_title": {
     "message": "About"
   },
@@ -228,5 +230,4 @@
   "options_about_description_website": {
     "message": "Welcome to visit out website to get more infomation："
   }
-
 }

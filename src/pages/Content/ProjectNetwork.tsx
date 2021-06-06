@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
 import { utils } from 'github-url-detection';
-import { Stack, Dropdown, IDropdownStyles, IDropdownOption, Link, Spinner } from 'office-ui-fabric-react';
+import { Stack, Dropdown, IDropdownStyles, IDropdownOption, Spinner } from 'office-ui-fabric-react';
 import Graph from '../../components/Graph/Graph';
 import { isPerceptor, runsWhen } from '../../utils/utils';
 import { getRepoCorrelation, getDevelopersByRepo } from '../../api/repo';
@@ -10,6 +10,7 @@ import { getMessageByLocale } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
 import { inject2Perceptor } from './Perceptor';
 import Settings, { loadSettings } from '../../utils/settings';
+import ErrorPage from '../../components/ExceptionPage/ErrorPage';
 
 interface ProjectNetworkViewProps {
   currentRepo: string;
@@ -23,23 +24,28 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
   const [developerPeriod, setDeveloperPeriod] = useState<string | number | undefined>(180);
   const [inited, setInited] = useState(false);
   const [settings, setSettings] = useState(new Settings());
+  const [statusCode, setStatusCode] = useState<number>(200);
 
   useEffect(() => {
     const getRepoCorrelationData = async () => {
-      const res = await getRepoCorrelation(currentRepo);
-      if (res.status === 200) {
+      try {
+        const res = await getRepoCorrelation(currentRepo);
         setRepoCorrelationData(res.data)
-      }
+      } catch (e) {
+        setStatusCode(e);
+      };
     }
     getRepoCorrelationData();
   }, [repoPeriod]);
 
   useEffect(() => {
     const getDevelopersByRepoData = async () => {
-      const res = await getDevelopersByRepo(currentRepo);
-      if (res.status === 200) {
+      try {
+        const res = await getDevelopersByRepo(currentRepo);
         setDevelopersByRepoData(res.data)
-      }
+      } catch (e) {
+        setStatusCode(e);
+      };
     }
     getDevelopersByRepoData();
   }, [developerPeriod]);
@@ -84,6 +90,12 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
   const graphStyle = {
     width: '500px',
     height: '380px'
+  }
+
+  if (statusCode !== 200) {
+    return (
+      <ErrorPage errorCode={statusCode} />
+    )
   }
 
   if (!repoCorrelationData || !developersByRepoData) {
