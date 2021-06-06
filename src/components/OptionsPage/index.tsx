@@ -48,32 +48,18 @@ const OptionsPage: React.FC = () => {
       text: 'Echarts'
     }
   ];
+
   const locale=settings.locale;
-  let localeOptions: IChoiceGroupOption[];
-  if(locale==="en"){
-    localeOptions = [
-      {
-        key: 'en',
-        text: 'English'
-      },
-      {
-        key: 'zh_CN',
-        text: 'Chinese'
-      }
-    ];
-  }
-  else{
-    localeOptions = [
-      {
-        key: 'en',
-        text: '英语'
-      },
+  const localeOptions: IChoiceGroupOption[]=[
+        {
+          key: 'en',
+          text: 'English'
+        },
       {
         key: 'zh_CN',
         text: '汉语'
       }
-    ];
-  }
+  ];
 
 
   useEffect(() => {
@@ -98,7 +84,7 @@ const OptionsPage: React.FC = () => {
     if (!inited) {
       initMetaData();
     }
-  }, [inited, metaData]);
+  }, [inited, locale, metaData]);
 
   useEffect(() => {
     const initSettings = async () => {
