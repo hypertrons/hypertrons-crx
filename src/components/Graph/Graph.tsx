@@ -142,7 +142,7 @@ const Graph: React.FC<GraphProps> = ({
       graphOption = {
         tooltip: {},
         animation: true,
-        animationDuration: 3000,
+        animationDuration: 2000,
         series: [
           {
             type: 'graph',

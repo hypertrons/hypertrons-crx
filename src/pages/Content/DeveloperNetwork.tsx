@@ -11,6 +11,7 @@ import { inject2Perceptor } from './Perceptor';
 import Settings, { loadSettings } from '../../utils/settings';
 import Graph from '../../components/Graph/Graph';
 import TeachingBubbleWrapper from './TeachingBubbleWrapper'
+import ErrorPage from '../../components/ExceptionPage/ErrorPage';
 
 initializeIcons();
 
@@ -28,14 +29,17 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
   const [showProjectDialog, setShowProjectDialog] = useState(false);
   const [inited, setInited] = useState(false);
   const [settings, setSettings] = useState(new Settings());
+  const [statusCode, setStatusCode] = useState<number>(200);
 
   // get developercollabration data
   useEffect(() => {
     const getDeveloperCollabrationData = async () => {
-      const res = await getDeveloperCollabration(currentDeveloper);
-      if (res.status === 200) {
+      try {
+        const res = await getDeveloperCollabration(currentDeveloper);
         setDeveloperCollabrationData(res.data)
-      }
+      } catch (e) {
+        setStatusCode(e);
+      };
     }
     getDeveloperCollabrationData();
   }, [developerPeriod]);
@@ -43,10 +47,12 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
   // get participated projects data
   useEffect(() => {
     const getParticipatedProjectsData = async () => {
-      const res = await getParticipatedProjects(currentDeveloper);
-      if (res.status === 200) {
+      try {
+        const res = await getParticipatedProjects(currentDeveloper);
         setParticipatedProjectsData(res.data)
-      }
+      } catch (e) {
+        setStatusCode(e);
+      };
     }
     getParticipatedProjectsData();
   }, [repoPeriod]);
@@ -61,11 +67,6 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
       initSettings();
     }
   }, [inited, settings]);
-
-  const onProjectChartClick = (param: any, echarts: any) => {
-    const url = 'https://github.com/' + param.data.name + '/pulse?type=perceptor';
-    window.location.href = url;
-  };
 
   const dropdownStyles: Partial<IDropdownStyles> = {
     dropdown: { width: 120 }
@@ -157,40 +158,44 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
         }}
         modalProps={dialogProps}
       >
-        <div>
-          <Stack className="hypertrons-crx-title">
-            <span>{getMessageByLocale('component_developerCollabrationNetwork_title', settings.locale)}</span>
-            <div className='hypertrons-crx-title-extra'>
-              <Dropdown
-                defaultSelectedKey={developerPeriod}
-                options={periodOptions}
-                styles={dropdownStyles}
-                onRenderTitle={onRenderPeriodDropdownTitle}
-                onChange={onDeveloperPeriodChange}
-              />
-            </div>
-          </Stack>
-          <div className="d-flex flex-wrap flex-items-center">
-            <div className="col-12 col-md-6">
-              <div style={{ margin: '10px 0 20px 20px' }}>
-                < Graph
-                  graphType={graphType}
-                  data={developerCollabrationData!}
-                  style={graphStyle}
-                />
+        {
+          statusCode !== 200 ? <ErrorPage errorCode={statusCode} /> :
+            <div>
+              <Stack className="hypertrons-crx-title">
+                <span>{getMessageByLocale('component_developerCollabrationNetwork_title', settings.locale)}</span>
+                <div className='hypertrons-crx-title-extra'>
+                  <Dropdown
+                    defaultSelectedKey={developerPeriod}
+                    options={periodOptions}
+                    styles={dropdownStyles}
+                    onRenderTitle={onRenderPeriodDropdownTitle}
+                    onChange={onDeveloperPeriodChange}
+                  />
+                </div>
+              </Stack>
+              <div className="d-flex flex-wrap flex-items-center">
+                <div className="col-12 col-md-6">
+                  <div style={{ margin: '10px 0 20px 20px' }}>
+                    < Graph
+                      graphType={graphType}
+                      data={developerCollabrationData!}
+                      style={graphStyle}
+                    />
+                  </div>
+                </div>
+                <div className="col-12 col-md-6">
+                  <div className="color-text-secondary" style={{ marginLeft: '55px' }}>
+                    <p>{getMessageByLocale('component_developerCollabrationNetwork_description', settings.locale)}</p>
+                    <ul style={{ margin: '0px 0 10px 15px' }}>
+                      <li>{getMessageByLocale('component_developerCollabrationNetwork_description_node', settings.locale)}</li>
+                      <li>{getMessageByLocale('component_developerCollabrationNetwork_description_edge', settings.locale)}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="col-12 col-md-6">
-              <div className="color-text-secondary" style={{ marginLeft: '55px' }}>
-                <p>{getMessageByLocale('component_developerCollabrationNetwork_description', settings.locale)}</p>
-                <ul style={{ margin: '0px 0 10px 15px' }}>
-                  <li>{getMessageByLocale('component_developerCollabrationNetwork_description_node', settings.locale)}</li>
-                  <li>{getMessageByLocale('component_developerCollabrationNetwork_description_edge', settings.locale)}</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
+        }
+
       </Dialog>
       <Dialog
         hidden={!showProjectDialog}
@@ -199,40 +204,43 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
         }}
         modalProps={dialogProps}
       >
-        <div>
-          <Stack className="hypertrons-crx-title">
-            <span>{getMessageByLocale('component_mostParticipatedProjects_title', settings.locale)}</span>
-            <div className='hypertrons-crx-title-extra'>
-              <Dropdown
-                defaultSelectedKey={repoPeriod}
-                options={periodOptions}
-                styles={dropdownStyles}
-                onRenderTitle={onRenderPeriodDropdownTitle}
-                onChange={onRepoPeriodChange}
-              />
-            </div>
-          </Stack>
-          <div className="d-flex flex-wrap flex-items-center">
-            <div className="col-12 col-md-6">
-              <div style={{ margin: '10px 0 20px 20px' }}>
-                < Graph
-                  graphType={graphType}
-                  data={participatedProjectsData!}
-                  style={graphStyle}
-                />
+        {
+          statusCode !== 200 ? <ErrorPage errorCode={statusCode} /> :
+            <div>
+              <Stack className="hypertrons-crx-title">
+                <span>{getMessageByLocale('component_mostParticipatedProjects_title', settings.locale)}</span>
+                <div className='hypertrons-crx-title-extra'>
+                  <Dropdown
+                    defaultSelectedKey={repoPeriod}
+                    options={periodOptions}
+                    styles={dropdownStyles}
+                    onRenderTitle={onRenderPeriodDropdownTitle}
+                    onChange={onRepoPeriodChange}
+                  />
+                </div>
+              </Stack>
+              <div className="d-flex flex-wrap flex-items-center">
+                <div className="col-12 col-md-6">
+                  <div style={{ margin: '10px 0 20px 20px' }}>
+                    < Graph
+                      graphType={graphType}
+                      data={participatedProjectsData!}
+                      style={graphStyle}
+                    />
+                  </div>
+                </div>
+                <div className="col-12 col-md-6">
+                  <div className="color-text-secondary" style={{ marginLeft: '55px' }}>
+                    <p>{getMessageByLocale('component_mostParticipatedProjects_description', settings.locale)}</p>
+                    <ul style={{ margin: '0px 0 10px 15px' }}>
+                      <li>{getMessageByLocale('component_mostParticipatedProjects_description_node', settings.locale)}</li>
+                      <li>{getMessageByLocale('component_mostParticipatedProjects_description_edge', settings.locale)}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="col-12 col-md-6">
-              <div className="color-text-secondary" style={{ marginLeft: '55px' }}>
-                <p>{getMessageByLocale('component_mostParticipatedProjects_description', settings.locale)}</p>
-                <ul style={{ margin: '0px 0 10px 15px' }}>
-                  <li>{getMessageByLocale('component_mostParticipatedProjects_description_node', settings.locale)}</li>
-                  <li>{getMessageByLocale('component_mostParticipatedProjects_description_edge', settings.locale)}</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
+        }
       </Dialog>
     </div>
   )
