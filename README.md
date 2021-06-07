@@ -54,7 +54,7 @@ For more information please refer to [Installation Guide](./INSTALLATION.md).
 ### Quickstart
 
 ```bash
-git clone git@github.com:hypertrons/hypertrons-crx.git
+git clone https://github.com/hypertrons/hypertrons-crx
 cd hypertrons-crx
 npm install
 npm run watch
