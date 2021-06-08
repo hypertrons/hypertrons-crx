@@ -57,7 +57,7 @@ const OptionsPage: React.FC = () => {
         },
       {
         key: 'zh_CN',
-        text: '汉语'
+        text: '简体中文 (Simplifified Chinese)'
       }
   ];
 
