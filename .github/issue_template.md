@@ -18,7 +18,7 @@ _Put an `x` in the boxes that apply_
 - [ ] Raise a Question
 
 
-## Introduction ot the issue
+## Introduction to the issue
 
 [provide a general introduction to the issue you are logging and why it is relevant to this repository]
 
