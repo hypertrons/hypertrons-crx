@@ -21,7 +21,7 @@ class PerceptorTab extends PerceptorBase {
     }
 
     // copy Insights tab data item
-    const insightsTabDataItem = $('li[data-menu-item="i8insights-tab"]');
+    const insightsTabDataItem = $('li[data-menu-item$="insights-tab"]');
     const perceptorTabDataItem=insightsTabDataItem.clone(true);
     const perceptorTabDataItemLink=perceptorTabDataItem.children("a");
     let href=perceptorTabDataItemLink.attr("href");
@@ -30,7 +30,7 @@ class PerceptorTab extends PerceptorBase {
     perceptorTabDataItemLink.attr("href",href);
     perceptorTabDataItemLink.attr("data-selected-links",href);
     perceptorTabDataItemLink.text("perceptor");
-    perceptorTabDataItem.attr("data-menu-item","i9perceptor-tab");
+    perceptorTabDataItem.attr("data-menu-item","i99perceptor-tab");
     insightsTabDataItem.after(perceptorTabDataItem);
 
     // copy Insights tab
@@ -38,7 +38,7 @@ class PerceptorTab extends PerceptorBase {
     perceptorTab = insightsTab.clone(true);
     perceptorTab.attr('id','perceptor_tab');
     const perceptorTablink=perceptorTab.children("a")
-    perceptorTablink.attr("data-tab-item","i9perceptor-tab")
+    perceptorTablink.attr("data-tab-item","i99perceptor-tab")
 
     // Un-select one of the tabs if necessary
     const insightsLink = $('a', insightsTab);
