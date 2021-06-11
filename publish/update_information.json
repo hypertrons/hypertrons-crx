@@ -1,10 +1,10 @@
 {
   "chrome": {
-    "latest_version":"1.0.0",
-    "url":"https://chrome.google.com/webstore/detail/hypertrons/jkgfcnkgfapbckbpgobmgiphpknkiljm"
+    "latest_version":"1.0.1",
+    "url":"https://chrome.google.com/webstore/detail/hypertrons-crx/jkgfcnkgfapbckbpgobmgiphpknkiljm"
   },
   "edge": {
-    "latest_version":"1.0.0",
+    "latest_version":"1.0.1",
     "url":"https://github.com/hypertrons/hypertrons-crx/releases"
   },
   "develop": {
