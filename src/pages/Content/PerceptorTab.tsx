@@ -13,8 +13,6 @@ import logger from '../../utils/logger';
 class PerceptorTab extends PerceptorBase {
 
   public async run(): Promise<void> {
-    const insightsTab = $('.js-repo-nav [data-ga-click="Repository, Navigation click, Insights tab"]').parent();
-
     // avoid redundant clone
     let perceptorTab=$("#perceptor_tab")
     if(perceptorTab.length>0){
@@ -22,9 +20,25 @@ class PerceptorTab extends PerceptorBase {
       return
     }
 
+    // copy Insights tab data item
+    const insightsTabDataItem = $('li[data-menu-item="i8insights-tab"]');
+    const perceptorTabDataItem=insightsTabDataItem.clone(true);
+    const perceptorTabDataItemLink=perceptorTabDataItem.children("a");
+    let href=perceptorTabDataItemLink.attr("href");
+    // @ts-ignore
+    href=`${href}?redirect=perceptor`
+    perceptorTabDataItemLink.attr("href",href);
+    perceptorTabDataItemLink.attr("data-selected-links",href);
+    perceptorTabDataItemLink.text("perceptor");
+    perceptorTabDataItem.attr("data-menu-item","i9perceptor-tab");
+    insightsTabDataItem.after(perceptorTabDataItem);
+
     // copy Insights tab
+    const insightsTab = $('.js-repo-nav [data-ga-click="Repository, Navigation click, Insights tab"]').parent();
     perceptorTab = insightsTab.clone(true);
     perceptorTab.attr('id','perceptor_tab');
+    const perceptorTablink=perceptorTab.children("a")
+    perceptorTablink.attr("data-tab-item","i9perceptor-tab")
 
     // Un-select one of the tabs if necessary
     const insightsLink = $('a', insightsTab);
