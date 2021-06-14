@@ -1,4 +1,4 @@
-Language : [US](./README.md) | CN
+Language : [US](./README.md) | zh-CN
 
 <h1 align="center">Hypertrons Chrome Extension</h1>
 
@@ -60,11 +60,11 @@ Hypertrons 浏览器插件项目旨在通过直接往 GitHub 页面中插入各�
 
 ## 安装与使用 📢
 
-[link-chrome]: https://chrome.google.com/webstore/detail/hypertrons/jkgfcnkgfapbckbpgobmgiphpknkiljm 'Version published on Chrome Web Store'
+[link-chrome]: https://chrome.google.com/webstore/detail/hypertrons-crx/jkgfcnkgfapbckbpgobmgiphpknkiljm 'Version published on Chrome Web Store'
 
 [<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/chrome/chrome.svg" width="48" alt="Chrome" valign="middle">][link-chrome] [<img valign="middle" src="https://img.shields.io/chrome-web-store/v/jkgfcnkgfapbckbpgobmgiphpknkiljm.svg?label=%20">][link-chrome] also compatible with [<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/edge/edge.svg" width="24" alt="Edge" valign="middle">][link-chrome] [<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/opera/opera.svg" width="24" alt="Opera" valign="middle">][link-chrome]
 
-更多信息请参考 [安装指南](./INSTALLATION.md).
+更多信息请参考 [安装指南](./INSTALLATION.zh-CN.md).
 
 ## 参与贡献
 
