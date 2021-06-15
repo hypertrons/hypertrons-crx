@@ -24,6 +24,10 @@ interface GraphProps {
    * callback function when click node
    */
   readonly onNodeClick?: NodeClickFunc;
+  /**
+   * will assign a distinguishable color to the focused node if specified
+   */
+  readonly focusedNodeID?: string;
 }
 
 const Graph: React.FC<GraphProps> = ({
@@ -34,10 +38,13 @@ const Graph: React.FC<GraphProps> = ({
     const url = 'https://github.com/' + node.id;
     window.location.href = url;
   },
+  focusedNodeID,
 }) => {
   const NODE_SIZE = [10, 30];
   const NODE_COLOR = GITHUB_THEME === 'light' ? ['#9EB9A8', '#40C463', '#30A14E', '#216E39'] : ['#0E4429', '#006D32', '#26A641', '#39D353'];
   const THRESHOLD = [10, 100, 1000];
+  const FOCUSED_NODE_COLOR = GITHUB_THEME === 'light' ? ['#D73A49'] : ['#DA3633'];
+
   const [inited, setInited] = useState(false);
   const [settings, setSettings] = useState(new Settings());
 
@@ -72,7 +79,7 @@ const Graph: React.FC<GraphProps> = ({
           value: n.value,
           symbolSize: linearMap(n.value, minMax, NODE_SIZE),
           itemStyle: {
-            color: getColorMap(n.value)
+            color: focusedNodeID && focusedNodeID === n.name ? FOCUSED_NODE_COLOR : getColorMap(n.value)
           }
         }
       })
@@ -96,7 +103,7 @@ const Graph: React.FC<GraphProps> = ({
     const generateNodes = (nodes: any[]): any => {
       const minMax = getMinMax(nodes);
       return nodes.map((n: any) => {
-        const color = getColorMap(n.value);
+        const color = focusedNodeID && focusedNodeID === n.name ? FOCUSED_NODE_COLOR : getColorMap(n.value);
         return {
           id: n.name,
           value: n.value,
