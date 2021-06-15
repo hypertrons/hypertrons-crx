@@ -1,40 +1,111 @@
-Hypertrons-crx v1.0.0 现已登陆 Chrome 网上应用商店，您可以通过本文档，了解如何在 Chrome 浏览器中安装并使用 Hypertrons-crx，具体步骤如下：
+Language : [US](./INSTALLATION.md) | zh-CN
 
-## Step 1：
+# 安装指南
 
-在 Chrome 网上应用商店中搜索“Hypertrons-crx”，或点击以下链接(https://chrome.google.com/webstore/detail/hypertrons-crx/jkgfcnkgfapbckbpgobmgiphpknkiljm/related) 访问“Hypertrons-crx”的插件页面。
+欢迎下载安装 hypertrons-crx 浏览器插件。您可以通过本文档，了解如何下载安装并使用 Hypertrons-crx。如果您在插件使用过程中遇到任何问题，欢迎 [提 Issue](https://github.com/hypertrons/hypertrons-crx/issues) 反馈给我们！
 
-点击“添加至 Chrome”，并确认“添加扩展程序”，经过短暂的等待， Hypertrons-crx 将会被成功添加至扩展程序，点击浏览器右上角拼图样式的扩展程序管理，可看到已经安装成功的扩展程序。
+您可以任选一种方式安装使用。
 
-<br/>
-<div align=center><img src="./assets/installation_p1.png" width="80%">
-<br/> 
+## 从应用商店安装
 
-<img src="./assets/installation_p2.png" style="zoom:80%;">
-<br/> 
+Hypertrons-crx 现已登陆 [Chrome 网上应用商店](https://chrome.google.com/webstore/detail/hypertrons-crx/jkgfcnkgfapbckbpgobmgiphpknkiljm)。
 
-<img src="./assets/installation_p3.png" style="zoom:80%;"></div>
-<br/>
+### Chrome 浏览器 / Edge 浏览器
 
-## Step 2：
+1. 点击 [此链接](https://chrome.google.com/webstore/detail/hypertrons-crx/jkgfcnkgfapbckbpgobmgiphpknkiljm?hl=zh-CN) 访问 “Hypertrons-crx” 扩展程序主页，点击 “添加至 Chrome” ，并确认。
 
-插件成功添加后，我们访问 GitHub 的任一仓库，这里以hypertrons/hypertrons-crx (https://github.com/hypertrons/hypertrons-crx) 为例，网页中将会出现新的 Perceptor 栏目（若未出现，可尝试刷新网页），点击该栏目，可以看到 hpertrons-crx 的项目关系网络图和项目活跃开发者协作网络图。
+<img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-cws-zh-CN.png">
 
-<br/>
-<div align=center><img src="./assets/installation_p4.png" width="100%"><br/> 
+2. 此时插件已成功安装，您可以在 GitHub 任一开发者/仓库主页面看到以下效果图：
 
-<img src="./assets/installation_p5.png" width="100%"><br/></div>
-<br/>
+<table>
+	<tr>
+		<th width="50%">
+			<p>Entrance 1: GitHub User's Profile Page
+			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-perceptor-entrance-1-zh-CN.png">
+		<th width="50%">
+			<p>Entrance 2: GitHub Repository Page
+			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-perceptor-entrance-2-zh-CN.png">
+</table>
 
-## Step 3（可选）：
+3. 如需对插件进行设置，请点击以下按钮，可以进入到插件设置页面。在设置页面，您可以更改相关配置。
 
-在浏览器右上角的产检管理器中，点击插件名称，将进入 Hypertrons-crx 的设置页面，您可在这里选择想要查看的组件类别，图表类型以及确认是否自动检测更新。
+<table>
+	<tr>
+		<th width="50%">
+      <p> Chrome 浏览器
+      <p> <img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-chrome-ext-setting-zh-CN.png">
+		<th width="50%">
+			<p> Edge 浏览器
+      <p> <img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-edge-ext-setting-zh-CN.png">
+</table>
 
-<br/>
-<div align=center><img src="./assets/installation_p6.png" style="zoom: 67%;"><br/></div>
-<br/>
+## 手动下载安装包
 
-以上是 Chrome 浏览器安装 Hypertrons-crx 的简要说明，若您在安装和使用过程中有任何问题和建议，可访问项目的 issue列表 (https://github.com/hypertrons/hypertrons-crx/issues) 创建您的 isuue 与我们进行讨论。
+您可以在[这里](https://github.com/hypertrons/hypertrons-crx/releases)下载最新的安装包。 当前版本支持 Chromium 内核浏览器，如:
+
+- [Chrome 浏览器](#chrome)
+
+- [Edge 浏览器](#edge)
+
+- [360 安全浏览器](#360-safety)
+
+- [360 快速浏览器](#360-speed)
+ 
+### <a id="chrome"></a> Chrome 浏览器
+
+1. 下载 `hypertrons.zip`, 解压。
+
+2. 打开浏览器，在地址栏中输入 [chrome://extensions](chrome://extensions)。
+
+3. 打开 **[开发者模式]**。
+
+4. 点击 **[加载已解压的扩展程序]**。
+
+5. 完成。
+
+### <a id="edge"></a> Edge 浏览器
+
+1. 下载 `hypertrons.zip`, 解压。
+
+2. 打开浏览器，在地址栏中输入 [edge://extensions/](edge://extensions/)。
+
+3. 打开 **[开发者模式]**。
+
+4. 点击 **[加载已解压的扩展程序]**。
+
+5. 完成。
+
+### <a id="360-safety"> 360 安全浏览器
+
+1. 下载 `hypertrons.crx`.
+
+2. 打开浏览器，在地址栏中输入 [se://extensions/](se://extensions/)。
+
+3. 打开 **[开发者模式]**。
+
+4. 将下载好的 `hypertrons.crx` 拖入页面中。
+
+5. 弹框选择 **[添加]**。
+
+6. 完成。
+
+### <a id="360-speed">360 快速浏览器
+
+1. 下载 `hypertrons.crx`.
+
+2. 打开浏览器，在地址栏中输入 [chrome://myextensions/extensions](chrome://myextensions/extensions)。
+
+3. 打开 **[开发者模式]**。
+
+4. 将下载好的 `hypertrons.crx` 拖入页面中。
+
+5. 弹框选择 **[添加]**。
+
+6. 完成。
+
+
+以上是 Hypertrons-crx 的安装及使用说明，若您在安装和使用过程中有任何问题和建议，可访问项目的 issue列表 (https://github.com/hypertrons/hypertrons-crx/issues) 或创建 isuue 与我们进行讨论。
 
 感谢您的支持！
 
