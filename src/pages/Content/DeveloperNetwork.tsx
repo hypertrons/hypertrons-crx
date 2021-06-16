@@ -180,6 +180,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
                       graphType={graphType}
                       data={developerCollabrationData!}
                       style={graphStyle}
+                      focusedNodeID={currentDeveloper}
                     />
                   </div>
                 </div>

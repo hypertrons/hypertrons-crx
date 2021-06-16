@@ -129,6 +129,7 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
                 graphType={graphType}
                 data={repoCorrelationData!}
                 style={graphStyle}
+                focusedNodeID={currentRepo}
               />
             </div>
           </div>
