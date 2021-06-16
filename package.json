@@ -2,7 +2,7 @@
   "name": "hypertrons-crx",
   "version": "1.0.1",
   "private": true,
-  "description": "Hypertrons Chrome Extension",
+  "description": "Hypertrons Chromium Extension",
   "license": "Apache",
   "scripts": {
     "start": "node utils/webserver.js",
