@@ -68,7 +68,7 @@ The latest release can be found on this page https://github.com/hypertrons/hyper
 
 3. Turn on the **[Developer Mode]** button on the bottom left corner of this page, then refresh. 
 
-4. Click **[Load Unpacked]** button on the top right, and select the folder where the unzipped files are stored( `hypertrons/`).
+4. Click **[Load Unpacked]** button on the top right, and select the folder (`/build`) under the folder ( `hypertrons/`) unzipped in step 1.
 
 5. Now, the extension can be successfully loaded. Make sure the switch is on.
 
