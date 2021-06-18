@@ -29,7 +29,7 @@ class PerceptorTab extends PerceptorBase {
     href=`${href}?redirect=perceptor`
     perceptorTabDataItemLink.attr("href",href);
     perceptorTabDataItemLink.attr("data-selected-links",href);
-    perceptorTabDataItemLink.text("perceptor");
+    perceptorTabDataItemLink.text("Perceptor");
     perceptorTabDataItem.attr("data-menu-item","i99perceptor-tab");
     insightsTabDataItem.after(perceptorTabDataItem);
 
@@ -60,9 +60,9 @@ class PerceptorTab extends PerceptorBase {
 
     // Update
     perceptorLink.attr("href", `https://github.com/${utils.getRepositoryInfo(window.location)!.nameWithOwner}/pulse?redirect=perceptor`);
+  
     $('span[data-content="Insights"]', perceptorLink).text('Perceptor');
-
-
+    
     render(
       <TeachingBubbleWrapper target="#perceptor_tab"/>
       ,
