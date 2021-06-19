@@ -33,7 +33,6 @@ const PopupPage: React.FC = () => {
     const initMetaData = async () => {
       const temp=await loadMetaData();
       setMetaData(temp);
-      console.log("meta");
     }
     initMetaData();
   }, []);
