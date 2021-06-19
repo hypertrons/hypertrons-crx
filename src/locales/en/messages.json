@@ -17,6 +17,12 @@
   "global_search": {
     "message": "Search"
   },
+  "global_toggle_onText": {
+    "message": "On"
+  },
+  "global_toggle_offText": {
+    "message": "Off"
+  },
   "global_btn_ok": {
     "message": "Ok"
   },
@@ -143,6 +149,15 @@
   "teachingBubble_text_content": {
     "message": "Click here to see statistics data"
   },
+  "options_enable_title": {
+    "message": "Status"
+  },
+  "options_enable_toolTip": {
+    "message": "Choose whether to enable perceptor when visiting github"
+  },
+  "options_enable_toggle_autoCheck": {
+    "message": "Enable perceptor"
+  },
   "options_components_title": {
     "message": "Select Components"
   },
@@ -169,12 +184,6 @@
   },
   "options_update_toggle_autoCheck": {
     "message": "Auto check updates"
-  },
-  "options_update_toggle_autoCheck_onText": {
-    "message": "On"
-  },
-  "options_update_toggle_autoCheck_offText": {
-    "message": "Off"
   },
   "options_update_btn_checkUpdate": {
     "message": "Check"

@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import {
   DefaultButton,
   Image, ImageFit,
-  Stack, Text,
+  Stack, Text, Toggle,
 } from 'office-ui-fabric-react';
 import { initializeIcons } from '@uifabric/icons';
 import './index.css';
 import Settings,{ loadSettings } from '../../utils/settings';
 import MetaData, { loadMetaData } from '../../utils/metadata';
-import { getMessageByLocale } from '../../utils/utils';
+import { chromeSet, getMessageByLocale } from '../../utils/utils';
 
 initializeIcons();
 
@@ -27,23 +27,28 @@ const PopupPage: React.FC = () => {
     if(!inited){
       initSettings();
     }
-  },[settings]);
+  },[inited, settings]);
 
   useEffect(() => {
     const initMetaData = async () => {
       const temp=await loadMetaData();
       setMetaData(temp);
+      console.log("meta");
     }
     initMetaData();
   }, []);
 
+  const saveSettings = async (settings: Settings) => {
+    setSettings(settings);
+    await chromeSet("settings", settings.toJson());
+  }
+  
   if(!inited){
     return (<div/>);
   }
 
   return(
       <Stack horizontalAlign="center">
-        <h1>Hypertrons-crx</h1>
         <Stack
           horizontalAlign="space-around"
           verticalAlign='center'
@@ -52,13 +57,27 @@ const PopupPage: React.FC = () => {
             childrenGap: 10
           }}
         >
+          <Stack
+            horizontalAlign="center"
+          >
+            <Toggle
+              label={getMessageByLocale('options_enable_toggle_autoCheck', settings.locale)}
+              defaultChecked={settings.isEnabled}
+              onText={getMessageByLocale('global_toggle_onText', settings.locale)}
+              offText={getMessageByLocale('global_toggle_offText', settings.locale)}
+              onChange={async (e, checked) => {
+                settings.isEnabled = checked;
+                await saveSettings(settings);
+              }}
+            />
+          </Stack>
           {
             metaData.token!==""&&
             <Stack
               horizontal
               verticalAlign="center"
               style={{
-                margin: "5px", padding: "3px", width: "300px"
+                margin: "5px", padding: "3px", width: "200px"
               }}
               tokens={{
                 childrenGap: 5
@@ -72,7 +91,7 @@ const PopupPage: React.FC = () => {
               />
               <Text
                 variant="large"
-                style={{marginLeft:25,maxWidth:200,wordWrap:"break-word"}}
+                style={{marginLeft:25,maxWidth:300,wordWrap:"break-word"}}
               >
                 {metaData.name}
               </Text>

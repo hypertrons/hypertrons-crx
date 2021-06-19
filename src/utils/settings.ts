@@ -1,6 +1,7 @@
 import { chromeGet, chromeSet, isNull } from './utils';
 
 class Settings {
+  isEnabled: boolean | undefined;
   checkForUpdates: boolean | undefined;
   developerNetwork: boolean | undefined;
   projectNetwork: boolean | undefined;
@@ -8,6 +9,7 @@ class Settings {
   graphType:GraphType;
 
   constructor() {
+    this.isEnabled=true
     this.checkForUpdates = true;
     this.developerNetwork = true;
     this.projectNetwork = true;
@@ -22,6 +24,9 @@ class Settings {
   }
 
   loadFromJson(data: { [key: string]: any; }): void {
+    if ("isEnabled" in data) {
+      this.isEnabled = data["isEnabled"];
+    }
     if ("checkForUpdates" in data) {
       this.checkForUpdates = data["checkForUpdates"];
     }
@@ -41,6 +46,7 @@ class Settings {
 
   toJson(): { [key: string]: any; } {
     const result: { [key: string]: any; } = {};
+    result["isEnabled"] = this.isEnabled;
     result["checkForUpdates"] = this.checkForUpdates;
     result["developerNetwork"] = this.developerNetwork;
     result["projectNetwork"] = this.projectNetwork;

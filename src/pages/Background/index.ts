@@ -22,6 +22,9 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
   const settings=await loadSettings();
   const metaData=await loadMetaData();
 
+  if(!settings.isEnabled){
+    return
+  }
 
   if(name===BackgroundTasks.update){
     if(settings.checkForUpdates){
