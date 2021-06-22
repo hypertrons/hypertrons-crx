@@ -176,8 +176,13 @@ const OptionsPage: React.FC = () => {
             title: getMessageByLocale('options_token_dialog_title', settings.locale)
           }}
         >
+          <p
+            style={{ fontSize:14,color:"#6a737d",margin: 5 }}
+          >
+            {getMessageByLocale('options_token_dialog_description', settings.locale)}
+          </p>
           <Stack horizontal style={{ fontSize: 16, margin: 5 }}>
-            <Link href="https://github.com/settings/tokens" target="_blank" underline>
+            <Link href="https://github.com/settings/tokens/new" target="_blank" underline>
               {getMessageByLocale('options_token_dialog_message', settings.locale)}
             </Link>
           </Stack>

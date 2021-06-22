@@ -219,7 +219,10 @@
     "message": "设置 token"
   },
   "options_token_dialog_message": {
-    "message": "如何生成 GitHub token?"
+    "message": "如何获取 GitHub token?"
+  },
+  "options_token_dialog_description": {
+    "message": "您的token将仅被用于获取您的头像和昵称以及从 Github 项目读取 hypertrons.json 配置文件,无需赋予额外权限。该token仅存储于本地,并不会向任何 github.com 以外的服务器发送。"
   },
   "options_token_dialog_checking": {
     "message": "检测中"

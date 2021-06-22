@@ -219,10 +219,13 @@
     "message": "Set token"
   },
   "options_token_dialog_message": {
-    "message": "How to generate GitHub token?"
+    "message": "Where to generate GitHub token?"
+  },
+  "options_token_dialog_description": {
+    "message": "Your token will only be used to get avatar and username and hypertrons.json from any Github repositories, which needs no more scopes than basic. The token will be keep in local storage and will not be sent to any other domains except github.com."
   },
   "options_token_dialog_checking": {
-    "message": "checking"
+    "message": "Checking"
   },
   "options_token_dialog_error": {
     "message": "Bad token"
