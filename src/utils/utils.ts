@@ -1,4 +1,11 @@
 import $ from 'jquery';
+import messages_en from '../locales/en/messages.json';
+import messages_zh_CN from '../locales/zh_CN/messages.json';
+
+const messages_locale = {
+  "en": messages_en,
+  "zh_CN": messages_zh_CN
+}
 
 export function elementExists(obj: null | JQuery) {
   return obj !== null && obj.length > 0;
@@ -41,6 +48,11 @@ export async function chromeGet(key: string) {
       resolve(result[key]);
     })
   });
+}
+
+export function getMessageByLocale(key: string, locale: string) {
+  // @ts-ignore
+  return messages_locale[locale][key]["message"];
 }
 
 export function getMessageI18n(key: string) {
@@ -117,21 +129,51 @@ export function runsWhen(rules: any[]) {
   };
 }
 
-export enum GraphType {
-  antv = "antv", echarts = "echarts"
-}
-
-export function mockSuccessResponse(data: any) {
-  if (process.env.NODE_ENV !== 'production') {
-    return {
-      status: 200,
-      statusText: 'ok',
-      data: data,
-    };
-  }
-  return null;
-}
-
 export function getGithubTheme() {
   return $('[data-color-mode]')[0].dataset['colorMode'];
+}
+
+export function getMinMax(data: INode[] | IEdge[]) {
+  const newArr = data.map((item: INode | IEdge) => {
+    return item.value;
+  })
+  return [Math.min(...newArr), Math.max(...newArr)];
+}
+
+export function linearMap(
+  val: number,
+  domain: number[],
+  range: number[],
+): number {
+  const d0 = domain[0];
+  const d1 = domain[1];
+  const r0 = range[0];
+  const r1 = range[1];
+
+  const subDomain = d1 - d0;
+  const subRange = r1 - r0;
+
+  if (subDomain === 0) {
+    return subRange === 0
+      ? r0
+      : (r0 + r1) / 2;
+  }
+  if (subDomain > 0) {
+    if (val <= d0) {
+      return r0;
+    }
+    else if (val >= d1) {
+      return r1;
+    }
+  }
+  else {
+    if (val >= d0) {
+      return r0;
+    }
+    else if (val <= d1) {
+      return r1;
+    }
+  }
+
+  return (val - d0) / subDomain * subRange + r0;
 }

@@ -1,6 +1,5 @@
 {
-  "name": "Hypertrons",
-  "default_locale": "zh_CN",
+  "name": "Hypertrons-crx",
   "options_page": "options.html",
   "icons": {
     "128": "main.png"

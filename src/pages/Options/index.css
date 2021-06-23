@@ -12,7 +12,7 @@ body {
   margin: 0px;
   display: flex;
   flex-direction: column;
-  background-color: rgb(242, 243, 245);
+  background-color: #fafbfc;
   padding: 0px;
   transition: all 0.3s ease 0s;
 }

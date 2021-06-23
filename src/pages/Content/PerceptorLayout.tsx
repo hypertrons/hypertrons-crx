@@ -1,14 +1,13 @@
 import React from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
-import { Stack } from 'office-ui-fabric-react';
 import { isPerceptor, runsWhen } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
 import { inject2Perceptor } from './Perceptor';
 
 const PerceptorLayoutView: React.FC<{}> = () => {
   return (
-    <Stack horizontalAlign="center" />
+    <div />
   )
 }
 @runsWhen([isPerceptor])

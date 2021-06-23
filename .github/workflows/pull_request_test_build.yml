@@ -32,4 +32,4 @@ jobs:
 
       - name: Test output
         shell: pwsh
-        run: Test-Path release/hypertrons.crx | Should -Be $true
+        run: Test-Path release/hypertrons-crx.crx | Should -Be $true

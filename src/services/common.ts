@@ -15,6 +15,14 @@ export const checkUpdate= async ()=>{
     if(browserType==="Edge"){
       latestVersion=updateInformation["edge"]["latest_version"];
       updateUrl=updateInformation["edge"]["url"];
+      // edge can also install crx from chrome store
+      if("update_url" in details){
+        const update_url=details["update_url"]
+        if(update_url.search("google")!==-1){
+          latestVersion=updateInformation["chrome"]["latest_version"];
+          updateUrl=updateInformation["chrome"]["url"];
+        }
+      }
     }
     else{
       latestVersion=updateInformation["chrome"]["latest_version"];

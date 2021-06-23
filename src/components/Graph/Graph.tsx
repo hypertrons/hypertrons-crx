@@ -1,50 +1,63 @@
-import React, { useState, CSSProperties } from 'react';
+import React, { useState, CSSProperties, useEffect } from 'react';
 import EChartsWrapper from './Echarts/index';
 import GraphinWrapper from './Graphin/index'
-import { Stack, Toggle, SwatchColorPicker } from 'office-ui-fabric-react';
-import { getMessageI18n, GraphType, getGithubTheme } from "../../utils/utils"
-
-enum ThemeType {
-  light = 'light',
-  dark = 'dark'
-}
+import { Stack, SwatchColorPicker, Link } from 'office-ui-fabric-react';
+import { getGithubTheme, isNull, getMinMax, linearMap, getMessageByLocale } from '../../utils/utils';
+import Settings, { loadSettings } from '../../utils/settings';
 
 const GITHUB_THEME = getGithubTheme();
 
 interface GraphProps {
-  graphType: string;
-  data: NetworkData;
-  style?: CSSProperties;
-  onChartClick?: any;
+  /**
+   * data
+   */
+  readonly data: IGraphData;
+  /**
+   * graphType, default is Echarts
+   */
+  readonly graphType?: GraphType;
+  /**
+   * `style` for graph container
+   */
+  readonly style?: CSSProperties;
+  /**
+   * callback function when click node
+   */
+  readonly onNodeClick?: NodeClickFunc;
+  /**
+   * will assign a distinguishable color to the focused node if specified
+   */
+  readonly focusedNodeID?: string;
 }
 
 const Graph: React.FC<GraphProps> = ({
-  graphType,
   data,
-  style,
-  onChartClick = (param: any, echarts: any) => {
-    const url = 'https://github.com/' + param.data.name;
+  graphType = 'echarts',
+  style = {},
+  onNodeClick = (node: INode) => {
+    const url = 'https://github.com/' + node.id;
     window.location.href = url;
   },
+  focusedNodeID,
 }) => {
+  const NODE_SIZE = [10, 30];
+  const NODE_COLOR = GITHUB_THEME === 'light' ? ['#9EB9A8', '#40C463', '#30A14E', '#216E39'] : ['#0E4429', '#006D32', '#26A641', '#39D353'];
+  const THRESHOLD = [10, 100, 1000];
+  const FOCUSED_NODE_COLOR = GITHUB_THEME === 'light' ? ['#D73A49'] : ['#DA3633'];
 
-  const [theme, setTheme] = useState<any>(GITHUB_THEME);
+  const [inited, setInited] = useState(false);
+  const [settings, setSettings] = useState(new Settings());
 
-  const NODE_SIZE = [5, 7, 10, 14, 18, 23];
-
-  const NODE_COLOR = theme === ThemeType.light ? ['#9EB9A8', '#40C463', '#30A14E', '#216E39'] : ['#0E4429', '#006D32', '#26A641', '#39D353'];
-  const THRESHOLD = [10, 40, 160, 640, 2560];
-
-  const getSizeMap = (value: number): number => {
-    const length = Math.min(THRESHOLD.length, NODE_SIZE.length - 1);
-    let i = 0;
-    for (; i < length; i++) {
-      if (value < THRESHOLD[i]) {
-        return NODE_SIZE[i];
-      }
+  useEffect(() => {
+    const initSettings = async () => {
+      const temp = await loadSettings();
+      setSettings(temp);
+      setInited(true);
     }
-    return NODE_SIZE[i];
-  }
+    if (!inited) {
+      initSettings();
+    }
+  }, [inited, settings]);
 
   const getColorMap = (value: number): string => {
     const length = Math.min(THRESHOLD.length, NODE_COLOR.length - 1);
@@ -58,13 +71,15 @@ const Graph: React.FC<GraphProps> = ({
   }
   const generateEchartsData = (data: any): any => {
     const generateNodes = (nodes: any[]): any => {
+      const minMax = getMinMax(nodes);
       return nodes.map((n: any) => {
         return {
+          id: n.name,
           name: n.name,
           value: n.value,
-          symbolSize: getSizeMap(n.value),
+          symbolSize: linearMap(n.value, minMax, NODE_SIZE),
           itemStyle: {
-            color: getColorMap(n.value)
+            color: focusedNodeID && focusedNodeID === n.name ? FOCUSED_NODE_COLOR : getColorMap(n.value)
           }
         }
       })
@@ -86,14 +101,15 @@ const Graph: React.FC<GraphProps> = ({
 
   const generateGraphinData = (data: any): any => {
     const generateNodes = (nodes: any[]): any => {
+      const minMax = getMinMax(nodes);
       return nodes.map((n: any) => {
-        const color = getColorMap(n.value);
+        const color = focusedNodeID && focusedNodeID === n.name ? FOCUSED_NODE_COLOR : getColorMap(n.value);
         return {
           id: n.name,
           value: n.value,
           style: {
             keyshape: {
-              size: getSizeMap(n.value),
+              size: linearMap(n.value, minMax, NODE_SIZE),
               stroke: color,
               fill: color,
               fillOpacity: 1,
@@ -128,27 +144,27 @@ const Graph: React.FC<GraphProps> = ({
   let graphData: any;
   let graphOption: any;
   switch (graphType) {
-    case GraphType.echarts:
+    case 'echarts':
       graphData = generateEchartsData(data);
       graphOption = {
         tooltip: {},
         animation: true,
-        animationDuration: 3000,
+        animationDuration: 2000,
         series: [
           {
             type: 'graph',
             layout: 'force',
             nodes: graphData.nodes,
             edges: graphData.edges,
-            // Enable mouse zooming and translating. See: https://echarts.apache.org/en/option.html#series-graph.roam
+            // Enable mouse zooming and translating
             roam: true,
             label: {
               position: 'right'
             },
             force: {
               repulsion: 50,
-              edgeLength: [1, 150],
-              // Disable the iteration animation of layout. See: https://echarts.apache.org/en/option.html#series-graph.force.layoutAnimation
+              edgeLength: [1, 100],
+              // Disable the iteration animation of layout
               layoutAnimation: false,
             },
             lineStyle: {
@@ -166,7 +182,7 @@ const Graph: React.FC<GraphProps> = ({
         ]
       };
       break;
-    case GraphType.antv:
+    case 'antv':
       graphData = generateGraphinData(data);
       break;
     default:
@@ -180,8 +196,31 @@ const Graph: React.FC<GraphProps> = ({
     { id: 'L3', label: `> ${THRESHOLD[2]}`, color: NODE_COLOR[3] },
   ];
 
+  if (isNull(data)) {
+    return (<div />)
+  }
   return (
     <Stack>
+      <Stack className='hypertrons-crx-border'>
+        {
+          graphType === 'echarts' &&
+          <EChartsWrapper
+            option={graphOption}
+            style={style}
+            onEvents={{
+              'click': onNodeClick,
+            }}
+          />
+        }
+        {
+          graphType === 'antv' &&
+          <GraphinWrapper
+            data={graphData}
+            style={style}
+            onNodeClick={onNodeClick}
+          />
+        }
+      </Stack>
       <Stack
         horizontal
         horizontalAlign="space-between"
@@ -189,17 +228,9 @@ const Graph: React.FC<GraphProps> = ({
         tokens={{
           childrenGap: 10
         }}
-      >
-        <Toggle
-          defaultChecked={theme === ThemeType.dark}
-          // Note: Graphin is currently unable to switch the theme. See: https://graphin.antv.vision/en-US/graphin/render/theme/
-          disabled={graphType === GraphType.antv}
-          onText={getMessageI18n("component_darkMode")}
-          offText={getMessageI18n("component_darkMode")}
-          onChange={(e, checked) => {
-            checked ? setTheme(ThemeType.dark) : setTheme(ThemeType.light);
-          }}
-        />
+      ><Link href={getMessageByLocale("component_activity_definition_link", settings.locale)} target="_blank">
+          {getMessageByLocale("component_activity_definition", settings.locale)}
+        </Link>
         <Stack
           horizontal
           horizontalAlign="space-between"
@@ -215,31 +246,6 @@ const Graph: React.FC<GraphProps> = ({
           </div>
           <span>More</span>
         </Stack>
-      </Stack>
-      <Stack className='hypertrons-crx-border'>
-        {
-          graphType === GraphType.echarts &&
-          <EChartsWrapper
-            option={graphOption}
-            onEvents={{
-              'click': onChartClick,
-            }}
-            style={style}
-            theme={theme}
-          />
-        }
-        {
-          graphType === GraphType.antv &&
-          <GraphinWrapper
-            data={graphData}
-            layoutOption={{
-              type: 'force',
-              linkDistance: 150,
-            }}
-            style={style}
-            theme={theme}
-          />
-        }
       </Stack>
     </Stack>
   )

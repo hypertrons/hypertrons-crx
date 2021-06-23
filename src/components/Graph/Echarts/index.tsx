@@ -61,7 +61,7 @@ const EChartsWrapper: React.FC<EChartsWrapperProps> = ({
   const renderNewEcharts = () => {
     const bindEvent = (eventName: string, func: Function) => {
       instance.on(eventName, (param: any) => {
-        func(param, instance);
+        func(param.data);
       });
     }
     const instance = getEchartsInstance();

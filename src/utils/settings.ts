@@ -1,19 +1,32 @@
 import { chromeGet, chromeSet, isNull } from './utils';
 
 class Settings {
+  isEnabled: boolean | undefined;
   checkForUpdates: boolean | undefined;
   developerNetwork: boolean | undefined;
   projectNetwork: boolean | undefined;
-  graphType:string;
+  locale:string;
+  graphType:GraphType;
 
   constructor() {
+    this.isEnabled=true
     this.checkForUpdates = true;
     this.developerNetwork = true;
     this.projectNetwork = true;
+    const language = chrome.i18n.getUILanguage();
+    if (language.startsWith("zh")) {
+      this.locale="zh_CN"
+    }
+    else {
+      this.locale="en"
+    }
     this.graphType="echarts";
   }
 
   loadFromJson(data: { [key: string]: any; }): void {
+    if ("isEnabled" in data) {
+      this.isEnabled = data["isEnabled"];
+    }
     if ("checkForUpdates" in data) {
       this.checkForUpdates = data["checkForUpdates"];
     }
@@ -23,6 +36,9 @@ class Settings {
     if ("projectNetwork" in data) {
       this.projectNetwork = data["projectNetwork"];
     }
+    if ("locale" in data) {
+      this.locale = data["locale"];
+    }
     if ("graphType" in data) {
       this.graphType = data["graphType"];
     }
@@ -30,11 +46,12 @@ class Settings {
 
   toJson(): { [key: string]: any; } {
     const result: { [key: string]: any; } = {};
+    result["isEnabled"] = this.isEnabled;
     result["checkForUpdates"] = this.checkForUpdates;
     result["developerNetwork"] = this.developerNetwork;
     result["projectNetwork"] = this.projectNetwork;
+    result["locale"] = this.locale;
     result["graphType"]=this.graphType;
-
     return result;
   }
 }
