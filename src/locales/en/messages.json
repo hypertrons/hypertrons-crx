@@ -222,7 +222,7 @@
     "message": "Where to generate GitHub token?"
   },
   "options_token_dialog_description": {
-    "message": "Your token will only be used to get avatar and username and hypertrons.json from any Github repositories, which needs no more scopes than basic. The token will be keep in local storage and will not be sent to any other domains except github.com."
+    "message": "Your token will only be used to get avatar and username and hypertrons.json from any Github repositories, which needs no more scopes than basic `public_repo`. The token will be keep in local storage and will not be sent to any other domains except github.com."
   },
   "options_token_dialog_checking": {
     "message": "Checking"
