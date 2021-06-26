@@ -241,5 +241,29 @@
   },
   "options_about_description_website": {
     "message": "Welcome to visit out website to get more infomation："
+  },
+  "hypertrons_tab_title": {
+    "message": "Hypertrons Commands"
+  },
+  "hypertrons_tab_description": {
+    "message": "You can use hypertrons commands here, try: /start-vote A B C"
+  },
+  "hypertrons_command_start_vote": {
+    "message": "Start a vote in conversation"
+  },
+  "hypertrons_command_vote": {
+    "message": "Join a vote created previous"
+  },
+  "hypertrons_command_rerun": {
+    "message": "Rerun"
+  },
+  "hypertrons_command_self_assign": {
+    "message": "Assign a issue to yourself"
+  },
+  "hypertrons_command_complete_checklist": {
+    "message": "Mark a checklist as completed"
+  },
+  "hypertrons_command_approve": {
+    "message": "Approve a pull request"
   }
 }
