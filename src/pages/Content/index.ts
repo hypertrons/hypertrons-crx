@@ -4,8 +4,15 @@ import './DeveloperNetwork';
 import './ProjectNetwork';
 import './content.styles.css';
 import { Perceptor } from './Perceptor';
+import { loadSettings } from '../../utils/settings';
 
-const perceptor = new Perceptor();
-perceptor.run();
+async function mainInject() {
+  const settings=await loadSettings();
+  if(settings.isEnabled){
+    const perceptor = new Perceptor();
+    perceptor.run();
+  }
+}
 
+mainInject()
 
