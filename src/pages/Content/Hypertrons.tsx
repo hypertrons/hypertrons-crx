@@ -159,7 +159,7 @@ const HypertronsTabView: React.FC = () => {
   )
 }
 
-@runsWhen([pageDetect.isPR])
+@runsWhen([pageDetect.isPR,pageDetect.isIssue])
 class Hypertrons extends PerceptorBase {
   private static renderView():void{
     // avoid redundant button
