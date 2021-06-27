@@ -93,7 +93,13 @@ const HypertronsTabView: React.FC = () => {
     const textarea=document.getElementById("new_comment_field") as HTMLTextAreaElement;
     if(textarea){
       const commentCurrent=textarea.value;
-      const commentNew=`${commentCurrent} ${command.command}`;
+      let commandExec;
+      switch (command.key){
+        case "start_vote":commandExec=`${command.command} A B C`;break;
+        case "vote":commandExec=`${command.command} A`;break;
+        default:commandExec=command.command;break;
+      }
+      const commentNew=`${commentCurrent}${commandExec} `;
       // @ts-ignore
       Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set.call(textarea, commentNew);
       fire(textarea,"change");
@@ -109,7 +115,7 @@ const HypertronsTabView: React.FC = () => {
         onClick={toggleIsCalloutVisible}
         type="button"
       >
-        commands
+        Commands
       </button>
       {
         isCalloutVisible && (
@@ -119,7 +125,6 @@ const HypertronsTabView: React.FC = () => {
             target={'#hypertrons_button'}
             onDismiss={toggleIsCalloutVisible}
             directionalHint={DirectionalHint.topCenter}
-            setInitialFocus
           >
             <Text block variant="large" className={styles.title}>
               {getMessageByLocale("hypertrons_tab_title",settings.locale)}

@@ -243,16 +243,16 @@
     "message": "欢迎访问我们的网站获取更多信息："
   },
   "hypertrons_tab_title": {
-    "message": "Hypertrons指令"
+    "message": "Hypertrons 指令"
   },
   "hypertrons_tab_description": {
-    "message": "可在此处键入hypertrons指令，如: /start-vote A B C"
+    "message": "在此处使用hypertrons指令，如: /start-vote A B C"
   },
   "hypertrons_command_start_vote": {
-    "message": "发起一个投票"
+    "message": "发起投票"
   },
   "hypertrons_command_vote": {
-    "message": "参与发起的投票"
+    "message": "参与投票"
   },
   "hypertrons_command_rerun": {
     "message": "重新运行"
