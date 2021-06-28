@@ -176,8 +176,13 @@ const OptionsPage: React.FC = () => {
             title: getMessageByLocale('options_token_dialog_title', settings.locale)
           }}
         >
+          <p
+            style={{ fontSize:14,color:"#6a737d",margin: 5 }}
+          >
+            {getMessageByLocale('options_token_dialog_description', settings.locale)}
+          </p>
           <Stack horizontal style={{ fontSize: 16, margin: 5 }}>
-            <Link href="https://github.com/settings/tokens" target="_blank" underline>
+            <Link href="https://github.com/settings/tokens/new" target="_blank" underline>
               {getMessageByLocale('options_token_dialog_message', settings.locale)}
             </Link>
           </Stack>
@@ -204,7 +209,6 @@ const OptionsPage: React.FC = () => {
           >
             <TextField
               style={{ width: "200px" }}
-              value={token}
               defaultValue={token}
               onChange={(e, value) => {
                 if (value) {
@@ -250,6 +254,35 @@ const OptionsPage: React.FC = () => {
           childrenGap: 30
         }}
       >
+        <Stack.Item className='Box'>
+          <TooltipHost
+            content={getMessageByLocale('options_enable_toolTip', settings.locale)}
+          >
+            <Stack.Item className='Box-header'>
+              <h2 className='Box-title'>
+                {getMessageByLocale('options_enable_title', settings.locale)}
+              </h2>
+            </Stack.Item>
+          </TooltipHost>
+          <Stack
+            style={{ margin: '10px 25px' }}
+            tokens={{
+              childrenGap: 10
+            }}
+          >
+            <p>{getMessageByLocale('options_enable_toolTip', settings.locale)}.</p>
+            <Toggle
+              label={getMessageByLocale('options_enable_toggle_autoCheck', settings.locale)}
+              defaultChecked={settings.isEnabled}
+              onText={getMessageByLocale('global_toggle_onText', settings.locale)}
+              offText={getMessageByLocale('global_toggle_offText', settings.locale)}
+              onChange={async (e, checked) => {
+                settings.isEnabled = checked;
+                await saveSettings(settings);
+              }}
+            />
+          </Stack>
+        </Stack.Item>
         <Stack.Item className='Box'>
           <TooltipHost
             content={getMessageByLocale('options_locale_toolTip', settings.locale)}
@@ -353,8 +386,8 @@ const OptionsPage: React.FC = () => {
             <Toggle
               label={getMessageByLocale('options_update_toggle_autoCheck', settings.locale)}
               defaultChecked={settings.checkForUpdates}
-              onText={getMessageByLocale('options_update_toggle_autoCheck_onText', settings.locale)}
-              offText={getMessageByLocale('options_update_toggle_autoCheck_offText', settings.locale)}
+              onText={getMessageByLocale('global_toggle_onText', settings.locale)}
+              offText={getMessageByLocale('global_toggle_offText', settings.locale)}
               onChange={async (e, checked) => {
                 settings.checkForUpdates = checked;
                 await saveSettings(settings);

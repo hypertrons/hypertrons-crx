@@ -17,6 +17,12 @@
   "global_search": {
     "message": "查找"
   },
+  "global_toggle_onText": {
+    "message": "开"
+  },
+  "global_toggle_offText": {
+    "message": "关"
+  },
   "global_btn_ok": {
     "message": "确定"
   },
@@ -143,6 +149,15 @@
   "teachingBubble_text_content": {
     "message": "点击以查看统计数据"
   },
+  "options_enable_title": {
+    "message": "开关"
+  },
+  "options_enable_toolTip": {
+    "message": "是否在访问github时启用perceptor"
+  },
+  "options_enable_toggle_autoCheck": {
+    "message": "启用插件"
+  },
   "options_components_title": {
     "message": "选择组件"
   },
@@ -169,12 +184,6 @@
   },
   "options_update_toggle_autoCheck": {
     "message": "自动检测更新"
-  },
-  "options_update_toggle_autoCheck_onText": {
-    "message": "开"
-  },
-  "options_update_toggle_autoCheck_offText": {
-    "message": "关"
   },
   "options_update_btn_checkUpdate": {
     "message": "检查更新"
@@ -210,7 +219,10 @@
     "message": "设置 token"
   },
   "options_token_dialog_message": {
-    "message": "如何生成 GitHub token?"
+    "message": "如何获取 GitHub token?"
+  },
+  "options_token_dialog_description": {
+    "message": "您的token将仅被用于获取您的头像和昵称以及从 Github 项目读取 hypertrons.json 配置文件,无需赋予除public_repo外的额外权限。该token仅存储于本地,并不会向任何 github.com 以外的服务器发送。"
   },
   "options_token_dialog_checking": {
     "message": "检测中"
