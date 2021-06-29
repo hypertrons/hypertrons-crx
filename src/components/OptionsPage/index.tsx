@@ -37,6 +37,7 @@ const OptionsPage: React.FC = () => {
   const [notification, setNotification] = useState("");
   const [updateStatus, setUpdateStatus] = useState(UpdateStatus.undefine);
   const [updateUrl, setUpdateUrl] = useState("https://github.com/hypertrons/hypertrons-crx/releases");
+  const tokenCurrent=metaData.token;
 
   const graphOptions: IChoiceGroupOption[] = [
     {
@@ -139,6 +140,9 @@ const OptionsPage: React.FC = () => {
             type: DialogType.normal,
             title: getMessageByLocale("global_notificationTitle", settings.locale)
           }}
+          modalProps={{
+            isBlocking: true
+          }}
         >
           <Text variant="mediumPlus">
             {notification}
@@ -174,6 +178,9 @@ const OptionsPage: React.FC = () => {
           dialogContentProps={{
             type: DialogType.normal,
             title: getMessageByLocale('options_token_dialog_title', settings.locale)
+          }}
+          modalProps={{
+            isBlocking: true
           }}
         >
           <p
@@ -217,7 +224,7 @@ const OptionsPage: React.FC = () => {
                 }
               }}
             />
-            <DefaultButton
+            <PrimaryButton
               disabled={checkingToken}
               onClick={async () => {
                 setCheckingToken(true);
@@ -237,8 +244,27 @@ const OptionsPage: React.FC = () => {
               }}
             >
               {getMessageByLocale('global_btn_ok', settings.locale)}
-            </DefaultButton>
+            </PrimaryButton>
           </Stack>
+          {
+            tokenCurrent !== "" &&
+            <DefaultButton
+              onClick={async () => {
+                metaData.token = "";
+                metaData.avatar = ""
+                metaData.name = ""
+                metaData.id = ""
+                setMetaData(metaData);
+                await chromeSet("meta_data", metaData.toJson());
+                setShowDialogToken(false);
+              }}
+              style={{
+                width: 120
+              }}
+            >
+              {getMessageByLocale('options_token_btn_rmToken',settings.locale)}
+            </DefaultButton>
+          }
         </Dialog>
       }
       <Stack
@@ -451,7 +477,7 @@ const OptionsPage: React.FC = () => {
           >
             <p>{getMessageByLocale('options_token_toolTip', settings.locale)} :</p>
             {
-              metaData.token !== "" &&
+              tokenCurrent !== "" &&
               <Stack
                 horizontal
                 verticalAlign="center"
