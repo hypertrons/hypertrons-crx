@@ -103,8 +103,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
       title: {
         padding: 0,
       }
-    },
-    isBlocking:true
+    }
   };
 
   const graphStyle = {
@@ -249,7 +248,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
 }
 
 
-@runsWhen([pageDetect.isUserProfileMainTab])
+@runsWhen([pageDetect.isUserProfile])
 class DeveloperNetwork extends PerceptorBase {
   private _currentDeveloper: string;
 
