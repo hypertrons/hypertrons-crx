@@ -218,6 +218,9 @@
   "options_token_btn_setToken": {
     "message": "Set token"
   },
+  "options_token_btn_rmToken": {
+    "message": "Remove token"
+  },
   "options_token_dialog_message": {
     "message": "Where to generate GitHub token?"
   },

@@ -104,6 +104,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
         padding: 0,
       }
     },
+    isBlocking:true
   };
 
   const graphStyle = {

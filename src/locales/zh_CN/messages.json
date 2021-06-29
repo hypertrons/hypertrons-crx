@@ -218,6 +218,9 @@
   "options_token_btn_setToken": {
     "message": "设置 token"
   },
+  "options_token_btn_rmToken": {
+    "message": "移除 token"
+  },
   "options_token_dialog_message": {
     "message": "如何获取 GitHub token?"
   },

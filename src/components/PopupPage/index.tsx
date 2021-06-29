@@ -90,7 +90,7 @@ const PopupPage: React.FC = () => {
               />
               <Text
                 variant="large"
-                style={{marginLeft:25,maxWidth:300,wordWrap:"break-word"}}
+                style={{marginLeft:25,width:100,wordWrap:"break-word"}}
               >
                 {metaData.name}
               </Text>
