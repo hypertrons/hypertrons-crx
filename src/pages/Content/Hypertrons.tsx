@@ -174,7 +174,8 @@ class Hypertrons extends PerceptorBase {
     }
 
     // add hypertrons tab
-    const parentContainer = $('.d-flex.flex-justify-end');
+    const commentForm=$(".js-new-comment-form");
+    const parentContainer = commentForm.find('.d-flex.flex-justify-end');
     const hypertronsTab=document.createElement('div');
     render(
       <HypertronsTabView />,
