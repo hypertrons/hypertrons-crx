@@ -48,7 +48,7 @@ The latest release can be found on this page https://github.com/hypertrons/hyper
 
 - [360 Speed Explorer](#360-speed)
 
-## <a id="chrome"></a> Chrome 
+## <a id="chrome">Chrome </a>
 
 1. Download file `hypertrons.zip`, and unzip it to a new folder, for example, named as `hypertrons/`.
 
@@ -60,7 +60,7 @@ The latest release can be found on this page https://github.com/hypertrons/hyper
 
 5. Now, the extension can be successfully loaded. Make sure the switch is on.
 
-## <a id="edge"></a> Edge
+## <a id="edge">Edge</a>
 
 1. Download file `hypertrons.zip`, and unzip it to a new folder, for example, named as `hypertrons/`.
 
@@ -72,7 +72,7 @@ The latest release can be found on this page https://github.com/hypertrons/hyper
 
 5. Now, the extension can be successfully loaded. Make sure the switch is on.
 
-## <a id="360-safety"> 360 Safety Explorer
+## <a id="360-safety"> 360 Safety Explorer</a>
 
 1. Download file `hypertrons.crx`.
 
@@ -98,3 +98,33 @@ The latest release can be found on this page https://github.com/hypertrons/hyper
 5. In the pop-up dialog box "Do you want to add Hypertrons?", select **[Add]**.
 
 6. Now, the extension can be successfully loaded. Make sure the switch is on.
+
+
+
+# Additional Configuration
+
+### Adding Github Token 
+
+Hypertrons requires a github token for getting the avatar and username from Github repositories	and getting the hypertrons.json. 
+
+1. Click on the hypertrons icon to open the menu and select set Token
+
+	<img src="assets/en/ex.png">
+	
+
+2. Now click on set Token in the Options page
+
+	<img src="assets/en/op.png">
+
+
+
+
+3. You'll need a github token with "public_repo" scope. <a href="https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token">How to generate token?</a>
+
+	<img src="assets/en/mo.png">
+
+
+
+4. Paste the token and click ok
+
+	<img src="assets/en/set.png">
