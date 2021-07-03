@@ -63,3 +63,25 @@ chrome.notifications.onClicked.addListener(async function(notificationId){
   }
   chrome.notifications.clear(notificationId);
 });
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  const type = request.task_type
+  if(type==="get_username_from_cookie"){
+    chrome.cookies.get({
+      url : "https://github.com",
+      name : "dotcom_user"
+    }, function(cookie) {
+      let message;
+      if(cookie){
+        message=cookie.value;
+      }
+      else{
+        message=null;
+      }
+      sendResponse({
+        message: message
+      });
+    });
+  }
+  return true;
+})

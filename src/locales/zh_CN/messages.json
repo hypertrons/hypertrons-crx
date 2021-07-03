@@ -8,6 +8,9 @@
   "golbal_loading": {
     "message": "载入中......"
   },
+  "golbal_link": {
+    "message": "链接"
+  },
   "global_error_message": {
     "message": "抱歉，Hypertrons-crx 插件加载时遇到了一点问题。错误代码为："
   },
@@ -249,7 +252,10 @@
     "message": "Hypertrons 指令"
   },
   "hypertrons_tab_description": {
-    "message": "在此处使用hypertrons指令，如: /start-vote A B C"
+    "message": "可在此处使用hypertrons指令，详情请见:"
+  },
+  "hypertrons_tab_link": {
+    "message": "https://www.hypertrons.io/#/zh-cn/component/index"
   },
   "hypertrons_command_start_vote": {
     "message": "发起投票"
@@ -258,7 +264,7 @@
     "message": "参与投票"
   },
   "hypertrons_command_rerun": {
-    "message": "重新运行"
+    "message": "重新运行ci"
   },
   "hypertrons_command_self_assign": {
     "message": "认领issue"

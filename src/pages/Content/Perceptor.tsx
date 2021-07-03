@@ -28,9 +28,14 @@ export class Perceptor extends PerceptorBase {
       logger.info('Detected that this is a repo page, trying to load configuration file from the repo ...');
       const owner = utils.getRepositoryInfo(window.location)!.owner;
       const repo = utils.getRepositoryInfo(window.location)!.name;
-      const configFromGithub = await getConfigFromGithub(owner, repo);
-      logger.info('The configurations are: ', configFromGithub);
-      this.settings = await mergeSettings(configFromGithub);
+      const configHypertrons=await getConfigFromGithub(owner, repo);
+      logger.info('The configurations are: ', configHypertrons);
+      if("hypertrons-crx" in configHypertrons){
+        this.settings = await mergeSettings(configHypertrons["hypertrons-crx"]);
+      }
+      else{
+        this.settings = await loadSettings();
+      }
     } else {
       this.settings = await loadSettings();
     }

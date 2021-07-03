@@ -8,6 +8,9 @@
   "golbal_loading": {
     "message": "Loading……"
   },
+  "golbal_link": {
+    "message": "Link"
+  },
   "global_error_message": {
     "message": "Sorry，an error occurred while loading Hypertrons-crx extention. Error Code is: "
   },
@@ -249,7 +252,10 @@
     "message": "Hypertrons Commands"
   },
   "hypertrons_tab_description": {
-    "message": "You can use hypertrons commands here, try: /start-vote A B C"
+    "message": "You can use hypertrons commands here. See usage:"
+  },
+  "hypertrons_tab_link": {
+    "message": "https://www.hypertrons.io/#/component/index"
   },
   "hypertrons_command_start_vote": {
     "message": "Start a vote in conversation"
@@ -258,7 +264,7 @@
     "message": "Join a vote created previous"
   },
   "hypertrons_command_rerun": {
-    "message": "Rerun"
+    "message": "Rerun a CI"
   },
   "hypertrons_command_self_assign": {
     "message": "Assign a issue to yourself"
