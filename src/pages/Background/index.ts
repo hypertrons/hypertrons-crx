@@ -83,5 +83,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       });
     });
   }
+  // must return true in async mode
   return true;
 })
