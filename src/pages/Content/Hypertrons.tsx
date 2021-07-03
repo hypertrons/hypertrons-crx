@@ -89,6 +89,7 @@ const HypertronsTabView: React.FC = () => {
     const initCommandsCurrent = async () => {
       let commandsCanUse=new Set([]);
       if("role" in hypertronsConfig){
+        // @ts-ignore
         const roleConfig=hypertronsConfig["role"];
         if("roles" in roleConfig){
           const rolesConfig=roleConfig["roles"];
