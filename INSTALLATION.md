@@ -8,9 +8,13 @@ We welcome users to install and try our Hypertrons Chrome Extension. If you have
 
 ### Chrome / Edge
 
-1. Visit [Chrome Web Store](https://chrome.google.com/webstore/detail/hypertrons-crx/jkgfcnkgfapbckbpgobmgiphpknkiljm)，and click **[Add to Chrome]**.
+1. [Chrome] Visit [Chrome Web Store](https://chrome.google.com/webstore/detail/hypertrons-crx/jkgfcnkgfapbckbpgobmgiphpknkiljm)，and click **[Add to Chrome]**.
 
 <img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-cws.png">
+
+1. [Edge] Visit [Edge Extensions Home](https://microsoftedge.microsoft.com/addons/search/hypertrons-crx), and click **[Get]**.
+
+<img src="assets/en/installation-edge-1.png">
 
 2. Then you can find the dashboards in: 
 
@@ -117,12 +121,9 @@ Hypertrons requires a github token for getting the avatar and username from Gith
 	<img src="assets/en/op.png">
 
 
-
-
 3. You'll need a github token with "public_repo" scope. <a href="https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token">How to generate token?</a>
 
 	<img src="assets/en/mo.png">
-
 
 
 4. Paste the token and click ok
