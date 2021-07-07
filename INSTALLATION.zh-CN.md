@@ -8,13 +8,17 @@ Language : [US](./INSTALLATION.md) | zh-CN
 
 ## 从应用商店安装
 
-Hypertrons-crx 现已登陆 [Chrome 网上应用商店](https://chrome.google.com/webstore/detail/hypertrons-crx/jkgfcnkgfapbckbpgobmgiphpknkiljm)。
+Hypertrons-crx 现已登陆 [Chrome 网上应用商店](https://chrome.google.com/webstore/detail/hypertrons-crx/jkgfcnkgfapbckbpgobmgiphpknkiljm)及[Edge 网上扩展商店](https://microsoftedge.microsoft.com/addons/Microsoft-Edge-Extensions-Home)。
 
 ### Chrome 浏览器 / Edge 浏览器
 
-1. 点击 [此链接](https://chrome.google.com/webstore/detail/hypertrons-crx/jkgfcnkgfapbckbpgobmgiphpknkiljm?hl=zh-CN) 访问 “Hypertrons-crx” 扩展程序主页，点击 “添加至 Chrome” ，并确认。
+1. [Choreme]点击 [此链接](https://chrome.google.com/webstore/detail/hypertrons-crx/jkgfcnkgfapbckbpgobmgiphpknkiljm?hl=zh-CN) 访问 “Hypertrons-crx” 扩展程序主页，点击 “添加至 Chrome” ，并确认。
 
 <img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-cws-zh-CN.png">
+
+1. [Edge]点击[此链接](https://microsoftedge.microsoft.com/addons/search/hypertrons-crx) 访问 “Hypertrons-crx” 扩展程序主页，点击 “获取” ，在网页弹窗中点击 “添加扩展” ，当浏览器右上角出现 “Hypertrons-crx” 图标，即表示安装完成。
+
+<img src="assets/zh-CN/installation-edge-1.png">
 
 2. 此时插件已成功安装，您可以在 GitHub 任一开发者/仓库主页面看到以下效果图：
 
