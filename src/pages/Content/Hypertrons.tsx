@@ -34,15 +34,17 @@ const styles = mergeStyleSets({
   },
 });
 
-const HypertronsTabView: React.FC = () => {
+interface HypertronsTabViewProps {
+  hypertronsConfig: any;
+}
+
+const HypertronsTabView: React.FC<HypertronsTabViewProps> = ({hypertronsConfig}) => {
   const commandsInit: Command[]=[]
   const [settings, setSettings] = useState(new Settings());
   const [settingsInited, setSettingsInited] = useState(false);
   const [isCalloutVisible, { toggle: toggleIsCalloutVisible }] = useBoolean(false);
   const [userName, setUserName] = useState(null);
   const [userNameInited, setUserNameInited] = useState(false);
-  const [hypertronsConfig, setHypertronsConfig] = useState({});
-  const [hypertronsConfigInited, setHypertronsConfigInited] = useState(false);
   const [commandsCurrent, setCommandsCurrent] = useState(commandsInit);
   const [commandsCurrentInited, setCommandsCurrentInited] = useState(false);
 
@@ -56,19 +58,6 @@ const HypertronsTabView: React.FC = () => {
       initSettings();
     }
   }, [settingsInited,settings]);
-
-  useEffect(() => {
-    const initHypertronsConfig = async () => {
-      const owner = utils.getRepositoryInfo(window.location)!.owner;
-      const repo = utils.getRepositoryInfo(window.location)!.name;
-      const hypertonsConfig = await getConfigFromGithub(owner,repo);
-      setHypertronsConfig(hypertonsConfig);
-      setHypertronsConfigInited(true);
-    }
-    if (!hypertronsConfigInited) {
-      initHypertronsConfig();
-    }
-  }, [hypertronsConfigInited,hypertronsConfig]);
 
   useEffect(() => {
     const initUserName = async () => {
@@ -112,10 +101,10 @@ const HypertronsTabView: React.FC = () => {
       setCommandsCurrent(commandsFinal);
       setCommandsCurrentInited(true);
     }
-    if (!commandsCurrentInited&&hypertronsConfigInited&&userNameInited) {
+    if (!commandsCurrentInited&&userNameInited) {
       initCommandsCurrent();
     }
-  }, [hypertronsConfigInited, userNameInited, commandsCurrentInited, commandsCurrent, hypertronsConfig, userName]);
+  }, [userNameInited, commandsCurrentInited, commandsCurrent, hypertronsConfig, userName]);
 
   const ExecCommand=(command:Command)=>{
     const textarea=document.getElementById("new_comment_field") as HTMLTextAreaElement;
@@ -178,6 +167,7 @@ const HypertronsTabView: React.FC = () => {
               className={styles.buttons}
               gap={8}
               horizontal
+              horizontalAlign="center"
               wrap
             >
               {
@@ -207,6 +197,8 @@ const HypertronsTabView: React.FC = () => {
 
 @runsWhen([pageDetect.isPR,pageDetect.isIssue])
 class Hypertrons extends PerceptorBase {
+  public static hypertronsConfig:any;
+
   private static renderView():void{
     // avoid redundant button
     if($("#hypertrons_button").length>0){
@@ -219,14 +211,16 @@ class Hypertrons extends PerceptorBase {
     const parentContainer = commentForm.find('.d-flex.flex-justify-end');
     const hypertronsTab=document.createElement('div');
     render(
-      <HypertronsTabView />,
+      <HypertronsTabView
+        hypertronsConfig={this.hypertronsConfig}
+      />,
       hypertronsTab,
     );
     parentContainer.prepend(hypertronsTab);
   }
 
-  public async run(): Promise<void> {
-
+  public async run(config:any): Promise<void> {
+    Hypertrons.hypertronsConfig=config;
     // @ts-ignore
     const observer = new MutationObserver(Hypertrons.renderView);
     const element = document.querySelector('#new_comment_field');

@@ -7,6 +7,7 @@ import logger from '../../utils/logger';
 export class Perceptor extends PerceptorBase {
   public static Features: Map<string, any> = new Map();
   public settings: any;
+  public hypertronsConfig: any;
 
   public async run(): Promise<void> {
     logger.info('start.');
@@ -30,6 +31,7 @@ export class Perceptor extends PerceptorBase {
       const repo = utils.getRepositoryInfo(window.location)!.name;
       const configHypertrons=await getConfigFromGithub(owner, repo);
       logger.info('The configurations are: ', configHypertrons);
+      this.hypertronsConfig=configHypertrons;
       if("hypertrons-crx" in configHypertrons){
         this.settings = await mergeSettings(configHypertrons["hypertrons-crx"]);
       }
@@ -63,7 +65,7 @@ export class Perceptor extends PerceptorBase {
       }
       logger.info('running ', featureId)
       const feature = new Feature();
-      await feature.run();
+      await feature.run(this.hypertronsConfig);
     }, this)
   }
 
