@@ -256,23 +256,5 @@
   },
   "hypertrons_tab_link": {
     "message": "https://www.hypertrons.io/#/zh-cn/component/index"
-  },
-  "hypertrons_command_start_vote": {
-    "message": "发起投票"
-  },
-  "hypertrons_command_vote": {
-    "message": "参与投票"
-  },
-  "hypertrons_command_rerun": {
-    "message": "重新运行ci"
-  },
-  "hypertrons_command_self_assign": {
-    "message": "认领issue"
-  },
-  "hypertrons_command_complete_checklist": {
-    "message": "完成待办事项"
-  },
-  "hypertrons_command_approve": {
-    "message": "允许pull request合并"
   }
 }

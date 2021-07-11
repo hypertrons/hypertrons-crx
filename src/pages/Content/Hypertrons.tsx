@@ -4,13 +4,12 @@ import $ from 'jquery';
 import { fire } from 'delegated-events'
 import * as pageDetect from 'github-url-detection';
 import {
-  Callout, Stack, FocusZone,Link,
-  Text,mergeStyleSets, FontWeights, DirectionalHint,
-  IconButton, initializeIcons,TooltipHost
+  Callout, Stack,Link, Text, initializeIcons,
+  mergeStyleSets, FontWeights, DirectionalHint
 } from '@fluentui/react';
-import { useBoolean,useId } from '@fluentui/react-hooks';
+import { useBoolean } from '@fluentui/react-hooks';
 import { utils } from 'github-url-detection';
-import { Command,CommandListDefault,getUserNameFromCookie } from "../../services/hypertrons"
+import { Command,LabelStyles,Label2Style,getUserNameFromCookie } from "../../services/hypertrons"
 import { getMessageByLocale, runsWhen } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
 import { inject2Perceptor } from './Perceptor';
@@ -27,12 +26,11 @@ const styles = mergeStyleSets({
   },
   title: {
     fontWeight: FontWeights.bold,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   buttons: {
-    display: 'flex',
-    justifyContent: 'flex-end',
     marginTop: 20,
+    overflow:"hidden"
   },
 });
 
@@ -47,7 +45,6 @@ const HypertronsTabView: React.FC = () => {
   const [hypertronsConfigInited, setHypertronsConfigInited] = useState(false);
   const [commandsCurrent, setCommandsCurrent] = useState(commandsInit);
   const [commandsCurrentInited, setCommandsCurrentInited] = useState(false);
-  const tooltipId = useId('tooltip');
 
   useEffect(() => {
     const initSettings = async () => {
@@ -107,15 +104,11 @@ const HypertronsTabView: React.FC = () => {
           }
         }
       }
-
-      let commandsFinal=[];
-      for (const command of CommandListDefault) {
-        // @ts-ignore
-        if(commandsCanUse.has(command.command)){
-          commandsFinal.push(command);
-        }
+      let commandsFinal: Command[]=[];
+      for (const command of commandsCanUse) {
+        const commandNew:Command= { "command":command }
+        commandsFinal.push(commandNew);
       }
-      // @ts-ignore
       setCommandsCurrent(commandsFinal);
       setCommandsCurrentInited(true);
     }
@@ -129,11 +122,11 @@ const HypertronsTabView: React.FC = () => {
     if(textarea){
       const commentCurrent=textarea.value;
       let commandExec;
-      switch (command.key){
-        case "start_vote":commandExec=`${command.command}  A,B,C,D`;break;
-        case "vote":commandExec=`${command.command} A`;break;
-        case "rerun":commandExec=`${command.command} CI`;break;
-        case "complete-checklist":commandExec=`${command.command} 1 #1`;break;
+      switch (command.command){
+        case "/start-vote":commandExec=`${command.command}  A,B,C,D`;break;
+        case "/vote":commandExec=`${command.command} A`;break;
+        case "/rerun":commandExec=`${command.command} CI`;break;
+        case "/complete-checklist":commandExec=`${command.command} 1 #1`;break;
         default:commandExec=command.command;break;
       }
       const commentNew=`${commentCurrent}${commandExec} `;
@@ -181,31 +174,30 @@ const HypertronsTabView: React.FC = () => {
                 {getMessageByLocale("golbal_link",settings.locale)}
               </Link>
             </Text>
-            <FocusZone>
-              <Stack className={styles.buttons} gap={8} horizontal>
-                {
-                  commandsCurrent.map((command, index) => {
-                    return (
-                        <TooltipHost
-                          content={getMessageByLocale(`hypertrons_command_${command.key}`,settings.locale)}
-                          id={tooltipId}
-                          calloutProps={{ gapSpace: 0 }}
-                          styles={{ root: { display: 'inline-block' } }}
-                        >
-                          <IconButton
-                            iconProps={{
-                              iconName:command.icon
-                            }}
-                            onClick={()=>{
-                              ExecCommand(command)
-                            }}
-                          />
-                        </TooltipHost>
-                    )
-                  })
-                }
-              </Stack>
-            </FocusZone>
+            <Stack
+              className={styles.buttons}
+              gap={8}
+              horizontal
+              wrap
+            >
+              {
+                commandsCurrent.map((command, index) => {
+                  const styleIndex=index%(LabelStyles.length-1);
+                  return (
+                    <div
+                      // @ts-ignore
+                      style={Label2Style(LabelStyles[styleIndex])}
+                      className="IssueLabel hx_IssueLabel"
+                      onClick={()=>{
+                        ExecCommand(command)
+                      }}
+                    >
+                      {command.command}
+                    </div>
+                  )
+                })
+              }
+            </Stack>
           </Callout>
         )
       }
