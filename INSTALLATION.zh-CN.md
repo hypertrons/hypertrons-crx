@@ -8,13 +8,17 @@ Language : [US](./INSTALLATION.md) | zh-CN
 
 ## 从应用商店安装
 
-Hypertrons-crx 现已登陆 [Chrome 网上应用商店](https://chrome.google.com/webstore/detail/hypertrons-crx/jkgfcnkgfapbckbpgobmgiphpknkiljm)。
+Hypertrons-crx 现已登陆 [Chrome 网上应用商店](https://chrome.google.com/webstore/detail/hypertrons-crx/jkgfcnkgfapbckbpgobmgiphpknkiljm)及[Edge 网上扩展商店](https://microsoftedge.microsoft.com/addons/Microsoft-Edge-Extensions-Home)。
 
 ### Chrome 浏览器 / Edge 浏览器
 
-1. 点击 [此链接](https://chrome.google.com/webstore/detail/hypertrons-crx/jkgfcnkgfapbckbpgobmgiphpknkiljm?hl=zh-CN) 访问 “Hypertrons-crx” 扩展程序主页，点击 “添加至 Chrome” ，并确认。
+1. [Choreme]点击 [此链接](https://chrome.google.com/webstore/detail/hypertrons-crx/jkgfcnkgfapbckbpgobmgiphpknkiljm?hl=zh-CN) 访问 “Hypertrons-crx” 扩展程序主页，点击 “添加至 Chrome” ，并确认。
 
 <img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-cws-zh-CN.png">
+
+1. [Edge]点击[此链接](https://microsoftedge.microsoft.com/addons/search/hypertrons-crx) 访问 “Hypertrons-crx” 扩展程序主页，点击 “获取” ，在网页弹窗中点击 “添加扩展” ，当浏览器右上角出现 “Hypertrons-crx” 图标，即表示安装完成。
+
+<img src="assets/zh-CN/installation-edge-1.png">
 
 2. 此时插件已成功安装，您可以在 GitHub 任一开发者/仓库主页面看到以下效果图：
 
@@ -104,6 +108,22 @@ Hypertrons-crx 现已登陆 [Chrome 网上应用商店](https://chrome.google.co
 
 6. 完成。
 
+## 附加配置
+
+### 添加 GitHub token
+
+Hypertrons 需要一个 GitHub token 来从 GitHub 仓库中获取用户信息，以得到 hypertrons.json 文件。
+
+1. 右键 hypertrons 图标，进入“选项”，打开设置菜单，并选择“设置 token”；
+	
+	<img src="assets/zh-CN/token-1.png">
+
+2. 在弹出的页面中粘贴您已经生成的 token,<a href="https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token">如何生成token?</a>
+
+	<img src="assets/zh-CN/token-2.png">
+
+3. 粘贴您的 token 后，点击“确定”，您的 token 将会被应用。
+	<img src="assets/zh-CN/token-3.png">
 
 以上是 Hypertrons-crx 的安装及使用说明，若您在安装和使用过程中有任何问题和建议，可访问项目的 issue列表 (https://github.com/hypertrons/hypertrons-crx/issues) 或创建 isuue 与我们进行讨论。
 

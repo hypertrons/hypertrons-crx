@@ -32,6 +32,14 @@ if (fileSystem.existsSync(secretsPath)) {
   alias['secrets'] = secretsPath;
 }
 
+var content_security_policy;
+if(ENV.NODE_ENV === 'development'){
+  content_security_policy="script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
+else{
+  content_security_policy="script-src 'self'; object-src 'self'"
+}
+
 var options = {
   mode: ENV.NODE_ENV,
   entry: {
@@ -101,6 +109,7 @@ var options = {
                 description: process.env.npm_package_description,
                 version: process.env.npm_package_version,
                 ...JSON.parse(content.toString()),
+                content_security_policy:content_security_policy
               })
             );
           },
