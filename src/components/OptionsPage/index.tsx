@@ -12,7 +12,7 @@ import { checkUpdate, checkIsTokenAvailabe } from '../../services/common';
 import Settings, { loadSettings } from "../../utils/settings"
 import MetaData, { loadMetaData } from '../../utils/metadata';
 import { getNotificationInformation } from '../../services/background';
-import { HYPERTRONS_CRX_WEBSITE } from '../../constant';
+import { OAUTH_CLIENT_ID,OAUTH_REDIRECT_URI,HYPERTRONS_CRX_WEBSITE } from '../../constant';
 import './index.css';
 
 initializeIcons();
@@ -37,7 +37,7 @@ const OptionsPage: React.FC = () => {
   const [notification, setNotification] = useState("");
   const [updateStatus, setUpdateStatus] = useState(UpdateStatus.undefine);
   const [updateUrl, setUpdateUrl] = useState("https://github.com/hypertrons/hypertrons-crx/releases");
-  const tokenCurrent=metaData.token;
+  const metaDataToken=metaData.token;
 
   const graphOptions: IChoiceGroupOption[] = [
     {
@@ -61,7 +61,6 @@ const OptionsPage: React.FC = () => {
         text: '简体中文 (Simplified Chinese)'
       }
   ];
-
 
   useEffect(() => {
     const initMetaData = async () => {
@@ -246,25 +245,6 @@ const OptionsPage: React.FC = () => {
               {getMessageByLocale('global_btn_ok', settings.locale)}
             </PrimaryButton>
           </Stack>
-          {
-            tokenCurrent !== "" &&
-            <DefaultButton
-              onClick={async () => {
-                metaData.token = "";
-                metaData.avatar = ""
-                metaData.name = ""
-                metaData.id = ""
-                setMetaData(metaData);
-                await chromeSet("meta_data", metaData.toJson());
-                setShowDialogToken(false);
-              }}
-              style={{
-                width: 120
-              }}
-            >
-              {getMessageByLocale('options_token_btn_rmToken',settings.locale)}
-            </DefaultButton>
-          }
         </Dialog>
       }
       <Stack
@@ -477,7 +457,7 @@ const OptionsPage: React.FC = () => {
           >
             <p>{getMessageByLocale('options_token_toolTip', settings.locale)} :</p>
             {
-              tokenCurrent !== "" &&
+              metaDataToken !== "" &&
               <Stack
                 horizontal
                 verticalAlign="center"
@@ -503,16 +483,52 @@ const OptionsPage: React.FC = () => {
                 </Text>
               </Stack>
             }
-            <DefaultButton
-              onClick={() => {
-                setShowDialogToken(true);
-              }}
-              style={{
-                width: 120
-              }}
-            >
-              {getMessageByLocale('options_token_btn_setToken', settings.locale)}
-            </DefaultButton>
+            {
+              metaDataToken !== "" &&
+              <DefaultButton
+                onClick={async () => {
+                  const tempMetaData=await loadMetaData();
+                  tempMetaData.token = "";
+                  tempMetaData.avatar = ""
+                  tempMetaData.name = ""
+                  tempMetaData.id = ""
+                  setMetaData(tempMetaData);
+                  await chromeSet("meta_data", tempMetaData.toJson());
+                }}
+                style={{
+                  width: 120
+                }}
+              >
+                {getMessageByLocale('options_token_btn_rmToken',settings.locale)}
+              </DefaultButton>
+            }
+            {
+              metaDataToken === "" &&
+              <DefaultButton
+                onClick={() => {
+                  setShowDialogToken(true);
+                }}
+                style={{
+                  width: 120
+                }}
+              >
+                {getMessageByLocale('options_token_btn_setToken', settings.locale)}
+              </DefaultButton>
+            }
+            {
+              metaDataToken === "" &&
+              <PrimaryButton
+                onClick={() => {
+                  const oauthUrl = `https://github.com/login/oauth/authorize?client_id=${OAUTH_CLIENT_ID}&redirect_uri=${OAUTH_REDIRECT_URI}`;
+                  window.open(oauthUrl);
+                }}
+                style={{
+                  width: 120
+                }}
+              >
+                {getMessageByLocale('options_token_btn_setTokenOauth', settings.locale)}
+              </PrimaryButton>
+            }
           </Stack>
         </Stack.Item>
         <Stack.Item className='Box'>

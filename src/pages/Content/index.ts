@@ -2,6 +2,7 @@ import './PerceptorTab';
 import './PerceptorLayout';
 import './DeveloperNetwork';
 import './ProjectNetwork';
+import './Oauth';
 import './content.styles.css';
 import { Perceptor } from './Perceptor';
 import { loadSettings } from '../../utils/settings';

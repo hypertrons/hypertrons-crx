@@ -69,7 +69,7 @@
     "message": "Click to show"
   },
   "global_notificationTitle": {
-    "message": "Messages from the developers"
+    "message": "Message from Hypercrx developers"
   },
   "global_sendFeedback": {
     "message": "Send the feedback to us."
@@ -206,6 +206,9 @@
   "notification_message_newUpdate": {
     "message": "Version: %v"
   },
+  "notification_token_setTokenSucceed": {
+    "message": "Successfully set github token!"
+  },
   "options_token_title": {
     "message": "Set token"
   },
@@ -217,6 +220,9 @@
   },
   "options_token_btn_setToken": {
     "message": "Set token"
+  },
+  "options_token_btn_setTokenOauth": {
+    "message": "Use oauth"
   },
   "options_token_btn_rmToken": {
     "message": "Remove token"

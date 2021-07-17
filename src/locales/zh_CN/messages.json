@@ -69,7 +69,7 @@
     "message": "点击查看"
   },
   "global_notificationTitle": {
-    "message": "欢迎"
+    "message": "来自Hypercrx开发者的消息"
   },
   "global_sendFeedback": {
     "message": "将您的问题反馈给我们。"
@@ -206,6 +206,9 @@
   "notification_message_newUpdate": {
     "message": "版本号: %v"
   },
+  "notification_token_setTokenSucceed": {
+    "message": "设置 GitHub token成功！"
+  },
   "options_token_title": {
     "message": "设置 Token"
   },
@@ -217,6 +220,9 @@
   },
   "options_token_btn_setToken": {
     "message": "设置 token"
+  },
+  "options_token_btn_setTokenOauth": {
+    "message": "使用 oauth"
   },
   "options_token_btn_rmToken": {
     "message": "移除 token"
