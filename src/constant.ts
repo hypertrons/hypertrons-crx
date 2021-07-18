@@ -7,7 +7,9 @@ export enum ErrorCode {
 // set up from https://github.com/settings/apps
 export const OAUTH_CLIENT_ID= 'Iv1.6b559ac8182ce0ce'
 
-export const OAUTH_REDIRECT_URI= 'http://hypercrx.19970301.xyz/oauth'
+export const OAUTH_CLIENT_SECRET= ''
+
+export const OAUTH_REDIRECT_URI= 'https://github.com'
 
 export const API_TARGET = 'https://hypertrons-oss.x-lab.info'
 

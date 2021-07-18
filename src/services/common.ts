@@ -40,3 +40,14 @@ export const checkIsTokenAvailabe= async (token:string)=>{
   const response = await fetch(`https://api.github.com/user`,{headers: { "Authorization":`token ${token}` }});
   return await response.json();
 }
+
+export const getToken= async (data:string)=>{
+  const response = await fetch(`https://github.com/login/oauth/access_token`,
+    {
+      headers: { "Content-Type":"application/json" },
+      body:data,
+      method:"POST"
+    }
+  );
+  return await response.text();
+}
