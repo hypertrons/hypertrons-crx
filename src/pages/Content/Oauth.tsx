@@ -2,7 +2,7 @@ import * as pageDetect from 'github-url-detection';
 import { runsWhen, getQueryVariable, chromeSet, getMessageByLocale } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
 import { inject2Perceptor } from './Perceptor';
-import { checkIsTokenAvailabe, getToken } from '../../services/common';
+import { checkIsTokenAvailable, getToken } from '../../services/common';
 import { loadMetaData } from '../../utils/metadata';
 import React, { useEffect, useState } from 'react';
 import { render } from 'react-dom';
@@ -76,7 +76,7 @@ class Oauth extends PerceptorBase {
         const match=token_result.match(/(?<=access_token=)(.{40})/)
         if (match) {
           const token = match[0];
-          const result=await checkIsTokenAvailabe(token);
+          const result=await checkIsTokenAvailable(token);
           if("id" in result){
             metaData.token = token;
             metaData.avatar = result["avatar_url"];

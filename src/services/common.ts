@@ -36,7 +36,7 @@ export const checkUpdate= async ()=>{
   return [currentVersion,latestVersion,updateUrl];
 }
 
-export const checkIsTokenAvailabe= async (token:string)=>{
+export const checkIsTokenAvailable= async (token:string)=>{
   const response = await fetch(`https://api.github.com/user`,{headers: { "Authorization":`token ${token}` }});
   return await response.json();
 }

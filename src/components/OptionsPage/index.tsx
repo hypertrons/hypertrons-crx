@@ -9,7 +9,7 @@ import {
 } from 'office-ui-fabric-react';
 import { initializeIcons } from '@uifabric/icons';
 import { getMessageByLocale, chromeSet, compareVersion } from '../../utils/utils';
-import { checkUpdate, checkIsTokenAvailabe } from '../../services/common';
+import { checkUpdate, checkIsTokenAvailable } from '../../services/common';
 import Settings, { loadSettings } from "../../utils/settings"
 import MetaData, { loadMetaData } from '../../utils/metadata';
 import { getNotificationInformation } from '../../services/background';
@@ -234,7 +234,7 @@ const OptionsPage: React.FC = () => {
               disabled={checkingToken}
               onClick={async () => {
                 setCheckingToken(true);
-                const result = await checkIsTokenAvailabe(token);
+                const result = await checkIsTokenAvailable(token);
                 setCheckingToken(false)
                 if ("id" in result) {
                   metaData.token = token;
