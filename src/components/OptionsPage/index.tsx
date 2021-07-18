@@ -3,8 +3,9 @@ import {
   TooltipHost, Stack,
   Toggle, DefaultButton, Checkbox, Text, Link,
   Spinner, MessageBar, MessageBarType,
+  IPersonaSharedProps, Persona, PersonaSize,
   Dialog, DialogType, TextField, ChoiceGroup, IChoiceGroupOption,
-  Image, ImageFit, DialogFooter, PrimaryButton
+  DialogFooter, PrimaryButton
 } from 'office-ui-fabric-react';
 import { initializeIcons } from '@uifabric/icons';
 import { getMessageByLocale, chromeSet, compareVersion } from '../../utils/utils';
@@ -61,6 +62,12 @@ const OptionsPage: React.FC = () => {
         text: '简体中文 (Simplified Chinese)'
       }
   ];
+
+  const persona: IPersonaSharedProps = {
+    imageUrl: metaData.avatar,
+    imageInitials: 'AL',
+    text: metaData.name
+  };
 
   useEffect(() => {
     const initMetaData = async () => {
@@ -460,27 +467,16 @@ const OptionsPage: React.FC = () => {
               metaDataToken !== "" &&
               <Stack
                 horizontal
+                horizontalAlign="start"
                 verticalAlign="center"
                 style={{
-                  margin: "5px", padding: "3px", width: "300px",
-                  boxShadow: "4px 4px 10px rgba(0, 0, 0, 0.2)",
-                }}
-                tokens={{
-                  childrenGap: 5
+                  margin: "5px", padding: "3px", width: "200px"
                 }}
               >
-                <Image
-                  width={75}
-                  height={75}
-                  src={metaData.avatar}
-                  imageFit={ImageFit.centerCover}
+                <Persona
+                  {...persona}
+                  size={PersonaSize.size48}
                 />
-                <Text
-                  variant="large"
-                  style={{ marginLeft: 25, maxWidth: 200, wordWrap: "break-word" }}
-                >
-                  {metaData.name}
-                </Text>
               </Stack>
             }
             {

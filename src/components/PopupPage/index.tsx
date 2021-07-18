@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import {
-  DefaultButton,
-  Image, ImageFit,
-  Stack, Text, Toggle,
+  DefaultButton, Stack,
+  Toggle,IPersonaSharedProps,
+  Persona, PersonaSize
 } from 'office-ui-fabric-react';
 import { initializeIcons } from '@uifabric/icons';
 import './index.css';
@@ -46,6 +46,12 @@ const PopupPage: React.FC = () => {
     return (<div/>);
   }
 
+  const persona: IPersonaSharedProps = {
+    imageUrl: metaData.avatar,
+    imageInitials: 'AL',
+    text: metaData.name
+  };
+
   return(
       <Stack horizontalAlign="center">
         <Stack
@@ -74,6 +80,7 @@ const PopupPage: React.FC = () => {
             metaData.token!==""&&
             <Stack
               horizontal
+              horizontalAlign="center"
               verticalAlign="center"
               style={{
                 margin: "5px", padding: "3px", width: "200px"
@@ -82,18 +89,10 @@ const PopupPage: React.FC = () => {
                 childrenGap: 5
               }}
             >
-              <Image
-                width={75}
-                height={75}
-                src={metaData.avatar}
-                imageFit={ImageFit.centerCover}
+              <Persona
+                {...persona}
+                size={PersonaSize.size48}
               />
-              <Text
-                variant="large"
-                style={{marginLeft:25,width:100,wordWrap:"break-word"}}
-              >
-                {metaData.name}
-              </Text>
             </Stack>
           }
           {
