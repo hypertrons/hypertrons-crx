@@ -143,6 +143,18 @@
   "component_activeDeveloperCollabrationNetwork_description_edge": {
     "message": "Edge: Collaborative relationship between developers, the value indicates the closeness of the connection between developers."
   },
+  "component_projectDimensionIndex_title": {
+    "message": "Project Dimension Index"
+  },
+  "component_projectDimensionIndex_description": {
+    "message": "Project Dimension Index shows how do these fields change comparing the last time."
+  },
+  "component_projectDimensionIndex_description_sub1": {
+    "message": ""
+  },
+  "component_projectDimensionIndex_description_sub2": {
+    "message": ""
+  },
   "component_darkMode": {
     "message": "Dark mode"
   },
