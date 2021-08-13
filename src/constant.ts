@@ -7,7 +7,7 @@ export enum ErrorCode {
 // set up from https://github.com/settings/apps
 export const OAUTH_CLIENT_ID= 'Iv1.6b559ac8182ce0ce'
 
-export const OAUTH_CLIENT_SECRET= ''
+export const OAUTH_CLIENT_SECRET= '079a1b3f1df68c83584f3a4bab514d7aa37706db'
 
 export const OAUTH_REDIRECT_URI= 'https://github.com'
 
