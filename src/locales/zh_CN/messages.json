@@ -8,6 +8,9 @@
   "golbal_loading": {
     "message": "载入中......"
   },
+  "golbal_link": {
+    "message": "链接"
+  },
   "global_error_message": {
     "message": "抱歉，Hypertrons-crx 插件加载时遇到了一点问题。错误代码为："
   },
@@ -140,6 +143,18 @@
   "component_activeDeveloperCollabrationNetwork_description_edge": {
     "message": "边：开发者与开发者之间的连接关系，值的大小表示开发者间联系的紧密程度。"
   },
+  "component_projectDimensionIndex_title": {
+    "message": "项目维度指标图"
+  },
+  "component_projectDimensionIndex_description": {
+    "message": "项目维度指标图展现了项目相对于上一周期各维度的变化。"
+  },
+  "component_projectDimensionIndex_description_sub1": {
+    "message": ""
+  },
+  "component_projectDimensionIndex_description_sub2": {
+    "message": ""
+  },
   "component_darkMode": {
     "message": "深色模式"
   },
@@ -244,5 +259,14 @@
   },
   "options_about_description_website": {
     "message": "欢迎访问我们的网站获取更多信息："
+  },
+  "hypertrons_tab_title": {
+    "message": "Hypertrons 指令"
+  },
+  "hypertrons_tab_description": {
+    "message": "可在此处使用hypertrons指令，详情请见:"
+  },
+  "hypertrons_tab_link": {
+    "message": "https://www.hypertrons.io/#/zh-cn/component/index"
   }
 }

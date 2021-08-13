@@ -4,6 +4,7 @@ import $ from 'jquery';
 import { utils } from 'github-url-detection';
 import { Stack, Dropdown, IDropdownStyles, IDropdownOption, Spinner } from 'office-ui-fabric-react';
 import Graph from '../../components/Graph/Graph';
+import Radar from '../../components/Graph/Radar'
 import { isPerceptor, runsWhen } from '../../utils/utils';
 import { getRepoCorrelation, getDevelopersByRepo } from '../../api/repo';
 import { getMessageByLocale } from '../../utils/utils';
@@ -11,6 +12,7 @@ import PerceptorBase from './PerceptorBase';
 import { inject2Perceptor } from './Perceptor';
 import Settings, { loadSettings } from '../../utils/settings';
 import ErrorPage from '../../components/ExceptionPage/ErrorPage';
+import { radarData } from "../../mock/radar.data"
 
 interface ProjectNetworkViewProps {
   currentRepo: string;
@@ -174,6 +176,29 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
                 <li>{getMessageByLocale('component_activeDeveloperCollabrationNetwork_description_node', settings.locale)}</li>
                 <li>{getMessageByLocale('component_activeDeveloperCollabrationNetwork_description_edge', settings.locale)}</li>
               </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="hypertrons-crx-border hypertrons-crx-container">
+        <Stack className="hypertrons-crx-title">
+          <span>{getMessageByLocale('component_projectDimensionIndex_title', settings.locale)}</span>
+        </Stack>
+        <div className="d-flex flex-wrap flex-items-center">
+          <div className="col-12 col-md-6">
+            <div style={{ margin: '10px 0 20px 20px' }}>
+              <Radar
+                data={radarData}
+              />
+            </div>
+          </div>
+          <div className="col-12 col-md-6">
+            <div className="color-text-secondary" style={{ marginLeft: '55px' }}>
+              <p>{getMessageByLocale('component_projectDimensionIndex_description', settings.locale)}</p>
+              {/*<ul style={{ margin: '0px 0 10px 15px' }}>*/}
+              {/*  <li>{getMessageByLocale('component_projectDimensionIndex_description_sub1', settings.locale)}</li>*/}
+              {/*  <li>{getMessageByLocale('component_projectDimensionIndex_description_sub2', settings.locale)}</li>*/}
+              {/*</ul>*/}
             </div>
           </div>
         </div>
