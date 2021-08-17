@@ -8,6 +8,9 @@
   "golbal_loading": {
     "message": "Loading……"
   },
+  "golbal_link": {
+    "message": "Link"
+  },
   "global_error_message": {
     "message": "Sorry，an error occurred while loading Hypertrons-crx extention. Error Code is: "
   },
@@ -244,5 +247,14 @@
   },
   "options_about_description_website": {
     "message": "Welcome to visit out website to get more infomation："
+  },
+  "hypertrons_tab_title": {
+    "message": "Hypertrons Commands"
+  },
+  "hypertrons_tab_description": {
+    "message": "You can use hypertrons commands here. See usage:"
+  },
+  "hypertrons_tab_link": {
+    "message": "https://www.hypertrons.io/#/component/index"
   }
 }

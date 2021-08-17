@@ -14,7 +14,7 @@ export const getConfigFromGithub = async (owner: string, repo: string) => {
     const response = await octokit.request('GET /repos/{owner}/{repo}/contents/.github/hypertrons.json', { owner, repo });
     const res = response.data as any;
     res.content = Buffer.from(res.content, 'base64').toString('ascii');
-    return JSON.parse(res.content)["hypertrons-crx"];
+    return JSON.parse(res.content);
   } catch (error: unknown) {
     return {};
   }

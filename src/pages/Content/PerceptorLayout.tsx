@@ -5,7 +5,7 @@ import { isPerceptor, runsWhen } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
 import { inject2Perceptor } from './Perceptor';
 
-const PerceptorLayoutView: React.FC<{}> = () => {
+const PerceptorLayoutView: React.FC = () => {
   return (
     <div />
   )
