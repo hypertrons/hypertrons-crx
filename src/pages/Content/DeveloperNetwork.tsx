@@ -38,6 +38,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
         const res = await getDeveloperCollabration(currentDeveloper);
         setDeveloperCollabrationData(res.data)
       } catch (e) {
+        // @ts-ignore
         setStatusCode(e);
       };
     }
@@ -51,6 +52,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
         const res = await getParticipatedProjects(currentDeveloper);
         setParticipatedProjectsData(res.data)
       } catch (e) {
+        // @ts-ignore
         setStatusCode(e);
       };
     }

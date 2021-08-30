@@ -32,6 +32,7 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
         const res = await getRepoCorrelation(currentRepo);
         setRepoCorrelationData(res.data)
       } catch (e) {
+        // @ts-ignore
         setStatusCode(e);
       };
     }
@@ -44,6 +45,7 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
         const res = await getDevelopersByRepo(currentRepo);
         setDevelopersByRepoData(res.data)
       } catch (e) {
+        // @ts-ignore
         setStatusCode(e);
       };
     }
