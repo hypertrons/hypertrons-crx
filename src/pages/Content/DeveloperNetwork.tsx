@@ -100,7 +100,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
     styles: {
       main: {
         color: 'var(--color-text-primary)',
-        backgroundColor: 'var(--color-bg-overlay)',
+        backgroundColor: 'var(--color-canvas-default)',
       },
       title: {
         padding: 0,
