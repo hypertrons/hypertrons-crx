@@ -8,7 +8,7 @@ We welcome users to install and try our Hypertrons Chrome Extension. If you have
 
 ### Chrome / Edge
 
-1. [Chrome] Visit [Chrome Web Store](https://chrome.google.com/webstore/detail/hypertrons-crx/jkgfcnkgfapbckbpgobmgiphpknkiljm)，and click **[Add to Chrome]**.
+1. [Chrome] Visit [Chrome Web Store](https://chrome.google.com/webstore/detail/hypertrons-crx/ijchfbpdgeljmhnhokmekkecpbdkgabc)，and click **[Add to Chrome]**.
 
 <img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-cws.png">
 

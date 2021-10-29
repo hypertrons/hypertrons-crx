@@ -8,11 +8,11 @@ Language : [US](./INSTALLATION.md) | zh-CN
 
 ## 从应用商店安装
 
-Hypertrons-crx 现已登陆 [Chrome 网上应用商店](https://chrome.google.com/webstore/detail/hypertrons-crx/jkgfcnkgfapbckbpgobmgiphpknkiljm)及[Edge 网上扩展商店](https://microsoftedge.microsoft.com/addons/Microsoft-Edge-Extensions-Home)。
+Hypertrons-crx 现已登陆 [Chrome 网上应用商店](https://chrome.google.com/webstore/detail/hypertrons-crx/ijchfbpdgeljmhnhokmekkecpbdkgabc)及[Edge 网上扩展商店](https://microsoftedge.microsoft.com/addons/Microsoft-Edge-Extensions-Home)。
 
 ### Chrome 浏览器 / Edge 浏览器
 
-1. [Choreme]点击 [此链接](https://chrome.google.com/webstore/detail/hypertrons-crx/jkgfcnkgfapbckbpgobmgiphpknkiljm?hl=zh-CN) 访问 “Hypertrons-crx” 扩展程序主页，点击 “添加至 Chrome” ，并确认。
+1. [Choreme]点击 [此链接](https://chrome.google.com/webstore/detail/hypertrons-crx/ijchfbpdgeljmhnhokmekkecpbdkgabc) 访问 “Hypertrons-crx” 扩展程序主页，点击 “添加至 Chrome” ，并确认。
 
 <img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-cws-zh-CN.png">
 
