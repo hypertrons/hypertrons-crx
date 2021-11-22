@@ -79,12 +79,12 @@
   },
   "global_error_message_404": {
     "message": {
-      "status": "Hmmm... error while getting data",
+      "status": "Data does not exist",
       "measure": {
-        "text": "Try:",
+        "text": "Possible causes:",
         "tips": [
-          "Refresh the page",
-          "Check the network"
+          "Recently cerated, has not been computed",
+          "No actions in selected period, nothing to be computed"
         ]
       }
     }
