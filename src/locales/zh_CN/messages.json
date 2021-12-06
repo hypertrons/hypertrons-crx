@@ -107,6 +107,18 @@
   "component_activity_definition_link": {
     "message": "http://oss.x-lab.info/github-insight-report-2020.pdf"
   },
+  "component_contributorsActivityEvolution_title": {
+    "message": "项目贡献者活跃度滚榜图"
+  },
+  "component_contributorsActivityEvolution_description_1": {
+    "message": "项目贡献者活跃度滚榜图展示了在给定的时间内，项目贡献者的活跃度变化情况，用于发掘项目中头部和贡献增长迅速的贡献者，并有助于项目社区关注贡献者的流失情况。当某一贡献者的活跃度长时间未更新，在一定程度上可以认为该贡献者已经流失。"
+  },
+  "component_contributorsActivityEvolution_description_2": {
+    "message": "每一种颜色对应一个贡献者，最左端显示贡献者的 GitHub ID，最右端显示贡献者的 GitHub 头像和活跃度。"
+  },
+  "component_contributorsActivityEvolution_description_3": {
+    "message": "贡献者：指在项目中有过 star、fork、issue，和 PR 活动的所有 GitHub 用户。"
+  },
   "component_projectCorrelationNetwork_title": {
     "message": "项目关系网络图"
   },
