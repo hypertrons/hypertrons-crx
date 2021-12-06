@@ -2,6 +2,7 @@ import './PerceptorTab';
 import './PerceptorLayout';
 import './DeveloperNetwork';
 import './ProjectNetwork';
+import './ContributorsActivityEvolution';
 import './Hypertrons';
 import './content.styles.css';
 import { Perceptor } from './Perceptor';

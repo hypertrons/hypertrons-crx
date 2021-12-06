@@ -107,6 +107,18 @@
   "component_activity_definition_link": {
     "message": "http://oss.x-lab.info/github-insight-report-2020-en.pdf"
   },
+  "component_contributorsActivityEvolution_title": {
+    "message": "Contributor Activity Rolling Chart"
+  },
+  "component_contributorsActivityEvolution_description_1": {
+    "message": "The contributor activity rolling chart shows how active a project's contributors have been over time, and is used to identify the top contributors and those whose contributions are growing rapidly. It also helps the community keep an eye on contributor attrition, which means, when a contributor's activity has not been updated for a long time, it is somewhat assumed that the contributor has been lost."
+  },
+  "component_contributorsActivityEvolution_description_2": {
+    "message": "Each color corresponds to a developer, with the developer's GitHub ID on the far left and the developer's GitHub avatar and activity on the far right."
+  },
+  "component_contributorsActivityEvolution_description_3": {
+    "message": "Contributors: All GitHub users who have star, fork, issue, and PR activity in the repository."
+  },
   "component_projectCorrelationNetwork_title": {
     "message": "Project Correlation Network"
   },
