@@ -90,8 +90,8 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
   }
 
   const graphStyle = {
-    width: '500px',
-    height: '380px'
+    width: 780,
+    height: 380
   }
 
   if (statusCode !== 200) {
@@ -125,7 +125,7 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
           </div>
         </Stack>
         <div className="d-flex flex-wrap flex-items-center">
-          <div className="col-12 col-md-6">
+          <div className="col-12 col-md-8">
             <div style={{ margin: '10px 0 20px 20px' }}>
               < Graph
                 graphType={graphType}
@@ -135,7 +135,7 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
               />
             </div>
           </div>
-          <div className="col-12 col-md-6">
+          <div className="col-12 col-md-4">
             <div className="color-text-secondary" style={{ marginLeft: '55px' }}>
               <p>{getMessageByLocale('component_projectCorrelationNetwork_description', settings.locale)}</p>
               <ul style={{ margin: '0px 0 10px 15px' }}>
@@ -160,7 +160,7 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
           </div>
         </Stack>
         <div className="d-flex flex-wrap flex-items-center">
-          <div className="col-12 col-md-6">
+          <div className="col-12 col-md-8">
             <div style={{ margin: '10px 0 20px 20px' }}>
               < Graph
                 graphType={graphType}
@@ -169,7 +169,7 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
               />
             </div>
           </div>
-          <div className="col-12 col-md-6">
+          <div className="col-12 col-md-4">
             <div className="color-text-secondary" style={{ marginLeft: '55px' }}>
               <p>{getMessageByLocale('component_activeDeveloperCollabrationNetwork_description', settings.locale)}</p>
               <ul style={{ margin: '0px 0 10px 15px' }}>
