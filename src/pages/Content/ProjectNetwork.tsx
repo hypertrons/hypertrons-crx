@@ -136,7 +136,7 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
             </div>
           </div>
           <div className="col-12 col-md-4">
-            <div className="color-text-secondary" style={{ marginLeft: '55px' }}>
+            <div className="color-text-secondary" style={{ marginLeft: '35px', marginRight: '35px' }}>
               <p>{getMessageByLocale('component_projectCorrelationNetwork_description', settings.locale)}</p>
               <ul style={{ margin: '0px 0 10px 15px' }}>
                 <li>{getMessageByLocale('component_projectCorrelationNetwork_description_node', settings.locale)}</li>
@@ -170,7 +170,7 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({ currentRepo, gr
             </div>
           </div>
           <div className="col-12 col-md-4">
-            <div className="color-text-secondary" style={{ marginLeft: '55px' }}>
+            <div className="color-text-secondary" style={{ marginLeft: '35px', marginRight: '35px' }}>
               <p>{getMessageByLocale('component_activeDeveloperCollabrationNetwork_description', settings.locale)}</p>
               <ul style={{ margin: '0px 0 10px 15px' }}>
                 <li>{getMessageByLocale('component_activeDeveloperCollabrationNetwork_description_node', settings.locale)}</li>
