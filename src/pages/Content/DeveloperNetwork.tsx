@@ -176,7 +176,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
                 </div>
               </Stack>
               <div className="d-flex flex-wrap flex-items-center">
-                <div className="col-12 col-md-6">
+                <div className="col-12 col-md-8">
                   <div style={{ margin: '10px 0 20px 20px' }}>
                     < Graph
                       graphType={graphType}
@@ -186,8 +186,8 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
                     />
                   </div>
                 </div>
-                <div className="col-12 col-md-6">
-                  <div className="color-text-secondary" style={{ marginLeft: '55px' }}>
+                <div className="col-12 col-md-4">
+                  <div className="color-text-secondary" style={{ marginLeft: '35px', marginRight: '35px' }}>
                     <p>{getMessageByLocale('component_developerCollabrationNetwork_description', settings.locale)}</p>
                     <ul style={{ margin: '0px 0 10px 15px' }}>
                       <li>{getMessageByLocale('component_developerCollabrationNetwork_description_node', settings.locale)}</li>
@@ -223,7 +223,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
                 </div>
               </Stack>
               <div className="d-flex flex-wrap flex-items-center">
-                <div className="col-12 col-md-6">
+                <div className="col-12 col-md-8">
                   <div style={{ margin: '10px 0 20px 20px' }}>
                     < Graph
                       graphType={graphType}
@@ -232,8 +232,8 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({ currentDeve
                     />
                   </div>
                 </div>
-                <div className="col-12 col-md-6">
-                  <div className="color-text-secondary" style={{ marginLeft: '55px' }}>
+                <div className="col-12 col-md-4">
+                  <div className="color-text-secondary" style={{ marginLeft: '35px', marginRight: '35px' }}>
                     <p>{getMessageByLocale('component_mostParticipatedProjects_description', settings.locale)}</p>
                     <ul style={{ margin: '0px 0 10px 15px' }}>
                       <li>{getMessageByLocale('component_mostParticipatedProjects_description_node', settings.locale)}</li>
