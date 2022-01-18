@@ -1,6 +1,6 @@
 {
   "chrome": {
-    "latest_version":"1.0.1",
+    "latest_version":"1.3.0",
     "url":"https://chrome.google.com/webstore/detail/hypertrons-crx/jkgfcnkgfapbckbpgobmgiphpknkiljm"
   },
   "edge": {
@@ -8,7 +8,7 @@
     "url":"https://microsoftedge.microsoft.com/addons/detail/hypertronscrx/lfdjlbagcbpjpdhlllcgglplcccnigip"
   },
   "develop": {
-    "latest_version":"1.0.1",
+    "latest_version":"1.3.0",
     "url":"https://github.com/hypertrons/hypertrons-crx/releases"
   }
 }

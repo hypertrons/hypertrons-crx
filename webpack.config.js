@@ -76,7 +76,7 @@ var options = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader','css-loader'],
+        use: ['style-loader', 'css-loader'],
         sideEffects: true,
       },
     ],
@@ -85,7 +85,7 @@ var options = {
     alias: alias,
     extensions: fileExtensions
       .map((extension) => '.' + extension)
-      .concat(['.jsx', '.js', '.ts','.tsx', '.css']),
+      .concat(['.jsx', '.js', '.ts', '.tsx', '.css']),
   },
   plugins: [
     new webpack.ProgressPlugin(),
@@ -109,7 +109,7 @@ var options = {
                 description: process.env.npm_package_description,
                 version: process.env.npm_package_version,
                 ...JSON.parse(content.toString()),
-                content_security_policy:content_security_policy
+                content_security_policy: content_security_policy,
               })
             );
           },
@@ -161,9 +161,12 @@ var options = {
       keyFile: 'build.pem',
       contentPath: 'build',
       outputPath: 'release',
-      name: 'hypertrons-crx'
-    })
+      name: 'hypercrx',
+    }),
   ],
+  node: {
+    fs: 'empty',
+  },
 };
 
 if (ENV.NODE_ENV === 'development') {

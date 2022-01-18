@@ -106,7 +106,7 @@ const ContributorsActivityEvolution: React.FC<ContributorsActivityEvolutionProps
             <div style={{ margin: '10px 0 20px 20px' }}>
               <Stack className="hypertrons-crx-border">
                 <Stack.Item align="center">
-            <DynamicBar theme={githubTheme} width={700} height={600} barNumber={20} digitNumber={2} duration={20} dateLabelSize={30} dataUrl={`${API_TARGET}/dynamicbar_activities_v2/latest/${currentRepo}.csv`}/>
+            <DynamicBar theme={githubTheme as 'light' | 'dark'} width={700} height={600} barNumber={20} digitNumber={2} duration={20} dateLabelSize={30} dataUrl={`${API_TARGET}/dynamicbar_activities_v2/latest/${currentRepo}.csv`}/>
                 </Stack.Item>
               </Stack>
             </div>
