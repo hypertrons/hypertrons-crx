@@ -2,8 +2,5 @@
   "extends": "react-app",
   "globals": {
     "chrome": "readonly"
-  },
-  "rules": {
-    "no-restricted-globals": 0
   }
 }
