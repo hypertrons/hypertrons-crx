@@ -45,7 +45,7 @@ let options = {
       'src',
       'pages',
       'ContentScripts',
-      'index.js'
+      'index.ts'
     ),
     devtools: path.join(__dirname, 'src', 'pages', 'Devtools', 'index.js'),
     panel: path.join(__dirname, 'src', 'pages', 'Panel', 'index.jsx'),
@@ -123,7 +123,11 @@ let options = {
     new CleanWebpackPlugin({ verbose: false }),
     new webpack.ProgressPlugin(),
     // expose and write the allowed env vars on the compiled bundle
-    new webpack.EnvironmentPlugin(['NODE_ENV']),
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: env.NODE_ENV,
+      PORT: env.PORT,
+      MOCK: env.MOCK
+    }),
     new CopyWebpackPlugin({
       patterns: [
         {
@@ -155,16 +159,7 @@ let options = {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: 'src/assets/img/icon-128.png',
-          to: path.join(__dirname, 'build'),
-          force: true,
-        },
-      ],
-    }),
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: 'src/assets/img/icon-34.png',
+          from: 'src/assets/img/main.png',
           to: path.join(__dirname, 'build'),
           force: true,
         },
@@ -204,6 +199,29 @@ let options = {
   infrastructureLogging: {
     level: 'info',
   },
+
+  resolve: {
+    extensions: ["*", ".js", ".jsx", ".ts", ".tsx"],
+    fallback: {
+      fs: false,
+      http: false,
+      https: false,
+      zlib: false,
+      stream: false,
+      url: false,
+      buffer: false,
+      util: false
+    },
+    alias: {
+      // d3-dsv csvParse require 'unsafe-eval' CSP, which refused by manifest v3
+      // so temporily alias this package to the modified pakage in src
+      "d3-dsv": path.resolve(__dirname, 'src/components/DynamicBar/d3-dsv-2.0.0')
+    }
+  },
+
+  node: {
+    global: true,
+  },
 };
 
 if (env.NODE_ENV === 'development') {
@@ -214,6 +232,12 @@ if (env.NODE_ENV === 'development') {
     minimizer: [
       new TerserPlugin({
         extractComments: false,
+        terserOptions: {
+          // avoid all constructor.name to be 't' after code compression in production mode,
+          // because the same constructor.name will lead to only one key in Features(a Map() obj),
+          // which then faild the inject2Perceptor step.
+          keep_fnames: true
+        }
       }),
     ],
   };

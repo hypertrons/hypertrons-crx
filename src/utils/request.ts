@@ -1,4 +1,4 @@
-const ENV:any = require('../../utils/env');
+const ENV = require('../../utils/env');
 import { ErrorCode, API_TARGET } from '../constant';
 
 /**

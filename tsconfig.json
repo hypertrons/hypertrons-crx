@@ -13,7 +13,9 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "noEmit": false,
-    "jsx": "react"
+    "jsx": "react",
+    "experimentalDecorators": true,
+    "downlevelIteration": true
   },
   "include": ["src"],
   "exclude": ["build", "node_modules"]
