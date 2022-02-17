@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Stack, MessageBar, Link, MessageBarType } from 'office-ui-fabric-react';
+import {
+  Stack,
+  MessageBar,
+  Link,
+  MessageBarType,
+} from 'office-ui-fabric-react';
 import { getMessageByLocale } from '../../utils/utils';
-import { ErrorCode, HYPERTRONS_CRX_NEW_ISSUE  } from '../../constant';
+import { ErrorCode, HYPERTRONS_CRX_NEW_ISSUE } from '../../constant';
 import Settings, { loadSettings } from '../../utils/settings';
 
 interface ErrorMessageBarProps {
@@ -11,7 +16,7 @@ interface ErrorMessageBarProps {
 
 const ErrorMessageBar: React.FC<ErrorMessageBarProps> = ({
   errorCode = ErrorCode.UNKNOWN,
-  url = HYPERTRONS_CRX_NEW_ISSUE 
+  url = HYPERTRONS_CRX_NEW_ISSUE,
 }) => {
   const [inited, setInited] = useState(false);
   const [settings, setSettings] = useState(new Settings());
@@ -21,29 +26,29 @@ const ErrorMessageBar: React.FC<ErrorMessageBarProps> = ({
       const temp = await loadSettings();
       setSettings(temp);
       setInited(true);
-    }
+    };
     if (!inited) {
       initSettings();
     }
   }, [inited, settings]);
 
   return (
-    <Stack >
+    <Stack>
       <Stack.Item align="center">
         <MessageBar
           messageBarType={MessageBarType.error}
           isMultiline={false}
           dismissButtonAriaLabel="Close"
         >
-          {getMessageByLocale("global_error_message", settings.locale)}{errorCode}.
+          {getMessageByLocale('global_error_message', settings.locale)}
+          {errorCode}.
           <Link href={url} target="_blank" underline>
-            {getMessageByLocale("global_clickToshow", settings.locale)} Issue.
+            {getMessageByLocale('global_clickToshow', settings.locale)} Issue.
           </Link>
         </MessageBar>
       </Stack.Item>
     </Stack>
-
-  )
-}
+  );
+};
 
 export default ErrorMessageBar;

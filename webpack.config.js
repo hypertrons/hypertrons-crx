@@ -126,7 +126,7 @@ let options = {
     new webpack.EnvironmentPlugin({
       NODE_ENV: env.NODE_ENV,
       PORT: env.PORT,
-      MOCK: env.MOCK
+      MOCK: env.MOCK,
     }),
     new CopyWebpackPlugin({
       patterns: [
@@ -201,7 +201,7 @@ let options = {
   },
 
   resolve: {
-    extensions: ["*", ".js", ".jsx", ".ts", ".tsx"],
+    extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
     fallback: {
       fs: false,
       http: false,
@@ -210,13 +210,16 @@ let options = {
       stream: false,
       url: false,
       buffer: false,
-      util: false
+      util: false,
     },
     alias: {
       // d3-dsv csvParse require 'unsafe-eval' CSP, which refused by manifest v3
       // so temporily alias this package to the modified pakage in src
-      "d3-dsv": path.resolve(__dirname, 'src/components/DynamicBar/d3-dsv-2.0.0')
-    }
+      'd3-dsv': path.resolve(
+        __dirname,
+        'src/components/DynamicBar/d3-dsv-2.0.0'
+      ),
+    },
   },
 
   node: {
@@ -236,8 +239,8 @@ if (env.NODE_ENV === 'development') {
           // avoid all constructor.name to be 't' after code compression in production mode,
           // because the same constructor.name will lead to only one key in Features(a Map() obj),
           // which then faild the inject2Perceptor step.
-          keep_fnames: true
-        }
+          keep_fnames: true,
+        },
       }),
     ],
   };

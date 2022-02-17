@@ -1,11 +1,14 @@
 import React, { useEffect, useContext, CSSProperties, useState } from 'react';
-import Graphin, { GraphinContext, Behaviors, IG6GraphEvent } from '@antv/graphin';
+import Graphin, {
+  GraphinContext,
+  Behaviors,
+  IG6GraphEvent,
+} from '@antv/graphin';
 import { Tooltip } from '@antv/graphin-components';
 import { INode as G6INode, NodeConfig } from '@antv/g6';
 import { Persona, PersonaSize } from '@fluentui/react/lib/Persona';
 import { getMessageByLocale } from '../../../utils/utils';
 import Settings, { loadSettings } from '../../../utils/settings';
-
 
 interface GraphinWrapperProps {
   /**
@@ -17,18 +20,18 @@ interface GraphinWrapperProps {
    */
   readonly layoutOption?: any;
   /**
- * `style` for container
- */
+   * `style` for container
+   */
   readonly style?: CSSProperties;
   /**
- * Graphin theme config
- */
-  readonly theme?: "dark" | "light";
+   * Graphin theme config
+   */
+  readonly theme?: 'dark' | 'light';
   /**
    * Callback function when click node
    */
   readonly onNodeClick: NodeClickFunc;
-};
+}
 
 const TooltipForNode = () => {
   const { tooltip } = useContext(GraphinContext);
@@ -44,18 +47,21 @@ const TooltipForNode = () => {
       const temp = await loadSettings();
       setSettings(temp);
       setInited(true);
-    }
+    };
     if (!inited) {
       initSettings();
     }
   }, [inited, settings]);
 
   return (
-    <div style={{ border: "1px solid", borderRadius: "6px" }}>
+    <div style={{ border: '1px solid', borderRadius: '6px' }}>
       <div style={{ margin: '5px' }}>
         <Persona
           text={model.id}
-          secondaryText={`${getMessageByLocale("global_activity", settings.locale)}: ${model.value.toString()}`}
+          secondaryText={`${getMessageByLocale(
+            'global_activity',
+            settings.locale
+          )}: ${model.value.toString()}`}
           size={PersonaSize.size24}
           showSecondaryText={true}
         />
@@ -70,7 +76,7 @@ const TooltipForEdge = () => {
   const { item } = context;
   const model = item && item.getModel();
   return (
-    <div style={{ border: "1px solid", borderRadius: "6px" }}>
+    <div style={{ border: '1px solid', borderRadius: '6px' }}>
       <div style={{ margin: '5px' }}>
         {`${model.source} > ${model.target} `}
         <strong>{model.value}</strong>
@@ -82,8 +88,8 @@ const TooltipForEdge = () => {
 const { ActivateRelations } = Behaviors;
 
 type HandleClickNodeProps = {
-  callback: NodeClickFunc
-}
+  callback: NodeClickFunc;
+};
 const HandleClickNode: React.FC<HandleClickNodeProps> = ({ callback }) => {
   const { graph } = useContext(GraphinContext);
   useEffect(() => {
@@ -93,7 +99,7 @@ const HandleClickNode: React.FC<HandleClickNodeProps> = ({ callback }) => {
       const model = node.getModel() as NodeConfig;
       // callback
       callback(model as any);
-    }
+    };
     graph.on('node:click', handleClick);
     return () => {
       graph.off('node:click', handleClick);
@@ -110,27 +116,30 @@ const GraphinWrapper: React.FC<GraphinWrapperProps> = ({
   },
   theme = 'light',
   style,
-  onNodeClick
+  onNodeClick,
 }) => {
   return (
     <div style={{ overflow: 'hidden', ...style }}>
-      <Graphin
-        data={data}
-        theme={{ mode: theme }}
-        layout={layoutOption}
-      >
-        <Tooltip bindType="node" placement="right" style={{ width: 'fit-content' }}>
+      <Graphin data={data} theme={{ mode: theme }} layout={layoutOption}>
+        <Tooltip
+          bindType="node"
+          placement="right"
+          style={{ width: 'fit-content' }}
+        >
           <TooltipForNode />
         </Tooltip>
-        <Tooltip bindType="edge" placement="right" style={{ width: 'fit-content' }}>
+        <Tooltip
+          bindType="edge"
+          placement="right"
+          style={{ width: 'fit-content' }}
+        >
           <TooltipForEdge />
         </Tooltip>
         <ActivateRelations activeState={'none'} />
         <HandleClickNode callback={onNodeClick} />
       </Graphin>
     </div>
-
   );
-}
+};
 
 export default GraphinWrapper;

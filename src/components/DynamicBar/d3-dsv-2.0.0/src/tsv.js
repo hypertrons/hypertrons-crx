@@ -1,6 +1,6 @@
-import dsv from "./dsv.js";
+import dsv from './dsv.js';
 
-var tsv = dsv("\t");
+var tsv = dsv('\t');
 
 export var tsvParse = tsv.parse;
 export var tsvParseRows = tsv.parseRows;

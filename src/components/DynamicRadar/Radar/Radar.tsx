@@ -94,7 +94,7 @@ const Radar: React.FC<RadarProps> = (props) => {
   useEffect(() => {
     let chartDOM = divEL.current;
     const instance = echarts.getInstanceByDom(chartDOM as any);
-    if(instance){
+    if (instance) {
       instance.setOption(option);
     }
   }, [indicators, values]);

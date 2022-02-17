@@ -36,9 +36,7 @@
     "cookies",
     "management"
   ],
-  "host_permissions": [
-    "*://github.com/*"
-  ],
+  "host_permissions": ["*://github.com/*"],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
   }

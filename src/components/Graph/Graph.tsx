@@ -1,8 +1,14 @@
 import React, { useState, CSSProperties, useEffect } from 'react';
 import EChartsWrapper from './Echarts/index';
-import GraphinWrapper from './Graphin/index'
+import GraphinWrapper from './Graphin/index';
 import { Stack, SwatchColorPicker, Link } from 'office-ui-fabric-react';
-import { getGithubTheme, isNull, getMinMax, linearMap, getMessageByLocale } from '../../utils/utils';
+import {
+  getGithubTheme,
+  isNull,
+  getMinMax,
+  linearMap,
+  getMessageByLocale,
+} from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
 
 const GITHUB_THEME = getGithubTheme();
@@ -41,9 +47,13 @@ const Graph: React.FC<GraphProps> = ({
   focusedNodeID,
 }) => {
   const NODE_SIZE = [10, 30];
-  const NODE_COLOR = GITHUB_THEME === 'light' ? ['#9EB9A8', '#40C463', '#30A14E', '#216E39'] : ['#0E4429', '#006D32', '#26A641', '#39D353'];
+  const NODE_COLOR =
+    GITHUB_THEME === 'light'
+      ? ['#9EB9A8', '#40C463', '#30A14E', '#216E39']
+      : ['#0E4429', '#006D32', '#26A641', '#39D353'];
   const THRESHOLD = [10, 100, 1000];
-  const FOCUSED_NODE_COLOR = GITHUB_THEME === 'light' ? ['#D73A49'] : ['#DA3633'];
+  const FOCUSED_NODE_COLOR =
+    GITHUB_THEME === 'light' ? ['#D73A49'] : ['#DA3633'];
 
   const [inited, setInited] = useState(false);
   const [settings, setSettings] = useState(new Settings());
@@ -53,7 +63,7 @@ const Graph: React.FC<GraphProps> = ({
       const temp = await loadSettings();
       setSettings(temp);
       setInited(true);
-    }
+    };
     if (!inited) {
       initSettings();
     }
@@ -68,7 +78,7 @@ const Graph: React.FC<GraphProps> = ({
       }
     }
     return NODE_COLOR[i];
-  }
+  };
   const generateEchartsData = (data: any): any => {
     const generateNodes = (nodes: any[]): any => {
       const minMax = getMinMax(nodes);
@@ -79,31 +89,37 @@ const Graph: React.FC<GraphProps> = ({
           value: n.value,
           symbolSize: linearMap(n.value, minMax, NODE_SIZE),
           itemStyle: {
-            color: focusedNodeID && focusedNodeID === n.name ? FOCUSED_NODE_COLOR : getColorMap(n.value)
-          }
-        }
-      })
-    }
+            color:
+              focusedNodeID && focusedNodeID === n.name
+                ? FOCUSED_NODE_COLOR
+                : getColorMap(n.value),
+          },
+        };
+      });
+    };
     const generateEdges = (edges: any[]): any => {
       return edges.map((e: any) => {
         return {
           source: e.source,
           target: e.target,
-          value: e.weight
-        }
-      })
-    }
+          value: e.weight,
+        };
+      });
+    };
     return {
       nodes: generateNodes(data.nodes),
-      edges: generateEdges(data.edges)
-    }
-  }
+      edges: generateEdges(data.edges),
+    };
+  };
 
   const generateGraphinData = (data: any): any => {
     const generateNodes = (nodes: any[]): any => {
       const minMax = getMinMax(nodes);
       return nodes.map((n: any) => {
-        const color = focusedNodeID && focusedNodeID === n.name ? FOCUSED_NODE_COLOR : getColorMap(n.value);
+        const color =
+          focusedNodeID && focusedNodeID === n.name
+            ? FOCUSED_NODE_COLOR
+            : getColorMap(n.value);
         return {
           id: n.name,
           value: n.value,
@@ -114,10 +130,10 @@ const Graph: React.FC<GraphProps> = ({
               fill: color,
               fillOpacity: 1,
             },
-          }
-        }
-      })
-    }
+          },
+        };
+      });
+    };
     const generateEdges = (edges: any[]): any => {
       return edges.map((e: any) => {
         return {
@@ -132,14 +148,14 @@ const Graph: React.FC<GraphProps> = ({
               },
             },
           },
-        }
-      })
-    }
+        };
+      });
+    };
     return {
       nodes: generateNodes(data.nodes),
-      edges: generateEdges(data.edges)
-    }
-  }
+      edges: generateEdges(data.edges),
+    };
+  };
 
   let graphData: any;
   let graphOption: any;
@@ -159,7 +175,7 @@ const Graph: React.FC<GraphProps> = ({
             // Enable mouse zooming and translating
             roam: true,
             label: {
-              position: 'right'
+              position: 'right',
             },
             force: {
               repulsion: 50,
@@ -169,17 +185,17 @@ const Graph: React.FC<GraphProps> = ({
             },
             lineStyle: {
               curveness: 0.3,
-              opacity: 0.7
+              opacity: 0.7,
             },
             emphasis: {
               focus: 'adjacency',
               label: {
                 position: 'right',
-                show: true
-              }
+                show: true,
+              },
             },
-          }
-        ]
+          },
+        ],
       };
       break;
     case 'antv':
@@ -191,64 +207,75 @@ const Graph: React.FC<GraphProps> = ({
 
   const colorCellsExample1 = [
     { id: 'L0', label: `< ${THRESHOLD[0]}`, color: NODE_COLOR[0] },
-    { id: 'L1', label: `${THRESHOLD[0]} - ${THRESHOLD[1]}`, color: NODE_COLOR[1] },
-    { id: 'L2', label: `${THRESHOLD[1]} - ${THRESHOLD[2]}`, color: NODE_COLOR[2] },
+    {
+      id: 'L1',
+      label: `${THRESHOLD[0]} - ${THRESHOLD[1]}`,
+      color: NODE_COLOR[1],
+    },
+    {
+      id: 'L2',
+      label: `${THRESHOLD[1]} - ${THRESHOLD[2]}`,
+      color: NODE_COLOR[2],
+    },
     { id: 'L3', label: `> ${THRESHOLD[2]}`, color: NODE_COLOR[3] },
   ];
 
   if (isNull(data)) {
-    return (<div />)
+    return <div />;
   }
   return (
     <Stack>
-      <Stack className='hypertrons-crx-border'>
-        {
-          graphType === 'echarts' &&
+      <Stack className="hypertrons-crx-border">
+        {graphType === 'echarts' && (
           <EChartsWrapper
             option={graphOption}
             style={style}
             onEvents={{
-              'click': onNodeClick,
+              click: onNodeClick,
             }}
           />
-        }
-        {
-          graphType === 'antv' &&
+        )}
+        {graphType === 'antv' && (
           <GraphinWrapper
             data={graphData}
             style={style}
             onNodeClick={onNodeClick}
           />
-        }
+        )}
       </Stack>
       <Stack
         horizontal
         horizontalAlign="space-between"
-        style={{ padding: "3px" }}
+        style={{ padding: '3px' }}
         tokens={{
-          childrenGap: 10
+          childrenGap: 10,
         }}
-      ><Link href={getMessageByLocale("component_activity_definition_link", settings.locale)} target="_blank">
-          {getMessageByLocale("component_activity_definition", settings.locale)}
-        </Link>
-        <Stack
-          horizontal
-          horizontalAlign="space-between"
+      >
+        <Link
+          href={getMessageByLocale(
+            'component_activity_definition_link',
+            settings.locale
+          )}
+          target="_blank"
         >
+          {getMessageByLocale('component_activity_definition', settings.locale)}
+        </Link>
+        <Stack horizontal horizontalAlign="space-between">
           <span>Less</span>
-          <div style={{ marginTop: "-12px", maxWidth: '80px' }}>
+          <div style={{ marginTop: '-12px', maxWidth: '80px' }}>
             <SwatchColorPicker
               columnCount={4}
               cellShape={'square'}
               cellHeight={10}
               cellWidth={10}
-              colorCells={colorCellsExample1} />
+              colorCells={colorCellsExample1}
+            />
           </div>
           <span>More</span>
         </Stack>
       </Stack>
     </Stack>
-  )
+  );
 };
 
 export default Graph;
