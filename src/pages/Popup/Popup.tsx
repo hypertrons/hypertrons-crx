@@ -8,7 +8,7 @@ import {
   Toggle,
 } from 'office-ui-fabric-react';
 import { initializeIcons } from '@uifabric/icons';
-import './index.css';
+import './Popup.css';
 import Settings, { loadSettings } from '../../utils/settings';
 import MetaData, { loadMetaData } from '../../utils/metadata';
 import { chromeSet, getMessageByLocale } from '../../utils/utils';

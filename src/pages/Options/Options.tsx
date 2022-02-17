@@ -31,7 +31,7 @@ import Settings, { loadSettings } from '../../utils/settings';
 import MetaData, { loadMetaData } from '../../utils/metadata';
 import { getNotificationInformation } from '../../services/background';
 import { HYPERTRONS_CRX_WEBSITE } from '../../constant';
-import './index.css';
+import './Options.css';
 
 initializeIcons();
 
