@@ -20,7 +20,6 @@ import {
   DialogFooter,
   PrimaryButton,
 } from 'office-ui-fabric-react';
-import { initializeIcons } from '@uifabric/icons';
 import {
   getMessageByLocale,
   chromeSet,
@@ -32,8 +31,6 @@ import MetaData, { loadMetaData } from '../../utils/metadata';
 import { getNotificationInformation } from '../../services/background';
 import { HYPERTRONS_CRX_WEBSITE } from '../../constant';
 import './Options.css';
-
-initializeIcons();
 
 export enum UpdateStatus {
   undefine = -1,

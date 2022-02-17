@@ -7,12 +7,9 @@ import {
   IStackTokens,
   Link,
 } from 'office-ui-fabric-react';
-import { initializeIcons } from '@uifabric/icons';
 import { getMessageByLocale } from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
 import { HYPERTRONS_CRX_NEW_ISSUE } from '../../constant';
-
-initializeIcons();
 
 const navigateBackIcon: IIconProps = { iconName: 'NavigateBack' };
 const stackTokens: IStackTokens = { childrenGap: 20 };

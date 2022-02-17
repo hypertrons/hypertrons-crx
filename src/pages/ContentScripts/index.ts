@@ -1,3 +1,7 @@
+// initializeIcons() should only be called once per app and must be called before rendering any components.
+import { initializeIcons } from '@fluentui/react/lib/Icons';
+initializeIcons();
+
 import './PerceptorTab';
 import './PerceptorLayout';
 import './DeveloperNetwork';

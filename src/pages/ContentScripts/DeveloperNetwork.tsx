@@ -10,7 +10,6 @@ import {
   IDropdownOption,
   ActionButton,
 } from 'office-ui-fabric-react';
-import { initializeIcons } from '@uifabric/icons';
 import {
   getDeveloperCollabration,
   getParticipatedProjects,
@@ -22,8 +21,6 @@ import Settings, { loadSettings } from '../../utils/settings';
 import Graph from '../../components/Graph/Graph';
 import TeachingBubbleWrapper from './TeachingBubbleWrapper';
 import ErrorPage from '../../components/ExceptionPage/ErrorPage';
-
-initializeIcons();
 
 interface DeveloperNetworkViewProps {
   currentDeveloper: string;

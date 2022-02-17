@@ -7,13 +7,10 @@ import {
   Text,
   Toggle,
 } from 'office-ui-fabric-react';
-import { initializeIcons } from '@uifabric/icons';
 import './Popup.css';
 import Settings, { loadSettings } from '../../utils/settings';
 import MetaData, { loadMetaData } from '../../utils/metadata';
 import { chromeSet, getMessageByLocale } from '../../utils/utils';
-
-initializeIcons();
 
 const Popup: React.FC = () => {
   const [settings, setSettings] = useState(new Settings());

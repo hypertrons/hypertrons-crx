@@ -8,7 +8,6 @@ import {
   Stack,
   Link,
   Text,
-  initializeIcons,
   mergeStyleSets,
   FontWeights,
   DirectionalHint,
@@ -27,8 +26,6 @@ import { inject2Perceptor } from './Perceptor';
 import logger from '../../utils/logger';
 import Settings, { loadSettings } from '../../utils/settings';
 import { getConfigFromGithub } from '../../api/github';
-
-initializeIcons();
 
 const styles = mergeStyleSets({
   callout: {
