@@ -8,9 +8,6 @@
     "default_popup": "popup.html",
     "default_icon": "main.png"
   },
-  "chrome_url_overrides": {
-    "newtab": "newtab.html"
-  },
   "icons": {
     "128": "main.png"
   },
@@ -22,7 +19,6 @@
       "run_at": "document_end"
     }
   ],
-  "devtools_page": "devtools.html",
   "web_accessible_resources": [
     {
       "resources": ["content.styles.css", "main.png"],
