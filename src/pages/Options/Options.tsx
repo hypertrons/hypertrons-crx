@@ -374,7 +374,7 @@ const Options: React.FC = () => {
             <ChoiceGroup
               defaultSelectedKey={settings.locale}
               options={localeOptions}
-              onChanged={async (option) => {
+              onChange={async (e, option: any) => {
                 settings.locale = option.key;
                 await saveSettings(settings);
               }}
@@ -455,7 +455,7 @@ const Options: React.FC = () => {
             <ChoiceGroup
               defaultSelectedKey={settings.graphType}
               options={graphOptions}
-              onChanged={async (option) => {
+              onChange={async (e, option: any) => {
                 settings.graphType = option.key as GraphType;
                 await saveSettings(settings);
               }}
