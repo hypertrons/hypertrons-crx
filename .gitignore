@@ -8,6 +8,7 @@
 
 # production
 /build
+/release
 
 # misc
 .DS_Store
@@ -17,6 +18,7 @@
 .env.production.local
 .history
 .vscode
+package-lock.json
 
 # secrets
 secrets.*.js
