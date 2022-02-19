@@ -18,6 +18,7 @@ export const getConfigFromGithub = async (owner: string, repo: string) => {
     res.content = Buffer.from(res.content, 'base64').toString('ascii');
     return JSON.parse(res.content);
   } catch (error: unknown) {
+    console.error(error);
     return {};
   }
 };
