@@ -65,30 +65,39 @@ For more information please refer to [Installation Guide](./INSTALLATION.md).
 
 ## Contributing
 
+Please read [CONTRIBUTING](./CONTRIBUTING.md) if you are new here or not familiar with the basic rules of Git/GitHub world.
+
 ### Quickstart
 
-```bash
-git clone https://github.com/hypertrons/hypertrons-crx
-cd hypertrons-crx
-npm install
-npm run watch
-npm run web-ext
-```
+1. git clone https://github.com/hypertrons/hypertrons-crx
 
-[web-ext](https://github.com/mozilla/web-ext) would open `Chrome` and load `Hypertrons-crx` into the browser automatically. And the default configuration of `web-ext` can be found in [package.json](https://github.com/hypertrons/hypertrons-crx/blob/master/package.json):
+2. cd hypertrons-crx
 
-```json
-{
-  "webExt": {
-    "sourceDir": "distribution",
-    "run": {
-      "keepProfileChanges": true,
-      "chromiumProfile": "./test/web-ext-profile",
-      "startUrl": ["https://github.com/hypertrons/hypertrons-crx"]
-    }
-  }
-}
-```
+3. yarn install
+
+4. yarn run start
+
+5. Load the freshly built unpacked extension on Chrome following:
+
+   1. Access chrome://extensions/
+
+   2. Check "Developer mode"
+
+   3. Click on "Load unpacked extension"
+
+   4. Select the "build" folder under the project root directory
+
+   5. Keep "service worker" DevTools page open ([why?]())
+
+      ![](./assets/keep-service-worker-devtools-open.jpeg)
+
+6. Happy hacking!
+
+### HMR & auto-reload
+
+If you are developing Options page or Popup page, each time you save files the pages will hot replace the modules without refreshing, which means you can see the changes right away.
+
+However, if you are developing Background or ContentScripts, each time you save files the service worker will reload the extension automatically. And if you are developing ContentScripts, then pages that injected with ContentScripts will refresh themselves to run the newest scripts.
 
 ### Q&A
 

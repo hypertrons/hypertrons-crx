@@ -59,7 +59,7 @@ Hypertrons 浏览器插件项目旨在通过直接往 GitHub 页面中插入各�
 
 ## 安装与使用 📢
 
-[link-chrome]: https://chrome.google.com/webstore/detail/hypertrons-crx/jkgfcnkgfapbckbpgobmgiphpknkiljm 'Version published on Chrome Web Store'
+[link-chrome]: https://chrome.google.com/webstore/detail/hypertrons-crx/jkgfcnkgfapbckbpgobmgiphpknkiljm "Version published on Chrome Web Store"
 
 [<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/chrome/chrome.svg" width="48" alt="Chrome" valign="middle">][link-chrome] [<img valign="middle" src="https://img.shields.io/chrome-web-store/v/jkgfcnkgfapbckbpgobmgiphpknkiljm.svg?label=%20">][link-chrome] also compatible with [<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/edge/edge.svg" width="24" alt="Edge" valign="middle">][link-chrome] [<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/opera/opera.svg" width="24" alt="Opera" valign="middle">][link-chrome]
 
@@ -67,30 +67,39 @@ Hypertrons 浏览器插件项目旨在通过直接往 GitHub 页面中插入各�
 
 ## 参与贡献
 
+如果你初来乍到或对 Git/GitHub 的基本操作不熟悉，请阅读[CONTRIBUTING](./CONTRIBUTING.md)。
+
 ### 快速开始
 
-```bash
-git clone git@github.com:hypertrons/hypertrons-crx.git
-cd hypertrons-crx
-npm install
-npm run watch
-npm run web-ext
-```
+1. git clone https://github.com/hypertrons/hypertrons-crx
 
-[web-ext](https://github.com/mozilla/web-ext) 将会自动打开 `Chrome` 浏览器并加载 `Hypertrons-crx`. `web-ext` 的配置请参考 [package.json](https://github.com/hypertrons/hypertrons-crx/blob/master/package.json):
+2. cd hypertrons-crx
 
-```json
-{
-  "webExt": {
-    "sourceDir": "distribution",
-    "run": {
-      "keepProfileChanges": true,
-      "chromiumProfile": "./test/web-ext-profile",
-      "startUrl": ["https://github.com/hypertrons/hypertrons-crx"]
-    }
-  }
-}
-```
+3. yarn install
+
+4. yarn run start
+
+5. 在 chrome 中加载新鲜出炉的插件:
+
+   1. 在浏览器地址栏访问 chrome://extensions/
+
+   2. 勾选“开发者模式”
+
+   3. 点击“加载已解压的扩展程序”
+
+   4. 选择项目根目录下的“build”目录
+
+   5. 保持“Service Worker”的 DevTools 页面为打开状态 ([why?]())
+
+      ![](./assets/keep-service-worker-devtools-open.jpeg)
+
+6. Happy hacking!
+
+### HMR & auto-reload
+
+如果你开发的是 Options 页面或 Popup 页面，每次保存文件都可以让页面进行热模块替换而不需要刷新页面，这意味着你能立马看到改动后的效果。
+
+但是，如果你开发的是 Background 或 ContentScripts，每次保存文件后，service worker 会自动重新加载插件。除此之外，若你开发的是 ContentScripts，那么那些被注入 ContentScripts 的页面还会自动刷新从而运行最新的 ContentScripts。
 
 ### 问题交流
 
