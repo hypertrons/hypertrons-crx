@@ -89,7 +89,7 @@ Hypertrons 浏览器插件项目旨在通过直接往 GitHub 页面中插入各�
 
    4. 选择项目根目录下的“build”目录
 
-   5. 保持“Service Worker”的 DevTools 页面为打开状态 ([why?]())
+   5. 保持“Service Worker”的 DevTools 页面为打开状态 ([why?](https://github.com/hypertrons/hypertrons-crx/pull/274#discussion_r811878203))
 
       ![](./assets/keep-service-worker-devtools-open.jpeg)
 
