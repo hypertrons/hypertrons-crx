@@ -1,5 +1,4 @@
-
-import ENV from '../../utils/env';
+const ENV = require('../../utils/env');
 import { ErrorCode, API_TARGET } from '../constant';
 
 /**
@@ -10,15 +9,15 @@ const request = async (path: string) => {
   const url = new URL(path, API_TARGET);
   const response = await fetch(url.href);
   if (!response.ok) {
-    throw ErrorCode.NOT_FOUND
+    throw ErrorCode.NOT_FOUND;
   }
   const data = await response.json();
   return {
     status: response.status,
     statusText: response.statusText,
-    data
+    data,
   };
-}
+};
 
 export const mockSuccessRes = (data: any) => {
   if (!ENV.MOCK) {
@@ -29,6 +28,6 @@ export const mockSuccessRes = (data: any) => {
     statusText: 'ok',
     data: data,
   };
-}
+};
 
 export default request;

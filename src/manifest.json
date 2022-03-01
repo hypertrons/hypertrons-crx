@@ -1,34 +1,38 @@
 {
+  "manifest_version": 3,
   "name": "Hypercrx",
   "options_page": "options.html",
-  "icons": {
-    "128": "main.png"
-  },
-  "background": {
-    "scripts": ["background.bundle.js"],
-    "persistent": true
-  },
-  "browser_action": {
+  "background": { "service_worker": "background.bundle.js" },
+  "action": {
     "default_popup": "popup.html",
     "default_icon": "main.png"
   },
-  "content_scripts": [{
-    "matches": ["*://github.com/*"],
-    "js": ["contentScript.bundle.js"],
-    "css": ["content.styles.css"],
-    "run_at":"document_end"
-  }],
+  "icons": {
+    "128": "main.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://github.com/*"],
+      "js": ["contentScript.bundle.js"],
+      "css": ["content.styles.css"],
+      "run_at": "document_end"
+    }
+  ],
   "web_accessible_resources": [
-    "content.styles.css",
-    "main.png"
+    {
+      "resources": ["content.styles.css", "main.png"],
+      "matches": []
+    }
   ],
   "permissions": [
-    "*://github.com/*",
     "storage",
     "notifications",
     "alarms",
-    "cookies"
+    "cookies",
+    "management"
   ],
-  "manifest_version": 2,
-  "content_security_policy": "script-src 'self'; object-src 'self'"
+  "host_permissions": ["*://github.com/*"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
 }

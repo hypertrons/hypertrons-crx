@@ -12,8 +12,11 @@ const logger = {
   },
   error: (code?: number, message?: any, ...optionalParams: any[]): void => {
     console.error(
-      '❌ Error From Hypertrons-crx. Code: ', code,
-      ' Message: ', message, ...optionalParams
+      '❌ Error From Hypertrons-crx. Code: ',
+      code,
+      ' Message: ',
+      message,
+      ...optionalParams
     );
     if (elementExists($('#hypertrons-crx-error-message'))) {
       return;
@@ -24,12 +27,9 @@ const logger = {
     const errorContainer = document.createElement('div');
     errorContainer.setAttribute('id', 'hypertrons-crx-error-message');
 
-    render(
-      <ErrorMessageBar />,
-      errorContainer,
-    );
+    render(<ErrorMessageBar />, errorContainer);
     root.prepend(errorContainer);
-  }
+  },
 };
 
 export default logger;

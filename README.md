@@ -12,7 +12,7 @@ Language : US | [zh-CN](./README.zh-CN.md)
 
 ## Dashboards 🔥🔥🔥
 
-You can find these dashboards in: 
+You can find these dashboards in:
 
 <table>
 	<tr>
@@ -57,7 +57,7 @@ You can find these dashboards in:
 
 ## Install
 
-[link-chrome]: https://chrome.google.com/webstore/detail/hypertrons-crx/jkgfcnkgfapbckbpgobmgiphpknkiljm 'Version published on Chrome Web Store'
+[link-chrome]: https://chrome.google.com/webstore/detail/hypertrons-crx/jkgfcnkgfapbckbpgobmgiphpknkiljm "Version published on Chrome Web Store"
 
 [<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/chrome/chrome.svg" width="48" alt="Chrome" valign="middle">][link-chrome] [<img valign="middle" src="https://img.shields.io/chrome-web-store/v/jkgfcnkgfapbckbpgobmgiphpknkiljm.svg?label=%20">][link-chrome] also compatible with [<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/edge/edge.svg" width="24" alt="Edge" valign="middle">][link-chrome] [<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/opera/opera.svg" width="24" alt="Opera" valign="middle">][link-chrome]
 
@@ -65,30 +65,39 @@ For more information please refer to [Installation Guide](./INSTALLATION.md).
 
 ## Contributing
 
+Please read [CONTRIBUTING](./CONTRIBUTING.md) if you are new here or not familiar with the basic rules of Git/GitHub world.
+
 ### Quickstart
 
-```bash
-git clone https://github.com/hypertrons/hypertrons-crx
-cd hypertrons-crx
-npm install
-npm run watch
-npm run web-ext
-```
+1. git clone https://github.com/hypertrons/hypertrons-crx
 
-[web-ext](https://github.com/mozilla/web-ext) would open `Chrome` and load `Hypertrons-crx` into the browser automatically. And the default configuration of `web-ext` can be found in [package.json](https://github.com/hypertrons/hypertrons-crx/blob/master/package.json):
+2. cd hypertrons-crx
 
-```json
-{
-  "webExt": {
-    "sourceDir": "distribution",
-    "run": {
-      "keepProfileChanges": true,
-      "chromiumProfile": "./test/web-ext-profile",
-      "startUrl": ["https://github.com/hypertrons/hypertrons-crx"]
-    }
-  }
-}
-```
+3. yarn install
+
+4. yarn run start
+
+5. Load the freshly built unpacked extension on Chrome following:
+
+   1. Access chrome://extensions/
+
+   2. Check "Developer mode"
+
+   3. Click on "Load unpacked extension"
+
+   4. Select the "build" folder under the project root directory
+
+   5. Keep "service worker" DevTools page open ([why?](https://github.com/hypertrons/hypertrons-crx/pull/274#discussion_r811878203))
+
+      ![](./assets/keep-service-worker-devtools-open.jpeg)
+
+6. Happy hacking!
+
+### HMR & auto-reload
+
+If you are developing Options page or Popup page, each time you save files the pages will hot replace the modules without refreshing, which means you can see the changes right away.
+
+However, if you are developing Background or ContentScripts, each time you save files the service worker will reload the extension automatically. And if you are developing ContentScripts, then pages that injected with ContentScripts will refresh themselves to run the newest scripts.
 
 ### Q&A
 

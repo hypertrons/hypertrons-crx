@@ -1,7 +1,5 @@
 import React from 'react';
-import { initializeIcons, IconButton } from '@fluentui/react';
-
-initializeIcons();
+import { IconButton } from '@fluentui/react';
 
 interface PlayButtonProps {
   hide: boolean;

@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
 import { utils } from 'github-url-detection';
-import { Stack, Dropdown, IDropdownStyles, IDropdownOption, Spinner, } from '@fluentui/react';
+import {
+  Stack,
+  Dropdown,
+  IDropdownStyles,
+  IDropdownOption,
+  Spinner,
+} from '@fluentui/react';
 import { isPerceptor, runsWhen } from '../../utils/utils';
 import { getGithubTheme, getMessageByLocale } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
@@ -28,7 +34,9 @@ interface ContributorsActivityEvolutionProps {
   currentRepo: string;
 }
 
-const ContributorsActivityEvolution: React.FC<ContributorsActivityEvolutionProps> = ({currentRepo}) => {
+const ContributorsActivityEvolution: React.FC<
+  ContributorsActivityEvolutionProps
+> = ({ currentRepo }) => {
   const [repoPeriod, setRepoPeriod] = useState<string | number | undefined>(
     180
   );
@@ -106,7 +114,16 @@ const ContributorsActivityEvolution: React.FC<ContributorsActivityEvolutionProps
             <div style={{ margin: '10px 0 20px 20px' }}>
               <Stack className="hypertrons-crx-border">
                 <Stack.Item align="center">
-            <DynamicBar theme={githubTheme as 'light' | 'dark'} width={700} height={600} barNumber={20} digitNumber={2} duration={20} dateLabelSize={30} dataUrl={`${API_TARGET}/dynamicbar_activities_v2/latest/${currentRepo}.csv`}/>
+                  <DynamicBar
+                    theme={githubTheme as 'light' | 'dark'}
+                    width={700}
+                    height={600}
+                    barNumber={20}
+                    digitNumber={2}
+                    duration={20}
+                    dateLabelSize={30}
+                    dataUrl={`${API_TARGET}/dynamicbar_activities_v2/latest/${currentRepo}.csv`}
+                  />
                 </Stack.Item>
               </Stack>
             </div>
@@ -117,9 +134,26 @@ const ContributorsActivityEvolution: React.FC<ContributorsActivityEvolutionProps
               style={{ marginLeft: '35px', marginRight: '35px' }}
             >
               <ul style={{ margin: '0px 0 10px 15px' }}>
-                <li>{getMessageByLocale('component_contributorsActivityEvolution_description_1', settings.locale)}</li><br/>
-                <li>{getMessageByLocale('component_contributorsActivityEvolution_description_2', settings.locale)}</li><br/>
-                <li>{getMessageByLocale('component_contributorsActivityEvolution_description_3', settings.locale)}</li>
+                <li>
+                  {getMessageByLocale(
+                    'component_contributorsActivityEvolution_description_1',
+                    settings.locale
+                  )}
+                </li>
+                <br />
+                <li>
+                  {getMessageByLocale(
+                    'component_contributorsActivityEvolution_description_2',
+                    settings.locale
+                  )}
+                </li>
+                <br />
+                <li>
+                  {getMessageByLocale(
+                    'component_contributorsActivityEvolution_description_3',
+                    settings.locale
+                  )}
+                </li>
               </ul>
             </div>
           </div>
@@ -144,10 +178,12 @@ class ContributorsActivityEvolutionPerceptor extends PerceptorBase {
     newDivElement.style.width = '100%';
     this._currentRepo = utils.getRepositoryInfo(window.location)!.nameWithOwner;
     const settings = await loadSettings();
-    render(<ContributorsActivityEvolution currentRepo={this._currentRepo}/>, newDivElement);
+    render(
+      <ContributorsActivityEvolution currentRepo={this._currentRepo} />,
+      newDivElement
+    );
     perceptorContainer.prepend(newDivElement);
   }
 }
 
 inject2Perceptor(ContributorsActivityEvolutionPerceptor);
-

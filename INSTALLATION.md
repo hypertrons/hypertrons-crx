@@ -16,7 +16,7 @@ We welcome users to install and try our Hypertrons Chrome Extension. If you have
 
 <img src="assets/en/installation-edge-1.png">
 
-2. Then you can find the dashboards in: 
+2. Then you can find the dashboards in:
 
 <table>
 	<tr>
@@ -70,7 +70,7 @@ The latest release can be found on this page https://github.com/hypertrons/hyper
 
 2. Open Edge and enter [edge://extensions/](edge://extensions/) in the address bar directing to the extension management page.
 
-3. Turn on the **[Developer Mode]** button on the bottom left corner of this page, then refresh. 
+3. Turn on the **[Developer Mode]** button on the bottom left corner of this page, then refresh.
 
 4. Click **[Load Unpacked]** button on the top right, and select the folder (`/build`) under the folder ( `hypertrons/`) unzipped in step 1.
 
@@ -91,6 +91,7 @@ The latest release can be found on this page https://github.com/hypertrons/hyper
 6. Now, the extension can be successfully loaded. Make sure the switch is on.
 
 ## <a id="360-speed"> 360 Speed Explorer
+
 1. Download file `hypertrons.crx`.
 
 2. Open the browser and enter [chrome://myextensions/extensions](chrome://myextensions/extensions) in the address bar directing to the extension management page.
@@ -103,29 +104,24 @@ The latest release can be found on this page https://github.com/hypertrons/hyper
 
 6. Now, the extension can be successfully loaded. Make sure the switch is on.
 
-
-
 # Additional Configuration
 
-### Adding Github Token 
+### Adding Github Token
 
-Hypertrons requires a github token for getting the avatar and username from Github repositories	and getting the hypertrons.json. 
+Hypertrons requires a github token for getting the avatar and username from Github repositories and getting the hypertrons.json.
 
 1. Click on the hypertrons icon to open the menu and select set Token
 
-	<img src="assets/en/ex.png">
-	
+<img src="assets/en/ex.png">
 
 2. Now click on set Token in the Options page
 
-	<img src="assets/en/op.png">
-
+<img src="assets/en/op.png">
 
 3. You'll need a github token with "public_repo" scope. <a href="https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token">How to generate token?</a>
 
-	<img src="assets/en/mo.png">
-
+<img src="assets/en/mo.png">
 
 4. Paste the token and click ok
 
-	<img src="assets/en/set.png">
+<img src="assets/en/set.png">

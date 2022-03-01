@@ -55,7 +55,7 @@ Hypertrons-crx 现已登陆 [Chrome 网上应用商店](https://chrome.google.co
 - [360 安全浏览器](#360-safety)
 
 - [360 快速浏览器](#360-speed)
- 
+
 ### <a id="chrome"></a> Chrome 浏览器
 
 1. 下载 `hypertrons.zip`, 解压。
@@ -115,17 +115,16 @@ Hypertrons-crx 现已登陆 [Chrome 网上应用商店](https://chrome.google.co
 Hypertrons 需要一个 GitHub token 来从 GitHub 仓库中获取用户信息，以得到 hypertrons.json 文件。
 
 1. 右键 hypertrons 图标，进入“选项”，打开设置菜单，并选择“设置 token”；
-	
-	<img src="assets/zh-CN/token-1.png">
 
-2. 在弹出的页面中粘贴您已经生成的 token,<a href="https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token">如何生成token?</a>
+<img src="assets/zh-CN/token-1.png">
 
-	<img src="assets/zh-CN/token-2.png">
+2. 在弹出的页面中粘贴您已经生成的 token,<a href="https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token">如何生成 token?</a>
+
+<img src="assets/zh-CN/token-2.png">
 
 3. 粘贴您的 token 后，点击“确定”，您的 token 将会被应用。
-	<img src="assets/zh-CN/token-3.png">
+   <img src="assets/zh-CN/token-3.png">
 
-以上是 Hypertrons-crx 的安装及使用说明，若您在安装和使用过程中有任何问题和建议，可访问项目的 issue列表 (https://github.com/hypertrons/hypertrons-crx/issues) 或创建 isuue 与我们进行讨论。
+以上是 Hypertrons-crx 的安装及使用说明，若您在安装和使用过程中有任何问题和建议，可访问项目的 issue 列表 (https://github.com/hypertrons/hypertrons-crx/issues) 或创建 isuue 与我们进行讨论。
 
 感谢您的支持！
-

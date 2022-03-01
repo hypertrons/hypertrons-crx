@@ -6,10 +6,8 @@ import PerceptorBase from './PerceptorBase';
 import { inject2Perceptor } from './Perceptor';
 
 const PerceptorLayoutView: React.FC = () => {
-  return (
-    <div />
-  )
-}
+  return <div />;
+};
 @runsWhen([isPerceptor])
 class PerceptorLayout extends PerceptorBase {
   public async run(): Promise<void> {
@@ -21,10 +19,7 @@ class PerceptorLayout extends PerceptorBase {
     const percepterContainer = document.createElement('div');
     percepterContainer.setAttribute('id', 'perceptor-layout');
 
-    render(
-      <PerceptorLayoutView />,
-      percepterContainer,
-    );
+    render(<PerceptorLayoutView />, percepterContainer);
     parentContainer.prepend(percepterContainer);
   }
 }
