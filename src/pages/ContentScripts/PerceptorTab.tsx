@@ -16,6 +16,25 @@ class PerceptorTab extends PerceptorBase {
     let perceptorTab = $('#perceptor_tab');
     if (perceptorTab.length > 0) {
       logger.info('perceptor tab already exists');
+
+      // Un-select one of the tabs if necessary
+      const insightsTab = $(
+        '.js-repo-nav [data-ga-click="Repository, Navigation click, Insights tab"]'
+      ).parent();
+      const insightsLink = $('a', insightsTab);
+      const perceptorLink = $('a', perceptorTab);
+
+      if (insightsLink.hasClass('selected')) {
+        if (isPerceptor()) {
+          insightsLink.removeClass('selected');
+          insightsLink.removeAttr('aria-current');
+          perceptorLink.addClass('selected');
+          perceptorLink.attr('aria-current', 'page');
+        } else {
+          perceptorLink.removeClass('selected');
+          perceptorLink.removeAttr('aria-current');
+        }
+      }
       return;
     }
 
