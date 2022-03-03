@@ -128,7 +128,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
   const dialogProps = {
     styles: {
       main: {
-        color: 'var(--color-text-primary)',
+        color: 'var(--color-fg-default)',
         backgroundColor: 'var(--color-canvas-default)',
       },
       title: {
@@ -170,7 +170,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
               className="Label"
               style={{
                 marginLeft: '5px!important',
-                color: 'var(--color-text-link)',
+                color: 'var(--color-fg-default)',
               }}
             >
               {getMessageByLocale(
@@ -201,7 +201,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
               className="Label"
               style={{
                 marginLeft: '5px!important',
-                color: 'var(--color-text-link)',
+                color: 'var(--color-fg-default)',
               }}
             >
               {getMessageByLocale(
