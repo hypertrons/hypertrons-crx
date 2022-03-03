@@ -11,7 +11,16 @@ import {
 } from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
 
-const GITHUB_THEME = getGithubTheme();
+let githubTheme = getGithubTheme();
+/*若是根据系统主题自动切换*/
+if (githubTheme === 'auto') {
+  /*判断是否处于深色模式*/
+  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    githubTheme = 'dark';
+  } else {
+    githubTheme = 'light';
+  }
+}
 
 interface GraphProps {
   /**
@@ -48,12 +57,11 @@ const Graph: React.FC<GraphProps> = ({
 }) => {
   const NODE_SIZE = [10, 30];
   const NODE_COLOR =
-    GITHUB_THEME === 'light'
+    githubTheme === 'light'
       ? ['#9EB9A8', '#40C463', '#30A14E', '#216E39']
       : ['#0E4429', '#006D32', '#26A641', '#39D353'];
   const THRESHOLD = [10, 100, 1000];
-  const FOCUSED_NODE_COLOR =
-    GITHUB_THEME === 'light' ? ['#D73A49'] : ['#DA3633'];
+  const FOCUSED_NODE_COLOR = githubTheme === 'light' ? '#D73A49' : '#DA3633';
 
   const [inited, setInited] = useState(false);
   const [settings, setSettings] = useState(new Settings());
