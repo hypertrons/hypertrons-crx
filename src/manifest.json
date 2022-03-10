@@ -28,8 +28,7 @@
     "storage",
     "notifications",
     "alarms",
-    "cookies",
-    "management"
+    "cookies"
   ],
   "host_permissions": ["*://github.com/*"],
   "content_security_policy": {
