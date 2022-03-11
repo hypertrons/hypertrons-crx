@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@antv/g6": "^4.5.5",
-    "@antv/graphin": "^2.4.14",
+    "@antv/graphin": "^2.4.15",
     "@antv/graphin-components": "^2.4.0",
     "@fluentui/react": "^8.55.1",
     "@fluentui/react-hooks": "^8.3.12",
