@@ -24,12 +24,7 @@
       "matches": []
     }
   ],
-  "permissions": [
-    "storage",
-    "notifications",
-    "alarms",
-    "cookies"
-  ],
+  "permissions": ["storage", "notifications", "alarms", "cookies"],
   "host_permissions": ["*://github.com/*"],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
