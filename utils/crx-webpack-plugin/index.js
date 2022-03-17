@@ -55,30 +55,28 @@ CrxWebpackPlugin.prototype.package = function () {
   var self = this;
   self.crx.load(self.contentPath).then(function () {
     self.crx.pack().then(function (buffer) {
-      mkdirp(self.outputPath, function (err) {
-        if (err) {
-          self.logger.error(err);
-          throw err;
-        }
-
-        var updateXML = self.crx.generateUpdateXML();
-        fs.writeFile(self.updateFile, updateXML, function (err) {
-          if (err) {
-            self.logger.error(err);
-            throw err;
-          }
-
-          self.logger.info('wrote updateFile to ' + self.updateFile);
-          fs.writeFile(self.crxFile, buffer, function (err) {
+      mkdirp(self.outputPath)
+        .then((made) => {
+          var updateXML = self.crx.generateUpdateXML();
+          fs.writeFile(self.updateFile, updateXML, function (err) {
             if (err) {
               self.logger.error(err);
               throw err;
             }
-
-            self.logger.info('wrote crxFile to ' + self.crxFile);
+            self.logger.info('wrote updateFile to ' + self.updateFile);
+            fs.writeFile(self.crxFile, buffer, function (err) {
+              if (err) {
+                self.logger.error(err);
+                throw err;
+              }
+              self.logger.info('wrote crxFile to ' + self.crxFile);
+            });
           });
+        })
+        .catch((err) => {
+          self.logger.error(err);
+          throw err;
         });
-      });
     });
   });
 };
