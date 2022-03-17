@@ -2,6 +2,7 @@
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 initializeIcons();
 
+import './RepoActiInflTrend';
 import './PerceptorTab';
 import './PerceptorLayout';
 import './DeveloperNetwork';
