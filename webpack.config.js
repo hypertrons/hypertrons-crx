@@ -11,9 +11,6 @@ const ASSET_PATH = process.env.ASSET_PATH || '/';
 
 const alias = {
   'react-dom': '@hot-loader/react-dom',
-  // d3-dsv csvParse require 'unsafe-eval' CSP, which refused by manifest v3
-  // so temporily alias this package to the modified pakage in src
-  'd3-dsv': path.resolve(__dirname, 'src/components/DynamicBar/d3-dsv-2.0.0'),
 };
 
 // load the secrets
@@ -118,16 +115,6 @@ let options = {
     extensions: fileExtensions
       .map((extension) => '.' + extension)
       .concat(['.js', '.jsx', '.ts', '.tsx', '.css']),
-    fallback: {
-      fs: false,
-      http: false,
-      https: false,
-      zlib: false,
-      url: false,
-      util: false,
-      stream: false,
-      buffer: require.resolve('buffer/'),
-    },
   },
   plugins: [
     new CleanWebpackPlugin({ verbose: false }),
@@ -194,10 +181,6 @@ let options = {
   ],
   infrastructureLogging: {
     level: 'info',
-  },
-
-  node: {
-    global: true,
   },
 };
 
