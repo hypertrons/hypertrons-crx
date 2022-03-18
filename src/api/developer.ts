@@ -17,3 +17,7 @@ export const getParticipatedProjects = async (developer: string) => {
     (await request(`/actor/${developer}_top.json`))
   );
 };
+
+export const getDeveloperActiInfl = async (developer: string) => {
+  return (await request(`/activity_influence/actors/${developer[0]}/${developer}.json`));
+}

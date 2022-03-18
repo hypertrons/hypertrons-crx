@@ -7,6 +7,8 @@ import PerceptorBase from './PerceptorBase';
 import { inject2Perceptor } from './Perceptor';
 import Settings, { loadSettings } from '../../utils/settings';
 import { utils } from 'github-url-detection';
+import { getRepoActiInfl } from '../../api/repo';
+import Bars from '../../components/Bars/index';
 
 interface RepoActiInflTrendViewProps {
   currentRepo: string;
@@ -15,14 +17,51 @@ interface RepoActiInflTrendViewProps {
 const RepoActiInflTrendView: React.FC<RepoActiInflTrendViewProps> = ({
   currentRepo,
 }) => {
+  const [repoActiInflData, setRepoActiInflData] = useState();
+
+  const generateBarsData = (repoActiInflData: any) => {
+    const activityField = repoActiInflData['activity'];
+    const influenceFiled = repoActiInflData['influence'];
+
+    let xAxisData: string[] = [];
+    let data1: number[] = [];
+    let data2: number[] = [];
+
+    Object.keys(activityField).forEach((value, index) => {
+      xAxisData.push(`${value.substr(2, 2)}/${value.split('-')[1]}`);
+      data1.push(activityField[value].toFixed(2));
+      data2.push(influenceFiled[value].toFixed(2));
+    });
+
+    return { xAxisData, data1, data2 };
+  };
+
+  useEffect(() => {
+    const getRepoActiInflData = async () => {
+      try {
+        const res = await getRepoActiInfl(currentRepo);
+        setRepoActiInflData(res.data);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    getRepoActiInflData();
+  }, []);
+
+  if (!repoActiInflData) return null;
+
+  let barsData: any = generateBarsData(repoActiInflData);
+
   return (
     <div>
       <h2 className="h4 mb-3">Activity & Influence Trends</h2>
-      <p>This is content.</p>
-      <p>This is content.</p>
-      <p>This is content.</p>
-      <p>This is content.</p>
-      <p>This is content.</p>
+      <Bars
+        theme="light"
+        height={350}
+        xAxisData={barsData.xAxisData}
+        data1={barsData.data1}
+        data2={barsData.data2}
+      />
     </div>
   );
 };

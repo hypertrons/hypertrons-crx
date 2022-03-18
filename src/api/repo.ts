@@ -13,3 +13,7 @@ export const getDevelopersByRepo = async (repo: string) => {
     (await request(`/repo/${repo}_top.json`))
   );
 };
+
+export const getRepoActiInfl = async (repo: string) => {
+  return (await request(`/activity_influence/repos/${repo}.json`));
+}
