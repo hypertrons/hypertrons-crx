@@ -119,6 +119,36 @@
   "component_contributorsActivityEvolution_description_3": {
     "message": "Contributors: All GitHub users who have star, fork, issue, and PR activity in the repository."
   },
+  "component_repoActiInflTrend_title": {
+    "message": "Activity & Influence Trends"
+  },
+  "component_repoActiInflTrend_legend1": {
+    "message": "Activity"
+  },
+  "component_repoActiInflTrend_legend2": {
+    "message": "Influence"
+  },
+  "component_repoActiInflTrend_yName1": {
+    "message": "Act"
+  },
+  "component_repoActiInflTrend_yName2": {
+    "message": "Inf"
+  },
+  "component_developerActiInflTrend_title": {
+    "message": "Activity & Influence Trends"
+  },
+  "component_developerActiInflTrend_legend1": {
+    "message": "Activity"
+  },
+  "component_developerActiInflTrend_legend2": {
+    "message": "Influence"
+  },
+  "component_developerActiInflTrend_yName1": {
+    "message": "Act"
+  },
+  "component_developerActiInflTrend_yName2": {
+    "message": "Inf"
+  },
   "component_projectCorrelationNetwork_title": {
     "message": "Project Correlation Network"
   },

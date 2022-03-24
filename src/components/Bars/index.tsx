@@ -4,18 +4,32 @@ import * as echarts from 'echarts';
 interface BarsProps {
   theme: 'light' | 'dark';
   height: number;
+  legend1: string;
+  legend2: string;
+  yName1: string;
+  yName2: string;
   xAxisData: string[];
   data1: number[];
   data2: number[];
 }
 
 const Bars: React.FC<BarsProps> = (props) => {
-  const { theme, height, xAxisData, data1, data2 } = props;
+  const {
+    theme,
+    height,
+    xAxisData,
+    legend1,
+    legend2,
+    yName1,
+    yName2,
+    data1,
+    data2,
+  } = props;
   const divEL = useRef(null);
 
   const option: echarts.EChartsOption = {
     legend: {
-      data: ['Activity', 'Influence'],
+      data: [legend1, legend2],
     },
     tooltip: {},
     xAxis: {
@@ -25,28 +39,30 @@ const Bars: React.FC<BarsProps> = (props) => {
         show: false,
       },
     },
-    yAxis: {
-      type: 'value',
-      axisLabel: {
-        formatter: (num: number, index: number) => {
-          let si = [
-            { value: 1, symbol: '' },
-            { value: 1e3, symbol: 'k' },
-            // { value: 1e6, symbol: "M" },
-          ];
-          let rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-          let i;
-          for (i = si.length - 1; i > 0; i--) {
-            if (num >= si[i].value) {
-              break;
-            }
-          }
-          return (
-            (num / si[i].value).toFixed(2).replace(rx, '$1') + si[i].symbol
-          );
+    yAxis: [
+      {
+        type: 'value',
+        name: yName1,
+        position: 'left',
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          formatter: formatNum,
         },
       },
-    },
+      {
+        type: 'value',
+        name: yName2,
+        position: 'right',
+        axisLine: {
+          show: true,
+        },
+        axisLabel: {
+          formatter: formatNum,
+        },
+      },
+    ],
     dataZoom: [
       {
         type: 'inside',
@@ -57,23 +73,25 @@ const Bars: React.FC<BarsProps> = (props) => {
     ],
     series: [
       {
-        name: 'Activity',
+        name: legend1,
         type: 'bar',
         data: data1,
         emphasis: {
           focus: 'series',
         },
+        yAxisIndex: 0,
         animationDelay: function (idx: any) {
           return idx * 10;
         },
       },
       {
-        name: 'Influence',
+        name: legend2,
         type: 'bar',
         data: data2,
         emphasis: {
           focus: 'series',
         },
+        yAxisIndex: 1,
         animationDelay: function (idx: any) {
           return idx * 10 + 100;
         },
@@ -103,6 +121,22 @@ const Bars: React.FC<BarsProps> = (props) => {
   }, []);
 
   return <div ref={divEL} style={{ width: '100%', height }}></div>;
+};
+
+const formatNum = (num: number, index: number) => {
+  let si = [
+    { value: 1, symbol: '' },
+    { value: 1e3, symbol: 'k' },
+    // { value: 1e6, symbol: "M" },
+  ];
+  let rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+  let i;
+  for (i = si.length - 1; i > 0; i--) {
+    if (num >= si[i].value) {
+      break;
+    }
+  }
+  return (num / si[i].value).toFixed(2).replace(rx, '$1') + si[i].symbol;
 };
 
 export default Bars;

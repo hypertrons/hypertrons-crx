@@ -15,5 +15,5 @@ export const getDevelopersByRepo = async (repo: string) => {
 };
 
 export const getRepoActiInfl = async (repo: string) => {
-  return (await request(`/activity_influence/repos/${repo}.json`));
-}
+  return await request(`/activity_influence/repos/${repo}.json`);
+};
