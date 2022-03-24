@@ -4,7 +4,9 @@ export enum ErrorCode {
   UNKNOWN = 500,
 }
 
-export const API_TARGET = 'https://hypertrons-oss.x-lab.info';
+export const HYPERTRONS_OSS_XLAB_ENDPOINT = 'https://hypertrons-oss.x-lab.info';
+//
+export const OSS_XLAB_ENDPOINT = 'https://oss.x-lab.info';
 
 export const HYPERTRONS_CRX_NEW_ISSUE =
   'https://github.com/hypertrons/hypertrons-crx/issues/new';

@@ -1,3 +1,4 @@
+import { HYPERTRONS_OSS_XLAB_ENDPOINT, OSS_XLAB_ENDPOINT } from '../constant';
 import request, { mockSuccessRes } from '../utils/request';
 import {
   developerCollabrationData,
@@ -7,19 +8,19 @@ import {
 export const getDeveloperCollabration = async (developer: string) => {
   return (
     mockSuccessRes(developerCollabrationData) ||
-    (await request(`/actor/${developer}.json`))
+    (await request(`${HYPERTRONS_OSS_XLAB_ENDPOINT}/actor/${developer}.json`))
   );
 };
 
 export const getParticipatedProjects = async (developer: string) => {
   return (
     mockSuccessRes(participatedProjectsData) ||
-    (await request(`/actor/${developer}_top.json`))
+    (await request(
+      `${HYPERTRONS_OSS_XLAB_ENDPOINT}/actor/${developer}_top.json`
+    ))
   );
 };
 
 export const getDeveloperActiInfl = async (developer: string) => {
-  return await request(
-    `/activity_influence/actors/${developer[0]}/${developer}.json`
-  );
+  return await request(`${OSS_XLAB_ENDPOINT}/hypercrx_actor/${developer}.json`);
 };
