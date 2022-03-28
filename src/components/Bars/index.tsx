@@ -1,6 +1,18 @@
 import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
 
+const LIGHT_THEME = {
+  FG_COLOR: '#24292f',
+  BG_COLOR: '#ffffff',
+  PALLET: ['#5470c6', '#91cc75'],
+};
+
+const DARK_THEME = {
+  FG_COLOR: '#c9d1d9',
+  BG_COLOR: '#0d1118',
+  PALLET: ['#58a6ff', '#3fb950'],
+};
+
 interface BarsProps {
   theme: 'light' | 'dark';
   height: number;
@@ -27,22 +39,38 @@ const Bars: React.FC<BarsProps> = (props) => {
   } = props;
   const divEL = useRef(null);
 
+  const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;
   const option: echarts.EChartsOption = {
+    color: TH.PALLET,
     legend: {
       data: [legend1, legend2],
+      textStyle: {
+        color: TH.FG_COLOR,
+      },
     },
-    tooltip: {},
+    tooltip: {
+      textStyle: {
+        color: TH.FG_COLOR,
+      },
+      backgroundColor: TH.BG_COLOR,
+    },
     xAxis: {
       type: 'category',
       data: xAxisData,
       splitLine: {
         show: false,
       },
+      axisLabel: {
+        color: TH.FG_COLOR,
+      },
     },
     yAxis: [
       {
         type: 'value',
         name: yName1,
+        nameTextStyle: {
+          color: TH.FG_COLOR,
+        },
         position: 'left',
         axisLine: {
           show: true,
@@ -54,6 +82,9 @@ const Bars: React.FC<BarsProps> = (props) => {
       {
         type: 'value',
         name: yName2,
+        nameTextStyle: {
+          color: TH.FG_COLOR,
+        },
         position: 'right',
         axisLine: {
           show: true,

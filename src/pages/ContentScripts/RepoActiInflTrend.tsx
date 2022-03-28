@@ -2,13 +2,28 @@ import React, { useState, useEffect } from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
-import { runsWhen, getMessageByLocale } from '../../utils/utils';
+import {
+  getGithubTheme,
+  runsWhen,
+  getMessageByLocale,
+} from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
 import { inject2Perceptor } from './Perceptor';
 import Settings, { loadSettings } from '../../utils/settings';
 import { utils } from 'github-url-detection';
 import { getRepoActiInfl } from '../../api/repo';
 import Bars from '../../components/Bars/index';
+
+let githubTheme = getGithubTheme();
+/*若是根据系统主题自动切换*/
+if (githubTheme === 'auto') {
+  /*判断是否处于深色模式*/
+  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    githubTheme = 'dark';
+  } else {
+    githubTheme = 'light';
+  }
+}
 
 interface RepoActiInflTrendViewProps {
   currentRepo: string;
@@ -74,7 +89,7 @@ const RepoActiInflTrendView: React.FC<RepoActiInflTrendViewProps> = ({
         )}
       </h2>
       <Bars
-        theme="light"
+        theme={githubTheme as 'light' | 'dark'}
         height={350}
         legend1={getMessageByLocale(
           'component_repoActiInflTrend_legend1',
