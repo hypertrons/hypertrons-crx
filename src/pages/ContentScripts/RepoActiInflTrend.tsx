@@ -100,7 +100,7 @@ const RepoActiInflTrendView: React.FC<RepoActiInflTrendViewProps> = ({
   );
 };
 
-@runsWhen([pageDetect.isRepo])
+@runsWhen([pageDetect.isRepoHome])
 class RepoActiInflTrend extends PerceptorBase {
   private _currentRepo: string;
 
@@ -108,25 +108,39 @@ class RepoActiInflTrend extends PerceptorBase {
     super();
     this._currentRepo = '';
   }
-  public async run(): Promise<void> {
-    if (document.getElementById('repo-acti-infl-trend') != null) return;
 
+  public async run(): Promise<void> {
     this._currentRepo = utils.getRepositoryInfo(window.location)!.nameWithOwner;
 
-    const newBorderGridRow = document.createElement('div');
-    newBorderGridRow.id = 'repo-acti-infl-trend';
-    newBorderGridRow.className = 'BorderGrid-row';
-    const newBorderGridCell = document.createElement('div');
-    newBorderGridCell.className = 'BorderGrid-cell';
-    newBorderGridRow.appendChild(newBorderGridCell);
+    let newBorderGridRow = null;
+    let newBorderGridCell = null;
 
-    render(
-      <RepoActiInflTrendView currentRepo={this._currentRepo} />,
-      newBorderGridCell
-    );
+    // if not the first time to enter this code
+    if (document.getElementById('repo-acti-infl-trend') != null) {
+      newBorderGridCell = $('#repo-acti-infl-trend').children(
+        '.BorderGrid-cell'
+      )[0];
 
-    const borderGridRows = $('div.Layout-sidebar').children('.BorderGrid');
-    borderGridRows.append(newBorderGridRow);
+      render(
+        <RepoActiInflTrendView currentRepo={this._currentRepo} />,
+        newBorderGridCell
+      );
+    } else {
+      newBorderGridRow = document.createElement('div');
+      newBorderGridRow.id = 'repo-acti-infl-trend';
+      newBorderGridRow.className = 'BorderGrid-row';
+      newBorderGridCell = document.createElement('div');
+      newBorderGridCell.className = 'BorderGrid-cell';
+      newBorderGridRow.appendChild(newBorderGridCell);
+
+      render(
+        <RepoActiInflTrendView currentRepo={this._currentRepo} />,
+        newBorderGridCell
+      );
+
+      const borderGridRows = $('div.Layout-sidebar').children('.BorderGrid');
+      borderGridRows.append(newBorderGridRow);
+    }
   }
 }
 
