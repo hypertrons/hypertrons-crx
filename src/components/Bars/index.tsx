@@ -20,23 +20,14 @@ interface BarsProps {
   legend2: string;
   yName1: string;
   yName2: string;
-  xAxisData: string[];
-  data1: number[];
-  data2: number[];
+  data1: [string, number][];
+  data2: [string, number][];
 }
 
 const Bars: React.FC<BarsProps> = (props) => {
-  const {
-    theme,
-    height,
-    xAxisData,
-    legend1,
-    legend2,
-    yName1,
-    yName2,
-    data1,
-    data2,
-  } = props;
+  const { theme, height, legend1, legend2, yName1, yName2, data1, data2 } =
+    props;
+
   const divEL = useRef(null);
 
   const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;
@@ -53,10 +44,10 @@ const Bars: React.FC<BarsProps> = (props) => {
         color: TH.FG_COLOR,
       },
       backgroundColor: TH.BG_COLOR,
+      formatter: tooltipFormatter,
     },
     xAxis: {
-      type: 'category',
-      data: xAxisData,
+      type: 'time',
       splitLine: {
         show: false,
       },
@@ -98,8 +89,10 @@ const Bars: React.FC<BarsProps> = (props) => {
       {
         type: 'inside',
         xAxisIndex: [0],
+        yAxisIndex: [0, 1],
         start: 0,
         end: 100,
+        minValueSpan: 3600 * 24 * 1000 * 180,
       },
     ],
     series: [
@@ -152,6 +145,12 @@ const Bars: React.FC<BarsProps> = (props) => {
   }, []);
 
   return <div ref={divEL} style={{ width: '100%', height }}></div>;
+};
+
+const tooltipFormatter = (params: any) => {
+  let res = `${params.seriesName} (${params.data[0]})<br/>
+  ${params.marker}  ${params.data[1]}`;
+  return res;
 };
 
 const formatNum = (num: number, index: number) => {

@@ -40,17 +40,15 @@ const RepoActiInflTrendView: React.FC<RepoActiInflTrendViewProps> = ({
     const activityField = repoActiInflData['activity'];
     const influenceFiled = repoActiInflData['influence'];
 
-    let xAxisData: string[] = [];
-    let data1: number[] = [];
-    let data2: number[] = [];
+    let data1: [string, number][] = [];
+    let data2: [string, number][] = [];
 
     Object.keys(activityField).forEach((value, index) => {
-      xAxisData.push(`${value.substring(2, 4)}/${value.split('-')[1]}`);
-      data1.push(activityField[value].toFixed(2));
-      data2.push(influenceFiled[value].toFixed(2));
+      data1.push([value, activityField[value].toFixed(2)]);
+      data2.push([value, influenceFiled[value].toFixed(2)]);
     });
 
-    return { xAxisData, data1, data2 };
+    return { data1, data2 };
   };
 
   useEffect(() => {
@@ -107,7 +105,6 @@ const RepoActiInflTrendView: React.FC<RepoActiInflTrendViewProps> = ({
           'component_repoActiInflTrend_yName2',
           settings.locale
         )}
-        xAxisData={barsData.xAxisData}
         data1={barsData.data1}
         data2={barsData.data2}
       />
