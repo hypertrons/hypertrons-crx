@@ -166,3 +166,8 @@ export function linearMap(
 
   return ((val - d0) / subDomain) * subRange + r0;
 }
+
+// check if the repository is public
+export function isPublic() {
+  return $('[class="Label Label--secondary v-align-middle mr-1"]')[0].innerHTML.toLowerCase() == "public";
+};
