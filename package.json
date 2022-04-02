@@ -1,6 +1,6 @@
 {
   "name": "hypercrx",
-  "version": "1.4.8",
+  "version": "1.5.0",
   "private": true,
   "description": "Hypertrons Chromium Extension",
   "license": "Apache",

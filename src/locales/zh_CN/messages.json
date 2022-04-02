@@ -119,6 +119,36 @@
   "component_contributorsActivityEvolution_description_3": {
     "message": "贡献者：指在项目中有过 star、fork、issue，和 PR 活动的所有 GitHub 用户。"
   },
+  "component_repoActiInflTrend_title": {
+    "message": "活跃度与影响力趋势"
+  },
+  "component_repoActiInflTrend_legend1": {
+    "message": "活跃度"
+  },
+  "component_repoActiInflTrend_legend2": {
+    "message": "影响力"
+  },
+  "component_repoActiInflTrend_yName1": {
+    "message": "活跃度"
+  },
+  "component_repoActiInflTrend_yName2": {
+    "message": "影响力"
+  },
+  "component_developerActiInflTrend_title": {
+    "message": "活跃度与影响力趋势"
+  },
+  "component_developerActiInflTrend_legend1": {
+    "message": "活跃度"
+  },
+  "component_developerActiInflTrend_legend2": {
+    "message": "影响力"
+  },
+  "component_developerActiInflTrend_yName1": {
+    "message": "活跃度"
+  },
+  "component_developerActiInflTrend_yName2": {
+    "message": "影响力"
+  },
   "component_projectCorrelationNetwork_title": {
     "message": "项目关系网络图"
   },
