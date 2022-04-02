@@ -60,7 +60,7 @@ export class Perceptor extends PerceptorBase {
         logger.info(featureId, 'is disabled');
         return;
       }
-      if (!Feature.prototype.include.every((c: () => any) => c())) {
+      if (Feature.prototype.include.every((c: () => any) => !c())) {
         logger.info(featureId, 'does NOT run on this page');
         return;
       }

@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import messages_en from '../locales/en/messages.json';
 import messages_zh_CN from '../locales/zh_CN/messages.json';
+import * as pageDetect from 'github-url-detection';
 
 const messages_locale = {
   en: messages_en,
@@ -168,6 +169,6 @@ export function linearMap(
 }
 
 // check if the repository is public
-export function isPublic() {
-  return $('[class="Label Label--secondary v-align-middle mr-1"]')[0].innerHTML.toLowerCase() == "public";
+export function isPublicRepo() {
+  return pageDetect.isRepo() && $('[class="Label Label--secondary v-align-middle mr-1"]')[0].innerHTML.toLowerCase() == "public";
 };
