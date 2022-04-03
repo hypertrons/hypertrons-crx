@@ -170,5 +170,10 @@ export function linearMap(
 
 // check if the repository is public
 export function isPublicRepo() {
-  return pageDetect.isRepo() && $('[class="Label Label--secondary v-align-middle mr-1"]')[0].innerHTML.toLowerCase() == "public";
-};
+  return (
+    pageDetect.isRepo() &&
+    $(
+      '[class="Label Label--secondary v-align-middle mr-1"]'
+    )[0].innerHTML.toLowerCase() == 'public'
+  );
+}
