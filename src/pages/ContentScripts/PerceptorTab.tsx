@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
 import { utils } from 'github-url-detection';
-import { isPerceptor, runsWhen } from '../../utils/utils';
+import { isPerceptor, runsWhen, isPublicRepo } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
 import { inject2Perceptor } from './Perceptor';
 import { render } from 'react-dom';
@@ -9,7 +9,7 @@ import React from 'react';
 import TeachingBubbleWrapper from './TeachingBubbleWrapper';
 import logger from '../../utils/logger';
 
-@runsWhen([pageDetect.isRepo])
+@runsWhen([isPublicRepo])
 class PerceptorTab extends PerceptorBase {
   public async run(): Promise<void> {
     // avoid redundant clone
