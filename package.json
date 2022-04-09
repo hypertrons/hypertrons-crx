@@ -7,7 +7,7 @@
   "scripts": {
     "build": "node utils/build.js",
     "start": "node utils/server.js",
-    "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,scss}'"
+    "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss}\""
   },
   "dependencies": {
     "@antv/g6": "^4.5.5",
