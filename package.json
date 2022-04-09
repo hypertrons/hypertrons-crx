@@ -10,7 +10,7 @@
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss}\""
   },
   "dependencies": {
-    "@antv/g6": "^4.5.5",
+    "@antv/g6": "^4.6.4",
     "@antv/graphin": "^2.4.15",
     "@antv/graphin-components": "^2.4.0",
     "@fluentui/react": "^8.55.2",
