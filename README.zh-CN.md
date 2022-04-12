@@ -43,9 +43,9 @@ Hypertrons 浏览器插件项目旨在通过直接往 GitHub 页面中插入各�
 			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_activity%26influence.gif">
 </table>
 
-- **项目关系网络图**: 项目关系网络图展示了在给定的时间段内，项目与项目之间的联结关系，***用于项目间关系的追踪与挖掘***。从该网络图中，可以找出与该项目有联结关系的其他项目。
+- **项目关系网络图**: 项目关系网络图展示了在给定的时间段内，项目与项目之间的联结关系，**_用于项目间关系的追踪与挖掘_**。从该网络图中，可以找出与该项目有联结关系的其他项目。
 
-- **项目活跃开发者协作网络图**: 项目活跃开发者协作网络图展示了在给定的时间段内，项目内部活跃的开发者之间的协作关系，***用于项目内部开发者关系的追踪与挖掘***。从该网络图中，可以找出该项目中最活跃的开发者，及开发者之间的协作关系。
+- **项目活跃开发者协作网络图**: 项目活跃开发者协作网络图展示了在给定的时间段内，项目内部活跃的开发者之间的协作关系，**_用于项目内部开发者关系的追踪与挖掘_**。从该网络图中，可以找出该项目中最活跃的开发者，及开发者之间的协作关系。
 
 - **项目活跃度&影响力趋势图**：项目活跃度和影响力趋势图描述了项目成立至今的活跃度和影响力变化，您可以选择其中一项指标查看，并切换时间轴选择总览全部指标变化情况或聚焦最近几个月的数据。
 
@@ -64,6 +64,7 @@ Hypertrons 浏览器插件项目旨在通过直接往 GitHub 页面中插入各�
 			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_activity%26influence.gif">
 </table>
 
+<<<<<<< HEAD
 
 - **开发者协作网络图**: 开发者协作网络图展示了在给定的时间段内，开发者与开发者之间的协作关系, ***用于开发者关系的追踪与挖掘***。从该网络图中，可以找出与指定开发者联系较为紧密的其他开发者。
 - **活跃仓库网络图**: 活跃仓库网络图展示了在给定的时间段内，开发者的活跃项目，***用于开发者行为的追踪与挖掘***。从该网络图中，可以找出该开发者在哪些项目中活跃。
@@ -76,35 +77,55 @@ Hypertrons 浏览器插件项目旨在通过直接往 GitHub 页面中插入各�
 [link-edge]:https://microsoftedge.microsoft.com/addons/detail/hypercrx/lbbajaehiibofpconjgdjonmkidpcome?hl=zh-CN
 
 [<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/chrome/chrome.svg" width="48" alt="Chrome" valign="middle">][link-chrome] 同时上线在 [<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/edge/edge.svg" width="24" alt="Edge" valign="middle">][link-edge] [<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/opera/opera.svg" width="24" alt="Opera" valign="middle">][link-chrome]
+=======
+- **开发者协作网络图**: 开发者协作网络图展示了在给定的时间段内，开发者与开发者之间的协作关系, **_用于开发者关系的追踪与挖掘_**。从该网络图中，可以找出与指定开发者联系较为紧密的其他开发者。
+- **活跃仓库网络图**: 活跃仓库网络图展示了在给定的时间段内，开发者的活跃项目，**_用于开发者行为的追踪与挖掘_**。从该网络图中，可以找出该开发者在哪些项目中活跃。
+
+## 安装与使用 📢
+
+[link-chrome]: https://chrome.google.com/webstore/detail/hypercrx/ijchfbpdgeljmhnhokmekkecpbdkgabc "Version published on Chrome Web Store"
+[link-edge]: https://microsoftedge.microsoft.com/addons/detail/hypercrx/lbbajaehiibofpconjgdjonmkidpcome "Version published on Microsoft Edge Add-ons"
+
+[<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/chrome/chrome.svg" width="48" alt="Chrome" valign="middle">][link-chrome] [<img valign="middle" src="https://img.shields.io/chrome-web-store/v/ijchfbpdgeljmhnhokmekkecpbdkgabc.svg?label=%20">][link-chrome] also compatible with [<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/edge/edge.svg" width="24" alt="Edge" valign="middle">][link-edge] [<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/opera/opera.svg" width="24" alt="Opera" valign="middle">][link-chrome]
+>>>>>>> 95ffa01412c0cffb99f7fcf32ca15634cb163bdc
 
 更多信息请参考 [安装指南](./INSTALLATION.zh-CN.md).
 
 ## 参与贡献
 
+如果你初来乍到或对 Git/GitHub 的基本操作不熟悉，请阅读[CONTRIBUTING](./CONTRIBUTING.md)。
+
 ### 快速开始
 
-```bash
-git clone git@github.com:hypertrons/hypertrons-crx.git
-cd hypertrons-crx
-npm install
-npm run watch
-npm run web-ext
-```
+1. git clone https://github.com/hypertrons/hypertrons-crx
 
-[web-ext](https://github.com/mozilla/web-ext) 将会自动打开 `Chrome` 浏览器并加载 `Hypertrons-crx`. `web-ext` 的配置请参考 [package.json](https://github.com/hypertrons/hypertrons-crx/blob/master/package.json):
+2. cd hypertrons-crx
 
-```json
-{
-  "webExt": {
-    "sourceDir": "distribution",
-    "run": {
-      "keepProfileChanges": true,
-      "chromiumProfile": "./test/web-ext-profile",
-      "startUrl": ["https://github.com/hypertrons/hypertrons-crx"]
-    }
-  }
-}
-```
+3. yarn install
+
+4. yarn run start
+
+5. 在 chrome 中加载新鲜出炉的插件:
+
+   1. 在浏览器地址栏访问 chrome://extensions/
+
+   2. 勾选“开发者模式”
+
+   3. 点击“加载已解压的扩展程序”
+
+   4. 选择项目根目录下的“build”目录
+
+   5. 保持“Service Worker”的 DevTools 页面为打开状态 ([why?](https://github.com/hypertrons/hypertrons-crx/pull/274#discussion_r811878203))
+
+      ![](./assets/keep-service-worker-devtools-open.jpeg)
+
+6. Happy hacking!
+
+### HMR & auto-reload
+
+如果你开发的是 Options 页面或 Popup 页面，每次保存文件都可以让页面进行热模块替换而不需要刷新页面，这意味着你能立马看到改动后的效果。
+
+但是，如果你开发的是 Background 或 ContentScripts，每次保存文件后，service worker 会自动重新加载插件。除此之外，若你开发的是 ContentScripts，那么那些被注入 ContentScripts 的页面还会自动刷新从而运行最新的 ContentScripts。
 
 ### 问题交流
 

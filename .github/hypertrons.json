@@ -45,7 +45,13 @@
         "name": "kind/CICD",
         "description": "CI/CD related issue or pull",
         "color": "0099ff",
-        "keywords": ["continuous integration", "continuous delivery", "[ci]", "[cd]", "[ci/cd]"]
+        "keywords": [
+          "continuous integration",
+          "continuous delivery",
+          "[ci]",
+          "[cd]",
+          "[ci/cd]"
+        ]
       }
     ]
   },
@@ -59,19 +65,42 @@
       {
         "name": "committer",
         "description": "Committer of the project",
-        "users": ["frank-zsy", "heming6666", "LiuChangFreeman", "tyn1998", "zhuxiangning"],
-        "commands": ["/difficulty", "/rerun", "/complete-checklist", "/start-vote"]
+        "users": [
+          "frank-zsy",
+          "heming6666",
+          "LiuChangFreeman",
+          "tyn1998",
+          "zhuxiangning"
+        ],
+        "commands": [
+          "/difficulty",
+          "/rerun",
+          "/complete-checklist",
+          "/start-vote"
+        ]
       },
       {
         "name": "replier",
         "description": "Replier is responsible for reply issues in time",
-        "users": ["heming6666", "LiuChangFreeman", "xiaoya-Esther", "tyn1998", "zhuxiangning"],
+        "users": [
+          "heming6666",
+          "LiuChangFreeman",
+          "xiaoya-Esther",
+          "tyn1998",
+          "zhuxiangning"
+        ],
         "commands": []
       },
       {
         "name": "approver",
         "description": "After approvers' approve, pulls should be merged automatically",
-        "users": ["frank-zsy", "heming6666", "LiuChangFreeman", "tyn1998", "zhuxiangning"],
+        "users": [
+          "frank-zsy",
+          "heming6666",
+          "LiuChangFreeman",
+          "tyn1998",
+          "zhuxiangning"
+        ],
         "commands": ["/approve"]
       },
       {
