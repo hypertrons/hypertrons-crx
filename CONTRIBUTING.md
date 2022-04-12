@@ -78,12 +78,12 @@ The name of branch should be semantic, avoiding words like 'update' or 'tmp'. We
 
 ### 5. Make your changes
 
-Now you can create your patch, including appropriate test cases in the new branch. Please read and follow our [Code Rules](#rules).
+Now you can code. Please read and follow our [Code Rules](#rules).
 
-After you finish your modification, run the test and ensure that all tests pass.
+After you finish your modification, please prettify the code.
 
 ```shell
-npm run test
+yarn run prettier
 ```
 
 ### 6. Commit your changes

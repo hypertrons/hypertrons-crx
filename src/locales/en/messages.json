@@ -79,12 +79,12 @@
   },
   "global_error_message_404": {
     "message": {
-      "status": "Hmmm... error while getting data",
+      "status": "Data does not exist",
       "measure": {
-        "text": "Try:",
+        "text": "Possible causes:",
         "tips": [
-          "Refresh the page",
-          "Check the network"
+          "Recently cerated, has not been computed",
+          "No actions in selected period, nothing to be computed"
         ]
       }
     }
@@ -106,6 +106,48 @@
   },
   "component_activity_definition_link": {
     "message": "http://oss.x-lab.info/github-insight-report-2020-en.pdf"
+  },
+  "component_contributorsActivityEvolution_title": {
+    "message": "Contributor Activity Rolling Chart"
+  },
+  "component_contributorsActivityEvolution_description_1": {
+    "message": "The contributor activity rolling chart shows how active a project's contributors have been over time, and is used to identify the top contributors and those whose contributions are growing rapidly. It also helps the community keep an eye on contributor attrition, which means, when a contributor's activity has not been updated for a long time, it is somewhat assumed that the contributor has been lost."
+  },
+  "component_contributorsActivityEvolution_description_2": {
+    "message": "Each color corresponds to a developer, with the developer's GitHub ID on the far left and the developer's GitHub avatar and activity on the far right."
+  },
+  "component_contributorsActivityEvolution_description_3": {
+    "message": "Contributors: All GitHub users who have star, fork, issue, and PR activity in the repository."
+  },
+  "component_repoActiInflTrend_title": {
+    "message": "Activity & Influence Trends"
+  },
+  "component_repoActiInflTrend_legend1": {
+    "message": "Activity"
+  },
+  "component_repoActiInflTrend_legend2": {
+    "message": "Influence"
+  },
+  "component_repoActiInflTrend_yName1": {
+    "message": "Act"
+  },
+  "component_repoActiInflTrend_yName2": {
+    "message": "Inf"
+  },
+  "component_developerActiInflTrend_title": {
+    "message": "Activity & Influence Trends"
+  },
+  "component_developerActiInflTrend_legend1": {
+    "message": "Activity"
+  },
+  "component_developerActiInflTrend_legend2": {
+    "message": "Influence"
+  },
+  "component_developerActiInflTrend_yName1": {
+    "message": "Act"
+  },
+  "component_developerActiInflTrend_yName2": {
+    "message": "Inf"
   },
   "component_projectCorrelationNetwork_title": {
     "message": "Project Correlation Network"

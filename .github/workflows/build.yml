@@ -28,11 +28,11 @@ jobs:
         run: |
           yarn install
           npm run build
-          zip release/hypertrons-crx.zip -r build/*
+          zip release/hypercrx.zip -r build/*
 
       - name: Test output
         shell: pwsh
-        run: Test-Path release/hypertrons-crx.crx | Should -Be $true
+        run: Test-Path release/hypercrx.crx | Should -Be $true
 
       - name: Release the extension
         uses: "marvinpinto/action-automatic-releases@latest"
@@ -42,11 +42,11 @@ jobs:
           prerelease: true
           title: "Development Build"
           files: |
-            release/hypertrons-crx.crx
-            release/hypertrons-crx.zip
+            release/hypercrx.crx
+            release/hypercrx.zip
 
       - name: Update oss
-        uses: tvrcgo/upload-to-oss@master
+        uses: tvrcgo/upload-to-oss@v0.1.1
         with:
           key-id: ${{ secrets.accessKeyId }}
           key-secret: ${{ secrets.accessKeySecret }}

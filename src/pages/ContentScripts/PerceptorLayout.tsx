@@ -6,26 +6,23 @@ import PerceptorBase from './PerceptorBase';
 import { inject2Perceptor } from './Perceptor';
 
 const PerceptorLayoutView: React.FC = () => {
-  return (
-    <div />
-  )
-}
+  return <div />;
+};
 @runsWhen([isPerceptor])
 class PerceptorLayout extends PerceptorBase {
   public async run(): Promise<void> {
     // remove the original container
-    const parentContainer = $('.container-xl.clearfix.new-discussion-timeline');
-    $('#repo-content-pjax-container', parentContainer).remove();
+    const parentContainer = $('#repo-content-pjax-container').children(
+      'div.clearfix.container-xl'
+    );
+    parentContainer.children('div.Layout').remove();
 
     // create the new one : percepter container
     const percepterContainer = document.createElement('div');
     percepterContainer.setAttribute('id', 'perceptor-layout');
 
-    render(
-      <PerceptorLayoutView />,
-      percepterContainer,
-    );
-    parentContainer.prepend(percepterContainer);
+    render(<PerceptorLayoutView />, percepterContainer);
+    parentContainer.append(percepterContainer);
   }
 }
 

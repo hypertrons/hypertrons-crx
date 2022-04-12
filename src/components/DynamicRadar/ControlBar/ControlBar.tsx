@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { Stack, Slider, initializeIcons, IconButton } from '@fluentui/react';
+import { Stack, Slider, IconButton } from '@fluentui/react';
 import {
   IStyleFunctionOrObject,
   ISliderStyleProps,
   ISliderStyles,
 } from '@fluentui/react';
-
-initializeIcons();
 
 interface ControlBarProps {
   theme: 'light' | 'dark';

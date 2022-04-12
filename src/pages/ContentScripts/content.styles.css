@@ -1,7 +1,7 @@
 .hypertrons-crx-container {
-  margin-top: 24px!important;
+  margin-top: 24px !important;
   overflow: auto;
-  height: 520px;
+  /* height: 520px; */
 }
 
 .hypertrons-crx-border {
@@ -31,14 +31,14 @@
 .verticalStackItemStyle {
   width: 50%;
   margin-left: 10px;
-} 
+}
 
 .verticalSeparatorStyle {
   margin-top: 25px;
   height: 332px;
 }
 
-.ms-Dialog-main{
+.ms-Dialog-main {
   max-width: 100%;
   width: 60vw;
 }

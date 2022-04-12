@@ -11,8 +11,8 @@ interface EChartsWrapperProps {
    */
   readonly style?: CSSProperties;
   /**
-  * `className` for container
-  */
+   * `className` for container
+   */
   readonly className?: string;
   /**
    * echarts theme config
@@ -22,17 +22,17 @@ interface EChartsWrapperProps {
    * bind events, default is `{}`
    */
   readonly onEvents?: Record<string, Function>;
-};
+}
 
 const EChartsWrapper: React.FC<EChartsWrapperProps> = ({
   option,
   style = {
     width: 500,
-    height: 300
+    height: 300,
   },
   className,
   theme,
-  onEvents = {}
+  onEvents = {},
 }) => {
   let ele: HTMLDivElement;
 
@@ -43,7 +43,7 @@ const EChartsWrapper: React.FC<EChartsWrapperProps> = ({
    */
   const getEchartsInstance = () => {
     return echarts.getInstanceByDom(ele) || echarts.init(ele, theme);
-  }
+  };
 
   /**
    * dispose the echart instance
@@ -53,7 +53,7 @@ const EChartsWrapper: React.FC<EChartsWrapperProps> = ({
     if (instance) {
       instance.dispose();
     }
-  }
+  };
 
   /**
    * render and return a new echart instance
@@ -63,7 +63,7 @@ const EChartsWrapper: React.FC<EChartsWrapperProps> = ({
       instance.on(eventName, (param: any) => {
         func(param.data);
       });
-    }
+    };
     const instance = getEchartsInstance();
     instance.setOption(option);
     // loop and bind events
@@ -72,7 +72,7 @@ const EChartsWrapper: React.FC<EChartsWrapperProps> = ({
         bindEvent(eventName, onEvents[eventName]);
       }
     }
-  }
+  };
 
   useEffect(() => {
     // dispose the old instance if exist
@@ -90,6 +90,6 @@ const EChartsWrapper: React.FC<EChartsWrapperProps> = ({
       className={className}
     />
   );
-}
+};
 
 export default EChartsWrapper;

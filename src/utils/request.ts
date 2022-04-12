@@ -1,24 +1,22 @@
-
-import ENV from '../../utils/env';
-import { ErrorCode, API_TARGET } from '../constant';
+const ENV = require('../../utils/env');
+import { ErrorCode } from '../constant';
 
 /**
  * @zh-CN 处理网络请求
  * @en-US network request
  */
-const request = async (path: string) => {
-  const url = new URL(path, API_TARGET);
-  const response = await fetch(url.href);
+const request = async (url: string) => {
+  const response = await fetch(url);
   if (!response.ok) {
-    throw ErrorCode.NOT_FOUND
+    throw ErrorCode.NOT_FOUND;
   }
   const data = await response.json();
   return {
     status: response.status,
     statusText: response.statusText,
-    data
+    data,
   };
-}
+};
 
 export const mockSuccessRes = (data: any) => {
   if (!ENV.MOCK) {
@@ -29,6 +27,6 @@ export const mockSuccessRes = (data: any) => {
     statusText: 'ok',
     data: data,
   };
-}
+};
 
 export default request;

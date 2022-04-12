@@ -1,11 +1,12 @@
->### delete this section
+> ### delete this section
 
->Before you submit an issue, consider the following guidelines:
+> Before you submit an issue, consider the following guidelines:
 
->- Please search for related issues. Make sure you are not going to open a duplicate issue.
->- Please specify what kind of issue it is and explain it in the title or content, e.g. `feature`, `bug`, `documentation`, `discussion`, `help wanted`... The issue will be tagged automatically by the robot of the project(Menbotics) 
+> - Please search for related issues. Make sure you are not going to open a duplicate issue.
+> - Please specify what kind of issue it is and explain it in the title or content, e.g. `feature`, `bug`, `documentation`, `discussion`, `help wanted`... The issue will be tagged automatically by the robot of the project(Menbotics)
 
 ## Type of Issue
+
 _What types of issue have you found with hypertrons-crx?_
 _Put an `x` in the boxes that apply_
 
@@ -16,7 +17,6 @@ _Put an `x` in the boxes that apply_
 - [ ] Documention incomplete
 - [ ] Test Improvement
 - [ ] Raise a Question
-
 
 ## Introduction to the issue
 
@@ -42,10 +42,9 @@ _Put an `x` in the boxes that apply_
 
 [not obligatory, but suggest fixes or reasons for the bug]
 
-* Modal tells the user what dataset is being deleted, like “You are about to delete this dataset: car_crashes_2014.”
-* A temporary "Trashcan" where you can recover a just deleted dataset if you mess up (maybe it's only good for a few hours, and then it cleans the cache assuming you made the right decision).
+- Modal tells the user what dataset is being deleted, like “You are about to delete this dataset: car_crashes_2014.”
+- A temporary "Trashcan" where you can recover a just deleted dataset if you mess up (maybe it's only good for a few hours, and then it cleans the cache assuming you made the right decision).
 
 ## screenshot
 
 [if relevant, include a screenshot]
-
