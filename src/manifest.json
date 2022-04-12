@@ -1,8 +1,5 @@
 {
-<<<<<<< HEAD
-=======
   "manifest_version": 3,
->>>>>>> 95ffa01412c0cffb99f7fcf32ca15634cb163bdc
   "name": "Hypercrx",
   "options_page": "options.html",
   "background": { "service_worker": "background.bundle.js" },
