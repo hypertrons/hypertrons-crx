@@ -45,7 +45,7 @@ You can find these dashboards in:
 
 - **Developer Collabration Network within project**: Developer Collabration Network within project shows the collaboration between active developers within the project for a given time period. From this graph you can find the active developers in the given project. What's more, you can find the collaborative relationships between these developers.
 
-- **Project Activity & Influence Trend**: Project Activity & Influence Trend graph depicts the change in activity and influence since the project's inception. You can select one of the metrics to view, and switch the timeline to see the full change in the metrics or focus on the most recent months of data.
+- **Project Activity & Influence Trend**: The Project Activity and Influence Trend chart presents how the two metrics evolve since 2015. In the chart, you can zoom and drag using your mouse or touchpad, and you can toggle either of the data by clicking the legend buttons as well.
 
 
 ### Developer Releated
@@ -65,7 +65,7 @@ You can find these dashboards in:
 
 - **Developer Collabration Network**: Developer Collaboration Network shows the collaboration between developers for a given time period. From this graph you can find other developers who are closet to a given developer.
 - **Developer's Most Participated Repos**: Developer's Most Participated Repos shows the active projects of developers in a given time period. From this graph you can find out the most active repositories for a given developer.
-- **Developer's Activity & Influence Trend**：The Developer Activity and Influence Trend chart depicts changes in developer activity and influence from 15 years to the present. You can select one of the metrics to view, and switch the timeline to see an overview of all changes in the metrics or focus on the most recent months of data.
+- **Developer's Activity & Influence Trend**：The Developer Activity and Influence Trend chart presents how the two metrics evolve since 2015. In the chart, you can zoom and drag using your mouse or touchpad, and you can toggle either of the data by clicking the legend buttons as well.
 
 ## Install
 
