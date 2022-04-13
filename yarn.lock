@@ -147,6 +147,22 @@
     ml-matrix "^6.5.0"
     tslib "^2.1.0"
 
+"@antv/g6-core@0.6.4":
+  version "0.6.4"
+  resolved "https://registry.npmmirror.com/@antv/g6-core/-/g6-core-0.6.4.tgz#8120752fe7b7e71bf672c8771ed5d486a80e2031"
+  integrity sha512-8JYIZME7zaQJImlPOatmlTe/tKPxRaq8/wV2f61/7mfKON3LF9kEVvTrpJexMnXoCBuM+puxx3DbiPb64gL4LQ==
+  dependencies:
+    "@antv/algorithm" "^0.1.8"
+    "@antv/dom-util" "^2.0.1"
+    "@antv/event-emitter" "~0.1.0"
+    "@antv/g-base" "^0.5.1"
+    "@antv/g-math" "^0.1.1"
+    "@antv/matrix-util" "^3.1.0-beta.3"
+    "@antv/path-util" "^2.0.3"
+    "@antv/util" "~2.0.5"
+    ml-matrix "^6.5.0"
+    tslib "^2.1.0"
+
 "@antv/g6-element@0.6.3":
   version "0.6.3"
   resolved "https://registry.npmmirror.com/@antv/g6-element/-/g6-element-0.6.3.tgz#341a6443345e9f46c704060fd0e6c841abffc1de"
@@ -154,6 +170,15 @@
   dependencies:
     "@antv/g-base" "^0.5.1"
     "@antv/g6-core" "0.6.3"
+    "@antv/util" "~2.0.5"
+
+"@antv/g6-element@0.6.4":
+  version "0.6.4"
+  resolved "https://registry.npmmirror.com/@antv/g6-element/-/g6-element-0.6.4.tgz#8bf95e5bf46c394f25dbb709d82a6e8f3a416fe9"
+  integrity sha512-9wKogi6LnA4IoiVEWv8HmvHgHOXzbT73jDi4QrdSWjrttu7cyR2wQeKRYDp2lL2OPkHzzuNcI+ULQxbLKl3Oqg==
+  dependencies:
+    "@antv/g-base" "^0.5.1"
+    "@antv/g6-core" "0.6.4"
     "@antv/util" "~2.0.5"
 
 "@antv/g6-pc@0.6.3":
@@ -183,6 +208,33 @@
     insert-css "^2.0.0"
     ml-matrix "^6.5.0"
 
+"@antv/g6-pc@0.6.4":
+  version "0.6.4"
+  resolved "https://registry.npmmirror.com/@antv/g6-pc/-/g6-pc-0.6.4.tgz#badd64ddc98e10c6432148e38881eb5403ffe569"
+  integrity sha512-bEQ3pqHzkqDvk2aWRghj9cB73qXx0n4NRJFmL4cSJnB1SQyk7akfBHgLBzw5aqsYviL9WK7VR6uCCZRPK3PoXA==
+  dependencies:
+    "@ant-design/colors" "^4.0.5"
+    "@antv/algorithm" "^0.1.8"
+    "@antv/dom-util" "^2.0.1"
+    "@antv/event-emitter" "~0.1.0"
+    "@antv/g-base" "^0.5.1"
+    "@antv/g-canvas" "^0.5.2"
+    "@antv/g-math" "^0.1.1"
+    "@antv/g-svg" "^0.5.1"
+    "@antv/g6-core" "0.6.4"
+    "@antv/g6-element" "0.6.4"
+    "@antv/g6-plugin" "0.6.4"
+    "@antv/hierarchy" "^0.6.7"
+    "@antv/layout" "^0.2.1"
+    "@antv/matrix-util" "^3.1.0-beta.3"
+    "@antv/path-util" "^2.0.3"
+    "@antv/util" "~2.0.5"
+    color "^3.1.3"
+    d3-force "^2.0.1"
+    dagre "^0.8.5"
+    insert-css "^2.0.0"
+    ml-matrix "^6.5.0"
+
 "@antv/g6-plugin@0.6.3":
   version "0.6.3"
   resolved "https://registry.npmmirror.com/@antv/g6-plugin/-/g6-plugin-0.6.3.tgz#8175edb17ce212c873f8f6daa747a9c43bcd77a8"
@@ -198,12 +250,34 @@
     "@antv/util" "^2.0.9"
     insert-css "^2.0.0"
 
-"@antv/g6@^4.5.5", "@antv/g6@^4.6.0-beta.3":
+"@antv/g6-plugin@0.6.4":
+  version "0.6.4"
+  resolved "https://registry.npmmirror.com/@antv/g6-plugin/-/g6-plugin-0.6.4.tgz#8cd90083dad1c843c7b33cf4c9686690f71265bc"
+  integrity sha512-eStD6j3nB54owXdYcA6/vxVCxJfBiMUfc33p4cKnRJnomSvEHYG/7i21SbyzMQQq7dRc0RDIPubYVwSilKzLCA==
+  dependencies:
+    "@antv/dom-util" "^2.0.2"
+    "@antv/g-base" "^0.5.1"
+    "@antv/g-canvas" "^0.5.2"
+    "@antv/g-svg" "^0.5.2"
+    "@antv/g6-core" "0.6.4"
+    "@antv/matrix-util" "^3.1.0-beta.3"
+    "@antv/scale" "^0.3.4"
+    "@antv/util" "^2.0.9"
+    insert-css "^2.0.0"
+
+"@antv/g6@^4.6.0-beta.3":
   version "4.6.3"
   resolved "https://registry.npmmirror.com/@antv/g6/-/g6-4.6.3.tgz#3eff301c92a234354753f3cdce92b2368c876d64"
   integrity sha512-afRMbymOmCQ+hJtcI5VeiYNM0OxNpMdy1Ldp6hReJiBNVV+lGyLxs1DW0m/ruyZwyaN4tABzreXMSU4pvqVhAA==
   dependencies:
     "@antv/g6-pc" "0.6.3"
+
+"@antv/g6@^4.6.4":
+  version "4.6.4"
+  resolved "https://registry.npmmirror.com/@antv/g6/-/g6-4.6.4.tgz#41297f577026697118ab87e365cc8a500c09fc7c"
+  integrity sha512-8xU96NISJ7G3Gwo6m1BTtqzfBeRd23BWcLDIpwX4v1KoE3NMHZlJkUaNvnKsoeoEoLNCDYBvTfBfEwV4C5gWfw==
+  dependencies:
+    "@antv/g6-pc" "0.6.4"
 
 "@antv/graphin-components@^2.4.0":
   version "2.4.0"
@@ -212,10 +286,10 @@
   dependencies:
     "@antv/util" "^2.0.10"
 
-"@antv/graphin@^2.4.15":
-  version "2.5.0"
-  resolved "https://registry.npmmirror.com/@antv/graphin/-/graphin-2.5.0.tgz#e525b141541ebc6c7ef0e1cc7bdce1130f01ac8a"
-  integrity sha512-XKYLv3PXbhng8Azd/tJqfF+Ez2z55uW6ub/S8RDooFcATzHXgTvQHiX4Fr8bjODZVe/Ek1JcejwXrkvH2fycEg==
+"@antv/graphin@^2.5.1":
+  version "2.6.0"
+  resolved "https://registry.npmmirror.com/@antv/graphin/-/graphin-2.6.0.tgz#5aa80858679fe5bd195469ce0bde1b44f1ecd553"
+  integrity sha512-0bD2aPSPYXxsPb5cmhmCCd5tgJqCaxF1DeM3LmszRp+KkE7utNw7tdR/+25Ta+K1dj1n5HI7QydagRQNTavxqw==
   dependencies:
     "@antv/g6" "^4.6.0-beta.3"
     "@antv/util" "^2.0.10"
@@ -1267,13 +1341,14 @@
     "@fluentui/set-version" "^8.2.0"
     tslib "^2.1.0"
 
-"@fluentui/font-icons-mdl2@^8.2.5":
-  version "8.2.5"
-  resolved "https://registry.npmmirror.com/@fluentui/font-icons-mdl2/-/font-icons-mdl2-8.2.5.tgz#fbdd576795338742b5add28c071e348607d9f34f"
-  integrity sha512-IgzcoOm+hZMlYJBR1RFb3fner1IxdSLCsnsjkVUtfnwuvGq/zjqEpNgsk5eUG4dHlu3E9dDY86nLqfGJe8R6yw==
+"@fluentui/font-icons-mdl2@^8.3.0":
+  version "8.3.0"
+  resolved "https://registry.npmmirror.com/@fluentui/font-icons-mdl2/-/font-icons-mdl2-8.3.0.tgz#939bca3d9914ea061c0e04395dbffd841b4f51e7"
+  integrity sha512-o67iMsFFqBCSL/l9D+wAguHCPOFd9xde9SztL7zwlf/c3o3+7oPRfzI/Zs1BqMxwd3WDsoKidhS2X6U8sZAuyg==
   dependencies:
     "@fluentui/set-version" "^8.2.0"
     "@fluentui/style-utilities" "^8.6.5"
+    "@fluentui/utilities" "^8.8.1"
     tslib "^2.1.0"
 
 "@fluentui/foundation-legacy@^8.2.5":
@@ -1359,13 +1434,13 @@
     "@fluentui/set-version" "^8.2.0"
     tslib "^2.1.0"
 
-"@fluentui/react@^8.55.2":
-  version "8.61.2"
-  resolved "https://registry.npmmirror.com/@fluentui/react/-/react-8.61.2.tgz#12a4bf2d1d0d712c6f3d78220f048271884bf92c"
-  integrity sha512-s55nR6gEshqRc3qOAJLrLMnWFNT87e2F/BJSlHNQzW8Rx4MWNhtb00fgtHLiGZ21G6R9znPDI+fEzL9QYn/y3A==
+"@fluentui/react@^8.62.0":
+  version "8.64.3"
+  resolved "https://registry.npmmirror.com/@fluentui/react/-/react-8.64.3.tgz#d7094cc1e195a54d8cc5de900bc9ffdfdb0c315d"
+  integrity sha512-zFZIydeLY5rovBXxVNvaRuDM1+TkBJ1h7s7bCGgZHuWbya0vmiWUJOEKsGL2hNJw9nppCrgau7EZU2b5d4xePQ==
   dependencies:
     "@fluentui/date-time-utilities" "^8.5.0"
-    "@fluentui/font-icons-mdl2" "^8.2.5"
+    "@fluentui/font-icons-mdl2" "^8.3.0"
     "@fluentui/foundation-legacy" "^8.2.5"
     "@fluentui/merge-styles" "^8.5.0"
     "@fluentui/react-focus" "^8.5.6"

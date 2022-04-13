@@ -1,6 +1,6 @@
 {
   "name": "hypercrx",
-  "version": "1.5.1",
+  "version": "1.5.4",
   "private": true,
   "description": "Hypertrons Chromium Extension",
   "license": "Apache",
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@antv/g6": "^4.6.4",
-    "@antv/graphin": "^2.4.15",
+    "@antv/graphin": "^2.5.1",
     "@antv/graphin-components": "^2.4.0",
     "@fluentui/react": "^8.62.0",
     "@fluentui/react-hooks": "^8.3.13",
