@@ -8,11 +8,11 @@ We welcome users to install and try our Hypertrons Chrome Extension. If you have
 
 ### Chrome / Edge
 
-1. [Chrome] Visit [Chrome Web Store](https://chrome.google.com/webstore/detail/hypertrons-crx/ijchfbpdgeljmhnhokmekkecpbdkgabc)，and click **[Add to Chrome]**.
+1. [Chrome] Visit [Chrome Web Store](https://chrome.google.com/webstore/detail/hypercrx/ijchfbpdgeljmhnhokmekkecpbdkgabc)，and click **[Add to Chrome]**.
 
 <img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-cws.png">
 
-1. [Edge] Visit [Edge Extensions Home](https://microsoftedge.microsoft.com/addons/search/hypertrons-crx), and click **[Get]**.
+1. [Edge] Visit [Edge Extensions Home](https://microsoftedge.microsoft.com/addons/detail/hypercrx/lbbajaehiibofpconjgdjonmkidpcome?hl=zh-CN), and click **[Get]**.
 
 <img src="assets/en/installation-edge-1.png">
 
@@ -23,8 +23,10 @@ We welcome users to install and try our Hypertrons Chrome Extension. If you have
 		<th width="50%">
 			<p>Entrance 1: GitHub User's Profile Page
 			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-perceptor-entrance-1.png">
+			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_influence_location_dev.png">
 		<th width="50%">
 			<p>Entrance 2: GitHub Repository Page
+			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_activity%26influence_location.png">
 			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-perceptor-entrance-2.png">
 </table>
 

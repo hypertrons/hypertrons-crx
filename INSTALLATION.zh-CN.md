@@ -8,15 +8,15 @@ Language : [US](./INSTALLATION.md) | zh-CN
 
 ## 从应用商店安装
 
-Hypertrons-crx 现已登陆 [Chrome 网上应用商店](https://chrome.google.com/webstore/detail/hypertrons-crx/ijchfbpdgeljmhnhokmekkecpbdkgabc)及[Edge 网上扩展商店](https://microsoftedge.microsoft.com/addons/Microsoft-Edge-Extensions-Home)。
+Hypertrons-crx 现已登陆 [Chrome 网上应用商店](https://chrome.google.com/webstore/detail/hypercrx/ijchfbpdgeljmhnhokmekkecpbdkgabc)及[Edge 网上扩展商店](https://microsoftedge.microsoft.com/addons/detail/hypercrx/lbbajaehiibofpconjgdjonmkidpcome?hl=zh-CN)。
 
 ### Chrome 浏览器 / Edge 浏览器
 
-1. [Choreme]点击 [此链接](https://chrome.google.com/webstore/detail/hypertrons-crx/ijchfbpdgeljmhnhokmekkecpbdkgabc) 访问 “Hypertrons-crx” 扩展程序主页，点击 “添加至 Chrome” ，并确认。
+1. [Choreme]点击 [此链接](https://chrome.google.com/webstore/detail/hypercrx/ijchfbpdgeljmhnhokmekkecpbdkgabc) 访问 “Hypercrx” 扩展程序主页，点击 “添加至 Chrome” ，并确认。
 
 <img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-cws-zh-CN.png">
 
-1. [Edge]点击[此链接](https://microsoftedge.microsoft.com/addons/search/hypertrons-crx) 访问 “Hypertrons-crx” 扩展程序主页，点击 “获取” ，在网页弹窗中点击 “添加扩展” ，当浏览器右上角出现 “Hypertrons-crx” 图标，即表示安装完成。
+1. [Edge]点击[此链接](https://microsoftedge.microsoft.com/addons/detail/hypercrx/lbbajaehiibofpconjgdjonmkidpcome?hl=zh-CN) 访问 “Hypercrx” 扩展程序主页，点击 “获取” ，在网页弹窗中点击 “添加扩展” ，当浏览器右上角出现 “Hypercrx” 图标，即表示安装完成。
 
 <img src="assets/zh-CN/installation-edge-1.png">
 
@@ -26,10 +26,12 @@ Hypertrons-crx 现已登陆 [Chrome 网上应用商店](https://chrome.google.co
 	<tr>
 		<th width="50%">
 			<p>Entrance 1: GitHub User's Profile Page
-			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-perceptor-entrance-1-zh-CN.png">
+			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-perceptor-entrance-1.png">
+			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_influence_location_dev.png">
 		<th width="50%">
 			<p>Entrance 2: GitHub Repository Page
-			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-perceptor-entrance-2-zh-CN.png">
+			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_activity%26influence_location.png">
+			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-perceptor-entrance-2.png">
 </table>
 
 3. 如需对插件进行设置，请点击以下按钮，可以进入到插件设置页面。在设置页面，您可以更改相关配置。
