@@ -1,0 +1,29 @@
+# This yml is adapted from pull_request_test_build.yml
+name: check
+
+on: [pull_request, workflow_dispatch]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Format checks
+        run: |
+          yarn install
+          npm run prettier:check
+
+  build:
+    runs-on: ubuntu-latest
+    needs: checks
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Build
+        run: |
+          yarn install
+          npm run build

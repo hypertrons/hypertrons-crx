@@ -1,0 +1,21 @@
+{
+  "name": "script",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "scripts package",
+  "main": "release.js",
+  "scripts": {
+    "release": "node ./release.js"
+  },
+  "author": "wxharry",
+  "license": "ISC",
+  "dependencies": {
+    "execa": "^6.1.0",
+    "minimist": "^1.2.6",
+    "semver": "^7.3.7",
+    "zip-folder": "^1.0.0"
+  },
+  "devDependencies": {
+    "chrome-webstore-upload": "^1.0.0"
+  }
+}
