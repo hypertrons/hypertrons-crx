@@ -22,3 +22,6 @@ package-lock.json
 
 # secrets
 secrets.*.js
+
+# yarn
+yarn-error.log
