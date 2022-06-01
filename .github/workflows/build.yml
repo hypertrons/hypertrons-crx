@@ -1,0 +1,36 @@
+# This yml is adapted from pull_request_test_build.yml
+name: build
+
+on: [pull_request, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Build
+        run: |
+          yarn install
+          yarn run build
+
+# https://github.com/marketplace/actions/file-existence
+  file_existence:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
+
+      - name: Check file existence
+        id: check_files
+        uses: andstor/file-existence-action@v1
+        with:
+          files: "release/hyprecrx.crx"
+          allow_failure: true
+
+      - name: File exists
+        if: steps.check_files.outputs.files_exists == 'true'
+        # Only runs if all of the files exists
+        run: echo All files exists!

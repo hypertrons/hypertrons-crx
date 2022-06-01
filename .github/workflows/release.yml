@@ -16,7 +16,7 @@ jobs:
       - name: Build
         run: |
           yarn install
-          npm run build
+          yarn run build
       - name: zip hypercrx.zip
         run: zip release/hypercrx.zip -r build/*
 
