@@ -15,14 +15,7 @@ jobs:
           yarn install
           yarn run build
 
-# https://github.com/marketplace/actions/file-existence
-  file_existence:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v1
-
+      # https://github.com/marketplace/actions/file-existence
       - name: Check file existence
         id: check_files
         uses: andstor/file-existence-action@v1
