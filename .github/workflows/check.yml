@@ -1,4 +1,4 @@
-# This yml is adapted from pull_request_test_build.yml
+# check.yml runs checks to maintain consistency
 name: check
 
 on: [pull_request, workflow_dispatch]
