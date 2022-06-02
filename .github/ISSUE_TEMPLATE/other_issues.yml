@@ -1,0 +1,12 @@
+name: Other Issues
+description: For questions, suggestions, improvements and others.
+title: "[xxx] "
+body:
+- type: textarea
+  attributes:
+    label: Description
+    description: |
+      Please describe the issue.
+
+  validations:
+    required: true
