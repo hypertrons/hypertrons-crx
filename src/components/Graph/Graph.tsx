@@ -111,7 +111,7 @@ const Graph: React.FC<GraphProps> = ({
             },
           };
         } else {
-        /* 
+          /* 
         nodes doesnot denote repositories
       */
           return {
