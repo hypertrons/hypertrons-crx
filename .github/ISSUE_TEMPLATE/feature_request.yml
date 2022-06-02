@@ -1,0 +1,13 @@
+name: Feature Request
+description: Request a new feature from Hypercrx
+title: "[Feature] "
+labels: [kind/feature]
+body:
+- type: textarea
+  attributes:
+    label: Description
+    description: |
+      Please describe what this feature does.
+
+  validations:
+    required: true
