@@ -1,7 +1,7 @@
 name: Bug Report
 description: Report a bug to Hypercrx
 title: "[Bug] "
-labels: [bug]
+labels: [kind/bug]
 body:
 - type: input
   attributes:
