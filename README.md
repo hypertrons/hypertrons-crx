@@ -35,7 +35,7 @@ You can find these dashboards in:
 			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-prn.gif">
 		<th width="33%">
 			<p>Developer Collabration Network within Project
-			<p><img src="https://user-images.githubusercontent.com/90528630/171568125-95bb7b85-f03e-4e51-b93c-1066204696b0.gif">
+			<p><img src="https://user-images.githubusercontent.com/90528630/171819879-d76a3f01-444a-4544-8d46-de539c5684c3.gif">
 		<th width="34%">
 			<p>Project Activity & Influence Trend
 			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_activity%26influence.gif">
@@ -54,7 +54,7 @@ You can find these dashboards in:
 	<tr>
 		<th width="33%">
 			<p>Developer Collabration Network
-			<p><img src="https://user-images.githubusercontent.com/90528630/171568462-38782abc-19a1-4fa5-9a7b-a20d23037067.gif">
+			<p><img src="https://user-images.githubusercontent.com/90528630/171820059-96c6da74-3d29-4e79-a08d-a07861682646.gif">
 		<th width="33%">
 			<p>Developer's Most Participated Repos
 			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-dmpr.gif">
