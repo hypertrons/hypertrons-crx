@@ -38,7 +38,7 @@ You can find these dashboards in:
 			<p><img src="https://user-images.githubusercontent.com/90528630/171819879-d76a3f01-444a-4544-8d46-de539c5684c3.gif">
 		<th width="34%">
 			<p>Project Activity & Influence Trend
-			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_activity%26influence.gif">
+			<p><img src="https://user-images.githubusercontent.com/90528630/171828864-2aeb8a30-bce8-4544-839d-834fc2720a46.gif">
 </table>
 
 - **Project Correlation Network**: Project Correlation Network shows the correlation between projects for a given time period. From this graph you can find the projects that are related to the given project.
@@ -60,7 +60,7 @@ You can find these dashboards in:
 			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-dmpr.gif">
 		<th width="34%">
 			<p>Developer's Activity & Influence Trend
-			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_activity%26influence.gif">
+			<p><img src="https://user-images.githubusercontent.com/90528630/171830059-acabce8a-86e2-42c4-812b-51685e7c0d30.gif">
 </table>
 
 - **Developer Collabration Network**: Developer Collaboration Network shows the collaboration between developers for a given time period. From this graph you can find other developers who are closet to a given developer.
