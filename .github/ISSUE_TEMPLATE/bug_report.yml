@@ -1,0 +1,53 @@
+name: Bug Report
+description: Report a bug to Hypercrx
+title: "[Bug] "
+labels: [kind/bug]
+body:
+- type: input
+  attributes:
+    label: Version
+    description: |
+      Check if the issue is reproducible with the latest stable version of Hypercrx.
+    placeholder: |
+      e.g. 1.5.5
+
+  validations:
+    required: false
+
+- type: textarea
+  attributes:
+    label: Current Behavior
+    description: A concise description of what you're experiencing. Attach screenshots if needed.
+  validations:
+    required: true
+
+- type: textarea
+  attributes:
+    label: Expected Behavior
+    description: A concise description of what you expected to happen.
+  validations:
+    required: false
+
+- type: textarea
+  attributes:
+    label: Environment
+    description: |
+      e.g.
+        - **OS**: MacOS Monterey M1
+        - **Browser**: Chrome 96.0.4664.55
+    value: |
+        - OS:
+        - Browser:
+    render: markdown
+
+  validations:
+    required: false
+
+- type: textarea
+  attributes:
+    label: Any additional comments?
+    description: |
+      e.g. some background/context of how you ran into this bug.
+
+  validations:
+    required: false
