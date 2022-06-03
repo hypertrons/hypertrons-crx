@@ -3,9 +3,12 @@
 ## Usage
 
 ```sh
-node release.js --version NEW_VERSION
+yarn run release [--version NEW_VERSION]
+# Or
+node release.js [--version NEW_VERSION]
 ```
 
+If you run without flag `--version`, release.js will automatically increase patch number by 1.
 The script has its own `package.json` so we can reinstall the root's `node_modules/` while making the release.
 
 ## Credits
