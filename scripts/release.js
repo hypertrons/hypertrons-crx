@@ -1,14 +1,24 @@
 import { readJson, writeJson, processFile } from './utils.js';
 
-async function bump({ version }) {
-  const pkg = await readJson('../package.json');
+async function bump({ version, deploy }) {
+  // update ../package.json
+  const pkgPath = '../package.json';
+  const pkg = await readJson(pkgPath);
   pkg.version = version;
-  await writeJson('package.json', pkg);
+  await writeJson(pkgPath, pkg);
 
-  // Update github issue templates
-  processFile('../publish/update_information.json', (content) =>
-    content.replace(/(\"latest_version\")\:.*?,/g, `$1: "${version}",`)
-  );
+  // update update_information.json
+  const infoPath = '../publish/update_information.json';
+  const update_info = await readJson(infoPath);
+  // we only update version number in extension store when deploy
+  if (deploy) {
+    update_info.chrome.latest_version = version;
+    update_info.edge.latest_version = version;
+  }
+  update_info.develop.latest_version = version;
+  writeJson(infoPath, update_info);
+
+  // update background.data.ts
   processFile('../src/mock/background.data.ts', (content) =>
     content.replace(/(latest_version)\:.*?,/g, `$1: '${version}',`)
   );
@@ -19,7 +29,7 @@ async function run() {
   const minimist = await importDefault('minimist');
   const params = await minimist(process.argv.slice(2), {
     string: ['version'],
-    boolean: ['dry'],
+    boolean: ['deploy'],
     alias: { v: 'version' },
   });
   params.previousVersion = (await readJson('../package.json')).version;
