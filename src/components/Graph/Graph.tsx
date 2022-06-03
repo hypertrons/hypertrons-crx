@@ -91,38 +91,37 @@ const Graph: React.FC<GraphProps> = ({
     const generateNodes = (nodes: any[]): any => {
       const minMax = getMinMax(nodes);
       return nodes.map((n: any) => {
-      const imageURL=`image://https://avatars.githubusercontent.com/` + n.name;
-      /* 
+        const imageURL =
+          `image://https://avatars.githubusercontent.com/` + n.name;
+        /* 
         Not to replace node color with profile picture in project correlation network
         checking weather nodes denotes repository
       */
-      if(n.name.includes('/')){
-        return {
-          id: n.name,
-          name: n.name,
-          value: n.value,
-          symbolSize: linearMap(n.value, minMax, NODE_SIZE),
-          itemStyle: {
-            color:
-              focusedNodeID && focusedNodeID === n.name
-                ? FOCUSED_NODE_COLOR
-                : getColorMap(n.value),
-          },
-        };
-      }
-      /* 
+        if (n.name.includes('/')) {
+          return {
+            id: n.name,
+            name: n.name,
+            value: n.value,
+            symbolSize: linearMap(n.value, minMax, NODE_SIZE),
+            itemStyle: {
+              color:
+                focusedNodeID && focusedNodeID === n.name
+                  ? FOCUSED_NODE_COLOR
+                  : getColorMap(n.value),
+            },
+          };
+        } else {
+          /* 
         nodes doesnot denote repositories
       */
-      else{
-        return {
-          id: n.name,
-          name: n.name,
-          value: n.value,
-          symbolSize: linearMap(n.value, minMax, NODE_SIZE),
-          symbol: imageURL,
-        };
-      }
-        
+          return {
+            id: n.name,
+            name: n.name,
+            value: n.value,
+            symbolSize: linearMap(n.value, minMax, NODE_SIZE),
+            symbol: imageURL,
+          };
+        }
       });
     };
     const generateEdges = (edges: any[]): any => {
