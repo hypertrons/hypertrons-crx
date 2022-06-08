@@ -1,0 +1,47 @@
+# check-build-test.yml builds the project and checks the format
+name: check-build-test
+
+on:
+  push:
+    branches:
+      - "master"
+  pull_request:
+    branches:
+      - "master"
+
+jobs:
+  check-build-test:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Check out repository code
+          uses: actions/checkout@v2
+
+        - name: Setup Node.js
+          uses: actions/setup-node@v3
+          with:
+            cache: "yarn"
+
+        - name: install dependencies
+          run: |
+            yarn install
+
+        - name: Build
+          run: |
+            yarn run build
+
+        # https://github.com/marketplace/actions/file-existence
+        - name: Check file existence
+          id: check_files
+          uses: andstor/file-existence-action@v1
+          with:
+            files: "release/hypercrx.crx"
+            allow_failure: true
+
+        - name: File exists
+          if: steps.check_files.outputs.files_exists == 'true'
+          # Only runs if all of the files exists
+          run: echo All files exists!
+
+        - name: Format checks
+          run: |
+            yarn run prettier:check
