@@ -1,7 +1,8 @@
 # release-deploy
-name: release
+name: release-deploy
 
-on: [workflow_dispatch]
+on: 
+  workflow_dispatch:
 
 jobs:
   release:
@@ -24,12 +25,12 @@ jobs:
         run: zip release/hypercrx.zip -r build/*
 
       - name: Release
-      - uses: actions/checkout@v2
-      - uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@v1
         with:
-          artifacts: "release/hypercrx.*, CHANGLOG.md"
-          bodyFile: "CHANGLOG.md"
+          artifacts: "release/hypercrx.*, CHANGELOG.md"
+          bodyFile: "CHANGELOG.md"
           token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref_name }}
 
       # - name: Upload and Deploy
       #   run: |

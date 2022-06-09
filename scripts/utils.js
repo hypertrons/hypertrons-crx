@@ -1,10 +1,4 @@
-import { execa } from 'execa';
-import fs from 'node:fs';
-
-function runGit(args, options) {
-  args = Array.isArray(args) ? args : [args];
-  return execa('git', args, options);
-}
+const fs = require('fs');
 
 function readJson(filename) {
   return JSON.parse(fs.readFileSync(filename));
@@ -18,4 +12,4 @@ function processFile(filename, fn) {
   const content = fs.readFileSync(filename, 'utf8');
   fs.writeFileSync(filename, fn(content));
 }
-export { runGit, readJson, writeJson, processFile };
+module.exports = { readJson, writeJson, processFile };

@@ -7,6 +7,7 @@
   "scripts": {
     "build": "node utils/build.js",
     "start": "node utils/server.js",
+    "release": "node scripts/release.js",
     "deploy": "node scripts/deploy.js",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss}\"",
     "prettier:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css,scss}\""
@@ -21,14 +22,18 @@
     "@octokit/core": "^3.5.1",
     "@uifabric/icons": "^7.6.2",
     "buffer": "^6.0.3",
+    "chrome-webstore-upload": "^1.0.0",
     "delegated-events": "^1.1.2",
     "echarts": "^5.3.0",
+    "execa": "^6.1.0",
     "github-url-detection": "^5.8.0",
     "jquery": "^3.6.0",
+    "minimist": "^1.2.6",
     "office-ui-fabric-react": "^7.183.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-hot-loader": "^4.13.0"
+    "react-hot-loader": "^4.13.0",
+    "zip-folder": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.17.0",

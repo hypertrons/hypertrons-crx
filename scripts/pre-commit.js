@@ -1,5 +1,5 @@
-import bump from 'release.js'
+const { bump } = require('./release.js');
 
-exports.preCommit = ({version}) => {
-    bump({version, deploy})
-}
+exports.preCommit = ({ version }) => {
+  bump({ version: version, deploy: false });
+};

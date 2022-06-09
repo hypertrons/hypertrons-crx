@@ -21,7 +21,7 @@ jobs:
         with:
           github-token: ${{ secrets.github_token }}
           skip-on-empty: 'false'
-          output-file: 'CHANGLOG.md'
+          output-file: 'CHANGELOG.md'
           pre-commit: scripts/pre-commit.js
           
   on-failure:
