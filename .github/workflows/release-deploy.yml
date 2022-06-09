@@ -1,0 +1,44 @@
+# release-deploy
+name: release
+
+on: [workflow_dispatch]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          cache: "yarn"
+          
+      - name: Build
+        run: |
+          yarn install
+          yarn run build
+
+      - name: zip hypercrx.zip
+        run: zip release/hypercrx.zip -r build/*
+
+      - name: Release
+      - uses: actions/checkout@v2
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "release/hypercrx.*, CHANGLOG.md"
+          bodyFile: "CHANGLOG.md"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # - name: Upload and Deploy
+      #   run: |
+      #     yarn install --cwd ./scripts
+      #     yarn run deploy
+      #   env:
+      #     EXTENSION_ID: ${{ secrets.EXTENSION_ID }}
+      #     CLIENT_ID: ${{ secrets.CLIENT_ID }}
+      #     REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
+      #     CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+
+
