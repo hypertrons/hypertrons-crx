@@ -1,4 +1,5 @@
-# build.yml checks, builds and bump a version on push
+# build.yml checks and test build on push and pull request to master branch
+# and bump a version if push to master branch
 name: build
 
 on:
