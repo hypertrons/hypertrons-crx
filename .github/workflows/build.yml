@@ -1,5 +1,5 @@
-# check-build-test.yml builds the project and checks the format
-name: check-build-test
+# build.yml checks, builds and bump a version on push
+name: build
 
 on:
   push:
@@ -45,3 +45,20 @@ jobs:
           if: steps.check_files.outputs.files_exists == 'true'
           # Only runs if all of the files exists
           run: echo All files exists!
+
+  bump-version:
+    runs-on: ubuntu-latest
+    needs: check-build-test
+    if: ${{ github.event_name == 'push' }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+          
+      - name: Conventional Changelog Action
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v3
+        with:
+          github-token: ${{ secrets.github_token }}
+          skip-on-empty: 'false'
+          output-file: 'CHANGELOG.md'
+          pre-commit: scripts/pre-commit.js
