@@ -1,4 +1,4 @@
-const { bump } = require('./release.js');
+const { bump } = require('./bump-version.js');
 
 exports.preCommit = ({ version }) => {
   bump({ version: version, deploy: false });

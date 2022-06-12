@@ -1,6 +1,6 @@
 async function bump({ version, deploy }) {
   const { readJson, writeJson, processFile } = require('./utils.js');
-  // update ../package.json
+  // update package.json
   const pkgPath = 'package.json';
   const pkg = await readJson(pkgPath);
   pkg.version = version;

@@ -7,7 +7,6 @@
   "scripts": {
     "build": "node utils/build.js",
     "start": "node utils/server.js",
-    "release": "node scripts/release.js",
     "deploy": "node scripts/deploy.js",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss}\"",
     "prettier:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css,scss}\""
@@ -52,7 +51,6 @@
     "fs-extra": "^10.0.0",
     "html-loader": "^3.1.0",
     "html-webpack-plugin": "^5.5.0",
-    "minimist": "^1.2.6",
     "mkdirp": "^1.0.4",
     "prettier": "^2.6.2",
     "querystring": "^0.2.1",
