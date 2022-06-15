@@ -42,24 +42,10 @@ jobs:
             files: "release/hypercrx.crx"
             allow_failure: true
 
-        - name: File exists
+        - name: Pre-Release
           if: steps.check_files.outputs.files_exists == 'true'
-          # Only runs if all of the files exists
-          run: echo All files exists!
-
-  bump-version:
-    runs-on: ubuntu-latest
-    needs: check-build-test
-    if: ${{ github.event_name == 'push' }}
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-          
-      - name: Conventional Changelog Action
-        id: changelog
-        uses: TriPSs/conventional-changelog-action@v3
-        with:
-          github-token: ${{ secrets.github_token }}
-          skip-on-empty: 'false'
-          output-file: 'CHANGELOG.md'
-          pre-commit: scripts/pre-commit.js
+          uses: ncipollo/release-action@v1
+          with:
+            prerelease: 'true'
+            artifacts: "release/hypercrx.*"
+            token: ${{ secrets.GITHUB_TOKEN }}

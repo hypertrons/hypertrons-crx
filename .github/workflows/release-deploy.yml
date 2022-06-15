@@ -15,7 +15,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           cache: "yarn"
-          
+
+      - name: Conventional Changelog Action
+        uses: TriPSs/conventional-changelog-action@v3
+        id: changelog
+        with:
+          github-token: ${{ secrets.github_token }}
+          skip-on-empty: 'false'
+          pre-commit: scripts/pre-commit.js
+
       - name: Build
         run: |
           yarn install
@@ -27,10 +35,10 @@ jobs:
       - name: Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "release/hypercrx.*, CHANGELOG.md"
-          bodyFile: "CHANGELOG.md"
+          artifacts: "release/hypercrx.*"
           token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.ref_name }}
+          tag: ${{ steps.changelog.outputs.tag }}
+          body: ${{ steps.changelog.outputs.clean_changelog }}
 
       # - name: Upload and Deploy
       #   run: |
@@ -41,5 +49,3 @@ jobs:
       #     CLIENT_ID: ${{ secrets.CLIENT_ID }}
       #     REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
       #     CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-
-
