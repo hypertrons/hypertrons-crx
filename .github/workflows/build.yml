@@ -44,8 +44,11 @@ jobs:
 
         - name: Pre-Release
           if: steps.check_files.outputs.files_exists == 'true'
-          uses: ncipollo/release-action@v1
+          uses: "marvinpinto/action-automatic-releases@latest"
           with:
-            prerelease: 'true'
-            artifacts: "release/hypercrx.*"
-            token: ${{ secrets.GITHUB_TOKEN }}
+            repo_token: "${{ secrets.GITHUB_TOKEN }}"
+            automatic_release_tag: "latest"
+            prerelease: true
+            title: "Development Build"
+            files: |
+              release/hypercrx.*
