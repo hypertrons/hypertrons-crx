@@ -43,7 +43,7 @@ jobs:
             allow_failure: true
 
         - name: Pre-Release
-          if: steps.check_files.outputs.files_exists == 'true'
+          if: steps.check_files.outputs.files_exists == 'true' && ${{ github.event_name == 'push' }}
           uses: "marvinpinto/action-automatic-releases@latest"
           with:
             repo_token: "${{ secrets.GITHUB_TOKEN }}"
