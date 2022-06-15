@@ -39,6 +39,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ steps.changelog.outputs.tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
+          git-message: 'chore(bump version): {version}'
 
       # - name: Upload and Deploy
       #   run: |
