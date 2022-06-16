@@ -1,4 +1,5 @@
-# release-deploy
+# release-deploy.yml
+# releases and publish a version when a workflow_dispatch is triggered
 name: release-deploy
 
 on: 

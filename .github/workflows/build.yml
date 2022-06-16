@@ -1,5 +1,6 @@
-# build.yml checks and test build on push and pull request to master branch
-# and bump a version if push to master branch
+# build.yml
+# checks and test build on push and pull request to master branch
+# creates a pre-release on push
 name: build
 
 on:
