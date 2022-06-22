@@ -1,6 +1,6 @@
 # build.yml
 # checks and test build on push and pull request to master branch
-# creates a pre-release on push
+# creates a pre-release on push to master
 name: build
 
 on:
@@ -12,7 +12,7 @@ on:
       - "master"
 
 jobs:
-  check-build-test:
+  build:
       runs-on: ubuntu-latest
       steps:
         - name: Check out repository code
@@ -23,11 +23,11 @@ jobs:
           with:
             cache: "yarn"
 
-        - name: install dependencies
+        - name: Install dependencies
           run: |
             yarn install
 
-        - name: Format checks
+        - name: Code Format checks
           run: |
             yarn run prettier:check
 
@@ -35,7 +35,6 @@ jobs:
           run: |
             yarn run build
 
-        # https://github.com/marketplace/actions/file-existence
         - name: Check file existence
           id: check_files
           uses: andstor/file-existence-action@v1

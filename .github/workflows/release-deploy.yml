@@ -1,12 +1,12 @@
 # release-deploy.yml
-# releases and publish a version when a workflow_dispatch is triggered
+# release a version then deploy it to the store when a workflow_dispatch is triggered
 name: release-deploy
 
 on: 
   workflow_dispatch:
 
 jobs:
-  release:
+  release-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -42,7 +42,7 @@ jobs:
           body: ${{ steps.changelog.outputs.clean_changelog }}
           git-message: 'chore(release): {version}'
 
-      - name: Upload and Deploy
+      - name: Deploy
         run: |
           yarn run deploy
         env:
