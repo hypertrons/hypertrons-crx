@@ -177,7 +177,7 @@ After your pull request is merged, you can safely delete your branch and pull th
 Please sign our [Contributor License Agreement (CLA)][cla] before sending pull requests. For any code changes to be accepted, the CLA must be signed.
 
 [coc]: ./CODE_OF_CONDUCT.md
-[new-issue]: https://github.com/hypertrons/hypertrons-crx/issues/new
+[new-issue]: https://github.com/hypertrons/hypertrons-crx/issues/new/choose
 [issue-label]: https://github.com/hypertrons/hypertrons-crx/labels
 [good-first-issues]: https://github.com/hypertrons/hypertrons-crx/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22+
 [repo]: https://github.com/hypertrons/hypertrons-crx
