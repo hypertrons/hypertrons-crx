@@ -21,9 +21,10 @@ jobs:
         uses: TriPSs/conventional-changelog-action@v3
         id: changelog
         with:
-          github-token: ${{ secrets.github_token }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           skip-on-empty: 'false'
           pre-commit: scripts/pre-commit.js
+          git-message: 'chore(release): {version}'
 
       - name: Build
         run: |
@@ -40,7 +41,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ steps.changelog.outputs.tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
-          git-message: 'chore(release): {version}'
 
       - name: Deploy
         run: |
