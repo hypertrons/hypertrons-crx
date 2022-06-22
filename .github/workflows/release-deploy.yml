@@ -42,12 +42,11 @@ jobs:
           body: ${{ steps.changelog.outputs.clean_changelog }}
           git-message: 'chore(release): {version}'
 
-      # - name: Upload and Deploy
-      #   run: |
-      #     yarn install --cwd ./scripts
-      #     yarn run deploy
-      #   env:
-      #     EXTENSION_ID: ${{ secrets.EXTENSION_ID }}
-      #     CLIENT_ID: ${{ secrets.CLIENT_ID }}
-      #     REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
-      #     CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+      - name: Upload and Deploy
+        run: |
+          yarn run deploy
+        env:
+          EXTENSION_ID: ${{ secrets.EXTENSION_ID }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
