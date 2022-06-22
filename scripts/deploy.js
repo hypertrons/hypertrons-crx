@@ -1,4 +1,4 @@
-import chromeWebstoreUpload from 'chrome-webstore-upload';
+const chromeWebstoreUpload = require('chrome-webstore-upload');
 const fs = require('fs');
 
 const ZIP_PATH = '../release/hypercrx.zip';

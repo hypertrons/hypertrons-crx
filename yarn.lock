@@ -2577,10 +2577,10 @@ chrome-trace-event@^1.0.2:
   resolved "https://registry.yarnpkg.com/chrome-trace-event/-/chrome-trace-event-1.0.3.tgz#1015eced4741e15d06664a957dbbf50d041e26ac"
   integrity sha512-p3KULyQg4S7NIHixdwbGX+nFHkoBiA4YQmyWtjb8XngSKV124nJmRysgAeujbUVb15vh+RvFUfCPqU7rXk+hZg==
 
-chrome-webstore-upload@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/chrome-webstore-upload/-/chrome-webstore-upload-1.0.0.tgz#aeb97b9a6524a4c843cc8ac1f24c904f62764294"
-  integrity sha512-8+MKhuLzVWNekBnej8w4M80O8Yfp91hBQimqEZx1nKEn7nNQwBa/CjjQSuK2c3vz9DukV5WRZcQz+zzLdrEC1Q==
+chrome-webstore-upload@0.5.0:
+  version "0.5.0"
+  resolved "https://registry.npmmirror.com/chrome-webstore-upload/-/chrome-webstore-upload-0.5.0.tgz#9109d548ecf7d46192c0f232253cfbd60f8784b5"
+  integrity sha512-Gmo+SVCK8vIrXNoQ+59TYTdso0GK/rZ/F1DbdWcF5Pw1GE5+CIj8pSwYAvVkNVprTpFGlpOy9vqHBqDi7ViZug==
   dependencies:
     got "^11.8.2"
 
