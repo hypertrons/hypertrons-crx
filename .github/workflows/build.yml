@@ -41,7 +41,6 @@ jobs:
           uses: andstor/file-existence-action@v1
           with:
             files: "release/hypercrx.crx"
-            allow_failure: true
 
         - name: Pre-Release
           if: ${{ steps.check_files.outputs.files_exists == 'true' && github.event_name == 'push' }}
