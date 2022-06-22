@@ -1,7 +1,8 @@
 const chromeWebstoreUpload = require('chrome-webstore-upload');
+const path = require('path');
 const fs = require('fs');
 
-const ZIP_PATH = '../release/hypercrx.zip';
+const ZIP_PATH = path.join(__dirname, '..', '/release/hypercrx.zip');
 
 // getting all the credentials and IDs from environment
 const CHROME_EXTENSION_ID = process.env.CHROME_EXTENSION_ID;
