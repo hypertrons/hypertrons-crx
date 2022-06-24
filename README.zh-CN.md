@@ -7,6 +7,7 @@ Language : [US](./README.md) | zh-CN
 开源项目与开发者关系的追踪、挖掘与洞察
 
 [![CLA assistant](https://cla-assistant.io/readme/badge/hypertrons/hypertrons-crx)](https://cla-assistant.io/hypertrons/hypertrons-crx)
+[![Slack](https://img.shields.io/badge/slack-join_chat-success.svg?logo=slack)](https://join.slack.com/t/hypertrons/shared_invite/zt-1a7tfc1tx-5YP8m59Yg~vSqiMBMeUJnQ)
 
 </div>
 
@@ -119,4 +120,6 @@ Hypertrons 浏览器插件项目旨在通过直接往 GitHub 页面中插入各�
 
 我们非常欢迎您的贡献，您可以通过 [Issue](https://github.com/hypertrons/hypertrons-crx/issues) 提出问题或交流。
 
-更多信息请参考 [贡献指南](./CONTRIBUTING.md).
+更多信息请参考 [贡献指南](./CONTRIBUTING.md)。
+
+在 <a href="https://join.slack.com/t/hypertrons/shared_invite/zt-1a7tfc1tx-5YP8m59Yg~vSqiMBMeUJnQ" target="_blank">Slack</a> 上联系我们。
