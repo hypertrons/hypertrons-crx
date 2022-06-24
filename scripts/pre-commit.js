@@ -1,5 +1,5 @@
 const { bump } = require('./bump-version.js');
 
 exports.preCommit = ({ version }) => {
-  bump({ version: version, deploy: false });
+  bump({ version: version, deploy: true });
 };
