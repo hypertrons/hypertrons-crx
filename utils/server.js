@@ -124,7 +124,7 @@ const server = new WebpackDevServer(
               customOptions.enableContentScriptsAutoReload;
 
             if (shouldBackgroundReload) {
-              sseStream.writeMessage(
+              sseStream.write(
                 {
                   event: 'background-updated',
                   data: {}, // "data" key should be reserved though it is empty.
@@ -133,7 +133,7 @@ const server = new WebpackDevServer(
               );
             }
             if (shouldContentScriptsReload) {
-              sseStream.writeMessage(
+              sseStream.write(
                 {
                   event: 'content-scripts-updated',
                   data: {},

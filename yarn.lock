@@ -5242,10 +5242,10 @@ spdy@^4.0.2:
     select-hose "^2.0.0"
     spdy-transport "^3.0.0"
 
-ssestream@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.npmmirror.com/ssestream/-/ssestream-1.1.0.tgz#f46d046ede4797ca00e2e1b88964021cfbe7d678"
-  integrity sha512-UOS3JTuGqGEOH89mfHFwVOJNH2+JX9ebIWuw6WBQXpkVOxbdoY3RMliSHzshL4XVYJJrcul5NkuvDFCzgYu1Lw==
+ssestream@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npmmirror.com/ssestream/-/ssestream-1.0.1.tgz#351551b12c00e91e7550f38d558323f3f47b54c2"
+  integrity sha512-VK2CDxNV+cYWN3MuyL+lBSIm5qX3gPXONKejuXCnkbRzf/d/+2Nxsf38DXNNOlNWvdIhWNeiqJy0AMN7zZHJHQ==
 
 "statuses@>= 1.4.0 < 2", "statuses@>= 1.5.0 < 2", statuses@~1.5.0:
   version "1.5.0"
