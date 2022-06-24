@@ -1,4 +1,4 @@
-const querystring = require('querystring');
+import querystring from 'querystring';
 
 const logger = (msg) => {
   console.log(`[BGC] ${msg}`);

@@ -1,4 +1,5 @@
-const ENV = require('../../utils/env');
+// @ts-ignore
+import ENV from '../../utils/env';
 import { ErrorCode } from '../constant';
 
 /**

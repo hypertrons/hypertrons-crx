@@ -1,11 +1,15 @@
-const webpack = require('webpack'),
-  path = require('path'),
-  fileSystem = require('fs-extra'),
-  env = require('./utils/env'),
-  CopyWebpackPlugin = require('copy-webpack-plugin'),
-  HtmlWebpackPlugin = require('html-webpack-plugin'),
-  TerserPlugin = require('terser-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+import webpack from 'webpack';
+import { fileURLToPath } from 'url';
+import path, { dirname } from 'path';
+import fileSystem from 'fs-extra';
+import env from './utils/env.js';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 
@@ -203,4 +207,4 @@ if (env.NODE_ENV === 'development') {
   };
 }
 
-module.exports = options;
+export default options;

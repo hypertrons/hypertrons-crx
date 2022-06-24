@@ -1,8 +1,7 @@
-var fs = require('fs');
-var path = require('path');
-var join = path.join;
-var mkdirp = require('mkdirp');
-var ChromeExtension = require('crx');
+import fs from 'fs';
+import { join } from 'path';
+import mkdirp from 'mkdirp';
+import ChromeExtension from 'crx';
 
 function CrxWebpackPlugin(options) {
   this.options = options || {};
@@ -81,4 +80,4 @@ CrxWebpackPlugin.prototype.package = function () {
   });
 };
 
-module.exports = CrxWebpackPlugin;
+export default CrxWebpackPlugin;
