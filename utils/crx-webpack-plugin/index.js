@@ -16,16 +16,9 @@ function CrxWebpackPlugin(options) {
   this.options.updateUrl = this.options.updateUrl.replace(/\/$/, '');
 
   // setup paths
-  this.context = path.dirname(module.parent.filename);
-  this.keyFile = path.isAbsolute(this.options.keyFile)
-    ? this.options.keyFile
-    : join(this.context, this.options.keyFile);
-  this.outputPath = path.isAbsolute(this.options.outputPath)
-    ? this.options.outputPath
-    : join(this.context, this.options.outputPath);
-  this.contentPath = path.isAbsolute(this.options.contentPath)
-    ? this.options.contentPath
-    : join(this.context, this.options.contentPath);
+  this.keyFile = this.options.keyFile
+  this.outputPath = this.options.outputPath
+  this.contentPath = this.options.contentPath
 
   // set output info
   this.crxName = this.options.name + '.crx';
