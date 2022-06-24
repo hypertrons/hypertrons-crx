@@ -31,7 +31,7 @@ jobs:
           yarn install
           yarn run build
 
-      - name: zip hypercrx.zip
+      - name: zip to hypercrx.zip
         run: zip release/hypercrx.zip -r build/*
 
       - name: Release
