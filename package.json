@@ -7,7 +7,8 @@
   "scripts": {
     "build": "node utils/build.js",
     "start": "node utils/server.js",
-    "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss}\""
+    "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss}\"",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@antv/g6": "^4.6.4",
@@ -47,6 +48,7 @@
     "fs-extra": "^10.0.0",
     "html-loader": "^3.1.0",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^8.0.1",
     "mkdirp": "^1.0.4",
     "prettier": "^2.6.2",
     "querystring": "^0.2.1",
