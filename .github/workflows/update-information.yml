@@ -2,13 +2,16 @@
 # upload `publish/update_information.json` to oss
 name: update-information
 
-on: 
+on:
   workflow_dispatch:
 
 jobs:
   update-information:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
       - name: Upload update_information.json to oss
         uses: tvrcgo/upload-to-oss@v0.1.1
         with:
