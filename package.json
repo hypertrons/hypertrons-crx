@@ -7,7 +7,9 @@
   "scripts": {
     "build": "node utils/build.js",
     "start": "node utils/server.js",
-    "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss}\""
+    "deploy": "node scripts/deploy.js",
+    "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss}\"",
+    "prettier:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css,scss}\""
   },
   "dependencies": {
     "@antv/g6": "^4.6.4",
@@ -39,6 +41,7 @@
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.11",
     "babel-loader": "^8.2.3",
+    "chrome-webstore-upload": "0.5.0",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^7.0.0",
     "crx": "^5.0.1",
