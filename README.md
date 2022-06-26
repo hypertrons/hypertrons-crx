@@ -5,6 +5,7 @@ Language : US | [zh-CN](./README.zh-CN.md)
 <div align="center">
 
 [![CLA assistant](https://cla-assistant.io/readme/badge/hypertrons/hypertrons-crx)](https://cla-assistant.io/hypertrons/hypertrons-crx)
+[![Slack](https://img.shields.io/badge/slack-join_chat-success.svg?logo=slack)](https://join.slack.com/t/hypertrons/shared_invite/zt-1a7tfc1tx-5YP8m59Yg~vSqiMBMeUJnQ)
 
 </div>
 
@@ -114,6 +115,8 @@ However, if you are developing Background or ContentScripts, each time you save 
 
 ### Q&A
 
-Any type of contribution is welcome, you can submit [Issue](https://github.com/hypertrons/hypertrons-crx/issues) to report bugs or ask question。
+Any type of contribution is welcome, you can submit [Issue](https://github.com/hypertrons/hypertrons-crx/issues) to report bugs or ask question.
 
 For more information please refer to [Contributing Guide](./CONTRIBUTING.md).
+
+Message us on <a href="https://join.slack.com/t/hypertrons/shared_invite/zt-1a7tfc1tx-5YP8m59Yg~vSqiMBMeUJnQ" target="_blank">Slack</a>.
