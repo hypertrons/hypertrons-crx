@@ -89,11 +89,9 @@ Please read [CONTRIBUTING](./CONTRIBUTING.md) if you are new here or not familia
 
 3. yarn install
    
-4. yarn run prepare
-   
-5. yarn run start
+4. yarn run start
 
-6. Load the freshly built unpacked extension on Chrome following:
+5. Load the freshly built unpacked extension on Chrome following:
 
    1. Access chrome://extensions/
 
@@ -107,7 +105,7 @@ Please read [CONTRIBUTING](./CONTRIBUTING.md) if you are new here or not familia
 
       ![](./assets/keep-service-worker-devtools-open.jpeg)
 
-7. Happy hacking!
+6. Happy hacking!
 
 ### HMR & auto-reload
 
