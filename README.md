@@ -88,7 +88,7 @@ Please read [CONTRIBUTING](./CONTRIBUTING.md) if you are new here or not familia
 2. cd hypertrons-crx
 
 3. yarn install
-   
+
 4. yarn run start
 
 5. Load the freshly built unpacked extension on Chrome following:

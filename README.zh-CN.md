@@ -91,7 +91,7 @@ Hypertrons 浏览器插件项目旨在通过直接往 GitHub 页面中插入各�
 2. cd hypertrons-crx
 
 3. yarn install
-   
+
 4. yarn run start
 
 5. 在 chrome 中加载新鲜出炉的插件:
