@@ -91,10 +91,12 @@ Hypertrons 浏览器插件项目旨在通过直接往 GitHub 页面中插入各�
 2. cd hypertrons-crx
 
 3. yarn install
+   
+4. yarn run prepare
 
-4. yarn run start
+5. yarn run start
 
-5. 在 chrome 中加载新鲜出炉的插件:
+6. 在 chrome 中加载新鲜出炉的插件:
 
    1. 在浏览器地址栏访问 chrome://extensions/
 
@@ -108,7 +110,7 @@ Hypertrons 浏览器插件项目旨在通过直接往 GitHub 页面中插入各�
 
       ![](./assets/keep-service-worker-devtools-open.jpeg)
 
-6. Happy hacking!
+7. Happy hacking!
 
 ### HMR & auto-reload
 

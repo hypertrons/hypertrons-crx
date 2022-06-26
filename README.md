@@ -88,10 +88,12 @@ Please read [CONTRIBUTING](./CONTRIBUTING.md) if you are new here or not familia
 2. cd hypertrons-crx
 
 3. yarn install
+   
+4. yarn run prepare
+   
+5. yarn run start
 
-4. yarn run start
-
-5. Load the freshly built unpacked extension on Chrome following:
+6. Load the freshly built unpacked extension on Chrome following:
 
    1. Access chrome://extensions/
 
@@ -105,7 +107,7 @@ Please read [CONTRIBUTING](./CONTRIBUTING.md) if you are new here or not familia
 
       ![](./assets/keep-service-worker-devtools-open.jpeg)
 
-6. Happy hacking!
+7. Happy hacking!
 
 ### HMR & auto-reload
 
