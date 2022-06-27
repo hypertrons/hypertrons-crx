@@ -80,12 +80,6 @@ The name of branch should be semantic, avoiding words like 'update' or 'tmp'. We
 
 Now you can code. Please read and follow our [Code Rules](#rules).
 
-After you finish your modification, please prettify the code.
-
-```shell
-yarn run prettier
-```
-
 ### 6. Commit your changes
 
 Commit your changes If your changes pass the tests. You are encouraged to use [angular commit-message-format][angular-commit-message-format] to write commit message. In this way, we could have a more trackable history and an automatically generated changelog.
@@ -94,6 +88,8 @@ Commit your changes If your changes pass the tests. You are encouraged to use [a
 git add .
 git commit -sm "fix: add license headers (#264)"
 ```
+
+`Husky` and `Prettier` are adopted to automatically check code format on `git commit` ([#386](https://github.com/hypertrons/hypertrons-crx/pull/386)). If you are prompted with code style issues when a commit fails, please run `yarn run prettier` first then try to commit your changes again.
 
 ### 7. Sync your local repository with the upstream
 
