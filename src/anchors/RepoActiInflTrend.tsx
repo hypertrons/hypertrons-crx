@@ -2,10 +2,10 @@ import React from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
-import PerceptorBase from '../PerceptorBase';
-import { runsWhen } from '../../utils/utils';
+import PerceptorBase from './PerceptorBase';
+import { runsWhen } from '../utils/utils';
 import { utils } from 'github-url-detection';
-import RepoActiInflTrendView from '../../views/RepoActiInflTrend';
+import RepoActiInflTrendView from '../views/RepoActiInflTrend';
 
 @runsWhen([pageDetect.isRepoHome])
 class RepoActiInflTrend extends PerceptorBase {

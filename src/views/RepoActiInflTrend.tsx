@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { getGithubTheme, getMessageByLocale } from '../../utils/utils';
-import Settings, { loadSettings } from '../../utils/settings';
-import { getDeveloperActiInfl } from '../../api/developer';
-import Bars from '../../components/Bars/index';
+
+import { getGithubTheme, getMessageByLocale } from '../utils/utils';
+import Settings, { loadSettings } from '../utils/settings';
+import { getRepoActiInfl } from '../api/repo';
+import Bars from '../components/Bars/index';
 
 let githubTheme = getGithubTheme();
 /*若是根据系统主题自动切换*/
@@ -15,20 +16,20 @@ if (githubTheme === 'auto') {
   }
 }
 
-interface DeveloperActiInflTrendViewProps {
-  currentDeveloper: string;
+interface RepoActiInflTrendViewProps {
+  currentRepo: string;
 }
 
-const DeveloperActiInflTrendView: React.FC<DeveloperActiInflTrendViewProps> = ({
-  currentDeveloper,
+const RepoActiInflTrendView: React.FC<RepoActiInflTrendViewProps> = ({
+  currentRepo,
 }) => {
   const [inited, setInited] = useState(false);
   const [settings, setSettings] = useState(new Settings());
-  const [developerActiInflData, setDeveloperActiInflData] = useState();
+  const [repoActiInflData, setRepoActiInflData] = useState();
 
-  const generateBarsData = (developerActiInflData: any) => {
-    const activityField = developerActiInflData['activity'];
-    const influenceFiled = developerActiInflData['influence'];
+  const generateBarsData = (repoActiInflData: any) => {
+    const activityField = repoActiInflData['activity'];
+    const influenceFiled = repoActiInflData['influence'];
 
     let data1: [string, number][] = [];
     let data2: [string, number][] = [];
@@ -53,25 +54,26 @@ const DeveloperActiInflTrendView: React.FC<DeveloperActiInflTrendViewProps> = ({
   }, [inited, settings]);
 
   useEffect(() => {
-    const getDeveloperActiInflData = async () => {
+    const getRepoActiInflData = async () => {
       try {
-        const res = await getDeveloperActiInfl(currentDeveloper);
-        setDeveloperActiInflData(res.data);
+        const res = await getRepoActiInfl(currentRepo);
+        setRepoActiInflData(res.data);
       } catch (e) {
         console.error(e);
       }
     };
-    getDeveloperActiInflData();
+    getRepoActiInflData();
   }, []);
 
-  if (!developerActiInflData) return null;
+  if (!repoActiInflData) return null;
 
-  let barsData: any = generateBarsData(developerActiInflData);
+  let barsData: any = generateBarsData(repoActiInflData);
+
   return (
-    <div className="border-top color-border-secondary pt-3 mt-3">
+    <div>
       <h2 className="h4 mb-3">
         {getMessageByLocale(
-          'component_developerActiInflTrend_title',
+          'component_repoActiInflTrend_title',
           settings.locale
         )}
       </h2>
@@ -79,19 +81,19 @@ const DeveloperActiInflTrendView: React.FC<DeveloperActiInflTrendViewProps> = ({
         theme={githubTheme as 'light' | 'dark'}
         height={350}
         legend1={getMessageByLocale(
-          'component_developerActiInflTrend_legend1',
+          'component_repoActiInflTrend_legend1',
           settings.locale
         )}
         legend2={getMessageByLocale(
-          'component_developerActiInflTrend_legend2',
+          'component_repoActiInflTrend_legend2',
           settings.locale
         )}
         yName1={getMessageByLocale(
-          'component_developerActiInflTrend_yName1',
+          'component_repoActiInflTrend_yName1',
           settings.locale
         )}
         yName2={getMessageByLocale(
-          'component_developerActiInflTrend_yName2',
+          'component_repoActiInflTrend_yName2',
           settings.locale
         )}
         data1={barsData.data1}
@@ -101,4 +103,4 @@ const DeveloperActiInflTrendView: React.FC<DeveloperActiInflTrendViewProps> = ({
   );
 };
 
-export default DeveloperActiInflTrendView;
+export default RepoActiInflTrendView;
