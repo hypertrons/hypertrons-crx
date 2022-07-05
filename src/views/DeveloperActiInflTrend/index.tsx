@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { render } from 'react-dom';
-import $ from 'jquery';
-import * as pageDetect from 'github-url-detection';
-import {
-  getGithubTheme,
-  runsWhen,
-  getMessageByLocale,
-} from '../../utils/utils';
-import PerceptorBase from './PerceptorBase';
-import { inject2Perceptor } from './Perceptor';
+import { getGithubTheme, getMessageByLocale } from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
 import { getDeveloperActiInfl } from '../../api/developer';
 import Bars from '../../components/Bars/index';
@@ -110,30 +101,4 @@ const DeveloperActiInflTrendView: React.FC<DeveloperActiInflTrendViewProps> = ({
   );
 };
 
-@runsWhen([pageDetect.isUserProfile])
-class DeveloperActiInflTrend extends PerceptorBase {
-  private _currentDeveloper: string;
-
-  constructor() {
-    super();
-    this._currentDeveloper = '';
-  }
-
-  public async run(): Promise<void> {
-    const profileArea = $('.js-profile-editable-area').parent();
-    const newContainer = document.createElement('div');
-    newContainer.id = 'developer-acti-infl-trend';
-    newContainer.style.width = '100%';
-    this._currentDeveloper = $('.p-nickname.vcard-username.d-block')
-      .text()
-      .trim();
-
-    render(
-      <DeveloperActiInflTrendView currentDeveloper={this._currentDeveloper} />,
-      newContainer
-    );
-    profileArea.after(newContainer);
-  }
-}
-
-inject2Perceptor(DeveloperActiInflTrend);
+export default DeveloperActiInflTrendView;
