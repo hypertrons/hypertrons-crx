@@ -2,6 +2,7 @@
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 import DeveloperActiInflTrend from '../../anchors/DeveloperActInflTrend';
 import RepoActiInflTrend from '../../anchors/RepoActiInflTrend';
+import DeveloperNetwork from '../../anchors/DeveloperNetwork';
 import { inject2Perceptor } from './Perceptor';
 initializeIcons();
 inject2Perceptor(DeveloperActiInflTrend);
@@ -9,7 +10,7 @@ inject2Perceptor(RepoActiInflTrend);
 
 import './PerceptorTab';
 import './PerceptorLayout';
-import './DeveloperNetwork';
+inject2Perceptor(DeveloperNetwork);
 import './ProjectNetwork';
 import './Hypertrons';
 import './content.styles.css';

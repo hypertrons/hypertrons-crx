@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { render } from 'react-dom';
-import $ from 'jquery';
-import * as pageDetect from 'github-url-detection';
+
 import {
   Dialog,
   Stack,
@@ -13,14 +11,12 @@ import {
 import {
   getDeveloperCollabration,
   getParticipatedProjects,
-} from '../../api/developer';
-import { runsWhen, getMessageByLocale } from '../../utils/utils';
-import PerceptorBase from './PerceptorBase';
-import { inject2Perceptor } from './Perceptor';
-import Settings, { loadSettings } from '../../utils/settings';
-import Graph from '../../components/Graph/Graph';
-import TeachingBubbleWrapper from './TeachingBubbleWrapper';
-import ErrorPage from '../../components/ExceptionPage/ErrorPage';
+} from '../api/developer';
+import { getMessageByLocale } from '../utils/utils';
+import Settings, { loadSettings } from '../utils/settings';
+import Graph from '../components/Graph/Graph';
+import TeachingBubbleWrapper from '../pages/ContentScripts/TeachingBubbleWrapper';
+import ErrorPage from '../components/ExceptionPage/ErrorPage';
 
 interface DeveloperNetworkViewProps {
   currentDeveloper: string;
@@ -357,33 +353,4 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
   );
 };
 
-@runsWhen([pageDetect.isUserProfile])
-class DeveloperNetwork extends PerceptorBase {
-  private _currentDeveloper: string;
-
-  constructor() {
-    super();
-    this._currentDeveloper = '';
-  }
-
-  public async run(): Promise<void> {
-    const profileArea = $('.js-profile-editable-area').parent();
-    const DeveloperNetworkDiv = document.createElement('div');
-    DeveloperNetworkDiv.id = 'developer-network';
-    DeveloperNetworkDiv.style.width = '100%';
-    this._currentDeveloper = $('.p-nickname.vcard-username.d-block')
-      .text()
-      .trim();
-    const settings = await loadSettings();
-    render(
-      <DeveloperNetworkView
-        currentDeveloper={this._currentDeveloper}
-        graphType={settings.graphType}
-      />,
-      DeveloperNetworkDiv
-    );
-    profileArea.after(DeveloperNetworkDiv);
-  }
-}
-
-inject2Perceptor(DeveloperNetwork);
+export default DeveloperNetworkView;
