@@ -1,13 +1,12 @@
 import $ from 'jquery';
-import * as pageDetect from 'github-url-detection';
 import { utils } from 'github-url-detection';
-import { isPerceptor, runsWhen, isPublicRepo } from '../../utils/utils';
-import PerceptorBase from './PerceptorBase';
-import { inject2Perceptor } from './Perceptor';
+import { isPerceptor, runsWhen, isPublicRepo } from '../utils/utils';
+import PerceptorBase from '../pages/ContentScripts/PerceptorBase';
+import { inject2Perceptor } from '../pages/ContentScripts/Perceptor';
 import { render } from 'react-dom';
 import React from 'react';
-import TeachingBubbleWrapper from './TeachingBubbleWrapper';
-import logger from '../../utils/logger';
+import TeachingBubbleWrapper from '../pages/ContentScripts/TeachingBubbleWrapper';
+import logger from '../utils/logger';
 
 @runsWhen([isPublicRepo])
 class PerceptorTab extends PerceptorBase {
@@ -97,4 +96,4 @@ class PerceptorTab extends PerceptorBase {
   }
 }
 
-inject2Perceptor(PerceptorTab);
+export default PerceptorTab;

@@ -2,13 +2,14 @@
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 import DeveloperActiInflTrend from '../../anchors/DeveloperActInflTrend';
 import RepoActiInflTrend from '../../anchors/RepoActiInflTrend';
+import PerceptorTab from '../../anchors/PerceptorTab';
 import DeveloperNetwork from '../../anchors/DeveloperNetwork';
 import { inject2Perceptor } from './Perceptor';
 initializeIcons();
 inject2Perceptor(DeveloperActiInflTrend);
 inject2Perceptor(RepoActiInflTrend);
 
-import './PerceptorTab';
+inject2Perceptor(PerceptorTab);
 import './PerceptorLayout';
 inject2Perceptor(DeveloperNetwork);
 import './ProjectNetwork';
