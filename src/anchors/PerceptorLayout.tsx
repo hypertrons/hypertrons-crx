@@ -1,9 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
-import { isPerceptor, runsWhen } from '../../utils/utils';
-import PerceptorBase from './PerceptorBase';
-import { inject2Perceptor } from './Perceptor';
+import { isPerceptor, runsWhen } from '../utils/utils';
+import PerceptorBase from '../pages/ContentScripts/PerceptorBase';
+import { inject2Perceptor } from '../pages/ContentScripts/Perceptor';
 
 const PerceptorLayoutView: React.FC = () => {
   return <div />;
@@ -26,4 +26,4 @@ class PerceptorLayout extends PerceptorBase {
   }
 }
 
-inject2Perceptor(PerceptorLayout);
+export default PerceptorLayout;
