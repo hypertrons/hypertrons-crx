@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { render } from 'react-dom';
-import $ from 'jquery';
-import { utils } from 'github-url-detection';
 import {
   Stack,
   Dropdown,
@@ -9,14 +6,11 @@ import {
   IDropdownOption,
   Spinner,
 } from 'office-ui-fabric-react';
-import Graph from '../../components/Graph/Graph';
-import { isPerceptor, runsWhen } from '../../utils/utils';
-import { getRepoCorrelation, getDevelopersByRepo } from '../../api/repo';
-import { getMessageByLocale } from '../../utils/utils';
-import PerceptorBase from './PerceptorBase';
-import { inject2Perceptor } from './Perceptor';
-import Settings, { loadSettings } from '../../utils/settings';
-import ErrorPage from '../../components/ExceptionPage/ErrorPage';
+import Graph from '../components/Graph/Graph';
+import { getRepoCorrelation, getDevelopersByRepo } from '../api/repo';
+import { getMessageByLocale } from '../utils/utils';
+import Settings, { loadSettings } from '../utils/settings';
+import ErrorPage from '../components/ExceptionPage/ErrorPage';
 
 interface ProjectNetworkViewProps {
   currentRepo: string;
@@ -256,30 +250,4 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({
   );
 };
 
-@runsWhen([isPerceptor])
-class ProjectNetwork extends PerceptorBase {
-  private _currentRepo: string;
-
-  constructor() {
-    super();
-    this._currentRepo = '';
-  }
-  public async run(): Promise<void> {
-    const perceptorContainer = $('#perceptor-layout').children();
-    const ProjectNetworkDiv = document.createElement('div');
-    ProjectNetworkDiv.id = 'project-network';
-    ProjectNetworkDiv.style.width = '100%';
-    this._currentRepo = utils.getRepositoryInfo(window.location)!.nameWithOwner;
-    const settings = await loadSettings();
-    render(
-      <ProjectNetworkView
-        currentRepo={this._currentRepo}
-        graphType={settings.graphType}
-      />,
-      ProjectNetworkDiv
-    );
-    perceptorContainer.prepend(ProjectNetworkDiv);
-  }
-}
-
-inject2Perceptor(ProjectNetwork);
+export default ProjectNetworkView;
