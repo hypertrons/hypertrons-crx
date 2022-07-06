@@ -5,7 +5,7 @@ import PerceptorBase from '../pages/ContentScripts/PerceptorBase';
 import { inject2Perceptor } from '../pages/ContentScripts/Perceptor';
 import { render } from 'react-dom';
 import React from 'react';
-import TeachingBubbleWrapper from '../pages/ContentScripts/TeachingBubbleWrapper';
+import TeachingBubbleWrapper from '../views/TeachingBubbleWrapper';
 import logger from '../utils/logger';
 
 @runsWhen([isPublicRepo])

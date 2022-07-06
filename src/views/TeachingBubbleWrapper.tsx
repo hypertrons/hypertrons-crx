@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { IButtonProps, TeachingBubble } from 'office-ui-fabric-react';
 import { useBoolean } from '@fluentui/react-hooks';
-import { chromeSet, getMessageByLocale } from '../../utils/utils';
-import MetaData, { loadMetaData } from '../../utils/metadata';
-import Settings, { loadSettings } from '../../utils/settings';
+import { chromeSet, getMessageByLocale } from '../utils/utils';
+import MetaData, { loadMetaData } from '../utils/metadata';
+import Settings, { loadSettings } from '../utils/settings';
 
 export interface TeachingBubbleProps {
   target: string;

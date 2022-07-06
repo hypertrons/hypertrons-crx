@@ -15,7 +15,7 @@ import {
 import { getMessageByLocale } from '../utils/utils';
 import Settings, { loadSettings } from '../utils/settings';
 import Graph from '../components/Graph/Graph';
-import TeachingBubbleWrapper from '../pages/ContentScripts/TeachingBubbleWrapper';
+import TeachingBubbleWrapper from './TeachingBubbleWrapper';
 import ErrorPage from '../components/ExceptionPage/ErrorPage';
 
 interface DeveloperNetworkViewProps {
