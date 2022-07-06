@@ -2,8 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
 import { isPerceptor, runsWhen } from '../utils/utils';
-import PerceptorBase from '../pages/ContentScripts/PerceptorBase';
-import { inject2Perceptor } from '../pages/ContentScripts/Perceptor';
+import PerceptorBase from './PerceptorBase';
 
 const PerceptorLayoutView: React.FC = () => {
   return <div />;

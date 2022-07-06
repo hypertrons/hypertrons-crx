@@ -3,8 +3,7 @@ import { render } from 'react-dom';
 import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
 import { runsWhen } from '../utils/utils';
-import PerceptorBase from '../pages/ContentScripts/PerceptorBase';
-import { inject2Perceptor } from '../pages/ContentScripts/Perceptor';
+import PerceptorBase from './PerceptorBase';
 import logger from '../utils/logger';
 import HypertronsTabView from '../views/Hypertrons';
 

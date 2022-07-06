@@ -1,8 +1,8 @@
 import { utils, isRepo } from 'github-url-detection';
-import { loadSettings, mergeSettings } from '../../utils/settings';
-import { getConfigFromGithub } from '../../api/github';
+import { loadSettings, mergeSettings } from '../utils/settings';
+import { getConfigFromGithub } from '../api/github';
 import PerceptorBase from './PerceptorBase';
-import logger from '../../utils/logger';
+import logger from '../utils/logger';
 
 export class Perceptor extends PerceptorBase {
   public static Features: Map<string, any> = new Map();

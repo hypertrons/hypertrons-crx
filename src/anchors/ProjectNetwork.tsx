@@ -3,8 +3,7 @@ import { render } from 'react-dom';
 import $ from 'jquery';
 import { utils } from 'github-url-detection';
 import { isPerceptor, runsWhen } from '../utils/utils';
-import PerceptorBase from '../pages/ContentScripts/PerceptorBase';
-import { inject2Perceptor } from '../pages/ContentScripts/Perceptor';
+import PerceptorBase from './PerceptorBase';
 import { loadSettings } from '../utils/settings';
 import ProjectNetworkView from '../views/ProjectNetwork';
 

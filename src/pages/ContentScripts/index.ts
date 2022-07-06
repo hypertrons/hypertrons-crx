@@ -7,7 +7,7 @@ import PerceptorLayout from '../../anchors/PerceptorLayout';
 import DeveloperNetwork from '../../anchors/DeveloperNetwork';
 import ProjectNetwork from '../../anchors/ProjectNetwork';
 import Hypertrons from '../../anchors/Hypertrons';
-import { inject2Perceptor } from './Perceptor';
+import { inject2Perceptor } from '../../anchors/Perceptor';
 initializeIcons();
 inject2Perceptor(DeveloperActiInflTrend);
 inject2Perceptor(RepoActiInflTrend);
@@ -18,7 +18,7 @@ inject2Perceptor(DeveloperNetwork);
 inject2Perceptor(ProjectNetwork);
 inject2Perceptor(Hypertrons);
 import './content.styles.css';
-import { Perceptor } from './Perceptor';
+import { Perceptor } from '../../anchors/Perceptor';
 import { loadSettings } from '../../utils/settings';
 
 async function mainInject() {

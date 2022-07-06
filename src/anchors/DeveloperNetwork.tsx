@@ -4,7 +4,7 @@ import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
 import { runsWhen } from '../utils/utils';
 import { loadSettings } from '../utils/settings';
-import PerceptorBase from '../pages/ContentScripts/PerceptorBase';
+import PerceptorBase from './PerceptorBase';
 import DeveloperNetworkView from '../views/DeveloperNetwork';
 
 @runsWhen([pageDetect.isUserProfile])
