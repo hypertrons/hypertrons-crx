@@ -264,20 +264,36 @@ class ProjectNetwork extends PerceptorBase {
     this._currentRepo = '';
   }
   public async run(): Promise<void> {
-    const perceptorContainer = $('#perceptor-layout').children();
-    const ProjectNetworkDiv = document.createElement('div');
-    ProjectNetworkDiv.id = 'project-network';
-    ProjectNetworkDiv.style.width = '100%';
     this._currentRepo = utils.getRepositoryInfo(window.location)!.nameWithOwner;
+
+    let perceptorContainer = null;
+    let ProjectNetworkDiv = null;
+
     const settings = await loadSettings();
-    render(
-      <ProjectNetworkView
-        currentRepo={this._currentRepo}
-        graphType={settings.graphType}
-      />,
-      ProjectNetworkDiv
-    );
-    perceptorContainer.prepend(ProjectNetworkDiv);
+
+    // if exists (when going backword or forward in browser history)
+    if (document.getElementById('project-network') != null) {
+      render(
+        <ProjectNetworkView
+          currentRepo={this._currentRepo}
+          graphType={settings.graphType}
+        />,
+        document.getElementById('project-network')
+      );
+    } else {
+      perceptorContainer = $('#perceptor-layout').children();
+      ProjectNetworkDiv = document.createElement('div');
+      ProjectNetworkDiv.id = 'project-network';
+      ProjectNetworkDiv.style.width = '100%';
+      render(
+        <ProjectNetworkView
+          currentRepo={this._currentRepo}
+          graphType={settings.graphType}
+        />,
+        ProjectNetworkDiv
+      );
+      perceptorContainer.prepend(ProjectNetworkDiv);
+    }
   }
 }
 

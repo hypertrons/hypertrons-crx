@@ -366,22 +366,38 @@ class DeveloperNetwork extends PerceptorBase {
   }
 
   public async run(): Promise<void> {
-    const profileArea = $('.js-profile-editable-area').parent();
-    const DeveloperNetworkDiv = document.createElement('div');
-    DeveloperNetworkDiv.id = 'developer-network';
-    DeveloperNetworkDiv.style.width = '100%';
     this._currentDeveloper = $('.p-nickname.vcard-username.d-block')
       .text()
       .trim();
+
+    let profileArea = null;
+    let DeveloperNetworkDiv = null;
+
     const settings = await loadSettings();
-    render(
-      <DeveloperNetworkView
-        currentDeveloper={this._currentDeveloper}
-        graphType={settings.graphType}
-      />,
-      DeveloperNetworkDiv
-    );
-    profileArea.after(DeveloperNetworkDiv);
+
+    // if exists (when going backword or forward in browser history)
+    if (document.getElementById('developer-network') != null) {
+      render(
+        <DeveloperNetworkView
+          currentDeveloper={this._currentDeveloper}
+          graphType={settings.graphType}
+        />,
+        document.getElementById('developer-network')
+      );
+    } else {
+      profileArea = $('.js-profile-editable-area').parent();
+      DeveloperNetworkDiv = document.createElement('div');
+      DeveloperNetworkDiv.id = 'developer-network';
+      DeveloperNetworkDiv.style.width = '100%';
+      render(
+        <DeveloperNetworkView
+          currentDeveloper={this._currentDeveloper}
+          graphType={settings.graphType}
+        />,
+        DeveloperNetworkDiv
+      );
+      profileArea.after(DeveloperNetworkDiv);
+    }
   }
 }
 
