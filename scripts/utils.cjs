@@ -1,3 +1,6 @@
+// according to https://github.com/TriPSs/conventional-changelog-action#pre-commit-hook
+// this script should be a CommonJS module
+
 const fs = require('fs');
 
 function readJson(filename) {
