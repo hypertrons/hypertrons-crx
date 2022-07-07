@@ -1,4 +1,4 @@
-const fs = require('fs');
+import fs from 'fs';
 
 function readJson(filename) {
   return JSON.parse(fs.readFileSync(filename));
@@ -12,4 +12,5 @@ function processFile(filename, fn) {
   const content = fs.readFileSync(filename, 'utf8');
   fs.writeFileSync(filename, fn(content));
 }
-module.exports = { readJson, writeJson, processFile };
+
+export { readJson, writeJson, processFile };

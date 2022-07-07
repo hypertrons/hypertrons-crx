@@ -1,10 +1,13 @@
+// according to https://github.com/TriPSs/conventional-changelog-action#pre-commit-hook
+// this script should be a CommonJS module, too?
+
 async function bump({ version, deploy }) {
   const { readJson, writeJson, processFile } = require('./utils.js');
   // update package.json
   const pkgPath = 'package.json';
   const pkg = await readJson(pkgPath);
   pkg.version = version;
-  await writeJson(pkgPath, pkg);
+  writeJson(pkgPath, pkg);
 
   // update update_information.json
   const infoPath = 'publish/update_information.json';
