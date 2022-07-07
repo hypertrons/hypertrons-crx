@@ -205,6 +205,7 @@ const HypertronsTabView: React.FC<HypertronsTabViewProps> = ({
               const styleIndex = index % (LabelStyles.length - 1);
               return (
                 <div
+                  key={`command_${index}`}
                   // @ts-ignore
                   style={Label2Style(LabelStyles[styleIndex])}
                   className="IssueLabel hx_IssueLabel"
