@@ -71,8 +71,8 @@ chrome.notifications.onClicked.addListener(async function (notificationId) {
   chrome.notifications.clear(notificationId);
 });
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  const type = request.task_type;
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  const type = message.task_type;
   if (type === 'get_username_from_cookie') {
     chrome.cookies.get(
       {
@@ -94,4 +94,27 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
   // must return true in async mode
   return true;
+});
+
+const tabIds = new Set();
+
+// add contentscript's tabId to the set
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message === 'Hey background, take my tabId!') {
+    console.log('From contentscript: Hey background, take my tabId!');
+    if (sender.tab && sender.tab.id) {
+      tabIds.add(sender.tab.id);
+      sendResponse('Hey contentscript, copy that!');
+    }
+  }
+  // must return true in async mode
+  return true;
+});
+
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (tabIds.has(tabId)) {
+    if (changeInfo.url) {
+      chrome.tabs.sendMessage(tabId, 'url changed');
+    }
+  }
 });

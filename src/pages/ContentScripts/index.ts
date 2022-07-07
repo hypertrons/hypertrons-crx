@@ -32,3 +32,16 @@ async function mainInject() {
 }
 
 mainInject();
+
+// send a message to indirectly tell background this contentscript's tabId
+chrome.runtime.sendMessage('Hey background, take my tabId!', (response) => {
+  if (response === 'Hey contentscript, copy that!') {
+    console.log('From background: Hey contentscript, copy that!');
+  }
+});
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message === 'url changed') {
+    mainInject();
+  }
+});
