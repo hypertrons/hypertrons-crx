@@ -1,8 +1,7 @@
-var fs = require('fs');
-var path = require('path');
-var join = path.join;
-var mkdirp = require('mkdirp');
-var ChromeExtension = require('crx');
+import fs from 'fs';
+import { join } from 'path';
+import mkdirp from 'mkdirp';
+import ChromeExtension from 'crx';
 
 function CrxWebpackPlugin(options) {
   this.options = options || {};
@@ -17,16 +16,9 @@ function CrxWebpackPlugin(options) {
   this.options.updateUrl = this.options.updateUrl.replace(/\/$/, '');
 
   // setup paths
-  this.context = path.dirname(module.parent.filename);
-  this.keyFile = path.isAbsolute(this.options.keyFile)
-    ? this.options.keyFile
-    : join(this.context, this.options.keyFile);
-  this.outputPath = path.isAbsolute(this.options.outputPath)
-    ? this.options.outputPath
-    : join(this.context, this.options.outputPath);
-  this.contentPath = path.isAbsolute(this.options.contentPath)
-    ? this.options.contentPath
-    : join(this.context, this.options.contentPath);
+  this.keyFile = this.options.keyFile;
+  this.outputPath = this.options.outputPath;
+  this.contentPath = this.options.contentPath;
 
   // set output info
   this.crxName = this.options.name + '.crx';
@@ -81,4 +73,4 @@ CrxWebpackPlugin.prototype.package = function () {
   });
 };
 
-module.exports = CrxWebpackPlugin;
+export default CrxWebpackPlugin;

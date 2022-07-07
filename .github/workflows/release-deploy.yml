@@ -23,7 +23,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           skip-on-empty: 'false'
-          pre-commit: scripts/pre-commit.js
+          pre-commit: scripts/pre-commit.cjs
           git-message: 'chore(release): {version}'
 
       - name: Build

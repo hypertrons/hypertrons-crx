@@ -1,6 +1,10 @@
-const chromeWebstoreUpload = require('chrome-webstore-upload');
-const path = require('path');
-const fs = require('fs');
+import chromeWebstoreUpload from 'chrome-webstore-upload';
+import { fileURLToPath } from 'url';
+import path, { dirname } from 'path';
+import fs from 'fs';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const ZIP_PATH = path.join(__dirname, '..', '/release/hypercrx.zip');
 
