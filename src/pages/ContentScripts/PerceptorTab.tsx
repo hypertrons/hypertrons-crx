@@ -3,7 +3,6 @@ import * as pageDetect from 'github-url-detection';
 import { utils } from 'github-url-detection';
 import { isPerceptor, runsWhen, isPublicRepo } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
-import { inject2Perceptor } from './Perceptor';
 import { render } from 'react-dom';
 import React from 'react';
 import TeachingBubbleWrapper from './TeachingBubbleWrapper';
@@ -97,4 +96,4 @@ class PerceptorTab extends PerceptorBase {
   }
 }
 
-inject2Perceptor(PerceptorTab);
+export default PerceptorTab;

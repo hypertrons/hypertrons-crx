@@ -8,7 +8,6 @@ import {
   getMessageByLocale,
 } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
-import { inject2Perceptor } from './Perceptor';
 import Settings, { loadSettings } from '../../utils/settings';
 import { utils } from 'github-url-detection';
 import { getRepoActiInfl } from '../../api/repo';
@@ -156,4 +155,4 @@ class RepoActiInflTrend extends PerceptorBase {
   }
 }
 
-inject2Perceptor(RepoActiInflTrend);
+export default RepoActiInflTrend;

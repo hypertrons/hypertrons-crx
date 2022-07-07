@@ -22,7 +22,6 @@ import {
 } from '../../services/hypertrons';
 import { getMessageByLocale, runsWhen } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
-import { inject2Perceptor } from './Perceptor';
 import logger from '../../utils/logger';
 import Settings, { loadSettings } from '../../utils/settings';
 import { getConfigFromGithub } from '../../api/github';
@@ -260,4 +259,4 @@ class Hypertrons extends PerceptorBase {
   }
 }
 
-inject2Perceptor(Hypertrons);
+export default Hypertrons;

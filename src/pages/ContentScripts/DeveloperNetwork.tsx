@@ -16,7 +16,6 @@ import {
 } from '../../api/developer';
 import { runsWhen, getMessageByLocale } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
-import { inject2Perceptor } from './Perceptor';
 import Settings, { loadSettings } from '../../utils/settings';
 import Graph from '../../components/Graph/Graph';
 import TeachingBubbleWrapper from './TeachingBubbleWrapper';
@@ -386,4 +385,4 @@ class DeveloperNetwork extends PerceptorBase {
   }
 }
 
-inject2Perceptor(DeveloperNetwork);
+export default DeveloperNetwork;

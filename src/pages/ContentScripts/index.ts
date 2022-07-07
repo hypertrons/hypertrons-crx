@@ -2,16 +2,26 @@
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 initializeIcons();
 
-import './DeveloperActiInflTrend';
-import './RepoActiInflTrend';
-import './PerceptorTab';
-import './PerceptorLayout';
-import './DeveloperNetwork';
-import './ProjectNetwork';
-import './Hypertrons';
-import './content.styles.css';
-import { Perceptor } from './Perceptor';
 import { loadSettings } from '../../utils/settings';
+import { inject2Perceptor, Perceptor } from './Perceptor';
+
+import DeveloperActiInflTrend from './DeveloperActiInflTrend';
+import RepoActiInflTrend from './RepoActiInflTrend';
+import PerceptorTab from './PerceptorTab';
+import PerceptorLayout from './PerceptorLayout';
+import DeveloperNetwork from './DeveloperNetwork';
+import ProjectNetwork from './ProjectNetwork';
+import Hypertrons from './Hypertrons';
+
+import './content.styles.css';
+
+inject2Perceptor(DeveloperActiInflTrend);
+inject2Perceptor(RepoActiInflTrend);
+inject2Perceptor(PerceptorTab);
+inject2Perceptor(PerceptorLayout);
+inject2Perceptor(DeveloperNetwork);
+inject2Perceptor(ProjectNetwork);
+inject2Perceptor(Hypertrons);
 
 async function mainInject() {
   const settings = await loadSettings();
