@@ -1,4 +1,8 @@
-# 1.6.0 (2022-06-25)
+## [1.6.1](https://github.com/hypertrons/hypertrons-crx/compare/v1.6.0...v1.6.1) (2022-07-07)
+
+
+
+# [1.6.0](https://github.com/hypertrons/hypertrons-crx/compare/7a41836b12f4d2c312c71d077341ee4f59dea0bc...v1.6.0) (2022-06-25)
 
 
 ### Bug Fixes
