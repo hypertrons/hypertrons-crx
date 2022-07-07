@@ -3,10 +3,8 @@ import { render } from 'react-dom';
 import $ from 'jquery';
 import { isPerceptor, runsWhen } from '../utils/utils';
 import PerceptorBase from './PerceptorBase';
+import PerceptorLayoutView from '../views/PerceptorLayout';
 
-const PerceptorLayoutView: React.FC = () => {
-  return <div />;
-};
 @runsWhen([isPerceptor])
 class PerceptorLayout extends PerceptorBase {
   public async run(): Promise<void> {
