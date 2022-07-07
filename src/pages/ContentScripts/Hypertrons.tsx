@@ -22,7 +22,6 @@ import {
 } from '../../services/hypertrons';
 import { getMessageByLocale, runsWhen } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
-import { inject2Perceptor } from './Perceptor';
 import logger from '../../utils/logger';
 import Settings, { loadSettings } from '../../utils/settings';
 import { getConfigFromGithub } from '../../api/github';
@@ -206,6 +205,7 @@ const HypertronsTabView: React.FC<HypertronsTabViewProps> = ({
               const styleIndex = index % (LabelStyles.length - 1);
               return (
                 <div
+                  key={`command_${index}`}
                   // @ts-ignore
                   style={Label2Style(LabelStyles[styleIndex])}
                   className="IssueLabel hx_IssueLabel"
@@ -260,4 +260,4 @@ class Hypertrons extends PerceptorBase {
   }
 }
 
-inject2Perceptor(Hypertrons);
+export default Hypertrons;

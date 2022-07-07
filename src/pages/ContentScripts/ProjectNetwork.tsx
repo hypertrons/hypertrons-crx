@@ -14,7 +14,6 @@ import { isPerceptor, runsWhen } from '../../utils/utils';
 import { getRepoCorrelation, getDevelopersByRepo } from '../../api/repo';
 import { getMessageByLocale } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
-import { inject2Perceptor } from './Perceptor';
 import Settings, { loadSettings } from '../../utils/settings';
 import ErrorPage from '../../components/ExceptionPage/ErrorPage';
 
@@ -282,4 +281,4 @@ class ProjectNetwork extends PerceptorBase {
   }
 }
 
-inject2Perceptor(ProjectNetwork);
+export default ProjectNetwork;
