@@ -8,7 +8,6 @@ import {
   getMessageByLocale,
 } from '../../utils/utils';
 import PerceptorBase from './PerceptorBase';
-import { inject2Perceptor } from './Perceptor';
 import Settings, { loadSettings } from '../../utils/settings';
 import { getDeveloperActiInfl } from '../../api/developer';
 import Bars from '../../components/Bars/index';
@@ -136,4 +135,4 @@ class DeveloperActiInflTrend extends PerceptorBase {
   }
 }
 
-inject2Perceptor(DeveloperActiInflTrend);
+export default DeveloperActiInflTrend;
