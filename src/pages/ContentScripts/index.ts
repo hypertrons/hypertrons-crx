@@ -1,3 +1,11 @@
+const injected = document.createElement('script');
+injected.src = chrome.runtime.getURL('injectedScript.bundle.js');
+console.log(injected);
+injected.onload = function () {
+  injected.remove();
+};
+(document.head || document.documentElement).appendChild(injected);
+
 // initializeIcons() should only be called once per app and must be called before rendering any components.
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 initializeIcons();
