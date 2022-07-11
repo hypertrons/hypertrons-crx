@@ -5,3 +5,7 @@ document.addEventListener('turbo:before-visit', () => {
     }
   });
 });
+
+document.addEventListener('turbo:load', () => {
+  window.postMessage('turbo:load', '*');
+});

@@ -39,17 +39,10 @@ async function mainInject() {
   }
 }
 
-mainInject();
-
-// send a message to indirectly tell background this contentscript's tabId
-chrome.runtime.sendMessage('Hey background, take my tabId!', (response) => {
-  if (response === 'Hey contentscript, copy that!') {
-    console.log('From background: Hey contentscript, copy that!');
-  }
-});
-
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message === 'url changed') {
+window.addEventListener('message', function (event) {
+  // Only accept messages from the same frame
+  if (event.source !== window) return;
+  if (event.data === 'turbo:load') {
     mainInject();
   }
 });
