@@ -71,8 +71,8 @@ chrome.notifications.onClicked.addListener(async function (notificationId) {
   chrome.notifications.clear(notificationId);
 });
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  const type = request.task_type;
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  const type = message.task_type;
   if (type === 'get_username_from_cookie') {
     chrome.cookies.get(
       {

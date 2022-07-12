@@ -20,8 +20,12 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["content.styles.css", "main.png"],
-      "matches": []
+      "resources": [
+        "content.styles.css",
+        "main.png",
+        "injectedScript.bundle.js"
+      ],
+      "matches": ["<all_urls>"]
     }
   ],
   "permissions": ["storage", "notifications", "alarms", "cookies"],
