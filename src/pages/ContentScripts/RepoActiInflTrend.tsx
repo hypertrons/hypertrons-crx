@@ -13,16 +13,7 @@ import { utils } from 'github-url-detection';
 import { getRepoActiInfl } from '../../api/repo';
 import Bars from '../../components/Bars/index';
 
-let githubTheme = getGithubTheme();
-/*若是根据系统主题自动切换*/
-if (githubTheme === 'auto') {
-  /*判断是否处于深色模式*/
-  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    githubTheme = 'dark';
-  } else {
-    githubTheme = 'light';
-  }
-}
+const githubTheme = getGithubTheme();
 
 interface RepoActiInflTrendViewProps {
   currentRepo: string;
