@@ -1,3 +1,13 @@
+## [1.6.2](https://github.com/hypertrons/hypertrons-crx/compare/v1.6.1...v1.6.2) (2022-07-12)
+
+
+### Bug Fixes
+
+* fatal issue 382 ([#396](https://github.com/hypertrons/hypertrons-crx/issues/396)) ([31688ff](https://github.com/hypertrons/hypertrons-crx/commit/31688ff4c9470d2c14fabb20d1c3c3bc2ba28612))
+* using dark theme in day time or vice verse is not considered ([#401](https://github.com/hypertrons/hypertrons-crx/issues/401)) ([1771cc7](https://github.com/hypertrons/hypertrons-crx/commit/1771cc7e347ff2b25913e0f6ef51a55709fd54b7))
+
+
+
 ## [1.6.1](https://github.com/hypertrons/hypertrons-crx/compare/v1.6.0...v1.6.1) (2022-07-07)
 
 

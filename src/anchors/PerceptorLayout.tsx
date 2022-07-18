@@ -9,9 +9,7 @@ import PerceptorLayoutView from '../views/PerceptorLayout';
 class PerceptorLayout extends PerceptorBase {
   public async run(): Promise<void> {
     // remove the original container
-    const parentContainer = $('#repo-content-pjax-container').children(
-      'div.clearfix.container-xl'
-    );
+    const parentContainer = $('div.clearfix.container-xl:first');
     parentContainer.children('div.Layout').remove();
 
     // create the new one : percepter container
