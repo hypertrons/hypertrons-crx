@@ -14,13 +14,6 @@ export class Perceptor extends PerceptorBase {
 
     await this.checkSettings();
     await this.loadFeatures();
-    /**
-     * @zh-CN 检测到页面更新加载时，自动重新运行一次
-     * @en-US Automatically rerun once when page update loading is detected
-     */
-    document.addEventListener('pjax:end', async () => {
-      await this.loadFeatures();
-    });
   }
 
   private async checkSettings(): Promise<void> {
