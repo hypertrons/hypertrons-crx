@@ -17,34 +17,34 @@ You can find these dashboards in:
 
 <table>
   <thead>
-    <tr>
-      <th width="50%">Entrance 1: GitHub User's Profile Page</th>
-      <th width="50%">Entrance 2: GitHub Repository Page</th>
-    </tr>
+	<tr>
+	  <th width="50%">Entrance 1: GitHub User's Profile Page</th>
+	  <th width="50%">Entrance 2: GitHub Repository Page</th>
+	</tr>
   </thead>
   <tbody>
-    <tr>
-      <td>
-        <img
-          src="https://user-images.githubusercontent.com/32434520/180445548-63d5e0ce-635f-4e7b-bed7-e4bcbf2dc8c4.png"
-        />
-      </td>
-      <td>
-        <img
-          src="https://user-images.githubusercontent.com/32434520/180447103-76ff1e25-ec35-4e7f-bd54-9d98545ca1df.png"
-        />
-        <img
-          src="https://user-images.githubusercontent.com/32434520/180446790-50b6a53b-119e-4b74-a08d-dda146fb9f29.png"
-        />
-      </td>
-    </tr>
+	<tr>
+	  <td>
+		<img
+		  src="https://user-images.githubusercontent.com/32434520/180445548-63d5e0ce-635f-4e7b-bed7-e4bcbf2dc8c4.png"
+		/>
+	  </td>
+	  <td>
+		<img
+		  src="https://user-images.githubusercontent.com/32434520/180447103-76ff1e25-ec35-4e7f-bd54-9d98545ca1df.png"
+		/>
+		<img
+		  src="https://user-images.githubusercontent.com/32434520/180446790-50b6a53b-119e-4b74-a08d-dda146fb9f29.png"
+		/>
+	  </td>
+	</tr>
   </tbody>
 </table>
 
 
 ### Project Releated
 
-<table>
+<!-- <table>
 	<tr>
 		<th width="33%">
 			<p> Project Correlation Network
@@ -55,7 +55,14 @@ You can find these dashboards in:
 		<th width="34%">
 			<p>Project Activity & Influence Trend
 			<p><img src="https://user-images.githubusercontent.com/90528630/171828864-2aeb8a30-bce8-4544-839d-834fc2720a46.gif">
-</table>
+</table> -->
+a = <img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-prn.gif">
+b = <img src="https://user-images.githubusercontent.com/90528630/171819879-d76a3f01-444a-4544-8d46-de539c5684c3.gif">
+b = <img src="https://user-images.githubusercontent.com/90528630/171828864-2aeb8a30-bce8-4544-839d-834fc2720a46.gif">
+
+| Project Correlation Network | Developer Collabration Network within Project | Project Activity & Influence Trend |
+| --------------------------- | --------------------------------------------- | ---------------------------------- |
+| a                           | b                                             | c                                  |
 
 - **Project Correlation Network**: Project Correlation Network shows the correlation between projects for a given time period. From this graph you can find the projects that are related to the given project.
 
@@ -118,7 +125,7 @@ Please read [CONTRIBUTING](./CONTRIBUTING.md) if you are new here or not familia
 
    5. Keep "service worker" DevTools page open ([why?](https://github.com/hypertrons/hypertrons-crx/pull/274#discussion_r811878203))
 
-      ![](./assets/keep-service-worker-devtools-open.jpeg)
+	  ![](./assets/keep-service-worker-devtools-open.jpeg)
 
 6. Happy hacking!
 
