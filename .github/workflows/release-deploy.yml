@@ -40,7 +40,7 @@ jobs:
           artifacts: "release/hypercrx.*"
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ steps.changelog.outputs.tag }}
-          body: ${{ steps.changelog.outputs.clean_changelog }}
+          generateReleaseNotes: true
 
       - name: Deploy
         run: |
