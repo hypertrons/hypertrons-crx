@@ -19,39 +19,47 @@ const EDGE_CLIENT_ID = process.env.EDGE_CLIENT_ID;
 const EDGE_CLIENT_SECRET = process.env.EDGE_CLIENT_SECRET;
 const EDGE_ACCESS_TOKEN_URL = process.env.EDGE_ACCESS_TOKEN_URL;
 
-// upload to chrome webstore
-console.log('Start deploying to chrome webstore...');
+const deployToChrome = async () => {
+  const chromeStore = chromeWebstoreUpload({
+    extensionId: CHROME_EXTENSION_ID,
+    clientId: CHROME_CLIENT_ID,
+    clientSecret: CHROME_CLIENT_SECRET,
+    refreshToken: CHROME_REFRESH_TOKEN,
+  });
 
-const chromeStore = chromeWebstoreUpload({
-  extensionId: CHROME_EXTENSION_ID,
-  clientId: CHROME_CLIENT_ID,
-  clientSecret: CHROME_CLIENT_SECRET,
-  refreshToken: CHROME_REFRESH_TOKEN,
-});
+  const zipFile = fs.createReadStream(ZIP_PATH);
 
-const zipFile = fs.createReadStream(ZIP_PATH);
-
-(async () => {
   const token = await chromeStore.fetchToken();
 
   const uploadRes = await chromeStore.uploadExisting(zipFile, token);
   console.log({ uploadRes });
 
-  const publishRes = await chromeStore.publish('default', token);
-  console.log({ publishRes });
+  if (uploadRes.uploadState !== 'FAILURE') {
+    const publishRes = await chromeStore.publish('default', token);
+    console.log({ publishRes });
+  }
+};
+
+const deployToEdge = async () => {
+  const edgeStore = new EdgeAddonsAPI({
+    productId: EDGE_PRODUCT_ID,
+    clientId: EDGE_CLIENT_ID,
+    clientSecret: EDGE_CLIENT_SECRET,
+    accessTokenUrl: EDGE_ACCESS_TOKEN_URL,
+  });
+
+  const publishResp = await edgeStore.submit({
+    filePath: ZIP_PATH,
+    notes: 'Updating extension.',
+  });
+
+  console.log('publishResp: ', publishResp);
+};
+
+(async () => {
+  console.log('Start deploying to chrome webstore...');
+  await deployToChrome();
+
+  console.log('Start deploying to edge add-on store...');
+  await deployToEdge();
 })();
-
-// upload to edge add-on store
-console.log('Start deploying to edge add-on store...');
-
-const edgeStore = new EdgeAddonsAPI({
-  productId: EDGE_PRODUCT_ID,
-  clientId: EDGE_CLIENT_ID,
-  clientSecret: EDGE_CLIENT_SECRET,
-  accessTokenUrl: EDGE_ACCESS_TOKEN_URL,
-});
-
-await edgeStore.submit({
-  filePath: ZIP_PATH,
-  notes: 'Updating extension.',
-});
