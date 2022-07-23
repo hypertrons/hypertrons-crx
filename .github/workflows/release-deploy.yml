@@ -31,13 +31,18 @@ jobs:
           yarn install
           yarn run build
 
-      - name: zip to hypercrx.zip
-        run: zip release/hypercrx.zip -r build/*
+      - name: Zip to hypercrx.zip
+        run: zip -j release/hypercrx.zip build/*
+
+      - name: Append version to release file names
+        run: |
+          cp release/hypercrx.crx ${{format('release/hypercrx-{0}.crx', steps.changelog.outputs.tag)}}
+          cp release/hypercrx.zip ${{format('release/hypercrx-{0}.zip', steps.changelog.outputs.tag)}}
 
       - name: Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "release/hypercrx.*"
+          artifacts: "release/hypercrx-v*.*"
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ steps.changelog.outputs.tag }}
           generateReleaseNotes: true
