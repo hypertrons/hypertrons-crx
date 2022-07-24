@@ -189,7 +189,7 @@ const HypertronsTabView: React.FC<HypertronsTabViewProps> = ({
           </Text>
           <Stack
             className={styles.buttons}
-            gap={8}
+            tokens={{ childrenGap: 8 }}
             horizontal
             horizontalAlign="center"
             wrap

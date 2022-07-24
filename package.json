@@ -38,6 +38,7 @@
     "@babel/plugin-proposal-class-properties": "^7.16.7",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
+    "@plasmohq/edge-addons-api": "^1.0.1",
     "@types/chrome": "^0.0.177",
     "@types/jest": "^27.4.0",
     "@types/jquery": "^3.5.13",
