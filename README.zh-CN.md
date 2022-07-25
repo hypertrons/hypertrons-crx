@@ -1,4 +1,4 @@
-Language : [US](./README.md) | zh-CN
+Language : [English](./README.md) | zh-CN
 
 <h1 align="center">Hypercrx</h1>
 

@@ -1,4 +1,4 @@
-Language : [US](./INSTALLATION.md) | zh-CN
+Language : [English](./INSTALLATION.md) | zh-CN
 
 # 安装指南
 

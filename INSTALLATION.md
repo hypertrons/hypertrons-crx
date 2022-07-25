@@ -1,4 +1,4 @@
-Language : US | [zh-CN](./INSTALLATION.zh-CN.md)
+Language : English | [zh-CN](./INSTALLATION.zh-CN.md)
 
 # Installation Guide
 
