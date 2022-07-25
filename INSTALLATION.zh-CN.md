@@ -22,26 +22,32 @@ Hypertrons-crx 现已登陆 [Chrome 网上应用商店](https://chrome.google.co
 
 2. 此时插件已成功安装，您可以在 GitHub 任一开发者/仓库主页面看到以下效果图：
 
-<table> 
-   <thead> 
-     <tr> 
-       <th width="50%">Entrance 1: GitHub User's Profile Page</th> 
-       <th width="50%">Entrance 2: GitHub Repository Page</th> 
-     </tr> 
-   </thead> 
-   <tbody> 
-     <tr> 
-       <td> 
-			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-perceptor-entrance-1.png">
-			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_influence_location_dev.png">
-       </td> 
-       <td>
-   			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_activity%26influence_location.png">
-			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-perceptor-entrance-2.png">
-              </td>
-     </tr> 
-   </tbody> 
- </table> 
+<table>
+  <thead>
+    <tr>
+      <th width="50%">Entrance 1: GitHub User's Profile Page</th>
+      <th width="50%">Entrance 2: GitHub Repository Page</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <img
+          src="https://user-images.githubusercontent.com/32434520/180445548-63d5e0ce-635f-4e7b-bed7-e4bcbf2dc8c4.png"
+        />
+      </td>
+      <td>
+        <img
+          src="https://user-images.githubusercontent.com/32434520/180447103-76ff1e25-ec35-4e7f-bd54-9d98545ca1df.png"
+        />
+        <img
+          src="https://user-images.githubusercontent.com/32434520/180446790-50b6a53b-119e-4b74-a08d-dda146fb9f29.png"
+        />
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 
 
 
