@@ -55,24 +55,30 @@ Hypertrons-crx 现已登陆 [Chrome 网上应用商店](https://chrome.google.co
 
 3. 如需对插件进行设置，请点击以下按钮，可以进入到插件设置页面。在设置页面，您可以更改相关配置。
 
-<table> 
-   <thead> 
-     <tr> 
-       <th width="50%">Chrome 浏览器</th> 
-       <th width="50%">Edge 浏览器</th> 
-     </tr> 
-   </thead> 
-   <tbody> 
-     <tr> 
-       <td> 
-<img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-chrome-ext-setting-zh-CN.png"  style="zoom:50%;" >
-       </td> 
-       <td>
-<img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-edge-ext-setting-zh-CN.png" style="zoom:65%;" >
-              </td>
-     </tr> 
-   </tbody> 
- </table> 
+<table>
+  <thead>
+    <tr>
+      <th width="50%">Chrome 浏览器</th>
+      <th width="50%">Edge 浏览器</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <img
+          src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-chrome-ext-setting-zh-CN.png"
+          style="zoom: 50%"
+        />
+      </td>
+      <td>
+        <img
+          src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-edge-ext-setting-zh-CN.png"
+          style="zoom: 65%"
+        />
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 
 ## 手动下载安装包

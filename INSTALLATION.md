@@ -49,24 +49,30 @@ We welcome users to install and try our Hypertrons Chrome Extension. If you have
 
 3. You can change configuration of hypertrons-crx by visiting the setting page:
 
-<table> 
-   <thead> 
-     <tr> 
-       <th width="50%"> If Chrome</th> 
-       <th width="50%">If Edge</th> 
-     </tr> 
-   </thead> 
-   <tbody> 
-     <tr> 
-       <td> 
-<img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-chrome-ext-setting.png"  style="zoom:50%;" >
-       </td> 
-       <td>
-<img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-edge-ext-setting.png" style="zoom:65%;" >
-              </td>
-     </tr> 
-   </tbody> 
- </table> 
+<table>
+  <thead>
+    <tr>
+      <th width="50%">If Chrome</th>
+      <th width="50%">If Edge</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <img
+          src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-chrome-ext-setting.png"
+          style="zoom: 50%"
+        />
+      </td>
+      <td>
+        <img
+          src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-edge-ext-setting.png"
+          style="zoom: 65%"
+        />
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 
 ## Install from released package
