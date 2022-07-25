@@ -17,9 +17,9 @@ We welcome users to install and try our Hypertrons Chrome Extension. If you have
 <table> 
    <thead> 
      <tr> 
-       <th width="33%">项目关系网络图</th> 
-       <th width="33%">项目活跃开发者协作网络图</th> 
-       <th width="34%">项目活跃度&影响力趋势图</th> 
+       <th width="33%">Project Correlation Network</th> 
+       <th width="33%">Developer Collabration Network within Project</th> 
+       <th width="34%">Project Activity & Influence Trend</th> 
      </tr> 
    </thead> 
    <tbody> 
