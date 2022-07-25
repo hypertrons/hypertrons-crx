@@ -14,33 +14,7 @@ We welcome users to install and try our Hypertrons Chrome Extension. If you have
 
 1. [Edge] Visit [Edge Extensions Home](https://microsoftedge.microsoft.com/addons/detail/hypercrx/lbbajaehiibofpconjgdjonmkidpcome?hl=zh-CN), and click **[Get]**.
 
-<table> 
-   <thead> 
-     <tr> 
-       <th width="33%">Project Correlation Network</th> 
-       <th width="33%">Developer Collabration Network within Project</th> 
-       <th width="34%">Project Activity & Influence Trend</th> 
-     </tr> 
-   </thead> 
-   <tbody> 
-     <tr> 
-       <td> 
-         <img 
-           src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-prn.gif"
-         /> 
-       </td> 
-       <td> 
-         <img 
-           src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-dcnp.gif"
-         /> 
-       </td> 
-       <td>
-         <img 
-           src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_activity%26influence.gif"
-         /> </td>
-     </tr> 
-   </tbody> 
- </table> 
+<img src="assets/en/installation-edge-1.png">
 
 2. Then you can find the dashboards in:
 
