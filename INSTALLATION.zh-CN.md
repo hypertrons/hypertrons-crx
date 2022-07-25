@@ -1,4 +1,4 @@
-Language : [US](./INSTALLATION.md) | zh-CN
+Language : [English](./INSTALLATION.md) | 中文
 
 # 安装指南
 
@@ -12,39 +12,74 @@ Hypertrons-crx 现已登陆 [Chrome 网上应用商店](https://chrome.google.co
 
 ### Chrome 浏览器 / Edge 浏览器
 
-1. [Choreme]点击 [此链接](https://chrome.google.com/webstore/detail/hypercrx/ijchfbpdgeljmhnhokmekkecpbdkgabc) 访问 “Hypercrx” 扩展程序主页，点击 “添加至 Chrome” ，并确认。
+1. 安装Hypertrons-crx插件
+
+[Chrome]点击 [此链接](https://chrome.google.com/webstore/detail/hypercrx/ijchfbpdgeljmhnhokmekkecpbdkgabc) 访问 “Hypercrx” 扩展程序主页，点击 “添加至 Chrome” ，并确认。
 
 <img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-cws-zh-CN.png">
 
-1. [Edge]点击[此链接](https://microsoftedge.microsoft.com/addons/detail/hypercrx/lbbajaehiibofpconjgdjonmkidpcome?hl=zh-CN) 访问 “Hypercrx” 扩展程序主页，点击 “获取” ，在网页弹窗中点击 “添加扩展” ，当浏览器右上角出现 “Hypercrx” 图标，即表示安装完成。
+[Edge]点击[此链接](https://microsoftedge.microsoft.com/addons/detail/hypercrx/lbbajaehiibofpconjgdjonmkidpcome?hl=zh-CN) 访问 “Hypercrx” 扩展程序主页，点击 “获取” ，在网页弹窗中点击 “添加扩展” ，当浏览器右上角出现 “Hypercrx” 图标，即表示安装完成。
 
 <img src="assets/zh-CN/installation-edge-1.png">
 
 2. 此时插件已成功安装，您可以在 GitHub 任一开发者/仓库主页面看到以下效果图：
 
 <table>
-	<tr>
-		<th width="50%">
-			<p>Entrance 1: GitHub User's Profile Page
-			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-perceptor-entrance-1.png">
-			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_influence_location_dev.png">
-		<th width="50%">
-			<p>Entrance 2: GitHub Repository Page
-			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_activity%26influence_location.png">
-			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-perceptor-entrance-2.png">
+  <thead>
+    <tr>
+      <th width="50%">Entrance 1: GitHub User's Profile Page</th>
+      <th width="50%">Entrance 2: GitHub Repository Page</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <img
+          src="https://user-images.githubusercontent.com/32434520/180445548-63d5e0ce-635f-4e7b-bed7-e4bcbf2dc8c4.png"
+        />
+      </td>
+      <td>
+        <img
+          src="https://user-images.githubusercontent.com/32434520/180447103-76ff1e25-ec35-4e7f-bd54-9d98545ca1df.png"
+        />
+        <img
+          src="https://user-images.githubusercontent.com/32434520/180446790-50b6a53b-119e-4b74-a08d-dda146fb9f29.png"
+        />
+      </td>
+    </tr>
+  </tbody>
 </table>
+
+
+
 
 3. 如需对插件进行设置，请点击以下按钮，可以进入到插件设置页面。在设置页面，您可以更改相关配置。
 
 <table>
-	<tr>
-		<th width="50%">
-      <p> Chrome 浏览器
-      <p> <img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-chrome-ext-setting-zh-CN.png">
-		<th width="50%">
-			<p> Edge 浏览器
-      <p> <img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-edge-ext-setting-zh-CN.png">
+  <thead>
+    <tr>
+      <th width="50%">Chrome 浏览器</th>
+      <th width="50%">Edge 浏览器</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <img
+          src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-chrome-ext-setting-zh-CN.png"
+          style="zoom: 50%"
+        />
+      </td>
+      <td>
+        <img
+          src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-edge-ext-setting-zh-CN.png"
+          style="zoom: 65%"
+        />
+      </td>
+    </tr>
+  </tbody>
 </table>
+
 
 ## 手动下载安装包
 

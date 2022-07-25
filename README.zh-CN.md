@@ -1,4 +1,4 @@
-Language : [US](./README.md) | zh-CN
+Language : [English](./README.md) | 中文
 
 <h1 align="center">Hypercrx</h1>
 
@@ -45,18 +45,34 @@ Hypertrons 浏览器插件项目旨在通过直接往 GitHub 页面中插入各�
 
 ### 项目关系挖掘
 
-<table>
-  <tr>
-    <th width="33%">
-      <p> 项目关系网络图
-      <p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-prn.gif">
-    <th width="33%">
-      <p>项目活跃开发者协作网络图
-      <p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-dcnp.gif">
-    <th width="34%">
-      <p>项目活跃度&影响力趋势图
-      <p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_activity%26influence.gif">
-</table>
+ <table> 
+   <thead> 
+     <tr> 
+       <th width="33%">项目关系网络图</th> 
+       <th width="33%">项目活跃开发者协作网络图</th> 
+       <th width="34%">项目活跃度&影响力趋势图</th> 
+     </tr> 
+   </thead> 
+   <tbody> 
+     <tr> 
+       <td> 
+         <img 
+           src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-prn.gif"
+         /> 
+       </td> 
+       <td> 
+         <img 
+           src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-dcnp.gif"
+         /> 
+       </td> 
+       <td>
+         <img 
+           src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_activity%26influence.gif"
+         /> </td>
+     </tr> 
+   </tbody> 
+ </table> 
+
 
 - **项目关系网络图**: 项目关系网络图展示了在给定的时间段内，项目与项目之间的联结关系，**_用于项目间关系的追踪与挖掘_**。从该网络图中，可以找出与该项目有联结关系的其他项目。
 
@@ -66,18 +82,34 @@ Hypertrons 浏览器插件项目旨在通过直接往 GitHub 页面中插入各�
 
 ### 开发者关系挖掘
 
-<table>
-  <tr>
-    <th width="33%">
-      <p>开发者协作网络图
-      <p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-dcn.gif">
-    <th width="33%">
-      <p>开发者活跃仓库网络图
-      <p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-dmpr.gif">
-    <th width="34%">
-      <p>开发者活跃度&影响力趋势图
-      <p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_activity%26influence.gif">
-</table>
+ <table> 
+   <thead> 
+     <tr> 
+       <th width="33%">开发者协作网络图</th> 
+       <th width="33%">开发者活跃仓库网络图</th> 
+       <th width="34%">开发者活跃度&影响力趋势图</th> 
+     </tr> 
+   </thead> 
+   <tbody> 
+     <tr> 
+       <td> 
+         <img 
+           src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-dcn.gif"
+         /> 
+       </td> 
+       <td> 
+         <img 
+           src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-dmpr.gif"
+         /> 
+       </td> 
+       <td>
+         <img 
+           src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_activity%26influence.gif"
+         /> </td>
+     </tr> 
+   </tbody> 
+ </table> 
+
 
 
 - **开发者协作网络图**: 开发者协作网络图展示了在给定的时间段内，开发者与开发者之间的协作关系, ***用于开发者关系的追踪与挖掘***。从该网络图中，可以找出与指定开发者联系较为紧密的其他开发者。
@@ -86,7 +118,7 @@ Hypertrons 浏览器插件项目旨在通过直接往 GitHub 页面中插入各�
 
 ## 安装与使用 📢
 
-[link-chrome]: https://chrome.google.com/webstore/detail/hypercrx/ijchfbpdgeljmhnhokmekkecpbdkgabc 'Version published on Chrome Web Store'
+[link-chrome]: https://chrome.google.com/webstore/detail/hypercrx/ijchfbpdgeljmhnhokmekkecpbdkgabc "Version published on Chrome Web Store"
 
 [link-edge]:https://microsoftedge.microsoft.com/addons/detail/hypercrx/lbbajaehiibofpconjgdjonmkidpcome?hl=zh-CN
 
