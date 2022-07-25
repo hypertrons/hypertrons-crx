@@ -12,11 +12,13 @@ Hypertrons-crx 现已登陆 [Chrome 网上应用商店](https://chrome.google.co
 
 ### Chrome 浏览器 / Edge 浏览器
 
-1. [Chrome]点击 [此链接](https://chrome.google.com/webstore/detail/hypercrx/ijchfbpdgeljmhnhokmekkecpbdkgabc) 访问 “Hypercrx” 扩展程序主页，点击 “添加至 Chrome” ，并确认。
+1. 安装Hypertrons-crx插件
+
+[Chrome]点击 [此链接](https://chrome.google.com/webstore/detail/hypercrx/ijchfbpdgeljmhnhokmekkecpbdkgabc) 访问 “Hypercrx” 扩展程序主页，点击 “添加至 Chrome” ，并确认。
 
 <img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-cws-zh-CN.png">
 
-1. [Edge]点击[此链接](https://microsoftedge.microsoft.com/addons/detail/hypercrx/lbbajaehiibofpconjgdjonmkidpcome?hl=zh-CN) 访问 “Hypercrx” 扩展程序主页，点击 “获取” ，在网页弹窗中点击 “添加扩展” ，当浏览器右上角出现 “Hypercrx” 图标，即表示安装完成。
+[Edge]点击[此链接](https://microsoftedge.microsoft.com/addons/detail/hypercrx/lbbajaehiibofpconjgdjonmkidpcome?hl=zh-CN) 访问 “Hypercrx” 扩展程序主页，点击 “获取” ，在网页弹窗中点击 “添加扩展” ，当浏览器右上角出现 “Hypercrx” 图标，即表示安装完成。
 
 <img src="assets/zh-CN/installation-edge-1.png">
 
