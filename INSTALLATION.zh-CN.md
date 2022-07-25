@@ -22,29 +22,50 @@ Hypertrons-crx 现已登陆 [Chrome 网上应用商店](https://chrome.google.co
 
 2. 此时插件已成功安装，您可以在 GitHub 任一开发者/仓库主页面看到以下效果图：
 
-<table>
-	<tr>
-		<th width="50%">
-			<p>Entrance 1: GitHub User's Profile Page
+<table> 
+   <thead> 
+     <tr> 
+       <th width="50%">Entrance 1: GitHub User's Profile Page</th> 
+       <th width="50%">Entrance 2: GitHub Repository Page</th> 
+     </tr> 
+   </thead> 
+   <tbody> 
+     <tr> 
+       <td> 
 			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-perceptor-entrance-1.png">
 			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_influence_location_dev.png">
-		<th width="50%">
-			<p>Entrance 2: GitHub Repository Page
-			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_activity%26influence_location.png">
+       </td> 
+       <td>
+   			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_activity%26influence_location.png">
 			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-perceptor-entrance-2.png">
-</table>
+              </td>
+     </tr> 
+   </tbody> 
+ </table> 
+
+
 
 3. 如需对插件进行设置，请点击以下按钮，可以进入到插件设置页面。在设置页面，您可以更改相关配置。
 
-<table>
-	<tr>
-		<th width="50%">
-      <p> Chrome 浏览器
-      <p> <img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-chrome-ext-setting-zh-CN.png">
-		<th width="50%">
-			<p> Edge 浏览器
-      <p> <img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-edge-ext-setting-zh-CN.png">
-</table>
+<table> 
+   <thead> 
+     <tr> 
+       <th width="50%">Chrome 浏览器</th> 
+       <th width="50%">Edge 浏览器</th> 
+     </tr> 
+   </thead> 
+   <tbody> 
+     <tr> 
+       <td> 
+<img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-chrome-ext-setting-zh-CN.png"  style="zoom:50%;" >
+       </td> 
+       <td>
+<img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-edge-ext-setting-zh-CN.png" style="zoom:65%;" >
+              </td>
+     </tr> 
+   </tbody> 
+ </table> 
+
 
 ## 手动下载安装包
 
