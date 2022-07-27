@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { IButtonProps, TeachingBubble } from 'office-ui-fabric-react';
 import { useBoolean } from '@fluentui/react-hooks';
-import { chromeSet, getMessageByLocale } from '../utils/utils';
-import MetaData, { loadMetaData } from '../utils/metadata';
-import Settings, { loadSettings } from '../utils/settings';
+import { chromeSet, getMessageByLocale } from '../../utils/utils';
+import MetaData, { loadMetaData } from '../../utils/metadata';
+import Settings, { loadSettings } from '../../utils/settings';
 
 export interface TeachingBubbleProps {
   target: string;
 }
 
-const TeachingBubbleWrapper: React.FC<TeachingBubbleProps> = ({ target }) => {
+const TeachingBubbleWrapperView: React.FC<TeachingBubbleProps> = ({
+  target,
+}) => {
   const [metaData, setMetaData] = useState(new MetaData());
   const [inited, setInited] = useState(false);
   const [settings, setSettings] = useState(new Settings());
@@ -75,4 +77,4 @@ const TeachingBubbleWrapper: React.FC<TeachingBubbleProps> = ({ target }) => {
   );
 };
 
-export default TeachingBubbleWrapper;
+export default TeachingBubbleWrapperView;

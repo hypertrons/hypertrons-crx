@@ -15,9 +15,9 @@ import {
   LabelStyles,
   Label2Style,
   getUserNameFromCookie,
-} from '../services/hypertrons';
-import { getMessageByLocale, runsWhen } from '../utils/utils';
-import Settings, { loadSettings } from '../utils/settings';
+} from '../../services/hypertrons';
+import { getMessageByLocale, runsWhen } from '../../utils/utils';
+import Settings, { loadSettings } from '../../utils/settings';
 
 const styles = mergeStyleSets({
   callout: {
@@ -38,7 +38,7 @@ interface HypertronsTabViewProps {
   hypertronsConfig: any;
 }
 
-const HypertronsTabView: React.FC<HypertronsTabViewProps> = ({
+const HypertronsView: React.FC<HypertronsTabViewProps> = ({
   hypertronsConfig,
 }) => {
   const commandsInit: Command[] = [];
@@ -217,4 +217,4 @@ const HypertronsTabView: React.FC<HypertronsTabViewProps> = ({
   );
 };
 
-export default HypertronsTabView;
+export default HypertronsView;

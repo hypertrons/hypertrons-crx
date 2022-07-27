@@ -3,12 +3,12 @@ import { render } from 'react-dom';
 import $ from 'jquery';
 import { utils } from 'github-url-detection';
 import { isPerceptor, runsWhen } from '../utils/utils';
-import PerceptorBase from './PerceptorBase';
+import PerceptorBase from '../PerceptorBase';
 import { loadSettings } from '../utils/settings';
-import ProjectNetworkView from '../views/ProjectNetwork';
+import ProjectNetworkView from '../views/ProjectNetworkView/ProjectNetworkView';
 
 @runsWhen([isPerceptor])
-class ProjectNetwork extends PerceptorBase {
+class ProjectNetworkAnchor extends PerceptorBase {
   private _currentRepo: string;
 
   constructor() {
@@ -33,4 +33,4 @@ class ProjectNetwork extends PerceptorBase {
   }
 }
 
-export default ProjectNetwork;
+export default ProjectNetworkAnchor;

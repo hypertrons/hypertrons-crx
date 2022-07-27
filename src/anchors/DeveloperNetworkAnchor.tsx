@@ -4,11 +4,11 @@ import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
 import { runsWhen } from '../utils/utils';
 import { loadSettings } from '../utils/settings';
-import PerceptorBase from './PerceptorBase';
-import DeveloperNetworkView from '../views/DeveloperNetwork';
+import PerceptorBase from '../PerceptorBase';
+import DeveloperNetworkView from '../views/DeveloperNetworkView/DeveloperNetworkView';
 
 @runsWhen([pageDetect.isUserProfile])
-class DeveloperNetwork extends PerceptorBase {
+class DeveloperNetworkAnchor extends PerceptorBase {
   private _currentDeveloper: string;
 
   constructor() {
@@ -36,4 +36,4 @@ class DeveloperNetwork extends PerceptorBase {
   }
 }
 
-export default DeveloperNetwork;
+export default DeveloperNetworkAnchor;

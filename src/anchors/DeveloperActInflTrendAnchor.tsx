@@ -2,12 +2,12 @@ import React from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
-import PerceptorBase from './PerceptorBase';
+import PerceptorBase from '../PerceptorBase';
 import { runsWhen } from '../utils/utils';
-import DeveloperActiInflTrendView from '../views/DeveloperActiInflTrend';
+import DeveloperActiInflTrendView from '../views/DeveloperActiInflTrendView/DeveloperActiInflTrendView';
 
 @runsWhen([pageDetect.isUserProfile])
-class DeveloperActiInflTrend extends PerceptorBase {
+class DeveloperActiInflTrendAnchor extends PerceptorBase {
   private _currentDeveloper: string;
 
   constructor() {
@@ -32,4 +32,4 @@ class DeveloperActiInflTrend extends PerceptorBase {
   }
 }
 
-export default DeveloperActiInflTrend;
+export default DeveloperActiInflTrendAnchor;

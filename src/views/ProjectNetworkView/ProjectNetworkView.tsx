@@ -6,11 +6,11 @@ import {
   IDropdownOption,
   Spinner,
 } from 'office-ui-fabric-react';
-import Graph from '../components/Graph/Graph';
-import { getRepoCorrelation, getDevelopersByRepo } from '../api/repo';
-import { getMessageByLocale } from '../utils/utils';
-import Settings, { loadSettings } from '../utils/settings';
-import ErrorPage from '../components/ExceptionPage/ErrorPage';
+import Graph from '../../components/Graph/Graph';
+import { getRepoCorrelation, getDevelopersByRepo } from '../../api/repo';
+import { getMessageByLocale } from '../../utils/utils';
+import Settings, { loadSettings } from '../../utils/settings';
+import ErrorPage from '../../components/ExceptionPage/ErrorPage';
 
 interface ProjectNetworkViewProps {
   currentRepo: string;

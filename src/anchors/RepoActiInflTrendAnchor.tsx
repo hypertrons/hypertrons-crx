@@ -2,13 +2,13 @@ import React from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
-import PerceptorBase from './PerceptorBase';
+import PerceptorBase from '../PerceptorBase';
 import { runsWhen } from '../utils/utils';
 import { utils } from 'github-url-detection';
-import RepoActiInflTrendView from '../views/RepoActiInflTrend';
+import RepoActiInflTrendView from '../views/RepoActiInflTrendView/RepoActiInflTrendView';
 
 @runsWhen([pageDetect.isRepoHome])
-class RepoActiInflTrend extends PerceptorBase {
+class RepoActiInflTrendAnchor extends PerceptorBase {
   private _currentRepo: string;
 
   constructor() {
@@ -51,4 +51,4 @@ class RepoActiInflTrend extends PerceptorBase {
   }
 }
 
-export default RepoActiInflTrend;
+export default RepoActiInflTrendAnchor;

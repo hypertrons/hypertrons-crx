@@ -11,12 +11,12 @@ import {
 import {
   getDeveloperCollabration,
   getParticipatedProjects,
-} from '../api/developer';
-import { getMessageByLocale } from '../utils/utils';
-import Settings, { loadSettings } from '../utils/settings';
-import Graph from '../components/Graph/Graph';
-import TeachingBubbleWrapper from './TeachingBubbleWrapper';
-import ErrorPage from '../components/ExceptionPage/ErrorPage';
+} from '../../api/developer';
+import { getMessageByLocale } from '../../utils/utils';
+import Settings, { loadSettings } from '../../utils/settings';
+import Graph from '../../components/Graph/Graph';
+import TeachingBubbleWrapperView from '../TeachingBubbleWrapperView/TeachingBubbleWrapperView';
+import ErrorPage from '../../components/ExceptionPage/ErrorPage';
 
 interface DeveloperNetworkViewProps {
   currentDeveloper: string;
@@ -208,7 +208,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
           </ActionButton>
         </li>
       </ul>
-      <TeachingBubbleWrapper target="#developer-network" />
+      <TeachingBubbleWrapperView target="#developer-network" />
 
       <Dialog
         hidden={!showDeveloperDialog}

@@ -3,12 +3,12 @@ import { render } from 'react-dom';
 import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
 import { runsWhen } from '../utils/utils';
-import PerceptorBase from './PerceptorBase';
+import PerceptorBase from '../PerceptorBase';
 import logger from '../utils/logger';
-import HypertronsTabView from '../views/Hypertrons';
+import HypertronsView from '../views/HypertronsView/HypertronsView';
 
 @runsWhen([pageDetect.isPR, pageDetect.isIssue])
-class Hypertrons extends PerceptorBase {
+class HypertronsAnchor extends PerceptorBase {
   public static hypertronsConfig: any;
 
   private static renderView(): void {
@@ -23,24 +23,24 @@ class Hypertrons extends PerceptorBase {
     const parentContainer = commentForm.find('.d-flex.flex-justify-end');
     const hypertronsTab = document.createElement('div');
     render(
-      <HypertronsTabView hypertronsConfig={this.hypertronsConfig} />,
+      <HypertronsView hypertronsConfig={this.hypertronsConfig} />,
       hypertronsTab
     );
     parentContainer.prepend(hypertronsTab);
   }
 
   public async run(config: any): Promise<void> {
-    Hypertrons.hypertronsConfig = config;
+    HypertronsAnchor.hypertronsConfig = config;
     // @ts-ignore
-    const observer = new MutationObserver(Hypertrons.renderView);
+    const observer = new MutationObserver(HypertronsAnchor.renderView);
     const element = document.querySelector('#new_comment_field');
     // @ts-ignore
     observer.observe(element, {
       attributes: true,
     });
 
-    Hypertrons.renderView();
+    HypertronsAnchor.renderView();
   }
 }
 
-export default Hypertrons;
+export default HypertronsAnchor;
