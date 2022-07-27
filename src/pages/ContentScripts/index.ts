@@ -27,7 +27,7 @@ inject2Perceptor(RepoActiInflTrend);
 
 import { loadSettings } from '../../utils/settings';
 
-import './content.styles.css';
+import './index.css';
 
 // inject to Perceptor's static variable
 inject2Perceptor(DeveloperActiInflTrend);
