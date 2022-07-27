@@ -137,7 +137,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
   };
 
   const graphStyle = {
-    width: '400px',
+    width: '560px',
     height: '380px',
   };
 
