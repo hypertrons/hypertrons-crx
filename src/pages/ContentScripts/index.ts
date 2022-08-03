@@ -1,16 +1,3 @@
-// content script lives in an isolated world, which means it
-// cannot access to host page's javascript context such as
-// adding an extra event handler to a registered event in host
-// page. However, we can use injected scripts to run some code
-// that can access to host page's context.
-const injected = document.createElement('script');
-injected.src = chrome.runtime.getURL('injectedScript.bundle.js');
-console.log(injected);
-injected.onload = function () {
-  injected.remove(); // after the script run, it can be removed
-};
-(document.head || document.documentElement).appendChild(injected);
-
 // initializeIcons() should only be called once per app and must be called before rendering any components.
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 initializeIcons();
@@ -45,11 +32,39 @@ async function mainInject() {
   }
 }
 
-// if receive "turbo:load" from injected script, run mainInject()
-window.addEventListener('message', function (event) {
-  // Only accept messages from the same frame
-  if (event.source !== window) return;
-  if (event.data === 'turbo:load') {
-    mainInject();
-  }
+document.addEventListener('turbo:load', () => {
+  mainInject();
+});
+
+/**
+ * I infer that GitHub uses hotwired/turbo to speedup its SPA.
+ * Fortunately there are some events to hook our code in GitHub
+ * life cycle. See: https://turbo.hotwired.dev/reference/events
+ *
+ * FluentUI is a css-in-js UI library, all styles are dynamicly
+ * computed and injected to several style tags, like:
+ *
+ * <head>
+ *   <style data-merge-styles="true"></style>
+ *   <style data-merge-styles="true"></style>
+ *   <style data-merge-styles="true"></style>
+ * </head>
+ *
+ * Thease tags are only computed once for each component. But the
+ * style tags are regarded as "provisional elements" by turbo and
+ * most of them will be removed after each trubo:visit, leading to
+ * style crash.
+ *
+ * After reading the source code of turbo, I figure out a workaround.
+ * By adding an id to all <style data-merge-styles="true"></style>
+ * to make their outerHtml not be same, turbo will not regard them
+ * as provisional elements and will keep them in headers.
+ */
+
+document.addEventListener('turbo:before-visit', () => {
+  [...document.getElementsByTagName('style')].forEach((element, index) => {
+    if (element.hasAttribute('data-merge-styles')) {
+      element.setAttribute('data-id', index + '');
+    }
+  });
 });

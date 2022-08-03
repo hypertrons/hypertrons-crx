@@ -1,4 +1,4 @@
-Language : US | [zh-CN](./INSTALLATION.zh-CN.md)
+Language : English | [中文](./INSTALLATION.zh-CN.md)
 
 # Installation Guide
 
@@ -8,39 +8,72 @@ We welcome users to install and try our Hypertrons Chrome Extension. If you have
 
 ### Chrome / Edge
 
-1. [Chrome] Visit [Chrome Web Store](https://chrome.google.com/webstore/detail/hypercrx/ijchfbpdgeljmhnhokmekkecpbdkgabc)，and click **[Add to Chrome]**.
+1. Install our extension from [Chrome Web Store](https://chrome.google.com/webstore/detail/hypercrx/ijchfbpdgeljmhnhokmekkecpbdkgabc) or  [Edge Extensions Home](https://microsoftedge.microsoft.com/addons/detail/hypercrx/lbbajaehiibofpconjgdjonmkidpcome?hl=zh-CN)
+
+[Chrome] Visit [Chrome Web Store](https://chrome.google.com/webstore/detail/hypercrx/ijchfbpdgeljmhnhokmekkecpbdkgabc)，and click **[Add to Chrome]**.
 
 <img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-cws.png">
 
-1. [Edge] Visit [Edge Extensions Home](https://microsoftedge.microsoft.com/addons/detail/hypercrx/lbbajaehiibofpconjgdjonmkidpcome?hl=zh-CN), and click **[Get]**.
+[Edge] Visit [Edge Extensions Home](https://microsoftedge.microsoft.com/addons/detail/hypercrx/lbbajaehiibofpconjgdjonmkidpcome?hl=zh-CN), and click **[Get]**.
 
 <img src="assets/en/installation-edge-1.png">
 
 2. Then you can find the dashboards in:
 
 <table>
-	<tr>
-		<th width="50%">
-			<p>Entrance 1: GitHub User's Profile Page
-			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-perceptor-entrance-1.png">
-			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_influence_location_dev.png">
-		<th width="50%">
-			<p>Entrance 2: GitHub Repository Page
-			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_activity%26influence_location.png">
-			<p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-perceptor-entrance-2.png">
+  <thead>
+    <tr>
+      <th width="50%">Entrance 1: GitHub User's Profile Page</th>
+      <th width="50%">Entrance 2: GitHub Repository Page</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <img
+          src="https://user-images.githubusercontent.com/32434520/180445548-63d5e0ce-635f-4e7b-bed7-e4bcbf2dc8c4.png"
+        />
+      </td>
+      <td>
+        <img
+          src="https://user-images.githubusercontent.com/32434520/180447103-76ff1e25-ec35-4e7f-bd54-9d98545ca1df.png"
+        />
+        <img
+          src="https://user-images.githubusercontent.com/32434520/180446790-50b6a53b-119e-4b74-a08d-dda146fb9f29.png"
+        />
+      </td>
+    </tr>
+  </tbody>
 </table>
+
 
 3. You can change configuration of hypertrons-crx by visiting the setting page:
 
 <table>
-	<tr>
-		<th width="50%">
-      <p> If Chrome
-      <p> <img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-chrome-ext-setting.png">
-		<th width="50%">
-			<p> If Edge
-      <p> <img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-edge-ext-setting.png">
+  <thead>
+    <tr>
+      <th width="50%">If Chrome</th>
+      <th width="50%">If Edge</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <img
+          src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-chrome-ext-setting.png"
+          style="zoom: 50%"
+        />
+      </td>
+      <td>
+        <img
+          src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/installation-edge-ext-setting.png"
+          style="zoom: 65%"
+        />
+      </td>
+    </tr>
+  </tbody>
 </table>
+
 
 ## Install from released package
 

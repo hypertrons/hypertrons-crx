@@ -1,4 +1,4 @@
-Language : US | [zh-CN](./README.zh-CN.md)
+Language : English | [中文](./README.zh-CN.md)
 
 <h1 align="center">Hypercrx</h1>
 
@@ -44,18 +44,34 @@ You can find these dashboards in:
 
 ### Project Releated
 
-<table>
-  <tr>
-    <th width="33%">
-      <p> Project Correlation Network
-      <p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-prn.gif">
-    <th width="33%">
-      <p>Developer Collabration Network within Project
-      <p><img src="https://user-images.githubusercontent.com/90528630/171819879-d76a3f01-444a-4544-8d46-de539c5684c3.gif">
-    <th width="34%">
-      <p>Project Activity & Influence Trend
-      <p><img src="https://user-images.githubusercontent.com/90528630/171828864-2aeb8a30-bce8-4544-839d-834fc2720a46.gif">
-</table>
+ <table> 
+   <thead> 
+     <tr> 
+       <th width="33%">Project Correlation Network</th> 
+       <th width="33%">Developer Collabration Network within Project</th> 
+       <th width="34%">Project Activity & Influence Trend</th> 
+     </tr> 
+   </thead> 
+   <tbody> 
+     <tr> 
+       <td> 
+         <img 
+           src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-prn.gif"
+         /> 
+       </td> 
+       <td> 
+         <img 
+           src="https://user-images.githubusercontent.com/90528630/171819879-d76a3f01-444a-4544-8d46-de539c5684c3.gif"
+         /> 
+       </td> 
+       <td>
+         <img 
+           src="https://user-images.githubusercontent.com/90528630/171828864-2aeb8a30-bce8-4544-839d-834fc2720a46.gif"
+         /> </td>
+     </tr> 
+   </tbody> 
+ </table> 
+
 
 - **Project Correlation Network**: Project Correlation Network shows the correlation between projects for a given time period. From this graph you can find the projects that are related to the given project.
 
@@ -66,18 +82,35 @@ You can find these dashboards in:
 
 ### Developer Releated
 
-<table>
-  <tr>
-    <th width="33%">
-      <p>Developer Collabration Network
-      <p><img src="https://user-images.githubusercontent.com/90528630/171820059-96c6da74-3d29-4e79-a08d-a07861682646.gif">
-    <th width="33%">
-      <p>Developer's Most Participated Repos
-      <p><img src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-dmpr.gif">
-    <th width="34%">
-      <p>Developer's Activity & Influence Trend
-      <p><img src="https://user-images.githubusercontent.com/90528630/171830059-acabce8a-86e2-42c4-812b-51685e7c0d30.gif">
-</table>
+<table> 
+   <thead> 
+     <tr> 
+       <th width="33%">Developer Collabration Network</th> 
+       <th width="33%">Developer's Most Participated Repos</th> 
+       <th width="34%">Developer's Activity & Influence Trend</th> 
+     </tr> 
+   </thead> 
+   <tbody> 
+     <tr> 
+       <td> 
+         <img 
+           src="https://user-images.githubusercontent.com/90528630/171820059-96c6da74-3d29-4e79-a08d-a07861682646.gif"
+         /> 
+       </td> 
+       <td> 
+         <img 
+           src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-dmpr.gif"
+         /> 
+       </td> 
+       <td>
+         <img 
+           src="https://user-images.githubusercontent.com/90528630/171830059-acabce8a-86e2-42c4-812b-51685e7c0d30.gif"
+         /> </td>
+     </tr> 
+   </tbody> 
+ </table> 
+
+
 
 - **Developer Collabration Network**: Developer Collaboration Network shows the collaboration between developers for a given time period. From this graph you can find other developers who are closet to a given developer.
 - **Developer's Most Participated Repos**: Developer's Most Participated Repos shows the active projects of developers in a given time period. From this graph you can find out the most active repositories for a given developer.

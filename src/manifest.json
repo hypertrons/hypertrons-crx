@@ -19,7 +19,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["main.png", "injectedScript.bundle.js"],
+      "resources": ["content.styles.css", "main.png"],
       "matches": ["<all_urls>"]
     }
   ],
