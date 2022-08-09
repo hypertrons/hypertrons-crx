@@ -2,27 +2,27 @@
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 initializeIcons();
 
+import DeveloperActiInflTrendAnchor from '../../anchors/DeveloperActInflTrendAnchor';
+import RepoActiInflTrendAnchor from '../../anchors/RepoActiInflTrendAnchor';
+import PerceptorTabAnchor from '../../anchors/PerceptorTabAnchor';
+import PerceptorLayoutAnchor from '../../anchors/PerceptorLayoutAnchor';
+import DeveloperNetworkAnchor from '../../anchors/DeveloperNetworkAnchor';
+import ProjectNetworkAnchor from '../../anchors/ProjectNetworkAnchor';
+import HypertronsAnchor from '../../anchors/HypertronsAnchor';
+import { inject2Perceptor, Perceptor } from '../../Perceptor';
+
 import { loadSettings } from '../../utils/settings';
-import { inject2Perceptor, Perceptor } from './Perceptor';
 
-import DeveloperActiInflTrend from './DeveloperActiInflTrend';
-import RepoActiInflTrend from './RepoActiInflTrend';
-import PerceptorTab from './PerceptorTab';
-import PerceptorLayout from './PerceptorLayout';
-import DeveloperNetwork from './DeveloperNetwork';
-import ProjectNetwork from './ProjectNetwork';
-import Hypertrons from './Hypertrons';
-
-import './content.styles.css';
+import './index.css';
 
 // inject to Perceptor's static variable
-inject2Perceptor(DeveloperActiInflTrend);
-inject2Perceptor(RepoActiInflTrend);
-inject2Perceptor(PerceptorTab);
-inject2Perceptor(PerceptorLayout);
-inject2Perceptor(DeveloperNetwork);
-inject2Perceptor(ProjectNetwork);
-inject2Perceptor(Hypertrons);
+inject2Perceptor(DeveloperActiInflTrendAnchor);
+inject2Perceptor(RepoActiInflTrendAnchor);
+inject2Perceptor(PerceptorTabAnchor);
+inject2Perceptor(PerceptorLayoutAnchor);
+inject2Perceptor(DeveloperNetworkAnchor);
+inject2Perceptor(ProjectNetworkAnchor);
+inject2Perceptor(HypertronsAnchor);
 
 async function mainInject() {
   const settings = await loadSettings();

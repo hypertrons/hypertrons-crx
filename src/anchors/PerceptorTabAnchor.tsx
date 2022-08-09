@@ -1,15 +1,14 @@
 import $ from 'jquery';
-import * as pageDetect from 'github-url-detection';
 import { utils } from 'github-url-detection';
-import { isPerceptor, runsWhen, isPublicRepo } from '../../utils/utils';
-import PerceptorBase from './PerceptorBase';
+import { isPerceptor, runsWhen, isPublicRepo } from '../utils/utils';
+import PerceptorBase from '../PerceptorBase';
 import { render } from 'react-dom';
 import React from 'react';
-import TeachingBubbleWrapper from './TeachingBubbleWrapper';
-import logger from '../../utils/logger';
+import TeachingBubbleWrapper from '../views/TeachingBubbleWrapperView/TeachingBubbleWrapperView';
+import logger from '../utils/logger';
 
 @runsWhen([isPublicRepo])
-class PerceptorTab extends PerceptorBase {
+class PerceptorTabAnchor extends PerceptorBase {
   public async run(): Promise<void> {
     // avoid redundant clone
     let perceptorTab = $('#perceptor_tab');
@@ -96,4 +95,4 @@ class PerceptorTab extends PerceptorBase {
   }
 }
 
-export default PerceptorTab;
+export default PerceptorTabAnchor;

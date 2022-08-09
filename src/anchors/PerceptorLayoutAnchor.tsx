@@ -1,14 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
-import { isPerceptor, runsWhen } from '../../utils/utils';
-import PerceptorBase from './PerceptorBase';
+import { isPerceptor, runsWhen } from '../utils/utils';
+import PerceptorBase from '../PerceptorBase';
+import PerceptorLayoutView from '../views/PerceptorLayoutView/PerceptorLayoutView';
 
-const PerceptorLayoutView: React.FC = () => {
-  return <div />;
-};
 @runsWhen([isPerceptor])
-class PerceptorLayout extends PerceptorBase {
+class PerceptorLayoutAnchor extends PerceptorBase {
   public async run(): Promise<void> {
     // remove the original container
     const parentContainer = $('div.clearfix.container-xl:first');
@@ -23,4 +21,4 @@ class PerceptorLayout extends PerceptorBase {
   }
 }
 
-export default PerceptorLayout;
+export default PerceptorLayoutAnchor;

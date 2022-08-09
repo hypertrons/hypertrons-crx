@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { render } from 'react-dom';
-import $ from 'jquery';
-import { utils } from 'github-url-detection';
 import {
   Stack,
   Dropdown,
@@ -10,10 +7,8 @@ import {
   Spinner,
 } from 'office-ui-fabric-react';
 import Graph from '../../components/Graph/Graph';
-import { isPerceptor, runsWhen } from '../../utils/utils';
 import { getRepoCorrelation, getDevelopersByRepo } from '../../api/repo';
 import { getMessageByLocale } from '../../utils/utils';
-import PerceptorBase from './PerceptorBase';
 import Settings, { loadSettings } from '../../utils/settings';
 import ErrorPage from '../../components/ExceptionPage/ErrorPage';
 
@@ -255,46 +250,4 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({
   );
 };
 
-@runsWhen([isPerceptor])
-class ProjectNetwork extends PerceptorBase {
-  private _currentRepo: string;
-
-  constructor() {
-    super();
-    this._currentRepo = '';
-  }
-  public async run(): Promise<void> {
-    this._currentRepo = utils.getRepositoryInfo(window.location)!.nameWithOwner;
-
-    let perceptorContainer = null;
-    let ProjectNetworkDiv = null;
-
-    const settings = await loadSettings();
-
-    // if exists (when going backword or forward in browser history)
-    if (document.getElementById('project-network') != null) {
-      render(
-        <ProjectNetworkView
-          currentRepo={this._currentRepo}
-          graphType={settings.graphType}
-        />,
-        document.getElementById('project-network')
-      );
-    } else {
-      perceptorContainer = $('#perceptor-layout').children();
-      ProjectNetworkDiv = document.createElement('div');
-      ProjectNetworkDiv.id = 'project-network';
-      ProjectNetworkDiv.style.width = '100%';
-      render(
-        <ProjectNetworkView
-          currentRepo={this._currentRepo}
-          graphType={settings.graphType}
-        />,
-        ProjectNetworkDiv
-      );
-      perceptorContainer.prepend(ProjectNetworkDiv);
-    }
-  }
-}
-
-export default ProjectNetwork;
+export default ProjectNetworkView;

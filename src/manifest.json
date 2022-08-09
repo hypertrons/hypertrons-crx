@@ -14,7 +14,6 @@
     {
       "matches": ["*://github.com/*"],
       "js": ["contentScript.bundle.js"],
-      "css": ["content.styles.css"],
       "run_at": "document_end"
     }
   ],

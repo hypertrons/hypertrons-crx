@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { render } from 'react-dom';
-import $ from 'jquery';
-import * as pageDetect from 'github-url-detection';
+
 import {
   Dialog,
   Stack,
@@ -14,11 +12,10 @@ import {
   getDeveloperCollabration,
   getParticipatedProjects,
 } from '../../api/developer';
-import { runsWhen, getMessageByLocale } from '../../utils/utils';
-import PerceptorBase from './PerceptorBase';
+import { getMessageByLocale } from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
 import Graph from '../../components/Graph/Graph';
-import TeachingBubbleWrapper from './TeachingBubbleWrapper';
+import TeachingBubbleWrapperView from '../TeachingBubbleWrapperView/TeachingBubbleWrapperView';
 import ErrorPage from '../../components/ExceptionPage/ErrorPage';
 
 interface DeveloperNetworkViewProps {
@@ -211,7 +208,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
           </ActionButton>
         </li>
       </ul>
-      <TeachingBubbleWrapper target="#developer-network" />
+      <TeachingBubbleWrapperView target="#developer-network" />
 
       <Dialog
         hidden={!showDeveloperDialog}
@@ -356,49 +353,4 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
   );
 };
 
-@runsWhen([pageDetect.isUserProfile])
-class DeveloperNetwork extends PerceptorBase {
-  private _currentDeveloper: string;
-
-  constructor() {
-    super();
-    this._currentDeveloper = '';
-  }
-
-  public async run(): Promise<void> {
-    this._currentDeveloper = $('.p-nickname.vcard-username.d-block')
-      .text()
-      .trim();
-
-    let profileArea = null;
-    let DeveloperNetworkDiv = null;
-
-    const settings = await loadSettings();
-
-    // if exists (when going backword or forward in browser history)
-    if (document.getElementById('developer-network') != null) {
-      render(
-        <DeveloperNetworkView
-          currentDeveloper={this._currentDeveloper}
-          graphType={settings.graphType}
-        />,
-        document.getElementById('developer-network')
-      );
-    } else {
-      profileArea = $('.js-profile-editable-area').parent();
-      DeveloperNetworkDiv = document.createElement('div');
-      DeveloperNetworkDiv.id = 'developer-network';
-      DeveloperNetworkDiv.style.width = '100%';
-      render(
-        <DeveloperNetworkView
-          currentDeveloper={this._currentDeveloper}
-          graphType={settings.graphType}
-        />,
-        DeveloperNetworkDiv
-      );
-      profileArea.after(DeveloperNetworkDiv);
-    }
-  }
-}
-
-export default DeveloperNetwork;
+export default DeveloperNetworkView;
