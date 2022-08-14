@@ -66,6 +66,9 @@ const EChartsWrapper: React.FC<EChartsWrapperProps> = ({
     };
     const instance = getEchartsInstance();
     instance.setOption(option);
+    window.addEventListener('resize', () => {
+      instance.resize();
+    });
     // loop and bind events
     for (const eventName in onEvents) {
       if (Object.prototype.hasOwnProperty.call(onEvents, eventName)) {
