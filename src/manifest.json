@@ -14,17 +14,12 @@
     {
       "matches": ["*://github.com/*"],
       "js": ["contentScript.bundle.js"],
-      "css": ["content.styles.css"],
       "run_at": "document_end"
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": [
-        "content.styles.css",
-        "main.png",
-        "injectedScript.bundle.js"
-      ],
+      "resources": ["content.styles.css", "main.png"],
       "matches": ["<all_urls>"]
     }
   ],

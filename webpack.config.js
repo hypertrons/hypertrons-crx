@@ -50,18 +50,11 @@ let options = {
       'ContentScripts',
       'index.ts'
     ),
-    injectedScript: path.join(
-      __dirname,
-      'src',
-      'pages',
-      'InjectedScripts',
-      'index.ts'
-    ),
   },
   // "custom" is not a standard key of webpack options
   // it will be consumed by utils/server.js and must be deleted before webpack(config)
   custom: {
-    notHMR: ['background', 'contentScript', 'injectedScript'],
+    notHMR: ['background', 'contentScript'],
     enableBackgroundAutoReload: true, // always true when "enableContentScriptsAutoReload" is set true
     enableContentScriptsAutoReload: true,
   },
@@ -152,15 +145,6 @@ let options = {
               })
             );
           },
-        },
-      ],
-    }),
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: 'src/pages/ContentScripts/content.styles.css',
-          to: path.join(__dirname, 'build'),
-          force: true,
         },
       ],
     }),

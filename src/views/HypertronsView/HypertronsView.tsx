@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { render } from 'react-dom';
-import $ from 'jquery';
 import { fire } from 'delegated-events';
-import * as pageDetect from 'github-url-detection';
 import {
   Callout,
   Stack,
@@ -13,7 +10,6 @@ import {
   DirectionalHint,
 } from '@fluentui/react';
 import { useBoolean } from '@fluentui/react-hooks';
-import { utils } from 'github-url-detection';
 import {
   Command,
   LabelStyles,
@@ -21,10 +17,7 @@ import {
   getUserNameFromCookie,
 } from '../../services/hypertrons';
 import { getMessageByLocale, runsWhen } from '../../utils/utils';
-import PerceptorBase from './PerceptorBase';
-import logger from '../../utils/logger';
 import Settings, { loadSettings } from '../../utils/settings';
-import { getConfigFromGithub } from '../../api/github';
 
 const styles = mergeStyleSets({
   callout: {
@@ -45,7 +38,7 @@ interface HypertronsTabViewProps {
   hypertronsConfig: any;
 }
 
-const HypertronsTabView: React.FC<HypertronsTabViewProps> = ({
+const HypertronsView: React.FC<HypertronsTabViewProps> = ({
   hypertronsConfig,
 }) => {
   const commandsInit: Command[] = [];
@@ -224,40 +217,4 @@ const HypertronsTabView: React.FC<HypertronsTabViewProps> = ({
   );
 };
 
-@runsWhen([pageDetect.isPR, pageDetect.isIssue])
-class Hypertrons extends PerceptorBase {
-  public static hypertronsConfig: any;
-
-  private static renderView(): void {
-    // avoid redundant button
-    if ($('#hypertrons_button').length > 0) {
-      logger.info('hypertrons tab exists');
-      return;
-    }
-
-    // add hypertrons tab
-    const commentForm = $('.js-new-comment-form');
-    const parentContainer = commentForm.find('.d-flex.flex-justify-end');
-    const hypertronsTab = document.createElement('div');
-    render(
-      <HypertronsTabView hypertronsConfig={this.hypertronsConfig} />,
-      hypertronsTab
-    );
-    parentContainer.prepend(hypertronsTab);
-  }
-
-  public async run(config: any): Promise<void> {
-    Hypertrons.hypertronsConfig = config;
-    // @ts-ignore
-    const observer = new MutationObserver(Hypertrons.renderView);
-    const element = document.querySelector('#new_comment_field');
-    // @ts-ignore
-    observer.observe(element, {
-      attributes: true,
-    });
-
-    Hypertrons.renderView();
-  }
-}
-
-export default Hypertrons;
+export default HypertronsView;

@@ -103,10 +103,17 @@ const server = new WebpackDevServer(
                 path.resolve(__dirname, '../src/pages/Background')
               )
             );
-            const isContentScriptsUpdated = updatedJsModules.some((module) =>
-              module.nameForCondition.startsWith(
-                path.resolve(__dirname, '../src/pages/ContentScripts')
-              )
+            const isContentScriptsUpdated = updatedJsModules.some(
+              (module) =>
+                module.nameForCondition.startsWith(
+                  path.resolve(__dirname, '../src/pages/ContentScripts')
+                ) ||
+                module.nameForCondition.startsWith(
+                  path.resolve(__dirname, '../src/anchors')
+                ) ||
+                module.nameForCondition.startsWith(
+                  path.resolve(__dirname, '../src/views')
+                )
             );
 
             const shouldBackgroundReload =
