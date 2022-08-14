@@ -16,9 +16,7 @@ class PerceptorTabAnchor extends PerceptorBase {
       logger.info('perceptor tab already exists');
 
       // Un-select one of the tabs if necessary
-      const insightsTab = $(
-        '.js-repo-nav [data-ga-click="Repository, Navigation click, Insights tab"]'
-      ).parent();
+      const insightsTab = $('a[id$="insights-tab"]').parent();
       const insightsLink = $('a', insightsTab);
       const perceptorLink = $('a', perceptorTab);
 
@@ -50,9 +48,7 @@ class PerceptorTabAnchor extends PerceptorBase {
     insightsTabDataItem.after(perceptorTabDataItem);
 
     // copy Insights tab
-    const insightsTab = $(
-      '.js-repo-nav [data-ga-click="Repository, Navigation click, Insights tab"]'
-    ).parent();
+    const insightsTab = $('a[id$="insights-tab"]').parent();
     perceptorTab = insightsTab.clone(true);
     perceptorTab.attr('id', 'perceptor_tab');
     const perceptorTablink = perceptorTab.children('a');
@@ -61,6 +57,12 @@ class PerceptorTabAnchor extends PerceptorBase {
     // Un-select one of the tabs if necessary
     const insightsLink = $('a', insightsTab);
     const perceptorLink = $('a', perceptorTab);
+    perceptorLink
+      .attr('id', 'percepter-tab')
+      .attr(
+        'data-selected-links',
+        'hypertrons/hypertrons-crx/pulse?redirect=perceptor'
+      ); // fix: perceptor-tab blinks when click insight-tab
 
     if (insightsLink.hasClass('selected')) {
       if (isPerceptor()) {
