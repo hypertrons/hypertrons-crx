@@ -130,6 +130,11 @@ Hypertrons 浏览器插件项目旨在通过直接往 GitHub 页面中插入各�
 
 如果你初来乍到或对 Git/GitHub 的基本操作不熟悉，请阅读[CONTRIBUTING](./CONTRIBUTING.md)。
 
+### 环境需求
+
+1. node >= 16.14
+
+2. yarn
 ### 快速开始
 
 1. git clone https://github.com/hypertrons/hypertrons-crx

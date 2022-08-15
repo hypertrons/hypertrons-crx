@@ -128,6 +128,11 @@ For more information please refer to [Installation Guide](./INSTALLATION.md).
 ## Contributing
 
 Please read [CONTRIBUTING](./CONTRIBUTING.md) if you are new here or not familiar with the basic rules of Git/GitHub world.
+### Requirements
+
+1. node >= 16.14
+
+2. yarn
 
 ### Quickstart
 
