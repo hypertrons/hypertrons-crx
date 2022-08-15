@@ -112,8 +112,8 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({
   };
 
   const graphStyle = {
-    width: 780,
-    height: 380,
+    width: '100%',
+    height: '380px',
   };
 
   if (statusCode !== 200) {
