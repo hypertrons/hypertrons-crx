@@ -1,3 +1,12 @@
+## [1.6.4](https://github.com/hypertrons/hypertrons-crx/compare/v1.6.3...v1.6.4) (2022-08-15)
+
+
+### Bug Fixes
+
+* failed to find insightsTab ([#440](https://github.com/hypertrons/hypertrons-crx/issues/440)) ([05a4d7f](https://github.com/hypertrons/hypertrons-crx/commit/05a4d7fbf7ca8ddf05926cde78ab772705753eec))
+
+
+
 ## [1.6.3](https://github.com/hypertrons/hypertrons-crx/compare/v1.6.2...v1.6.3) (2022-07-25)
 
 
