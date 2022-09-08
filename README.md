@@ -9,7 +9,7 @@ Language : English | [中文](./README.zh-CN.md)
 
 </div>
 
-`Hypercrx` project aims at tracing, digging and gaining insight into the projects and developers you're interested in. We do this by inserting useful dashboards into `GitHub` pages. `Hypercrx` provides an effective way for digital operations and analysis of open source community.
+`Hypercrx` (pronounced: 'Hai-puh CRX') project aims at tracing, digging and gaining insight into the projects and developers you're interested in. We do this by inserting useful dashboards into `GitHub` pages. `Hypercrx` provides an effective way for digital operations and analysis of open source community.
 
 ## Dashboards 🔥🔥🔥
 
