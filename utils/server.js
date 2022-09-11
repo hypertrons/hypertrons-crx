@@ -94,8 +94,9 @@ const server = new WebpackDevServer(
             const { modules } = stats.toJson({ all: false, modules: true });
             const updatedJsModules = modules.filter(
               (module) =>
-                module.type === 'module' &&
-                module.moduleType === 'javascript/auto'
+                (module.type === 'module' &&
+                  module.moduleType === 'javascript/auto') ||
+                module.moduleType === 'json'
             );
 
             const isBackgroundUpdated = updatedJsModules.some((module) =>
@@ -103,17 +104,10 @@ const server = new WebpackDevServer(
                 path.resolve(__dirname, '../src/pages/Background')
               )
             );
-            const isContentScriptsUpdated = updatedJsModules.some(
-              (module) =>
-                module.nameForCondition.startsWith(
-                  path.resolve(__dirname, '../src/pages/ContentScripts')
-                ) ||
-                module.nameForCondition.startsWith(
-                  path.resolve(__dirname, '../src/anchors')
-                ) ||
-                module.nameForCondition.startsWith(
-                  path.resolve(__dirname, '../src/views')
-                )
+            const isContentScriptsUpdated = updatedJsModules.some((module) =>
+              module.nameForCondition.startsWith(
+                path.resolve(__dirname, '../src')
+              )
             );
 
             const shouldBackgroundReload =
