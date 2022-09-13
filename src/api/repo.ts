@@ -19,3 +19,7 @@ export const getDevelopersByRepo = async (repo: string) => {
 export const getRepoActiInfl = async (repo: string) => {
   return await request(`${OSS_XLAB_ENDPOINT}/hypercrx_repo/${repo}.json`);
 };
+
+export const getRepoDetail = async (repo: string) => {
+  return await request(`${OSS_XLAB_ENDPOINT}/repo_detail/${repo}.json`);
+};
