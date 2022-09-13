@@ -141,6 +141,18 @@ const Bars: React.FC<BarsProps> = (props) => {
     const instance = echarts.getInstanceByDom(chartDOM as any);
     if (instance) {
       instance.setOption(option);
+      instance.on('click', function (params) {
+        const { data, seriesName } = params;
+        if (seriesName == 'Activity') {
+          let [year, month] = data.toString().split(',')[0].split('-');
+          if (month.length < 2) {
+            month = '0' + month;
+          }
+          window.open(
+            `${window.location.href}/issues?q=updated:${year}-${month}`
+          );
+        }
+      });
     }
   }, []);
 
