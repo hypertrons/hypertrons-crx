@@ -60,6 +60,23 @@ const RepoActiInflTrendView: React.FC<RepoActiInflTrendViewProps> = ({
 
   let barsData: any = generateBarsData(repoActiInflData);
 
+  const onClick = (params: any) => {
+    const { seriesIndex, data } = params;
+    // if seriesName == 'Activity'.
+    // However, seriesName changes with locales, so we use seriesIndex instead.
+    if (seriesIndex == 0) {
+      let [year, month] = data.toString().split(',')[0].split('-');
+      if (month.length < 2) {
+        month = '0' + month;
+      }
+      console.log('currentRepo', currentRepo);
+
+      window.open(
+        `/${currentRepo}/issues?q=updated:${year}-${month} sort:updated-asc`
+      );
+    }
+  };
+
   return (
     <div>
       <h2 className="h4 mb-3">
@@ -89,6 +106,7 @@ const RepoActiInflTrendView: React.FC<RepoActiInflTrendViewProps> = ({
         )}
         data1={barsData.data1}
         data2={barsData.data2}
+        onClick={onClick}
       />
     </div>
   );
