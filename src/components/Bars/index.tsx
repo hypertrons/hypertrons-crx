@@ -152,7 +152,7 @@ const Bars: React.FC<BarsProps> = (props) => {
     if (instance) {
       instance.setOption(option);
       if (onClick) {
-        instance.on('click', function (params) {
+        instance.on('click', (params) => {
           onClick(params);
         });
       }
