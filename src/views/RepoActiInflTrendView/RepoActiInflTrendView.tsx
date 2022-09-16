@@ -71,7 +71,6 @@ const RepoActiInflTrendView: React.FC<RepoActiInflTrendViewProps> = ({
       if (month.length < 2) {
         month = '0' + month;
       }
-      console.log('currentRepo', currentRepo);
 
       window.open(
         `/${currentRepo}/issues?q=updated:${year}-${month} sort:updated-asc`
