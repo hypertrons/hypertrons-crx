@@ -29,15 +29,18 @@ class RepoDetailStarAnchor extends PerceptorBase {
 
     this._currentRepo = utils.getRepositoryInfo(window.location)!.nameWithOwner;
 
-    $('button[data-ga-click*="click star button"]').attr({
+    const attributes = {
       'data-tip': '',
       'data-for': 'star-tooltip',
-      'data-place': 'bottom',
+      'data-place': 'left',
       'data-type': 'dark',
       'data-effect': 'solid',
       'data-delay-hide': 500,
       'data-delay-show': 500,
-    });
+    };
+    // The data-ga-click attribute differs after starring, so there are 2 cases
+    $('button[data-ga-click*="click star button"]').attr(attributes);
+    $('button[data-ga-click*="click unstar button"]').attr(attributes);
 
     const tooltipContainer = document.createElement('div');
     tooltipContainer.id = 'star-tooltip-container';
