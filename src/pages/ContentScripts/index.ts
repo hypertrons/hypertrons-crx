@@ -15,7 +15,7 @@ import { inject2Perceptor, Perceptor } from '../../Perceptor';
 
 import { loadSettings } from '../../utils/settings';
 
-import './index.css';
+import './index.scss';
 
 // inject to Perceptor's static variable
 inject2Perceptor(RepoDetailStarAnchor);

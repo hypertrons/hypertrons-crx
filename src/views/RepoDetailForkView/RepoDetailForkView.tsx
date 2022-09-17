@@ -4,12 +4,24 @@ import { getGithubTheme, getMessageByLocale } from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
 import { getRepoDetail } from '../../api/repo';
 import ReactTooltip from 'react-tooltip';
+import ForkBars from './ForkBars';
 
 const githubTheme = getGithubTheme();
 
 interface RepoDetailForkViewProps {
   currentRepo: string;
 }
+
+const generateForkBarsData = (fork: any) => {
+  const data: [string, number][] = [];
+  Object.keys(fork).forEach((value, index) => {
+    // format date string
+    // 20204 -> 2020-4
+    const date = value.slice(0, 4) + '-' + value.slice(4);
+    data.push([date, fork[value]]);
+  });
+  return data;
+};
 
 const RepoDetailForkView: React.FC<RepoDetailForkViewProps> = ({
   currentRepo,
@@ -43,14 +55,12 @@ const RepoDetailForkView: React.FC<RepoDetailForkViewProps> = ({
   if (!fork) return null;
 
   return (
-    <ReactTooltip id="fork-tooltip" clickable={true}>
-      <p>This is a global react component tooltip</p>
-      <p>You can put every thing here</p>
-      <ul>
-        <li>Word</li>
-        <li>Chart</li>
-        <li>Else</li>
-      </ul>
+    <ReactTooltip
+      id="fork-tooltip"
+      className={githubTheme === 'dark' ? 'custom-react-tooltip' : ''}
+      clickable={true}
+    >
+      <ForkBars width={300} height={150} data={generateForkBarsData(fork)} />
     </ReactTooltip>
   );
 };

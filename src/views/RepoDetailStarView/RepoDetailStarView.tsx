@@ -4,12 +4,24 @@ import { getGithubTheme, getMessageByLocale } from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
 import { getRepoDetail } from '../../api/repo';
 import ReactTooltip from 'react-tooltip';
+import StarBars from '../RepoDetailStarView/StarBars';
 
 const githubTheme = getGithubTheme();
 
 interface RepoDetailStarViewProps {
   currentRepo: string;
 }
+
+const generateStarBarsData = (star: any) => {
+  const data: [string, number][] = [];
+  Object.keys(star).forEach((value, index) => {
+    // format date string
+    // 20204 -> 2020-4
+    const date = value.slice(0, 4) + '-' + value.slice(4);
+    data.push([date, star[value]]);
+  });
+  return data;
+};
 
 const RepoDetailStarView: React.FC<RepoDetailStarViewProps> = ({
   currentRepo,
@@ -33,7 +45,7 @@ const RepoDetailStarView: React.FC<RepoDetailStarViewProps> = ({
     (async () => {
       try {
         const res = await getRepoDetail(currentRepo);
-        setStar(res.data['f']);
+        setStar(res.data['s']);
       } catch (e) {
         console.error(e);
       }
@@ -43,14 +55,12 @@ const RepoDetailStarView: React.FC<RepoDetailStarViewProps> = ({
   if (!star) return null;
 
   return (
-    <ReactTooltip id="star-tooltip" clickable={true}>
-      <p>This is a global react component tooltip</p>
-      <p>You can put every thing here</p>
-      <ul>
-        <li>Word</li>
-        <li>Chart</li>
-        <li>Else</li>
-      </ul>
+    <ReactTooltip
+      id="star-tooltip"
+      className={githubTheme === 'dark' ? 'custom-react-tooltip' : ''}
+      clickable={true}
+    >
+      <StarBars width={300} height={150} data={generateStarBarsData(star)} />
     </ReactTooltip>
   );
 };
