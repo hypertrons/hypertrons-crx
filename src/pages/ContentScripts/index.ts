@@ -14,6 +14,7 @@ import { inject2Perceptor, Perceptor } from '../../Perceptor';
 import { loadSettings } from '../../utils/settings';
 
 import './index.css';
+import DynamicRacingBarAnchor from '../../anchors/DynamicRacingBarAnchor';
 
 // inject to Perceptor's static variable
 inject2Perceptor(DeveloperActiInflTrendAnchor);
@@ -23,6 +24,7 @@ inject2Perceptor(PerceptorLayoutAnchor);
 inject2Perceptor(DeveloperNetworkAnchor);
 inject2Perceptor(ProjectNetworkAnchor);
 inject2Perceptor(HypertronsAnchor);
+// inject2Perceptor(DynamicRacingBarAnchor)
 
 async function mainInject() {
   const settings = await loadSettings();
