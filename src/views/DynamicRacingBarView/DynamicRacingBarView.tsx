@@ -79,12 +79,6 @@ const DynamicRacingBarView: React.FC<ContributorsActivityEvolutionProps> = ({
     <div>
       <div className="hypertrons-crx-border hypertrons-crx-container">
         <Stack className="hypertrons-crx-title">
-          <span>
-            {getMessageByLocale(
-              'component_contributorsActivityEvolution_title',
-              settings.locale
-            )}
-          </span>
           <div className="hypertrons-crx-title-extra">
             <Dropdown
               defaultSelectedKey={repoPeriod}
@@ -100,7 +94,6 @@ const DynamicRacingBarView: React.FC<ContributorsActivityEvolutionProps> = ({
             <div style={{ margin: '10px 0 20px 20px' }}>
               <Stack className="hypertrons-crx-border">
                 <Stack.Item align="center">
-                  {/* <DynamicRacingBar theme={getGithubTheme} width={700} height={600} barNumber={20} digitNumber={2} duration={20} dateLabelSize={30} dataUrl={`${API_TARGET}/dynamicbar_activities_v2/latest/${currentRepo}.csv`}/> */}
                   <DynamicRacingBar
                     height={0}
                     legend1={''}
@@ -118,30 +111,7 @@ const DynamicRacingBarView: React.FC<ContributorsActivityEvolutionProps> = ({
             <div
               className="color-text-secondary"
               style={{ marginLeft: '55px' }}
-            >
-              <ul style={{ margin: '0px 0 10px 15px' }}>
-                <li>
-                  {getMessageByLocale(
-                    'component_contributorsActivityEvolution_description_1',
-                    settings.locale
-                  )}
-                </li>
-                <br />
-                <li>
-                  {getMessageByLocale(
-                    'component_contributorsActivityEvolution_description_2',
-                    settings.locale
-                  )}
-                </li>
-                <br />
-                <li>
-                  {getMessageByLocale(
-                    'component_contributorsActivityEvolution_description_3',
-                    settings.locale
-                  )}
-                </li>
-              </ul>
-            </div>
+            ></div>
           </div>
         </div>
       </div>

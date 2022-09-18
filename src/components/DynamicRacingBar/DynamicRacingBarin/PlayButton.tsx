@@ -5,13 +5,12 @@ initializeIcons();
 
 interface PlayButtonProps {
   hide: boolean;
-  theme: 'light' | 'dark';
   size: number;
   play: any;
 }
 
 const PlayButton: React.FC<PlayButtonProps> = (props) => {
-  const { hide, theme, size, play } = props;
+  const { hide, size, play } = props;
 
   if (hide) return null;
 
@@ -31,7 +30,6 @@ const PlayButton: React.FC<PlayButtonProps> = (props) => {
             borderRadius: '100%',
           },
           icon: {
-            color: theme == 'light' ? 'black' : 'white',
             fontSize: size,
           },
           rootHovered: {

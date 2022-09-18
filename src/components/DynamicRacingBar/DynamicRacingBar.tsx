@@ -119,8 +119,7 @@ const DynamicRacingBar: React.FC<DynamicBarProps> = (props) => {
     <div>
       {/* <PlayButton
         hide={playing}
-        theme={theme}
-        size={dateLabelSize * 0.8}
+        size={4}
         play={play}
       /> */}
       <div ref={divEL} style={{ width: '100%', height: '500px' }}></div>;
