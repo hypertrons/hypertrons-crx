@@ -22,11 +22,21 @@ interface BarsProps {
   yName2: string;
   data1: [string, number][];
   data2: [string, number][];
+  onClick?: Function;
 }
 
 const Bars: React.FC<BarsProps> = (props) => {
-  const { theme, height, legend1, legend2, yName1, yName2, data1, data2 } =
-    props;
+  const {
+    theme,
+    height,
+    legend1,
+    legend2,
+    yName1,
+    yName2,
+    data1,
+    data2,
+    onClick,
+  } = props;
 
   const divEL = useRef(null);
 
@@ -141,6 +151,11 @@ const Bars: React.FC<BarsProps> = (props) => {
     const instance = echarts.getInstanceByDom(chartDOM as any);
     if (instance) {
       instance.setOption(option);
+      if (onClick) {
+        instance.on('click', (params) => {
+          onClick(params);
+        });
+      }
     }
   }, []);
 
