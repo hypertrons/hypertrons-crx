@@ -25,11 +25,10 @@ interface DynamicBarProps {
   data1: [string, number][];
   data2: [string, number][];
 }
-const [playing, setPlaying] = useState(false);
 const dimension = 0;
 const DynamicRacingBar: React.FC<DynamicBarProps> = (props) => {
   const { height, legend1, legend2, yName1, yName2, data1, data2 } = props;
-
+  const [playing, setPlaying] = useState(false);
   const divEL = useRef(null);
   const TH = githubTheme == 'light' ? LIGHT_THEME : DARK_THEME;
   const option: echarts.EChartsOption = {
