@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { render } from 'react-dom';
-import $ from 'jquery';
-import { utils } from 'github-url-detection';
 import {
   Stack,
   Dropdown,
@@ -9,8 +6,7 @@ import {
   IDropdownOption,
   Spinner,
 } from '@fluentui/react';
-import { isPerceptor, runsWhen } from '../../utils/utils';
-import { getGithubTheme, getMessageByLocale } from '../../utils/utils';
+import { getMessageByLocale } from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
 import ErrorPage from '../../components/ExceptionPage/ErrorPage';
 import DynamicRacingBar from '../../components/DynamicRacingBar/DynamicRacingBar';
@@ -95,13 +91,9 @@ const DynamicRacingBarView: React.FC<ContributorsActivityEvolutionProps> = ({
               <Stack className="hypertrons-crx-border">
                 <Stack.Item align="center">
                   <DynamicRacingBar
-                    height={0}
-                    legend1={''}
-                    legend2={''}
-                    yName1={''}
-                    yName2={''}
-                    data1={[]}
+                    data1={[]} //fetch the data and pass it to dynamic racing bars
                     data2={[]}
+                    dataURL="https://hypertrons-oss.x-lab.info/dynamicbar_activities_v2/latest/hypertrons/hypertrons-crx.csv"
                   />
                 </Stack.Item>
               </Stack>
