@@ -80,18 +80,13 @@ const DynamicRacingBar: React.FC<DynamicBarProps> = (props) => {
     animationEasingUpdate: 'linear',
   };
   function run() {
-    // for (var i = 0; i < data.length; ++i) {
-    //   if (Math.random() > 0.9) {
-    //     data[i] += Math.round(Math.random() * 2000);
-    //   } else {
-    //     data[i] += Math.round(Math.random() * 200);
-    //   }
-    // }
-    data[4] += Math.round(Math.random() * 2000);
-    data[3] += Math.round(Math.random() * 9000);
-    data[2] += Math.round(Math.random() * 7000);
-    data[1] += Math.round(Math.random() * 1000);
-    data[0] += Math.round(Math.random() * 100);
+    for (var i = 0; i < data.length; ++i) {
+      if (Math.random() > 0.9) {
+        data[i] += Math.round(Math.random() * 2000);
+      } else {
+        data[i] += Math.round(Math.random() * 200);
+      }
+    }
   }
 
   setTimeout(function () {
