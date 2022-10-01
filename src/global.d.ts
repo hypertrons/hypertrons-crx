@@ -41,6 +41,6 @@ interface IGraphData {
 
 type NodeClickFunc = (node: INode) => void;
 
-type GraphType = 'echarts' | 'antv';
+type GraphType = 'echarts';
 
 type ThemeType = 'light' | 'dark';

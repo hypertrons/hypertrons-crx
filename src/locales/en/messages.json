@@ -215,12 +215,6 @@
   "options_locale_toolTip": {
     "message": "Choose the dispaly language"
   },
-  "options_graphType_title": {
-    "message": "Default graph type"
-  },
-  "options_graphType_toolTip": {
-    "message": "You can choose the rendering type of component，Antv or Echarts"
-  },
   "options_update_title": {
     "message": "Update"
   },

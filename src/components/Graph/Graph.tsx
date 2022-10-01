@@ -1,6 +1,5 @@
 import React, { useState, CSSProperties, useEffect } from 'react';
 import EChartsWrapper from './Echarts/index';
-import GraphinWrapper from './Graphin/index';
 import { Stack, SwatchColorPicker, Link } from 'office-ui-fabric-react';
 import {
   getGithubTheme,
@@ -130,51 +129,6 @@ const Graph: React.FC<GraphProps> = ({
     };
   };
 
-  const generateGraphinData = (data: any): any => {
-    const generateNodes = (nodes: any[]): any => {
-      const minMax = getMinMax(nodes);
-      return nodes.map((n: any) => {
-        const color =
-          focusedNodeID && focusedNodeID === n.name
-            ? FOCUSED_NODE_COLOR
-            : getColorMap(n.value);
-        return {
-          id: n.name,
-          value: n.value,
-          style: {
-            keyshape: {
-              size: linearMap(n.value, minMax, NODE_SIZE),
-              stroke: color,
-              fill: color,
-              fillOpacity: 1,
-            },
-          },
-        };
-      });
-    };
-    const generateEdges = (edges: any[]): any => {
-      return edges.map((e: any) => {
-        return {
-          source: e.source,
-          target: e.target,
-          value: e.weight,
-          style: {
-            keyshape: {
-              type: 'poly',
-              poly: {
-                distance: 40,
-              },
-            },
-          },
-        };
-      });
-    };
-    return {
-      nodes: generateNodes(data.nodes),
-      edges: generateEdges(data.edges),
-    };
-  };
-
   let graphData: any;
   let graphOption: any;
   switch (graphType) {
@@ -216,9 +170,6 @@ const Graph: React.FC<GraphProps> = ({
         ],
       };
       break;
-    case 'antv':
-      graphData = generateGraphinData(data);
-      break;
     default:
       break;
   }
@@ -251,13 +202,6 @@ const Graph: React.FC<GraphProps> = ({
             onEvents={{
               click: onNodeClick,
             }}
-          />
-        )}
-        {graphType === 'antv' && (
-          <GraphinWrapper
-            data={graphData}
-            style={style}
-            onNodeClick={onNodeClick}
           />
         )}
       </Stack>
