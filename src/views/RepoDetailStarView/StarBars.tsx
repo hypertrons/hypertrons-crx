@@ -82,9 +82,18 @@ const StarBars: React.FC<StarBarsProps> = (props) => {
           focus: 'series',
         },
         yAxisIndex: 0,
-        animationDelay: function (idx: any) {
-          return idx * 10;
+      },
+      {
+        type: 'line',
+        symbol: 'none',
+        lineStyle: {
+          color: COLORS.FG_COLOR,
         },
+        data: data,
+        emphasis: {
+          focus: 'series',
+        },
+        yAxisIndex: 0,
       },
     ],
     animationEasing: 'elasticOut',

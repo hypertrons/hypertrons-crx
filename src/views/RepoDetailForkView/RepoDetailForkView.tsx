@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { getGithubTheme, getMessageByLocale } from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
+import { generateDataByMonth } from '../../utils/data';
 import { getRepoDetail } from '../../api/repo';
 import ReactTooltip from 'react-tooltip';
 import ForkBars from './ForkBars';
@@ -13,14 +14,7 @@ interface RepoDetailForkViewProps {
 }
 
 const generateForkBarsData = (fork: any) => {
-  const data: [string, number][] = [];
-  Object.keys(fork).forEach((value, index) => {
-    // format date string
-    // 20204 -> 2020-4
-    const date = value.slice(0, 4) + '-' + value.slice(4);
-    data.push([date, fork[value]]);
-  });
-  return data;
+  return generateDataByMonth(fork);
 };
 
 const RepoDetailForkView: React.FC<RepoDetailForkViewProps> = ({
