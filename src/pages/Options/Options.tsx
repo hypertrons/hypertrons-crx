@@ -57,17 +57,6 @@ const Options: React.FC = () => {
   );
   const tokenCurrent = metaData.token;
 
-  const graphOptions: IChoiceGroupOption[] = [
-    {
-      key: 'antv',
-      text: 'Antv',
-    },
-    {
-      key: 'echarts',
-      text: 'Echarts',
-    },
-  ];
-
   const locale = settings.locale;
   const localeOptions: IChoiceGroupOption[] = [
     {
@@ -429,34 +418,6 @@ const Options: React.FC = () => {
               defaultChecked={settings.projectNetwork}
               onChange={async (e, checked) => {
                 settings.projectNetwork = checked;
-                await saveSettings(settings);
-              }}
-            />
-          </Stack>
-        </Stack.Item>
-        <Stack.Item className="Box">
-          <TooltipHost
-            content={getMessageByLocale(
-              'options_graphType_toolTip',
-              settings.locale
-            )}
-          >
-            <Stack.Item className="Box-header">
-              <h2 className="Box-title">
-                {getMessageByLocale('options_graphType_title', settings.locale)}
-              </h2>
-            </Stack.Item>
-          </TooltipHost>
-          <Stack style={{ margin: '10px 25px' }}>
-            <p>
-              {getMessageByLocale('options_graphType_toolTip', settings.locale)}{' '}
-              :
-            </p>
-            <ChoiceGroup
-              defaultSelectedKey={settings.graphType}
-              options={graphOptions}
-              onChange={async (e, option: any) => {
-                settings.graphType = option.key as GraphType;
                 await saveSettings(settings);
               }}
             />

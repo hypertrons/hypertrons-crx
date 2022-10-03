@@ -6,7 +6,6 @@ class Settings {
   developerNetwork: boolean | undefined;
   projectNetwork: boolean | undefined;
   locale: string;
-  graphType: GraphType;
 
   constructor() {
     this.isEnabled = true;
@@ -19,7 +18,6 @@ class Settings {
     } else {
       this.locale = 'en';
     }
-    this.graphType = 'echarts';
   }
 
   loadFromJson(data: { [key: string]: any }): void {
@@ -38,9 +36,6 @@ class Settings {
     if ('locale' in data) {
       this.locale = data['locale'];
     }
-    if ('graphType' in data) {
-      this.graphType = data['graphType'];
-    }
   }
 
   toJson(): { [key: string]: any } {
@@ -50,7 +45,6 @@ class Settings {
     result['developerNetwork'] = this.developerNetwork;
     result['projectNetwork'] = this.projectNetwork;
     result['locale'] = this.locale;
-    result['graphType'] = this.graphType;
     return result;
   }
 }

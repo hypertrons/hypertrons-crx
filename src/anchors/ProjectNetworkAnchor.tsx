@@ -23,10 +23,7 @@ class ProjectNetworkAnchor extends PerceptorBase {
     this._currentRepo = utils.getRepositoryInfo(window.location)!.nameWithOwner;
     const settings = await loadSettings();
     render(
-      <ProjectNetworkView
-        currentRepo={this._currentRepo}
-        graphType={settings.graphType}
-      />,
+      <ProjectNetworkView currentRepo={this._currentRepo} />,
       ProjectNetworkDiv
     );
     perceptorContainer.prepend(ProjectNetworkDiv);
