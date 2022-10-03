@@ -5,7 +5,7 @@ import Settings, { loadSettings } from '../../utils/settings';
 import { generateDataByMonth } from '../../utils/data';
 import { getRepoDetail } from '../../api/repo';
 import ReactTooltip from 'react-tooltip';
-import StarBars from '../RepoDetailStarView/StarBars';
+import StarChart from './StarChart';
 
 const githubTheme = getGithubTheme();
 
@@ -13,7 +13,7 @@ interface RepoDetailStarViewProps {
   currentRepo: string;
 }
 
-const generateStarBarsData = (star: any) => {
+const generateStarChartData = (star: any) => {
   return generateDataByMonth(star);
 };
 
@@ -54,7 +54,7 @@ const RepoDetailStarView: React.FC<RepoDetailStarViewProps> = ({
       className={githubTheme === 'dark' ? 'custom-react-tooltip' : ''}
       clickable={true}
     >
-      <StarBars width={300} height={150} data={generateStarBarsData(star)} />
+      <StarChart width={300} height={150} data={generateStarChartData(star)} />
     </ReactTooltip>
   );
 };

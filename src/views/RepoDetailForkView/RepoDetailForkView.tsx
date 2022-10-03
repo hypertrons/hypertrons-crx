@@ -5,7 +5,7 @@ import Settings, { loadSettings } from '../../utils/settings';
 import { generateDataByMonth } from '../../utils/data';
 import { getRepoDetail } from '../../api/repo';
 import ReactTooltip from 'react-tooltip';
-import ForkBars from './ForkBars';
+import ForkChart from './ForkChart';
 
 const githubTheme = getGithubTheme();
 
@@ -13,7 +13,7 @@ interface RepoDetailForkViewProps {
   currentRepo: string;
 }
 
-const generateForkBarsData = (fork: any) => {
+const generateForkChartData = (fork: any) => {
   return generateDataByMonth(fork);
 };
 
@@ -54,7 +54,7 @@ const RepoDetailForkView: React.FC<RepoDetailForkViewProps> = ({
       className={githubTheme === 'dark' ? 'custom-react-tooltip' : ''}
       clickable={true}
     >
-      <ForkBars width={300} height={150} data={generateForkBarsData(fork)} />
+      <ForkChart width={300} height={150} data={generateForkChartData(fork)} />
     </ReactTooltip>
   );
 };

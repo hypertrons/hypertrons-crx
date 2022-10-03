@@ -5,16 +5,16 @@ const COLORS = {
   FG_COLOR: '#c9d1d9',
   BG_COLOR: '#0d1118',
   SPLIT_LINE: 'grey',
-  PALLET: ['#e3b341'],
+  PALLET: ['mediumpurple'],
 };
 
-interface StarBarsProps {
+interface ForkChartProps {
   width: number;
   height: number;
   data: [string, number][];
 }
 
-const StarBars: React.FC<StarBarsProps> = (props) => {
+const ForkChart: React.FC<ForkChartProps> = (props) => {
   const { width, height, data } = props;
 
   const divEL = useRef(null);
@@ -22,7 +22,7 @@ const StarBars: React.FC<StarBarsProps> = (props) => {
   const option: echarts.EChartsOption = {
     color: COLORS.PALLET,
     title: {
-      text: 'Star Event',
+      text: 'Fork Event',
       textStyle: {
         fontSize: 14,
         color: COLORS.FG_COLOR,
@@ -75,7 +75,7 @@ const StarBars: React.FC<StarBarsProps> = (props) => {
     ],
     series: [
       {
-        name: 'Star Event',
+        name: 'Fork Event',
         type: 'bar',
         data: data,
         emphasis: {
@@ -143,4 +143,4 @@ const formatNum = (num: number, index: number) => {
   return (num / si[i].value).toFixed(2).replace(rx, '$1') + si[i].symbol;
 };
 
-export default StarBars;
+export default ForkChart;
