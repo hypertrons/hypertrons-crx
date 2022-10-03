@@ -26,10 +26,7 @@ class DeveloperNetworkAnchor extends PerceptorBase {
       .trim();
     const settings = await loadSettings();
     render(
-      <DeveloperNetworkView
-        currentDeveloper={this._currentDeveloper}
-        graphType={settings.graphType}
-      />,
+      <DeveloperNetworkView currentDeveloper={this._currentDeveloper} />,
       DeveloperNetworkDiv
     );
     profileArea.after(DeveloperNetworkDiv);

@@ -20,12 +20,10 @@ import ErrorPage from '../../components/ExceptionPage/ErrorPage';
 
 interface DeveloperNetworkViewProps {
   currentDeveloper: string;
-  graphType: GraphType;
 }
 
 const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
   currentDeveloper,
-  graphType,
 }) => {
   const [developerCollabrationData, setDeveloperCollabrationData] = useState<
     IGraphData | undefined
@@ -242,7 +240,6 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
               <div className="col-12 col-md-8">
                 <div style={{ margin: '10px 0 20px 20px' }}>
                   <Graph
-                    graphType={graphType}
                     data={developerCollabrationData!}
                     style={graphStyle}
                     focusedNodeID={currentDeveloper}
@@ -311,11 +308,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
             <div className="d-flex flex-wrap flex-items-center">
               <div className="col-12 col-md-8">
                 <div style={{ margin: '10px 0 20px 20px' }}>
-                  <Graph
-                    graphType={graphType}
-                    data={participatedProjectsData!}
-                    style={graphStyle}
-                  />
+                  <Graph data={participatedProjectsData!} style={graphStyle} />
                 </div>
               </div>
               <div className="col-12 col-md-4">
