@@ -188,7 +188,12 @@ const Graph: React.FC<GraphProps> = ({
           option={graphOption}
           style={style}
           onEvents={{
-            click: onNodeClick,
+            click: {
+              query: {
+                dataType: 'node',
+              },
+              handler: onNodeClick,
+            },
           }}
         />
       </Stack>
