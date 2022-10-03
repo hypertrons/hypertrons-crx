@@ -87,7 +87,7 @@ const StarBars: React.FC<StarBarsProps> = (props) => {
         type: 'line',
         symbol: 'none',
         lineStyle: {
-          color: COLORS.FG_COLOR,
+          color: 'white',
         },
         data: data,
         emphasis: {
