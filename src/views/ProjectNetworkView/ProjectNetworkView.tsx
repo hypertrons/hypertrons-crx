@@ -14,12 +14,10 @@ import ErrorPage from '../../components/ExceptionPage/ErrorPage';
 
 interface ProjectNetworkViewProps {
   currentRepo: string;
-  graphType: GraphType;
 }
 
 const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({
   currentRepo,
-  graphType,
 }) => {
   const [repoCorrelationData, setRepoCorrelationData] = useState<
     IGraphData | undefined
@@ -153,7 +151,6 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({
           <div className="col-12 col-md-8">
             <div style={{ margin: '10px 0 20px 20px' }}>
               <Graph
-                graphType={graphType}
                 data={repoCorrelationData!}
                 style={graphStyle}
                 focusedNodeID={currentRepo}
@@ -210,11 +207,7 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({
         <div className="d-flex flex-wrap flex-items-center">
           <div className="col-12 col-md-8">
             <div style={{ margin: '10px 0 20px 20px' }}>
-              <Graph
-                graphType={graphType}
-                data={developersByRepoData!}
-                style={graphStyle}
-              />
+              <Graph data={developersByRepoData!} style={graphStyle} />
             </div>
           </div>
           <div className="col-12 col-md-4">

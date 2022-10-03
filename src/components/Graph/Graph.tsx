@@ -1,6 +1,5 @@
 import React, { useState, CSSProperties, useEffect } from 'react';
 import EChartsWrapper from './Echarts/index';
-import GraphinWrapper from './Graphin/index';
 import { Stack, SwatchColorPicker, Link } from 'office-ui-fabric-react';
 import {
   getGithubTheme,
@@ -19,10 +18,6 @@ interface GraphProps {
    */
   readonly data: IGraphData;
   /**
-   * graphType, default is Echarts
-   */
-  readonly graphType?: GraphType;
-  /**
    * `style` for graph container
    */
   readonly style?: CSSProperties;
@@ -38,7 +33,6 @@ interface GraphProps {
 
 const Graph: React.FC<GraphProps> = ({
   data,
-  graphType = 'echarts',
   style = {},
   onNodeClick = (node: INode) => {
     const url = 'https://github.com/' + node.id;
@@ -130,98 +124,44 @@ const Graph: React.FC<GraphProps> = ({
     };
   };
 
-  const generateGraphinData = (data: any): any => {
-    const generateNodes = (nodes: any[]): any => {
-      const minMax = getMinMax(nodes);
-      return nodes.map((n: any) => {
-        const color =
-          focusedNodeID && focusedNodeID === n.name
-            ? FOCUSED_NODE_COLOR
-            : getColorMap(n.value);
-        return {
-          id: n.name,
-          value: n.value,
-          style: {
-            keyshape: {
-              size: linearMap(n.value, minMax, NODE_SIZE),
-              stroke: color,
-              fill: color,
-              fillOpacity: 1,
-            },
-          },
-        };
-      });
-    };
-    const generateEdges = (edges: any[]): any => {
-      return edges.map((e: any) => {
-        return {
-          source: e.source,
-          target: e.target,
-          value: e.weight,
-          style: {
-            keyshape: {
-              type: 'poly',
-              poly: {
-                distance: 40,
-              },
-            },
-          },
-        };
-      });
-    };
-    return {
-      nodes: generateNodes(data.nodes),
-      edges: generateEdges(data.edges),
-    };
-  };
-
   let graphData: any;
   let graphOption: any;
-  switch (graphType) {
-    case 'echarts':
-      graphData = generateEchartsData(data);
-      graphOption = {
-        tooltip: {},
-        animation: true,
-        animationDuration: 2000,
-        series: [
-          {
-            type: 'graph',
-            layout: 'force',
-            nodes: graphData.nodes,
-            edges: graphData.edges,
-            // Enable mouse zooming and translating
-            roam: true,
-            label: {
-              position: 'right',
-            },
-            force: {
-              repulsion: 50,
-              edgeLength: [1, 100],
-              // Disable the iteration animation of layout
-              layoutAnimation: false,
-            },
-            lineStyle: {
-              curveness: 0.3,
-              opacity: 0.7,
-            },
-            emphasis: {
-              focus: 'adjacency',
-              label: {
-                position: 'right',
-                show: true,
-              },
-            },
+  graphData = generateEchartsData(data);
+  graphOption = {
+    tooltip: {},
+    animation: true,
+    animationDuration: 2000,
+    series: [
+      {
+        type: 'graph',
+        layout: 'force',
+        nodes: graphData.nodes,
+        edges: graphData.edges,
+        // Enable mouse zooming and translating
+        roam: true,
+        label: {
+          position: 'right',
+        },
+        force: {
+          repulsion: 50,
+          edgeLength: [1, 100],
+          // Disable the iteration animation of layout
+          layoutAnimation: false,
+        },
+        lineStyle: {
+          curveness: 0.3,
+          opacity: 0.7,
+        },
+        emphasis: {
+          focus: 'adjacency',
+          label: {
+            position: 'right',
+            show: true,
           },
-        ],
-      };
-      break;
-    case 'antv':
-      graphData = generateGraphinData(data);
-      break;
-    default:
-      break;
-  }
+        },
+      },
+    ],
+  };
 
   const colorCellsExample1 = [
     { id: 'L0', label: `< ${THRESHOLD[0]}`, color: NODE_COLOR[0] },
@@ -244,22 +184,13 @@ const Graph: React.FC<GraphProps> = ({
   return (
     <Stack>
       <Stack className="hypertrons-crx-border">
-        {graphType === 'echarts' && (
-          <EChartsWrapper
-            option={graphOption}
-            style={style}
-            onEvents={{
-              click: onNodeClick,
-            }}
-          />
-        )}
-        {graphType === 'antv' && (
-          <GraphinWrapper
-            data={graphData}
-            style={style}
-            onNodeClick={onNodeClick}
-          />
-        )}
+        <EChartsWrapper
+          option={graphOption}
+          style={style}
+          onEvents={{
+            click: onNodeClick,
+          }}
+        />
       </Stack>
       <Stack
         horizontal
