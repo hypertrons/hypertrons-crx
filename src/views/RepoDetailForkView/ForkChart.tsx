@@ -29,6 +29,7 @@ const ForkChart: React.FC<ForkChartProps> = (props) => {
       },
     },
     tooltip: {
+      trigger: 'axis',
       textStyle: {
         color: COLORS.FG_COLOR,
       },
@@ -123,8 +124,8 @@ const ForkChart: React.FC<ForkChartProps> = (props) => {
 };
 
 const tooltipFormatter = (params: any) => {
-  let res = `${params.seriesName} (${params.data[0]})<br/>
-  ${params.marker}  ${params.data[1]}`;
+  let res = `${params[0].seriesName} (${params[0].data[0]})<br/>
+  ${params[0].marker}  ${params[0].data[1]}`;
   return res;
 };
 
