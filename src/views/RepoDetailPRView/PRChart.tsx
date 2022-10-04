@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
+import { formatNum, numberWithCommas } from '../../utils/formatter';
 
 const COLORS = {
   FG_COLOR: '#c9d1d9',
@@ -41,6 +42,7 @@ const PRChart: React.FC<PRChartProps> = (props) => {
         color: COLORS.FG_COLOR,
       },
       backgroundColor: COLORS.BG_COLOR,
+      formatter: tooltipFormatter,
     },
     grid: {
       top: '25%',
@@ -138,19 +140,41 @@ const PRChart: React.FC<PRChartProps> = (props) => {
   return <div ref={divEL} style={{ width, height }}></div>;
 };
 
-const formatNum = (num: number, index: number) => {
-  let si = [
-    { value: 1, symbol: '' },
-    { value: 1e3, symbol: 'k' },
-  ];
-  let rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-  let i;
-  for (i = si.length - 1; i > 0; i--) {
-    if (num >= si[i].value) {
-      break;
-    }
-  }
-  return (num / si[i].value).toFixed(2).replace(rx, '$1') + si[i].symbol;
+const tooltipFormatter = (params: any) => {
+  const series0 = params[0];
+  const series1 = params[1];
+  const series2 = params[2];
+  const ym = series0.data[0];
+  const html0 = series0
+    ? `
+    <span style="float:left;">${series0.marker}${series0.seriesName}</span>
+    <span style="float:right;font-weight:bold;">${numberWithCommas(
+      series0.data[1]
+    )}</span><br/> `
+    : '';
+  const html1 = series1
+    ? `
+    <span style="float:left;">${series1.marker}${series1.seriesName}</span>
+    <span style="float:right;font-weight:bold;">${numberWithCommas(
+      series1.data[1]
+    )}</span><br/> `
+    : '';
+  const html2 = series2
+    ? `
+    <span style="float:left;">${series2.marker}${series2.seriesName}</span>
+    <span style="float:right;font-weight:bold;">${numberWithCommas(
+      series2.data[1]
+    )}</span><br/> `
+    : '';
+  let res = `
+    <div style="width:80px;">
+      ${ym}<br/>
+      ${html0}
+      ${html1}
+      ${html2}
+    </div>
+  `;
+  return res;
 };
 
 export default PRChart;
