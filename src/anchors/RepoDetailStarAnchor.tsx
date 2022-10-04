@@ -1,13 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
-import * as pageDetect from 'github-url-detection';
 import PerceptorBase from '../PerceptorBase';
-import { runsWhen } from '../utils/utils';
+import { runsWhen, isPublicRepo } from '../utils/utils';
 import { utils } from 'github-url-detection';
 import RepoDetailStarView from '../views/RepoDetailStarView/RepoDetailStarView';
 
-@runsWhen([pageDetect.isRepo])
+@runsWhen([isPublicRepo])
 class RepoDetailStarAnchor extends PerceptorBase {
   private _currentRepo: string;
 
