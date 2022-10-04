@@ -2,6 +2,7 @@
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 initializeIcons();
 
+import RepoHeaderLabelsAnchor from '../../anchors/RepoHeaderLabelsAnchor';
 import RepoDetailPRAnchor from '../../anchors/RepoDetailPRAnchor';
 import RepoDetailIssueAnchor from '../../anchors/RepoDetailIssueAnchor';
 import RepoDetailStarAnchor from '../../anchors/RepoDetailStarAnchor';
@@ -20,6 +21,7 @@ import { loadSettings } from '../../utils/settings';
 import './index.scss';
 
 // inject to Perceptor's static variable
+inject2Perceptor(RepoHeaderLabelsAnchor);
 inject2Perceptor(RepoDetailPRAnchor);
 inject2Perceptor(RepoDetailIssueAnchor);
 inject2Perceptor(RepoDetailStarAnchor);
