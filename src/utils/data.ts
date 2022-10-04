@@ -20,7 +20,8 @@ export const generateDataByMonth = (originalData: any) => {
   const arrayData: [string, number][] = [];
   const start = new Date(oldestMonth);
   const end = new Date(newestMonth);
-  for (let i = start; i <= end; i.setMonth(i.getMonth() + 1)) {
+  end.setMonth(end.getMonth() + 1); // if not +1 month, i <= end will miss the last month occasionally
+  for (let i = start; i < end; i.setMonth(i.getMonth() + 1)) {
     const date = i.getFullYear() + '-' + (i.getMonth() + 1);
     if (!objectData.hasOwnProperty(date)) {
       arrayData.push([date, 0]);
