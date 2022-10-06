@@ -23,11 +23,12 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
   const option: echarts.EChartsOption = {
     color: COLORS.PALLET,
     title: {
-      text: 'Open Issue Event & Issue Comment Event',
+      text: 'Open Issue and Issue Comment Events',
       textStyle: {
         fontSize: 14,
         color: COLORS.FG_COLOR,
       },
+      left: '5%',
     },
     legend: {
       show: true,
@@ -84,7 +85,7 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
     ],
     series: [
       {
-        name: 'oi',
+        name: 'opens',
         type: 'line',
         symbol: 'none',
         data: data.oi,
@@ -94,7 +95,7 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
         yAxisIndex: 0,
       },
       {
-        name: 'ic',
+        name: 'comments',
         type: 'line',
         symbol: 'none',
         data: data.ic,

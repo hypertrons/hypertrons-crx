@@ -84,7 +84,7 @@ const PRChart: React.FC<PRChartProps> = (props) => {
     ],
     series: [
       {
-        name: 'op',
+        name: 'opens',
         type: 'line',
         symbol: 'none',
         data: data.op,
@@ -94,7 +94,7 @@ const PRChart: React.FC<PRChartProps> = (props) => {
         yAxisIndex: 0,
       },
       {
-        name: 'pm',
+        name: 'merges',
         type: 'line',
         symbol: 'none',
         data: data.pm,
@@ -104,7 +104,7 @@ const PRChart: React.FC<PRChartProps> = (props) => {
         yAxisIndex: 0,
       },
       {
-        name: 'rc',
+        name: 'reviews',
         type: 'line',
         symbol: 'none',
         data: data.rc,

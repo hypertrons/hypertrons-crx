@@ -23,7 +23,7 @@ const StarChart: React.FC<StarChartProps> = (props) => {
   const option: echarts.EChartsOption = {
     color: COLORS.PALLET,
     title: {
-      text: 'Star Event',
+      text: 'Star Events',
       textStyle: {
         fontSize: 14,
         color: COLORS.FG_COLOR,

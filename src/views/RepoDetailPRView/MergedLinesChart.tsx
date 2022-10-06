@@ -85,7 +85,7 @@ const MergedLinesChart: React.FC<MergedLinesChartProps> = (props) => {
     ],
     series: [
       {
-        name: 'ad',
+        name: 'additions',
         type: 'line',
         symbol: 'none',
         areaStyle: {},
@@ -96,7 +96,7 @@ const MergedLinesChart: React.FC<MergedLinesChartProps> = (props) => {
         yAxisIndex: 0,
       },
       {
-        name: 'de',
+        name: 'deletions',
         type: 'line',
         symbol: 'none',
         areaStyle: {},
