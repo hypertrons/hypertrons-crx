@@ -31,7 +31,8 @@
     "office-ui-fabric-react": "^7.183.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-hot-loader": "^4.13.0"
+    "react-hot-loader": "^4.13.0",
+    "react-tooltip": "^4.2.21"
   },
   "devDependencies": {
     "@babel/core": "^7.17.0",
