@@ -23,7 +23,7 @@ const ForkChart: React.FC<ForkChartProps> = (props) => {
   const option: echarts.EChartsOption = {
     color: COLORS.PALLET,
     title: {
-      text: 'Fork Event',
+      text: 'Fork Events',
       textStyle: {
         fontSize: 14,
         color: COLORS.FG_COLOR,

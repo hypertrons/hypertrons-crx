@@ -23,7 +23,7 @@ const ParticipantChart: React.FC<ParticipantChartProps> = (props) => {
   const option: echarts.EChartsOption = {
     color: COLORS.PALLET,
     title: {
-      text: 'Participant',
+      text: 'Participants',
       textStyle: {
         fontSize: 14,
         color: COLORS.FG_COLOR,
