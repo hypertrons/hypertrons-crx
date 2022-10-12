@@ -167,7 +167,7 @@ const tooltipFormatter = (params: any) => {
     )}</span><br/> `
     : '';
   let res = `
-    <div style="width:80px;">
+    <div style="width:110px;">
       ${ym}<br/>
       ${html0}
       ${html1}
