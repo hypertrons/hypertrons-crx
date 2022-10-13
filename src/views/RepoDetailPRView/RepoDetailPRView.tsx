@@ -74,9 +74,9 @@ const RepoDetailPRView: React.FC<RepoDetailPRViewProps> = ({ currentRepo }) => {
       className={githubTheme === 'dark' ? 'custom-react-tooltip' : ''}
       clickable={true}
     >
-      <PRChart width={300} height={200} data={generatePRData(PR)} />
+      <PRChart width={330} height={200} data={generatePRData(PR)} />
       <MergedLinesChart
-        width={300}
+        width={330}
         height={200}
         data={generateMergedLinesData(PR)}
       />

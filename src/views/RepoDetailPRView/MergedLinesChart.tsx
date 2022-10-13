@@ -138,7 +138,7 @@ const tooltipFormatter = (params: any) => {
   const series1 = params[1];
   const ym = series0.data[0];
   let res = `
-    <div style="width:100px;">
+    <div style="width:140px;">
       ${ym}<br/>
       <span style="float:left;">${series0.marker}${series0.seriesName}</span>
       <span style="float:right;font-weight:bold;">${numberWithCommas(

@@ -24,8 +24,9 @@ const PRChart: React.FC<PRChartProps> = (props) => {
     color: COLORS.PALLET,
     title: {
       text: 'Open PR, PR Merge, Review Comment Events',
+      width: 100,
       textStyle: {
-        fontSize: 13,
+        fontSize: 14,
         color: COLORS.FG_COLOR,
       },
     },
@@ -167,7 +168,7 @@ const tooltipFormatter = (params: any) => {
     )}</span><br/> `
     : '';
   let res = `
-    <div style="width:80px;">
+    <div style="width:110px;">
       ${ym}<br/>
       ${html0}
       ${html1}
