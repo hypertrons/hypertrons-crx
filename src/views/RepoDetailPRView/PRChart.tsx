@@ -48,7 +48,7 @@ const PRChart: React.FC<PRChartProps> = (props) => {
     grid: {
       top: '25%',
       left: '12%',
-      width: '100%',
+      width: '85%',
       height: '60%',
     },
     xAxis: {
