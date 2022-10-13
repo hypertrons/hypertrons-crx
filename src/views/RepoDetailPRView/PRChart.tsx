@@ -24,8 +24,9 @@ const PRChart: React.FC<PRChartProps> = (props) => {
     color: COLORS.PALLET,
     title: {
       text: 'Open PR, PR Merge, Review Comment Events',
+      width: 100,
       textStyle: {
-        fontSize: 13,
+        fontSize: 14,
         color: COLORS.FG_COLOR,
       },
     },
@@ -47,7 +48,7 @@ const PRChart: React.FC<PRChartProps> = (props) => {
     grid: {
       top: '25%',
       left: '12%',
-      width: '85%',
+      width: '100%',
       height: '60%',
     },
     xAxis: {
