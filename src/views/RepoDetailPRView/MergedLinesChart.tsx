@@ -24,7 +24,7 @@ const MergedLinesChart: React.FC<MergedLinesChartProps> = (props) => {
     color: COLORS.PALLET,
     title: {
       text: 'Merged Addition & Deletion Code Lines',
-      left: '4%',
+      left: 'center',
       textStyle: {
         fontSize: 14,
         color: COLORS.FG_COLOR,
