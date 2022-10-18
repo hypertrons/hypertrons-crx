@@ -143,10 +143,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
     <div className="border-top color-border-secondary pt-3 mt-3">
       <h2 className="h4 mb-2">Perceptor</h2>
       <ul className="vcard-details">
-        <li
-          className="vcard-detail pt-1 css-truncate css-truncate-target"
-          style={{ margin: '-5px -30px' }}
-        >
+        <li className="vcard-detail pt-1" style={{ margin: '-5px -30px' }}>
           <ActionButton
             iconProps={{ iconName: 'Group' }}
             onClick={() => {
@@ -174,10 +171,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
             </span>
           </ActionButton>
         </li>
-        <li
-          className="vcard-detail pt-1 css-truncate css-truncate-target"
-          style={{ margin: '-5px -30px' }}
-        >
+        <li className="vcard-detail pt-1" style={{ margin: '-5px -30px' }}>
           <ActionButton
             iconProps={{ iconName: 'BranchMerge' }}
             onClick={() => {
