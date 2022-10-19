@@ -1,3 +1,15 @@
+## [1.7.1](https://github.com/hypertrons/hypertrons-crx/compare/v1.7.0...v1.7.1) (2022-10-19)
+
+
+### Bug Fixes
+
+* avoid redundant renders ([#485](https://github.com/hypertrons/hypertrons-crx/issues/485)) ([1ca1b32](https://github.com/hypertrons/hypertrons-crx/commit/1ca1b32969f82d0f8558e2b705f1604f9ea95d38))
+* modify the css class of the two network buttons in profile perceptor to avoid be truncated ([#484](https://github.com/hypertrons/hypertrons-crx/issues/484)) ([83f8c5e](https://github.com/hypertrons/hypertrons-crx/commit/83f8c5ee24284017655c7979e926a956df9068ec))
+* recenter the title of mergedline chart ([#482](https://github.com/hypertrons/hypertrons-crx/issues/482)) ([3bbf62b](https://github.com/hypertrons/hypertrons-crx/commit/3bbf62bec1f02ca32e6b207ab82a27abb703374e))
+* the width of tooltip is too small ([#477](https://github.com/hypertrons/hypertrons-crx/issues/477)) ([daf8ed6](https://github.com/hypertrons/hypertrons-crx/commit/daf8ed6c3cad3de439ffa06904b035dde2ca2749))
+
+
+
 # [1.7.0](https://github.com/hypertrons/hypertrons-crx/compare/v1.6.4...v1.7.0) (2022-10-06)
 
 
@@ -35,10 +47,6 @@
 
 * fatal issue 382 ([#396](https://github.com/hypertrons/hypertrons-crx/issues/396)) ([31688ff](https://github.com/hypertrons/hypertrons-crx/commit/31688ff4c9470d2c14fabb20d1c3c3bc2ba28612))
 * using dark theme in day time or vice verse is not considered ([#401](https://github.com/hypertrons/hypertrons-crx/issues/401)) ([1771cc7](https://github.com/hypertrons/hypertrons-crx/commit/1771cc7e347ff2b25913e0f6ef51a55709fd54b7))
-
-
-
-## [1.6.1](https://github.com/hypertrons/hypertrons-crx/compare/v1.6.0...v1.6.1) (2022-07-07)
 
 
 

@@ -1,14 +1,14 @@
 export const updateInformation = {
   chrome: {
-    latest_version: '1.7.0',
+    latest_version: '1.7.1',
     url: 'https://github.com/hypertrons/hypertrons-crx/releases',
   },
   edge: {
-    latest_version: '1.7.0',
+    latest_version: '1.7.1',
     url: 'https://github.com/hypertrons/hypertrons-crx/releases',
   },
   develop: {
-    latest_version: '1.7.0',
+    latest_version: '1.7.1',
     url: 'https://github.com/hypertrons/hypertrons-crx/releases',
   },
 };
