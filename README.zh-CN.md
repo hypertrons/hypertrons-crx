@@ -13,6 +13,14 @@ Language : [English](./README.md) | 中文
 
 `Hypercrx` (发音: 'Hai-puh CRX') 浏览器插件项目旨在通过直接往 GitHub 页面中插入各类可视化看板的形式，帮助用户快速追踪、挖掘和洞察项目与开发者的各类行为数据，为社区的数字化运营和分析提供有效支撑。
 
+## 安装与使用 📢
+
+<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/chrome/chrome.svg" width="48" alt="Chrome" valign="middle"> [前往Chrome商店安装插件](https://chrome.google.com/webstore/detail/hypercrx/ijchfbpdgeljmhnhokmekkecpbdkgabc)
+
+<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/edge/edge.svg" width="48" alt="Edge" valign="middle"> [前往Edge商店安装插件](https://microsoftedge.microsoft.com/addons/detail/hypercrx/lbbajaehiibofpconjgdjonmkidpcome)
+
+获取更多信息，请查阅[安装指南](./INSTALLATION.zh-CN.md)。
+
 ## 可视化看板 🔥🔥🔥
 
 您可以在以下入口处找到这些看板：
@@ -115,16 +123,6 @@ Language : [English](./README.md) | 中文
 - **开发者协作网络图**: 开发者协作网络图展示了在给定的时间段内，开发者与开发者之间的协作关系, ***用于开发者关系的追踪与挖掘***。从该网络图中，可以找出与指定开发者联系较为紧密的其他开发者。
 - **活跃仓库网络图**: 活跃仓库网络图展示了在给定的时间段内，开发者的活跃项目，***用于开发者行为的追踪与挖掘***。从该网络图中，可以找出该开发者在哪些项目中活跃。
 - **开发者活跃度&影响力趋势图**：开发者活跃度和影响力趋势图显示了项目成立至今的活跃度和影响力这两个指标的变化。您可以利用鼠标或触控板在图表内缩放和拖拽，此外，您还可以点击Legend按钮来控制图例的显示和隐藏。
-
-## 安装与使用 📢
-
-[link-chrome]: https://chrome.google.com/webstore/detail/hypercrx/ijchfbpdgeljmhnhokmekkecpbdkgabc "Version published on Chrome Web Store"
-
-[link-edge]:https://microsoftedge.microsoft.com/addons/detail/hypercrx/lbbajaehiibofpconjgdjonmkidpcome?hl=zh-CN
-
-[<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/chrome/chrome.svg" width="48" alt="Chrome" valign="middle">][link-chrome] 同时上线在 [<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/edge/edge.svg" width="24" alt="Edge" valign="middle">][link-edge]<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/opera/opera.svg" width="24" alt="Opera" valign="middle">
-
-更多信息请参考 [安装指南](./INSTALLATION.zh-CN.md).
 
 ## 参与贡献
 
