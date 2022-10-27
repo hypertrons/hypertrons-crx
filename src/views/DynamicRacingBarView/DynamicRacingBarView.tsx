@@ -6,6 +6,7 @@ import {
   IDropdownOption,
   Spinner,
 } from '@fluentui/react';
+import $ from 'jquery';
 import { getMessageByLocale } from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
 import ErrorPage from '../../components/ExceptionPage/ErrorPage';
