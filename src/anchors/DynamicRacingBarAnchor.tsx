@@ -22,10 +22,7 @@ class DynamicRacingBarAnchor extends PerceptorBase {
     this._currentRepo = utils.getRepositoryInfo(window.location)!.nameWithOwner;
     const settings = await loadSettings();
     render(
-      <DynamicRacingBarView
-        currentRepo={this._currentRepo}
-        graphType={settings.graphType}
-      />,
+      <DynamicRacingBarView currentRepo={this._currentRepo} />,
       newDivElement
     );
     perceptorContainer.prepend(newDivElement);

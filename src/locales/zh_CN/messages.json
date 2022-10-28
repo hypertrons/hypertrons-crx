@@ -230,12 +230,6 @@
   "options_locale_toolTip": {
     "message": "选择以何种语言显示信息"
   },
-  "options_graphType_title": {
-    "message": "图表类型"
-  },
-  "options_graphType_toolTip": {
-    "message": "可选择图表组件的渲染方式，Antv 或者 Echarts"
-  },
   "options_update_title": {
     "message": "更新"
   },

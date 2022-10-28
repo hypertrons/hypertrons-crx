@@ -16,19 +16,31 @@ class DeveloperActiInflTrendAnchor extends PerceptorBase {
   }
 
   public async run(): Promise<void> {
-    const profileArea = $('.js-profile-editable-area').parent();
-    const newContainer = document.createElement('div');
-    newContainer.id = 'developer-acti-infl-trend';
-    newContainer.style.width = '100%';
     this._currentDeveloper = $('.p-nickname.vcard-username.d-block')
       .text()
       .trim();
+    const container = document.getElementById('developer-acti-infl-trend');
+    if (container != null) {
+      render(
+        <DeveloperActiInflTrendView
+          currentDeveloper={this._currentDeveloper}
+        />,
+        container
+      );
+    } else {
+      const profileArea = $('.js-profile-editable-area').parent();
+      const newContainer = document.createElement('div');
+      newContainer.id = 'developer-acti-infl-trend';
+      newContainer.style.width = '100%';
 
-    render(
-      <DeveloperActiInflTrendView currentDeveloper={this._currentDeveloper} />,
-      newContainer
-    );
-    profileArea.after(newContainer);
+      render(
+        <DeveloperActiInflTrendView
+          currentDeveloper={this._currentDeveloper}
+        />,
+        newContainer
+      );
+      profileArea.after(newContainer);
+    }
   }
 }
 

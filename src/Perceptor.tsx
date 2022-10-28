@@ -47,7 +47,9 @@ export class Perceptor extends PerceptorBase {
   public async loadFeatures(): Promise<void> {
     //
     Perceptor.Features.forEach(async (Feature, name) => {
-      const featureId = name.replace(name[0], name[0].toLowerCase());
+      const featureId = name
+        .replace(name[0], name[0].toLowerCase())
+        .replace('Anchor', '');
       logger.info('trying to load ', featureId);
       if (this.settings.toJson()[featureId] === false) {
         logger.info(featureId, 'is disabled');

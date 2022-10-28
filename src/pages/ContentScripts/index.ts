@@ -2,6 +2,11 @@
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 initializeIcons();
 
+import RepoHeaderLabelsAnchor from '../../anchors/RepoHeaderLabelsAnchor';
+import RepoDetailPRAnchor from '../../anchors/RepoDetailPRAnchor';
+import RepoDetailIssueAnchor from '../../anchors/RepoDetailIssueAnchor';
+import RepoDetailStarAnchor from '../../anchors/RepoDetailStarAnchor';
+import RepoDetailForkAnchor from '../../anchors/RepoDetailForkAnchor';
 import DeveloperActiInflTrendAnchor from '../../anchors/DeveloperActInflTrendAnchor';
 import RepoActiInflTrendAnchor from '../../anchors/RepoActiInflTrendAnchor';
 import PerceptorTabAnchor from '../../anchors/PerceptorTabAnchor';
@@ -12,11 +17,16 @@ import HypertronsAnchor from '../../anchors/HypertronsAnchor';
 import { inject2Perceptor, Perceptor } from '../../Perceptor';
 import { loadSettings } from '../../utils/settings';
 
-import './index.css';
+import './index.scss';
 import DynamicRacingBarAnchor from '../../anchors/DynamicRacingBarAnchor';
 import HorizontalBannerAnchor from '../../anchors/HorizontalBanner';
 
 // inject to Perceptor's static variable
+inject2Perceptor(RepoHeaderLabelsAnchor);
+inject2Perceptor(RepoDetailPRAnchor);
+inject2Perceptor(RepoDetailIssueAnchor);
+inject2Perceptor(RepoDetailStarAnchor);
+inject2Perceptor(RepoDetailForkAnchor);
 inject2Perceptor(DeveloperActiInflTrendAnchor);
 inject2Perceptor(RepoActiInflTrendAnchor);
 inject2Perceptor(PerceptorTabAnchor);
@@ -25,7 +35,7 @@ inject2Perceptor(DeveloperNetworkAnchor);
 inject2Perceptor(ProjectNetworkAnchor);
 inject2Perceptor(HypertronsAnchor);
 inject2Perceptor(DynamicRacingBarAnchor);
-inject2Perceptor(HorizontalBannerAnchor)
+inject2Perceptor(HorizontalBannerAnchor);
 
 async function mainInject() {
   const settings = await loadSettings();

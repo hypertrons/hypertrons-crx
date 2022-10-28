@@ -20,12 +20,10 @@ import ErrorPage from '../../components/ExceptionPage/ErrorPage';
 
 interface DeveloperNetworkViewProps {
   currentDeveloper: string;
-  graphType: GraphType;
 }
 
 const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
   currentDeveloper,
-  graphType,
 }) => {
   const [developerCollabrationData, setDeveloperCollabrationData] = useState<
     IGraphData | undefined
@@ -145,10 +143,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
     <div className="border-top color-border-secondary pt-3 mt-3">
       <h2 className="h4 mb-2">Perceptor</h2>
       <ul className="vcard-details">
-        <li
-          className="vcard-detail pt-1 css-truncate css-truncate-target"
-          style={{ margin: '-5px -30px' }}
-        >
+        <li className="vcard-detail pt-1" style={{ margin: '-5px -30px' }}>
           <ActionButton
             iconProps={{ iconName: 'Group' }}
             onClick={() => {
@@ -176,10 +171,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
             </span>
           </ActionButton>
         </li>
-        <li
-          className="vcard-detail pt-1 css-truncate css-truncate-target"
-          style={{ margin: '-5px -30px' }}
-        >
+        <li className="vcard-detail pt-1" style={{ margin: '-5px -30px' }}>
           <ActionButton
             iconProps={{ iconName: 'BranchMerge' }}
             onClick={() => {
@@ -242,7 +234,6 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
               <div className="col-12 col-md-8">
                 <div style={{ margin: '10px 0 20px 20px' }}>
                   <Graph
-                    graphType={graphType}
                     data={developerCollabrationData!}
                     style={graphStyle}
                     focusedNodeID={currentDeveloper}
@@ -311,11 +302,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
             <div className="d-flex flex-wrap flex-items-center">
               <div className="col-12 col-md-8">
                 <div style={{ margin: '10px 0 20px 20px' }}>
-                  <Graph
-                    graphType={graphType}
-                    data={participatedProjectsData!}
-                    style={graphStyle}
-                  />
+                  <Graph data={participatedProjectsData!} style={graphStyle} />
                 </div>
               </div>
               <div className="col-12 col-md-4">

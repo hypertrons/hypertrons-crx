@@ -21,7 +21,13 @@ interface EChartsWrapperProps {
   /**
    * bind events, default is `{}`
    */
-  readonly onEvents?: Record<string, Function>;
+  readonly onEvents?: Record<
+    string,
+    {
+      query?: string | Object;
+      handler: Function;
+    }
+  >;
 }
 
 const EChartsWrapper: React.FC<EChartsWrapperProps> = ({
@@ -59,11 +65,6 @@ const EChartsWrapper: React.FC<EChartsWrapperProps> = ({
    * render and return a new echart instance
    */
   const renderNewEcharts = () => {
-    const bindEvent = (eventName: string, func: Function) => {
-      instance.on(eventName, (param: any) => {
-        func(param.data);
-      });
-    };
     const instance = getEchartsInstance();
     instance.setOption(option);
     window.addEventListener('resize', () => {
@@ -72,7 +73,17 @@ const EChartsWrapper: React.FC<EChartsWrapperProps> = ({
     // loop and bind events
     for (const eventName in onEvents) {
       if (Object.prototype.hasOwnProperty.call(onEvents, eventName)) {
-        bindEvent(eventName, onEvents[eventName]);
+        const query = onEvents[eventName].query;
+        const handler = onEvents[eventName].handler;
+        if (query) {
+          instance.on(eventName, query, (param: any) => {
+            handler(param.data);
+          });
+        } else {
+          instance.on(eventName, (param: any) => {
+            handler(param.data);
+          });
+        }
       }
     }
   };

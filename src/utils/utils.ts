@@ -195,10 +195,11 @@ export function linearMap(
 
 // check if the repository is public
 export function isPublicRepo() {
+  const repoLabel = $('#repository-container-header')
+    .find('span.Label.Label--secondary')
+    .text();
   return (
     pageDetect.isRepo() &&
-    $(
-      '[class="Label Label--secondary v-align-middle mr-1"]'
-    )[0].innerHTML.toLowerCase() == 'public'
+    (repoLabel === 'Public' || repoLabel === 'Public template')
   );
 }

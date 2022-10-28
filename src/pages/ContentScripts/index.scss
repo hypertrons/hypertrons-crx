@@ -42,3 +42,15 @@
   max-width: 100%;
   width: 60vw;
 }
+
+.custom-react-tooltip {
+  border: 1px solid #8b949e !important;
+  &.place-top::before,
+  &.place-bottom:before {
+    border-color: #8b949e transparent !important;
+  }
+  &.place-right::before,
+  &.place-left:before {
+    border-color: transparent #8b949e !important;
+  }
+}

@@ -1,0 +1,40 @@
+# issue-comment.yml
+# mark the status of the issue as waiting for repliers (contributor should reply) or waiting for author (issue author should reply)
+name: Add issues workflow labels
+
+on:
+  issue_comment:
+    types: [ created ]
+
+jobs:
+  add-label-if-is-author:
+    runs-on: ubuntu-latest
+    if: (github.event.issue.user.id == github.event.comment.user.id) && !github.event.issue.pull_request && (github.event.issue.state == 'open')
+    steps:
+      - name: Add require handle label
+        uses: actions-cool/issues-helper@v2
+        with:
+          actions: 'add-labels'
+          labels: 'waiting for repliers'
+
+      - name: Remove require reply label
+        uses: actions-cool/issues-helper@v2
+        with:
+          actions: 'remove-labels'
+          labels: 'waiting for author'
+
+  add-label-if-not-author:
+    runs-on: ubuntu-latest
+    if: (github.event.issue.user.id != github.event.comment.user.id) && !github.event.issue.pull_request && (github.event.issue.state == 'open')
+    steps:
+      - name: Add require reply label
+        uses: actions-cool/issues-helper@v2
+        with:
+          actions: 'add-labels'
+          labels: 'waiting for author'
+
+      - name: Remove require handle label
+        uses: actions-cool/issues-helper@v2
+        with:
+          actions: 'remove-labels'
+          labels: 'waiting for repliers'

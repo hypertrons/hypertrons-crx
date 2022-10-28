@@ -17,22 +17,27 @@ class DeveloperNetworkAnchor extends PerceptorBase {
   }
 
   public async run(): Promise<void> {
-    const profileArea = $('.js-profile-editable-area').parent();
-    const DeveloperNetworkDiv = document.createElement('div');
-    DeveloperNetworkDiv.id = 'developer-network';
-    DeveloperNetworkDiv.style.width = '100%';
     this._currentDeveloper = $('.p-nickname.vcard-username.d-block')
       .text()
       .trim();
-    const settings = await loadSettings();
-    render(
-      <DeveloperNetworkView
-        currentDeveloper={this._currentDeveloper}
-        graphType={settings.graphType}
-      />,
-      DeveloperNetworkDiv
-    );
-    profileArea.after(DeveloperNetworkDiv);
+    const container = document.getElementById('developer-network');
+    if (container != null) {
+      render(
+        <DeveloperNetworkView currentDeveloper={this._currentDeveloper} />,
+        container
+      );
+    } else {
+      const profileArea = $('.js-profile-editable-area').parent();
+      const DeveloperNetworkDiv = document.createElement('div');
+      DeveloperNetworkDiv.id = 'developer-network';
+      DeveloperNetworkDiv.style.width = '100%';
+      const settings = await loadSettings();
+      render(
+        <DeveloperNetworkView currentDeveloper={this._currentDeveloper} />,
+        DeveloperNetworkDiv
+      );
+      profileArea.after(DeveloperNetworkDiv);
+    }
   }
 }
 

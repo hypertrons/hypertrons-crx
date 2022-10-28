@@ -14,7 +14,6 @@ import DynamicRacingBar from '../../components/DynamicRacingBar/DynamicRacingBar
 
 interface ContributorsActivityEvolutionProps {
   currentRepo: string;
-  graphType: GraphType;
 }
 
 const DynamicRacingBarView: React.FC<ContributorsActivityEvolutionProps> = ({
