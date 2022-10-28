@@ -26,7 +26,7 @@ inject2Perceptor(DeveloperNetworkAnchor);
 inject2Perceptor(ProjectNetworkAnchor);
 inject2Perceptor(HypertronsAnchor);
 inject2Perceptor(DynamicRacingBarAnchor);
-inject2Perceptor(HorizontalBannerAnchor)
+inject2Perceptor(HorizontalBannerAnchor);
 
 async function mainInject() {
   const settings = await loadSettings();

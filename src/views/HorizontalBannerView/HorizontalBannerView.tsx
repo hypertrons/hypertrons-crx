@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Stack,
-} from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import { getMessageByLocale } from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
 import ErrorPage from '../../components/ExceptionPage/ErrorPage';

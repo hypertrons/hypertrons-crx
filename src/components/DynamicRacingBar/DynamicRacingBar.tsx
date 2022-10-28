@@ -3,7 +3,11 @@ import * as echarts from 'echarts';
 import * as React from 'react';
 import PlayButton from './DynamicRacingBarin/PlayButton';
 import { getGithubTheme } from '../../utils/utils';
-import { DynamicBarData } from '../../mock/DynamicRacingBar.data';
+import {
+  DynamicBarData,
+  DynamicBardata,
+} from '../../mock/DynamicRacingBar.data';
+
 const LIGHT_THEME = {
   FG_COLOR: '#24292f',
   BG_COLOR: '#ffffff',
@@ -16,48 +20,37 @@ const DARK_THEME = {
 };
 const githubTheme = getGithubTheme();
 interface DynamicBarProps {
-  data1: [string, number][];
-  data2: [string, number][];
   dataURL: string;
 }
-interface Symbol {
-  name: string;
-  avatar: string;
+let username: string[] = [];
+let time: string[] = [];
+let value: number[] = [];
+for (let i = 0; i < 7; i++) {
+  username.push(DynamicBardata.username[i]);
+  time.push(DynamicBarData.contribution[i].date);
+  value.push(DynamicBarData.contribution[i].value);
 }
-let resname = DynamicBarData.flags[0].name;
-let resavatar = DynamicBarData.flags[0].emoji;
-const symbols: Symbol[] = [{ name: resname, avatar: resavatar }];
 const years: string[] = [];
-function getContri(userName: string) {
-  if (!userName) {
-    return '';
-  }
-  return (
-    symbols.find(function (item) {
-      return item.name === userName;
-    }) || {}
-  ).avatar;
-}
 const DynamicRacingBar: React.FC<DynamicBarProps> = (props) => {
-  const { data1, data2,dataURL } = props;
+  const { dataURL } = props;
   const [play, setPlay] = useState(true);
   const divEL = useRef(null);
+  const [CSVData, setCSVData] = useState();
   const TH = githubTheme == 'light' ? LIGHT_THEME : DARK_THEME;
+
   const data: number[] = [];
-  for (let i = 0; i < 5; ++i) {
-    data.push(Math.round(Math.random() * 200));
-  }
+
   const option: echarts.EChartsOption = {
     xAxis: {
       max: 'dataMax',
     },
     yAxis: {
       type: 'category',
-      // data: ['A', 'B', 'C', 'D', 'E'],
+      data: username,
       inverse: true,
       animationDuration: 300,
       animationDurationUpdate: 300,
-      max: 9,
+      max: DynamicBardata.username.length,
     },
     series: [
       {
@@ -87,38 +80,35 @@ const DynamicRacingBar: React.FC<DynamicBarProps> = (props) => {
         continue;
       }
       if (Math.random() > 0.9) {
-        data[i] += Math.round(Math.random() * 2000);
+        data[i] += Math.round(Math.random() * 20);
       } else {
-        data[i] += Math.round(Math.random() * 200);
+        data[i] += Math.round(Math.random() * 2);
       }
     }
     if (data.length < 10) {
-      data.push(10000);
+      data.push(10);
     } else {
       data.splice(0, 1);
     }
     let chartDOM = divEL.current;
     const instance = echarts.getInstanceByDom(chartDOM as any);
-    if (play) {
-      if (instance) {
-        instance.setOption(option);
-      }
+
+    if (instance) {
+      instance.setOption(option);
     }
   }
-  if (play) {
-    setTimeout(function () {
-      run();
-    }, 0);
-    setInterval(function () {
-      run();
-      let chartDOM = divEL.current;
-      const instance = echarts.init(chartDOM as any);
+  setTimeout(function () {
+    run();
+  }, 0);
+  setInterval(function () {
+    run();
+    let chartDOM = divEL.current;
+    const instance = echarts.init(chartDOM as any);
 
-      return () => {
-        instance.dispose();
-      };
-    }, 3000);
-  }
+    return () => {
+      instance.dispose();
+    };
+  }, 3000);
 
   useEffect(() => {
     let chartDOM = divEL.current;
@@ -137,11 +127,6 @@ const DynamicRacingBar: React.FC<DynamicBarProps> = (props) => {
   }
   return (
     <div>
-      {/* <PlayButton 
-        hide= {true}  
-        size= {5}
-        play={setPlay(!play)}
-      /> */}
       <button
         onClick={settingplay}
         style={{ marginLeft: '690px', marginTop: '5px' }}

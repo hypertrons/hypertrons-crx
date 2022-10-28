@@ -13,7 +13,7 @@ class HorizontalBannerAnchor extends PerceptorBase {
     super();
     this._currentRepo = '';
   }
-  
+
   public async run(): Promise<void> {
     this._currentRepo = utils.getRepositoryInfo(window.location)!.nameWithOwner;
 
@@ -22,9 +22,8 @@ class HorizontalBannerAnchor extends PerceptorBase {
 
     // if not the first time to enter this code
     if (document.getElementById('hori-banner-trend') != null) {
-      newBorderHoriCell = $('#hori-banner-trend').children(
-        '.BorderHori-cell'
-      )[0];
+      newBorderHoriCell =
+        $('#hori-banner-trend').children('.BorderHori-cell')[0];
 
       render(
         <HorizontalBannerView currentRepo={this._currentRepo} />,
@@ -34,7 +33,7 @@ class HorizontalBannerAnchor extends PerceptorBase {
       newBorderHoriRow = document.createElement('div');
       newBorderHoriRow.id = 'hori-banner-trend';
       newBorderHoriRow.className = 'BorderHori-row';
-      newBorderHoriRow.style.width='100%';
+      newBorderHoriRow.style.width = '100%';
       newBorderHoriCell = document.createElement('div');
       newBorderHoriCell.className = 'BorderHori-cell';
       newBorderHoriRow.appendChild(newBorderHoriCell);
@@ -43,7 +42,7 @@ class HorizontalBannerAnchor extends PerceptorBase {
         <HorizontalBannerView currentRepo={this._currentRepo} />,
         newBorderHoriCell
       );
-      const borderHoriRows = $('div.pt-3')
+      const borderHoriRows = $('div.pt-3');
       borderHoriRows.append(newBorderHoriRow);
     }
   }

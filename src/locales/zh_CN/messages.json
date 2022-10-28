@@ -185,6 +185,21 @@
   "component_activeDeveloperCollabrationNetwork_description_edge": {
     "message": "边：开发者与开发者之间的连接关系，值的大小表示开发者间联系的紧密程度。"
   },
+  "component_DynamicRacingBar_title": {
+    "message": "动态赛车巴"
+  },
+  "component_DynamicRacingBar_description": {
+    "message": "动态赛车吧中显示了从创建存储库到现在不同用户在存储库中的贡献"
+  },
+  "component_DynamicRacingBar_description_xaxis": {
+    "message": "X 轴表示对 github 上的存储库做出贡献的时间，显示与其他用户相比，他们的贡献随时间动态变化."
+  },
+  "component_DynamicRacingBar_description_yaxis": {
+    "message": "Y轴表示对github上的repository做出贡献的用户，将他们的贡献与其他用户进行比较，条形动态变化."
+  },
+  "Horizontal_Banner_Description": {
+    "message": "欢迎来到 HyperCRX 存储库！"
+  },
   "component_darkMode": {
     "message": "深色模式"
   },

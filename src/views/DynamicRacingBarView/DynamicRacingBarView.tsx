@@ -76,6 +76,12 @@ const DynamicRacingBarView: React.FC<ContributorsActivityEvolutionProps> = ({
     <div>
       <div className="hypertrons-crx-border hypertrons-crx-container">
         <Stack className="hypertrons-crx-title">
+          <span>
+            {getMessageByLocale(
+              'component_DynamicRacingBar_title',
+              settings.locale
+            )}
+          </span>
           <div className="hypertrons-crx-title-extra">
             <Dropdown
               defaultSelectedKey={repoPeriod}
@@ -88,16 +94,39 @@ const DynamicRacingBarView: React.FC<ContributorsActivityEvolutionProps> = ({
         </Stack>
         <div className="d-flex flex-wrap flex-items-center">
           <div className="col-12 col-md-8">
-            <div style={{ margin: '10px 0 20px 20px' }}>
+            <div style={{ margin: '25px 0 20px 20px' }}>
               <Stack className="hypertrons-crx-border">
-                <Stack.Item align="center">
-                  <DynamicRacingBar
-                    data1={[]} //fetch the data and pass it to dynamic racing bars
-                    data2={[]}
-                    dataURL="https://hypertrons-oss.x-lab.info/dynamicbar_activities_v2/latest/hypertrons/hypertrons-crx.csv"
-                  />
+                <Stack.Item align="center" style={{ marginLeft: '100px' }}>
+                  <DynamicRacingBar dataURL="https://hypertrons-oss.x-lab.info/dynamicbar_activities_v2/latest/hypertrons/hypertrons-crx.csv" />
                 </Stack.Item>
               </Stack>
+            </div>
+          </div>
+          <div className="col-12 col-md-4">
+            <div
+              className="color-text-secondary"
+              style={{ marginLeft: '35px', marginRight: '35px' }}
+            >
+              <p>
+                {getMessageByLocale(
+                  'component_DynamicRacingBar_description',
+                  settings.locale
+                )}
+              </p>
+              <ul style={{ margin: '0px 0 10px 15px' }}>
+                <li>
+                  {getMessageByLocale(
+                    'component_DynamicRacingBar_description_xaxis',
+                    settings.locale
+                  )}
+                </li>
+                <li>
+                  {getMessageByLocale(
+                    'component_DynamicRacingBar_description_yaxis',
+                    settings.locale
+                  )}
+                </li>
+              </ul>
             </div>
           </div>
           <div className="col-12 col-md-4">
