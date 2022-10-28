@@ -16,35 +16,14 @@ class HorizontalBannerAnchor extends PerceptorBase {
 
   public async run(): Promise<void> {
     this._currentRepo = utils.getRepositoryInfo(window.location)!.nameWithOwner;
-
-    let newBorderHoriRow = null;
-    let newBorderHoriCell = null;
-
-    // if not the first time to enter this code
-    if (document.getElementById('hori-banner-trend') != null) {
-      newBorderHoriCell =
-        $('#hori-banner-trend').children('.BorderHori-cell')[0];
-
-      render(
-        <HorizontalBannerView currentRepo={this._currentRepo} />,
-        newBorderHoriCell
-      );
-    } else {
-      newBorderHoriRow = document.createElement('div');
-      newBorderHoriRow.id = 'hori-banner-trend';
-      newBorderHoriRow.className = 'BorderHori-row';
-      newBorderHoriRow.style.width = '100%';
-      newBorderHoriCell = document.createElement('div');
-      newBorderHoriCell.className = 'BorderHori-cell';
-      newBorderHoriRow.appendChild(newBorderHoriCell);
-
-      render(
-        <HorizontalBannerView currentRepo={this._currentRepo} />,
-        newBorderHoriCell
-      );
-      const borderHoriRows = $('div.pt-3');
-      borderHoriRows.append(newBorderHoriRow);
+    if (document.getElementById('horizontal-banner')) {
+      return;
     }
+
+    const container = document.createElement('div');
+    container.id = 'horizontal-banner';
+    $('nav.js-repo-nav').after(container);
+    render(<HorizontalBannerView currentRepo={this._currentRepo} />, container);
   }
 }
 export default HorizontalBannerAnchor;
