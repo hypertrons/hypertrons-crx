@@ -15,10 +15,11 @@ import DeveloperNetworkAnchor from '../../anchors/DeveloperNetworkAnchor';
 import ProjectNetworkAnchor from '../../anchors/ProjectNetworkAnchor';
 import HypertronsAnchor from '../../anchors/HypertronsAnchor';
 import { inject2Perceptor, Perceptor } from '../../Perceptor';
-
 import { loadSettings } from '../../utils/settings';
 
 import './index.scss';
+import DynamicRacingBarAnchor from '../../anchors/DynamicRacingBarAnchor';
+import HorizontalBannerAnchor from '../../anchors/HorizontalBanner';
 
 // inject to Perceptor's static variable
 inject2Perceptor(RepoHeaderLabelsAnchor);
@@ -33,6 +34,8 @@ inject2Perceptor(PerceptorLayoutAnchor);
 inject2Perceptor(DeveloperNetworkAnchor);
 inject2Perceptor(ProjectNetworkAnchor);
 inject2Perceptor(HypertronsAnchor);
+inject2Perceptor(DynamicRacingBarAnchor);
+inject2Perceptor(HorizontalBannerAnchor);
 
 async function mainInject() {
   const settings = await loadSettings();

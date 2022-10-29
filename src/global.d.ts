@@ -42,3 +42,5 @@ interface IGraphData {
 type NodeClickFunc = (node: INode) => void;
 
 type ThemeType = 'light' | 'dark';
+
+declare module 'papaparse';
