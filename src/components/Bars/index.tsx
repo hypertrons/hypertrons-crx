@@ -63,6 +63,15 @@ const Bars: React.FC<BarsProps> = (props) => {
       },
       axisLabel: {
         color: TH.FG_COLOR,
+        formatter: {
+          year: '{yearStyle|{yy}}',
+          month: '{MMM}',
+        },
+        rich: {
+          yearStyle: {
+            fontWeight: 'bold',
+          },
+        },
       },
     },
     yAxis: [

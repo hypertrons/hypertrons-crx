@@ -69,13 +69,21 @@ const RepoDetailPRView: React.FC<RepoDetailPRViewProps> = ({ currentRepo }) => {
   if (!PR) return null;
 
   return (
-    <ReactTooltip
-      id="pr-tooltip"
-      className={githubTheme === 'dark' ? 'custom-react-tooltip' : ''}
-      clickable={true}
-    >
-      <PRChart width={330} height={200} data={generatePRData(PR)} />
+    <ReactTooltip id="pr-tooltip" clickable={true}>
+      <div className="chart-title">
+        {getMessageByLocale('pr_popup_title', settings.locale)}
+      </div>
+      <PRChart
+        theme={githubTheme as 'light' | 'dark'}
+        width={330}
+        height={200}
+        data={generatePRData(PR)}
+      />
+      <div className="chart-title">
+        {getMessageByLocale('merged_lines_popup_title', settings.locale)}
+      </div>
       <MergedLinesChart
+        theme={githubTheme as 'light' | 'dark'}
         width={330}
         height={200}
         data={generateMergedLinesData(PR)}

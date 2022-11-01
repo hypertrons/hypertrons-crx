@@ -49,12 +49,16 @@ const RepoDetailStarView: React.FC<RepoDetailStarViewProps> = ({
   if (!star) return null;
 
   return (
-    <ReactTooltip
-      id="star-tooltip"
-      className={githubTheme === 'dark' ? 'custom-react-tooltip' : ''}
-      clickable={true}
-    >
-      <StarChart width={300} height={150} data={generateStarChartData(star)} />
+    <ReactTooltip id="star-tooltip" clickable={true}>
+      <div className="chart-title">
+        {getMessageByLocale('star_popup_title', settings.locale)}
+      </div>
+      <StarChart
+        theme={githubTheme as 'light' | 'dark'}
+        width={270}
+        height={130}
+        data={generateStarChartData(star)}
+      />
     </ReactTooltip>
   );
 };

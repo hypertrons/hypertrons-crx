@@ -78,6 +78,16 @@ Language : [English](./README.md) | 中文
            src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_activity%26influence.gif"
          /> </td>
      </tr> 
+     <tr> 
+       <th colspan="3">仓库详情 (鼠标悬浮触发)</th> 
+     </tr> 
+     <tr> 
+       <td colspan="3"> 
+         <img 
+           src="https://user-images.githubusercontent.com/32434520/199235703-a5609b58-35f0-4c26-ad94-8ddc98915147.png"
+         /> 
+       </td> 
+     </tr> 
    </tbody> 
  </table> 
 
@@ -87,6 +97,8 @@ Language : [English](./README.md) | 中文
 - **项目活跃开发者协作网络图**: 项目活跃开发者协作网络图展示了在给定的时间段内，项目内部活跃的开发者之间的协作关系，**_用于项目内部开发者关系的追踪与挖掘_**。从该网络图中，可以找出该项目中最活跃的开发者，及开发者之间的协作关系。
 
 - **项目活跃度&影响力趋势图**：项目活跃度和影响力趋势图显示了项目成立至今的活跃度和影响力这两个指标的变化。您可以利用鼠标或触控板在图表内缩放和拖拽，此外，您还可以点击Legend按钮来控制图例的显示和隐藏。
+
+- **仓库详情**: 显示了以下统计指标的历史值。活跃度、影响力、参与人数、Fork事件、Star事件、Issue创建事件、Issue评论事件、PR创建事件、PR合入事件、Review评论事件、通过PR合入增加和删除的代码行数。
 
 ### 开发者关系挖掘
 

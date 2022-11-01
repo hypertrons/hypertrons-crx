@@ -76,6 +76,16 @@ You can find these dashboards in:
          <img 
            src="https://user-images.githubusercontent.com/90528630/171828864-2aeb8a30-bce8-4544-839d-834fc2720a46.gif"
          /> </td>
+     </tr>
+     <tr> 
+       <th colspan="3">Repo Details (hover tiggerd)</th> 
+     </tr> 
+     <tr> 
+       <td colspan="3"> 
+         <img 
+           src="https://user-images.githubusercontent.com/32434520/199235703-a5609b58-35f0-4c26-ad94-8ddc98915147.png"
+         /> 
+       </td> 
      </tr> 
    </tbody> 
  </table> 
@@ -86,6 +96,8 @@ You can find these dashboards in:
 - **Developer Collabration Network within project**: Developer Collabration Network within project shows the collaboration between active developers within the project for a given time period. From this graph you can find the active developers in the given project. What's more, you can find the collaborative relationships between these developers.
 
 - **Project Activity & Influence Trend**: The Project Activity and Influence Trend chart presents how the two metrics evolve since 2015. In the chart, you can zoom and drag using your mouse or touchpad, and you can toggle either of the data by clicking the legend buttons as well.
+
+- **Repo Details**: Trends of Activity, Influence, Participants, Fork Events, Star Events, Open Issue Events, Issue Comment Events, Open PR Events, PR Merge Events, Review Comment Events, Merged Addition & Deletion Code Lines.
 
 
 ### Developer Releated

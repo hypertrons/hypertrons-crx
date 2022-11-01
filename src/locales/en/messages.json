@@ -292,5 +292,29 @@
   },
   "hypertrons_tab_link": {
     "message": "https://www.hypertrons.io/#/component/index"
+  },
+  "header_label_activity": {
+    "message": "Activity"
+  },
+  "header_label_influence": {
+    "message": "Influence"
+  },
+  "header_label_participant": {
+    "message": "Participants"
+  },
+  "fork_popup_title": {
+    "message": "Fork Events"
+  },
+  "star_popup_title": {
+    "message": "Star Events"
+  },
+  "issue_popup_title": {
+    "message": "Open Issue and Issue Comment Events"
+  },
+  "pr_popup_title": {
+    "message": "Open PR, PR Merge, Review Comment Events"
+  },
+  "merged_lines_popup_title": {
+    "message": "Merged Addition & Deletion Code Lines"
   }
 }

@@ -2,46 +2,51 @@ import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
 import { formatNum, numberWithCommas } from '../../utils/formatter';
 
-const COLORS = {
+const LIGHT_THEME = {
+  FG_COLOR: '#24292F',
+  BG_COLOR: '#ffffff',
+  SPLIT_LINE_COLOR: '#D0D7DE',
+  BAR_COLOR: '#9B71FF',
+  LINE_COLOR: '#8D5BFF',
+};
+
+const DARK_THEME = {
   FG_COLOR: '#c9d1d9',
   BG_COLOR: '#0d1118',
-  SPLIT_LINE: 'grey',
-  PALLET: ['mediumpurple'],
+  SPLIT_LINE_COLOR: '#30363D',
+  BAR_COLOR: '#9B71FF',
+  LINE_COLOR: '#BFA3FF',
 };
 
 interface ForkChartProps {
+  theme: 'light' | 'dark';
   width: number;
   height: number;
   data: [string, number][];
 }
 
 const ForkChart: React.FC<ForkChartProps> = (props) => {
-  const { width, height, data } = props;
+  const { theme, width, height, data } = props;
 
   const divEL = useRef(null);
 
+  const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;
+
   const option: echarts.EChartsOption = {
-    color: COLORS.PALLET,
-    title: {
-      text: 'Fork Events',
-      textStyle: {
-        fontSize: 14,
-        color: COLORS.FG_COLOR,
-      },
-    },
     tooltip: {
       trigger: 'axis',
       textStyle: {
-        color: COLORS.FG_COLOR,
+        color: TH.FG_COLOR,
       },
-      backgroundColor: COLORS.BG_COLOR,
+      backgroundColor: TH.BG_COLOR,
       formatter: tooltipFormatter,
     },
     grid: {
-      top: '20%',
-      left: '12%',
-      width: '85%',
-      height: '60%',
+      top: '5%',
+      bottom: '5%',
+      left: '5%',
+      right: '5%',
+      containLabel: true,
     },
     xAxis: {
       type: 'time',
@@ -49,7 +54,16 @@ const ForkChart: React.FC<ForkChartProps> = (props) => {
         show: false,
       },
       axisLabel: {
-        color: COLORS.FG_COLOR,
+        color: TH.FG_COLOR,
+        formatter: {
+          year: '{yearStyle|{yy}}',
+          month: '{MMM}',
+        },
+        rich: {
+          yearStyle: {
+            fontWeight: 'bold',
+          },
+        },
       },
     },
     yAxis: [
@@ -57,12 +71,12 @@ const ForkChart: React.FC<ForkChartProps> = (props) => {
         type: 'value',
         position: 'left',
         axisLabel: {
-          color: COLORS.FG_COLOR,
+          color: TH.FG_COLOR,
           formatter: formatNum,
         },
         splitLine: {
           lineStyle: {
-            color: COLORS.SPLIT_LINE,
+            color: TH.SPLIT_LINE_COLOR,
           },
         },
       },
@@ -80,6 +94,9 @@ const ForkChart: React.FC<ForkChartProps> = (props) => {
         name: 'Fork Event',
         type: 'bar',
         data: data,
+        itemStyle: {
+          color: TH.BAR_COLOR,
+        },
         emphasis: {
           focus: 'series',
         },
@@ -89,7 +106,7 @@ const ForkChart: React.FC<ForkChartProps> = (props) => {
         type: 'line',
         symbol: 'none',
         lineStyle: {
-          color: 'white',
+          color: TH.LINE_COLOR,
         },
         data: data,
         emphasis: {
