@@ -6,14 +6,14 @@ const LIGHT_THEME = {
   FG_COLOR: '#24292F',
   BG_COLOR: '#ffffff',
   SPLIT_LINE_COLOR: '#D0D7DE',
-  PALLET: ['#FF8061', '#34BF5B'],
+  PALLET: ['#34BF5B', '#FF8061'],
 };
 
 const DARK_THEME = {
   FG_COLOR: '#c9d1d9',
   BG_COLOR: '#0d1118',
   SPLIT_LINE_COLOR: '#30363D',
-  PALLET: ['#FF8061', '#34BF5B'],
+  PALLET: ['#34BF5B', '#FF8061'],
 };
 
 interface IssueChartProps {

@@ -310,5 +310,11 @@
   },
   "issue_popup_title": {
     "message": "Issue 创建和 Issue 评论事件"
+  },
+  "pr_popup_title": {
+    "message": "PR 创建、合入和 Review 评论事件"
+  },
+  "merged_lines_popup_title": {
+    "message": "通过 PR 合入增加和删除的代码行数"
   }
 }

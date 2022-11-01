@@ -310,5 +310,11 @@
   },
   "issue_popup_title": {
     "message": "Open Issue and Issue Comment Events"
+  },
+  "pr_popup_title": {
+    "message": "Open PR, PR Merge, Review Comment Events"
+  },
+  "merged_lines_popup_title": {
+    "message": "Merged Addition & Deletion Code Lines"
   }
 }

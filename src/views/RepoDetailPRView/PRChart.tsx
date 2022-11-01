@@ -2,54 +2,56 @@ import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
 import { formatNum, numberWithCommas } from '../../utils/formatter';
 
-const COLORS = {
+const LIGHT_THEME = {
+  FG_COLOR: '#24292F',
+  BG_COLOR: '#ffffff',
+  SPLIT_LINE_COLOR: '#D0D7DE',
+  PALLET: ['#34BF5B', '#9B71FF', '#FF8061'],
+};
+
+const DARK_THEME = {
   FG_COLOR: '#c9d1d9',
   BG_COLOR: '#0d1118',
-  SPLIT_LINE: 'grey',
-  PALLET: ['green', '#8250df', '#f78166'],
+  SPLIT_LINE_COLOR: '#30363D',
+  PALLET: ['#34BF5B', '#9B71FF', '#FF8061'],
 };
 
 interface PRChartProps {
+  theme: 'light' | 'dark';
   width: number;
   height: number;
   data: any;
 }
 
 const PRChart: React.FC<PRChartProps> = (props) => {
-  const { width, height, data } = props;
+  const { theme, width, height, data } = props;
 
   const divEL = useRef(null);
 
+  const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;
+
   const option: echarts.EChartsOption = {
-    color: COLORS.PALLET,
-    title: {
-      text: 'Open PR, PR Merge, Review Comment Events',
-      width: 100,
-      textStyle: {
-        fontSize: 14,
-        color: COLORS.FG_COLOR,
-      },
-    },
+    color: TH.PALLET,
     legend: {
       show: true,
-      top: '10%',
       textStyle: {
-        color: COLORS.FG_COLOR,
+        color: TH.FG_COLOR,
       },
     },
     tooltip: {
       trigger: 'axis',
       textStyle: {
-        color: COLORS.FG_COLOR,
+        color: TH.FG_COLOR,
       },
-      backgroundColor: COLORS.BG_COLOR,
+      backgroundColor: TH.BG_COLOR,
       formatter: tooltipFormatter,
     },
     grid: {
-      top: '25%',
-      left: '12%',
-      width: '85%',
-      height: '60%',
+      top: '15%',
+      bottom: '5%',
+      left: '5%',
+      right: '5%',
+      containLabel: true,
     },
     xAxis: {
       type: 'time',
@@ -57,7 +59,7 @@ const PRChart: React.FC<PRChartProps> = (props) => {
         show: false,
       },
       axisLabel: {
-        color: COLORS.FG_COLOR,
+        color: TH.FG_COLOR,
         formatter: {
           year: '{yearStyle|{yy}}',
           month: '{MMM}',
@@ -74,12 +76,12 @@ const PRChart: React.FC<PRChartProps> = (props) => {
         type: 'value',
         position: 'left',
         axisLabel: {
-          color: COLORS.FG_COLOR,
+          color: TH.FG_COLOR,
           formatter: formatNum,
         },
         splitLine: {
           lineStyle: {
-            color: COLORS.SPLIT_LINE,
+            color: TH.SPLIT_LINE_COLOR,
           },
         },
       },
