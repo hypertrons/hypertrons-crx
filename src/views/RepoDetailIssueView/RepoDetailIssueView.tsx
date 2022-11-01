@@ -55,12 +55,16 @@ const RepoDetailIssueView: React.FC<RepoDetailIssueViewProps> = ({
   if (!issue) return null;
 
   return (
-    <ReactTooltip
-      id="issue-tooltip"
-      className={githubTheme === 'dark' ? 'custom-react-tooltip' : ''}
-      clickable={true}
-    >
-      <IssueChart width={300} height={200} data={generateIssueData(issue)} />
+    <ReactTooltip id="issue-tooltip" clickable={true}>
+      <div className="chart-title">
+        {getMessageByLocale('issue_popup_title', settings.locale)}
+      </div>
+      <IssueChart
+        theme={githubTheme as 'light' | 'dark'}
+        width={300}
+        height={200}
+        data={generateIssueData(issue)}
+      />
     </ReactTooltip>
   );
 };

@@ -307,5 +307,8 @@
   },
   "star_popup_title": {
     "message": "Star Events"
+  },
+  "issue_popup_title": {
+    "message": "Open Issue and Issue Comment Events"
   }
 }

@@ -307,5 +307,8 @@
   },
   "star_popup_title": {
     "message": "Star 事件"
+  },
+  "issue_popup_title": {
+    "message": "Issue 创建和 Issue 评论事件"
   }
 }
