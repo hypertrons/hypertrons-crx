@@ -299,7 +299,7 @@
   "header_label_influence": {
     "message": "影响力"
   },
-  "header_label_participants": {
+  "header_label_participant": {
     "message": "参与人数"
   }
 }

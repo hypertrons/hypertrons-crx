@@ -2,46 +2,51 @@ import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
 import { formatNum, numberWithCommas } from '../../utils/formatter';
 
-const COLORS = {
+const LIGHT_THEME = {
+  FG_COLOR: '#24292F',
+  BG_COLOR: '#ffffff',
+  SPLIT_LINE_COLOR: '#D0D7DE',
+  BAR_COLOR: '#3E90F1',
+  LINE_COLOR: '#267FE8',
+};
+
+const DARK_THEME = {
   FG_COLOR: '#c9d1d9',
   BG_COLOR: '#0d1118',
-  SPLIT_LINE: 'grey',
-  PALLET: ['#f78166'],
+  SPLIT_LINE_COLOR: '#30363D',
+  BAR_COLOR: '#3E90F1',
+  LINE_COLOR: '#82BBFF',
 };
 
 interface ParticipantChartProps {
+  theme: 'light' | 'dark';
   width: number;
   height: number;
   data: [string, number][];
 }
 
 const ParticipantChart: React.FC<ParticipantChartProps> = (props) => {
-  const { width, height, data } = props;
+  const { theme, width, height, data } = props;
 
   const divEL = useRef(null);
 
+  const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;
+
   const option: echarts.EChartsOption = {
-    color: COLORS.PALLET,
-    title: {
-      text: 'Participants',
-      textStyle: {
-        fontSize: 14,
-        color: COLORS.FG_COLOR,
-      },
-    },
     tooltip: {
       trigger: 'axis',
       textStyle: {
-        color: COLORS.FG_COLOR,
+        color: TH.FG_COLOR,
       },
-      backgroundColor: COLORS.BG_COLOR,
+      backgroundColor: TH.BG_COLOR,
       formatter: tooltipFormatter,
     },
     grid: {
-      top: '20%',
-      left: '12%',
-      width: '85%',
-      height: '60%',
+      top: '5%',
+      bottom: '5%',
+      left: '5%',
+      right: '5%',
+      containLabel: true,
     },
     xAxis: {
       type: 'time',
@@ -49,7 +54,7 @@ const ParticipantChart: React.FC<ParticipantChartProps> = (props) => {
         show: false,
       },
       axisLabel: {
-        color: COLORS.FG_COLOR,
+        color: TH.FG_COLOR,
       },
     },
     yAxis: [
@@ -57,12 +62,12 @@ const ParticipantChart: React.FC<ParticipantChartProps> = (props) => {
         type: 'value',
         position: 'left',
         axisLabel: {
-          color: COLORS.FG_COLOR,
+          color: TH.FG_COLOR,
           formatter: formatNum,
         },
         splitLine: {
           lineStyle: {
-            color: COLORS.SPLIT_LINE,
+            color: TH.SPLIT_LINE_COLOR,
           },
         },
       },
@@ -79,6 +84,9 @@ const ParticipantChart: React.FC<ParticipantChartProps> = (props) => {
       {
         type: 'bar',
         data: data,
+        itemStyle: {
+          color: TH.BAR_COLOR,
+        },
         emphasis: {
           focus: 'series',
         },
@@ -88,7 +96,7 @@ const ParticipantChart: React.FC<ParticipantChartProps> = (props) => {
         type: 'line',
         symbol: 'none',
         lineStyle: {
-          color: 'white',
+          color: TH.LINE_COLOR,
         },
         data: data,
         emphasis: {

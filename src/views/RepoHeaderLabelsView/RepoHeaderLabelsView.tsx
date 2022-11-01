@@ -129,8 +129,10 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
         style={{ color: githubTheme === 'light' ? '#24292f' : '#c9d1d9' }}
         data-tip=""
         data-for="participant-tooltip"
+        data-class={`floating-window ${githubTheme}`}
         data-place="bottom"
-        data-type="dark"
+        data-text-color={githubTheme === 'light' ? '#24292F' : '#C9D1D9'}
+        data-background-color={githubTheme === 'light' ? 'white' : '#0D1117'}
         data-effect="solid"
         data-delay-hide={500}
         data-delay-show={500}
@@ -182,7 +184,15 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
         className={githubTheme === 'dark' ? 'custom-react-tooltip' : ''}
         clickable={true}
       >
-        <ParticipantChart width={300} height={150} data={participantData} />
+        <div className="chart-title">
+          {getMessageByLocale('header_label_participant', settings.locale)}
+        </div>
+        <ParticipantChart
+          theme={githubTheme as 'light' | 'dark'}
+          width={300}
+          height={150}
+          data={participantData}
+        />
       </ReactTooltip>
     </div>
   );
