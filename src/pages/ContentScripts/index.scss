@@ -43,14 +43,37 @@
   width: 60vw;
 }
 
-.custom-react-tooltip {
-  border: 1px solid #8b949e !important;
-  &.place-top::before,
-  &.place-bottom:before {
-    border-color: #8b949e transparent !important;
+.floating-window {
+  opacity: 1 !important;
+  padding: 16px 16px !important;
+  border-radius: 6px !important;
+  &.light {
+    border: 1px solid #d0d7de !important;
+    &.place-top::before,
+    &.place-bottom:before {
+      border-color: #d0d7de transparent !important;
+    }
+    &.place-right::before,
+    &.place-left:before {
+      border-color: transparent #d0d7de !important;
+    }
   }
-  &.place-right::before,
-  &.place-left:before {
-    border-color: transparent #8b949e !important;
+  &.dark {
+    border: 1px solid #30363d !important;
+    &.place-top::before,
+    &.place-bottom:before {
+      border-color: #30363d transparent !important;
+    }
+    &.place-right::before,
+    &.place-left:before {
+      border-color: transparent #30363d !important;
+    }
   }
+}
+
+.chart-title {
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 8px;
 }

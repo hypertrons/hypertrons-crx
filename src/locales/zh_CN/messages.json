@@ -292,5 +292,14 @@
   },
   "hypertrons_tab_link": {
     "message": "https://www.hypertrons.io/#/zh-cn/component/index"
+  },
+  "header_label_activity": {
+    "message": "活跃度"
+  },
+  "header_label_influence": {
+    "message": "影响力"
+  },
+  "header_label_participants": {
+    "message": "参与人数"
   }
 }

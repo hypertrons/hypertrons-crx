@@ -292,5 +292,14 @@
   },
   "hypertrons_tab_link": {
     "message": "https://www.hypertrons.io/#/component/index"
+  },
+  "header_label_activity": {
+    "message": "Activity"
+  },
+  "header_label_influence": {
+    "message": "Influence"
+  },
+  "header_label_participants": {
+    "message": "Participants"
   }
 }
