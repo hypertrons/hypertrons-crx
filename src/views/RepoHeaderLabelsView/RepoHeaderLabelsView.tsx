@@ -68,7 +68,7 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
     <div className="d-flex">
       <span
         id="activity-header-label"
-        className="Label Label--secondary v-align-middle mr-1"
+        className="Label Label--secondary v-align-middle mr-1 unselectable"
         style={{ color: githubTheme === 'light' ? '#24292f' : '#c9d1d9' }}
         data-tip=""
         data-for="activity-tooltip"
@@ -99,7 +99,7 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
 
       <span
         id="influence-header-label"
-        className="Label Label--secondary v-align-middle mr-1"
+        className="Label Label--secondary v-align-middle mr-1 unselectable"
         style={{ color: githubTheme === 'light' ? '#24292f' : '#c9d1d9' }}
         data-tip=""
         data-for="influence-tooltip"
@@ -125,7 +125,7 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
 
       <span
         id="participant-header-label"
-        className="Label Label--secondary v-align-middle mr-1"
+        className="Label Label--secondary v-align-middle mr-1 unselectable"
         style={{ color: githubTheme === 'light' ? '#24292f' : '#c9d1d9' }}
         data-tip=""
         data-for="participant-tooltip"
