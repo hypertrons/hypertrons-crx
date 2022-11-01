@@ -58,6 +58,15 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
       },
       axisLabel: {
         color: COLORS.FG_COLOR,
+        formatter: {
+          year: '{yearStyle|{yy}}',
+          month: '{MMM}',
+        },
+        rich: {
+          yearStyle: {
+            fontWeight: 500,
+          },
+        },
       },
     },
     yAxis: [

@@ -55,8 +55,8 @@ const RepoDetailForkView: React.FC<RepoDetailForkViewProps> = ({
       </div>
       <ForkChart
         theme={githubTheme as 'light' | 'dark'}
-        width={300}
-        height={150}
+        width={270}
+        height={130}
         data={generateForkChartData(fork)}
       />
     </ReactTooltip>

@@ -163,8 +163,8 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
         </div>
         <ActivityChart
           theme={githubTheme as 'light' | 'dark'}
-          width={300}
-          height={150}
+          width={270}
+          height={130}
           data={activityData}
         />
       </ReactTooltip>
@@ -174,8 +174,8 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
         </div>
         <InfluenceChart
           theme={githubTheme as 'light' | 'dark'}
-          width={300}
-          height={150}
+          width={270}
+          height={130}
           data={influenceData}
         />
       </ReactTooltip>
@@ -185,8 +185,8 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
         </div>
         <ParticipantChart
           theme={githubTheme as 'light' | 'dark'}
-          width={300}
-          height={150}
+          width={270}
+          height={130}
           data={participantData}
         />
       </ReactTooltip>

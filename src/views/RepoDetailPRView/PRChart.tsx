@@ -58,6 +58,15 @@ const PRChart: React.FC<PRChartProps> = (props) => {
       },
       axisLabel: {
         color: COLORS.FG_COLOR,
+        formatter: {
+          year: '{yearStyle|{yy}}',
+          month: '{MMM}',
+        },
+        rich: {
+          yearStyle: {
+            fontWeight: 500,
+          },
+        },
       },
     },
     yAxis: [

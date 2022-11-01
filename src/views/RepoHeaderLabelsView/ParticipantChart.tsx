@@ -55,6 +55,15 @@ const ParticipantChart: React.FC<ParticipantChartProps> = (props) => {
       },
       axisLabel: {
         color: TH.FG_COLOR,
+        formatter: {
+          year: '{yearStyle|{yy}}',
+          month: '{MMM}',
+        },
+        rich: {
+          yearStyle: {
+            fontWeight: 500,
+          },
+        },
       },
     },
     yAxis: [
