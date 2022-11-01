@@ -2,9 +2,11 @@ import React from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
 import PerceptorBase from '../PerceptorBase';
-import { runsWhen, isPublicRepo } from '../utils/utils';
+import { runsWhen, isPublicRepo, getGithubTheme } from '../utils/utils';
 import { utils } from 'github-url-detection';
 import RepoDetailStarView from '../views/RepoDetailStarView/RepoDetailStarView';
+
+const githubTheme = getGithubTheme();
 
 @runsWhen([isPublicRepo])
 class RepoDetailStarAnchor extends PerceptorBase {
@@ -31,11 +33,14 @@ class RepoDetailStarAnchor extends PerceptorBase {
     const attributes = {
       'data-tip': '',
       'data-for': 'star-tooltip',
+      'data-class': `floating-window ${githubTheme}`,
       'data-place': 'left',
-      'data-type': 'dark',
       'data-effect': 'solid',
       'data-delay-hide': 500,
       'data-delay-show': 500,
+      style: { color: githubTheme === 'light' ? '#24292f' : '#c9d1d9' },
+      'data-text-color': githubTheme === 'light' ? '#24292F' : '#C9D1D9',
+      'data-background-color': githubTheme === 'light' ? 'white' : '#0D1117',
     };
     // The data-ga-click attribute differs after starring, so there are 2 cases
     $('button[data-ga-click*="click star button"]').attr(attributes);
