@@ -2,9 +2,11 @@ import React from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
 import PerceptorBase from '../PerceptorBase';
-import { runsWhen, isPublicRepo } from '../utils/utils';
+import { runsWhen, isPublicRepo, getGithubTheme } from '../utils/utils';
 import { utils } from 'github-url-detection';
 import RepoDetailForkView from '../views/RepoDetailForkView/RepoDetailForkView';
+
+const githubTheme = getGithubTheme();
 
 @runsWhen([isPublicRepo])
 class RepoDetailForkAnchor extends PerceptorBase {
@@ -31,11 +33,14 @@ class RepoDetailForkAnchor extends PerceptorBase {
     $('a[data-ga-click*="show fork modal"]').attr({
       'data-tip': '',
       'data-for': 'fork-tooltip',
+      'data-class': `floating-window ${githubTheme}`,
       'data-place': 'bottom',
-      'data-type': 'dark',
       'data-effect': 'solid',
       'data-delay-hide': 500,
       'data-delay-show': 500,
+      style: { color: githubTheme === 'light' ? '#24292f' : '#c9d1d9' },
+      'data-text-color': githubTheme === 'light' ? '#24292F' : '#C9D1D9',
+      'data-background-color': githubTheme === 'light' ? 'white' : '#0D1117',
     });
 
     const tooltipContainer = document.createElement('div');

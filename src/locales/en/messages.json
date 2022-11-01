@@ -301,5 +301,11 @@
   },
   "header_label_participant": {
     "message": "Participants"
+  },
+  "fork_popup_title": {
+    "message": "Fork Events"
+  },
+  "star_popup_title": {
+    "message": "Star Events"
   }
 }

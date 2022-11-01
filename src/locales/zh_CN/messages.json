@@ -301,5 +301,11 @@
   },
   "header_label_participant": {
     "message": "参与人数"
+  },
+  "fork_popup_title": {
+    "message": "Fork 事件"
+  },
+  "star_popup_title": {
+    "message": "Star 事件"
   }
 }

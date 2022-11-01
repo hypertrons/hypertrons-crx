@@ -49,12 +49,16 @@ const RepoDetailForkView: React.FC<RepoDetailForkViewProps> = ({
   if (!fork) return null;
 
   return (
-    <ReactTooltip
-      id="fork-tooltip"
-      className={githubTheme === 'dark' ? 'custom-react-tooltip' : ''}
-      clickable={true}
-    >
-      <ForkChart width={300} height={150} data={generateForkChartData(fork)} />
+    <ReactTooltip id="fork-tooltip" clickable={true}>
+      <div className="chart-title">
+        {getMessageByLocale('fork_popup_title', settings.locale)}
+      </div>
+      <ForkChart
+        theme={githubTheme as 'light' | 'dark'}
+        width={300}
+        height={150}
+        data={generateForkChartData(fork)}
+      />
     </ReactTooltip>
   );
 };

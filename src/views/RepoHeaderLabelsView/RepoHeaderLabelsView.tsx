@@ -179,11 +179,7 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
           data={influenceData}
         />
       </ReactTooltip>
-      <ReactTooltip
-        id="participant-tooltip"
-        className={githubTheme === 'dark' ? 'custom-react-tooltip' : ''}
-        clickable={true}
-      >
+      <ReactTooltip id="participant-tooltip" clickable={true}>
         <div className="chart-title">
           {getMessageByLocale('header_label_participant', settings.locale)}
         </div>
