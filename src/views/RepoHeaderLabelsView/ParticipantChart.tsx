@@ -61,7 +61,7 @@ const ParticipantChart: React.FC<ParticipantChartProps> = (props) => {
         },
         rich: {
           yearStyle: {
-            fontWeight: 500,
+            fontWeight: 'bold',
           },
         },
       },

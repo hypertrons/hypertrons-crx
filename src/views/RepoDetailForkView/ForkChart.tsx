@@ -61,7 +61,7 @@ const ForkChart: React.FC<ForkChartProps> = (props) => {
         },
         rich: {
           yearStyle: {
-            fontWeight: 500,
+            fontWeight: 'bold',
           },
         },
       },

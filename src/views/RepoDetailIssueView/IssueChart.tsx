@@ -66,7 +66,7 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
         },
         rich: {
           yearStyle: {
-            fontWeight: 500,
+            fontWeight: 'bold',
           },
         },
       },

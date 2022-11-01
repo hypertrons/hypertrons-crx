@@ -66,7 +66,7 @@ const MergedLinesChart: React.FC<MergedLinesChartProps> = (props) => {
         },
         rich: {
           yearStyle: {
-            fontWeight: 500,
+            fontWeight: 'bold',
           },
         },
       },

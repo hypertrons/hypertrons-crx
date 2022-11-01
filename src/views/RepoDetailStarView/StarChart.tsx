@@ -61,7 +61,7 @@ const StarChart: React.FC<StarChartProps> = (props) => {
         },
         rich: {
           yearStyle: {
-            fontWeight: 500,
+            fontWeight: 'bold',
           },
         },
       },

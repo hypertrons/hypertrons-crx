@@ -61,7 +61,7 @@ const InfluenceChart: React.FC<InfluenceChartProps> = (props) => {
         },
         rich: {
           yearStyle: {
-            fontWeight: 500,
+            fontWeight: 'bold',
           },
         },
       },

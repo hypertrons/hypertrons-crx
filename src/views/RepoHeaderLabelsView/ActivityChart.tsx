@@ -61,7 +61,7 @@ const ActivityChart: React.FC<ActivityChartProps> = (props) => {
         },
         rich: {
           yearStyle: {
-            fontWeight: 500,
+            fontWeight: 'bold',
           },
         },
       },

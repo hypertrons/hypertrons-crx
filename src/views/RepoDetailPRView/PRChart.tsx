@@ -66,7 +66,7 @@ const PRChart: React.FC<PRChartProps> = (props) => {
         },
         rich: {
           yearStyle: {
-            fontWeight: 500,
+            fontWeight: 'bold',
           },
         },
       },
