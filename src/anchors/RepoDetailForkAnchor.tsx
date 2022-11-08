@@ -40,7 +40,7 @@ class RepoDetailForkAnchor extends PerceptorBase {
       'data-delay-show': 500,
       style: { color: githubTheme === 'light' ? '#24292f' : '#c9d1d9' },
       'data-text-color': githubTheme === 'light' ? '#24292F' : '#C9D1D9',
-      'data-background-color': githubTheme === 'light' ? 'white' : '#0D1117',
+      'data-background-color': githubTheme === 'light' ? 'white' : '#161B22',
     });
 
     const tooltipContainer = document.createElement('div');

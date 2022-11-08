@@ -40,7 +40,7 @@ class RepoDetailStarAnchor extends PerceptorBase {
       'data-delay-show': 500,
       style: { color: githubTheme === 'light' ? '#24292f' : '#c9d1d9' },
       'data-text-color': githubTheme === 'light' ? '#24292F' : '#C9D1D9',
-      'data-background-color': githubTheme === 'light' ? 'white' : '#0D1117',
+      'data-background-color': githubTheme === 'light' ? 'white' : '#161B22',
     };
     // The data-ga-click attribute differs after starring, so there are 2 cases
     $('button[data-ga-click*="click star button"]').attr(attributes);
