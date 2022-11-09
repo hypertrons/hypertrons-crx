@@ -47,9 +47,10 @@
   opacity: 1 !important;
   padding: 12px 4px 8px 4px !important;
   border-radius: 6px !important;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15) !important;
+
   &.light {
     border: 1px solid #d0d7de !important;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15) !important;
     &.place-top::before,
     &.place-bottom:before {
       border-color: #d0d7de transparent !important;
