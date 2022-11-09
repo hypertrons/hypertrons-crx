@@ -75,7 +75,7 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
         data-class={`floating-window ${githubTheme}`}
         data-place="bottom"
         data-text-color={githubTheme === 'light' ? '#24292F' : '#C9D1D9'}
-        data-background-color={githubTheme === 'light' ? 'white' : '#0D1117'}
+        data-background-color={githubTheme === 'light' ? 'white' : '#161B22'}
         data-effect="solid"
         data-delay-hide={500}
         data-delay-show={500}
@@ -106,7 +106,7 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
         data-class={`floating-window ${githubTheme}`}
         data-place="bottom"
         data-text-color={githubTheme === 'light' ? '#24292F' : '#C9D1D9'}
-        data-background-color={githubTheme === 'light' ? 'white' : '#0D1117'}
+        data-background-color={githubTheme === 'light' ? 'white' : '#161B22'}
         data-effect="solid"
         data-delay-hide={500}
         data-delay-show={500}
@@ -132,7 +132,7 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
         data-class={`floating-window ${githubTheme}`}
         data-place="bottom"
         data-text-color={githubTheme === 'light' ? '#24292F' : '#C9D1D9'}
-        data-background-color={githubTheme === 'light' ? 'white' : '#0D1117'}
+        data-background-color={githubTheme === 'light' ? 'white' : '#161B22 '}
         data-effect="solid"
         data-delay-hide={500}
         data-delay-show={500}
