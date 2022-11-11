@@ -16,13 +16,18 @@ import {
   Label2Style,
   getUserNameFromCookie,
 } from '../../services/hypertrons';
-import { getMessageByLocale, runsWhen } from '../../utils/utils';
+import {
+  getGithubTheme,
+  getMessageByLocale,
+  runsWhen,
+} from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
+
+const githubTheme = getGithubTheme();
 
 const styles = mergeStyleSets({
   callout: {
     width: 360,
-    padding: '20px 24px',
   },
   title: {
     fontWeight: FontWeights.bold,
@@ -173,11 +178,23 @@ const HypertronsView: React.FC<HypertronsTabViewProps> = ({
           target={'#hypertrons_button'}
           onDismiss={toggleIsCalloutVisible}
           directionalHint={DirectionalHint.topCenter}
+          style={{
+            padding: '20px 24px',
+          }}
+          backgroundColor={githubTheme === 'light' ? 'white' : '#161B22'}
         >
-          <Text variant="xLarge" block className={styles.title}>
+          <Text
+            variant="xLarge"
+            block
+            className={styles.title}
+            style={{ color: githubTheme === 'light' ? '#24292F' : '#C9D1D9' }}
+          >
             {getMessageByLocale('hypertrons_tab_title', settings.locale)}
           </Text>
-          <Text variant="medium" block>
+          <Text
+            variant="medium"
+            style={{ color: githubTheme === 'light' ? '#24292F' : '#C9D1D9' }}
+          >
             {getMessageByLocale('hypertrons_tab_description', settings.locale)}
             &nbsp;
             <Link
