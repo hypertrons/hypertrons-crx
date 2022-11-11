@@ -180,8 +180,8 @@ const HypertronsView: React.FC<HypertronsTabViewProps> = ({
           directionalHint={DirectionalHint.topCenter}
           style={{
             padding: '20px 24px',
-            backgroundColor: githubTheme === 'light' ? 'white' : '#161B22',
           }}
+          backgroundColor={githubTheme === 'light' ? 'white' : '#161B22'}
         >
           <Text
             variant="xLarge"
