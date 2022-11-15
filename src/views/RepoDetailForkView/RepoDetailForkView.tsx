@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { getGithubTheme, getMessageByLocale } from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
 import { generateDataByMonth } from '../../utils/data';
-import { getRepoDetail } from '../../api/repo';
+import { getForks } from '../../api/repo';
 import ReactTooltip from 'react-tooltip';
 import ForkChart from './ForkChart';
 
@@ -13,16 +13,12 @@ interface RepoDetailForkViewProps {
   currentRepo: string;
 }
 
-const generateForkChartData = (fork: any) => {
-  return generateDataByMonth(fork);
-};
-
 const RepoDetailForkView: React.FC<RepoDetailForkViewProps> = ({
   currentRepo,
 }) => {
   const [inited, setInited] = useState(false);
   const [settings, setSettings] = useState(new Settings());
-  const [fork, setFork] = useState();
+  const [forks, setForks] = useState();
 
   useEffect(() => {
     const initSettings = async () => {
@@ -38,15 +34,14 @@ const RepoDetailForkView: React.FC<RepoDetailForkViewProps> = ({
   useEffect(() => {
     (async () => {
       try {
-        const res = await getRepoDetail(currentRepo);
-        setFork(res.data['f']);
+        setForks(await getForks(currentRepo));
       } catch (e) {
         console.error(e);
       }
     })();
   }, []);
 
-  if (!fork) return null;
+  if (!forks) return null;
 
   return (
     <ReactTooltip id="fork-tooltip" clickable={true}>
@@ -57,7 +52,7 @@ const RepoDetailForkView: React.FC<RepoDetailForkViewProps> = ({
         theme={githubTheme as 'light' | 'dark'}
         width={270}
         height={130}
-        data={generateForkChartData(fork)}
+        data={generateDataByMonth(forks)}
       />
     </ReactTooltip>
   );
