@@ -21,6 +21,10 @@ Language : [English](./README.md) | 中文
 
 获取更多信息，请查阅[安装指南](./INSTALLATION.zh-CN.md)。
 
+## 数据来源
+
+`Hypercrx`呈现的所有数据都由[OpenDigger](https://github.com/X-lab2017/open-digger)产生。OpenDigger是一个聚焦于开源分析的开源项目。
+
 ## 可视化看板 🔥🔥🔥
 
 您可以在以下入口处找到这些看板：
