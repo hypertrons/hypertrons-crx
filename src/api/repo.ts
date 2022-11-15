@@ -9,6 +9,9 @@ const metricNameMap = new Map([
   ['participant', 'participants'],
   ['forks', 'technical_fork'],
   ['stars', 'stars'],
+  ['issues_opened', 'issues_new'],
+  ['issues_closed', 'issues_closed'],
+  ['issue_comments', 'issue_comments'],
 ]);
 
 const getMetricByName = async (repo: string, metric: string) => {
@@ -38,6 +41,18 @@ export const getForks = async (repo: string) => {
 
 export const getStars = async (repo: string) => {
   return await getMetricByName(repo, 'stars');
+};
+
+export const getIssuesOpened = async (repo: string) => {
+  return await getMetricByName(repo, 'issues_opened');
+};
+
+export const getIssuesClosed = async (repo: string) => {
+  return await getMetricByName(repo, 'issues_closed');
+};
+
+export const getIssueComments = async (repo: string) => {
+  return await getMetricByName(repo, 'issue_comments');
 };
 
 export const getRepoDetail = async (repo: string) => {

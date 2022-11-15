@@ -309,7 +309,7 @@
     "message": "Star Events"
   },
   "issue_popup_title": {
-    "message": "Open Issue and Issue Comment Events"
+    "message": "Issue Open, Close and Comment Events"
   },
   "pr_popup_title": {
     "message": "Open PR, PR Merge, Review Comment Events"
