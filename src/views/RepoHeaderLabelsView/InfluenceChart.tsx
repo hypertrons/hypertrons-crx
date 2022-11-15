@@ -145,7 +145,7 @@ const tooltipFormatter = (params: any) => {
     ${params[0].data[0]}<br/>
     ${params[0].marker}
     <span style="font-weight:bold;">
-      ${numberWithCommas(params[0].data[1])}
+      ${numberWithCommas(params[0].data[1].toFixed(2))}
     </span>
   `;
   return res;

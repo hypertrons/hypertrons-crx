@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { getGithubTheme, getMessageByLocale } from '../../utils/utils';
+import { generateDataByMonth } from '../../utils/data';
 import Settings, { loadSettings } from '../../utils/settings';
-import { getDeveloperActiInfl } from '../../api/developer';
+import { getActivity, getOpenrank } from '../../api/developer';
 import Bars from '../../components/Bars/index';
 
 const githubTheme = getGithubTheme();
@@ -10,27 +11,20 @@ interface DeveloperActiInflTrendViewProps {
   currentDeveloper: string;
 }
 
+const generateBarsData = (activity: any, openrank: any) => {
+  return {
+    data1: generateDataByMonth(activity),
+    data2: generateDataByMonth(openrank),
+  };
+};
+
 const DeveloperActiInflTrendView: React.FC<DeveloperActiInflTrendViewProps> = ({
   currentDeveloper,
 }) => {
   const [inited, setInited] = useState(false);
   const [settings, setSettings] = useState(new Settings());
-  const [developerActiInflData, setDeveloperActiInflData] = useState();
-
-  const generateBarsData = (developerActiInflData: any) => {
-    const activityField = developerActiInflData['activity'];
-    const influenceFiled = developerActiInflData['influence'];
-
-    let data1: [string, number][] = [];
-    let data2: [string, number][] = [];
-
-    Object.keys(activityField).forEach((value, index) => {
-      data1.push([value, activityField[value].toFixed(2)]);
-      data2.push([value, influenceFiled[value].toFixed(2)]);
-    });
-
-    return { data1, data2 };
-  };
+  const [activity, setActivity] = useState();
+  const [openrank, setOpenrank] = useState();
 
   useEffect(() => {
     const initSettings = async () => {
@@ -44,20 +38,19 @@ const DeveloperActiInflTrendView: React.FC<DeveloperActiInflTrendViewProps> = ({
   }, [inited, settings]);
 
   useEffect(() => {
-    const getDeveloperActiInflData = async () => {
+    (async () => {
       try {
-        const res = await getDeveloperActiInfl(currentDeveloper);
-        setDeveloperActiInflData(res.data);
+        setActivity(await getActivity(currentDeveloper));
+        setOpenrank(await getOpenrank(currentDeveloper));
       } catch (e) {
         console.error(e);
       }
-    };
-    getDeveloperActiInflData();
+    })();
   }, []);
 
-  if (!developerActiInflData) return null;
+  if (!activity || !openrank) return null;
 
-  let barsData: any = generateBarsData(developerActiInflData);
+  let barsData: any = generateBarsData(activity, openrank);
   return (
     <div className="border-top color-border-secondary pt-3 mt-3">
       <h2 className="h4 mb-3">

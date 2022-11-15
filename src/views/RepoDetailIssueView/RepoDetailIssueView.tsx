@@ -3,7 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { getGithubTheme, getMessageByLocale } from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
 import { generateDataByMonth } from '../../utils/data';
-import { getRepoDetail } from '../../api/repo';
+import {
+  getIssuesOpened,
+  getIssuesClosed,
+  getIssueComments,
+} from '../../api/repo';
 import ReactTooltip from 'react-tooltip';
 import IssueChart from './IssueChart';
 
@@ -15,8 +19,9 @@ interface RepoDetailIssueViewProps {
 
 const generateIssueData = (issue: any): any => {
   return {
-    ic: generateDataByMonth(issue.ic),
-    oi: generateDataByMonth(issue.oi),
+    issuesOpened: generateDataByMonth(issue.issuesOpened),
+    issuesClosed: generateDataByMonth(issue.issuesClosed),
+    issueComments: generateDataByMonth(issue.issueComments),
   };
 };
 
@@ -41,10 +46,10 @@ const RepoDetailIssueView: React.FC<RepoDetailIssueViewProps> = ({
   useEffect(() => {
     (async () => {
       try {
-        const res = await getRepoDetail(currentRepo);
         setIssue({
-          ic: res.data['ic'],
-          oi: res.data['oi'],
+          issuesOpened: await getIssuesOpened(currentRepo),
+          issuesClosed: await getIssuesClosed(currentRepo),
+          issueComments: await getIssueComments(currentRepo),
         });
       } catch (e) {
         console.error(e);
