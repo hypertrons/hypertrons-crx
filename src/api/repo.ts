@@ -30,59 +30,59 @@ const getMetricByName = async (repo: string, metric: string) => {
 };
 
 export const getActivity = async (repo: string) => {
-  return await getMetricByName(repo, 'activity');
+  return getMetricByName(repo, 'activity');
 };
 
 export const getOpenrank = async (repo: string) => {
-  return await getMetricByName(repo, 'openrank');
+  return getMetricByName(repo, 'openrank');
 };
 
 export const getParticipant = async (repo: string) => {
-  return await getMetricByName(repo, 'participant');
+  return getMetricByName(repo, 'participant');
 };
 
 export const getForks = async (repo: string) => {
-  return await getMetricByName(repo, 'forks');
+  return getMetricByName(repo, 'forks');
 };
 
 export const getStars = async (repo: string) => {
-  return await getMetricByName(repo, 'stars');
+  return getMetricByName(repo, 'stars');
 };
 
 export const getIssuesOpened = async (repo: string) => {
-  return await getMetricByName(repo, 'issues_opened');
+  return getMetricByName(repo, 'issues_opened');
 };
 
 export const getIssuesClosed = async (repo: string) => {
-  return await getMetricByName(repo, 'issues_closed');
+  return getMetricByName(repo, 'issues_closed');
 };
 
 export const getIssueComments = async (repo: string) => {
-  return await getMetricByName(repo, 'issue_comments');
+  return getMetricByName(repo, 'issue_comments');
 };
 
 export const getPROpened = async (repo: string) => {
-  return await getMetricByName(repo, 'PR_opened');
+  return getMetricByName(repo, 'PR_opened');
 };
 
 export const getPRMerged = async (repo: string) => {
-  return await getMetricByName(repo, 'PR_merged');
+  return getMetricByName(repo, 'PR_merged');
 };
 
 export const getPRReviews = async (repo: string) => {
-  return await getMetricByName(repo, 'PR_reviews');
+  return getMetricByName(repo, 'PR_reviews');
 };
 
 export const getMergedCodeAddition = async (repo: string) => {
-  return await getMetricByName(repo, 'merged_code_addition');
+  return getMetricByName(repo, 'merged_code_addition');
 };
 
 export const getMergedCodeDeletion = async (repo: string) => {
-  return await getMetricByName(repo, 'merged_code_deletion');
+  return getMetricByName(repo, 'merged_code_deletion');
 };
 
 export const getMergedCodeSum = async (repo: string) => {
-  return await getMetricByName(repo, 'merged_code_sum');
+  return getMetricByName(repo, 'merged_code_sum');
 };
 
 // the two requests below will be deprecated once their OpenDigger implementations are ready

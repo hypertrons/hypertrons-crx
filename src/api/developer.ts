@@ -21,11 +21,11 @@ const getMetricByName = async (user: string, metric: string) => {
 };
 
 export const getActivity = async (user: string) => {
-  return await getMetricByName(user, 'activity');
+  return getMetricByName(user, 'activity');
 };
 
 export const getOpenrank = async (user: string) => {
-  return await getMetricByName(user, 'openrank');
+  return getMetricByName(user, 'openrank');
 };
 
 // the two requests below will be deprecated once their OpenDigger implementations are ready
