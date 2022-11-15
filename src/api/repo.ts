@@ -12,6 +12,12 @@ const metricNameMap = new Map([
   ['issues_opened', 'issues_new'],
   ['issues_closed', 'issues_closed'],
   ['issue_comments', 'issue_comments'],
+  ['PR_opened', 'change_requests'],
+  ['PR_merged', 'change_requests_accepted'],
+  ['PR_reviews', 'change_requests_reviews'],
+  ['merged_code_addition', 'code_change_lines_add'],
+  ['merged_code_deletion', 'code_change_lines_remove'],
+  ['merged_code_sum', 'code_change_lines_sum'],
 ]);
 
 const getMetricByName = async (repo: string, metric: string) => {
@@ -53,6 +59,30 @@ export const getIssuesClosed = async (repo: string) => {
 
 export const getIssueComments = async (repo: string) => {
   return await getMetricByName(repo, 'issue_comments');
+};
+
+export const getPROpened = async (repo: string) => {
+  return await getMetricByName(repo, 'PR_opened');
+};
+
+export const getPRMerged = async (repo: string) => {
+  return await getMetricByName(repo, 'PR_merged');
+};
+
+export const getPRReviews = async (repo: string) => {
+  return await getMetricByName(repo, 'PR_reviews');
+};
+
+export const getMergedCodeAddition = async (repo: string) => {
+  return await getMetricByName(repo, 'merged_code_addition');
+};
+
+export const getMergedCodeDeletion = async (repo: string) => {
+  return await getMetricByName(repo, 'merged_code_deletion');
+};
+
+export const getMergedCodeSum = async (repo: string) => {
+  return await getMetricByName(repo, 'merged_code_sum');
 };
 
 export const getRepoDetail = async (repo: string) => {

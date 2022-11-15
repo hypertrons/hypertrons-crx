@@ -3,7 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { getGithubTheme, getMessageByLocale } from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
 import { generateDataByMonth } from '../../utils/data';
-import { getRepoDetail } from '../../api/repo';
+import {
+  getPROpened,
+  getPRMerged,
+  getPRReviews,
+  getMergedCodeAddition,
+  getMergedCodeDeletion,
+} from '../../api/repo';
 import ReactTooltip from 'react-tooltip';
 import PRChart from './PRChart';
 import MergedLinesChart from './MergedLinesChart';
@@ -16,20 +22,22 @@ interface RepoDetailPRViewProps {
 
 const generatePRData = (PR: any): any => {
   return {
-    op: generateDataByMonth(PR.op),
-    pm: generateDataByMonth(PR.pm),
-    rc: generateDataByMonth(PR.rc),
+    PROpened: generateDataByMonth(PR.PROpened),
+    PRMerged: generateDataByMonth(PR.PRMerged),
+    PRReviews: generateDataByMonth(PR.PRReviews),
   };
 };
 
 const generateMergedLinesData = (PR: any): any => {
   return {
-    ad: generateDataByMonth(PR.ad),
-    de: generateDataByMonth(PR.de).map((item) => {
-      const dataItem = item;
-      dataItem[1] = -item[1];
-      return dataItem;
-    }),
+    mergedCodeAddition: generateDataByMonth(PR.mergedCodeAddition),
+    mergedCodeDeletion: generateDataByMonth(PR.mergedCodeDeletion).map(
+      (item) => {
+        const dataItem = item;
+        dataItem[1] = -item[1];
+        return dataItem;
+      }
+    ),
   };
 };
 
@@ -52,13 +60,12 @@ const RepoDetailPRView: React.FC<RepoDetailPRViewProps> = ({ currentRepo }) => {
   useEffect(() => {
     (async () => {
       try {
-        const res = await getRepoDetail(currentRepo);
         setPR({
-          op: res.data['op'],
-          pm: res.data['pm'],
-          rc: res.data['rc'],
-          ad: res.data['ad'],
-          de: res.data['de'],
+          PROpened: await getPROpened(currentRepo),
+          PRMerged: await getPRMerged(currentRepo),
+          PRReviews: await getPRReviews(currentRepo),
+          mergedCodeAddition: await getMergedCodeAddition(currentRepo),
+          mergedCodeDeletion: await getMergedCodeDeletion(currentRepo),
         });
       } catch (e) {
         console.error(e);

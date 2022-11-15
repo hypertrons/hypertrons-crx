@@ -96,30 +96,30 @@ const PRChart: React.FC<PRChartProps> = (props) => {
     ],
     series: [
       {
-        name: 'opens',
+        name: 'open',
         type: 'line',
         symbol: 'none',
-        data: data.op,
+        data: data.PROpened,
         emphasis: {
           focus: 'series',
         },
         yAxisIndex: 0,
       },
       {
-        name: 'merges',
+        name: 'merge',
         type: 'line',
         symbol: 'none',
-        data: data.pm,
+        data: data.PRMerged,
         emphasis: {
           focus: 'series',
         },
         yAxisIndex: 0,
       },
       {
-        name: 'reviews',
+        name: 'review',
         type: 'line',
         symbol: 'none',
-        data: data.rc,
+        data: data.PRReviews,
         emphasis: {
           focus: 'series',
         },
