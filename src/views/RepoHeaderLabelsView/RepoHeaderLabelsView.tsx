@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
 import { getGithubTheme, getMessageByLocale } from '../../utils/utils';
+import { numberWithCommas } from '../../utils/formatter';
 import Settings, { loadSettings } from '../../utils/settings';
-import { getRepoActiInfl, getRepoDetail } from '../../api/repo';
+import { getActivity, getOpenrank, getParticipant } from '../../api/repo';
 import { rocketLight, rocketDark } from './base64';
 import ReactTooltip from 'react-tooltip';
 import { generateDataByMonth } from '../../utils/data';
-import { numberWithCommas } from '../../utils/formatter';
 import ActivityChart from './ActivityChart';
 import InfluenceChart from './InfluenceChart';
 import ParticipantChart from './ParticipantChart';
@@ -36,32 +36,23 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
   }, [inited, settings]);
 
   useEffect(() => {
-    const getData = async () => {
+    (async () => {
       try {
-        const repoActiInflResponse = await getRepoActiInfl(currentRepo);
-        const repoDetailReponse = await getRepoDetail(currentRepo);
         setData({
-          activity: repoActiInflResponse.data['activity'],
-          influence: repoActiInflResponse.data['influence'],
-          participant: repoDetailReponse.data['p'],
+          activity: await getActivity(currentRepo),
+          influence: await getOpenrank(currentRepo),
+          participant: await getParticipant(currentRepo),
         });
       } catch (e) {
         console.error(e);
       }
-    };
-    getData();
+    })();
   }, []);
 
   if (!data) return null;
 
-  const activityData: [string, number][] = [];
-  const influenceData: [string, number][] = [];
-
-  Object.keys(data.activity).forEach((key, index) => {
-    activityData.push([key, data.activity[key].toFixed(2)]);
-    influenceData.push([key, data.influence[key].toFixed(2)]);
-  });
-
+  const activityData = generateDataByMonth(data.activity);
+  const influenceData = generateDataByMonth(data.influence);
   const participantData = generateDataByMonth(data.participant);
 
   return (

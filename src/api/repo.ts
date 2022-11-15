@@ -6,6 +6,7 @@ import { repoCorrelationData, developersByRepo } from '../mock/repo.data';
 const metricNameMap = new Map([
   ['activity', 'activity'],
   ['openrank', 'openrank'],
+  ['participant', 'participants'],
 ]);
 
 const getMetricByName = async (repo: string, metric: string) => {
@@ -23,6 +24,10 @@ export const getActivity = async (repo: string) => {
 
 export const getOpenrank = async (repo: string) => {
   return await getMetricByName(repo, 'openrank');
+};
+
+export const getParticipant = async (repo: string) => {
+  return await getMetricByName(repo, 'participant');
 };
 
 export const getRepoDetail = async (repo: string) => {
