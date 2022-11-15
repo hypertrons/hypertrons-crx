@@ -85,10 +85,6 @@ export const getMergedCodeSum = async (repo: string) => {
   return await getMetricByName(repo, 'merged_code_sum');
 };
 
-export const getRepoDetail = async (repo: string) => {
-  return await request(`${OSS_XLAB_ENDPOINT}/repo_detail/${repo}.json`);
-};
-
 // the two requests below will be deprecated once their OpenDigger implementations are ready
 export const getRepoCorrelation = async (repo: string) => {
   return (
@@ -102,8 +98,4 @@ export const getDevelopersByRepo = async (repo: string) => {
     mockSuccessRes(developersByRepo) ||
     (await request(`${HYPERTRONS_OSS_XLAB_ENDPOINT}/repo/${repo}_top.json`))
   );
-};
-
-export const getRepoActiInfl = async (repo: string) => {
-  return await request(`${OSS_XLAB_ENDPOINT}/hypercrx_repo/${repo}.json`);
 };
