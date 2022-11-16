@@ -66,7 +66,7 @@ const RepoDetailIssueView: React.FC<RepoDetailIssueViewProps> = ({
       month = '0' + month;
     }
     window.open(
-      `/${currentRepo}/issues?q=is:issue create:${year}-${month} sort:updated-asc`
+      `/${currentRepo}/issues?q=is:issue created:${year}-${month} sort:updated-asc`
     );
   };
 
