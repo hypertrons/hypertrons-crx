@@ -21,10 +21,11 @@ interface IssueChartProps {
   width: number;
   height: number;
   data: any;
+  onClick?: Function;
 }
 
 const IssueChart: React.FC<IssueChartProps> = (props) => {
-  const { theme, width, height, data } = props;
+  const { theme, width, height, data, onClick } = props;
 
   const divEL = useRef(null);
 
@@ -146,6 +147,11 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
     const instance = echarts.getInstanceByDom(chartDOM as any);
     if (instance) {
       instance.setOption(option);
+      if (onClick) {
+        instance.on('click', (params) => {
+          onClick(params);
+        });
+      }
     }
   }, []);
 
