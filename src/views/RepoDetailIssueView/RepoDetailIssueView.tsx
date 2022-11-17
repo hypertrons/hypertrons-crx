@@ -60,7 +60,6 @@ const RepoDetailIssueView: React.FC<RepoDetailIssueViewProps> = ({
   if (!issue) return null;
 
   const onClick = (params: any) => {
-    //console.log(params)
     const ym = params.data[0];
     let [year, month] = ym.toString().split(',')[0].split('-');
     if (month.length < 2) {

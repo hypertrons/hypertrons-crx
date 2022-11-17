@@ -99,8 +99,7 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
       {
         name: 'open',
         type: 'line',
-        symbol: 'circle',
-        symbolSize: 0.2,
+        symbol: 'none',
         data: data.issuesOpened,
         emphasis: {
           focus: 'series',
@@ -111,8 +110,7 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
       {
         name: 'close',
         type: 'line',
-        symbol: 'circle',
-        symbolSize: 0.2,
+        symbol: 'none',
         data: data.issuesClosed,
         emphasis: {
           focus: 'series',
@@ -123,8 +121,7 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
       {
         name: 'comment',
         type: 'line',
-        symbol: 'circle',
-        symbolSize: 0.2,
+        symbol: 'none',
         data: data.issueComments,
         emphasis: {
           focus: 'series',
@@ -155,7 +152,7 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
       instance.setOption(option);
       if (onClick) {
         instance.on('click', (params) => {
-          onClick(params);
+          onClick(issueclickparams);
         });
       }
     }
@@ -164,7 +161,10 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
   return <div ref={divEL} style={{ width, height }}></div>;
 };
 
+let issueclickparams: { data: number[]; marker: any; seriesName: any };
+
 const tooltipFormatter = (params: any) => {
+  issueclickparams = params[0];
   const series0 = params[0];
   const series1 = params[1];
   const series2 = params[2];

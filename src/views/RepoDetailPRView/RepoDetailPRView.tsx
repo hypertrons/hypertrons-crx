@@ -75,6 +75,17 @@ const RepoDetailPRView: React.FC<RepoDetailPRViewProps> = ({ currentRepo }) => {
 
   if (!PR) return null;
 
+  const onClick = (params: any) => {
+    const ym = params.data[0];
+    let [year, month] = ym.toString().split(',')[0].split('-');
+    if (month.length < 2) {
+      month = '0' + month;
+    }
+    window.open(
+      `/${currentRepo}/pulls?q=is%3Apr+merged%3A${year}-${month} sort:updated-asc`
+    );
+  };
+
   return (
     <ReactTooltip id="pr-tooltip" clickable={true}>
       <div className="chart-title">
@@ -85,6 +96,7 @@ const RepoDetailPRView: React.FC<RepoDetailPRViewProps> = ({ currentRepo }) => {
         width={330}
         height={200}
         data={generatePRData(PR)}
+        onClick={onClick}
       />
       <div className="chart-title">
         {getMessageByLocale('merged_lines_popup_title', settings.locale)}
