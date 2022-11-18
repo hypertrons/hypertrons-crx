@@ -152,7 +152,7 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
       instance.setOption(option);
       if (onClick) {
         instance.on('click', (params) => {
-          onClick(issueclickparams);
+          onClick(issueclickparams, params);
         });
       }
     }

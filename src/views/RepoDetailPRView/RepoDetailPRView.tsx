@@ -75,14 +75,22 @@ const RepoDetailPRView: React.FC<RepoDetailPRViewProps> = ({ currentRepo }) => {
 
   if (!PR) return null;
 
-  const onClick = (params: any) => {
-    const ym = params.data[0];
+  const onClick = (params1: any, params2: any) => {
+    const ym = params1.data[0];
+    let type = params2.seriesName;
+    if (type === 'open') {
+      type = 'created';
+    } else if (type === 'review') {
+      type = 'updated';
+    } else {
+      type = 'merged';
+    }
     let [year, month] = ym.toString().split(',')[0].split('-');
     if (month.length < 2) {
       month = '0' + month;
     }
     window.open(
-      `/${currentRepo}/pulls?q=is%3Apr+merged%3A${year}-${month} sort:updated-asc`
+      `/${currentRepo}/pulls?q=is:pr ${type}:${year}-${month} sort:updated-asc`
     );
   };
 

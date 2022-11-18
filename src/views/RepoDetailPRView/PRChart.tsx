@@ -152,7 +152,7 @@ const PRChart: React.FC<PRChartProps> = (props) => {
       instance.setOption(option);
       if (onClick) {
         instance.on('click', (params) => {
-          onClick(prclickparams);
+          onClick(prclickparams, params);
         });
       }
     }
