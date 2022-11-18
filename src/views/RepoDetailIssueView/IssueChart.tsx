@@ -152,7 +152,7 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
       instance.setOption(option);
       if (onClick) {
         instance.on('click', (params) => {
-          onClick(issueclickparams, params);
+          onClick(curMonth, params);
         });
       }
     }
@@ -161,10 +161,10 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
   return <div ref={divEL} style={{ width, height }}></div>;
 };
 
-let issueclickparams: { data: number[]; marker: any; seriesName: any };
+let curMonth: { data: number[]; marker: any; seriesName: any };
 
 const tooltipFormatter = (params: any) => {
-  issueclickparams = params[0];
+  curMonth = params[0];
   const series0 = params[0];
   const series1 = params[1];
   const series2 = params[2];

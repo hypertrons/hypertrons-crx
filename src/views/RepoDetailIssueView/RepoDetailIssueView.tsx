@@ -61,20 +61,21 @@ const RepoDetailIssueView: React.FC<RepoDetailIssueViewProps> = ({
 
   const onClick = (params1: any, params2: any) => {
     const ym = params1.data[0];
-    let type = params2.seriesName;
-    if (type === 'open') {
+    const seriesIndex = params2.seriesIndex;
+    let type;
+    if (seriesIndex === 0) {
       type = 'created';
-    } else if (type === 'comment') {
-      type = 'updated';
-    } else {
+    } else if (seriesIndex === 1) {
       type = 'closed';
+    } else if (seriesIndex === 2) {
+      type = 'updated';
     }
     let [year, month] = ym.toString().split(',')[0].split('-');
     if (month.length < 2) {
       month = '0' + month;
     }
     window.open(
-      `/${currentRepo}/issues?q= is:issue ${type}:${year}-${month} sort:updated-asc`
+      `/${currentRepo}/issues?q=is:issue ${type}:${year}-${month} sort:updated-asc`
     );
   };
 

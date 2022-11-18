@@ -152,7 +152,7 @@ const PRChart: React.FC<PRChartProps> = (props) => {
       instance.setOption(option);
       if (onClick) {
         instance.on('click', (params) => {
-          onClick(prclickparams, params);
+          onClick(curMonth, params);
         });
       }
     }
@@ -161,10 +161,10 @@ const PRChart: React.FC<PRChartProps> = (props) => {
   return <div ref={divEL} style={{ width, height }}></div>;
 };
 
-let prclickparams: { data: number[]; marker: any; seriesName: any };
+let curMonth: { data: number[]; marker: any; seriesName: any };
 
 const tooltipFormatter = (params: any) => {
-  prclickparams = params[0];
+  curMonth = params[0];
   const series0 = params[0];
   const series1 = params[1];
   const series2 = params[2];
