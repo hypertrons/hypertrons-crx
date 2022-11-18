@@ -75,6 +75,25 @@ const RepoDetailPRView: React.FC<RepoDetailPRViewProps> = ({ currentRepo }) => {
 
   if (!PR) return null;
 
+  const onClick = (curMonth: string, params: any) => {
+    const seriesIndex = params.seriesIndex;
+    let type;
+    if (seriesIndex === 0) {
+      type = 'created';
+    } else if (seriesIndex === 1) {
+      type = 'merged';
+    } else if (seriesIndex === 2) {
+      type = 'updated';
+    }
+    let [year, month] = curMonth.toString().split(',')[0].split('-');
+    if (month.length < 2) {
+      month = '0' + month;
+    }
+    window.open(
+      `/${currentRepo}/pulls?q=is:pr ${type}:${year}-${month} sort:updated-asc`
+    );
+  };
+
   return (
     <ReactTooltip id="pr-tooltip" clickable={true}>
       <div className="chart-title">
@@ -85,6 +104,7 @@ const RepoDetailPRView: React.FC<RepoDetailPRViewProps> = ({ currentRepo }) => {
         width={330}
         height={200}
         data={generatePRData(PR)}
+        onClick={onClick}
       />
       <div className="chart-title">
         {getMessageByLocale('merged_lines_popup_title', settings.locale)}

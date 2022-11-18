@@ -59,6 +59,25 @@ const RepoDetailIssueView: React.FC<RepoDetailIssueViewProps> = ({
 
   if (!issue) return null;
 
+  const onClick = (curMonth: string, params: any) => {
+    const seriesIndex = params.seriesIndex;
+    let type;
+    if (seriesIndex === 0) {
+      type = 'created';
+    } else if (seriesIndex === 1) {
+      type = 'closed';
+    } else if (seriesIndex === 2) {
+      type = 'updated';
+    }
+    let [year, month] = curMonth.toString().split(',')[0].split('-');
+    if (month.length < 2) {
+      month = '0' + month;
+    }
+    window.open(
+      `/${currentRepo}/issues?q=is:issue ${type}:${year}-${month} sort:updated-asc`
+    );
+  };
+
   return (
     <ReactTooltip id="issue-tooltip" clickable={true}>
       <div className="chart-title">
@@ -69,6 +88,7 @@ const RepoDetailIssueView: React.FC<RepoDetailIssueViewProps> = ({
         width={300}
         height={200}
         data={generateIssueData(issue)}
+        onClick={onClick}
       />
     </ReactTooltip>
   );

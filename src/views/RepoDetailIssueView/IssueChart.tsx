@@ -21,10 +21,11 @@ interface IssueChartProps {
   width: number;
   height: number;
   data: any;
+  onClick?: Function;
 }
 
 const IssueChart: React.FC<IssueChartProps> = (props) => {
-  const { theme, width, height, data } = props;
+  const { theme, width, height, data, onClick } = props;
 
   const divEL = useRef(null);
 
@@ -104,6 +105,7 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
           focus: 'series',
         },
         yAxisIndex: 0,
+        triggerLineEvent: true,
       },
       {
         name: 'close',
@@ -114,6 +116,7 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
           focus: 'series',
         },
         yAxisIndex: 0,
+        triggerLineEvent: true,
       },
       {
         name: 'comment',
@@ -124,6 +127,7 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
           focus: 'series',
         },
         yAxisIndex: 0,
+        triggerLineEvent: true,
       },
     ],
     animationEasing: 'elasticOut',
@@ -146,13 +150,21 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
     const instance = echarts.getInstanceByDom(chartDOM as any);
     if (instance) {
       instance.setOption(option);
+      if (onClick) {
+        instance.on('click', (params) => {
+          onClick(curMonth, params);
+        });
+      }
     }
   }, []);
 
   return <div ref={divEL} style={{ width, height }}></div>;
 };
 
+let curMonth: string;
+
 const tooltipFormatter = (params: any) => {
+  curMonth = params[0].data[0];
   const series0 = params[0];
   const series1 = params[1];
   const series2 = params[2];
