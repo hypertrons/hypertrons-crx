@@ -75,9 +75,8 @@ const RepoDetailPRView: React.FC<RepoDetailPRViewProps> = ({ currentRepo }) => {
 
   if (!PR) return null;
 
-  const onClick = (params1: any, params2: any) => {
-    const ym = params1.data[0];
-    const seriesIndex = params2.seriesIndex;
+  const onClick = (curMonth: string, params: any) => {
+    const seriesIndex = params.seriesIndex;
     let type;
     if (seriesIndex === 0) {
       type = 'created';
@@ -86,7 +85,7 @@ const RepoDetailPRView: React.FC<RepoDetailPRViewProps> = ({ currentRepo }) => {
     } else if (seriesIndex === 2) {
       type = 'updated';
     }
-    let [year, month] = ym.toString().split(',')[0].split('-');
+    let [year, month] = curMonth.toString().split(',')[0].split('-');
     if (month.length < 2) {
       month = '0' + month;
     }

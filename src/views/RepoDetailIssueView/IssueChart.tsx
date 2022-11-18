@@ -161,10 +161,10 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
   return <div ref={divEL} style={{ width, height }}></div>;
 };
 
-let curMonth: { data: number[]; marker: any; seriesName: any };
+let curMonth: string;
 
 const tooltipFormatter = (params: any) => {
-  curMonth = params[0];
+  curMonth = params[0].data[0];
   const series0 = params[0];
   const series1 = params[1];
   const series2 = params[2];
