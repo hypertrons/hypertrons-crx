@@ -105,6 +105,7 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
           focus: 'series',
         },
         yAxisIndex: 0,
+        triggerLineEvent: true,
       },
       {
         name: 'close',
@@ -115,6 +116,7 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
           focus: 'series',
         },
         yAxisIndex: 0,
+        triggerLineEvent: true,
       },
       {
         name: 'comment',
@@ -125,6 +127,7 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
           focus: 'series',
         },
         yAxisIndex: 0,
+        triggerLineEvent: true,
       },
     ],
     animationEasing: 'elasticOut',
@@ -148,8 +151,8 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
     if (instance) {
       instance.setOption(option);
       if (onClick) {
-        instance.on('mouseover', (params) => {
-          onClick(params);
+        instance.on('click', (params) => {
+          onClick(issueclickparams);
         });
       }
     }
@@ -158,7 +161,10 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
   return <div ref={divEL} style={{ width, height }}></div>;
 };
 
+let issueclickparams: { data: number[]; marker: any; seriesName: any };
+
 const tooltipFormatter = (params: any) => {
+  issueclickparams = params[0];
   const series0 = params[0];
   const series1 = params[1];
   const series2 = params[2];
