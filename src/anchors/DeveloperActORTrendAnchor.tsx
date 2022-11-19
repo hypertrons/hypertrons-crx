@@ -4,10 +4,10 @@ import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
 import PerceptorBase from '../PerceptorBase';
 import { runsWhen } from '../utils/utils';
-import DeveloperActiInflTrendView from '../views/DeveloperActiInflTrendView/DeveloperActiInflTrendView';
+import DeveloperActORTrendView from '../views/DeveloperActORTrendView/DeveloperActORTrendView';
 
 @runsWhen([pageDetect.isUserProfile])
-class DeveloperActiInflTrendAnchor extends PerceptorBase {
+class DeveloperActORTrendAnchor extends PerceptorBase {
   private _currentDeveloper: string;
 
   constructor() {
@@ -19,24 +19,20 @@ class DeveloperActiInflTrendAnchor extends PerceptorBase {
     this._currentDeveloper = $('.p-nickname.vcard-username.d-block')
       .text()
       .trim();
-    const container = document.getElementById('developer-acti-infl-trend');
+    const container = document.getElementById('developer-act-OR-trend');
     if (container != null) {
       render(
-        <DeveloperActiInflTrendView
-          currentDeveloper={this._currentDeveloper}
-        />,
+        <DeveloperActORTrendView currentDeveloper={this._currentDeveloper} />,
         container
       );
     } else {
       const profileArea = $('.js-profile-editable-area').parent();
       const newContainer = document.createElement('div');
-      newContainer.id = 'developer-acti-infl-trend';
+      newContainer.id = 'developer-act-OR-trend';
       newContainer.style.width = '100%';
 
       render(
-        <DeveloperActiInflTrendView
-          currentDeveloper={this._currentDeveloper}
-        />,
+        <DeveloperActORTrendView currentDeveloper={this._currentDeveloper} />,
         newContainer
       );
       profileArea.after(newContainer);
@@ -44,4 +40,4 @@ class DeveloperActiInflTrendAnchor extends PerceptorBase {
   }
 }
 
-export default DeveloperActiInflTrendAnchor;
+export default DeveloperActORTrendAnchor;

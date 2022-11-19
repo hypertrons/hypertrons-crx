@@ -8,7 +8,7 @@ import { rocketLight, rocketDark } from './base64';
 import ReactTooltip from 'react-tooltip';
 import { generateDataByMonth } from '../../utils/data';
 import ActivityChart from './ActivityChart';
-import InfluenceChart from './InfluenceChart';
+import OpenRankChart from './OpenRankChart';
 import ParticipantChart from './ParticipantChart';
 
 const githubTheme = getGithubTheme();
@@ -40,7 +40,7 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
       try {
         setData({
           activity: await getActivity(currentRepo),
-          influence: await getOpenrank(currentRepo),
+          OpenRank: await getOpenrank(currentRepo),
           participant: await getParticipant(currentRepo),
         });
       } catch (e) {
@@ -52,7 +52,7 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
   if (!data) return null;
 
   const activityData = generateDataByMonth(data.activity);
-  const influenceData = generateDataByMonth(data.influence);
+  const OpenRankData = generateDataByMonth(data.OpenRank);
   const participantData = generateDataByMonth(data.participant);
 
   return (
@@ -89,11 +89,11 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
       </span>
 
       <span
-        id="influence-header-label"
+        id="OpenRank-header-label"
         className="Label Label--secondary v-align-middle mr-1 unselectable"
         style={{ color: githubTheme === 'light' ? '#24292f' : '#c9d1d9' }}
         data-tip=""
-        data-for="influence-tooltip"
+        data-for="OpenRank-tooltip"
         data-class={`floating-window ${githubTheme}`}
         data-place="bottom"
         data-text-color={githubTheme === 'light' ? '#24292F' : '#C9D1D9'}
@@ -109,9 +109,7 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
           src={githubTheme === 'light' ? rocketLight : rocketDark}
           alt=""
         />
-        {numberWithCommas(
-          Math.round(influenceData[influenceData.length - 1][1])
-        )}
+        {numberWithCommas(Math.round(OpenRankData[OpenRankData.length - 1][1]))}
       </span>
 
       <span
@@ -159,15 +157,15 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
           data={activityData}
         />
       </ReactTooltip>
-      <ReactTooltip id="influence-tooltip" clickable={true}>
+      <ReactTooltip id="OpenRank-tooltip" clickable={true}>
         <div className="chart-title">
-          {getMessageByLocale('header_label_influence', settings.locale)}
+          {getMessageByLocale('header_label_OpenRank', settings.locale)}
         </div>
-        <InfluenceChart
+        <OpenRankChart
           theme={githubTheme as 'light' | 'dark'}
           width={270}
           height={130}
-          data={influenceData}
+          data={OpenRankData}
         />
       </ReactTooltip>
       <ReactTooltip id="participant-tooltip" clickable={true}>
