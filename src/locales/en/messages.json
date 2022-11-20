@@ -129,10 +129,10 @@
     "message": "OpenRank"
   },
   "component_repoActORTrend_yName1": {
-    "message": "Act"
+    "message": "Activity"
   },
   "component_repoActORTrend_yName2": {
-    "message": "Inf"
+    "message": "OpenRank"
   },
   "component_developerActORTrend_title": {
     "message": "Activity & OpenRank Trends"
@@ -144,10 +144,10 @@
     "message": "OpenRank"
   },
   "component_developerActORTrend_yName1": {
-    "message": "Act"
+    "message": "Activity"
   },
   "component_developerActORTrend_yName2": {
-    "message": "Inf"
+    "message": "OpenRank"
   },
   "component_projectCorrelationNetwork_title": {
     "message": "Project Correlation Network"
