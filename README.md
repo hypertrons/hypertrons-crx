@@ -38,7 +38,7 @@ You can find these dashboards in:
     <tr>
       <td>
         <img
-          src="https://user-images.githubusercontent.com/32434520/180445548-63d5e0ce-635f-4e7b-bed7-e4bcbf2dc8c4.png"
+          src="https://user-images.githubusercontent.com/115639837/202853864-3f302d60-beb8-4051-b372-519f7755f819.png"
         />
       </td>
       <td>
@@ -46,7 +46,7 @@ You can find these dashboards in:
           src="https://user-images.githubusercontent.com/32434520/180447103-76ff1e25-ec35-4e7f-bd54-9d98545ca1df.png"
         />
         <img
-          src="https://user-images.githubusercontent.com/32434520/180446790-50b6a53b-119e-4b74-a08d-dda146fb9f29.png"
+          src="https://user-images.githubusercontent.com/115639837/202854182-83b2c2ea-476d-4c29-8683-897c7ba41da7.png"
         />
       </td>
     </tr>
@@ -78,7 +78,7 @@ You can find these dashboards in:
        </td> 
        <td>
          <img 
-           src="https://user-images.githubusercontent.com/90528630/171828864-2aeb8a30-bce8-4544-839d-834fc2720a46.gif"
+           src="https://user-images.githubusercontent.com/115639837/202900548-06add42c-7083-4f8d-9eac-9c080e46d755.gif"
          /> </td>
      </tr>
      <tr> 
@@ -87,7 +87,7 @@ You can find these dashboards in:
      <tr> 
        <td colspan="3"> 
          <img 
-           src="https://user-images.githubusercontent.com/32434520/199235703-a5609b58-35f0-4c26-ad94-8ddc98915147.png"
+           src="https://user-images.githubusercontent.com/32434520/202904112-f0f8386f-582d-4883-8e24-1be437f88ee0.png"
          /> 
        </td> 
      </tr> 
@@ -128,7 +128,7 @@ You can find these dashboards in:
        </td> 
        <td>
          <img 
-           src="https://user-images.githubusercontent.com/90528630/171830059-acabce8a-86e2-42c4-812b-51685e7c0d30.gif"
+           src="https://user-images.githubusercontent.com/115639837/202901000-e5027ce1-f973-4fbd-bb67-07530a941ef7.gif"
          /> </td>
      </tr> 
    </tbody> 

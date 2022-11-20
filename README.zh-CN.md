@@ -40,7 +40,7 @@ Language : [English](./README.md) | 中文
     <tr>
       <td>
         <img
-          src="https://user-images.githubusercontent.com/32434520/180445548-63d5e0ce-635f-4e7b-bed7-e4bcbf2dc8c4.png"
+          src="https://user-images.githubusercontent.com/115639837/202854757-fd4c663a-7c83-46eb-8c98-637b631f6c3c.png"
         />
       </td>
       <td>
@@ -48,7 +48,7 @@ Language : [English](./README.md) | 中文
           src="https://user-images.githubusercontent.com/32434520/180447103-76ff1e25-ec35-4e7f-bd54-9d98545ca1df.png"
         />
         <img
-          src="https://user-images.githubusercontent.com/32434520/180446790-50b6a53b-119e-4b74-a08d-dda146fb9f29.png"
+          src="https://user-images.githubusercontent.com/115639837/202854182-83b2c2ea-476d-4c29-8683-897c7ba41da7.png"
         />
       </td>
     </tr>
@@ -79,7 +79,7 @@ Language : [English](./README.md) | 中文
        </td> 
        <td>
          <img 
-           src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_activity%26influence.gif"
+           src="https://user-images.githubusercontent.com/115639837/202900548-06add42c-7083-4f8d-9eac-9c080e46d755.gif"
          /> </td>
      </tr> 
      <tr> 
@@ -88,7 +88,7 @@ Language : [English](./README.md) | 中文
      <tr> 
        <td colspan="3"> 
          <img 
-           src="https://user-images.githubusercontent.com/32434520/199235703-a5609b58-35f0-4c26-ad94-8ddc98915147.png"
+           src="https://user-images.githubusercontent.com/32434520/202904112-f0f8386f-582d-4883-8e24-1be437f88ee0.png"
          /> 
        </td> 
      </tr> 
@@ -128,7 +128,7 @@ Language : [English](./README.md) | 中文
        </td> 
        <td>
          <img 
-           src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme_activity%26influence.gif"
+           src="https://user-images.githubusercontent.com/115639837/202901000-e5027ce1-f973-4fbd-bb67-07530a941ef7.gif"
          /> </td>
      </tr> 
    </tbody> 
