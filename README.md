@@ -82,7 +82,7 @@ You can find these dashboards in:
          /> </td>
      </tr>
      <tr> 
-       <th colspan="3">Repo Details (hover tiggerd)</th> 
+       <th colspan="3">Repo Details (hover triggerd)</th> 
      </tr> 
      <tr> 
        <td colspan="3"> 
