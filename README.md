@@ -38,7 +38,7 @@ You can find these dashboards in:
     <tr>
       <td>
         <img
-          src="https://user-images.githubusercontent.com/32434520/180445548-63d5e0ce-635f-4e7b-bed7-e4bcbf2dc8c4.png"
+          src="https://user-images.githubusercontent.com/115639837/202907271-3eafea52-0dfd-4376-a896-b7ebbd75ae1d.png"
         />
       </td>
       <td>
@@ -46,7 +46,7 @@ You can find these dashboards in:
           src="https://user-images.githubusercontent.com/32434520/180447103-76ff1e25-ec35-4e7f-bd54-9d98545ca1df.png"
         />
         <img
-          src="https://user-images.githubusercontent.com/32434520/180446790-50b6a53b-119e-4b74-a08d-dda146fb9f29.png"
+          src="https://user-images.githubusercontent.com/115639837/202907348-678bfaca-81a0-40b3-a0ee-1e9a4931961b.png"
         />
       </td>
     </tr>
@@ -61,7 +61,7 @@ You can find these dashboards in:
      <tr> 
        <th width="33%">Project Correlation Network</th> 
        <th width="33%">Developer Collabration Network within Project</th> 
-       <th width="34%">Project Activity & Influence Trend</th> 
+       <th width="34%">Project Activity & OpenRank Trend</th> 
      </tr> 
    </thead> 
    <tbody> 
@@ -78,16 +78,16 @@ You can find these dashboards in:
        </td> 
        <td>
          <img 
-           src="https://user-images.githubusercontent.com/90528630/171828864-2aeb8a30-bce8-4544-839d-834fc2720a46.gif"
+           src="https://user-images.githubusercontent.com/115639837/202907049-d799bfe1-2bd2-4ef0-a467-cc480c6488eb.gif"
          /> </td>
      </tr>
      <tr> 
-       <th colspan="3">Repo Details (hover tiggerd)</th> 
+       <th colspan="3">Repo Details (hover triggered)</th> 
      </tr> 
      <tr> 
        <td colspan="3"> 
          <img 
-           src="https://user-images.githubusercontent.com/32434520/199235703-a5609b58-35f0-4c26-ad94-8ddc98915147.png"
+           src="https://user-images.githubusercontent.com/32434520/202904112-f0f8386f-582d-4883-8e24-1be437f88ee0.png"
          /> 
        </td> 
      </tr> 
@@ -99,9 +99,9 @@ You can find these dashboards in:
 
 - **Developer Collabration Network within project**: Developer Collabration Network within project shows the collaboration between active developers within the project for a given time period. From this graph you can find the active developers in the given project. What's more, you can find the collaborative relationships between these developers.
 
-- **Project Activity & Influence Trend**: The Project Activity and Influence Trend chart presents how the two metrics evolve since 2015. In the chart, you can zoom and drag using your mouse or touchpad, and you can toggle either of the data by clicking the legend buttons as well.
+- **Project Activity & OpenRank Trend**: The Project Activity and OpenRank Trend chart presents how the two metrics evolve since 2015. In the chart, you can zoom and drag using your mouse or touchpad, and you can toggle either of the data by clicking the legend buttons as well.
 
-- **Repo Details**: Trends of Activity, Influence, Participants, Fork Events, Star Events, Open Issue Events, Issue Comment Events, Open PR Events, PR Merge Events, Review Comment Events, Merged Addition & Deletion Code Lines.
+- **Repo Details**: Trends of Activity, OpenRank, Participants, Fork Events, Star Events, Open Issue Events, Issue Comment Events, Open PR Events, PR Merge Events, Review Comment Events, Merged Addition & Deletion Code Lines.
 
 
 ### Developer Releated
@@ -111,7 +111,7 @@ You can find these dashboards in:
      <tr> 
        <th width="33%">Developer Collabration Network</th> 
        <th width="33%">Developer's Most Participated Repos</th> 
-       <th width="34%">Developer's Activity & Influence Trend</th> 
+       <th width="34%">Developer's Activity & OpenRank Trend</th> 
      </tr> 
    </thead> 
    <tbody> 
@@ -128,7 +128,7 @@ You can find these dashboards in:
        </td> 
        <td>
          <img 
-           src="https://user-images.githubusercontent.com/90528630/171830059-acabce8a-86e2-42c4-812b-51685e7c0d30.gif"
+           src="https://user-images.githubusercontent.com/115639837/202906644-4a22a336-fded-4ef2-82e1-16c3cb749d32.gif"
          /> </td>
      </tr> 
    </tbody> 
@@ -138,7 +138,7 @@ You can find these dashboards in:
 
 - **Developer Collabration Network**: Developer Collaboration Network shows the collaboration between developers for a given time period. From this graph you can find other developers who are closet to a given developer.
 - **Developer's Most Participated Repos**: Developer's Most Participated Repos shows the active projects of developers in a given time period. From this graph you can find out the most active repositories for a given developer.
-- **Developer's Activity & Influence Trend**：The Developer Activity and Influence Trend chart presents how the two metrics evolve since 2015. In the chart, you can zoom and drag using your mouse or touchpad, and you can toggle either of the data by clicking the legend buttons as well.
+- **Developer's Activity & OpenRank Trend**：The Developer Activity and OpenRank Trend chart presents how the two metrics evolve since 2015. In the chart, you can zoom and drag using your mouse or touchpad, and you can toggle either of the data by clicking the legend buttons as well.
 
 ## Contributing
 

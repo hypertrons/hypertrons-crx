@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
+
 import { getGithubTheme, getMessageByLocale } from '../../utils/utils';
 import { generateDataByMonth } from '../../utils/data';
 import Settings, { loadSettings } from '../../utils/settings';
-import { getActivity, getOpenrank } from '../../api/developer';
+import { getActivity, getOpenrank } from '../../api/repo';
 import Bars from '../../components/Bars/index';
 
 const githubTheme = getGithubTheme();
 
-interface DeveloperActiInflTrendViewProps {
-  currentDeveloper: string;
+interface RepoActORTrendViewProps {
+  currentRepo: string;
 }
 
 const generateBarsData = (activity: any, openrank: any) => {
@@ -18,8 +19,8 @@ const generateBarsData = (activity: any, openrank: any) => {
   };
 };
 
-const DeveloperActiInflTrendView: React.FC<DeveloperActiInflTrendViewProps> = ({
-  currentDeveloper,
+const RepoActORTrendView: React.FC<RepoActORTrendViewProps> = ({
+  currentRepo,
 }) => {
   const [inited, setInited] = useState(false);
   const [settings, setSettings] = useState(new Settings());
@@ -40,8 +41,8 @@ const DeveloperActiInflTrendView: React.FC<DeveloperActiInflTrendViewProps> = ({
   useEffect(() => {
     (async () => {
       try {
-        setActivity(await getActivity(currentDeveloper));
-        setOpenrank(await getOpenrank(currentDeveloper));
+        setActivity(await getActivity(currentRepo));
+        setOpenrank(await getOpenrank(currentRepo));
       } catch (e) {
         console.error(e);
       }
@@ -51,38 +52,51 @@ const DeveloperActiInflTrendView: React.FC<DeveloperActiInflTrendViewProps> = ({
   if (!activity || !openrank) return null;
 
   let barsData: any = generateBarsData(activity, openrank);
+
+  const onClick = (params: any) => {
+    const { seriesIndex, data } = params;
+    if (seriesIndex === 0) {
+      let [year, month] = data.toString().split(',')[0].split('-');
+      if (month.length < 2) {
+        month = '0' + month;
+      }
+
+      window.open(
+        `/${currentRepo}/issues?q=updated:${year}-${month} sort:updated-asc`
+      );
+    }
+  };
+
   return (
-    <div className="border-top color-border-secondary pt-3 mt-3">
+    <div>
       <h2 className="h4 mb-3">
-        {getMessageByLocale(
-          'component_developerActiInflTrend_title',
-          settings.locale
-        )}
+        {getMessageByLocale('component_repoActORTrend_title', settings.locale)}
       </h2>
       <Bars
         theme={githubTheme as 'light' | 'dark'}
         height={350}
         legend1={getMessageByLocale(
-          'component_developerActiInflTrend_legend1',
+          'component_repoActORTrend_legend1',
           settings.locale
         )}
         legend2={getMessageByLocale(
-          'component_developerActiInflTrend_legend2',
+          'component_repoActORTrend_legend2',
           settings.locale
         )}
         yName1={getMessageByLocale(
-          'component_developerActiInflTrend_yName1',
+          'component_repoActORTrend_yName1',
           settings.locale
         )}
         yName2={getMessageByLocale(
-          'component_developerActiInflTrend_yName2',
+          'component_repoActORTrend_yName2',
           settings.locale
         )}
         data1={barsData.data1}
         data2={barsData.data2}
+        onClick={onClick}
       />
     </div>
   );
 };
 
-export default DeveloperActiInflTrendView;
+export default RepoActORTrendView;

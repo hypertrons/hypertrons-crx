@@ -119,35 +119,35 @@
   "component_contributorsActivityEvolution_description_3": {
     "message": "Contributors: All GitHub users who have star, fork, issue, and PR activity in the repository."
   },
-  "component_repoActiInflTrend_title": {
-    "message": "Activity & Influence Trends"
+  "component_repoActORTrend_title": {
+    "message": "Activity & OpenRank Trends"
   },
-  "component_repoActiInflTrend_legend1": {
+  "component_repoActORTrend_legend1": {
     "message": "Activity"
   },
-  "component_repoActiInflTrend_legend2": {
-    "message": "Influence"
+  "component_repoActORTrend_legend2": {
+    "message": "OpenRank"
   },
-  "component_repoActiInflTrend_yName1": {
-    "message": "Act"
-  },
-  "component_repoActiInflTrend_yName2": {
-    "message": "Inf"
-  },
-  "component_developerActiInflTrend_title": {
-    "message": "Activity & Influence Trends"
-  },
-  "component_developerActiInflTrend_legend1": {
+  "component_repoActORTrend_yName1": {
     "message": "Activity"
   },
-  "component_developerActiInflTrend_legend2": {
-    "message": "Influence"
+  "component_repoActORTrend_yName2": {
+    "message": "OpenRank"
   },
-  "component_developerActiInflTrend_yName1": {
-    "message": "Act"
+  "component_developerActORTrend_title": {
+    "message": "Activity & OpenRank Trends"
   },
-  "component_developerActiInflTrend_yName2": {
-    "message": "Inf"
+  "component_developerActORTrend_legend1": {
+    "message": "Activity"
+  },
+  "component_developerActORTrend_legend2": {
+    "message": "OpenRank"
+  },
+  "component_developerActORTrend_yName1": {
+    "message": "Activity"
+  },
+  "component_developerActORTrend_yName2": {
+    "message": "OpenRank"
   },
   "component_projectCorrelationNetwork_title": {
     "message": "Project Correlation Network"
@@ -296,8 +296,8 @@
   "header_label_activity": {
     "message": "Activity"
   },
-  "header_label_influence": {
-    "message": "Influence"
+  "header_label_OpenRank": {
+    "message": "OpenRank"
   },
   "header_label_participant": {
     "message": "Participants"
