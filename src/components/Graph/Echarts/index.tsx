@@ -1,5 +1,6 @@
 import React, { useEffect, CSSProperties } from 'react';
 import * as echarts from 'echarts';
+import { debounce } from '../../../utils/utils';
 
 interface EChartsWrapperProps {
   /**
@@ -67,9 +68,10 @@ const EChartsWrapper: React.FC<EChartsWrapperProps> = ({
   const renderNewEcharts = () => {
     const instance = getEchartsInstance();
     instance.setOption(option);
-    window.addEventListener('resize', () => {
+    const [debouncedResize, teardown] = debounce(() => {
       instance.resize();
-    });
+    }, 500);
+    window.addEventListener('resize', debouncedResize);
     // loop and bind events
     for (const eventName in onEvents) {
       if (Object.prototype.hasOwnProperty.call(onEvents, eventName)) {
