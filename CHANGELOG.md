@@ -1,3 +1,17 @@
+# [1.8.0](https://github.com/hypertrons/hypertrons-crx/compare/v1.7.3...v1.8.0) (2022-11-29)
+
+
+### Features
+
+* add issue and pr related interaction ([#524](https://github.com/hypertrons/hypertrons-crx/issues/524)) ([8052b5d](https://github.com/hypertrons/hypertrons-crx/commit/8052b5df9b54edeba160c5912996650185498bf8))
+
+
+### Performance Improvements
+
+* debounce echartsInstance.resize() to avoid pages becoming slow when window being resized ([#536](https://github.com/hypertrons/hypertrons-crx/issues/536)) ([888e374](https://github.com/hypertrons/hypertrons-crx/commit/888e374da172662c22c579e7e2737ca1ef6e5cc4))
+
+
+
 ## [1.7.3](https://github.com/hypertrons/hypertrons-crx/compare/v1.7.2...v1.7.3) (2022-11-15)
 
 
@@ -39,15 +53,6 @@
 
 * click activity bar to view all issues and PRs in that month ([#456](https://github.com/hypertrons/hypertrons-crx/issues/456)) ([8c5a824](https://github.com/hypertrons/hypertrons-crx/commit/8c5a824d9472beaf15e1e0479e601454e9b2a465))
 * show more data (in an embeded way) ([#455](https://github.com/hypertrons/hypertrons-crx/issues/455)) ([32edf7a](https://github.com/hypertrons/hypertrons-crx/commit/32edf7acb35f97eef27d0b3315e2837b96cd1eee)), closes [#464](https://github.com/hypertrons/hypertrons-crx/issues/464) [#462](https://github.com/hypertrons/hypertrons-crx/issues/462) [#466](https://github.com/hypertrons/hypertrons-crx/issues/466)
-
-
-
-## [1.6.4](https://github.com/hypertrons/hypertrons-crx/compare/v1.6.3...v1.6.4) (2022-08-15)
-
-
-### Bug Fixes
-
-* failed to find insightsTab ([#440](https://github.com/hypertrons/hypertrons-crx/issues/440)) ([05a4d7f](https://github.com/hypertrons/hypertrons-crx/commit/05a4d7fbf7ca8ddf05926cde78ab772705753eec))
 
 
 
