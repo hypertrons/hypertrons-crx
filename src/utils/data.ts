@@ -2,8 +2,12 @@ export const generateDataByMonth = (originalData: any) => {
   const objectData: any = {};
   // format month string
   Object.keys(originalData).forEach((key) => {
-    // e.g. 20204 -> 2020-4
-    const date = key.slice(0, 4) + '-' + key.slice(4);
+    // following wrapper code is for adaption purpose, see issue #541
+    let date = key;
+    // handle old date format, e.g. 20204 -> 2020-4
+    if (!key.includes('-')) {
+      date = key.slice(0, 4) + '-' + key.slice(4);
+    }
     objectData[date] = originalData[key];
   });
   // get the oldest month and the newest one
