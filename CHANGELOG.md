@@ -1,3 +1,12 @@
+## [1.8.2](https://github.com/hypertrons/hypertrons-crx/compare/v1.8.1...v1.8.2) (2022-12-03)
+
+
+### Bug Fixes
+
+* fatal parse error ([#544](https://github.com/hypertrons/hypertrons-crx/issues/544)) ([c7e0bb4](https://github.com/hypertrons/hypertrons-crx/commit/c7e0bb453dcf0f87391c54dd05705d52e1e68401))
+
+
+
 ## [1.8.1](https://github.com/hypertrons/hypertrons-crx/compare/v1.8.0...v1.8.1) (2022-12-02)
 
 
@@ -28,18 +37,6 @@
 
 
 ## [1.7.2](https://github.com/hypertrons/hypertrons-crx/compare/v1.7.1...v1.7.2) (2022-11-01)
-
-
-
-## [1.7.1](https://github.com/hypertrons/hypertrons-crx/compare/v1.7.0...v1.7.1) (2022-10-19)
-
-
-### Bug Fixes
-
-* avoid redundant renders ([#485](https://github.com/hypertrons/hypertrons-crx/issues/485)) ([1ca1b32](https://github.com/hypertrons/hypertrons-crx/commit/1ca1b32969f82d0f8558e2b705f1604f9ea95d38))
-* modify the css class of the two network buttons in profile perceptor to avoid be truncated ([#484](https://github.com/hypertrons/hypertrons-crx/issues/484)) ([83f8c5e](https://github.com/hypertrons/hypertrons-crx/commit/83f8c5ee24284017655c7979e926a956df9068ec))
-* recenter the title of mergedline chart ([#482](https://github.com/hypertrons/hypertrons-crx/issues/482)) ([3bbf62b](https://github.com/hypertrons/hypertrons-crx/commit/3bbf62bec1f02ca32e6b207ab82a27abb703374e))
-* the width of tooltip is too small ([#477](https://github.com/hypertrons/hypertrons-crx/issues/477)) ([daf8ed6](https://github.com/hypertrons/hypertrons-crx/commit/daf8ed6c3cad3de439ffa06904b035dde2ca2749))
 
 
 
