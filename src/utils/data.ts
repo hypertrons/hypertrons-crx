@@ -4,9 +4,9 @@ export const generateDataByMonth = (originalData: any) => {
   Object.keys(originalData).forEach((key) => {
     // following wrapper code is for adaption purpose, see issue #541
     let date = key;
-    // handle old date format, e.g. 20204 -> 2020-4
+    // handle old date format, e.g. 20204 -> 2020-04
     if (!key.includes('-')) {
-      date = key.slice(0, 4) + '-' + key.slice(4);
+      date = key.slice(0, 4) + '-' + key.slice(4).toString().padStart(2, '0');
     }
     objectData[date] = originalData[key];
   });
@@ -25,7 +25,8 @@ export const generateDataByMonth = (originalData: any) => {
   const start = new Date(oldestMonth);
   const end = new Date(newestMonth);
   for (let i = start; i <= end; i.setMonth(i.getMonth() + 1)) {
-    const date = i.getFullYear() + '-' + (i.getMonth() + 1);
+    const date =
+      i.getFullYear() + '-' + (i.getMonth() + 1).toString().padStart(2, '0');
     if (!objectData.hasOwnProperty(date)) {
       arrayData.push([date, 0]);
     } else {
