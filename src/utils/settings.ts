@@ -1,4 +1,4 @@
-import { chromeGet, chromeSet, isNull } from './utils';
+import { chromeGet, isNull } from './utils';
 
 class Settings {
   isEnabled: boolean | undefined;
@@ -56,15 +56,6 @@ export const loadSettings = async () => {
     obj = {};
   }
   settings.loadFromJson(obj);
-  return settings;
-};
-
-export const mergeSettings = async (data: { [key: string]: any }) => {
-  const settings = await loadSettings();
-  if (!isNull(data)) {
-    settings.loadFromJson(data);
-    await chromeSet('settings', settings.toJson());
-  }
   return settings;
 };
 
