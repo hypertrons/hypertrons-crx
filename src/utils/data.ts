@@ -1,17 +1,5 @@
 export const generateDataByMonth = (originalData: any) => {
-  const objectData: any = {};
-  // format month string
-  Object.keys(originalData).forEach((key) => {
-    // following wrapper code is for adaption purpose, see issue #541
-    let date = key;
-    // handle old date format, e.g. 20204 -> 2020-04
-    if (!key.includes('-')) {
-      date = key.slice(0, 4) + '-' + key.slice(4).toString().padStart(2, '0');
-    }
-    objectData[date] = originalData[key];
-  });
-  // get the oldest month and the newest one
-  const orderedMonths = Object.keys(objectData).sort((a, b) => {
+  const orderedMonths = Object.keys(originalData).sort((a, b) => {
     const dateA = new Date(a);
     const dateB = new Date(b);
     if (dateA < dateB) return -1;
@@ -27,10 +15,10 @@ export const generateDataByMonth = (originalData: any) => {
   for (let i = start; i <= end; i.setMonth(i.getMonth() + 1)) {
     const date =
       i.getFullYear() + '-' + (i.getMonth() + 1).toString().padStart(2, '0');
-    if (!objectData.hasOwnProperty(date)) {
+    if (!originalData.hasOwnProperty(date)) {
       arrayData.push([date, 0]);
     } else {
-      arrayData.push([date, objectData[date]]);
+      arrayData.push([date, originalData[date]]);
     }
   }
   return arrayData;
