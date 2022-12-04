@@ -20,41 +20,22 @@ import {
   DialogFooter,
   PrimaryButton,
 } from 'office-ui-fabric-react';
-import {
-  getMessageByLocale,
-  chromeSet,
-  compareVersion,
-} from '../../utils/utils';
-import { checkUpdate, checkIsTokenAvailabe } from '../../services/common';
+import { getMessageByLocale, chromeSet } from '../../utils/utils';
+import { checkIsTokenAvailabe } from '../../services/common';
 import Settings, { loadSettings } from '../../utils/settings';
 import MetaData, { loadMetaData } from '../../utils/metadata';
-import { getNotificationInformation } from '../../services/background';
 import { HYPERTRONS_CRX_WEBSITE } from '../../constant';
 import './Options.css';
-
-export enum UpdateStatus {
-  undefine = -1,
-  no = 0,
-  yes = 1,
-}
 
 const Options: React.FC = () => {
   const [settings, setSettings] = useState(new Settings());
   const [metaData, setMetaData] = useState(new MetaData());
   const [inited, setInited] = useState(false);
   const [version, setVersion] = useState('0.0.0');
-  const [checkingUpdate, setCheckingUpdate] = useState(false);
   const [token, setToken] = useState('');
   const [checkingToken, setCheckingToken] = useState(false);
   const [showDialogToken, setShowDialogToken] = useState(false);
   const [showDialogTokenError, setShowDialogTokenError] = useState(false);
-  const [showDialogNotification, setShowDialogNotification] = useState(false);
-  const [notificationId, setNotificationId] = useState(0);
-  const [notification, setNotification] = useState('');
-  const [updateStatus, setUpdateStatus] = useState(UpdateStatus.undefine);
-  const [updateUrl, setUpdateUrl] = useState(
-    'https://github.com/hypertrons/hypertrons-crx/releases'
-  );
   const tokenCurrent = metaData.token;
 
   const locale = settings.locale;
@@ -75,19 +56,6 @@ const Options: React.FC = () => {
       setMetaData(tempMetaData);
       if (tempMetaData.token !== '') {
         setToken(tempMetaData.token);
-      }
-      const notificationInformation = await getNotificationInformation();
-      if (
-        notificationInformation.is_published &&
-        tempMetaData.idLastNotication < notificationInformation.id
-      ) {
-        if (locale === 'zh_CN') {
-          setNotification(notificationInformation.content.zh);
-        } else {
-          setNotification(notificationInformation.content.en);
-        }
-        setNotificationId(notificationInformation.id);
-        setShowDialogNotification(true);
       }
     };
     if (!inited) {
@@ -120,64 +88,12 @@ const Options: React.FC = () => {
     await chromeSet('settings', settings.toJson());
   };
 
-  const checkUpdateManually = async () => {
-    setUpdateStatus(UpdateStatus.undefine);
-    setCheckingUpdate(true);
-    const [currentVersion, latestVersion, updateUrl] = await checkUpdate();
-    if (compareVersion(currentVersion, latestVersion) === -1) {
-      setUpdateUrl(updateUrl);
-      setUpdateStatus(UpdateStatus.yes);
-    } else {
-      setUpdateStatus(UpdateStatus.no);
-    }
-    setCheckingUpdate(false);
-  };
-
   if (!inited) {
     return <div />;
   }
 
   return (
     <Stack>
-      {showDialogNotification && (
-        <Dialog
-          hidden={!showDialogNotification}
-          onDismiss={() => {
-            setShowDialogNotification(false);
-          }}
-          dialogContentProps={{
-            type: DialogType.normal,
-            title: getMessageByLocale(
-              'global_notificationTitle',
-              settings.locale
-            ),
-          }}
-          modalProps={{
-            isBlocking: true,
-          }}
-        >
-          <Text variant="mediumPlus">{notification}</Text>
-          <DialogFooter>
-            <DefaultButton
-              onClick={() => {
-                setShowDialogNotification(false);
-              }}
-            >
-              {getMessageByLocale('global_btn_ok', settings.locale)}
-            </DefaultButton>
-            <PrimaryButton
-              onClick={async () => {
-                metaData.idLastNotication = notificationId;
-                setMetaData(metaData);
-                await chromeSet('meta_data', metaData.toJson());
-                setShowDialogNotification(false);
-              }}
-            >
-              {getMessageByLocale('global_btn_disable', settings.locale)}
-            </PrimaryButton>
-          </DialogFooter>
-        </Dialog>
-      )}
       {showDialogToken && (
         <Dialog
           hidden={!showDialogToken}
@@ -421,101 +337,6 @@ const Options: React.FC = () => {
                 await saveSettings(settings);
               }}
             />
-          </Stack>
-        </Stack.Item>
-        <Stack.Item className="Box">
-          <TooltipHost
-            content={getMessageByLocale(
-              'options_update_toolTip',
-              settings.locale
-            )}
-          >
-            <Stack.Item className="Box-header">
-              <h2 className="Box-title">
-                {getMessageByLocale('options_update_title', settings.locale)}
-              </h2>
-            </Stack.Item>
-          </TooltipHost>
-          <Stack
-            style={{ margin: '10px 25px' }}
-            tokens={{
-              childrenGap: 10,
-            }}
-          >
-            <p>
-              {getMessageByLocale('options_update_toolTip', settings.locale)}.
-            </p>
-            <Toggle
-              label={getMessageByLocale(
-                'options_update_toggle_autoCheck',
-                settings.locale
-              )}
-              defaultChecked={settings.checkForUpdates}
-              onText={getMessageByLocale(
-                'global_toggle_onText',
-                settings.locale
-              )}
-              offText={getMessageByLocale(
-                'global_toggle_offText',
-                settings.locale
-              )}
-              onChange={async (e, checked) => {
-                settings.checkForUpdates = checked;
-                await saveSettings(settings);
-              }}
-            />
-            {checkingUpdate && (
-              <Stack horizontalAlign="start">
-                <Spinner
-                  label={getMessageByLocale(
-                    'options_update_checking',
-                    settings.locale
-                  )}
-                />
-              </Stack>
-            )}
-            {updateStatus === UpdateStatus.yes && (
-              <MessageBar
-                messageBarType={MessageBarType.success}
-                isMultiline={false}
-              >
-                {getMessageByLocale(
-                  'options_update_btn_updateStatusYes',
-                  settings.locale
-                )}
-                <Link href={updateUrl} target="_blank" underline>
-                  {getMessageByLocale(
-                    'options_update_btn_getUpdate',
-                    settings.locale
-                  )}
-                </Link>
-              </MessageBar>
-            )}
-            {updateStatus === UpdateStatus.no && (
-              <MessageBar
-                messageBarType={MessageBarType.info}
-                isMultiline={false}
-              >
-                {getMessageByLocale(
-                  'options_update_btn_updateStatusNo',
-                  settings.locale
-                )}
-              </MessageBar>
-            )}
-            <DefaultButton
-              style={{
-                width: 120,
-              }}
-              disabled={checkingUpdate}
-              onClick={async () => {
-                await checkUpdateManually();
-              }}
-            >
-              {getMessageByLocale(
-                'options_update_btn_checkUpdate',
-                settings.locale
-              )}
-            </DefaultButton>
           </Stack>
         </Stack.Item>
         <Stack.Item className="Box">
