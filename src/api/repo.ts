@@ -1,6 +1,5 @@
 import { HYPERTRONS_OSS_XLAB_ENDPOINT, OSS_XLAB_ENDPOINT } from '../constant';
-import request, { mockSuccessRes } from '../utils/request';
-import { repoCorrelationData, developersByRepo } from '../mock/repo.data';
+import request from '../utils/request';
 
 // metric names and their implementation names in OpenDigger
 const metricNameMap = new Map([
@@ -87,15 +86,9 @@ export const getMergedCodeSum = async (repo: string) => {
 
 // the two requests below will be deprecated once their OpenDigger implementations are ready
 export const getRepoCorrelation = async (repo: string) => {
-  return (
-    mockSuccessRes(repoCorrelationData) ||
-    (await request(`${HYPERTRONS_OSS_XLAB_ENDPOINT}/repo/${repo}.json`))
-  );
+  return await request(`${HYPERTRONS_OSS_XLAB_ENDPOINT}/repo/${repo}.json`);
 };
 
 export const getDevelopersByRepo = async (repo: string) => {
-  return (
-    mockSuccessRes(developersByRepo) ||
-    (await request(`${HYPERTRONS_OSS_XLAB_ENDPOINT}/repo/${repo}_top.json`))
-  );
+  return await request(`${HYPERTRONS_OSS_XLAB_ENDPOINT}/repo/${repo}_top.json`);
 };

@@ -1,9 +1,5 @@
 import { HYPERTRONS_OSS_XLAB_ENDPOINT, OSS_XLAB_ENDPOINT } from '../constant';
-import request, { mockSuccessRes } from '../utils/request';
-import {
-  developerCollabrationData,
-  participatedProjectsData,
-} from '../mock/developer.data';
+import request from '../utils/request';
 
 // metric names and their implementation names in OpenDigger
 const metricNameMap = new Map([
@@ -30,17 +26,13 @@ export const getOpenrank = async (user: string) => {
 
 // the two requests below will be deprecated once their OpenDigger implementations are ready
 export const getDeveloperCollabration = async (developer: string) => {
-  return (
-    mockSuccessRes(developerCollabrationData) ||
-    (await request(`${HYPERTRONS_OSS_XLAB_ENDPOINT}/actor/${developer}.json`))
+  return await request(
+    `${HYPERTRONS_OSS_XLAB_ENDPOINT}/actor/${developer}.json`
   );
 };
 
 export const getParticipatedProjects = async (developer: string) => {
-  return (
-    mockSuccessRes(participatedProjectsData) ||
-    (await request(
-      `${HYPERTRONS_OSS_XLAB_ENDPOINT}/actor/${developer}_top.json`
-    ))
+  return await request(
+    `${HYPERTRONS_OSS_XLAB_ENDPOINT}/actor/${developer}_top.json`
   );
 };
