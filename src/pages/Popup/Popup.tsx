@@ -1,20 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import {
-  DefaultButton,
-  Image,
-  ImageFit,
-  Stack,
-  Text,
-  Toggle,
-} from 'office-ui-fabric-react';
+import { Stack, Toggle } from 'office-ui-fabric-react';
 import './Popup.css';
 import Settings, { loadSettings } from '../../utils/settings';
-import MetaData, { loadMetaData } from '../../utils/metadata';
 import { chromeSet, getMessageByLocale } from '../../utils/utils';
 
 const Popup: React.FC = () => {
   const [settings, setSettings] = useState(new Settings());
-  const [metaData, setMetaData] = useState(new MetaData());
   const [inited, setInited] = useState(false);
 
   useEffect(() => {
@@ -27,14 +18,6 @@ const Popup: React.FC = () => {
       initSettings();
     }
   }, [inited, settings]);
-
-  useEffect(() => {
-    const initMetaData = async () => {
-      const temp = await loadMetaData();
-      setMetaData(temp);
-    };
-    initMetaData();
-  }, []);
 
   const saveSettings = async (settings: Settings) => {
     setSettings(settings);
@@ -73,45 +56,6 @@ const Popup: React.FC = () => {
             }}
           />
         </Stack>
-        {metaData.token !== '' && (
-          <Stack
-            horizontal
-            verticalAlign="center"
-            style={{
-              margin: '5px',
-              padding: '3px',
-              width: '200px',
-            }}
-            tokens={{
-              childrenGap: 5,
-            }}
-          >
-            <Image
-              width={75}
-              height={75}
-              src={metaData.avatar}
-              imageFit={ImageFit.centerCover}
-            />
-            <Text
-              variant="large"
-              style={{ marginLeft: 25, width: 100, wordWrap: 'break-word' }}
-            >
-              {metaData.name}
-            </Text>
-          </Stack>
-        )}
-        {metaData.token === '' && (
-          <DefaultButton
-            onClick={() => {
-              chrome.runtime.openOptionsPage();
-            }}
-            style={{
-              width: 120,
-            }}
-          >
-            {getMessageByLocale('options_token_title', settings.locale)}
-          </DefaultButton>
-        )}
       </Stack>
     </Stack>
   );
