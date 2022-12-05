@@ -4,24 +4,20 @@ import {
   Stack,
   Toggle,
   Checkbox,
-  Text,
   Link,
   ChoiceGroup,
   IChoiceGroupOption,
 } from 'office-ui-fabric-react';
 import { getMessageByLocale, chromeSet } from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
-import MetaData, { loadMetaData } from '../../utils/metadata';
 import { HYPERTRONS_CRX_WEBSITE } from '../../constant';
 import './Options.css';
 
 const Options: React.FC = () => {
   const [settings, setSettings] = useState(new Settings());
-  const [metaData, setMetaData] = useState(new MetaData());
   const [inited, setInited] = useState(false);
   const [version, setVersion] = useState('0.0.0');
 
-  const locale = settings.locale;
   const localeOptions: IChoiceGroupOption[] = [
     {
       key: 'en',
@@ -32,16 +28,6 @@ const Options: React.FC = () => {
       text: '简体中文 (Simplified Chinese)',
     },
   ];
-
-  useEffect(() => {
-    const initMetaData = async () => {
-      const tempMetaData = await loadMetaData();
-      setMetaData(tempMetaData);
-    };
-    if (!inited) {
-      initMetaData();
-    }
-  }, [inited, locale, metaData]);
 
   useEffect(() => {
     const initSettings = async () => {
