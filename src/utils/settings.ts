@@ -1,15 +1,13 @@
-import { chromeGet, chromeSet, isNull } from './utils';
+import { chromeGet, isNull } from './utils';
 
 class Settings {
   isEnabled: boolean | undefined;
-  checkForUpdates: boolean | undefined;
   developerNetwork: boolean | undefined;
   projectNetwork: boolean | undefined;
   locale: string;
 
   constructor() {
     this.isEnabled = true;
-    this.checkForUpdates = true;
     this.developerNetwork = true;
     this.projectNetwork = true;
     const language = chrome.i18n.getUILanguage();
@@ -23,9 +21,6 @@ class Settings {
   loadFromJson(data: { [key: string]: any }): void {
     if ('isEnabled' in data) {
       this.isEnabled = data['isEnabled'];
-    }
-    if ('checkForUpdates' in data) {
-      this.checkForUpdates = data['checkForUpdates'];
     }
     if ('developerNetwork' in data) {
       this.developerNetwork = data['developerNetwork'];
@@ -41,7 +36,6 @@ class Settings {
   toJson(): { [key: string]: any } {
     const result: { [key: string]: any } = {};
     result['isEnabled'] = this.isEnabled;
-    result['checkForUpdates'] = this.checkForUpdates;
     result['developerNetwork'] = this.developerNetwork;
     result['projectNetwork'] = this.projectNetwork;
     result['locale'] = this.locale;
@@ -56,15 +50,6 @@ export const loadSettings = async () => {
     obj = {};
   }
   settings.loadFromJson(obj);
-  return settings;
-};
-
-export const mergeSettings = async (data: { [key: string]: any }) => {
-  const settings = await loadSettings();
-  if (!isNull(data)) {
-    settings.loadFromJson(data);
-    await chromeSet('settings', settings.toJson());
-  }
   return settings;
 };
 

@@ -13,7 +13,6 @@ import PerceptorTabAnchor from '../../anchors/PerceptorTabAnchor';
 import PerceptorLayoutAnchor from '../../anchors/PerceptorLayoutAnchor';
 import DeveloperNetworkAnchor from '../../anchors/DeveloperNetworkAnchor';
 import ProjectNetworkAnchor from '../../anchors/ProjectNetworkAnchor';
-import HypertronsAnchor from '../../anchors/HypertronsAnchor';
 import { inject2Perceptor, Perceptor } from '../../Perceptor';
 
 import { loadSettings } from '../../utils/settings';
@@ -32,7 +31,6 @@ inject2Perceptor(PerceptorTabAnchor);
 inject2Perceptor(PerceptorLayoutAnchor);
 inject2Perceptor(DeveloperNetworkAnchor);
 inject2Perceptor(ProjectNetworkAnchor);
-inject2Perceptor(HypertronsAnchor);
 
 async function mainInject() {
   const settings = await loadSettings();

@@ -19,11 +19,6 @@ async function bump({ version, deploy }) {
   }
   update_info.develop.latest_version = version;
   writeJson(infoPath, update_info);
-
-  // update background.data.ts
-  processFile('src/mock/background.data.ts', (content) =>
-    content.replace(/(latest_version)\:.*?,/g, `$1: '${version}',`)
-  );
 }
 
 module.exports = { bump };

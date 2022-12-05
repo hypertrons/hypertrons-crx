@@ -15,7 +15,6 @@ import {
 import { getMessageByLocale } from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
 import Graph from '../../components/Graph/Graph';
-import TeachingBubbleWrapperView from '../TeachingBubbleWrapperView/TeachingBubbleWrapperView';
 import ErrorPage from '../../components/ExceptionPage/ErrorPage';
 
 interface DeveloperNetworkViewProps {
@@ -200,8 +199,6 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
           </ActionButton>
         </li>
       </ul>
-      <TeachingBubbleWrapperView target="#developer-network" />
-
       <Dialog
         hidden={!showDeveloperDialog}
         onDismiss={() => {

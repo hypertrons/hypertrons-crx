@@ -127,7 +127,6 @@ let options = {
     new webpack.EnvironmentPlugin({
       NODE_ENV: env.NODE_ENV,
       PORT: env.PORT,
-      MOCK: env.MOCK,
     }),
     new CopyWebpackPlugin({
       patterns: [
