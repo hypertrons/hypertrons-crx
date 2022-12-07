@@ -1,4 +1,4 @@
-import select from 'select-dom';
+import $ from 'jquery';
 import domLoaded from 'dom-loaded';
 import stripIndent from 'strip-indent';
 import { Promisable } from 'type-fest';
@@ -31,7 +31,7 @@ type InternalRunConfig = {
   init: FeatureInit;
 };
 
-const { version } = browser.runtime.getManifest();
+const { version } = chrome.runtime.getManifest();
 
 const logError = (url: string, error: unknown): void => {
   const id = getFeatureID(url);
@@ -62,7 +62,7 @@ const globalReady = new Promise<void>(async (resolve) => {
     return;
   }
 
-  if (select.exists('html.hypercrx')) {
+  if ($('html.hypercrx').length > 0) {
     console.warn(
       stripIndent(`
       Hypercrx has been loaded twice. This may be because:
@@ -102,11 +102,13 @@ const setupPageLoad = async (
 };
 
 const getFeatureID = (url: string): FeatureID =>
-  url.split('/').pop()!.split('.')[0] as FeatureID;
+  `hypercrx-${url.split('/').pop()!.split('.')[0]}` as FeatureID;
 
 /** Register a new feature */
-const add = async (url: string, ...loaders: FeatureLoader[]): Promise<void> => {
-  const id = getFeatureID(url);
+const add = async (
+  id: FeatureID,
+  ...loaders: FeatureLoader[]
+): Promise<void> => {
   /* Feature filtering and running */
   await globalReady;
 
@@ -152,7 +154,7 @@ const add = async (url: string, ...loaders: FeatureLoader[]): Promise<void> => {
     }
 
     document.addEventListener('turbo:render', () => {
-      if (!deduplicate || !select.exists(deduplicate)) {
+      if (!deduplicate || !($(deduplicate).length > 0)) {
         void setupPageLoad(id, details);
       }
     });

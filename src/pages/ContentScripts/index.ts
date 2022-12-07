@@ -1,48 +1,6 @@
-// initializeIcons() should only be called once per app and must be called before rendering any components.
-import { initializeIcons } from '@fluentui/react/lib/Icons';
-initializeIcons();
-
-import RepoHeaderLabelsAnchor from '../../anchors/RepoHeaderLabelsAnchor';
-import RepoDetailPRAnchor from '../../anchors/RepoDetailPRAnchor';
-import RepoDetailIssueAnchor from '../../anchors/RepoDetailIssueAnchor';
-import RepoDetailStarAnchor from '../../anchors/RepoDetailStarAnchor';
-import RepoDetailForkAnchor from '../../anchors/RepoDetailForkAnchor';
-import DeveloperActORTrendAnchor from '../../anchors/DeveloperActORTrendAnchor';
-import RepoActORTrendAnchor from '../../anchors/RepoActORTrendAnchor';
-import PerceptorTabAnchor from '../../anchors/PerceptorTabAnchor';
-import PerceptorLayoutAnchor from '../../anchors/PerceptorLayoutAnchor';
-import DeveloperNetworkAnchor from '../../anchors/DeveloperNetworkAnchor';
-import ProjectNetworkAnchor from '../../anchors/ProjectNetworkAnchor';
-import { inject2Perceptor, Perceptor } from '../../Perceptor';
-
-import { loadSettings } from '../../utils/settings';
-
 import './index.scss';
 
-// inject to Perceptor's static variable
-inject2Perceptor(RepoHeaderLabelsAnchor);
-inject2Perceptor(RepoDetailPRAnchor);
-inject2Perceptor(RepoDetailIssueAnchor);
-inject2Perceptor(RepoDetailStarAnchor);
-inject2Perceptor(RepoDetailForkAnchor);
-inject2Perceptor(DeveloperActORTrendAnchor);
-inject2Perceptor(RepoActORTrendAnchor);
-inject2Perceptor(PerceptorTabAnchor);
-inject2Perceptor(PerceptorLayoutAnchor);
-inject2Perceptor(DeveloperNetworkAnchor);
-inject2Perceptor(ProjectNetworkAnchor);
-
-async function mainInject() {
-  const settings = await loadSettings();
-  if (settings.isEnabled) {
-    const perceptor = new Perceptor();
-    perceptor.run();
-  }
-}
-
-document.addEventListener('turbo:load', () => {
-  mainInject();
-});
+import './features/repo-activity-openrank-trends';
 
 /**
  * I infer that GitHub uses hotwired/turbo to speedup its SPA.
