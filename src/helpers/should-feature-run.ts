@@ -1,4 +1,4 @@
-export function shouldFeatureRun({
+export default function shouldFeatureRun({
   /** Every condition must be true */
   asLongAs = [() => true],
 

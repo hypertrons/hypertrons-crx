@@ -1,27 +1,31 @@
-import $ from 'jquery';
 import domLoaded from 'dom-loaded';
 import stripIndent from 'strip-indent';
 import { Promisable } from 'type-fest';
 import * as pageDetect from 'github-url-detection';
 
+import exists from './helpers/exsists';
 import waitFor from './helpers/wait-for';
-import { shouldFeatureRun } from './github-helpers';
+import isRestorationVisit from './helpers/is-restoration-visit';
+import shouldFeatureRun from './helpers/should-feature-run';
 
 type BooleanFunction = () => boolean;
 type FeatureInit = () => Promisable<void>;
+type FeatureRestore = Function;
 
 type FeatureLoader = {
   /** Whether to wait for DOM ready before running `init`. `false` makes `init` run right as soon as `body` is found.
    * @default true
    */
   awaitDomReady?: boolean;
-
-  /** When pressing the back button, DOM changes and listeners are still there. Using a selector here would use the integrated deduplication logic.
-   * @default false
-   */
-  deduplicate?: string;
-
   init: FeatureInit; // Repeated here because this interface is Partial<>
+  /**
+   * Will be called after a restoration turbo:visit, if provided.
+   *
+   * Clicking forward/back button in browser triggers a restoration turbo:visit, which will
+   * restore a page directly from cache. Elements injected by Hypercrx, however, cannot be
+   * all correctly restored. So we need to do some extra work to make features behave right.
+   */
+  restore?: FeatureRestore;
 } & Partial<InternalRunConfig>;
 
 type InternalRunConfig = {
@@ -62,7 +66,7 @@ const globalReady = new Promise<void>(async (resolve) => {
     return;
   }
 
-  if ($('html.hypercrx').length > 0) {
+  if (exists('html.hypercrx')) {
     console.warn(
       stripIndent(`
       Hypercrx has been loaded twice. This may be because:
@@ -119,8 +123,8 @@ const add = async (
       include,
       exclude,
       init,
+      restore,
       awaitDomReady = true,
-      deduplicate = false,
     } = loader;
 
     if (include?.length === 0) {
@@ -150,12 +154,15 @@ const add = async (
         await setupPageLoad(id, details);
       })();
     } else {
-      void setupPageLoad(id, details);
+      setupPageLoad(id, details);
     }
 
     document.addEventListener('turbo:render', () => {
-      if (!deduplicate || !($(deduplicate).length > 0)) {
-        void setupPageLoad(id, details);
+      if (!exists(`#${id}`)) {
+        setupPageLoad(id, details);
+      }
+      if (restore && isRestorationVisit()) {
+        restore();
       }
     });
   }
