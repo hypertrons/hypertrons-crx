@@ -105,8 +105,17 @@ const setupPageLoad = async (
   await runFeature();
 };
 
-const getFeatureID = (url: string): FeatureID =>
-  `hypercrx-${url.split('/').pop()!.split('.')[0]}` as FeatureID;
+// url can be in forms of: "foo/bar/feature-name.tsx" or "foo/bar/feature-name/index.tsx".
+// This function extracts "feature-name" in url and prefixes it with "hypercrx-".
+const getFeatureID = (url: string): FeatureID => {
+  const prefix = 'hyperxrx-';
+  const pathComponents = url.split('/');
+  let name = pathComponents.pop()!.split('.')[0];
+  if (name === 'index') {
+    name = pathComponents.pop()!;
+  }
+  return `${prefix}${name}` as FeatureID;
+};
 
 /** Register a new feature */
 const add = async (
