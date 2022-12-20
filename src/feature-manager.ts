@@ -166,12 +166,21 @@ const add = async (
       setupPageLoad(id, details);
     }
 
+    /**
+     * Features are targeted to different GitHub pages, so they will not be all run at once.
+     * They should be run as needed, however, `add()` only runs once for each feature. So
+     * how to load features after a turbo:visit? The answer is to make use of turbo events.
+     */
     document.addEventListener('turbo:render', () => {
+      // if a feature doesn't exisit in DOM, try loading it since it might be expected in current page
       if (!exists(`#${id}`)) {
         setupPageLoad(id, details);
-      }
-      if (restore && isRestorationVisit()) {
-        restore();
+      } else {
+        // if already exisits, either it's not removed from DOM after a turbo:visit or the
+        // current visit is a restoration visit. For the second case, we should take care.
+        if (restore && isRestorationVisit()) {
+          restore();
+        }
       }
     });
   }
