@@ -4,7 +4,6 @@ import { Stack, SwatchColorPicker, Link } from 'office-ui-fabric-react';
 import {
   getGithubTheme,
   isNull,
-  getMinMax,
   linearMap,
   getMessageByLocale,
 } from '../../utils/utils';
@@ -16,7 +15,7 @@ interface GraphProps {
   /**
    * data
    */
-  readonly data: IGraphData;
+  readonly data: any;
   /**
    * `style` for graph container
    */
@@ -24,7 +23,7 @@ interface GraphProps {
   /**
    * callback function when click node
    */
-  readonly onNodeClick?: NodeClickFunc;
+  readonly onNodeClick?: Function;
   /**
    * will assign a distinguishable color to the focused node if specified
    */
@@ -34,7 +33,7 @@ interface GraphProps {
 const Graph: React.FC<GraphProps> = ({
   data,
   style = {},
-  onNodeClick = (node: INode) => {
+  onNodeClick = (node: any) => {
     const url = 'https://github.com/' + node.id;
     window.location.href = url;
   },
@@ -74,36 +73,38 @@ const Graph: React.FC<GraphProps> = ({
   };
   const generateEchartsData = (data: any): any => {
     const generateNodes = (nodes: any[]): any => {
-      const minMax = getMinMax(nodes);
+      const values: number[] = nodes.map((item) => item[1]);
+      const minMax = [Math.min(...values), Math.max(...values)];
       return nodes.map((n: any) => {
+        console.log(n);
         const imageURL =
-          `image://https://avatars.githubusercontent.com/` + n.name;
-        /* 
+          `image://https://avatars.githubusercontent.com/` + n[0];
+        /*
         Not to replace node color with profile picture in project correlation network
         checking weather nodes denotes repository
       */
-        if (n.name.includes('/')) {
+        if (n[0].includes('/')) {
           return {
-            id: n.name,
-            name: n.name,
-            value: n.value,
-            symbolSize: linearMap(n.value, minMax, NODE_SIZE),
+            id: n[0],
+            name: n[0],
+            value: n[1],
+            symbolSize: linearMap(n[1], minMax, NODE_SIZE),
             itemStyle: {
               color:
-                focusedNodeID && focusedNodeID === n.name
+                focusedNodeID && focusedNodeID === n[0]
                   ? FOCUSED_NODE_COLOR
-                  : getColorMap(n.value),
+                  : getColorMap(n[1]),
             },
           };
         } else {
-          /* 
+          /*
         nodes doesnot denote repositories
       */
           return {
-            id: n.name,
-            name: n.name,
-            value: n.value,
-            symbolSize: linearMap(n.value, minMax, NODE_SIZE),
+            id: n[0],
+            name: n[0],
+            value: n[1],
+            symbolSize: linearMap(n[1], minMax, NODE_SIZE),
             symbol: imageURL,
           };
         }
@@ -112,9 +113,9 @@ const Graph: React.FC<GraphProps> = ({
     const generateEdges = (edges: any[]): any => {
       return edges.map((e: any) => {
         return {
-          source: e.source,
-          target: e.target,
-          value: e.weight,
+          source: e[0],
+          target: e[1],
+          value: e[2],
         };
       });
     };

@@ -8,10 +8,7 @@ import {
   IDropdownOption,
   ActionButton,
 } from 'office-ui-fabric-react';
-import {
-  getDeveloperCollabration,
-  getParticipatedProjects,
-} from '../../api/developer';
+import { getDeveloperNetwork, getRepoNetwork } from '../../api/developer';
 import { getMessageByLocale } from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
 import Graph from '../../components/Graph/Graph';
@@ -25,18 +22,12 @@ interface DeveloperNetworkViewProps {
 const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
   currentDeveloper,
 }) => {
-  const [developerCollabrationData, setDeveloperCollabrationData] = useState<
-    IGraphData | undefined
-  >();
-  const [participatedProjectsData, setParticipatedProjectsData] = useState<
-    IGraphData | undefined
-  >();
+  const [developerNetwork, setDeveloperNetwork] = useState();
+  const [repoNetwork, setRepoNetwork] = useState();
   const [developerPeriod, setDeveloperPeriod] = useState<
     string | number | undefined
-  >(180);
-  const [repoPeriod, setRepoPeriod] = useState<string | number | undefined>(
-    180
-  );
+  >(90);
+  const [repoPeriod, setRepoPeriod] = useState<string | number | undefined>(90);
   const [showDeveloperDialog, setShowDeveloperDialog] = useState(false);
   const [showProjectDialog, setShowProjectDialog] = useState(false);
   const [inited, setInited] = useState(false);
@@ -45,30 +36,26 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
 
   // get developercollabration data
   useEffect(() => {
-    const getDeveloperCollabrationData = async () => {
+    (async () => {
       try {
-        const res = await getDeveloperCollabration(currentDeveloper);
-        setDeveloperCollabrationData(res.data);
+        setDeveloperNetwork(await getDeveloperNetwork(currentDeveloper));
       } catch (e) {
         // @ts-ignore
         setStatusCode(e);
       }
-    };
-    getDeveloperCollabrationData();
+    })();
   }, [developerPeriod]);
 
   // get participated projects data
   useEffect(() => {
-    const getParticipatedProjectsData = async () => {
+    (async () => {
       try {
-        const res = await getParticipatedProjects(currentDeveloper);
-        setParticipatedProjectsData(res.data);
+        setRepoNetwork(await getRepoNetwork(currentDeveloper));
       } catch (e) {
         // @ts-ignore
         setStatusCode(e);
       }
-    };
-    getParticipatedProjectsData();
+    })();
   }, [repoPeriod]);
 
   useEffect(() => {
@@ -88,8 +75,8 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
 
   const periodOptions: IDropdownOption[] = [
     {
-      key: 180,
-      text: `180 ${getMessageByLocale('global_day', settings.locale)}`,
+      key: 90,
+      text: `90 ${getMessageByLocale('global_day', settings.locale)}`,
     },
   ];
 
@@ -136,7 +123,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
     height: '380px',
   };
 
-  if (!developerCollabrationData || !participatedProjectsData) {
+  if (!developerNetwork || !repoNetwork) {
     return <div />;
   }
   return (
@@ -234,7 +221,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
               <div className="col-12 col-md-8">
                 <div style={{ margin: '10px 0 20px 20px' }}>
                   <Graph
-                    data={developerCollabrationData!}
+                    data={developerNetwork!}
                     style={graphStyle}
                     focusedNodeID={currentDeveloper}
                   />
@@ -302,7 +289,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
             <div className="d-flex flex-wrap flex-items-center">
               <div className="col-12 col-md-8">
                 <div style={{ margin: '10px 0 20px 20px' }}>
-                  <Graph data={participatedProjectsData!} style={graphStyle} />
+                  <Graph data={repoNetwork!} style={graphStyle} />
                 </div>
               </div>
               <div className="col-12 col-md-4">
