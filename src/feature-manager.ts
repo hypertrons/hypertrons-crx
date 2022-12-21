@@ -21,9 +21,9 @@ type FeatureLoader = {
   /**
    * Will be called after a restoration turbo:visit, if provided.
    *
-   * Clicking forward/back button in browser triggers a restoration turbo:visit, which will
-   * restore a page directly from cache. Elements injected by Hypercrx, however, cannot be
-   * all correctly restored. So we need to do some extra work to make features behave right.
+   * Clicking forward/back button in browser triggers a restoration turbo:visit, which will restore
+   * a page directly from cache. Some of the features injected by Hypercrx, however, cannot be fully
+   * restored. Hence extra code(i.e. `restore`) is needed to keep features always behaving right.
    */
   restore?: FeatureRestore;
 } & Partial<InternalRunConfig>;

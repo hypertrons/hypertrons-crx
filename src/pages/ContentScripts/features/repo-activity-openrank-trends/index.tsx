@@ -42,7 +42,14 @@ const init = async (): Promise<void> => {
   newBorderGridCell.className = 'BorderGrid-cell';
   newBorderGridRow.appendChild(newBorderGridCell);
 
-  // we don't wait all DOM, but the anchor element should be waited.
+  /**
+   * `awaitDomReady` is set to `false` below, which means the `init()` of this feature
+   * will run as early as possible without waiting for the whole DOM ready. So the time
+   * saved can be used to fetch data and create elements and etc. However, certain DOM
+   * nodes should still be waited because before injecting features(elements) into pages
+   * those related DOM nodes must exist. Otherwise there would be no place to inject the
+   * feature then errors would occur.
+   */
   await elementReady('div.Layout-sidebar');
   renderTo(newBorderGridCell);
 
