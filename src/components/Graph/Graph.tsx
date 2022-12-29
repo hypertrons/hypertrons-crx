@@ -111,6 +111,7 @@ const Graph: React.FC<GraphProps> = ({
       });
     };
     const generateEdges = (edges: any[]): any => {
+      const threshold = edges[0][0].split('/').length === 2 ? 5 : 2.5;
       return edges
         .map((e: any) => {
           return {
@@ -119,7 +120,7 @@ const Graph: React.FC<GraphProps> = ({
             value: e[2],
           };
         })
-        .filter((edge) => edge.value > 2.5); // trim edges with small value to avoid a dense but useless graph
+        .filter((edge) => edge.value > threshold); // trim edges with small value to avoid a dense but useless graph
     };
     return {
       nodes: generateNodes(data.nodes),
