@@ -1,15 +1,8 @@
 import React, { useState, CSSProperties, useEffect } from 'react';
 import EChartsWrapper from './Echarts/index';
-import { Stack, SwatchColorPicker, Link } from 'office-ui-fabric-react';
-import {
-  getGithubTheme,
-  isNull,
-  linearMap,
-  getMessageByLocale,
-} from '../../utils/utils';
+import { Stack } from 'office-ui-fabric-react';
+import { isNull, linearMap } from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
-
-const githubTheme = getGithubTheme();
 
 interface GraphProps {
   /**
@@ -39,13 +32,7 @@ const Graph: React.FC<GraphProps> = ({
   },
   focusedNodeID,
 }) => {
-  const NODE_SIZE = [8, 24];
-  const NODE_COLOR =
-    githubTheme === 'light'
-      ? ['#9EB9A8', '#40C463', '#30A14E', '#216E39']
-      : ['#0E4429', '#006D32', '#26A641', '#39D353'];
-  const THRESHOLD = [10, 100, 1000];
-  const FOCUSED_NODE_COLOR = githubTheme === 'light' ? '#D73A49' : '#DA3633';
+  const NODE_SIZE = [10, 25];
 
   const [inited, setInited] = useState(false);
   const [settings, setSettings] = useState(new Settings());
@@ -61,53 +48,22 @@ const Graph: React.FC<GraphProps> = ({
     }
   }, [inited, settings]);
 
-  const getColorMap = (value: number): string => {
-    const length = Math.min(THRESHOLD.length, NODE_COLOR.length - 1);
-    let i = 0;
-    for (; i < length; i++) {
-      if (value < THRESHOLD[i]) {
-        return NODE_COLOR[i];
-      }
-    }
-    return NODE_COLOR[i];
-  };
   const generateEchartsData = (data: any): any => {
     const generateNodes = (nodes: any[]): any => {
       const values: number[] = nodes.map((item) => item[1]);
       const minMax = [Math.min(...values), Math.max(...values)];
       return nodes.map((n: any) => {
-        console.log(n);
-        const imageURL =
-          `image://https://avatars.githubusercontent.com/` + n[0];
-        /*
-        Not to replace node color with profile picture in project correlation network
-        checking weather nodes denotes repository
-      */
-        if (n[0].includes('/')) {
-          return {
-            id: n[0],
-            name: n[0],
-            value: n[1],
-            symbolSize: linearMap(n[1], minMax, NODE_SIZE),
-            itemStyle: {
-              color:
-                focusedNodeID && focusedNodeID === n[0]
-                  ? FOCUSED_NODE_COLOR
-                  : getColorMap(n[1]),
-            },
-          };
-        } else {
-          /*
-        nodes doesnot denote repositories
-      */
-          return {
-            id: n[0],
-            name: n[0],
-            value: n[1],
-            symbolSize: linearMap(n[1], minMax, NODE_SIZE),
-            symbol: imageURL,
-          };
-        }
+        const avatarId = n[0].split('/')[0];
+        return {
+          id: n[0],
+          name: n[0],
+          value: n[1],
+          symbolSize: linearMap(n[1], minMax, NODE_SIZE),
+          symbol: `image://https://avatars.githubusercontent.com/${avatarId}`,
+          label: {
+            show: n[0] === focusedNodeID ? true : false,
+          },
+        };
       });
     };
     const generateEdges = (edges: any[]): any => {
@@ -149,14 +105,14 @@ const Graph: React.FC<GraphProps> = ({
         force: {
           initLayout: 'circular',
           gravity: 0.1,
-          repulsion: 100,
+          repulsion: 80,
           edgeLength: [50, 100],
           // Disable the iteration animation of layout
           layoutAnimation: false,
         },
         lineStyle: {
           curveness: 0.3,
-          opacity: 0.3,
+          opacity: 0.2,
         },
         emphasis: {
           focus: 'adjacency',
@@ -169,24 +125,10 @@ const Graph: React.FC<GraphProps> = ({
     ],
   };
 
-  const colorCellsExample1 = [
-    { id: 'L0', label: `< ${THRESHOLD[0]}`, color: NODE_COLOR[0] },
-    {
-      id: 'L1',
-      label: `${THRESHOLD[0]} - ${THRESHOLD[1]}`,
-      color: NODE_COLOR[1],
-    },
-    {
-      id: 'L2',
-      label: `${THRESHOLD[1]} - ${THRESHOLD[2]}`,
-      color: NODE_COLOR[2],
-    },
-    { id: 'L3', label: `> ${THRESHOLD[2]}`, color: NODE_COLOR[3] },
-  ];
-
   if (isNull(data)) {
     return <div />;
   }
+
   return (
     <Stack>
       <Stack className="hypertrons-crx-border">
@@ -202,37 +144,6 @@ const Graph: React.FC<GraphProps> = ({
             },
           }}
         />
-      </Stack>
-      <Stack
-        horizontal
-        horizontalAlign="space-between"
-        style={{ padding: '3px' }}
-        tokens={{
-          childrenGap: 10,
-        }}
-      >
-        <Link
-          href={getMessageByLocale(
-            'component_activity_definition_link',
-            settings.locale
-          )}
-          target="_blank"
-        >
-          {getMessageByLocale('component_activity_definition', settings.locale)}
-        </Link>
-        <Stack horizontal horizontalAlign="space-between">
-          <span>Less</span>
-          <div style={{ marginTop: '-12px', maxWidth: '80px' }}>
-            <SwatchColorPicker
-              columnCount={4}
-              cellShape={'square'}
-              cellHeight={10}
-              cellWidth={10}
-              colorCells={colorCellsExample1}
-            />
-          </div>
-          <span>More</span>
-        </Stack>
       </Stack>
     </Stack>
   );
