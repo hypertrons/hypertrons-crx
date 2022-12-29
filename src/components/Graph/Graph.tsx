@@ -39,7 +39,7 @@ const Graph: React.FC<GraphProps> = ({
   },
   focusedNodeID,
 }) => {
-  const NODE_SIZE = [10, 30];
+  const NODE_SIZE = [8, 24];
   const NODE_COLOR =
     githubTheme === 'light'
       ? ['#9EB9A8', '#40C463', '#30A14E', '#216E39']
@@ -146,14 +146,16 @@ const Graph: React.FC<GraphProps> = ({
           position: 'right',
         },
         force: {
-          repulsion: 50,
-          edgeLength: [1, 100],
+          initLayout: 'circular',
+          gravity: 0.1,
+          repulsion: 100,
+          edgeLength: [50, 100],
           // Disable the iteration animation of layout
           layoutAnimation: false,
         },
         lineStyle: {
           curveness: 0.3,
-          opacity: 0.7,
+          opacity: 0.3,
         },
         emphasis: {
           focus: 'adjacency',
