@@ -99,7 +99,7 @@
     "message": "节点：一个节点表示开发者，节点大小与颜色的深浅表示开发者活跃度的大小。"
   },
   "component_developerCollabrationNetwork_description_edge": {
-    "message": "边：开发者与开发者之间的协作关系，值的大小表示开发者间联系的紧密程度。"
+    "message": "边：开发者与开发者之间的协作关系，值的大小表示开发者间联系的紧密程度。为了使网络图不至于太稠密，值小于 2.5 的边会被剪去。"
   },
   "component_activity_definition": {
     "message": "查看如何定义活跃度"
@@ -159,7 +159,7 @@
     "message": "节点：一个节点表示一个项目，节点大小与颜色的深浅表示项目活跃度的大小。"
   },
   "component_projectCorrelationNetwork_description_edge": {
-    "message": "边：表示项目与项目之间存在联结关系，值的大小表示项目间联系的紧密程度。"
+    "message": "边：表示项目与项目之间存在联结关系，值的大小表示项目间联系的紧密程度。为了使网络图不至于太稠密，值小于 5 的边会被剪去。"
   },
   "component_mostParticipatedProjects_title": {
     "message": "活跃仓库网络图"
@@ -171,7 +171,7 @@
     "message": "节点：一个节点表示一个项目，节点大小与颜色的深浅表示开发者对该项目活跃度的贡献值。"
   },
   "component_mostParticipatedProjects_description_edge": {
-    "message": "边：项目与项目之间的连接关系，值的大小表示项目间联系的紧密程度。"
+    "message": "边：项目与项目之间的连接关系，值的大小表示项目间联系的紧密程度。为了使网络图不至于太稠密，值小于 5 的边会被剪去。"
   },
   "component_activeDeveloperCollabrationNetwork_title": {
     "message": "项目活跃开发者协作网络图"
@@ -183,7 +183,7 @@
     "message": "节点：一个节点表示一个开发者，节点大小与颜色的深浅表示开发者对项目活跃度的贡献值。"
   },
   "component_activeDeveloperCollabrationNetwork_description_edge": {
-    "message": "边：开发者与开发者之间的连接关系，值的大小表示开发者间联系的紧密程度。"
+    "message": "边：开发者与开发者之间的连接关系，值的大小表示开发者间联系的紧密程度。为了使网络图不至于太稠密，值小于 2.5 的边会被剪去。"
   },
   "component_darkMode": {
     "message": "深色模式"
