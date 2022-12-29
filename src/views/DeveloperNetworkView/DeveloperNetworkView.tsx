@@ -11,7 +11,7 @@ import {
 import { getDeveloperNetwork, getRepoNetwork } from '../../api/developer';
 import { getMessageByLocale } from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
-import Graph from '../../components/Graph/Graph';
+import Graph from '../../components/Graph';
 import TeachingBubbleWrapperView from '../TeachingBubbleWrapperView/TeachingBubbleWrapperView';
 import ErrorPage from '../../components/ExceptionPage/ErrorPage';
 

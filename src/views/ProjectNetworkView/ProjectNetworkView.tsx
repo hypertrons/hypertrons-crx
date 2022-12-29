@@ -6,7 +6,7 @@ import {
   IDropdownOption,
   Spinner,
 } from 'office-ui-fabric-react';
-import Graph from '../../components/Graph/Graph';
+import Graph from '../../components/Graph';
 import { getRepoNetwork, getDeveloperNetwork } from '../../api/repo';
 import { getMessageByLocale } from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
