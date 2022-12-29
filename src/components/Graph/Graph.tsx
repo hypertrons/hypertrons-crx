@@ -111,13 +111,15 @@ const Graph: React.FC<GraphProps> = ({
       });
     };
     const generateEdges = (edges: any[]): any => {
-      return edges.map((e: any) => {
-        return {
-          source: e[0],
-          target: e[1],
-          value: e[2],
-        };
-      });
+      return edges
+        .map((e: any) => {
+          return {
+            source: e[0],
+            target: e[1],
+            value: e[2],
+          };
+        })
+        .filter((edge) => edge.value > 2.5); // trim edges with small value to avoid a dense but useless graph
     };
     return {
       nodes: generateNodes(data.nodes),
