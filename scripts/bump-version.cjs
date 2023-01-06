@@ -27,3 +27,8 @@ async function bump({ version, deploy }) {
 }
 
 module.exports = { bump };
+
+const [nodePath, scriptPath, arg1, ...otherArgs] = process.argv;
+if (arg1 !== undefined) {
+  bump({ version: arg1, deploy: true });
+}

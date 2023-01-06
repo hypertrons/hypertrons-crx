@@ -1,12 +1,14 @@
-# release-deploy.yml
-# release a version then deploy it to the store when a workflow_dispatch is triggered
-name: release-deploy
+# deploy.yml
+# deploy the selected tag to stores
+name: deploy
 
-on: 
+on:
   workflow_dispatch:
+    tags:
+      - 'v*.*.*'
 
 jobs:
-  release-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -16,15 +18,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           cache: "yarn"
-
-      - name: Conventional Changelog Action
-        uses: TriPSs/conventional-changelog-action@v3
-        id: changelog
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          skip-on-empty: 'false'
-          pre-commit: scripts/pre-commit.cjs
-          git-message: 'chore(release): {version}'
 
       - name: Build
         run: |
@@ -36,16 +29,8 @@ jobs:
 
       - name: Append version to release file names
         run: |
-          cp release/hypercrx.crx ${{format('release/hypercrx-{0}.crx', steps.changelog.outputs.tag)}}
-          cp release/hypercrx.zip ${{format('release/hypercrx-{0}.zip', steps.changelog.outputs.tag)}}
-
-      - name: Release
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "release/hypercrx-v*.*"
-          token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ steps.changelog.outputs.tag }}
-          generateReleaseNotes: true
+          cp release/hypercrx.crx ${{format('release/hypercrx-{0}.crx', github.ref_name)}}
+          cp release/hypercrx.zip ${{format('release/hypercrx-{0}.zip', github.ref_name)}}
 
       - name: Deploy
         run: |
