@@ -20,7 +20,10 @@ interface GraphProps {
 
 const NODE_SIZE = [10, 25];
 
-const generateEchartsData = (data: any, focusedNodeID: string): any => {
+const generateEchartsData = (
+  data: any,
+  focusedNodeID: string | undefined
+): any => {
   const generateNodes = (nodes: any[]): any => {
     const values: number[] = nodes.map((item) => item[1]);
     const minMax = [Math.min(...values), Math.max(...values)];
@@ -48,7 +51,12 @@ const generateEchartsData = (data: any, focusedNodeID: string): any => {
           value: e[2],
         };
       })
-      .filter((edge) => edge.value > threshold); // trim edges with small value to avoid a dense but useless graph
+      .filter(
+        (edge) =>
+          edge.value > threshold || // drop edges with small value to avoid a dense but useless graph
+          edge.source === focusedNodeID || // but always reserve those with focusedNode
+          edge.target === focusedNodeID
+      );
   };
   return {
     nodes: generateNodes(data.nodes),
@@ -58,7 +66,7 @@ const generateEchartsData = (data: any, focusedNodeID: string): any => {
 
 const Graph: React.FC<GraphProps> = ({ data, style = {}, focusedNodeID }) => {
   const divEL = useRef(null);
-  const graphData = generateEchartsData(data, focusedNodeID!);
+  const graphData = generateEchartsData(data, focusedNodeID);
   const option = {
     tooltip: {},
     animation: true,
