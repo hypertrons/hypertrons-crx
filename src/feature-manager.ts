@@ -13,7 +13,10 @@ type FeatureInit = () => Promisable<void>;
 type FeatureRestore = Function;
 
 type FeatureLoader = {
-  /** Whether to wait for DOM ready before running `init`. `false` makes `init` run right as soon as `body` is found.
+  /**
+   * Whether to wait for all DOMs to be ready before running `init`. Setting `false` makes `init` run
+   * immediately when `body` is found.
+   *
    * @default true
    */
   awaitDomReady?: boolean;
@@ -167,8 +170,8 @@ const add = async (
     }
 
     /**
-     * Features are targeted to different GitHub pages, so they will not be all run at once.
-     * They should be run as needed, however, `add()` only runs once for each feature. So
+     * Features are targeted to different GitHub pages, so they will not be all loaded at once.
+     * They should be loaded as needed, however, `add()` only runs once for each feature. So
      * how to load features after a turbo:visit? The answer is to make use of turbo events.
      */
     document.addEventListener('turbo:render', () => {
@@ -177,7 +180,7 @@ const add = async (
         setupPageLoad(id, details);
       } else {
         // if already exisits, either it's not removed from DOM after a turbo:visit or the
-        // current visit is a restoration visit. For the second case, we should take care.
+        // current visit is a restoration visit. For the second case, we should handle.
         if (restore && isRestorationVisit()) {
           restore();
         }
