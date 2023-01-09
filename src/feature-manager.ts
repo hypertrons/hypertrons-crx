@@ -3,7 +3,7 @@ import stripIndent from 'strip-indent';
 import { Promisable } from 'type-fest';
 import * as pageDetect from 'github-url-detection';
 
-import exists from './helpers/exsists';
+import exists from './helpers/exists';
 import waitFor from './helpers/wait-for';
 import isRestorationVisit from './helpers/is-restoration-visit';
 import shouldFeatureRun from './helpers/should-feature-run';
