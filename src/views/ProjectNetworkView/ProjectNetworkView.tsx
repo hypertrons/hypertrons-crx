@@ -180,7 +180,7 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({
         <Stack className="hypertrons-crx-title">
           <span>
             {getMessageByLocale(
-              'component_activeDeveloperCollabrationNetwork_title',
+              'component_activeDeveloperCollaborationNetwork_title',
               settings.locale
             )}
           </span>
@@ -207,20 +207,20 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({
             >
               <p>
                 {getMessageByLocale(
-                  'component_activeDeveloperCollabrationNetwork_description',
+                  'component_activeDeveloperCollaborationNetwork_description',
                   settings.locale
                 )}
               </p>
               <ul style={{ margin: '0px 0 10px 15px' }}>
                 <li>
                   {getMessageByLocale(
-                    'component_activeDeveloperCollabrationNetwork_description_node',
+                    'component_activeDeveloperCollaborationNetwork_description_node',
                     settings.locale
                   )}
                 </li>
                 <li>
                   {getMessageByLocale(
-                    'component_activeDeveloperCollabrationNetwork_description_edge',
+                    'component_activeDeveloperCollaborationNetwork_description_edge',
                     settings.locale
                   )}
                 </li>
