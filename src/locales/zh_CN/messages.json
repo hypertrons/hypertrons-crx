@@ -89,16 +89,16 @@
       }
     }
   },
-  "component_developerCollabrationNetwork_title": {
+  "component_developerCollaborationNetwork_title": {
     "message": "开发者协作网络图"
   },
-  "component_developerCollabrationNetwork_description": {
+  "component_developerCollaborationNetwork_description": {
     "message": "开发者协作网络图展示了在给定的时间段内，开发者与开发者之间的协作关系, 用于开发者关系的追踪与挖掘。从该网络图中，可以找出与该开发者联系较为紧密的其他开发者。"
   },
-  "component_developerCollabrationNetwork_description_node": {
+  "component_developerCollaborationNetwork_description_node": {
     "message": "节点：一个节点表示开发者，节点大小与颜色的深浅表示开发者活跃度的大小。"
   },
-  "component_developerCollabrationNetwork_description_edge": {
+  "component_developerCollaborationNetwork_description_edge": {
     "message": "边：开发者与开发者之间的协作关系，值的大小表示开发者间联系的紧密程度。为了使网络图不至于太稠密，值小于 2.5 的边会被剪去。"
   },
   "component_activity_definition": {
@@ -173,16 +173,16 @@
   "component_mostParticipatedProjects_description_edge": {
     "message": "边：项目与项目之间的连接关系，值的大小表示项目间联系的紧密程度。为了使网络图不至于太稠密，值小于 5 的边会被剪去。"
   },
-  "component_activeDeveloperCollabrationNetwork_title": {
+  "component_activeDeveloperCollaborationNetwork_title": {
     "message": "项目活跃开发者协作网络图"
   },
-  "component_activeDeveloperCollabrationNetwork_description": {
+  "component_activeDeveloperCollaborationNetwork_description": {
     "message": "项目活跃开发者协作网络图展示了在给定的时间段内，项目内部活跃的开发者之间的协作关系，用于项目内部开发者关系的追踪与挖掘。从该网络图中，可以找出该项目中最活跃的开发者，及开发者之间的协作关系。"
   },
-  "component_activeDeveloperCollabrationNetwork_description_node": {
+  "component_activeDeveloperCollaborationNetwork_description_node": {
     "message": "节点：一个节点表示一个开发者，节点大小与颜色的深浅表示开发者对项目活跃度的贡献值。"
   },
-  "component_activeDeveloperCollabrationNetwork_description_edge": {
+  "component_activeDeveloperCollaborationNetwork_description_edge": {
     "message": "边：开发者与开发者之间的连接关系，值的大小表示开发者间联系的紧密程度。为了使网络图不至于太稠密，值小于 2.5 的边会被剪去。"
   },
   "component_darkMode": {

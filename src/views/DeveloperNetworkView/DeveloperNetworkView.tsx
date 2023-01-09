@@ -34,7 +34,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
   const [settings, setSettings] = useState(new Settings());
   const [statusCode, setStatusCode] = useState<number>(200);
 
-  // get developercollabration data
+  // get developercollaboration data
   useEffect(() => {
     (async () => {
       try {
@@ -142,7 +142,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
                 'global_clickToshow',
                 settings.locale
               )} ${getMessageByLocale(
-                'component_developerCollabrationNetwork_title',
+                'component_developerCollaborationNetwork_title',
                 settings.locale
               )}`}
               className="Label"
@@ -152,7 +152,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
               }}
             >
               {getMessageByLocale(
-                'component_developerCollabrationNetwork_title',
+                'component_developerCollaborationNetwork_title',
                 settings.locale
               )}
             </span>
@@ -203,7 +203,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
             <Stack className="hypertrons-crx-title">
               <span>
                 {getMessageByLocale(
-                  'component_developerCollabrationNetwork_title',
+                  'component_developerCollaborationNetwork_title',
                   settings.locale
                 )}
               </span>
@@ -234,20 +234,20 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
                 >
                   <p>
                     {getMessageByLocale(
-                      'component_developerCollabrationNetwork_description',
+                      'component_developerCollaborationNetwork_description',
                       settings.locale
                     )}
                   </p>
                   <ul style={{ margin: '0px 0 10px 15px' }}>
                     <li>
                       {getMessageByLocale(
-                        'component_developerCollabrationNetwork_description_node',
+                        'component_developerCollaborationNetwork_description_node',
                         settings.locale
                       )}
                     </li>
                     <li>
                       {getMessageByLocale(
-                        'component_developerCollabrationNetwork_description_edge',
+                        'component_developerCollaborationNetwork_description_edge',
                         settings.locale
                       )}
                     </li>
