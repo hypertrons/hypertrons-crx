@@ -42,3 +42,5 @@ interface IGraphData {
 type NodeClickFunc = (node: INode) => void;
 
 type ThemeType = 'light' | 'dark';
+
+type FeatureID = string & { feature: true };

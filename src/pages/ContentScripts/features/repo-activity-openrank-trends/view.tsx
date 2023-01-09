@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-import { getGithubTheme, getMessageByLocale } from '../../utils/utils';
-import { generateDataByMonth } from '../../utils/data';
-import Settings, { loadSettings } from '../../utils/settings';
-import { getActivity, getOpenrank } from '../../api/repo';
-import Bars from '../../components/Bars/index';
+import { getGithubTheme, getMessageByLocale } from '../../../../utils/utils';
+import { generateDataByMonth } from '../../../../utils/data';
+import Settings, { loadSettings } from '../../../../utils/settings';
+import Bars from '../../../../components/Bars/index';
 
 const githubTheme = getGithubTheme();
-
-interface RepoActORTrendViewProps {
-  currentRepo: string;
-}
 
 const generateBarsData = (activity: any, openrank: any) => {
   return {
@@ -19,37 +14,20 @@ const generateBarsData = (activity: any, openrank: any) => {
   };
 };
 
-const RepoActORTrendView: React.FC<RepoActORTrendViewProps> = ({
-  currentRepo,
-}) => {
-  const [inited, setInited] = useState(false);
-  const [settings, setSettings] = useState(new Settings());
-  const [activity, setActivity] = useState();
-  const [openrank, setOpenrank] = useState();
-
-  useEffect(() => {
-    const initSettings = async () => {
-      const temp = await loadSettings();
-      setSettings(temp);
-      setInited(true);
-    };
-    if (!inited) {
-      initSettings();
-    }
-  }, [inited, settings]);
+const View: React.FC<{
+  repoName: string;
+  activity: any;
+  openrank: any;
+}> = ({ repoName, activity, openrank }) => {
+  const [settings, setSettings] = useState<Settings>();
 
   useEffect(() => {
     (async () => {
-      try {
-        setActivity(await getActivity(currentRepo));
-        setOpenrank(await getOpenrank(currentRepo));
-      } catch (e) {
-        console.error(e);
-      }
+      setSettings(await loadSettings());
     })();
   }, []);
 
-  if (!activity || !openrank) return null;
+  if (!settings || !activity || !openrank) return null;
 
   let barsData: any = generateBarsData(activity, openrank);
 
@@ -62,7 +40,7 @@ const RepoActORTrendView: React.FC<RepoActORTrendViewProps> = ({
       }
 
       window.open(
-        `/${currentRepo}/issues?q=updated:${year}-${month} sort:updated-asc`
+        `/${repoName}/issues?q=updated:${year}-${month} sort:updated-asc`
       );
     }
   };
@@ -99,4 +77,4 @@ const RepoActORTrendView: React.FC<RepoActORTrendViewProps> = ({
   );
 };
 
-export default RepoActORTrendView;
+export default View;
