@@ -153,13 +153,6 @@ export function getGithubTheme() {
   return githubTheme;
 }
 
-export function getMinMax(data: INode[] | IEdge[]) {
-  const newArr = data.map((item: INode | IEdge) => {
-    return item.value;
-  });
-  return [Math.min(...newArr), Math.max(...newArr)];
-}
-
 export function linearMap(
   val: number,
   domain: number[],
