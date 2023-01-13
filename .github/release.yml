@@ -10,7 +10,7 @@ changelog:
     - title: Refactor
       labels:
         - kind/enhancement
-    - title: Bug Fix
+    - title: Bug Fixes
       labels:
         - kind/bug
     - title: Other Changes

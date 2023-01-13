@@ -1,60 +1,24 @@
 {
   "categories": [
     {
-      "title": "## 🎉 Features",
-      "labels": ["feat"]
+      "title": "## What's New Features",
+      "labels": ["kind/feature"]
     },
     {
-      "title": "## 🐛 Bug Fixes",
-      "labels": ["fix"]
+      "title": "## Refactor",
+      "labels": ["kind/enhancement"]
     },
     {
-      "title": "## 📚 Documentation Changes",
-      "labels": ["docs"]
+      "title": "## Bug Fixes",
+      "labels": ["kind/bug"]
     },
     {
-      "title": "## 💄 Style Changes",
-      "labels": ["style"]
-    },
-    {
-      "title": "## 🚀 Performance Improvements",
-      "labels": ["perf"]
-    },
-    {
-      "title": "## 🏗️ Build System",
-      "labels": ["build"]
-    },
-    {
-      "title": "## 🧹 Chores",
-      "labels": ["chore"]
-    },
-    {
-      "title": "## ♻️ Refactor",
-      "labels": ["refactor"]
-    },
-    {
-      "title": "## 🧪 Tests",
-      "labels": ["test"]
-    },
-    {
-      "title": "## 💚 CI",
-      "labels": ["ci"]
-    },
-    {
-      "title": "## 💬 Other",
-      "labels": ["other"]
+      "title": "## Document changes",
+      "labels": ["area/document"]
     },
     {
       "title": "## 📦 Dependencies",
       "labels": ["dependencies"]
-    }
-  ],
-  "label_extractor": [
-    {
-      "pattern": "^(feat|fix|docs|style|perf|build|chore|refactor|test|ci)",
-      "flags": "gui",
-      "on_property": "title",
-      "method": "match"
     }
   ],
   "pr_template": "- ${{TITLE}}  #${{NUMBER}}"

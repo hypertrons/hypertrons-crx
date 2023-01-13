@@ -26,6 +26,18 @@ jobs:
           yarn install
           yarn run update-version ${{github.event.inputs.version}}
 
+      - name: Build Changelog
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@v3
+        with:
+          configuration: ".github/changelog-configuration.json"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Update CHANGELOG.md
+        run: |
+          echo -e "${{steps.github_release.outputs.changelog}}\n$(cat CHANGELOG.md)" > CHANGELOG.md
+
       - name: Commit and tag
         run: |
           git config --global user.name 'github-actions[bot]'
@@ -51,13 +63,6 @@ jobs:
           cp release/hypercrx.crx ${{format('release/hypercrx-{0}.crx', github.event.inputs.version)}}
           cp release/hypercrx.zip ${{format('release/hypercrx-{0}.zip', github.event.inputs.version)}}
 
-      - name: Create Changelog
-        id: create_changelog
-        uses: mikepenz/release-changelog-builder-action@v3
-        with:
-          configuration: ".github/changelog-configuration.json"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Release
         uses: softprops/action-gh-release@v1
