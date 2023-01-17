@@ -4,7 +4,7 @@ changelog:
     labels:
       - ignore for release
   categories:
-    - title: What's New Features
+    - title: New Features
       labels:
         - kind/feature
     - title: Refactor

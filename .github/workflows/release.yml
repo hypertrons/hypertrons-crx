@@ -9,6 +9,7 @@ on:
         description: 'Input a new version number to release. (e.g. 1.2.3)'
         required: true
 
+run-name: Release v${{github.event.inputs.version}}
 jobs:
   release:
     runs-on: ubuntu-latest
