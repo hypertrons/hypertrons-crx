@@ -171,7 +171,7 @@ const Options: React.FC = () => {
             </p>
             <Checkbox
               label={getMessageByLocale(
-                'component_developerCollabrationNetwork_title',
+                'component_developerCollaborationNetwork_title',
                 settings.locale
               )}
               defaultChecked={settings.developerNetwork}

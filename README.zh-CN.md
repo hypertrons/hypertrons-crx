@@ -46,7 +46,7 @@ Language : [English](./README.md) | 中文
       </td>
       <td>
         <img
-          src="https://user-images.githubusercontent.com/32434520/180447103-76ff1e25-ec35-4e7f-bd54-9d98545ca1df.png"
+          src="https://user-images.githubusercontent.com/32434520/210231755-34c788a8-ac2c-4993-b139-eb14aceee858.png"
         />
         <img
           src="https://user-images.githubusercontent.com/115639837/202907348-678bfaca-81a0-40b3-a0ee-1e9a4931961b.png"
@@ -70,12 +70,12 @@ Language : [English](./README.md) | 中文
      <tr> 
        <td> 
          <img 
-           src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-prn.gif"
+           src="https://user-images.githubusercontent.com/32434520/210232109-6d3fbb9a-89a9-4c81-987b-18a2623e7aba.gif"
          /> 
        </td> 
        <td> 
          <img 
-           src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-dcnp.gif"
+           src="https://user-images.githubusercontent.com/90528630/171819879-d76a3f01-444a-4544-8d46-de539c5684c3.gif"
          /> 
        </td> 
        <td>
@@ -119,12 +119,12 @@ Language : [English](./README.md) | 中文
      <tr> 
        <td> 
          <img 
-           src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-dcn.gif"
+           src="https://user-images.githubusercontent.com/90528630/171820059-96c6da74-3d29-4e79-a08d-a07861682646.gif"
          /> 
        </td> 
        <td> 
          <img 
-           src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-dmpr.gif"
+           src="https://user-images.githubusercontent.com/32434520/210232362-320c39ca-360d-4d60-a439-23bd02d611a6.gif"
          /> 
        </td> 
        <td>

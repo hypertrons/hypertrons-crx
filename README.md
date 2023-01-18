@@ -44,7 +44,7 @@ You can find these dashboards in:
       </td>
       <td>
         <img
-          src="https://user-images.githubusercontent.com/32434520/180447103-76ff1e25-ec35-4e7f-bd54-9d98545ca1df.png"
+          src="https://user-images.githubusercontent.com/32434520/210231755-34c788a8-ac2c-4993-b139-eb14aceee858.png"
         />
         <img
           src="https://user-images.githubusercontent.com/115639837/202907348-678bfaca-81a0-40b3-a0ee-1e9a4931961b.png"
@@ -61,7 +61,7 @@ You can find these dashboards in:
    <thead> 
      <tr> 
        <th width="33%">Project Correlation Network</th> 
-       <th width="33%">Developer Collabration Network within Project</th> 
+       <th width="33%">Developer Collaboration Network within Project</th> 
        <th width="34%">Project Activity & OpenRank Trend</th> 
      </tr> 
    </thead> 
@@ -69,7 +69,7 @@ You can find these dashboards in:
      <tr> 
        <td> 
          <img 
-           src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-prn.gif"
+           src="https://user-images.githubusercontent.com/32434520/210232109-6d3fbb9a-89a9-4c81-987b-18a2623e7aba.gif"
          /> 
        </td> 
        <td> 
@@ -98,7 +98,7 @@ You can find these dashboards in:
 
 - **Project Correlation Network**: Project Correlation Network shows the correlation between projects for a given time period. From this graph you can find the projects that are related to the given project.
 
-- **Developer Collabration Network within project**: Developer Collabration Network within project shows the collaboration between active developers within the project for a given time period. From this graph you can find the active developers in the given project. What's more, you can find the collaborative relationships between these developers.
+- **Developer Collaboration Network within project**: Developer Collaboration Network within project shows the collaboration between active developers within the project for a given time period. From this graph you can find the active developers in the given project. What's more, you can find the collaborative relationships between these developers.
 
 - **Project Activity & OpenRank Trend**: The Project Activity and OpenRank Trend chart presents how the two metrics evolve since 2015. In the chart, you can zoom and drag using your mouse or touchpad, and you can toggle either of the data by clicking the legend buttons as well.
 
@@ -110,7 +110,7 @@ You can find these dashboards in:
 <table> 
    <thead> 
      <tr> 
-       <th width="33%">Developer Collabration Network</th> 
+       <th width="33%">Developer Collaboration Network</th> 
        <th width="33%">Developer's Most Participated Repos</th> 
        <th width="34%">Developer's Activity & OpenRank Trend</th> 
      </tr> 
@@ -124,7 +124,7 @@ You can find these dashboards in:
        </td> 
        <td> 
          <img 
-           src="https://hypertrons.oss-cn-shanghai.aliyuncs.com/images/readme-dmpr.gif"
+           src="https://user-images.githubusercontent.com/32434520/210232362-320c39ca-360d-4d60-a439-23bd02d611a6.gif"
          /> 
        </td> 
        <td>
@@ -137,7 +137,7 @@ You can find these dashboards in:
 
 
 
-- **Developer Collabration Network**: Developer Collaboration Network shows the collaboration between developers for a given time period. From this graph you can find other developers who are closet to a given developer.
+- **Developer Collaboration Network**: Developer Collaboration Network shows the collaboration between developers for a given time period. From this graph you can find other developers who are closet to a given developer.
 - **Developer's Most Participated Repos**: Developer's Most Participated Repos shows the active projects of developers in a given time period. From this graph you can find out the most active repositories for a given developer.
 - **Developer's Activity & OpenRank Trend**：The Developer Activity and OpenRank Trend chart presents how the two metrics evolve since 2015. In the chart, you can zoom and drag using your mouse or touchpad, and you can toggle either of the data by clicking the legend buttons as well.
 

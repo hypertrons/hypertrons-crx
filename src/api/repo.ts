@@ -1,4 +1,4 @@
-import { HYPERTRONS_OSS_XLAB_ENDPOINT, OSS_XLAB_ENDPOINT } from '../constant';
+import { OSS_XLAB_ENDPOINT } from '../constant';
 import request from '../utils/request';
 
 // metric names and their implementation names in OpenDigger
@@ -17,6 +17,8 @@ const metricNameMap = new Map([
   ['merged_code_addition', 'code_change_lines_add'],
   ['merged_code_deletion', 'code_change_lines_remove'],
   ['merged_code_sum', 'code_change_lines_sum'],
+  ['developer_network', 'developer_network'],
+  ['repo_network', 'repo_network'],
 ]);
 
 const getMetricByName = async (repo: string, metric: string) => {
@@ -84,11 +86,10 @@ export const getMergedCodeSum = async (repo: string) => {
   return getMetricByName(repo, 'merged_code_sum');
 };
 
-// the two requests below will be deprecated once their OpenDigger implementations are ready
-export const getRepoCorrelation = async (repo: string) => {
-  return await request(`${HYPERTRONS_OSS_XLAB_ENDPOINT}/repo/${repo}.json`);
+export const getDeveloperNetwork = async (repo: string) => {
+  return getMetricByName(repo, 'developer_network');
 };
 
-export const getDevelopersByRepo = async (repo: string) => {
-  return await request(`${HYPERTRONS_OSS_XLAB_ENDPOINT}/repo/${repo}_top.json`);
+export const getRepoNetwork = async (repo: string) => {
+  return getMetricByName(repo, 'repo_network');
 };

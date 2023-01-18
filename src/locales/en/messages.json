@@ -89,17 +89,17 @@
       }
     }
   },
-  "component_developerCollabrationNetwork_title": {
-    "message": "Developer Collabration Network"
+  "component_developerCollaborationNetwork_title": {
+    "message": "Developer Collaboration Network"
   },
-  "component_developerCollabrationNetwork_description": {
+  "component_developerCollaborationNetwork_description": {
     "message": "Developer Collaboration Network shows the collaboration between developers for a given time period. From this graph you can find other developers who are closet to a given developer."
   },
-  "component_developerCollabrationNetwork_description_node": {
+  "component_developerCollaborationNetwork_description_node": {
     "message": "Node: Developer, node size and shades of color indicate developer activity."
   },
-  "component_developerCollabrationNetwork_description_edge": {
-    "message": "Edge: Collaborative relationship between developers, the value of the edge indicates the closeness of the connection between developers."
+  "component_developerCollaborationNetwork_description_edge": {
+    "message": "Edge: Collaborative relationship between developers, the value of the edge indicates the closeness of the connection between developers. Edges with values smaller than 2.5 are removed from the network to make it sparse and readable."
   },
   "component_activity_definition": {
     "message": "Learn how we count activity"
@@ -159,7 +159,7 @@
     "message": "Node: Project, node size and shades of color indicate project activity."
   },
   "component_projectCorrelationNetwork_description_edge": {
-    "message": "Edge: Connection between projects, the value indicates the closeness of the connection between projects."
+    "message": "Edge: Connection between projects, the value indicates the closeness of the connection between projects. Edges with values smaller than 5 are removed from the network to make it sparse and readable."
   },
   "component_mostParticipatedProjects_title": {
     "message": "Most Participated Repos"
@@ -171,19 +171,19 @@
     "message": "Node: Project, node size and shades of color indicate project activity."
   },
   "component_mostParticipatedProjects_description_edge": {
-    "message": "Edge: Connection between projects, the value of the edge indicates the closeness of the connection between projects."
+    "message": "Edge: Connection between projects, the value of the edge indicates the closeness of the connection between projects. Edges with values smaller than 5 are removed from the network to make it sparse and readable."
   },
-  "component_activeDeveloperCollabrationNetwork_title": {
-    "message": "Active Developer Collabration Network"
+  "component_activeDeveloperCollaborationNetwork_title": {
+    "message": "Active Developer Collaboration Network"
   },
-  "component_activeDeveloperCollabrationNetwork_description": {
-    "message": "Active Developer Collabration Network shows the collaboration between active developers within the project for a given time period.  From this graph you can find the active developers in the given project. What's more, you can find the collaborative relationships between these developers."
+  "component_activeDeveloperCollaborationNetwork_description": {
+    "message": "Active Developer Collaboration Network shows the collaboration between active developers within the project for a given time period.  From this graph you can find the active developers in the given project. What's more, you can find the collaborative relationships between these developers."
   },
-  "component_activeDeveloperCollabrationNetwork_description_node": {
+  "component_activeDeveloperCollaborationNetwork_description_node": {
     "message": "Node: Developer, node size and shades of color indicate the developer's contribution to the project's activity."
   },
-  "component_activeDeveloperCollabrationNetwork_description_edge": {
-    "message": "Edge: Collaborative relationship between developers, the value indicates the closeness of the connection between developers."
+  "component_activeDeveloperCollaborationNetwork_description_edge": {
+    "message": "Edge: Collaborative relationship between developers, the value indicates the closeness of the connection between developers. Edges with values smaller than 2.5 are removed from the network to make it sparse and readable."
   },
   "component_darkMode": {
     "message": "Dark mode"
