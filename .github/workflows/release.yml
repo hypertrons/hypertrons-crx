@@ -26,7 +26,7 @@ jobs:
         run: |
           yarn install
           yarn run update-version ${{github.event.inputs.version}}
-          yarn run update-changelog ${{github.event.inputs.version}}
+          yarn run update-changelog
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add .
