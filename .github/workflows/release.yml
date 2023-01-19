@@ -23,9 +23,19 @@ jobs:
           cache: "yarn"
 
       - name: Bump version
+        id: bump-version
         run: |
           yarn install
           yarn run update-version ${{github.event.inputs.version}}
+
+      - name: exit if failed to update new version
+        if: ${{ github.steps.bump-version != 0}}
+        run: |
+          echo ${{ github.steps.bump-version}}
+          exit 1
+
+      - name: Update changelog
+        run: |
           yarn run update-changelog
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
