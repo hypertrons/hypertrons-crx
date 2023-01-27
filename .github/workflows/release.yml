@@ -64,6 +64,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           body: ${{ steps.create_changelog.outputs.changelog }}
+          generate_release_notes: true
           files: |
             ${{format('release/hypercrx-{0}.crx', github.event.inputs.version)}}
             ${{format('release/hypercrx-{0}.zip', github.event.inputs.version)}}
