@@ -17,7 +17,7 @@
     "pretty-quick:check": "pretty-quick --staged --check --pattern \"**/*.{js,jsx,ts,tsx,json,css,scss}\"",
     "prepare": "husky install",
     "update-version": "node scripts/bump-version.cjs",
-    "update-changelog": "auto-changelog -p --unreleased-only"
+    "update-changelog": "auto-changelog -p --unreleased-only -l 0"
   },
   "dependencies": {
     "@fluentui/react": "^8.62.0",
