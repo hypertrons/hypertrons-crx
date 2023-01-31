@@ -13,10 +13,9 @@ export const getMetricByName = async (
       )}.json`
     );
   } catch (error) {
-    // the catched error being "404" means the metric file is not available
-    // returning an empty object makes follow-up data processing easier
+    // the catched error being "404" means the metric file is not available so return a null
     if (error === ErrorCode.NOT_FOUND) {
-      return {};
+      return null;
     } else {
       // other errors should be throwed
       throw error;

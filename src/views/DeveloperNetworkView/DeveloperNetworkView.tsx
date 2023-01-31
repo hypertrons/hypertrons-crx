@@ -37,11 +37,11 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
   // get developercollaboration data
   useEffect(() => {
     (async () => {
-      try {
-        setDeveloperNetwork(await getDeveloperNetwork(currentDeveloper));
-      } catch (e) {
-        // @ts-ignore
-        setStatusCode(e);
+      const data = await getDeveloperNetwork(currentDeveloper);
+      if (data !== null) {
+        setDeveloperNetwork(data);
+      } else {
+        setStatusCode(404);
       }
     })();
   }, [developerPeriod]);
@@ -49,11 +49,11 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
   // get participated projects data
   useEffect(() => {
     (async () => {
-      try {
-        setRepoNetwork(await getRepoNetwork(currentDeveloper));
-      } catch (e) {
-        // @ts-ignore
-        setStatusCode(e);
+      const data = await getRepoNetwork(currentDeveloper);
+      if (data !== null) {
+        setRepoNetwork(data);
+      } else {
+        setStatusCode(404);
       }
     })();
   }, [repoPeriod]);
