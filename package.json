@@ -1,6 +1,6 @@
 {
   "name": "hypercrx",
-  "version": "1.8.3",
+  "version": "1.8.4",
   "type": "module",
   "private": true,
   "description": "Hypertrons Chromium Extension",
@@ -16,8 +16,7 @@
     "prettier:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css,scss}\"",
     "pretty-quick:check": "pretty-quick --staged --check --pattern \"**/*.{js,jsx,ts,tsx,json,css,scss}\"",
     "prepare": "husky install",
-    "update-version": "node scripts/bump-version.cjs",
-    "update-changelog": "auto-changelog -p --unreleased-only -l 0"
+    "update-version": "node scripts/bump-version.cjs"
   },
   "dependencies": {
     "@fluentui/react": "^8.62.0",
