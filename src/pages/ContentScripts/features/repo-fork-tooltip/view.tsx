@@ -13,19 +13,13 @@ interface RepoDetailForkViewProps {
 }
 
 const View: React.FC<RepoDetailForkViewProps> = ({ forks }) => {
-  const [inited, setInited] = useState(false);
   const [settings, setSettings] = useState(new Settings());
 
   useEffect(() => {
-    const initSettings = async () => {
-      const temp = await loadSettings();
-      setSettings(temp);
-      setInited(true);
-    };
-    if (!inited) {
-      initSettings();
-    }
-  }, [inited, settings]);
+    (async () => {
+      setSettings(await loadSettings());
+    })();
+  }, []);
 
   if (!forks) return null;
 
