@@ -7,9 +7,10 @@ import exists from './helpers/exists';
 import waitFor from './helpers/wait-for';
 import sleep from './helpers/sleep';
 import isRestorationVisit from './helpers/is-restoration-visit';
-import shouldFeatureRun from './helpers/should-feature-run';
+import shouldFeatureRun, {
+  ShouldRunConditions,
+} from './helpers/should-feature-run';
 
-type BooleanFunction = () => boolean;
 type FeatureInit = () => Promisable<void>;
 type FeatureRestore = Function;
 
@@ -32,10 +33,7 @@ type FeatureLoader = {
   restore?: FeatureRestore;
 } & Partial<InternalRunConfig>;
 
-type InternalRunConfig = {
-  asLongAs: BooleanFunction[] | undefined;
-  include: BooleanFunction[] | undefined;
-  exclude: BooleanFunction[] | undefined;
+type InternalRunConfig = ShouldRunConditions & {
   init: FeatureInit;
 };
 
@@ -93,7 +91,7 @@ const setupPageLoad = async (
 ): Promise<void> => {
   const { asLongAs, include, exclude, init } = config;
 
-  if (!shouldFeatureRun({ asLongAs, include, exclude })) {
+  if (!(await shouldFeatureRun({ asLongAs, include, exclude }))) {
     return;
   }
 
