@@ -111,7 +111,7 @@ const setupPageLoad = async (
 // url can be in forms of: "foo/bar/feature-name.tsx" or "foo/bar/feature-name/index.tsx".
 // This function extracts "feature-name" in url and prefixes it with "hypercrx-".
 const getFeatureID = (url: string): FeatureID => {
-  const prefix = 'hyperxrx-';
+  const prefix = 'hypercrx-';
   const pathComponents = url.split('/');
   let name = pathComponents.pop()!.split('.')[0];
   if (name === 'index') {
