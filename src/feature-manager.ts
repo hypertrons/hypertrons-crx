@@ -5,10 +5,12 @@ import * as pageDetect from 'github-url-detection';
 
 import exists from './helpers/exists';
 import waitFor from './helpers/wait-for';
+import sleep from './helpers/sleep';
 import isRestorationVisit from './helpers/is-restoration-visit';
-import shouldFeatureRun from './helpers/should-feature-run';
+import shouldFeatureRun, {
+  ShouldRunConditions,
+} from './helpers/should-feature-run';
 
-type BooleanFunction = () => boolean;
 type FeatureInit = () => Promisable<void>;
 type FeatureRestore = Function;
 
@@ -31,10 +33,7 @@ type FeatureLoader = {
   restore?: FeatureRestore;
 } & Partial<InternalRunConfig>;
 
-type InternalRunConfig = {
-  asLongAs: BooleanFunction[] | undefined;
-  include: BooleanFunction[] | undefined;
-  exclude: BooleanFunction[] | undefined;
+type InternalRunConfig = ShouldRunConditions & {
   init: FeatureInit;
 };
 
@@ -92,7 +91,7 @@ const setupPageLoad = async (
 ): Promise<void> => {
   const { asLongAs, include, exclude, init } = config;
 
-  if (!shouldFeatureRun({ asLongAs, include, exclude })) {
+  if (!(await shouldFeatureRun({ asLongAs, include, exclude }))) {
     return;
   }
 
@@ -111,7 +110,7 @@ const setupPageLoad = async (
 // url can be in forms of: "foo/bar/feature-name.tsx" or "foo/bar/feature-name/index.tsx".
 // This function extracts "feature-name" in url and prefixes it with "hypercrx-".
 const getFeatureID = (url: string): FeatureID => {
-  const prefix = 'hyperxrx-';
+  const prefix = 'hypercrx-';
   const pathComponents = url.split('/');
   let name = pathComponents.pop()!.split('.')[0];
   if (name === 'index') {
@@ -174,7 +173,17 @@ const add = async (
      * They should be loaded as needed, however, `add()` only runs once for each feature. So
      * how to load features after a turbo:visit? The answer is to make use of turbo events.
      */
-    document.addEventListener('turbo:render', () => {
+    document.addEventListener('turbo:render', async () => {
+      if (isRestorationVisit()) {
+        /** After experiments I believe turbo:render is fired after the render starts but not
+         * after a render ends. So we need to wait for a while to make sure the DOM tree is
+         * substituted with the cached one, otherwise all operations on DOM in restore() are
+         * applied to the old DOM tree (before turbo:visit). turbo:load is also examined, but
+         * it's fired after turbo:visit, not after a render ends. So it cannot be used as the
+         * timing neither.
+         */
+        await sleep(10); // 10ms seems enough
+      }
       // if a feature doesn't exisit in DOM, try loading it since it might be expected in current page
       if (!exists(`#${id}`)) {
         setupPageLoad(id, details);

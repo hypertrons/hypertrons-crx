@@ -64,6 +64,7 @@ const restore = async () => {
     repoName = getRepoName();
     await getData();
   }
+  // rerender the chart or it will be empty
   renderTo($(`#${featureId}`).children('.BorderGrid-cell')[0]);
 };
 

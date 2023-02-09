@@ -1,7 +1,9 @@
 import $ from 'jquery';
+import * as pageDetect from 'github-url-detection';
+import elementReady from 'element-ready';
+
 import messages_en from '../locales/en/messages.json';
 import messages_zh_CN from '../locales/zh_CN/messages.json';
-import * as pageDetect from 'github-url-detection';
 
 const messages_locale = {
   en: messages_en,
@@ -120,9 +122,10 @@ export function linearMap(
 }
 
 // check if the repository is public
-export function isPublicRepo() {
+export async function isPublicRepo() {
   // another selector that also works
   // const repoLabel = $('strong[itemprop="name"]').siblings('span.Label.Label--secondary').text();
+  await elementReady('#repository-container-header');
   const repoLabel = $('#repository-container-header')
     .find('span.Label.Label--secondary:first')
     .text();
