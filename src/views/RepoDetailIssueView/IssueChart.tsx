@@ -38,6 +38,11 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
       textStyle: {
         color: TH.FG_COLOR,
       },
+      selected: {
+        open: data.issuesOpened.length > 0,
+        close: data.issuesClosed.length > 0,
+        comment: data.issueComments.length > 0,
+      },
     },
     tooltip: {
       trigger: 'axis',

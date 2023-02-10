@@ -37,6 +37,10 @@ const MergedLinesChart: React.FC<MergedLinesChartProps> = (props) => {
       textStyle: {
         color: TH.FG_COLOR,
       },
+      selected: {
+        addition: data.mergedCodeAddition.length > 0,
+        deletion: data.mergedCodeDeletion.length > 0,
+      },
     },
     tooltip: {
       trigger: 'axis',
