@@ -39,12 +39,8 @@ const DeveloperActORTrendView: React.FC<DeveloperActORTrendViewProps> = ({
 
   useEffect(() => {
     (async () => {
-      try {
-        setActivity(await getActivity(currentDeveloper));
-        setOpenrank(await getOpenrank(currentDeveloper));
-      } catch (e) {
-        console.error(e);
-      }
+      setActivity(await getActivity(currentDeveloper));
+      setOpenrank(await getOpenrank(currentDeveloper));
     })();
   }, []);
 

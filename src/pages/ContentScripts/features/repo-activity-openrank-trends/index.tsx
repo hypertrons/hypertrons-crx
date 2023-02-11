@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, Container } from 'react-dom';
-import elementReady from 'element-ready';
 import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
 
@@ -15,12 +14,8 @@ let activity: any;
 let openrank: any;
 
 const getData = async () => {
-  try {
-    activity = await getActivity(repoName);
-    openrank = await getOpenrank(repoName);
-  } catch (e) {
-    console.error(e);
-  }
+  activity = await getActivity(repoName);
+  openrank = await getOpenrank(repoName);
 };
 
 const renderTo = (container: Container) => {

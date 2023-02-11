@@ -31,22 +31,22 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({
 
   useEffect(() => {
     (async () => {
-      try {
-        setRepoNetwork(await getRepoNetwork(currentRepo));
-      } catch (e) {
-        // @ts-ignore
-        setStatusCode(e);
+      const data = await getRepoNetwork(currentRepo);
+      if (data !== null) {
+        setRepoNetwork(data);
+      } else {
+        setStatusCode(404);
       }
     })();
   }, [repoPeriod]);
 
   useEffect(() => {
     (async () => {
-      try {
-        setDeveloperNetwork(await getDeveloperNetwork(currentRepo));
-      } catch (e) {
-        // @ts-ignore
-        setStatusCode(e);
+      const data = await getDeveloperNetwork(currentRepo);
+      if (data !== null) {
+        setDeveloperNetwork(data);
+      } else {
+        setStatusCode(404);
       }
     })();
   }, [developerPeriod]);

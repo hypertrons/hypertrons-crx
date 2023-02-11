@@ -15,11 +15,7 @@ let repoName: string;
 let forks: any;
 
 const getData = async () => {
-  try {
-    forks = await getForks(repoName);
-  } catch (e) {
-    console.error(e);
-  }
+  forks = await getForks(repoName);
 };
 
 const renderTo = (container: Container) => {

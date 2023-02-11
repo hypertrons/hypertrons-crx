@@ -33,11 +33,7 @@ const RepoDetailStarView: React.FC<RepoDetailStarViewProps> = ({
 
   useEffect(() => {
     (async () => {
-      try {
-        setStars(await getStars(currentRepo));
-      } catch (e) {
-        console.error(e);
-      }
+      setStars(await getStars(currentRepo));
     })();
   }, []);
 

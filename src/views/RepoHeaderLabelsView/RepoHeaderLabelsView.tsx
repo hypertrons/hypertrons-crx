@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-import { getGithubTheme, getMessageByLocale } from '../../utils/utils';
+import {
+  getGithubTheme,
+  getMessageByLocale,
+  isNull,
+  isAllNull,
+} from '../../utils/utils';
 import { numberWithCommas } from '../../utils/formatter';
 import Settings, { loadSettings } from '../../utils/settings';
 import { getActivity, getOpenrank, getParticipant } from '../../api/repo';
@@ -37,19 +42,15 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
 
   useEffect(() => {
     (async () => {
-      try {
-        setData({
-          activity: await getActivity(currentRepo),
-          OpenRank: await getOpenrank(currentRepo),
-          participant: await getParticipant(currentRepo),
-        });
-      } catch (e) {
-        console.error(e);
-      }
+      setData({
+        activity: await getActivity(currentRepo),
+        OpenRank: await getOpenrank(currentRepo),
+        participant: await getParticipant(currentRepo),
+      });
     })();
   }, []);
 
-  if (!data) return null;
+  if (isNull(data) || isAllNull(data)) return null;
 
   const activityData = generateDataByMonth(data.activity);
   const OpenRankData = generateDataByMonth(data.OpenRank);
