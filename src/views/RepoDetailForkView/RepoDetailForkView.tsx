@@ -3,22 +3,22 @@ import React, { useState, useEffect } from 'react';
 import { getGithubTheme, getMessageByLocale } from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
 import { generateDataByMonth } from '../../utils/data';
-import { getStars } from '../../api/repo';
+import { getForks } from '../../api/repo';
 import ReactTooltip from 'react-tooltip';
-import StarChart from './StarChart';
+import ForkChart from './ForkChart';
 
 const githubTheme = getGithubTheme();
 
-interface RepoDetailStarViewProps {
+interface RepoDetailForkViewProps {
   currentRepo: string;
 }
 
-const RepoDetailStarView: React.FC<RepoDetailStarViewProps> = ({
+const RepoDetailForkView: React.FC<RepoDetailForkViewProps> = ({
   currentRepo,
 }) => {
   const [inited, setInited] = useState(false);
   const [settings, setSettings] = useState(new Settings());
-  const [stars, setStars] = useState();
+  const [forks, setForks] = useState();
 
   useEffect(() => {
     const initSettings = async () => {
@@ -33,25 +33,25 @@ const RepoDetailStarView: React.FC<RepoDetailStarViewProps> = ({
 
   useEffect(() => {
     (async () => {
-      setStars(await getStars(currentRepo));
+      setForks(await getForks(currentRepo));
     })();
   }, []);
 
-  if (!stars) return null;
+  if (!forks) return null;
 
   return (
-    <ReactTooltip id="star-tooltip" clickable={true}>
+    <ReactTooltip id="fork-tooltip" clickable={true}>
       <div className="chart-title">
-        {getMessageByLocale('star_popup_title', settings.locale)}
+        {getMessageByLocale('fork_popup_title', settings.locale)}
       </div>
-      <StarChart
+      <ForkChart
         theme={githubTheme as 'light' | 'dark'}
         width={270}
         height={130}
-        data={generateDataByMonth(stars)}
+        data={generateDataByMonth(forks)}
       />
     </ReactTooltip>
   );
 };
 
-export default RepoDetailStarView;
+export default RepoDetailForkView;

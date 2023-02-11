@@ -1,5 +1,4 @@
-import { OSS_XLAB_ENDPOINT } from '../constant';
-import request from '../utils/request';
+import { getMetricByName } from './common';
 
 // metric names and their implementation names in OpenDigger
 const metricNameMap = new Map([
@@ -21,75 +20,66 @@ const metricNameMap = new Map([
   ['repo_network', 'repo_network'],
 ]);
 
-const getMetricByName = async (repo: string, metric: string) => {
-  const res = await request(
-    `${OSS_XLAB_ENDPOINT}/open_digger/github/${repo}/${metricNameMap.get(
-      metric
-    )}.json`
-  );
-  return res.data;
-};
-
 export const getActivity = async (repo: string) => {
-  return getMetricByName(repo, 'activity');
+  return getMetricByName(repo, metricNameMap, 'activity');
 };
 
 export const getOpenrank = async (repo: string) => {
-  return getMetricByName(repo, 'openrank');
+  return getMetricByName(repo, metricNameMap, 'openrank');
 };
 
 export const getParticipant = async (repo: string) => {
-  return getMetricByName(repo, 'participant');
+  return getMetricByName(repo, metricNameMap, 'participant');
 };
 
 export const getForks = async (repo: string) => {
-  return getMetricByName(repo, 'forks');
+  return getMetricByName(repo, metricNameMap, 'forks');
 };
 
 export const getStars = async (repo: string) => {
-  return getMetricByName(repo, 'stars');
+  return getMetricByName(repo, metricNameMap, 'stars');
 };
 
 export const getIssuesOpened = async (repo: string) => {
-  return getMetricByName(repo, 'issues_opened');
+  return getMetricByName(repo, metricNameMap, 'issues_opened');
 };
 
 export const getIssuesClosed = async (repo: string) => {
-  return getMetricByName(repo, 'issues_closed');
+  return getMetricByName(repo, metricNameMap, 'issues_closed');
 };
 
 export const getIssueComments = async (repo: string) => {
-  return getMetricByName(repo, 'issue_comments');
+  return getMetricByName(repo, metricNameMap, 'issue_comments');
 };
 
 export const getPROpened = async (repo: string) => {
-  return getMetricByName(repo, 'PR_opened');
+  return getMetricByName(repo, metricNameMap, 'PR_opened');
 };
 
 export const getPRMerged = async (repo: string) => {
-  return getMetricByName(repo, 'PR_merged');
+  return getMetricByName(repo, metricNameMap, 'PR_merged');
 };
 
 export const getPRReviews = async (repo: string) => {
-  return getMetricByName(repo, 'PR_reviews');
+  return getMetricByName(repo, metricNameMap, 'PR_reviews');
 };
 
 export const getMergedCodeAddition = async (repo: string) => {
-  return getMetricByName(repo, 'merged_code_addition');
+  return getMetricByName(repo, metricNameMap, 'merged_code_addition');
 };
 
 export const getMergedCodeDeletion = async (repo: string) => {
-  return getMetricByName(repo, 'merged_code_deletion');
+  return getMetricByName(repo, metricNameMap, 'merged_code_deletion');
 };
 
 export const getMergedCodeSum = async (repo: string) => {
-  return getMetricByName(repo, 'merged_code_sum');
+  return getMetricByName(repo, metricNameMap, 'merged_code_sum');
 };
 
 export const getDeveloperNetwork = async (repo: string) => {
-  return getMetricByName(repo, 'developer_network');
+  return getMetricByName(repo, metricNameMap, 'developer_network');
 };
 
 export const getRepoNetwork = async (repo: string) => {
-  return getMetricByName(repo, 'repo_network');
+  return getMetricByName(repo, metricNameMap, 'repo_network');
 };

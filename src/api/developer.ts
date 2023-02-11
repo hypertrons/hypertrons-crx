@@ -1,5 +1,4 @@
-import { OSS_XLAB_ENDPOINT } from '../constant';
-import request from '../utils/request';
+import { getMetricByName } from './common';
 
 // metric names and their implementation names in OpenDigger
 const metricNameMap = new Map([
@@ -9,27 +8,18 @@ const metricNameMap = new Map([
   ['repo_network', 'repo_network'],
 ]);
 
-const getMetricByName = async (user: string, metric: string) => {
-  const res = await request(
-    `${OSS_XLAB_ENDPOINT}/open_digger/github/${user}/${metricNameMap.get(
-      metric
-    )}.json`
-  );
-  return res.data;
-};
-
 export const getActivity = async (user: string) => {
-  return getMetricByName(user, 'activity');
+  return getMetricByName(user, metricNameMap, 'activity');
 };
 
 export const getOpenrank = async (user: string) => {
-  return getMetricByName(user, 'openrank');
+  return getMetricByName(user, metricNameMap, 'openrank');
 };
 
 export const getDeveloperNetwork = async (user: string) => {
-  return getMetricByName(user, 'developer_network');
+  return getMetricByName(user, metricNameMap, 'developer_network');
 };
 
 export const getRepoNetwork = async (user: string) => {
-  return getMetricByName(user, 'repo_network');
+  return getMetricByName(user, metricNameMap, 'repo_network');
 };

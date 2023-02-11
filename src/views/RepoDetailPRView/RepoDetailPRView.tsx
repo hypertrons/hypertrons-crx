@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-import { getGithubTheme, getMessageByLocale } from '../../utils/utils';
+import {
+  getGithubTheme,
+  getMessageByLocale,
+  isNull,
+  isAllNull,
+} from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
 import { generateDataByMonth } from '../../utils/data';
 import {
@@ -59,21 +64,17 @@ const RepoDetailPRView: React.FC<RepoDetailPRViewProps> = ({ currentRepo }) => {
 
   useEffect(() => {
     (async () => {
-      try {
-        setPR({
-          PROpened: await getPROpened(currentRepo),
-          PRMerged: await getPRMerged(currentRepo),
-          PRReviews: await getPRReviews(currentRepo),
-          mergedCodeAddition: await getMergedCodeAddition(currentRepo),
-          mergedCodeDeletion: await getMergedCodeDeletion(currentRepo),
-        });
-      } catch (e) {
-        console.error(e);
-      }
+      setPR({
+        PROpened: await getPROpened(currentRepo),
+        PRMerged: await getPRMerged(currentRepo),
+        PRReviews: await getPRReviews(currentRepo),
+        mergedCodeAddition: await getMergedCodeAddition(currentRepo),
+        mergedCodeDeletion: await getMergedCodeDeletion(currentRepo),
+      });
     })();
   }, []);
 
-  if (!PR) return null;
+  if (isNull(PR) || isAllNull(PR)) return null;
 
   const onClick = (curMonth: string, params: any) => {
     const seriesIndex = params.seriesIndex;

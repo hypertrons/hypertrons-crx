@@ -59,8 +59,8 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ errorCode }) => {
       <Stack.Item>
         <strong>{errMessageObj.measure.text}</strong>
         <ul style={{ margin: '15px 0 0 15px' }}>
-          {errMessageObj.measure.tips.map((tip: string) => {
-            return <li>{tip}</li>;
+          {errMessageObj.measure.tips.map((tip: string, index: number) => {
+            return <li key={index}>{tip}</li>;
           })}
         </ul>
       </Stack.Item>
