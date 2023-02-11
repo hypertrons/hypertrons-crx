@@ -1,4 +1,7 @@
 export const generateDataByMonth = (originalData: any) => {
+  if (originalData === null) {
+    return [];
+  }
   const orderedMonths = Object.keys(originalData).sort((a, b) => {
     const dateA = new Date(a);
     const dateB = new Date(b);

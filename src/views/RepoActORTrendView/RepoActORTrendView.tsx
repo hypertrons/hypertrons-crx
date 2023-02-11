@@ -40,12 +40,8 @@ const RepoActORTrendView: React.FC<RepoActORTrendViewProps> = ({
 
   useEffect(() => {
     (async () => {
-      try {
-        setActivity(await getActivity(currentRepo));
-        setOpenrank(await getOpenrank(currentRepo));
-      } catch (e) {
-        console.error(e);
-      }
+      setActivity(await getActivity(currentRepo));
+      setOpenrank(await getOpenrank(currentRepo));
     })();
   }, []);
 

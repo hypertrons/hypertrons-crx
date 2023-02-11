@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-import { getGithubTheme, getMessageByLocale } from '../../utils/utils';
+import {
+  getGithubTheme,
+  getMessageByLocale,
+  isNull,
+  isAllNull,
+} from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
 import { generateDataByMonth } from '../../utils/data';
 import {
@@ -45,19 +50,15 @@ const RepoDetailIssueView: React.FC<RepoDetailIssueViewProps> = ({
 
   useEffect(() => {
     (async () => {
-      try {
-        setIssue({
-          issuesOpened: await getIssuesOpened(currentRepo),
-          issuesClosed: await getIssuesClosed(currentRepo),
-          issueComments: await getIssueComments(currentRepo),
-        });
-      } catch (e) {
-        console.error(e);
-      }
+      setIssue({
+        issuesOpened: await getIssuesOpened(currentRepo),
+        issuesClosed: await getIssuesClosed(currentRepo),
+        issueComments: await getIssueComments(currentRepo),
+      });
     })();
   }, []);
 
-  if (!issue) return null;
+  if (isNull(issue) || isAllNull(issue)) return null;
 
   const onClick = (curMonth: string, params: any) => {
     const seriesIndex = params.seriesIndex;

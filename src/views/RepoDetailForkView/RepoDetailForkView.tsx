@@ -33,11 +33,7 @@ const RepoDetailForkView: React.FC<RepoDetailForkViewProps> = ({
 
   useEffect(() => {
     (async () => {
-      try {
-        setForks(await getForks(currentRepo));
-      } catch (e) {
-        console.error(e);
-      }
+      setForks(await getForks(currentRepo));
     })();
   }, []);
 

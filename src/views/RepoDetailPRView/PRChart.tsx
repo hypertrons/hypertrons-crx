@@ -38,6 +38,11 @@ const PRChart: React.FC<PRChartProps> = (props) => {
       textStyle: {
         color: TH.FG_COLOR,
       },
+      selected: {
+        open: data.PROpened.length > 0,
+        merge: data.PRMerged.length > 0,
+        review: data.PRReviews.length > 0,
+      },
     },
     tooltip: {
       trigger: 'axis',
