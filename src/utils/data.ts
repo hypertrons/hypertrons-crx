@@ -2,7 +2,17 @@ export const generateDataByMonth = (originalData: any) => {
   if (originalData === null) {
     return [];
   }
-  const orderedMonths = Object.keys(originalData).sort((a, b) => {
+
+  const isNormalMonth = (key: string): boolean => {
+    return key.match(/^\d{4}-\d{2}$/) !== null;
+  };
+  // `originalData` is an object with keys like `2020-01`, `2020-02`, `2022`, `2022-Q1`, `all`.
+  // A normal month is a key like `2020-01`(yyyy-mm). They are the keys we handle later in this function.
+  // An unnormal month is a key like `2020`, `2020-Q1`, `all`. They are not used in any feature yet.
+  const normalMonths = Object.keys(originalData).filter((key) =>
+    isNormalMonth(key)
+  );
+  const orderedMonths = normalMonths.sort((a, b) => {
     const dateA = new Date(a);
     const dateB = new Date(b);
     if (dateA < dateB) return -1;
