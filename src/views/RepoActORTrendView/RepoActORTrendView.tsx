@@ -1,37 +1,31 @@
 import React, { useState, useEffect } from 'react';
 
 import { getGithubTheme, getMessageByLocale } from '../../utils/utils';
+import { generateDataByMonth } from '../../utils/data';
 import Settings, { loadSettings } from '../../utils/settings';
-import { getRepoActiInfl } from '../../api/repo';
+import { getActivity, getOpenrank } from '../../api/repo';
 import Bars from '../../components/Bars/index';
 
 const githubTheme = getGithubTheme();
 
-interface RepoActiInflTrendViewProps {
+interface RepoActORTrendViewProps {
   currentRepo: string;
 }
 
-const RepoActiInflTrendView: React.FC<RepoActiInflTrendViewProps> = ({
+const generateBarsData = (activity: any, openrank: any) => {
+  return {
+    data1: generateDataByMonth(activity),
+    data2: generateDataByMonth(openrank),
+  };
+};
+
+const RepoActORTrendView: React.FC<RepoActORTrendViewProps> = ({
   currentRepo,
 }) => {
   const [inited, setInited] = useState(false);
   const [settings, setSettings] = useState(new Settings());
-  const [repoActiInflData, setRepoActiInflData] = useState();
-
-  const generateBarsData = (repoActiInflData: any) => {
-    const activityField = repoActiInflData['activity'];
-    const influenceFiled = repoActiInflData['influence'];
-
-    let data1: [string, number][] = [];
-    let data2: [string, number][] = [];
-
-    Object.keys(activityField).forEach((value, index) => {
-      data1.push([value, activityField[value].toFixed(2)]);
-      data2.push([value, influenceFiled[value].toFixed(2)]);
-    });
-
-    return { data1, data2 };
-  };
+  const [activity, setActivity] = useState();
+  const [openrank, setOpenrank] = useState();
 
   useEffect(() => {
     const initSettings = async () => {
@@ -45,20 +39,15 @@ const RepoActiInflTrendView: React.FC<RepoActiInflTrendViewProps> = ({
   }, [inited, settings]);
 
   useEffect(() => {
-    const getRepoActiInflData = async () => {
-      try {
-        const res = await getRepoActiInfl(currentRepo);
-        setRepoActiInflData(res.data);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    getRepoActiInflData();
+    (async () => {
+      setActivity(await getActivity(currentRepo));
+      setOpenrank(await getOpenrank(currentRepo));
+    })();
   }, []);
 
-  if (!repoActiInflData) return null;
+  if (!activity || !openrank) return null;
 
-  let barsData: any = generateBarsData(repoActiInflData);
+  let barsData: any = generateBarsData(activity, openrank);
 
   const onClick = (params: any) => {
     const { seriesIndex, data } = params;
@@ -77,28 +66,25 @@ const RepoActiInflTrendView: React.FC<RepoActiInflTrendViewProps> = ({
   return (
     <div>
       <h2 className="h4 mb-3">
-        {getMessageByLocale(
-          'component_repoActiInflTrend_title',
-          settings.locale
-        )}
+        {getMessageByLocale('component_repoActORTrend_title', settings.locale)}
       </h2>
       <Bars
         theme={githubTheme as 'light' | 'dark'}
         height={350}
         legend1={getMessageByLocale(
-          'component_repoActiInflTrend_legend1',
+          'component_repoActORTrend_legend1',
           settings.locale
         )}
         legend2={getMessageByLocale(
-          'component_repoActiInflTrend_legend2',
+          'component_repoActORTrend_legend2',
           settings.locale
         )}
         yName1={getMessageByLocale(
-          'component_repoActiInflTrend_yName1',
+          'component_repoActORTrend_yName1',
           settings.locale
         )}
         yName2={getMessageByLocale(
-          'component_repoActiInflTrend_yName2',
+          'component_repoActORTrend_yName2',
           settings.locale
         )}
         data1={barsData.data1}
@@ -109,4 +95,4 @@ const RepoActiInflTrendView: React.FC<RepoActiInflTrendViewProps> = ({
   );
 };
 
-export default RepoActiInflTrendView;
+export default RepoActORTrendView;

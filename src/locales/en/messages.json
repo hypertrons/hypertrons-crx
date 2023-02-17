@@ -89,17 +89,17 @@
       }
     }
   },
-  "component_developerCollabrationNetwork_title": {
-    "message": "Developer Collabration Network"
+  "component_developerCollaborationNetwork_title": {
+    "message": "Developer Collaboration Network"
   },
-  "component_developerCollabrationNetwork_description": {
+  "component_developerCollaborationNetwork_description": {
     "message": "Developer Collaboration Network shows the collaboration between developers for a given time period. From this graph you can find other developers who are closet to a given developer."
   },
-  "component_developerCollabrationNetwork_description_node": {
+  "component_developerCollaborationNetwork_description_node": {
     "message": "Node: Developer, node size and shades of color indicate developer activity."
   },
-  "component_developerCollabrationNetwork_description_edge": {
-    "message": "Edge: Collaborative relationship between developers, the value of the edge indicates the closeness of the connection between developers."
+  "component_developerCollaborationNetwork_description_edge": {
+    "message": "Edge: Collaborative relationship between developers, the value of the edge indicates the closeness of the connection between developers. Edges with values smaller than 2.5 are removed from the network to make it sparse and readable."
   },
   "component_activity_definition": {
     "message": "Learn how we count activity"
@@ -119,35 +119,35 @@
   "component_contributorsActivityEvolution_description_3": {
     "message": "Contributors: All GitHub users who have star, fork, issue, and PR activity in the repository."
   },
-  "component_repoActiInflTrend_title": {
-    "message": "Activity & Influence Trends"
+  "component_repoActORTrend_title": {
+    "message": "Activity & OpenRank Trends"
   },
-  "component_repoActiInflTrend_legend1": {
+  "component_repoActORTrend_legend1": {
     "message": "Activity"
   },
-  "component_repoActiInflTrend_legend2": {
-    "message": "Influence"
+  "component_repoActORTrend_legend2": {
+    "message": "OpenRank"
   },
-  "component_repoActiInflTrend_yName1": {
-    "message": "Act"
-  },
-  "component_repoActiInflTrend_yName2": {
-    "message": "Inf"
-  },
-  "component_developerActiInflTrend_title": {
-    "message": "Activity & Influence Trends"
-  },
-  "component_developerActiInflTrend_legend1": {
+  "component_repoActORTrend_yName1": {
     "message": "Activity"
   },
-  "component_developerActiInflTrend_legend2": {
-    "message": "Influence"
+  "component_repoActORTrend_yName2": {
+    "message": "OpenRank"
   },
-  "component_developerActiInflTrend_yName1": {
-    "message": "Act"
+  "component_developerActORTrend_title": {
+    "message": "Activity & OpenRank Trends"
   },
-  "component_developerActiInflTrend_yName2": {
-    "message": "Inf"
+  "component_developerActORTrend_legend1": {
+    "message": "Activity"
+  },
+  "component_developerActORTrend_legend2": {
+    "message": "OpenRank"
+  },
+  "component_developerActORTrend_yName1": {
+    "message": "Activity"
+  },
+  "component_developerActORTrend_yName2": {
+    "message": "OpenRank"
   },
   "component_projectCorrelationNetwork_title": {
     "message": "Project Correlation Network"
@@ -159,7 +159,7 @@
     "message": "Node: Project, node size and shades of color indicate project activity."
   },
   "component_projectCorrelationNetwork_description_edge": {
-    "message": "Edge: Connection between projects, the value indicates the closeness of the connection between projects."
+    "message": "Edge: Connection between projects, the value indicates the closeness of the connection between projects. Edges with values smaller than 5 are removed from the network to make it sparse and readable."
   },
   "component_mostParticipatedProjects_title": {
     "message": "Most Participated Repos"
@@ -171,19 +171,19 @@
     "message": "Node: Project, node size and shades of color indicate project activity."
   },
   "component_mostParticipatedProjects_description_edge": {
-    "message": "Edge: Connection between projects, the value of the edge indicates the closeness of the connection between projects."
+    "message": "Edge: Connection between projects, the value of the edge indicates the closeness of the connection between projects. Edges with values smaller than 5 are removed from the network to make it sparse and readable."
   },
-  "component_activeDeveloperCollabrationNetwork_title": {
-    "message": "Active Developer Collabration Network"
+  "component_activeDeveloperCollaborationNetwork_title": {
+    "message": "Active Developer Collaboration Network"
   },
-  "component_activeDeveloperCollabrationNetwork_description": {
-    "message": "Active Developer Collabration Network shows the collaboration between active developers within the project for a given time period.  From this graph you can find the active developers in the given project. What's more, you can find the collaborative relationships between these developers."
+  "component_activeDeveloperCollaborationNetwork_description": {
+    "message": "Active Developer Collaboration Network shows the collaboration between active developers within the project for a given time period.  From this graph you can find the active developers in the given project. What's more, you can find the collaborative relationships between these developers."
   },
-  "component_activeDeveloperCollabrationNetwork_description_node": {
+  "component_activeDeveloperCollaborationNetwork_description_node": {
     "message": "Node: Developer, node size and shades of color indicate the developer's contribution to the project's activity."
   },
-  "component_activeDeveloperCollabrationNetwork_description_edge": {
-    "message": "Edge: Collaborative relationship between developers, the value indicates the closeness of the connection between developers."
+  "component_activeDeveloperCollaborationNetwork_description_edge": {
+    "message": "Edge: Collaborative relationship between developers, the value indicates the closeness of the connection between developers. Edges with values smaller than 2.5 are removed from the network to make it sparse and readable."
   },
   "component_darkMode": {
     "message": "Dark mode"
@@ -296,8 +296,8 @@
   "header_label_activity": {
     "message": "Activity"
   },
-  "header_label_influence": {
-    "message": "Influence"
+  "header_label_OpenRank": {
+    "message": "OpenRank"
   },
   "header_label_participant": {
     "message": "Participants"
@@ -309,7 +309,7 @@
     "message": "Star Events"
   },
   "issue_popup_title": {
-    "message": "Open Issue and Issue Comment Events"
+    "message": "Issue Open, Close and Comment Events"
   },
   "pr_popup_title": {
     "message": "Open PR, PR Merge, Review Comment Events"

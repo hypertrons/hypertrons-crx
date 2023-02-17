@@ -37,6 +37,10 @@ const MergedLinesChart: React.FC<MergedLinesChartProps> = (props) => {
       textStyle: {
         color: TH.FG_COLOR,
       },
+      selected: {
+        addition: data.mergedCodeAddition.length > 0,
+        deletion: data.mergedCodeDeletion.length > 0,
+      },
     },
     tooltip: {
       trigger: 'axis',
@@ -96,28 +100,28 @@ const MergedLinesChart: React.FC<MergedLinesChartProps> = (props) => {
     ],
     series: [
       {
-        name: 'additions',
+        name: 'addition',
         type: 'line',
         symbol: 'none',
         areaStyle: {},
         lineStyle: {
           width: 1,
         },
-        data: data.ad,
+        data: data.mergedCodeAddition,
         emphasis: {
           focus: 'series',
         },
         yAxisIndex: 0,
       },
       {
-        name: 'deletions',
+        name: 'deletion',
         type: 'line',
         symbol: 'none',
         areaStyle: {},
         lineStyle: {
           width: 1,
         },
-        data: data.de,
+        data: data.mergedCodeDeletion,
         emphasis: {
           focus: 'series',
         },
@@ -154,17 +158,25 @@ const tooltipFormatter = (params: any) => {
   const series0 = params[0];
   const series1 = params[1];
   const ym = series0.data[0];
+  const html0 = series0
+    ? `
+    <span style="float:left;">${series0.marker}${series0.seriesName}</span>
+    <span style="float:right;font-weight:bold;">${numberWithCommas(
+      series0.data[1]
+    )}</span><br/> `
+    : '';
+  const html1 = series1
+    ? `
+    <span style="float:left;">${series1.marker}${series1.seriesName}</span>
+    <span style="float:right;font-weight:bold;">${numberWithCommas(
+      series1.data[1]
+    )}</span><br/> `
+    : '';
   let res = `
     <div style="width:140px;">
       ${ym}<br/>
-      <span style="float:left;">${series0.marker}${series0.seriesName}</span>
-      <span style="float:right;font-weight:bold;">${numberWithCommas(
-        series0.data[1]
-      )}</span><br/>
-      <span style="float:left;">${series1.marker}${series1.seriesName}</span>
-      <span style="float:right;font-weight:bold;">${numberWithCommas(
-        series1.data[1]
-      )}</span><br/>
+      ${html0}
+      ${html1}
     </div>
   `;
   return res;

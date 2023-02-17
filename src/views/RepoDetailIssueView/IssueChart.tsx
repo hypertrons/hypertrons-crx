@@ -6,14 +6,14 @@ const LIGHT_THEME = {
   FG_COLOR: '#24292F',
   BG_COLOR: '#ffffff',
   SPLIT_LINE_COLOR: '#D0D7DE',
-  PALLET: ['#34BF5B', '#FF8061'],
+  PALLET: ['#34BF5B', '#9B71FF', '#FF8061'],
 };
 
 const DARK_THEME = {
   FG_COLOR: '#c9d1d9',
   BG_COLOR: '#0d1118',
   SPLIT_LINE_COLOR: '#30363D',
-  PALLET: ['#34BF5B', '#FF8061'],
+  PALLET: ['#34BF5B', '#9B71FF', '#FF8061'],
 };
 
 interface IssueChartProps {
@@ -21,10 +21,11 @@ interface IssueChartProps {
   width: number;
   height: number;
   data: any;
+  onClick?: Function;
 }
 
 const IssueChart: React.FC<IssueChartProps> = (props) => {
-  const { theme, width, height, data } = props;
+  const { theme, width, height, data, onClick } = props;
 
   const divEL = useRef(null);
 
@@ -36,6 +37,11 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
       show: true,
       textStyle: {
         color: TH.FG_COLOR,
+      },
+      selected: {
+        open: data.issuesOpened.length > 0,
+        close: data.issuesClosed.length > 0,
+        comment: data.issueComments.length > 0,
       },
     },
     tooltip: {
@@ -96,24 +102,37 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
     ],
     series: [
       {
-        name: 'opens',
+        name: 'open',
         type: 'line',
         symbol: 'none',
-        data: data.oi,
+        data: data.issuesOpened,
         emphasis: {
           focus: 'series',
         },
         yAxisIndex: 0,
+        triggerLineEvent: true,
       },
       {
-        name: 'comments',
+        name: 'close',
         type: 'line',
         symbol: 'none',
-        data: data.ic,
+        data: data.issuesClosed,
         emphasis: {
           focus: 'series',
         },
         yAxisIndex: 0,
+        triggerLineEvent: true,
+      },
+      {
+        name: 'comment',
+        type: 'line',
+        symbol: 'none',
+        data: data.issueComments,
+        emphasis: {
+          focus: 'series',
+        },
+        yAxisIndex: 0,
+        triggerLineEvent: true,
       },
     ],
     animationEasing: 'elasticOut',
@@ -136,15 +155,24 @@ const IssueChart: React.FC<IssueChartProps> = (props) => {
     const instance = echarts.getInstanceByDom(chartDOM as any);
     if (instance) {
       instance.setOption(option);
+      if (onClick) {
+        instance.on('click', (params) => {
+          onClick(curMonth, params);
+        });
+      }
     }
   }, []);
 
   return <div ref={divEL} style={{ width, height }}></div>;
 };
 
+let curMonth: string;
+
 const tooltipFormatter = (params: any) => {
+  curMonth = params[0].data[0];
   const series0 = params[0];
   const series1 = params[1];
+  const series2 = params[2];
   const ym = series0.data[0];
   const html0 = series0
     ? `
@@ -160,11 +188,19 @@ const tooltipFormatter = (params: any) => {
       series1.data[1]
     )}</span><br/> `
     : '';
+  const html2 = series2
+    ? `
+    <span style="float:left;">${series2.marker}${series2.seriesName}</span>
+    <span style="float:right;font-weight:bold;">${numberWithCommas(
+      series2.data[1]
+    )}</span><br/> `
+    : '';
   let res = `
     <div style="width:130px;">
       ${ym}<br/>
       ${html0}
       ${html1}
+      ${html2}
     </div>
   `;
   return res;

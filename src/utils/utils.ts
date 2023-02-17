@@ -153,13 +153,6 @@ export function getGithubTheme() {
   return githubTheme;
 }
 
-export function getMinMax(data: INode[] | IEdge[]) {
-  const newArr = data.map((item: INode | IEdge) => {
-    return item.value;
-  });
-  return [Math.min(...newArr), Math.max(...newArr)];
-}
-
 export function linearMap(
   val: number,
   domain: number[],
@@ -204,4 +197,31 @@ export function isPublicRepo() {
     pageDetect.isRepo() &&
     (repoLabel === 'Public' || repoLabel === 'Public template')
   );
+}
+
+// https://dev.to/bwca/create-a-debounce-function-from-scratch-in-typescript-560m
+export function debounce<A = unknown, R = void>(
+  fn: (args: A) => R,
+  ms: number
+): [(args: A) => Promise<R>, () => void] {
+  let timer: NodeJS.Timeout;
+
+  const debouncedFunc = (args: A): Promise<R> =>
+    new Promise((resolve) => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+
+      timer = setTimeout(() => {
+        resolve(fn(args));
+      }, ms);
+    });
+
+  const teardown = () => clearTimeout(timer);
+
+  return [debouncedFunc, teardown];
+}
+
+export function isAllNull(obj: Object) {
+  return Object.values(obj).every((value) => value === null);
 }

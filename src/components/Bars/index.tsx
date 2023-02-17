@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { formatNum } from '../../utils/formatter';
 import * as echarts from 'echarts';
 
 const LIGHT_THEME = {
@@ -173,24 +174,8 @@ const Bars: React.FC<BarsProps> = (props) => {
 
 const tooltipFormatter = (params: any) => {
   let res = `${params.seriesName} (${params.data[0]})<br/>
-  ${params.marker}  ${params.data[1]}`;
+  ${params.marker}  ${params.data[1].toFixed(2)}`;
   return res;
-};
-
-const formatNum = (num: number, index: number) => {
-  let si = [
-    { value: 1, symbol: '' },
-    { value: 1e3, symbol: 'k' },
-    // { value: 1e6, symbol: "M" },
-  ];
-  let rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-  let i;
-  for (i = si.length - 1; i > 0; i--) {
-    if (num >= si[i].value) {
-      break;
-    }
-  }
-  return (num / si[i].value).toFixed(2).replace(rx, '$1') + si[i].symbol;
 };
 
 export default Bars;

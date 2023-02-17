@@ -1,0 +1,70 @@
+# release.yml
+# bump a new version, create a new tag, and create a release in Github Releases
+name: release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Input a new version number to release. (e.g. 1.2.3)'
+        required: true
+
+run-name: Release v${{github.event.inputs.version}}
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          cache: "yarn"
+
+      - name: Bump version
+        id: bump-version
+        run: |
+          yarn install
+          yarn run update-version ${{github.event.inputs.version}}
+
+      - name: exit if failed to update new version
+        if: ${{ github.steps.bump-version != 0}}
+        run: |
+          echo ${{ github.steps.bump-version}}
+          exit 1
+
+      - name: Create release commit and tag
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add .
+          git commit -m "chore(release): v${{github.event.inputs.version}}"
+          git tag -a v${{github.event.inputs.version}} -m "Release v${{github.event.inputs.version}}"
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY
+          git push origin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build
+        run: |
+          yarn install
+          yarn run build
+
+      - name: Zip to hypercrx.zip
+        run: zip -j release/hypercrx.zip build/*
+
+      - name: Append version to release file names
+        run: |
+          cp release/hypercrx.crx ${{format('release/hypercrx-{0}.crx', github.event.inputs.version)}}
+          cp release/hypercrx.zip ${{format('release/hypercrx-{0}.zip', github.event.inputs.version)}}
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body: ${{ steps.create_changelog.outputs.changelog }}
+          generate_release_notes: true
+          files: |
+            ${{format('release/hypercrx-{0}.crx', github.event.inputs.version)}}
+            ${{format('release/hypercrx-{0}.zip', github.event.inputs.version)}}
+          tag_name: v${{github.event.inputs.version}}

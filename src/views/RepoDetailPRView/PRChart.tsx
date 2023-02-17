@@ -21,10 +21,11 @@ interface PRChartProps {
   width: number;
   height: number;
   data: any;
+  onClick?: Function;
 }
 
 const PRChart: React.FC<PRChartProps> = (props) => {
-  const { theme, width, height, data } = props;
+  const { theme, width, height, data, onClick } = props;
 
   const divEL = useRef(null);
 
@@ -36,6 +37,11 @@ const PRChart: React.FC<PRChartProps> = (props) => {
       show: true,
       textStyle: {
         color: TH.FG_COLOR,
+      },
+      selected: {
+        open: data.PROpened.length > 0,
+        merge: data.PRMerged.length > 0,
+        review: data.PRReviews.length > 0,
       },
     },
     tooltip: {
@@ -96,34 +102,37 @@ const PRChart: React.FC<PRChartProps> = (props) => {
     ],
     series: [
       {
-        name: 'opens',
+        name: 'open',
         type: 'line',
         symbol: 'none',
-        data: data.op,
+        data: data.PROpened,
         emphasis: {
           focus: 'series',
         },
         yAxisIndex: 0,
+        triggerLineEvent: true,
       },
       {
-        name: 'merges',
+        name: 'merge',
         type: 'line',
         symbol: 'none',
-        data: data.pm,
+        data: data.PRMerged,
         emphasis: {
           focus: 'series',
         },
         yAxisIndex: 0,
+        triggerLineEvent: true,
       },
       {
-        name: 'reviews',
+        name: 'review',
         type: 'line',
         symbol: 'none',
-        data: data.rc,
+        data: data.PRReviews,
         emphasis: {
           focus: 'series',
         },
         yAxisIndex: 0,
+        triggerLineEvent: true,
       },
     ],
     animationEasing: 'elasticOut',
@@ -146,13 +155,21 @@ const PRChart: React.FC<PRChartProps> = (props) => {
     const instance = echarts.getInstanceByDom(chartDOM as any);
     if (instance) {
       instance.setOption(option);
+      if (onClick) {
+        instance.on('click', (params) => {
+          onClick(curMonth, params);
+        });
+      }
     }
   }, []);
 
   return <div ref={divEL} style={{ width, height }}></div>;
 };
 
+let curMonth: string;
+
 const tooltipFormatter = (params: any) => {
+  curMonth = params[0].data[0];
   const series0 = params[0];
   const series1 = params[1];
   const series2 = params[2];

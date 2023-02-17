@@ -5,10 +5,10 @@ import * as pageDetect from 'github-url-detection';
 import PerceptorBase from '../PerceptorBase';
 import { runsWhen } from '../utils/utils';
 import { utils } from 'github-url-detection';
-import RepoActiInflTrendView from '../views/RepoActiInflTrendView/RepoActiInflTrendView';
+import RepoActORlTrendView from '../views/RepoActORTrendView/RepoActORTrendView';
 
 @runsWhen([pageDetect.isRepoHome])
-class RepoActiInflTrendAnchor extends PerceptorBase {
+class RepoActORTrendAnchor extends PerceptorBase {
   private _currentRepo: string;
 
   constructor() {
@@ -23,25 +23,24 @@ class RepoActiInflTrendAnchor extends PerceptorBase {
     let newBorderGridCell = null;
 
     // if not the first time to enter this code
-    if (document.getElementById('repo-acti-infl-trend') != null) {
-      newBorderGridCell = $('#repo-acti-infl-trend').children(
-        '.BorderGrid-cell'
-      )[0];
+    if (document.getElementById('repo-act-OR-trend') != null) {
+      newBorderGridCell =
+        $('#repo-act-OR-trend').children('.BorderGrid-cell')[0];
 
       render(
-        <RepoActiInflTrendView currentRepo={this._currentRepo} />,
+        <RepoActORlTrendView currentRepo={this._currentRepo} />,
         newBorderGridCell
       );
     } else {
       newBorderGridRow = document.createElement('div');
-      newBorderGridRow.id = 'repo-acti-infl-trend';
+      newBorderGridRow.id = 'repo-act-OR-trend';
       newBorderGridRow.className = 'BorderGrid-row';
       newBorderGridCell = document.createElement('div');
       newBorderGridCell.className = 'BorderGrid-cell';
       newBorderGridRow.appendChild(newBorderGridCell);
 
       render(
-        <RepoActiInflTrendView currentRepo={this._currentRepo} />,
+        <RepoActORlTrendView currentRepo={this._currentRepo} />,
         newBorderGridCell
       );
 
@@ -51,4 +50,4 @@ class RepoActiInflTrendAnchor extends PerceptorBase {
   }
 }
 
-export default RepoActiInflTrendAnchor;
+export default RepoActORTrendAnchor;

@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
 
-import { getGithubTheme, getMessageByLocale } from '../../utils/utils';
+import {
+  getGithubTheme,
+  getMessageByLocale,
+  isNull,
+  isAllNull,
+} from '../../utils/utils';
+import { numberWithCommas } from '../../utils/formatter';
 import Settings, { loadSettings } from '../../utils/settings';
-import { getRepoActiInfl, getRepoDetail } from '../../api/repo';
+import { getActivity, getOpenrank, getParticipant } from '../../api/repo';
 import { rocketLight, rocketDark } from './base64';
 import ReactTooltip from 'react-tooltip';
 import { generateDataByMonth } from '../../utils/data';
-import { numberWithCommas } from '../../utils/formatter';
 import ActivityChart from './ActivityChart';
-import InfluenceChart from './InfluenceChart';
+import OpenRankChart from './OpenRankChart';
 import ParticipantChart from './ParticipantChart';
 
 const githubTheme = getGithubTheme();
@@ -36,32 +41,19 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
   }, [inited, settings]);
 
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const repoActiInflResponse = await getRepoActiInfl(currentRepo);
-        const repoDetailReponse = await getRepoDetail(currentRepo);
-        setData({
-          activity: repoActiInflResponse.data['activity'],
-          influence: repoActiInflResponse.data['influence'],
-          participant: repoDetailReponse.data['p'],
-        });
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    getData();
+    (async () => {
+      setData({
+        activity: await getActivity(currentRepo),
+        OpenRank: await getOpenrank(currentRepo),
+        participant: await getParticipant(currentRepo),
+      });
+    })();
   }, []);
 
-  if (!data) return null;
+  if (isNull(data) || isAllNull(data)) return null;
 
-  const activityData: [string, number][] = [];
-  const influenceData: [string, number][] = [];
-
-  Object.keys(data.activity).forEach((key, index) => {
-    activityData.push([key, data.activity[key].toFixed(2)]);
-    influenceData.push([key, data.influence[key].toFixed(2)]);
-  });
-
+  const activityData = generateDataByMonth(data.activity);
+  const OpenRankData = generateDataByMonth(data.OpenRank);
   const participantData = generateDataByMonth(data.participant);
 
   return (
@@ -98,11 +90,11 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
       </span>
 
       <span
-        id="influence-header-label"
+        id="OpenRank-header-label"
         className="Label Label--secondary v-align-middle mr-1 unselectable"
         style={{ color: githubTheme === 'light' ? '#24292f' : '#c9d1d9' }}
         data-tip=""
-        data-for="influence-tooltip"
+        data-for="OpenRank-tooltip"
         data-class={`floating-window ${githubTheme}`}
         data-place="bottom"
         data-text-color={githubTheme === 'light' ? '#24292F' : '#C9D1D9'}
@@ -118,9 +110,7 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
           src={githubTheme === 'light' ? rocketLight : rocketDark}
           alt=""
         />
-        {numberWithCommas(
-          Math.round(influenceData[influenceData.length - 1][1])
-        )}
+        {numberWithCommas(Math.round(OpenRankData[OpenRankData.length - 1][1]))}
       </span>
 
       <span
@@ -168,15 +158,15 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
           data={activityData}
         />
       </ReactTooltip>
-      <ReactTooltip id="influence-tooltip" clickable={true}>
+      <ReactTooltip id="OpenRank-tooltip" clickable={true}>
         <div className="chart-title">
-          {getMessageByLocale('header_label_influence', settings.locale)}
+          {getMessageByLocale('header_label_OpenRank', settings.locale)}
         </div>
-        <InfluenceChart
+        <OpenRankChart
           theme={githubTheme as 'light' | 'dark'}
           width={270}
           height={130}
-          data={influenceData}
+          data={OpenRankData}
         />
       </ReactTooltip>
       <ReactTooltip id="participant-tooltip" clickable={true}>

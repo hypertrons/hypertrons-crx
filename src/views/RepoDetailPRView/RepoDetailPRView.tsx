@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from 'react';
 
-import { getGithubTheme, getMessageByLocale } from '../../utils/utils';
+import {
+  getGithubTheme,
+  getMessageByLocale,
+  isNull,
+  isAllNull,
+} from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
 import { generateDataByMonth } from '../../utils/data';
-import { getRepoDetail } from '../../api/repo';
+import {
+  getPROpened,
+  getPRMerged,
+  getPRReviews,
+  getMergedCodeAddition,
+  getMergedCodeDeletion,
+} from '../../api/repo';
 import ReactTooltip from 'react-tooltip';
 import PRChart from './PRChart';
 import MergedLinesChart from './MergedLinesChart';
@@ -16,20 +27,22 @@ interface RepoDetailPRViewProps {
 
 const generatePRData = (PR: any): any => {
   return {
-    op: generateDataByMonth(PR.op),
-    pm: generateDataByMonth(PR.pm),
-    rc: generateDataByMonth(PR.rc),
+    PROpened: generateDataByMonth(PR.PROpened),
+    PRMerged: generateDataByMonth(PR.PRMerged),
+    PRReviews: generateDataByMonth(PR.PRReviews),
   };
 };
 
 const generateMergedLinesData = (PR: any): any => {
   return {
-    ad: generateDataByMonth(PR.ad),
-    de: generateDataByMonth(PR.de).map((item) => {
-      const dataItem = item;
-      dataItem[1] = -item[1];
-      return dataItem;
-    }),
+    mergedCodeAddition: generateDataByMonth(PR.mergedCodeAddition),
+    mergedCodeDeletion: generateDataByMonth(PR.mergedCodeDeletion).map(
+      (item) => {
+        const dataItem = item;
+        dataItem[1] = -item[1];
+        return dataItem;
+      }
+    ),
   };
 };
 
@@ -51,22 +64,36 @@ const RepoDetailPRView: React.FC<RepoDetailPRViewProps> = ({ currentRepo }) => {
 
   useEffect(() => {
     (async () => {
-      try {
-        const res = await getRepoDetail(currentRepo);
-        setPR({
-          op: res.data['op'],
-          pm: res.data['pm'],
-          rc: res.data['rc'],
-          ad: res.data['ad'],
-          de: res.data['de'],
-        });
-      } catch (e) {
-        console.error(e);
-      }
+      setPR({
+        PROpened: await getPROpened(currentRepo),
+        PRMerged: await getPRMerged(currentRepo),
+        PRReviews: await getPRReviews(currentRepo),
+        mergedCodeAddition: await getMergedCodeAddition(currentRepo),
+        mergedCodeDeletion: await getMergedCodeDeletion(currentRepo),
+      });
     })();
   }, []);
 
-  if (!PR) return null;
+  if (isNull(PR) || isAllNull(PR)) return null;
+
+  const onClick = (curMonth: string, params: any) => {
+    const seriesIndex = params.seriesIndex;
+    let type;
+    if (seriesIndex === 0) {
+      type = 'created';
+    } else if (seriesIndex === 1) {
+      type = 'merged';
+    } else if (seriesIndex === 2) {
+      type = 'updated';
+    }
+    let [year, month] = curMonth.toString().split(',')[0].split('-');
+    if (month.length < 2) {
+      month = '0' + month;
+    }
+    window.open(
+      `/${currentRepo}/pulls?q=is:pr ${type}:${year}-${month} sort:updated-asc`
+    );
+  };
 
   return (
     <ReactTooltip id="pr-tooltip" clickable={true}>
@@ -78,6 +105,7 @@ const RepoDetailPRView: React.FC<RepoDetailPRViewProps> = ({ currentRepo }) => {
         width={330}
         height={200}
         data={generatePRData(PR)}
+        onClick={onClick}
       />
       <div className="chart-title">
         {getMessageByLocale('merged_lines_popup_title', settings.locale)}

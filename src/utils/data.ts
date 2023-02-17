@@ -1,13 +1,18 @@
 export const generateDataByMonth = (originalData: any) => {
-  const objectData: any = {};
-  // format month string
-  Object.keys(originalData).forEach((key) => {
-    // e.g. 20204 -> 2020-4
-    const date = key.slice(0, 4) + '-' + key.slice(4);
-    objectData[date] = originalData[key];
-  });
-  // get the oldest month and the newest one
-  const orderedMonths = Object.keys(objectData).sort((a, b) => {
+  if (originalData === null) {
+    return [];
+  }
+
+  const isNormalMonth = (key: string): boolean => {
+    return key.match(/^\d{4}-\d{2}$/) !== null;
+  };
+  // `originalData` is an object with keys like `2020-01`, `2020-02`, `2022`, `2022-Q1`, `all`.
+  // A normal month is a key like `2020-01`(yyyy-mm). They are the keys we handle later in this function.
+  // An unnormal month is a key like `2020`, `2020-Q1`, `all`. They are not used in any feature yet.
+  const normalMonths = Object.keys(originalData).filter((key) =>
+    isNormalMonth(key)
+  );
+  const orderedMonths = normalMonths.sort((a, b) => {
     const dateA = new Date(a);
     const dateB = new Date(b);
     if (dateA < dateB) return -1;
@@ -20,13 +25,13 @@ export const generateDataByMonth = (originalData: any) => {
   const arrayData: [string, number][] = [];
   const start = new Date(oldestMonth);
   const end = new Date(newestMonth);
-  end.setMonth(end.getMonth() + 1); // if not +1 month, i <= end will miss the last month occasionally
-  for (let i = start; i < end; i.setMonth(i.getMonth() + 1)) {
-    const date = i.getFullYear() + '-' + (i.getMonth() + 1);
-    if (!objectData.hasOwnProperty(date)) {
+  for (let i = start; i <= end; i.setMonth(i.getMonth() + 1)) {
+    const date =
+      i.getFullYear() + '-' + (i.getMonth() + 1).toString().padStart(2, '0');
+    if (!originalData.hasOwnProperty(date)) {
       arrayData.push([date, 0]);
     } else {
-      arrayData.push([date, objectData[date]]);
+      arrayData.push([date, originalData[date]]);
     }
   }
   return arrayData;

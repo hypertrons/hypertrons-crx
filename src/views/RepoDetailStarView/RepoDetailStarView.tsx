@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { getGithubTheme, getMessageByLocale } from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
 import { generateDataByMonth } from '../../utils/data';
-import { getRepoDetail } from '../../api/repo';
+import { getStars } from '../../api/repo';
 import ReactTooltip from 'react-tooltip';
 import StarChart from './StarChart';
 
@@ -13,16 +13,12 @@ interface RepoDetailStarViewProps {
   currentRepo: string;
 }
 
-const generateStarChartData = (star: any) => {
-  return generateDataByMonth(star);
-};
-
 const RepoDetailStarView: React.FC<RepoDetailStarViewProps> = ({
   currentRepo,
 }) => {
   const [inited, setInited] = useState(false);
   const [settings, setSettings] = useState(new Settings());
-  const [star, setStar] = useState();
+  const [stars, setStars] = useState();
 
   useEffect(() => {
     const initSettings = async () => {
@@ -37,16 +33,11 @@ const RepoDetailStarView: React.FC<RepoDetailStarViewProps> = ({
 
   useEffect(() => {
     (async () => {
-      try {
-        const res = await getRepoDetail(currentRepo);
-        setStar(res.data['s']);
-      } catch (e) {
-        console.error(e);
-      }
+      setStars(await getStars(currentRepo));
     })();
   }, []);
 
-  if (!star) return null;
+  if (!stars) return null;
 
   return (
     <ReactTooltip id="star-tooltip" clickable={true}>
@@ -57,7 +48,7 @@ const RepoDetailStarView: React.FC<RepoDetailStarViewProps> = ({
         theme={githubTheme as 'light' | 'dark'}
         width={270}
         height={130}
-        data={generateStarChartData(star)}
+        data={generateDataByMonth(stars)}
       />
     </ReactTooltip>
   );

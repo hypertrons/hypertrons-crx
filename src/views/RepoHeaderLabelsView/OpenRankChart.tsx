@@ -18,14 +18,14 @@ const DARK_THEME = {
   LINE_COLOR: '#FF8088',
 };
 
-interface InfluenceChartProps {
+interface OpenRankChartProps {
   theme: 'light' | 'dark';
   width: number;
   height: number;
   data: [string, number][];
 }
 
-const InfluenceChart: React.FC<InfluenceChartProps> = (props) => {
+const OpenRankChart: React.FC<OpenRankChartProps> = (props) => {
   const { theme, width, height, data } = props;
 
   const divEL = useRef(null);
@@ -145,10 +145,10 @@ const tooltipFormatter = (params: any) => {
     ${params[0].data[0]}<br/>
     ${params[0].marker}
     <span style="font-weight:bold;">
-      ${numberWithCommas(params[0].data[1])}
+      ${numberWithCommas(params[0].data[1].toFixed(2))}
     </span>
   `;
   return res;
 };
 
-export default InfluenceChart;
+export default OpenRankChart;

@@ -1,26 +1,25 @@
-import { HYPERTRONS_OSS_XLAB_ENDPOINT, OSS_XLAB_ENDPOINT } from '../constant';
-import request, { mockSuccessRes } from '../utils/request';
-import {
-  developerCollabrationData,
-  participatedProjectsData,
-} from '../mock/developer.data';
+import { getMetricByName } from './common';
 
-export const getDeveloperCollabration = async (developer: string) => {
-  return (
-    mockSuccessRes(developerCollabrationData) ||
-    (await request(`${HYPERTRONS_OSS_XLAB_ENDPOINT}/actor/${developer}.json`))
-  );
+// metric names and their implementation names in OpenDigger
+const metricNameMap = new Map([
+  ['activity', 'activity'],
+  ['openrank', 'openrank'],
+  ['developer_network', 'developer_network'],
+  ['repo_network', 'repo_network'],
+]);
+
+export const getActivity = async (user: string) => {
+  return getMetricByName(user, metricNameMap, 'activity');
 };
 
-export const getParticipatedProjects = async (developer: string) => {
-  return (
-    mockSuccessRes(participatedProjectsData) ||
-    (await request(
-      `${HYPERTRONS_OSS_XLAB_ENDPOINT}/actor/${developer}_top.json`
-    ))
-  );
+export const getOpenrank = async (user: string) => {
+  return getMetricByName(user, metricNameMap, 'openrank');
 };
 
-export const getDeveloperActiInfl = async (developer: string) => {
-  return await request(`${OSS_XLAB_ENDPOINT}/hypercrx_actor/${developer}.json`);
+export const getDeveloperNetwork = async (user: string) => {
+  return getMetricByName(user, metricNameMap, 'developer_network');
+};
+
+export const getRepoNetwork = async (user: string) => {
+  return getMetricByName(user, metricNameMap, 'repo_network');
 };

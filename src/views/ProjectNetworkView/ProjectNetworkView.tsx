@@ -6,8 +6,8 @@ import {
   IDropdownOption,
   Spinner,
 } from 'office-ui-fabric-react';
-import Graph from '../../components/Graph/Graph';
-import { getRepoCorrelation, getDevelopersByRepo } from '../../api/repo';
+import Graph from '../../components/Graph';
+import { getRepoNetwork, getDeveloperNetwork } from '../../api/repo';
 import { getMessageByLocale } from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
 import ErrorPage from '../../components/ExceptionPage/ErrorPage';
@@ -19,46 +19,36 @@ interface ProjectNetworkViewProps {
 const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({
   currentRepo,
 }) => {
-  const [repoCorrelationData, setRepoCorrelationData] = useState<
-    IGraphData | undefined
-  >();
-  const [developersByRepoData, setDevelopersByRepoData] = useState<
-    IGraphData | undefined
-  >();
-  const [repoPeriod, setRepoPeriod] = useState<string | number | undefined>(
-    180
-  );
+  const [repoNetwork, setRepoNetwork] = useState();
+  const [developerNetwork, setDeveloperNetwork] = useState();
+  const [repoPeriod, setRepoPeriod] = useState<string | number | undefined>(90);
   const [developerPeriod, setDeveloperPeriod] = useState<
     string | number | undefined
-  >(180);
+  >(90);
   const [inited, setInited] = useState(false);
   const [settings, setSettings] = useState(new Settings());
   const [statusCode, setStatusCode] = useState<number>(200);
 
   useEffect(() => {
-    const getRepoCorrelationData = async () => {
-      try {
-        const res = await getRepoCorrelation(currentRepo);
-        setRepoCorrelationData(res.data);
-      } catch (e) {
-        // @ts-ignore
-        setStatusCode(e);
+    (async () => {
+      const data = await getRepoNetwork(currentRepo);
+      if (data !== null) {
+        setRepoNetwork(data);
+      } else {
+        setStatusCode(404);
       }
-    };
-    getRepoCorrelationData();
+    })();
   }, [repoPeriod]);
 
   useEffect(() => {
-    const getDevelopersByRepoData = async () => {
-      try {
-        const res = await getDevelopersByRepo(currentRepo);
-        setDevelopersByRepoData(res.data);
-      } catch (e) {
-        // @ts-ignore
-        setStatusCode(e);
+    (async () => {
+      const data = await getDeveloperNetwork(currentRepo);
+      if (data !== null) {
+        setDeveloperNetwork(data);
+      } else {
+        setStatusCode(404);
       }
-    };
-    getDevelopersByRepoData();
+    })();
   }, [developerPeriod]);
 
   useEffect(() => {
@@ -78,8 +68,8 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({
 
   const periodOptions: IDropdownOption[] = [
     {
-      key: 180,
-      text: `180 ${getMessageByLocale('global_day', settings.locale)}`,
+      key: 90,
+      text: `90 ${getMessageByLocale('global_day', settings.locale)}`,
     },
   ];
 
@@ -118,7 +108,7 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({
     return <ErrorPage errorCode={statusCode} />;
   }
 
-  if (!repoCorrelationData || !developersByRepoData) {
+  if (!repoNetwork || !developerNetwork) {
     return (
       <Spinner
         id="spinner_perceptor_layout"
@@ -151,7 +141,7 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({
           <div className="col-12 col-md-8">
             <div style={{ margin: '10px 0 20px 20px' }}>
               <Graph
-                data={repoCorrelationData!}
+                data={repoNetwork!}
                 style={graphStyle}
                 focusedNodeID={currentRepo}
               />
@@ -190,7 +180,7 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({
         <Stack className="hypertrons-crx-title">
           <span>
             {getMessageByLocale(
-              'component_activeDeveloperCollabrationNetwork_title',
+              'component_activeDeveloperCollaborationNetwork_title',
               settings.locale
             )}
           </span>
@@ -207,7 +197,7 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({
         <div className="d-flex flex-wrap flex-items-center">
           <div className="col-12 col-md-8">
             <div style={{ margin: '10px 0 20px 20px' }}>
-              <Graph data={developersByRepoData!} style={graphStyle} />
+              <Graph data={developerNetwork!} style={graphStyle} />
             </div>
           </div>
           <div className="col-12 col-md-4">
@@ -217,20 +207,20 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({
             >
               <p>
                 {getMessageByLocale(
-                  'component_activeDeveloperCollabrationNetwork_description',
+                  'component_activeDeveloperCollaborationNetwork_description',
                   settings.locale
                 )}
               </p>
               <ul style={{ margin: '0px 0 10px 15px' }}>
                 <li>
                   {getMessageByLocale(
-                    'component_activeDeveloperCollabrationNetwork_description_node',
+                    'component_activeDeveloperCollaborationNetwork_description_node',
                     settings.locale
                   )}
                 </li>
                 <li>
                   {getMessageByLocale(
-                    'component_activeDeveloperCollabrationNetwork_description_edge',
+                    'component_activeDeveloperCollaborationNetwork_description_edge',
                     settings.locale
                   )}
                 </li>
