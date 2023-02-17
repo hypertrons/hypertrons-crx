@@ -8,9 +8,11 @@ import StarChart from './StarChart';
 
 const githubTheme = getGithubTheme();
 
-const View: React.FC<{
+interface Props {
   stars: any;
-}> = ({ stars: stars }) => {
+}
+
+const View = ({ stars: stars }: Props): JSX.Element | null => {
   const [settings, setSettings] = useState(new Settings());
 
   useEffect(() => {

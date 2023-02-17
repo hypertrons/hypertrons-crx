@@ -8,11 +8,11 @@ import ForkChart from './ForkChart';
 
 const githubTheme = getGithubTheme();
 
-interface RepoDetailForkViewProps {
+interface Props {
   forks: any;
 }
 
-const View: React.FC<RepoDetailForkViewProps> = ({ forks }) => {
+const View = ({ forks }: Props): JSX.Element | null => {
   const [settings, setSettings] = useState(new Settings());
 
   useEffect(() => {

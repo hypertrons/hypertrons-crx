@@ -14,11 +14,13 @@ const generateBarsData = (activity: any, openrank: any) => {
   };
 };
 
-const View: React.FC<{
+interface Props {
   repoName: string;
   activity: any;
   openrank: any;
-}> = ({ repoName, activity, openrank }) => {
+}
+
+const View = ({ repoName, activity, openrank }: Props): JSX.Element | null => {
   const [settings, setSettings] = useState<Settings>();
 
   useEffect(() => {

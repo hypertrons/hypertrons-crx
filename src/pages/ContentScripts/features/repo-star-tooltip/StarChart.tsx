@@ -25,7 +25,7 @@ interface StarChartProps {
   data: [string, number][];
 }
 
-const StarChart: React.FC<StarChartProps> = (props) => {
+const StarChart = (props: StarChartProps): JSX.Element => {
   const { theme, width, height, data } = props;
 
   const divEL = useRef(null);
