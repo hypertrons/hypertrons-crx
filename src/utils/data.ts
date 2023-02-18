@@ -20,7 +20,10 @@ export const generateDataByMonth = (originalData: any) => {
     else return 0;
   });
   const oldestMonth = orderedMonths[0];
-  const newestMonth = orderedMonths[orderedMonths.length - 1];
+  const now = new Date();
+  now.setMonth(now.getMonth() - 1);
+  const newestMonth =
+    now.getFullYear() + '-' + (now.getMonth() + 1).toString().padStart(2, '0');
   // insert no-event months (assigned to 0) and generate final data
   const arrayData: [string, number][] = [];
   const start = new Date(oldestMonth);
