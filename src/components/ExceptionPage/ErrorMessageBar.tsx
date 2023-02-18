@@ -14,10 +14,10 @@ interface ErrorMessageBarProps {
   url?: string;
 }
 
-const ErrorMessageBar: React.FC<ErrorMessageBarProps> = ({
+const ErrorMessageBar = ({
   errorCode = ErrorCode.UNKNOWN,
   url = HYPERTRONS_CRX_NEW_ISSUE,
-}) => {
+}: ErrorMessageBarProps): JSX.Element => {
   const [inited, setInited] = useState(false);
   const [settings, setSettings] = useState(new Settings());
 

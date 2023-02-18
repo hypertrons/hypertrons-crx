@@ -4,15 +4,15 @@ import { getGithubTheme, getMessageByLocale } from '../../../../utils/utils';
 import Settings, { loadSettings } from '../../../../utils/settings';
 import { generateDataByMonth } from '../../../../utils/data';
 import ReactTooltip from 'react-tooltip';
-import ForkChart from './ForkChart';
+import StarChart from './StarChart';
 
 const githubTheme = getGithubTheme();
 
 interface Props {
-  forks: any;
+  stars: any;
 }
 
-const View = ({ forks }: Props): JSX.Element | null => {
+const View = ({ stars: stars }: Props): JSX.Element | null => {
   const [settings, setSettings] = useState(new Settings());
 
   useEffect(() => {
@@ -21,18 +21,18 @@ const View = ({ forks }: Props): JSX.Element | null => {
     })();
   }, []);
 
-  if (!forks) return null;
+  if (!stars) return null;
 
   return (
-    <ReactTooltip id="fork-tooltip" clickable={true}>
+    <ReactTooltip id="star-tooltip" clickable={true}>
       <div className="chart-title">
-        {getMessageByLocale('fork_popup_title', settings.locale)}
+        {getMessageByLocale('star_popup_title', settings.locale)}
       </div>
-      <ForkChart
+      <StarChart
         theme={githubTheme as 'light' | 'dark'}
         width={270}
         height={130}
-        data={generateDataByMonth(forks)}
+        data={generateDataByMonth(stars)}
       />
     </ReactTooltip>
   );

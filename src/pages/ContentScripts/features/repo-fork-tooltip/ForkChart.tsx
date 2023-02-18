@@ -25,7 +25,7 @@ interface ForkChartProps {
   data: [string, number][];
 }
 
-const ForkChart: React.FC<ForkChartProps> = (props) => {
+const ForkChart = (props: ForkChartProps): JSX.Element => {
   const { theme, width, height, data } = props;
 
   const divEL = useRef(null);

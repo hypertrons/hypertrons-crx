@@ -26,7 +26,7 @@ interface BarsProps {
   onClick?: Function;
 }
 
-const Bars: React.FC<BarsProps> = (props) => {
+const Bars = (props: BarsProps): JSX.Element => {
   const {
     theme,
     height,

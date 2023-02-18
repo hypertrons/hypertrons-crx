@@ -18,7 +18,7 @@ interface ErrorPageProps {
   errorCode: number;
 }
 
-const ErrorPage: React.FC<ErrorPageProps> = ({ errorCode }) => {
+const ErrorPage = ({ errorCode }: ErrorPageProps): JSX.Element => {
   const [inited, setInited] = useState(false);
   const [settings, setSettings] = useState(new Settings());
 

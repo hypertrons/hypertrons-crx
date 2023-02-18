@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
-import { formatNum, numberWithCommas } from '../../utils/formatter';
+import { formatNum, numberWithCommas } from '../../../../utils/formatter';
 
 const LIGHT_THEME = {
   FG_COLOR: '#24292F',
@@ -25,7 +25,7 @@ interface StarChartProps {
   data: [string, number][];
 }
 
-const StarChart: React.FC<StarChartProps> = (props) => {
+const StarChart = (props: StarChartProps): JSX.Element => {
   const { theme, width, height, data } = props;
 
   const divEL = useRef(null);
