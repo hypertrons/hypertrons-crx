@@ -13,6 +13,7 @@ import shouldFeatureRun, {
 
 type FeatureInit = () => Promisable<void>;
 type FeatureRestore = Function;
+type FeatureAdvance = Function;
 
 type FeatureLoader = {
   /**
@@ -31,6 +32,8 @@ type FeatureLoader = {
    * restored. Hence extra code(i.e. `restore`) is needed to keep features always behaving right.
    */
   restore?: FeatureRestore;
+  advance?: FeatureAdvance;
+  additionalListeners?: CallableFunction[];
 } & Partial<InternalRunConfig>;
 
 type InternalRunConfig = ShouldRunConditions & {
@@ -135,6 +138,8 @@ const add = async (
       exclude,
       init,
       restore,
+      advance,
+      additionalListeners = [],
       awaitDomReady = true,
     } = loader;
 
@@ -193,8 +198,16 @@ const add = async (
         if (restore && isRestorationVisit()) {
           restore();
         }
+        if (advance && !isRestorationVisit()) {
+          (async () => {
+            await advance();
+          })();
+        }
       }
     });
+    for (const listener of additionalListeners) {
+      listener();
+    }
   }
 };
 
