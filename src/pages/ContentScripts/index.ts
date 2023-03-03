@@ -1,6 +1,7 @@
 import './index.scss';
 
 import './features/repo-activity-openrank-trends';
+import './features/developer-activity-openrank-trends';
 import './features/repo-fork-tooltip';
 import './features/repo-star-tooltip';
 
