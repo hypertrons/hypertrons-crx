@@ -1,13 +1,10 @@
 import $ from 'jquery';
-import { utils, isRepo } from 'github-url-detection';
 import elementReady from 'element-ready';
 import { isPerceptor, isPublicRepo } from '../../../../utils/utils';
 import features from '../../../../feature-manager';
-import logger from '../../../../utils/logger';
 import sleep from '../../../../helpers/sleep';
 
 const featureId = features.getFeatureID(import.meta.url);
-const repo = utils.getRepositoryInfo(window.location)!.nameWithOwner;
 
 const addPerceptorTab = async (): Promise<void | false> => {
   // add to tab bar
@@ -20,9 +17,8 @@ const addPerceptorTab = async (): Promise<void | false> => {
     return false;
   }
   const perceptorTab = insightsTab.cloneNode(true) as HTMLAnchorElement;
-
-  const perceptorHref = `/microsoft/vscode/pulse?redirect=perceptor`;
   delete perceptorTab.dataset.selectedLinks;
+  const perceptorHref = `${insightsTab.href}?redirect=perceptor`;
   perceptorTab.href = perceptorHref;
   perceptorTab.id = featureId;
   perceptorTab.setAttribute('data-tab-item', featureId);
@@ -70,14 +66,17 @@ const addPerceptorTab = async (): Promise<void | false> => {
 
 const updatePerceptorTabHighlighting = async (): Promise<void> => {
   const insightsTab = $('#insights-tab');
+  const perceptorTab = $(`#${featureId}`);
   // no operation needed
   if (!isPerceptor()) return;
   // if perceptor tab
   const insightsTabSeletedLinks = insightsTab.attr('data-selected-links');
   insightsTab.removeAttr('data-selected-links');
+  perceptorTab.attr('data-selected-links', 'pulse');
   await sleep(10);
   if (!insightsTabSeletedLinks) return;
   insightsTab.attr('data-selected-links', insightsTabSeletedLinks);
+  perceptorTab.removeAttr('data-selected-links');
   return;
 };
 
