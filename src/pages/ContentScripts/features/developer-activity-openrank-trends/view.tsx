@@ -14,11 +14,12 @@ const generateBarsData = (activity: any, openrank: any) => {
   };
 };
 
-const View: React.FC<{
-  developerName: string;
+interface Props {
   activity: any;
   openrank: any;
-}> = ({ developerName: developerName, activity, openrank }) => {
+}
+
+const View = ({ activity, openrank }: Props): JSX.Element | null => {
   const [settings, setSettings] = useState(new Settings());
 
   useEffect(() => {
@@ -30,6 +31,7 @@ const View: React.FC<{
   if (!settings || !activity || !openrank) return null;
 
   let barsData: any = generateBarsData(activity, openrank);
+
   return (
     <div className="border-top color-border-secondary pt-3 mt-3">
       <h2 className="h4 mb-3">

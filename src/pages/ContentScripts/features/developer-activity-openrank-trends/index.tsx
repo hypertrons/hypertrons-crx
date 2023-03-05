@@ -24,14 +24,7 @@ const getData = async () => {
 };
 
 const renderTo = (container: Container) => {
-  render(
-    <View
-      developerName={developerName}
-      activity={activity}
-      openrank={openrank}
-    />,
-    container
-  );
+  render(<View activity={activity} openrank={openrank} />, container);
 };
 
 const init = async (): Promise<void> => {
