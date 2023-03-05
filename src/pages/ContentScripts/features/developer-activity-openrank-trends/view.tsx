@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { getGithubTheme, getMessageByLocale } from '../../utils/utils';
-import { generateDataByMonth } from '../../utils/data';
-import Settings, { loadSettings } from '../../utils/settings';
-import { getActivity, getOpenrank } from '../../api/developer';
-import Bars from '../../components/Bars/index';
+
+import { getGithubTheme, getMessageByLocale } from '../../../../utils/utils';
+import { generateDataByMonth } from '../../../../utils/data';
+import Settings, { loadSettings } from '../../../../utils/settings';
+import Bars from '../../../../components/Bars/index';
 
 const githubTheme = getGithubTheme();
-
-interface DeveloperActORTrendViewProps {
-  currentDeveloper: string;
-}
 
 const generateBarsData = (activity: any, openrank: any) => {
   return {
@@ -18,35 +14,24 @@ const generateBarsData = (activity: any, openrank: any) => {
   };
 };
 
-const DeveloperActORTrendView: React.FC<DeveloperActORTrendViewProps> = ({
-  currentDeveloper,
-}) => {
-  const [inited, setInited] = useState(false);
-  const [settings, setSettings] = useState(new Settings());
-  const [activity, setActivity] = useState();
-  const [openrank, setOpenrank] = useState();
+interface Props {
+  activity: any;
+  openrank: any;
+}
 
-  useEffect(() => {
-    const initSettings = async () => {
-      const temp = await loadSettings();
-      setSettings(temp);
-      setInited(true);
-    };
-    if (!inited) {
-      initSettings();
-    }
-  }, [inited, settings]);
+const View = ({ activity, openrank }: Props): JSX.Element | null => {
+  const [settings, setSettings] = useState(new Settings());
 
   useEffect(() => {
     (async () => {
-      setActivity(await getActivity(currentDeveloper));
-      setOpenrank(await getOpenrank(currentDeveloper));
+      setSettings(await loadSettings());
     })();
   }, []);
 
-  if (!activity || !openrank) return null;
+  if (!settings || !activity || !openrank) return null;
 
   let barsData: any = generateBarsData(activity, openrank);
+
   return (
     <div className="border-top color-border-secondary pt-3 mt-3">
       <h2 className="h4 mb-3">
@@ -81,4 +66,4 @@ const DeveloperActORTrendView: React.FC<DeveloperActORTrendViewProps> = ({
   );
 };
 
-export default DeveloperActORTrendView;
+export default View;
