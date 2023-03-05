@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, Container } from 'react-dom';
-import elementReady from 'element-ready';
 import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
 
@@ -36,14 +35,6 @@ const init = async (): Promise<void> => {
   newContainer.id = featureId;
   newContainer.style.width = '100%';
 
-  /**
-   * `awaitDomReady` is set to `false` below, which means the `init()` of this feature
-   * will run as early as possible without waiting for the whole DOM ready. So the time
-   * saved can be used to fetch data and create elements and etc. However, certain DOM
-   * nodes should still be waited because before injecting features(elements) into pages
-   * those related DOM nodes must exist. Otherwise there would be no place to inject the
-   * feature then errors would occur.
-   */
   renderTo(newContainer);
 
   const profileArea = $('.js-profile-editable-area').parent();
