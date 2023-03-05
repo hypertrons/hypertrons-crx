@@ -14,12 +14,8 @@ let activity: any;
 let openrank: any;
 
 const getData = async () => {
-  try {
-    activity = await getActivity(developerName);
-    openrank = await getOpenrank(developerName);
-  } catch (e) {
-    console.error(e);
-  }
+  activity = await getActivity(developerName);
+  openrank = await getOpenrank(developerName);
 };
 
 const renderTo = (container: Container) => {
