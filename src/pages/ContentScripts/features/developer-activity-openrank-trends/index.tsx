@@ -33,7 +33,6 @@ const init = async (): Promise<void> => {
   // create container
   const newContainer = document.createElement('div');
   newContainer.id = featureId;
-  newContainer.style.width = '100%';
 
   renderTo(newContainer);
 
