@@ -21,6 +21,12 @@ const View: React.FC<{
 }> = ({ developerName: developerName, activity, openrank }) => {
   const [settings, setSettings] = useState(new Settings());
 
+  useEffect(() => {
+    (async () => {
+      setSettings(await loadSettings());
+    })();
+  }, []);
+
   if (!settings || !activity || !openrank) return null;
 
   let barsData: any = generateBarsData(activity, openrank);
