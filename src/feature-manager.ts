@@ -184,11 +184,11 @@ const add = async (
          */
         await sleep(10); // 10ms seems enough
       }
-      // if a feature doesn't exisit in DOM, try loading it since it might be expected in current page
+      // if a feature doesn't exist in DOM, try loading it since it might be expected in current page
       if (!exists(`#${id}`)) {
         setupPageLoad(id, details);
       } else {
-        // if already exisits, either it's not removed from DOM after a turbo:visit or the
+        // if already exists, either it's not removed from DOM after a turbo:visit or the
         // current visit is a restoration visit. For the second case, we should handle.
         if (restore && isRestorationVisit()) {
           restore();

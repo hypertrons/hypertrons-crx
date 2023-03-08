@@ -17,7 +17,7 @@ export default async function shouldFeatureRun(
   } = props;
   return (
     (await Promise.all(asLongAs.map((c) => c())).then((flags) =>
-      flags.some((flag) => flag === true)
+      flags.every((flag) => flag === true)
     )) &&
     (await Promise.all(include.map((c) => c())).then((flags) =>
       flags.some((flag) => flag === true)
