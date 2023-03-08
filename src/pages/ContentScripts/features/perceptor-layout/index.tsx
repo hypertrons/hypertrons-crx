@@ -2,9 +2,9 @@ import React from 'react';
 import $ from 'jquery';
 import elementReady from 'element-ready';
 import { render, Container } from 'react-dom';
-import { isPerceptor } from '../../../../utils/utils';
+
 import features from '../../../../feature-manager';
-import logger from '../../../../utils/logger';
+import { isPerceptor } from '../../../../utils/utils';
 import View from './view';
 
 const featureId = features.getFeatureID(import.meta.url);
@@ -24,7 +24,7 @@ const init = async (): Promise<void> => {
   );
   perceptorLayoutContainer.children('div').remove();
 
-  // create the new one : percepter container
+  // create the new one: the percepter container
   const percepterContainer = document.createElement('div');
   percepterContainer.setAttribute('id', 'perceptor-layout');
 
