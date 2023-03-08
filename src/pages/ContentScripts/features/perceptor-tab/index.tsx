@@ -1,20 +1,21 @@
 import $ from 'jquery';
 import elementReady from 'element-ready';
-import { isPerceptor, isPublicRepo } from '../../../../utils/utils';
+
 import iconSvgPath from './icon-svg-path';
 import features from '../../../../feature-manager';
+import { isPerceptor, isPublicRepo } from '../../../../utils/utils';
 import sleep from '../../../../helpers/sleep';
 
 const featureId = features.getFeatureID(import.meta.url);
 
 const addPerceptorTab = async (): Promise<void | false> => {
-  // add to tab bar
+  // the creation of the Perceptor tab is based on the Insights tab
   const insightsTab = await elementReady(
     'a.UnderlineNav-item[id="insights-tab"]',
     { waitForChildren: false }
   );
   if (!insightsTab) {
-    // Insights are disabled
+    // if the selector failed to find the Insights tab
     return false;
   }
   const perceptorTab = insightsTab.cloneNode(true) as HTMLAnchorElement;
@@ -34,6 +35,7 @@ const addPerceptorTab = async (): Promise<void | false> => {
   // replace with the perceptor Icon
   $('svg.octicon', perceptorTab).html(iconSvgPath);
 
+  // add the Perceptor tab to the tabs list
   if (!insightsTab.parentElement) {
     return false;
   }
@@ -43,7 +45,7 @@ const addPerceptorTab = async (): Promise<void | false> => {
   tabContainer.className = 'd-inline-flex';
   insightsTab.parentElement.after(tabContainer);
 
-  // add to drop down menu
+  // add to drop down menu (when the window is narrow enough some tabs are hidden into "···" menu)
   const repoNavigationDropdown = await elementReady('.UnderlineNav-actions ul');
   if (!repoNavigationDropdown) {
     return false;
@@ -73,11 +75,11 @@ const updatePerceptorTabHighlighting = async (): Promise<void> => {
   const insightsTabSeletedLinks = insightsTab.attr('data-selected-links');
   insightsTab.removeAttr('data-selected-links');
   perceptorTab.attr('data-selected-links', 'pulse');
+  // should wait a short time for the host code to update the tab highlighting first
   await sleep(10);
   if (!insightsTabSeletedLinks) return;
   insightsTab.attr('data-selected-links', insightsTabSeletedLinks);
   perceptorTab.removeAttr('data-selected-links');
-  return;
 };
 
 const init = async (): Promise<void> => {
