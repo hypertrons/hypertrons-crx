@@ -1,6 +1,6 @@
 import React from 'react';
 
-const View: React.FC = () => {
+const View = (): JSX.Element => {
   return (
     <div
       data-view-component="true"
