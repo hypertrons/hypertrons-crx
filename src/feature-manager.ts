@@ -31,7 +31,6 @@ type FeatureLoader = {
    * restored. Hence extra code(i.e. `restore`) is needed to keep features always behaving right.
    */
   restore?: FeatureRestore;
-  additionalListeners?: CallableFunction[];
 } & Partial<InternalRunConfig>;
 
 type InternalRunConfig = ShouldRunConditions & {
@@ -136,7 +135,6 @@ const add = async (
       exclude,
       init,
       restore,
-      additionalListeners = [],
       awaitDomReady = true,
     } = loader;
 
@@ -197,9 +195,6 @@ const add = async (
         }
       }
     });
-    for (const listener of additionalListeners) {
-      listener();
-    }
   }
 };
 
