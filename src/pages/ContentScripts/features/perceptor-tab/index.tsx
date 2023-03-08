@@ -83,13 +83,7 @@ const updatePerceptorTabHighlighting = async (): Promise<void> => {
 const init = async (): Promise<void> => {
   await addPerceptorTab();
   await updatePerceptorTabHighlighting();
-};
-
-const advance = async () => {
-  await updatePerceptorTabHighlighting();
-};
-
-const onLoad = async () => {
+  // add event listener to update tab highlighting at each turbo:load event
   document.addEventListener('turbo:load', async () => {
     (async () => {
       await updatePerceptorTabHighlighting();
@@ -101,6 +95,4 @@ features.add(featureId, {
   asLongAs: [isPublicRepo],
   awaitDomReady: false,
   init,
-  advance,
-  additionalListeners: [onLoad],
 });
