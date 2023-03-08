@@ -82,7 +82,6 @@ const updatePerceptorTabHighlighting = async (): Promise<void> => {
 
 const init = async (): Promise<void> => {
   await addPerceptorTab();
-  await updatePerceptorTabHighlighting();
   // add event listener to update tab highlighting at each turbo:load event
   document.addEventListener('turbo:load', async () => {
     await updatePerceptorTabHighlighting();
