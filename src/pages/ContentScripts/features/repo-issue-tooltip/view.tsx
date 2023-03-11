@@ -32,10 +32,7 @@ const generateData = (issueDetail: IssueDetail): any => {
   };
 };
 
-const RepoDetailIssueView = ({
-  currentRepo,
-  issueDetail,
-}: Props): JSX.Element | null => {
+const View = ({ currentRepo, issueDetail }: Props): JSX.Element | null => {
   const [settings, setSettings] = useState(new Settings());
 
   useEffect(() => {
@@ -81,4 +78,4 @@ const RepoDetailIssueView = ({
   );
 };
 
-export default RepoDetailIssueView;
+export default View;
