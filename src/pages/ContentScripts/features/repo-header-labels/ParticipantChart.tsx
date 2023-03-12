@@ -1,31 +1,32 @@
 import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
-import { formatNum, numberWithCommas } from '../../utils/formatter';
+
+import { formatNum, numberWithCommas } from '../../../../utils/formatter';
 
 const LIGHT_THEME = {
   FG_COLOR: '#24292F',
   BG_COLOR: '#ffffff',
   SPLIT_LINE_COLOR: '#D0D7DE',
-  BAR_COLOR: '#ED3E4A',
-  LINE_COLOR: '#F02331',
+  BAR_COLOR: '#3E90F1',
+  LINE_COLOR: '#267FE8',
 };
 
 const DARK_THEME = {
   FG_COLOR: '#c9d1d9',
   BG_COLOR: '#0d1118',
   SPLIT_LINE_COLOR: '#30363D',
-  BAR_COLOR: '#ED3E4A',
-  LINE_COLOR: '#FF8088',
+  BAR_COLOR: '#3E90F1',
+  LINE_COLOR: '#82BBFF',
 };
 
-interface OpenRankChartProps {
+interface ParticipantChartProps {
   theme: 'light' | 'dark';
   width: number;
   height: number;
   data: [string, number][];
 }
 
-const OpenRankChart: React.FC<OpenRankChartProps> = (props) => {
+const ParticipantChart = (props: ParticipantChartProps): JSX.Element => {
   const { theme, width, height, data } = props;
 
   const divEL = useRef(null);
@@ -145,10 +146,10 @@ const tooltipFormatter = (params: any) => {
     ${params[0].data[0]}<br/>
     ${params[0].marker}
     <span style="font-weight:bold;">
-      ${numberWithCommas(params[0].data[1].toFixed(2))}
+      ${numberWithCommas(params[0].data[1])}
     </span>
   `;
   return res;
 };
 
-export default OpenRankChart;
+export default ParticipantChart;

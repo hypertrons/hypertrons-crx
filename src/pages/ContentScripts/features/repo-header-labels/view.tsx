@@ -4,57 +4,46 @@ import {
   getGithubTheme,
   getMessageByLocale,
   isNull,
-  isAllNull,
-} from '../../utils/utils';
-import { numberWithCommas } from '../../utils/formatter';
-import Settings, { loadSettings } from '../../utils/settings';
-import { getActivity, getOpenrank, getParticipant } from '../../api/repo';
+} from '../../../../utils/utils';
+import { numberWithCommas } from '../../../../utils/formatter';
+import Settings, { loadSettings } from '../../../../utils/settings';
 import { rocketLight, rocketDark } from './base64';
 import ReactTooltip from 'react-tooltip';
-import { generateDataByMonth } from '../../utils/data';
+import { generateDataByMonth } from '../../../../utils/data';
 import ActivityChart from './ActivityChart';
 import OpenRankChart from './OpenRankChart';
 import ParticipantChart from './ParticipantChart';
 
 const githubTheme = getGithubTheme();
 
-interface RepoHeaderLabelsViewProps {
-  currentRepo: string;
+interface Props {
+  activity: any;
+  openrank: any;
+  participant: any;
 }
 
-const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
-  currentRepo,
-}) => {
-  const [inited, setInited] = useState(false);
+const View = ({
+  activity,
+  openrank,
+  participant,
+}: Props): JSX.Element | null => {
   const [settings, setSettings] = useState(new Settings());
-  const [data, setData] = useState<any>();
 
   useEffect(() => {
-    const initSettings = async () => {
-      const temp = await loadSettings();
-      setSettings(temp);
-      setInited(true);
-    };
-    if (!inited) {
-      initSettings();
-    }
-  }, [inited, settings]);
+    ReactTooltip.rebuild();
+  }, []);
 
   useEffect(() => {
     (async () => {
-      setData({
-        activity: await getActivity(currentRepo),
-        OpenRank: await getOpenrank(currentRepo),
-        participant: await getParticipant(currentRepo),
-      });
+      setSettings(await loadSettings());
     })();
   }, []);
 
-  if (isNull(data) || isAllNull(data)) return null;
+  if (isNull(activity) || isNull(openrank) || isNull(participant)) return null;
 
-  const activityData = generateDataByMonth(data.activity);
-  const OpenRankData = generateDataByMonth(data.OpenRank);
-  const participantData = generateDataByMonth(data.participant);
+  const activityData = generateDataByMonth(activity);
+  const openrankData = generateDataByMonth(openrank);
+  const participantData = generateDataByMonth(participant);
 
   return (
     <div className="d-flex">
@@ -94,7 +83,7 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
         className="Label Label--secondary v-align-middle mr-1 unselectable"
         style={{ color: githubTheme === 'light' ? '#24292f' : '#c9d1d9' }}
         data-tip=""
-        data-for="OpenRank-tooltip"
+        data-for="openrank-tooltip"
         data-class={`floating-window ${githubTheme}`}
         data-place="bottom"
         data-text-color={githubTheme === 'light' ? '#24292F' : '#C9D1D9'}
@@ -110,7 +99,7 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
           src={githubTheme === 'light' ? rocketLight : rocketDark}
           alt=""
         />
-        {numberWithCommas(Math.round(OpenRankData[OpenRankData.length - 1][1]))}
+        {numberWithCommas(Math.round(openrankData[openrankData.length - 1][1]))}
       </span>
 
       <span
@@ -158,7 +147,7 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
           data={activityData}
         />
       </ReactTooltip>
-      <ReactTooltip id="OpenRank-tooltip" clickable={true}>
+      <ReactTooltip id="openrank-tooltip" clickable={true}>
         <div className="chart-title">
           {getMessageByLocale('header_label_OpenRank', settings.locale)}
         </div>
@@ -166,7 +155,7 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
           theme={githubTheme as 'light' | 'dark'}
           width={270}
           height={130}
-          data={OpenRankData}
+          data={openrankData}
         />
       </ReactTooltip>
       <ReactTooltip id="participant-tooltip" clickable={true}>
@@ -184,4 +173,4 @@ const RepoHeaderLabelsView: React.FC<RepoHeaderLabelsViewProps> = ({
   );
 };
 
-export default RepoHeaderLabelsView;
+export default View;
