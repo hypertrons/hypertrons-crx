@@ -10,12 +10,13 @@ class Settings {
     this.isEnabled = true;
     this.developerNetwork = true;
     this.projectNetwork = true;
-    const language = chrome.i18n.getUILanguage();
-    if (language.startsWith('zh')) {
-      this.locale = 'zh_CN';
-    } else {
-      this.locale = 'en';
-    }
+    this.locale = 'en'; // temporarily set default language to English
+    // const language = chrome.i18n.getUILanguage();
+    // if (language.startsWith('zh')) {
+    //   this.locale = 'zh_CN';
+    // } else {
+    //   this.locale = 'en';
+    // }
   }
 
   loadFromJson(data: { [key: string]: any }): void {

@@ -5,38 +5,40 @@ import {
   getMessageByLocale,
   isNull,
   isAllNull,
-} from '../../utils/utils';
-import Settings, { loadSettings } from '../../utils/settings';
-import { generateDataByMonth } from '../../utils/data';
-import {
-  getPROpened,
-  getPRMerged,
-  getPRReviews,
-  getMergedCodeAddition,
-  getMergedCodeDeletion,
-} from '../../api/repo';
+} from '../../../../utils/utils';
+import Settings, { loadSettings } from '../../../../utils/settings';
+import { generateDataByMonth } from '../../../../utils/data';
 import ReactTooltip from 'react-tooltip';
 import PRChart from './PRChart';
 import MergedLinesChart from './MergedLinesChart';
 
 const githubTheme = getGithubTheme();
 
-interface RepoDetailPRViewProps {
-  currentRepo: string;
+export interface PRDetail {
+  PROpened: any;
+  PRMerged: any;
+  PRReviews: any;
+  mergedCodeAddition: any;
+  mergedCodeDeletion: any;
 }
 
-const generatePRData = (PR: any): any => {
+interface Props {
+  currentRepo: string;
+  PRDetail: PRDetail;
+}
+
+const generatePRChartData = (PRDetail: PRDetail): any => {
   return {
-    PROpened: generateDataByMonth(PR.PROpened),
-    PRMerged: generateDataByMonth(PR.PRMerged),
-    PRReviews: generateDataByMonth(PR.PRReviews),
+    PROpened: generateDataByMonth(PRDetail.PROpened),
+    PRMerged: generateDataByMonth(PRDetail.PRMerged),
+    PRReviews: generateDataByMonth(PRDetail.PRReviews),
   };
 };
 
-const generateMergedLinesData = (PR: any): any => {
+const generateMergedLinesChartData = (PRDetail: PRDetail): any => {
   return {
-    mergedCodeAddition: generateDataByMonth(PR.mergedCodeAddition),
-    mergedCodeDeletion: generateDataByMonth(PR.mergedCodeDeletion).map(
+    mergedCodeAddition: generateDataByMonth(PRDetail.mergedCodeAddition),
+    mergedCodeDeletion: generateDataByMonth(PRDetail.mergedCodeDeletion).map(
       (item) => {
         const dataItem = item;
         dataItem[1] = -item[1];
@@ -46,35 +48,16 @@ const generateMergedLinesData = (PR: any): any => {
   };
 };
 
-const RepoDetailPRView: React.FC<RepoDetailPRViewProps> = ({ currentRepo }) => {
-  const [inited, setInited] = useState(false);
+const View = ({ currentRepo, PRDetail }: Props): JSX.Element | null => {
   const [settings, setSettings] = useState(new Settings());
-  const [PR, setPR] = useState<any>();
-
-  useEffect(() => {
-    const initSettings = async () => {
-      const temp = await loadSettings();
-      setSettings(temp);
-      setInited(true);
-    };
-    if (!inited) {
-      initSettings();
-    }
-  }, [inited, settings]);
 
   useEffect(() => {
     (async () => {
-      setPR({
-        PROpened: await getPROpened(currentRepo),
-        PRMerged: await getPRMerged(currentRepo),
-        PRReviews: await getPRReviews(currentRepo),
-        mergedCodeAddition: await getMergedCodeAddition(currentRepo),
-        mergedCodeDeletion: await getMergedCodeDeletion(currentRepo),
-      });
+      setSettings(await loadSettings());
     })();
   }, []);
 
-  if (isNull(PR) || isAllNull(PR)) return null;
+  if (isNull(PRDetail) || isAllNull(PRDetail)) return null;
 
   const onClick = (curMonth: string, params: any) => {
     const seriesIndex = params.seriesIndex;
@@ -104,7 +87,7 @@ const RepoDetailPRView: React.FC<RepoDetailPRViewProps> = ({ currentRepo }) => {
         theme={githubTheme as 'light' | 'dark'}
         width={330}
         height={200}
-        data={generatePRData(PR)}
+        data={generatePRChartData(PRDetail)}
         onClick={onClick}
       />
       <div className="chart-title">
@@ -114,10 +97,10 @@ const RepoDetailPRView: React.FC<RepoDetailPRViewProps> = ({ currentRepo }) => {
         theme={githubTheme as 'light' | 'dark'}
         width={330}
         height={200}
-        data={generateMergedLinesData(PR)}
+        data={generateMergedLinesChartData(PRDetail)}
       />
     </ReactTooltip>
   );
 };
 
-export default RepoDetailPRView;
+export default View;

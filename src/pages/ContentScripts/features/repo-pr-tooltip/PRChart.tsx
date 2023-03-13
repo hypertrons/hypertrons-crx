@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
-import { formatNum, numberWithCommas } from '../../utils/formatter';
+
+import { formatNum, numberWithCommas } from '../../../../utils/formatter';
 
 const LIGHT_THEME = {
   FG_COLOR: '#24292F',
@@ -24,7 +25,7 @@ interface PRChartProps {
   onClick?: Function;
 }
 
-const PRChart: React.FC<PRChartProps> = (props) => {
+const PRChart = (props: PRChartProps): JSX.Element => {
   const { theme, width, height, data, onClick } = props;
 
   const divEL = useRef(null);
