@@ -12,7 +12,7 @@
     "message": "Link"
   },
   "global_error_message": {
-    "message": "Sorry，an error occurred while loading Hypertrons-crx extention. Error Code is: "
+    "message": "Sorry, an error occurred while loading Hypertrons-crx extention. Error Code is: "
   },
   "global_close": {
     "message": "Close"
@@ -57,7 +57,7 @@
     "message": "Period"
   },
   "global_day": {
-    "message": "Day"
+    "message": "days"
   },
   "global_week": {
     "message": "Week"
@@ -83,7 +83,7 @@
       "measure": {
         "text": "Possible causes:",
         "tips": [
-          "Recently cerated, has not been computed",
+          "Recently created, has not been computed",
           "No actions in selected period, nothing to be computed"
         ]
       }
@@ -279,10 +279,10 @@
     "message": "About Perceptor"
   },
   "options_about_description": {
-    "message": "Perceptor aims at tracing and digging GitHub projects and developers。We do this by inserting useful dashboards into some GitHub pages to help users gain the insight into developers and projects quickly."
+    "message": "Perceptor aims at tracing and digging GitHub projects and developers. We do this by inserting useful dashboards into some GitHub pages to help users gain the insight into developers and projects quickly."
   },
   "options_about_description_website": {
-    "message": "Welcome to visit out website to get more infomation："
+    "message": "Welcome to visit out website to get more infomation: "
   },
   "hypertrons_tab_title": {
     "message": "Hypertrons Commands"

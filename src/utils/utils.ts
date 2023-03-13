@@ -51,7 +51,7 @@ export function getMessageByLocale(key: string, locale: string) {
 }
 
 export const isPerceptor = (): boolean =>
-  window.location.search.includes('perceptor');
+  window.location.search.includes('?redirect=perceptor');
 
 export function runsWhen(rules: any[]) {
   return (constructor: Function) => {
