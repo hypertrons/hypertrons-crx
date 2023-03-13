@@ -61,7 +61,7 @@ export function getMessageI18n(key: string) {
 }
 
 export const isPerceptor = (): boolean =>
-  window.location.search.includes('perceptor');
+  window.location.search.includes('?redirect=perceptor');
 
 export const compareVersion = (version_1: string, version_2: string) => {
   const v1 = version_1.split('.');
