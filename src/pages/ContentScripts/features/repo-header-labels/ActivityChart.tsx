@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
-import { formatNum, numberWithCommas } from '../../utils/formatter';
+
+import { formatNum, numberWithCommas } from '../../../../utils/formatter';
 
 const LIGHT_THEME = {
   FG_COLOR: '#24292F',
@@ -25,7 +26,7 @@ interface ActivityChartProps {
   data: [string, number][];
 }
 
-const ActivityChart: React.FC<ActivityChartProps> = (props) => {
+const ActivityChart = (props: ActivityChartProps): JSX.Element => {
   const { theme, width, height, data } = props;
 
   const divEL = useRef(null);
