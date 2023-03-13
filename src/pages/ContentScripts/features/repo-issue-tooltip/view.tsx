@@ -5,60 +5,43 @@ import {
   getMessageByLocale,
   isNull,
   isAllNull,
-} from '../../utils/utils';
-import Settings, { loadSettings } from '../../utils/settings';
-import { generateDataByMonth } from '../../utils/data';
-import {
-  getIssuesOpened,
-  getIssuesClosed,
-  getIssueComments,
-} from '../../api/repo';
+} from '../../../../utils/utils';
+import Settings, { loadSettings } from '../../../../utils/settings';
+import { generateDataByMonth } from '../../../../utils/data';
 import ReactTooltip from 'react-tooltip';
 import IssueChart from './IssueChart';
 
 const githubTheme = getGithubTheme();
 
-interface RepoDetailIssueViewProps {
-  currentRepo: string;
+export interface IssueDetail {
+  issuesOpened: any;
+  issuesClosed: any;
+  issueComments: any;
 }
 
-const generateIssueData = (issue: any): any => {
+interface Props {
+  currentRepo: string;
+  issueDetail: IssueDetail;
+}
+
+const generateData = (issueDetail: IssueDetail): any => {
   return {
-    issuesOpened: generateDataByMonth(issue.issuesOpened),
-    issuesClosed: generateDataByMonth(issue.issuesClosed),
-    issueComments: generateDataByMonth(issue.issueComments),
+    issuesOpened: generateDataByMonth(issueDetail.issuesOpened),
+    issuesClosed: generateDataByMonth(issueDetail.issuesClosed),
+    issueComments: generateDataByMonth(issueDetail.issueComments),
   };
 };
 
-const RepoDetailIssueView: React.FC<RepoDetailIssueViewProps> = ({
-  currentRepo,
-}) => {
-  const [inited, setInited] = useState(false);
+const View = ({ currentRepo, issueDetail }: Props): JSX.Element | null => {
   const [settings, setSettings] = useState(new Settings());
-  const [issue, setIssue] = useState<any>();
-
-  useEffect(() => {
-    const initSettings = async () => {
-      const temp = await loadSettings();
-      setSettings(temp);
-      setInited(true);
-    };
-    if (!inited) {
-      initSettings();
-    }
-  }, [inited, settings]);
 
   useEffect(() => {
     (async () => {
-      setIssue({
-        issuesOpened: await getIssuesOpened(currentRepo),
-        issuesClosed: await getIssuesClosed(currentRepo),
-        issueComments: await getIssueComments(currentRepo),
-      });
+      setSettings(await loadSettings());
     })();
   }, []);
 
-  if (isNull(issue) || isAllNull(issue)) return null;
+  if (isNull(issueDetail) || isAllNull(issueDetail)) return null;
 
   const onClick = (curMonth: string, params: any) => {
     const seriesIndex = params.seriesIndex;
@@ -88,11 +71,11 @@ const RepoDetailIssueView: React.FC<RepoDetailIssueViewProps> = ({
         theme={githubTheme as 'light' | 'dark'}
         width={300}
         height={200}
-        data={generateIssueData(issue)}
+        data={generateData(issueDetail)}
         onClick={onClick}
       />
     </ReactTooltip>
   );
 };
 
-export default RepoDetailIssueView;
+export default View;
