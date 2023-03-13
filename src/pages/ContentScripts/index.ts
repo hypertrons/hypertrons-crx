@@ -4,6 +4,7 @@ import './features/repo-activity-openrank-trends';
 import './features/developer-activity-openrank-trends';
 import './features/repo-fork-tooltip';
 import './features/repo-star-tooltip';
+import './features/repo-issue-tooltip';
 import './features/perceptor-tab';
 import './features/perceptor-layout';
 
