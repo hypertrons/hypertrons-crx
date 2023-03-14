@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import {
   Widget,
   addResponseMessage,
+  deleteMessages,
   toggleMsgLoader,
   toggleInputDisabled,
 } from 'react-chat-widget';
@@ -35,6 +36,7 @@ const View = ({ currentRepo, currentDocsName }: Props): JSX.Element => {
     : `NOT AVAILABLE for ${currentRepo}`;
 
   useEffect(() => {
+    deleteMessages(Infinity); // delete all messages after repo switching
     if (currentDocsName) {
       addResponseMessage(
         `Hi, I'm an assistant powered by [DocsGPT](https://github.com/arc53/docsgpt) and [X-lab](https://github.com/X-lab2017). Ask me anything about \`${currentRepo}\`!`
@@ -44,7 +46,7 @@ const View = ({ currentRepo, currentDocsName }: Props): JSX.Element => {
         `OSS-GPT currently is **NOT AVAILABLE** for \`${currentRepo}\`, if you want docs support for the repository, please visit [this](https://github.com/hypertrons/hypertrons-crx/issues) issue and make a request there :)\n\nSee [all available docs](https://oss.x-lab.info/hypercrx/docsgpt_active_docs.json)`
       );
     }
-  }, [currentDocsName]);
+  }, [currentRepo, currentDocsName]);
 
   return (
     <Widget

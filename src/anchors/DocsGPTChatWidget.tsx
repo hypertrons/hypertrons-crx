@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'react-dom';
+import { render, unmountComponentAtNode } from 'react-dom';
 import $ from 'jquery';
 import { utils } from 'github-url-detection';
 
@@ -55,18 +55,19 @@ class DocsGPTChatWidgetAnchor extends PerceptorBase {
     const repoName = utils.getRepositoryInfo(window.location)!.nameWithOwner;
 
     if ($('#docs-gpt-chat-widget').length !== 0) {
-      if (this._currentRepo !== repoName) {
-        $('#docs-gpt-chat-widget').remove();
+      if ($('#docs-gpt-chat-widget').data('repo') === repoName) {
+        return; // should not re-render for same repo
       } else {
-        return;
+        $('#docs-gpt-chat-widget').remove();
       }
-    } else {
-      await this._getDocsMetaData(); // only fetch once
     }
 
     this._currentRepo = repoName;
+    await this._getDocsMetaData();
+
     const container = document.createElement('div');
     container.id = 'docs-gpt-chat-widget';
+    container.dataset.repo = this._currentRepo; // mark current repo by data-repo
     render(
       <DocsGPTChatWidget
         currentRepo={this._currentRepo}
