@@ -37,7 +37,7 @@ const View = ({ currentRepo, currentDocsName }: Props): JSX.Element => {
   useEffect(() => {
     if (currentDocsName) {
       addResponseMessage(
-        `Hi, I'm an assistant powered by [DocsGPT](https://github.com/arc53/docsgpt), a GPT-3 powered chatbot that answers questions about documentation. Ask me anything about \`${currentRepo}\`!`
+        `Hi, I'm an assistant powered by [DocsGPT](https://github.com/arc53/docsgpt) and [X-lab](https://github.com/X-lab2017). Ask me anything about \`${currentRepo}\`!`
       );
     } else {
       addResponseMessage(
