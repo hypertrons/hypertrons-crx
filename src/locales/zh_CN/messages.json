@@ -316,5 +316,8 @@
   },
   "merged_lines_popup_title": {
     "message": "通过 PR 合入增加和删除的代码行数"
+  },
+  "docs_gpt_chat_widget": {
+    "message": "OSS-GPT 聊天机器人"
   }
 }

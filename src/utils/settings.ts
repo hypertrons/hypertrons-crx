@@ -5,6 +5,7 @@ class Settings {
   checkForUpdates: boolean | undefined;
   developerNetwork: boolean | undefined;
   projectNetwork: boolean | undefined;
+  docsGPTChatWidget: boolean | undefined;
   locale: string;
 
   constructor() {
@@ -12,6 +13,7 @@ class Settings {
     this.checkForUpdates = true;
     this.developerNetwork = true;
     this.projectNetwork = true;
+    this.docsGPTChatWidget = true;
     const language = chrome.i18n.getUILanguage();
     if (language.startsWith('zh')) {
       this.locale = 'zh_CN';
@@ -33,6 +35,9 @@ class Settings {
     if ('projectNetwork' in data) {
       this.projectNetwork = data['projectNetwork'];
     }
+    if ('docsGPTChatWidget' in data) {
+      this.docsGPTChatWidget = data['docsGPTChatWidget'];
+    }
     if ('locale' in data) {
       this.locale = data['locale'];
     }
@@ -44,6 +49,7 @@ class Settings {
     result['checkForUpdates'] = this.checkForUpdates;
     result['developerNetwork'] = this.developerNetwork;
     result['projectNetwork'] = this.projectNetwork;
+    result['docsGPTChatWidget'] = this.docsGPTChatWidget;
     result['locale'] = this.locale;
     return result;
   }

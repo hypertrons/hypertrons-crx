@@ -421,6 +421,17 @@ const Options: React.FC = () => {
                 await saveSettings(settings);
               }}
             />
+            <Checkbox
+              label={getMessageByLocale(
+                'docs_gpt_chat_widget',
+                settings.locale
+              )}
+              defaultChecked={settings.docsGPTChatWidget}
+              onChange={async (e, checked) => {
+                settings.docsGPTChatWidget = checked;
+                await saveSettings(settings);
+              }}
+            />
           </Stack>
         </Stack.Item>
         <Stack.Item className="Box">

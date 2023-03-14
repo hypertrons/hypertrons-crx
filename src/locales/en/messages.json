@@ -316,5 +316,8 @@
   },
   "merged_lines_popup_title": {
     "message": "Merged Addition & Deletion Code Lines"
+  },
+  "docs_gpt_chat_widget": {
+    "message": "OSS-GPT Chat Bot"
   }
 }
