@@ -6,10 +6,10 @@ import {
   toggleMsgLoader,
   toggleInputDisabled,
 } from 'react-chat-widget';
-import 'react-chat-widget/lib/styles.css';
 
 import { getGithubTheme } from '../../utils/utils';
 import { getAnswer } from './service';
+import './rcw.scss';
 
 interface Props {
   currentRepo: string;
