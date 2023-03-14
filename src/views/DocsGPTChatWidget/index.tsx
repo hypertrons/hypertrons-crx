@@ -1,5 +1,10 @@
 import React from 'react';
-import { Widget, addResponseMessage } from 'react-chat-widget';
+import {
+  Widget,
+  addResponseMessage,
+  toggleMsgLoader,
+  toggleInputDisabled,
+} from 'react-chat-widget';
 import 'react-chat-widget/lib/styles.css';
 
 import { getGithubTheme } from '../../utils/utils';
@@ -9,6 +14,8 @@ const githubTheme = getGithubTheme();
 const DOCS_GPT_ENDPOINT = 'https://oss-gpt.frankzhao.cn/api';
 
 const handleNewUserMessage = async (newMessage: string) => {
+  toggleMsgLoader();
+  toggleInputDisabled();
   // Now send the message throught the backend API
   const response = await fetch(`${DOCS_GPT_ENDPOINT}/answer`, {
     method: 'POST',
@@ -30,6 +37,9 @@ const handleNewUserMessage = async (newMessage: string) => {
   } else {
     const data = await response.json();
     addResponseMessage(data.answer);
+
+    toggleMsgLoader();
+    toggleInputDisabled();
   }
 };
 
@@ -39,6 +49,7 @@ const View = ({ currentRepo }: { currentRepo: string }): JSX.Element => {
       title="OSS-GPT"
       subtitle={`Ask anything about ${currentRepo}`}
       emojis={true}
+      resizable={true}
       handleNewUserMessage={handleNewUserMessage}
     />
   );
