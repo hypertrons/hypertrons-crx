@@ -42,6 +42,9 @@ const generateEchartsData = (
     });
   };
   const generateEdges = (edges: any[]): any => {
+    if (edges.length === 0) {
+      return [];
+    }
     const threshold = edges[0][0].split('/').length === 2 ? 5 : 2.5;
     return edges
       .map((e: any) => {
