@@ -1,6 +1,10 @@
 const DOCS_GPT_ENDPOINT = 'https://oss-gpt.frankzhao.cn/api';
 
-export const getAnswer = async (activeDocs: string, question: string) => {
+export const getAnswer = async (
+  activeDocs: string,
+  question: string,
+  history: [string, string]
+) => {
   const response = await fetch(`${DOCS_GPT_ENDPOINT}/answer`, {
     method: 'POST',
     headers: {
@@ -11,8 +15,8 @@ export const getAnswer = async (activeDocs: string, question: string) => {
       active_docs: activeDocs,
       api_key: null,
       embeddings_key: null,
-      history: '',
-      question: question,
+      history: JSON.stringify(history),
+      question,
     }),
     mode: 'cors',
   });
