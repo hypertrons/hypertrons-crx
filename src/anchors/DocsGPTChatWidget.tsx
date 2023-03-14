@@ -4,7 +4,7 @@ import $ from 'jquery';
 import { utils } from 'github-url-detection';
 
 import PerceptorBase from '../PerceptorBase';
-import { runsWhen, isPublicRepo } from '../utils/utils';
+import { runsWhen, isPublicRepo, getGithubTheme } from '../utils/utils';
 import DocsGPTChatWidget from '../views/DocsGPTChatWidget';
 
 const DOCS_META_DATA_URL =
@@ -67,6 +67,7 @@ class DocsGPTChatWidgetAnchor extends PerceptorBase {
 
     const container = document.createElement('div');
     container.id = 'docs-gpt-chat-widget';
+    container.className = getGithubTheme()!;
     container.dataset.repo = this._currentRepo; // mark current repo by data-repo
     render(
       <DocsGPTChatWidget

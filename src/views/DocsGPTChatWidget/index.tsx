@@ -7,7 +7,6 @@ import {
   toggleInputDisabled,
 } from 'react-chat-widget';
 
-import { getGithubTheme } from '../../utils/utils';
 import { getAnswer } from './service';
 import './rcw.scss';
 
@@ -15,8 +14,6 @@ interface Props {
   currentRepo: string;
   currentDocsName: string | null;
 }
-
-const githubTheme = getGithubTheme();
 
 const displayWelcome = (repoName: string) => {
   addResponseMessage(
@@ -69,7 +66,7 @@ const View = ({ currentRepo, currentDocsName }: Props): JSX.Element => {
     <Widget
       title="OSS-GPT"
       subtitle={subtitle}
-      emojis={true}
+      emojis={false} // disable emojis because I don't want to tune styles
       resizable={true}
       handleNewUserMessage={handleNewUserMessage}
     />
