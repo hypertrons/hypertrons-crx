@@ -66,7 +66,7 @@ const View = ({ currentRepo, currentDocsName }: Props): JSX.Element => {
     <Widget
       title="OSS-GPT"
       subtitle={subtitle}
-      emojis={true}
+      emojis={false} // will be enabled after style is fine tuned for two themes
       resizable={true}
       handleNewUserMessage={handleNewUserMessage}
     />
