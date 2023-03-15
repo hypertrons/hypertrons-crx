@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
+import { render } from 'react-dom';
 import $ from 'jquery';
 import { utils } from 'github-url-detection';
 
