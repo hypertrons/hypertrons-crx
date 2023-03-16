@@ -69,6 +69,7 @@ const View = ({ currentRepo, currentDocsName }: Props): JSX.Element => {
       emojis={false} // will be enabled after style is fine tuned for two themes
       resizable={true}
       handleNewUserMessage={handleNewUserMessage}
+      showBadge={false}
     />
   );
 };
