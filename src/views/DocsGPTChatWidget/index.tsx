@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import $ from 'jquery';
 import {
   Widget,
   addResponseMessage,
@@ -6,7 +7,6 @@ import {
   toggleMsgLoader,
   toggleInputDisabled,
 } from 'react-chat-widget';
-import $ from 'jquery';
 
 import { getAnswer } from './service';
 import './rcw.scss';
@@ -63,32 +63,30 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
       displayNotAvailable(currentRepo);
     }
   }, [currentRepo, currentDocsName]);
+
+  // we cannot change emoji-mart theme with an option, so we have to use MutationObserver and jquery to change the css
   useEffect(() => {
     // Select the node that will be observed for mutations
     const targetNode = $('div.rcw-widget-container')[0]!;
     // Options for the observer (which mutations to observe)
     const config = { attributes: true, childList: true, subtree: true };
     // Callback function to execute when mutations are observed
-    if (theme == 'dark') {
-      const callback: MutationCallback = (mutationList, observer) => {
-        if ($('section.emoji-mart').length > 0) {
-          $('section.emoji-mart')
-            .removeClass('emoji-mart-light')
-            .addClass(`emoji-mart-${theme}`);
-        }
-      };
+    const callback: MutationCallback = (mutationList, observer) => {
+      if ($('section.emoji-mart').length > 0) {
+        $('section.emoji-mart').addClass(`emoji-mart emoji-mart-${theme}`);
+      }
+    };
+    // Create an observer instance linked to the callback function
+    const observer = new MutationObserver(callback);
+    // Start observing the target node for configured mutations
+    observer.observe(targetNode, config);
 
-      // Create an observer instance linked to the callback function
-      const observer = new MutationObserver(callback);
-      // Start observing the target node for configured mutations
-      observer.observe(targetNode, config);
-
-      return () => {
-        // Later, you can stop observing
-        observer.disconnect();
-      };
-    }
+    return () => {
+      // Later, you can stop observing
+      observer.disconnect();
+    };
   }, []);
+
   return (
     <div className={theme}>
       <Widget
