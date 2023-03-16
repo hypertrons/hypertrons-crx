@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import $ from 'jquery';
 import {
   Widget,
   addResponseMessage,
@@ -11,6 +12,7 @@ import { getAnswer } from './service';
 import './rcw.scss';
 
 interface Props {
+  theme: 'light' | 'dark';
   currentRepo: string;
   currentDocsName: string | null;
 }
@@ -27,7 +29,7 @@ const displayNotAvailable = (repoName: string) => {
   );
 };
 
-const View = ({ currentRepo, currentDocsName }: Props): JSX.Element => {
+const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
   const subtitle = currentDocsName
     ? `Ask anything about ${currentRepo}`
     : `NOT AVAILABLE for ${currentRepo}`;
@@ -62,16 +64,41 @@ const View = ({ currentRepo, currentDocsName }: Props): JSX.Element => {
     }
   }, [currentRepo, currentDocsName]);
 
+  // we cannot change emoji-mart theme with an option, so we have to use MutationObserver and jquery to change the css
+  useEffect(() => {
+    // Select the node that will be observed for mutations
+    const targetNode = $('div.rcw-widget-container')[0]!;
+    // Options for the observer (which mutations to observe)
+    const config = { attributes: true, childList: true, subtree: true };
+    // Callback function to execute when mutations are observed
+    const callback: MutationCallback = (mutationList, observer) => {
+      if ($('section.emoji-mart').length > 0) {
+        $('section.emoji-mart').addClass(`emoji-mart emoji-mart-${theme}`);
+      }
+    };
+    // Create an observer instance linked to the callback function
+    const observer = new MutationObserver(callback);
+    // Start observing the target node for configured mutations
+    observer.observe(targetNode, config);
+
+    return () => {
+      // Later, you can stop observing
+      observer.disconnect();
+    };
+  }, []);
+
   return (
-    <Widget
-      title="OSS-GPT"
-      subtitle={subtitle}
-      emojis={false} // will be enabled after style is fine tuned for two themes
-      resizable={true}
-      handleNewUserMessage={handleNewUserMessage}
-      showBadge={false}
-      profileAvatar={chrome.runtime.getURL('main.png')}
-    />
+    <div className={theme}>
+      <Widget
+        title="OSS-GPT"
+        subtitle={subtitle}
+        emojis={true} // will be enabled after style is fine tuned for two themes
+        resizable={true}
+        handleNewUserMessage={handleNewUserMessage}
+        showBadge={false}
+        profileAvatar={chrome.runtime.getURL('main.png')}
+      />
+    </div>
   );
 };
 
