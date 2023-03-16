@@ -69,22 +69,25 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
     // Options for the observer (which mutations to observe)
     const config = { attributes: true, childList: true, subtree: true };
     // Callback function to execute when mutations are observed
-    const callback: MutationCallback = (mutationList, observer) => {
-      if ($('section.emoji-mart').length > 0) {
-        $('section.emoji-mart')
-          .removeClass('emoji-mart-light')
-          .addClass(`emoji-mart-${theme}`);
-      }
-    };
-    // Create an observer instance linked to the callback function
-    const observer = new MutationObserver(callback);
-    // Start observing the target node for configured mutations
-    observer.observe(targetNode, config);
+    if (theme == 'dark') {
+      const callback: MutationCallback = (mutationList, observer) => {
+        if ($('section.emoji-mart').length > 0) {
+          $('section.emoji-mart')
+            .removeClass('emoji-mart-light')
+            .addClass(`emoji-mart-${theme}`);
+        }
+      };
 
-    return () => {
-      // Later, you can stop observing
-      observer.disconnect();
-    };
+      // Create an observer instance linked to the callback function
+      const observer = new MutationObserver(callback);
+      // Start observing the target node for configured mutations
+      observer.observe(targetNode, config);
+
+      return () => {
+        // Later, you can stop observing
+        observer.disconnect();
+      };
+    }
   }, []);
   return (
     <div className={theme}>
