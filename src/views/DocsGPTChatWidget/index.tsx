@@ -23,7 +23,7 @@ const displayWelcome = (repoName: string) => {
 
 const displayNotAvailable = (repoName: string) => {
   addResponseMessage(
-    `OSS-GPT currently is **NOT AVAILABLE** for \`${repoName}\`. If you want docs support for the repository, please check [this](https://github.com/hypertrons/hypertrons-crx/issues/609) issue and make a request there :)\n\nSee [all available docs](https://oss.x-lab.info/hypercrx/docsgpt_active_docs.json)\n\nThis chat widget can also be enable/disabled in the extension options page whenever you want.`
+    `OSS-GPT currently is **NOT AVAILABLE** for \`${repoName}\`. If you want docs support for the repository, please check [this](https://github.com/hypertrons/hypertrons-crx/issues/609) issue and make a request there :)\n\nSee [all available docs](https://oss.x-lab.info/hypercrx/docsgpt_active_docs.json)\n\nThis chat widget can also be enabled/disabled in the extension options page whenever you want.`
   );
 };
 
@@ -70,6 +70,7 @@ const View = ({ currentRepo, currentDocsName }: Props): JSX.Element => {
       resizable={true}
       handleNewUserMessage={handleNewUserMessage}
       showBadge={false}
+      profileAvatar={chrome.runtime.getURL('main.png')}
     />
   );
 };
