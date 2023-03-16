@@ -30,7 +30,7 @@
 .rcw-client .rcw-message-text {
   background-color: var(--color-accent-subtle);
   border-radius: 10px;
-  max-width: 215px;
+  max-width: 350px;
   padding: 15px;
   text-align: left;
   white-space: pre-wrap;
@@ -221,8 +221,8 @@
 }
 .rcw-messages-container {
   background-color: var(--color-canvas-default);
-  height: 50vh;
-  max-height: 410px;
+  height: 55vh;
+  max-height: 600px;
   overflow-y: auto;
   padding-top: 10px;
   -webkit-overflow-scrolling: touch;
@@ -423,6 +423,7 @@ img.rcw-picker-icon {
 }
 .emoji-mart-search {
   margin-top: 6px;
+  margin-bottom: 6px;
   padding: 0 6px;
   position: relative;
 }
@@ -444,7 +445,7 @@ img.rcw-picker-icon {
 }
 .emoji-mart-search-icon {
   position: absolute;
-  top: 7px;
+  top: 5px;
   right: 11px;
   z-index: 2;
   padding: 2px 5px 1px;
@@ -731,7 +732,7 @@ img.rcw-picker-icon {
 }
 .emoji-mart-dark {
   color: #fff;
-  background-color: #222;
+  background-color: #161b22;
 }
 .emoji-mart-dark,
 .emoji-mart-dark .emoji-mart-bar {
@@ -740,7 +741,7 @@ img.rcw-picker-icon {
 .emoji-mart-dark .emoji-mart-search input {
   color: #fff;
   border-color: #555453;
-  background-color: #2f2f2f;
+  background-color: #161b22;
 }
 .emoji-mart-dark .emoji-mart-search-icon svg {
   fill: #fff;
@@ -749,7 +750,7 @@ img.rcw-picker-icon {
   background-color: #444;
 }
 .emoji-mart-dark .emoji-mart-category-label span {
-  background-color: #222;
+  background-color: #161b22;
   color: #fff;
 }
 .emoji-mart-dark .emoji-mart-skin-swatches {
