@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Dialog, Stack, ActionButton } from 'office-ui-fabric-react';
 
-import {
-  Dialog,
-  Stack,
-  Dropdown,
-  IDropdownStyles,
-  IDropdownOption,
-  ActionButton,
-} from 'office-ui-fabric-react';
 import { getDeveloperNetwork, getRepoNetwork } from '../../api/developer';
 import { getMessageByLocale } from '../../utils/utils';
 import Settings, { loadSettings } from '../../utils/settings';
@@ -22,12 +15,10 @@ interface DeveloperNetworkViewProps {
 const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
   currentDeveloper,
 }) => {
+  const developerPeriod = 90;
+  const repoPeriod = 90;
   const [developerNetwork, setDeveloperNetwork] = useState();
   const [repoNetwork, setRepoNetwork] = useState();
-  const [developerPeriod, setDeveloperPeriod] = useState<
-    string | number | undefined
-  >(90);
-  const [repoPeriod, setRepoPeriod] = useState<string | number | undefined>(90);
   const [showDeveloperDialog, setShowDeveloperDialog] = useState(false);
   const [showProjectDialog, setShowProjectDialog] = useState(false);
   const [inited, setInited] = useState(false);
@@ -68,43 +59,6 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
       initSettings();
     }
   }, [inited, settings]);
-
-  const dropdownStyles: Partial<IDropdownStyles> = {
-    dropdown: { width: 120 },
-  };
-
-  const periodOptions: IDropdownOption[] = [
-    {
-      key: 90,
-      text: `90 ${getMessageByLocale('global_day', settings.locale)}`,
-    },
-  ];
-
-  const onRenderPeriodDropdownTitle = (
-    options: IDropdownOption[] | undefined
-  ): JSX.Element => {
-    const option = options![0];
-    return (
-      <div>
-        <span>{getMessageByLocale('global_period', settings.locale)}: </span>
-        <span>{option!.text}</span>
-      </div>
-    );
-  };
-
-  const onRepoPeriodChange = (
-    e: any,
-    option: IDropdownOption | undefined
-  ): void => {
-    setRepoPeriod(option!.key);
-  };
-
-  const onDeveloperPeriodChange = (
-    e: any,
-    option: IDropdownOption | undefined
-  ): void => {
-    setDeveloperPeriod(option!.key);
-  };
 
   const dialogProps = {
     styles: {
@@ -208,13 +162,8 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
                 )}
               </span>
               <div className="hypertrons-crx-title-extra">
-                <Dropdown
-                  defaultSelectedKey={developerPeriod}
-                  options={periodOptions}
-                  styles={dropdownStyles}
-                  onRenderTitle={onRenderPeriodDropdownTitle}
-                  onChange={onDeveloperPeriodChange}
-                />
+                {getMessageByLocale('global_period', settings.locale)}:{' '}
+                {repoPeriod} {getMessageByLocale('global_day', settings.locale)}
               </div>
             </Stack>
             <div className="d-flex flex-wrap flex-items-center">
@@ -277,13 +226,9 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
                 )}
               </span>
               <div className="hypertrons-crx-title-extra">
-                <Dropdown
-                  defaultSelectedKey={repoPeriod}
-                  options={periodOptions}
-                  styles={dropdownStyles}
-                  onRenderTitle={onRenderPeriodDropdownTitle}
-                  onChange={onRepoPeriodChange}
-                />
+                {getMessageByLocale('global_period', settings.locale)}:{' '}
+                {developerPeriod}{' '}
+                {getMessageByLocale('global_day', settings.locale)}
               </div>
             </Stack>
             <div className="d-flex flex-wrap flex-items-center">

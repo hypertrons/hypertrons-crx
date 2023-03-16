@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Stack,
-  Dropdown,
-  IDropdownStyles,
-  IDropdownOption,
-  Spinner,
-} from 'office-ui-fabric-react';
+import { Stack, Spinner } from 'office-ui-fabric-react';
+
 import Graph from '../../components/Graph';
 import { getRepoNetwork, getDeveloperNetwork } from '../../api/repo';
 import { getMessageByLocale } from '../../utils/utils';
@@ -19,12 +14,10 @@ interface ProjectNetworkViewProps {
 const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({
   currentRepo,
 }) => {
+  const developerPeriod = 90;
+  const repoPeriod = 90;
   const [repoNetwork, setRepoNetwork] = useState();
   const [developerNetwork, setDeveloperNetwork] = useState();
-  const [repoPeriod, setRepoPeriod] = useState<string | number | undefined>(90);
-  const [developerPeriod, setDeveloperPeriod] = useState<
-    string | number | undefined
-  >(90);
   const [inited, setInited] = useState(false);
   const [settings, setSettings] = useState(new Settings());
   const [statusCode, setStatusCode] = useState<number>(200);
@@ -62,43 +55,6 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({
     }
   }, [inited, settings]);
 
-  const dropdownStyles: Partial<IDropdownStyles> = {
-    dropdown: { width: 120 },
-  };
-
-  const periodOptions: IDropdownOption[] = [
-    {
-      key: 90,
-      text: `90 ${getMessageByLocale('global_day', settings.locale)}`,
-    },
-  ];
-
-  const onRenderPeriodDropdownTitle = (
-    options: IDropdownOption[] | undefined
-  ): JSX.Element => {
-    const option = options![0];
-    return (
-      <div>
-        <span>{getMessageByLocale('global_period', settings.locale)}: </span>
-        <span>{option!.text}</span>
-      </div>
-    );
-  };
-
-  const onRepoPeriodChange = (
-    e: any,
-    option: IDropdownOption | undefined
-  ): void => {
-    setRepoPeriod(option!.key);
-  };
-
-  const onDeveloperPeriodChange = (
-    e: any,
-    option: IDropdownOption | undefined
-  ): void => {
-    setDeveloperPeriod(option!.key);
-  };
-
   const graphStyle = {
     width: '100%',
     height: '380px',
@@ -128,13 +84,8 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({
             )}
           </span>
           <div className="hypertrons-crx-title-extra">
-            <Dropdown
-              defaultSelectedKey={repoPeriod}
-              options={periodOptions}
-              styles={dropdownStyles}
-              onRenderTitle={onRenderPeriodDropdownTitle}
-              onChange={onRepoPeriodChange}
-            />
+            {getMessageByLocale('global_period', settings.locale)}: {repoPeriod}{' '}
+            {getMessageByLocale('global_day', settings.locale)}
           </div>
         </Stack>
         <div className="d-flex flex-wrap flex-items-center">
@@ -185,13 +136,9 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({
             )}
           </span>
           <div className="hypertrons-crx-title-extra">
-            <Dropdown
-              defaultSelectedKey={developerPeriod}
-              options={periodOptions}
-              styles={dropdownStyles}
-              onRenderTitle={onRenderPeriodDropdownTitle}
-              onChange={onDeveloperPeriodChange}
-            />
+            {getMessageByLocale('global_period', settings.locale)}:{' '}
+            {developerPeriod}{' '}
+            {getMessageByLocale('global_day', settings.locale)}
           </div>
         </Stack>
         <div className="d-flex flex-wrap flex-items-center">
