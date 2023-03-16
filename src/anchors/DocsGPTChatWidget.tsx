@@ -67,10 +67,10 @@ class DocsGPTChatWidgetAnchor extends PerceptorBase {
 
     const container = document.createElement('div');
     container.id = 'docs-gpt-chat-widget';
-    container.className = getGithubTheme()!;
     container.dataset.repo = this._currentRepo; // mark current repo by data-repo
     render(
       <DocsGPTChatWidget
+        theme={getGithubTheme() as 'light' | 'dark'}
         currentRepo={this._currentRepo}
         currentDocsName={this._currentDocsName}
       />,
