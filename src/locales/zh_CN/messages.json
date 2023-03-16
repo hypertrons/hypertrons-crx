@@ -319,5 +319,17 @@
   },
   "docs_gpt_chat_widget": {
     "message": "OSS-GPT 聊天机器人"
+  },
+  "OSS_GPT_subtitle": {
+    "message": "询问任何有关%v的问题"
+  },
+  "OSS_GPT_subtitle_notAvailable": {
+    "message": "不适用于%v"
+  },
+  "OSS_GPT_welcome": {
+    "message": "您好，我是一个由[DocsGPT](https://github.com/arc53/docsgpt)和[X-lab](https://github.com/X-lab2017)提供支持的助手。请向我询问有关%v的任何问题!"
+  },
+  "OSS_GPT_notAvailable": {
+    "message": " OSS-GPT当前对于%v**不可用**。如果您想获得仓库的文档支持，请查看[这个issue](https://github.com/hypertrons/hypertrons-crx/issues/609)并在此提出请求:)\n\n查看[所有可用文档](https://oss.x-lab.info/hypercrx/docsgpt_active_docs.json)\n\n您也可以随时在扩展选项页面中启用/禁用此聊天小部件。"
   }
 }
