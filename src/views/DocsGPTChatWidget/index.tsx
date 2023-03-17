@@ -10,6 +10,8 @@ import {
 
 import { getAnswer } from './service';
 import './rcw.scss';
+import { getMessageByLocale } from '../../utils/utils';
+import Settings, { loadSettings } from '../../utils/settings';
 
 interface Props {
   theme: 'light' | 'dark';
@@ -17,24 +19,43 @@ interface Props {
   currentDocsName: string | null;
 }
 
-const displayWelcome = (repoName: string) => {
+const displayWelcome = (repoName: string, locale: string) => {
   addResponseMessage(
-    `Hi, I'm an assistant powered by [DocsGPT](https://github.com/arc53/docsgpt) and [X-lab](https://github.com/X-lab2017). Ask me anything about \`${repoName}\`!`
+    getMessageByLocale('OSS_GPT_welcome', locale).replace('%v', repoName)
   );
 };
 
-const displayNotAvailable = (repoName: string) => {
+const displayNotAvailable = (repoName: string, locale: string) => {
   addResponseMessage(
-    `OSS-GPT currently is **NOT AVAILABLE** for \`${repoName}\`. If you want docs support for the repository, please check [this](https://github.com/hypertrons/hypertrons-crx/issues/609) issue and make a request there :)\n\nSee [all available docs](https://oss.x-lab.info/hypercrx/docsgpt_active_docs.json)\n\nThis chat widget can also be enabled/disabled in the extension options page whenever you want.`
+    getMessageByLocale('OSS_GPT_notAvailable', locale).replace('%v', repoName)
   );
 };
 
 const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
-  const subtitle = currentDocsName
-    ? `Ask anything about ${currentRepo}`
-    : `NOT AVAILABLE for ${currentRepo}`;
-
+  const [inited, setInited] = useState(false);
+  const [settings, setSettings] = useState(new Settings());
   const [history, setHistory] = useState<[string, string]>(['', '']);
+
+  useEffect(() => {
+    const initSettings = async () => {
+      const temp = await loadSettings();
+      setSettings(temp);
+      setInited(true);
+    };
+    if (!inited) {
+      initSettings();
+    }
+  }, [inited, settings]);
+
+  const subtitle = currentDocsName
+    ? getMessageByLocale('OSS_GPT_subtitle', settings.locale).replace(
+        '%v',
+        currentRepo
+      )
+    : getMessageByLocale(
+        'OSS_GPT_subtitle_notAvailable',
+        settings.locale
+      ).replace('%v', currentRepo);
 
   const handleNewUserMessage = async (newMessage: string) => {
     toggleMsgLoader();
@@ -45,7 +66,7 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
       addResponseMessage(answer);
       setHistory([newMessage, answer]); // update history
     } else {
-      displayNotAvailable(currentRepo);
+      displayNotAvailable(currentRepo, settings.locale);
     }
 
     toggleMsgLoader();
@@ -58,11 +79,11 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
     setHistory(['', '']); // clear history
     if (currentDocsName) {
       // if docs for current repo is available
-      displayWelcome(currentRepo);
+      displayWelcome(currentRepo, settings.locale);
     } else {
-      displayNotAvailable(currentRepo);
+      displayNotAvailable(currentRepo, settings.locale);
     }
-  }, [currentRepo, currentDocsName]);
+  }, [settings, currentRepo, currentDocsName]);
 
   // we cannot change emoji-mart theme with an option, so we have to use MutationObserver and jquery to change the css
   useEffect(() => {
