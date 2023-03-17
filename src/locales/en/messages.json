@@ -327,7 +327,7 @@
     "message": "NOT AVAILABLE for %v"
   },
   "OSS_GPT_welcome": {
-    "message": "Hi, I'm an assistant powered by [DocsGPT](https://github.com/arc53/docsgpt) and [X-lab](https://github.com/X-lab2017). Ask me anything about %v !"
+    "message": "Hi, I'm an assistant powered by [DocsGPT](https://github.com/arc53/docsgpt) and [X-lab](https://github.com/X-lab2017). Ask me anything about %v!"
   },
   "OSS_GPT_notAvailable": {
     "message": "OSS-GPT currently is **NOT AVAILABLE** for %v. If you want docs support for the repository, please check [this issue](https://github.com/hypertrons/hypertrons-crx/issues/609) and make a request there :)\n\nSee [all available docs](https://oss.x-lab.info/hypercrx/docsgpt_active_docs.json)\n\nThis chat widget can also be enabled/disabled in the extension options page whenever you want."
