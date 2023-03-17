@@ -316,5 +316,20 @@
   },
   "merged_lines_popup_title": {
     "message": "通过 PR 合入增加和删除的代码行数"
+  },
+  "docs_gpt_chat_widget": {
+    "message": "OSS-GPT 聊天机器人"
+  },
+  "OSS_GPT_subtitle": {
+    "message": "询问任何有关 %v 的问题"
+  },
+  "OSS_GPT_subtitle_notAvailable": {
+    "message": "暂未支持 %v "
+  },
+  "OSS_GPT_welcome": {
+    "message": "您好，我是一个由 [DocsGPT](https://github.com/arc53/docsgpt) 和 [X-lab](https://github.com/X-lab2017) 提供支持的开源项目文档问答机器人。您可以向我询问有关 %v 的任何问题!"
+  },
+  "OSS_GPT_notAvailable": {
+    "message": "OSS-GPT 暂未支持 %v。如果您想使此仓库得到文档问答支持，请前往[该 issue](https://github.com/hypertrons/hypertrons-crx/issues/609) 提交需求 :)\n\n查看[所有已支持文档](https://oss.x-lab.info/hypercrx/docsgpt_active_docs.json)\n\n您也可以随时在扩展选项页面中启用/禁用此聊天小部件。"
   }
 }
