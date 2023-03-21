@@ -37,7 +37,7 @@ class RepoDetailIssueAnchor extends PerceptorBase {
       'data-place': 'bottom',
       'data-effect': 'solid',
       'data-delay-hide': 500,
-      'data-delay-show': 500,
+      'data-delay-show': 1000,
       style: { color: githubTheme === 'light' ? '#24292f' : '#c9d1d9' },
       'data-text-color': githubTheme === 'light' ? '#24292F' : '#C9D1D9',
       'data-background-color': githubTheme === 'light' ? 'white' : '#161B22',
