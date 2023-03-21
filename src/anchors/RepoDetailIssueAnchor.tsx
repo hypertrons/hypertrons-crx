@@ -47,7 +47,7 @@ class RepoDetailIssueAnchor extends PerceptorBase {
     tooltipContainer.id = 'issue-tooltip-container';
     $('#repository-container-header').append(tooltipContainer);
     render(
-      <RepoDetailIssueView currentRepo={this._currentRepo}/>,
+      <RepoDetailIssueView currentRepo={this._currentRepo} />,
       tooltipContainer
     );
   }
