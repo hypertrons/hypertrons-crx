@@ -142,6 +142,7 @@ Language : [English](./README.md) | 中文
 - **开发者活跃度&OpenRank趋势图**：开发者活跃度和OpenRank趋势图显示了项目成立至今的活跃度和OpenRank这两个指标的变化。您可以利用鼠标或触控板在图表内缩放和拖拽，此外，您还可以点击Legend按钮来控制图例的显示和隐藏。
 
 ## OSS-GPT
+
 OSS-GPT是集成了[DocsGPT](https://github.com/arc53/docsgpt)能力的开源项目文档问答机器人。对已经支持的项目，只需打开对应的项目仓库主页，即可询问有关于该仓库的任何问题。你可以通过[issue#609](https://github.com/hypertrons/hypertrons-crx/issues/609)以使你的开源项目获得OSS-GPT的支持。
 
 <img 
