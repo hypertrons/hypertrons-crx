@@ -24,7 +24,7 @@ Language : [English](./README.md) | 中文
 
 ## 数据来源
 
-`Hypercrx`呈现的所有数据都由[OpenDigger](https://github.com/X-lab2017/open-digger)产生。OpenDigger是一个聚焦于开源分析的开源项目。
+`Hypercrx`呈现的所有数据都由[OpenDigger](https://github.com/X-lab2017/open-digger)产生。OpenDigger是一个聚焦于开源分析的开源项目。数据会在每个月第二天更新。
 
 ## 可视化看板 🔥🔥🔥
 
