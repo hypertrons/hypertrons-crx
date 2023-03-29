@@ -141,6 +141,13 @@ You can find these dashboards in:
 - **Developer's Most Participated Repos**: Developer's Most Participated Repos shows the active projects of developers in a given time period. From this graph you can find out the most active repositories for a given developer.
 - **Developer's Activity & OpenRank Trend**：The Developer Activity and OpenRank Trend chart presents how the two metrics evolve since 2015. In the chart, you can zoom and drag using your mouse or touchpad, and you can toggle either of the data by clicking the legend buttons as well.
 
+## OSS-GPT
+
+OSS-GPT is an open source project document answering robot integrated with [DocsGPT](https://github.com/arc53/docsgpt) capabilities. For an already supported project, simply open the corresponding project repository home page and ask any questions you have about that repository. You can get OSS-GPT support for your open source projects through [issue#609](https://github.com/hypertrons/hypertrons-crx/issues/609).
+<img 
+  src="https://user-images.githubusercontent.com/104072573/228414906-9c219b36-8872-41a1-b681-91f7d8d74a63.png"
+/>
+
 ## Contributing
 
 Please read [CONTRIBUTING](./CONTRIBUTING.md) if you are new here or not familiar with the basic rules of Git/GitHub world.
