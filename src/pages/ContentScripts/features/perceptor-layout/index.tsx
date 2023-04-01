@@ -26,7 +26,7 @@ const init = async (): Promise<void> => {
 
   // create the new one: the percepter container
   const percepterContainer = document.createElement('div');
-  percepterContainer.setAttribute('id', 'perceptor-layout');
+  percepterContainer.id = featureId;
 
   renderTo(percepterContainer);
   perceptorLayoutContainer.append(percepterContainer);
