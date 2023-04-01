@@ -9,6 +9,7 @@ import './features/repo-pr-tooltip';
 import './features/repo-issue-tooltip';
 import './features/perceptor-tab';
 import './features/perceptor-layout';
+import './features/repo-networks';
 
 /**
  * I infer that GitHub uses hotwired/turbo to speedup its SPA.
