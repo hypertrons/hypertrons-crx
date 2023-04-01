@@ -39,8 +39,7 @@ type InternalRunConfig = ShouldRunConditions & {
 
 const { version } = chrome.runtime.getManifest();
 
-const logError = (url: string, error: unknown): void => {
-  const id = getFeatureID(url);
+const logError = (id: string, error: unknown): void => {
   const message = error instanceof Error ? error.message : String(error);
 
   if (message.includes('token')) {
