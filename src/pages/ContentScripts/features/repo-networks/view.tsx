@@ -1,82 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { Stack, Spinner } from 'office-ui-fabric-react';
 
-import Graph from '../../components/Graph';
-import { getRepoNetwork, getDeveloperNetwork } from '../../api/repo';
-import { getMessageByLocale } from '../../utils/utils';
-import Settings, { loadSettings } from '../../utils/settings';
-import ErrorPage from '../../components/ExceptionPage/ErrorPage';
+import Graph from '../../../../components/Graph';
+import { getMessageByLocale } from '../../../../utils/utils';
+import Settings, { loadSettings } from '../../../../utils/settings';
 
-interface ProjectNetworkViewProps {
+const DEVELOPER_PERIOD = 90;
+const REPO_PERIOD = 90;
+
+interface Props {
   currentRepo: string;
+  repoNetwork: any;
+  developerNetwork: any;
 }
 
-const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({
+const ProjectNetworkView = ({
   currentRepo,
-}) => {
-  const developerPeriod = 90;
-  const repoPeriod = 90;
-  const [repoNetwork, setRepoNetwork] = useState();
-  const [developerNetwork, setDeveloperNetwork] = useState();
-  const [inited, setInited] = useState(false);
+  repoNetwork,
+  developerNetwork,
+}: Props): JSX.Element => {
   const [settings, setSettings] = useState(new Settings());
-  const [statusCode, setStatusCode] = useState<number>(200);
 
   useEffect(() => {
     (async () => {
-      const data = await getRepoNetwork(currentRepo);
-      if (data !== null) {
-        setRepoNetwork(data);
-      } else {
-        setStatusCode(404);
-      }
+      setSettings(await loadSettings());
     })();
-  }, [repoPeriod]);
-
-  useEffect(() => {
-    (async () => {
-      const data = await getDeveloperNetwork(currentRepo);
-      if (data !== null) {
-        setDeveloperNetwork(data);
-      } else {
-        setStatusCode(404);
-      }
-    })();
-  }, [developerPeriod]);
-
-  useEffect(() => {
-    const initSettings = async () => {
-      const temp = await loadSettings();
-      setSettings(temp);
-      setInited(true);
-    };
-    if (!inited) {
-      initSettings();
-    }
-  }, [inited, settings]);
+  }, []);
 
   const graphStyle = {
     width: '100%',
     height: '380px',
   };
 
-  if (statusCode !== 200) {
-    return <ErrorPage errorCode={statusCode} />;
-  }
-
-  if (!repoNetwork || !developerNetwork) {
-    return (
-      <Spinner
-        id="spinner_perceptor_layout"
-        label={getMessageByLocale('golbal_loading', settings.locale)}
-      />
-    );
-  }
-
   return (
     <div>
       <div className="hypertrons-crx-border hypertrons-crx-container">
-        <Stack className="hypertrons-crx-title">
+        <div className="hypertrons-crx-title">
           <span>
             {getMessageByLocale(
               'component_projectCorrelationNetwork_title',
@@ -84,15 +42,15 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({
             )}
           </span>
           <div className="hypertrons-crx-title-extra">
-            {getMessageByLocale('global_period', settings.locale)}: {repoPeriod}{' '}
-            {getMessageByLocale('global_day', settings.locale)}
+            {getMessageByLocale('global_period', settings.locale)}:{' '}
+            {REPO_PERIOD} {getMessageByLocale('global_day', settings.locale)}
           </div>
-        </Stack>
+        </div>
         <div className="d-flex flex-wrap flex-items-center">
           <div className="col-12 col-md-8">
             <div style={{ margin: '10px 0 20px 20px' }}>
               <Graph
-                data={repoNetwork!}
+                data={repoNetwork}
                 style={graphStyle}
                 focusedNodeID={currentRepo}
               />
@@ -128,7 +86,7 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({
         </div>
       </div>
       <div className="hypertrons-crx-border hypertrons-crx-container">
-        <Stack className="hypertrons-crx-title">
+        <div className="hypertrons-crx-title">
           <span>
             {getMessageByLocale(
               'component_activeDeveloperCollaborationNetwork_title',
@@ -137,14 +95,14 @@ const ProjectNetworkView: React.FC<ProjectNetworkViewProps> = ({
           </span>
           <div className="hypertrons-crx-title-extra">
             {getMessageByLocale('global_period', settings.locale)}:{' '}
-            {developerPeriod}{' '}
+            {DEVELOPER_PERIOD}{' '}
             {getMessageByLocale('global_day', settings.locale)}
           </div>
-        </Stack>
+        </div>
         <div className="d-flex flex-wrap flex-items-center">
           <div className="col-12 col-md-8">
             <div style={{ margin: '10px 0 20px 20px' }}>
-              <Graph data={developerNetwork!} style={graphStyle} />
+              <Graph data={developerNetwork} style={graphStyle} />
             </div>
           </div>
           <div className="col-12 col-md-4">
