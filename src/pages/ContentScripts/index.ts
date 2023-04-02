@@ -11,3 +11,4 @@ import './features/perceptor-tab';
 import './features/perceptor-layout';
 import './features/repo-networks';
 import './features/developer-networks';
+import './features/oss-gpt';

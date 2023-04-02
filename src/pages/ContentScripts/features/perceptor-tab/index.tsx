@@ -84,6 +84,7 @@ const updatePerceptorTabHighlighting = async (): Promise<void> => {
 
 const init = async (): Promise<void> => {
   await addPerceptorTab();
+  // TODO need a mechanism to remove extra listeners like this one
   // add event listener to update tab highlighting at each turbo:load event
   document.addEventListener('turbo:load', async () => {
     await updatePerceptorTabHighlighting();
