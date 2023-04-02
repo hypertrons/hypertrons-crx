@@ -10,10 +10,6 @@ const messages_locale = {
   zh_CN: messages_zh_CN,
 };
 
-export function elementExists(obj: null | JQuery) {
-  return obj !== null && obj.length > 0;
-}
-
 export function isNull(object: any) {
   if (
     object === null ||
@@ -52,12 +48,6 @@ export function getMessageByLocale(key: string, locale: string) {
 
 export const isPerceptor = (): boolean =>
   window.location.search.includes('?redirect=perceptor');
-
-export function runsWhen(rules: any[]) {
-  return (constructor: Function) => {
-    constructor.prototype.include = rules;
-  };
-}
 
 export function getGithubTheme() {
   // following 3 variables are extracted from GitHub page's html tag properties

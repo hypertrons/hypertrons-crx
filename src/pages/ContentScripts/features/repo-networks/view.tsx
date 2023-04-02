@@ -13,7 +13,7 @@ interface Props {
   developerNetwork: any;
 }
 
-const ProjectNetworkView = ({
+const View = ({
   currentRepo,
   repoNetwork,
   developerNetwork,
@@ -138,4 +138,4 @@ const ProjectNetworkView = ({
   );
 };
 
-export default ProjectNetworkView;
+export default View;
