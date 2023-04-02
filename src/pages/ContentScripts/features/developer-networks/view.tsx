@@ -4,6 +4,7 @@ import ReactModal from 'react-modal';
 import Graph from '../../../../components/Graph';
 import { getMessageByLocale } from '../../../../utils/utils';
 import Settings, { loadSettings } from '../../../../utils/settings';
+import { iconDeveloperNetwork, iconRepoNetwork } from './icon-svg-path';
 import './react-modal.scss';
 
 const DEVELOPER_PERIOD = 90;
@@ -37,12 +38,22 @@ const View = ({
     <div className="border-top color-border-secondary pt-3 mt-3">
       <h2 className="h4 mb-2">Perceptor</h2>
       <ul className="vcard-details">
-        <li className="vcard-detail pt-1" style={{ margin: '-5px -30px' }}>
+        <li className="vcard-detail pt-1">
+          <svg
+            className="octicon octicon-clock"
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            width="16"
+            height="16"
+            aria-hidden="true"
+          >
+            <path d={iconDeveloperNetwork}></path>
+          </svg>
           <button
             style={{
               border: 0,
+              padding: '1px 0',
               backgroundColor: 'transparent',
-              margin: '5px 0',
             }}
             onClick={() => {
               setShowDeveloperNetwork(true);
@@ -58,7 +69,6 @@ const View = ({
               )}`}
               className="Label"
               style={{
-                marginLeft: '5px!important',
                 color: 'var(--color-fg-default)',
                 fontWeight: 'var(--base-text-weight-normal, 400)',
               }}
@@ -70,12 +80,22 @@ const View = ({
             </span>
           </button>
         </li>
-        <li className="vcard-detail pt-1" style={{ margin: '-5px -30px' }}>
+        <li className="vcard-detail pt-1">
+          <svg
+            className="octicon octicon-clock"
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            width="16"
+            height="16"
+            aria-hidden="true"
+          >
+            <path d={iconRepoNetwork}></path>
+          </svg>
           <button
             style={{
               border: 0,
+              padding: '1px 0',
               backgroundColor: 'transparent',
-              margin: '10px 0',
             }}
             onClick={() => {
               setShowRepoNetwork(true);
@@ -91,7 +111,6 @@ const View = ({
               )}`}
               className="Label"
               style={{
-                marginLeft: '5px!important',
                 color: 'var(--color-fg-default)',
                 fontWeight: 'var(--base-text-weight-normal, 400)',
               }}
