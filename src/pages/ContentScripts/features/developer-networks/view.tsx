@@ -126,6 +126,7 @@ const View = ({
       <ReactModal
         className="ReactModal__Content_Custom"
         overlayClassName="ReactModal__Overlay_Custom"
+        parentSelector={() => document.querySelector('main') ?? document.body}
         isOpen={showDeveloperNetwork}
         onRequestClose={() => {
           setShowDeveloperNetwork(false);
@@ -188,6 +189,7 @@ const View = ({
       <ReactModal
         className="ReactModal__Content_Custom"
         overlayClassName="ReactModal__Overlay_Custom"
+        parentSelector={() => document.querySelector('main') ?? document.body}
         isOpen={showRepoNetwork}
         onRequestClose={() => {
           setShowRepoNetwork(false);
