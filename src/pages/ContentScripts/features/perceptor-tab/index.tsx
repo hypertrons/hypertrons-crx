@@ -20,6 +20,8 @@ const addPerceptorTab = async (): Promise<void | false> => {
   }
   const perceptorTab = insightsTab.cloneNode(true) as HTMLAnchorElement;
   delete perceptorTab.dataset.selectedLinks;
+  perceptorTab.removeAttribute('aria-current')
+  perceptorTab.classList.remove('selected');
   const perceptorHref = `${insightsTab.href}?redirect=perceptor`;
   perceptorTab.href = perceptorHref;
   perceptorTab.id = featureId;
