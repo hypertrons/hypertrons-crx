@@ -166,8 +166,8 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
                 {repoPeriod} {getMessageByLocale('global_day', settings.locale)}
               </div>
             </Stack>
-            <div className="d-flex flex-wrap flex-items-center">
-              <div className="col-12 col-md-8">
+            <div className="d-flex flex-wrap justify-content-lg-between align-items-center">
+              <div className="col-8 graph-container">
                 <div style={{ margin: '10px 0 20px 20px' }}>
                   <Graph
                     data={developerNetwork!}
@@ -176,7 +176,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
                   />
                 </div>
               </div>
-              <div className="col-12 col-md-4">
+              <div className="col-4 description-container">
                 <div
                   className="color-text-secondary"
                   style={{ marginLeft: '35px', marginRight: '35px' }}
@@ -231,13 +231,13 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
                 {getMessageByLocale('global_day', settings.locale)}
               </div>
             </Stack>
-            <div className="d-flex flex-wrap flex-items-center">
-              <div className="col-12 col-md-8">
+            <div className="d-flex flex-wrap justify-content-lg-between align-items-center">
+              <div className="col-lg-8 col-12  ">
                 <div style={{ margin: '10px 0 20px 20px' }}>
                   <Graph data={repoNetwork!} style={graphStyle} />
                 </div>
               </div>
-              <div className="col-12 col-md-4">
+              <div className="col-lg-4 col-12">
                 <div
                   className="color-text-secondary"
                   style={{ marginLeft: '35px', marginRight: '35px' }}
