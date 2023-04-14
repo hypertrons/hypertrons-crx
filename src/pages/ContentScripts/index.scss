@@ -21,9 +21,16 @@
   border-bottom: 0;
   border-radius: 6px;
 }
+@media screen and (max-width: 1120px) {
+  .graph-container {
+    width: 100%;
+  }
+  .description-container {
+    width: 100%;
+  }
+}
 
 .hypertrons-crx-title-extra {
-  float: right;
   margin-right: 10px;
   text-align: right;
 }
