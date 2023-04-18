@@ -161,7 +161,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
                   settings.locale
                 )}
               </span>
-              <div className="hypertrons-crx-title-extra">
+              <div className="hypertrons-crx-title-extra developer-tab">
                 {getMessageByLocale('global_period', settings.locale)}:{' '}
                 {repoPeriod} {getMessageByLocale('global_day', settings.locale)}
               </div>
@@ -222,7 +222,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
                   settings.locale
                 )}
               </span>
-              <div className="hypertrons-crx-title-extra">
+              <div className="hypertrons-crx-title-extra ">
                 {getMessageByLocale('global_period', settings.locale)}:{' '}
                 {developerPeriod}{' '}
                 {getMessageByLocale('global_day', settings.locale)}

@@ -40,8 +40,15 @@
 }
 
 .hypertrons-crx-title-extra {
+  float: right;
   margin-right: 10px;
   text-align: right;
+}
+
+@media screen and (max-width: 670px) {
+  .developer-tab {
+    float: none;
+  }
 }
 
 .verticalStackItemStyle {
