@@ -161,14 +161,14 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
                   settings.locale
                 )}
               </span>
-              <div className="hypertrons-crx-title-extra">
+              <div className="hypertrons-crx-title-extra developer-tab">
                 {getMessageByLocale('global_period', settings.locale)}:{' '}
                 {repoPeriod} {getMessageByLocale('global_day', settings.locale)}
               </div>
             </Stack>
             <div className="d-flex flex-wrap justify-content-lg-between align-items-center">
               <div className="col-8 graph-container">
-                <div style={{ margin: '10px 0 20px 20px' }}>
+                <div style={{ margin: '15px 0 20px 0px' }}>
                   <Graph
                     data={developerNetwork!}
                     style={graphStyle}
@@ -177,10 +177,7 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
                 </div>
               </div>
               <div className="col-4 description-container">
-                <div
-                  className="color-text-secondary"
-                  style={{ marginLeft: '35px', marginRight: '35px' }}
-                >
+                <div className="color-text-secondary">
                   <p>
                     {getMessageByLocale(
                       'component_developerCollaborationNetwork_description',
@@ -225,23 +222,20 @@ const DeveloperNetworkView: React.FC<DeveloperNetworkViewProps> = ({
                   settings.locale
                 )}
               </span>
-              <div className="hypertrons-crx-title-extra">
+              <div className="hypertrons-crx-title-extra ">
                 {getMessageByLocale('global_period', settings.locale)}:{' '}
                 {developerPeriod}{' '}
                 {getMessageByLocale('global_day', settings.locale)}
               </div>
             </Stack>
             <div className="d-flex flex-wrap justify-content-lg-between align-items-center">
-              <div className="col-lg-8 col-12  ">
-                <div style={{ margin: '10px 0 20px 20px' }}>
+              <div className="col-lg-8 col-12 graph-container ">
+                <div style={{ margin: '15px 0px 20px 0px' }}>
                   <Graph data={repoNetwork!} style={graphStyle} />
                 </div>
               </div>
-              <div className="col-lg-4 col-12">
-                <div
-                  className="color-text-secondary"
-                  style={{ marginLeft: '35px', marginRight: '35px' }}
-                >
+              <div className="col-lg-4 col-12 description-container">
+                <div className="color-text-secondary ">
                   <p>
                     {getMessageByLocale(
                       'component_mostParticipatedProjects_description',

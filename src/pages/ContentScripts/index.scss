@@ -21,6 +21,11 @@
   border-bottom: 0;
   border-radius: 6px;
 }
+.color-text-secondary {
+  margin-left: 35px;
+  margin-right: 35px;
+  margin-top: 10px;
+}
 @media screen and (max-width: 1120px) {
   .graph-container {
     width: 100%;
@@ -28,11 +33,22 @@
   .description-container {
     width: 100%;
   }
+  .color-text-secondary {
+    margin-left: 5px;
+    margin-top: 5px;
+  }
 }
 
 .hypertrons-crx-title-extra {
+  float: right;
   margin-right: 10px;
   text-align: right;
+}
+
+@media screen and (max-width: 670px) {
+  .developer-tab {
+    float: none;
+  }
 }
 
 .verticalStackItemStyle {
