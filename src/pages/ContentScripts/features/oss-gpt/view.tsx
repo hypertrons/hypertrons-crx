@@ -35,6 +35,8 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
   const [inited, setInited] = useState(false);
   const [settings, setSettings] = useState(new Settings());
   const [history, setHistory] = useState<[string, string]>(['', '']);
+  // Toggle to allow resizing of the widget
+  const [resizable, setResizable] = useState(true);
 
   useEffect(() => {
     const initSettings = async () => {
@@ -93,6 +95,44 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
     const config = { attributes: true, childList: true, subtree: true };
     // Callback function to execute when mutations are observed
     const callback: MutationCallback = (mutationList, observer) => {
+      if (
+        $('div.rcw-conversation-resizer').length == 0 &&
+        $('div.rcw-conversation-container').length != 0
+      ) {
+        //we only add a resizer when there is no resizer and there is an active  conversation container
+        $('div.rcw-conversation-container').prepend(
+          "<div class='rcw-conversation-resizer'></div>"
+        );
+      } else {
+        if (resizable) {
+          // if resizer exits we only add listeners to it when resizable is true
+          const conversationContainer = $('.rcw-conversation-container');
+          const conversationResizer = $('.rcw-conversation-resizer');
+          let isDragging = false;
+          let initialMouseX: number;
+          let initialWidth: number;
+          if (conversationResizer.length) {
+            conversationResizer.on('mousedown', (event) => {
+              isDragging = true;
+              initialMouseX = event.clientX;
+              initialWidth = parseInt(conversationContainer.css('width'), 10);
+            });
+            $(document).on('mousemove', (event) => {
+              if (isDragging) {
+                const mouseX = event.clientX;
+                const widthDiff = mouseX - initialMouseX;
+                conversationContainer.css(
+                  'width',
+                  `${initialWidth - widthDiff}px`
+                );
+              }
+            });
+            $(document).on('mouseup', () => {
+              isDragging = false;
+            });
+          }
+        }
+      }
       if ($('section.emoji-mart').length > 0) {
         $('section.emoji-mart').addClass(`emoji-mart emoji-mart-${theme}`);
       }
@@ -105,6 +145,11 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
     return () => {
       // Later, you can stop observing
       observer.disconnect();
+
+      if ($('.rcw-conversation-resizer')) {
+        $('.rcw-conversation-resizer').off('mousedown');
+        $(document).off('mousemove mouseup');
+      }
     };
   }, []);
 
@@ -114,7 +159,6 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
         title="OSS-GPT"
         subtitle={subtitle}
         emojis={true} // will be enabled after style is fine tuned for two themes
-        resizable={true}
         handleNewUserMessage={handleNewUserMessage}
         showBadge={false}
         profileAvatar={chrome.runtime.getURL('main.png')}
