@@ -3,7 +3,7 @@ import ReactModal from 'react-modal';
 
 import Graph from '../../../../components/Graph';
 import { getMessageByLocale } from '../../../../utils/utils';
-import Settings, { loadSettings } from '../../../../utils/settings';
+import { defaultSettings, loadSettings } from '../../../../utils/settings';
 import { iconDeveloperNetwork, iconRepoNetwork } from './icon-svg-path';
 import './react-modal.scss';
 
@@ -24,7 +24,7 @@ const View = ({
   developerNetwork,
   repoNetwork,
 }: Props): JSX.Element => {
-  const [settings, setSettings] = useState(new Settings());
+  const [settings, setSettings] = useState(defaultSettings);
   const [showDeveloperNetwork, setShowDeveloperNetwork] = useState(false);
   const [showRepoNetwork, setShowRepoNetwork] = useState(false);
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { getGithubTheme, getMessageByLocale } from '../../../../utils/utils';
 import { generateDataByMonth } from '../../../../utils/data';
-import Settings, { loadSettings } from '../../../../utils/settings';
+import { loadSettings, defaultSettings } from '../../../../utils/settings';
 import Bars from '../../../../components/Bars/index';
 
 const githubTheme = getGithubTheme();
@@ -20,7 +20,7 @@ interface Props {
 }
 
 const View = ({ activity, openrank }: Props): JSX.Element | null => {
-  const [settings, setSettings] = useState(new Settings());
+  const [settings, setSettings] = useState(defaultSettings);
 
   useEffect(() => {
     (async () => {

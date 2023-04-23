@@ -6,7 +6,7 @@ import {
   isNull,
   isAllNull,
 } from '../../../../utils/utils';
-import Settings, { loadSettings } from '../../../../utils/settings';
+import { loadSettings, defaultSettings } from '../../../../utils/settings';
 import { generateDataByMonth } from '../../../../utils/data';
 import ReactTooltip from 'react-tooltip';
 import IssueChart from './IssueChart';
@@ -33,7 +33,7 @@ const generateData = (issueDetail: IssueDetail): any => {
 };
 
 const View = ({ currentRepo, issueDetail }: Props): JSX.Element | null => {
-  const [settings, setSettings] = useState(new Settings());
+  const [settings, setSettings] = useState(defaultSettings);
 
   useEffect(() => {
     (async () => {

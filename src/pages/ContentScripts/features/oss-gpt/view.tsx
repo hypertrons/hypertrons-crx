@@ -11,7 +11,7 @@ import {
 import { getAnswer } from './service';
 import './rcw.scss';
 import { getMessageByLocale } from '../../../../utils/utils';
-import Settings, { loadSettings } from '../../../../utils/settings';
+import { defaultSettings, loadSettings } from '../../../../utils/settings';
 
 interface Props {
   theme: 'light' | 'dark';
@@ -33,7 +33,7 @@ const displayNotAvailable = (repoName: string, locale: string) => {
 
 const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
   const [inited, setInited] = useState(false);
-  const [settings, setSettings] = useState(new Settings());
+  const [settings, setSettings] = useState(defaultSettings);
   const [history, setHistory] = useState<[string, string]>(['', '']);
 
   useEffect(() => {

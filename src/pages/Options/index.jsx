@@ -7,10 +7,12 @@ import { render } from 'react-dom';
 
 import Options from './Options';
 import './index.css';
+import {importedFeatures} from '../../../scripts/features-loader.js'
 
 render(
-  <Options title={'Settings'} />,
+  <Options importedFeatures={importedFeatures}/>,
   window.document.querySelector('#app-container')
 );
+console.log("options.index.jsx");
 
 if (module.hot) module.hot.accept();

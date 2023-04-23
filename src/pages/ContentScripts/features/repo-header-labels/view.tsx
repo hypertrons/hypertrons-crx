@@ -6,7 +6,7 @@ import {
   isNull,
 } from '../../../../utils/utils';
 import { numberWithCommas } from '../../../../utils/formatter';
-import Settings, { loadSettings } from '../../../../utils/settings';
+import { loadSettings, defaultSettings } from '../../../../utils/settings';
 import { rocketLight, rocketDark } from './base64';
 import ReactTooltip from 'react-tooltip';
 import { generateDataByMonth } from '../../../../utils/data';
@@ -27,7 +27,7 @@ const View = ({
   openrank,
   participant,
 }: Props): JSX.Element | null => {
-  const [settings, setSettings] = useState(new Settings());
+  const [settings, setSettings] = useState(defaultSettings);
 
   useEffect(() => {
     ReactTooltip.rebuild();

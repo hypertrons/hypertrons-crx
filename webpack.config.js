@@ -68,6 +68,14 @@ let options = {
   module: {
     rules: [
       {
+        test: /features-loader.js$/,
+        use: [
+          {
+            loader: `val-loader`,
+          },
+        ],
+      },
+      {
         // look for .css or .scss files
         test: /\.(css|scss)$/,
         // in the `src` directory

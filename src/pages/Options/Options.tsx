@@ -8,15 +8,35 @@ import {
   ChoiceGroup,
   IChoiceGroupOption,
 } from 'office-ui-fabric-react';
-import { getMessageByLocale, chromeSet } from '../../utils/utils';
-import Settings, { loadSettings } from '../../utils/settings';
+import {Settings, FeatureOption, loadSettings, defaultSettings, saveSettings, setFeatureSettings } from "../../utils/settings";
+import { getMessageByLocale } from '../../utils/utils';
 import { HYPERTRONS_CRX_WEBSITE } from '../../constant';
 import './Options.css';
+import { useRefEffect } from '@fluentui/react-hooks';
 
-const Options: React.FC = () => {
-  const [settings, setSettings] = useState(new Settings());
+interface Props {
+  importedFeatures: FeatureID[]
+}
+
+const Options = (props: Props): JSX.Element => {
   const [inited, setInited] = useState(false);
   const [version, setVersion] = useState('0.0.0');
+  const {
+    importedFeatures
+  } = props
+  const [settings, setSettings] = useState<Settings>(defaultSettings);
+
+  async function setSettingConfig({id, checked}:any) {
+    setSettings({
+      ...settings,
+      featureOptions: settings.featureOptions.map((featureOption:FeatureOption) => {
+        if (featureOption.id === id) {
+          return { ...featureOption, isEnabled: checked };
+        }
+        return featureOption;
+      }),
+    });
+  }
 
   const localeOptions: IChoiceGroupOption[] = [
     {
@@ -28,34 +48,45 @@ const Options: React.FC = () => {
       text: '简体中文 (Simplified Chinese)',
     },
   ];
-
-  useEffect(() => {
-    const initSettings = async () => {
-      const temp = await loadSettings();
-      setSettings(temp);
-      setInited(true);
-    };
-    if (!inited) {
-      initSettings();
-    }
-  }, [inited, settings]);
-
   const getVersion = async () => {
     let version = (await chrome.management.getSelf()).version;
     setVersion(version);
   };
 
   useEffect(() => {
+    const save = async () => {
+      await saveSettings(settings);
+    }
+    save();
+  }, [settings]);
+
+  useEffect(() => {
+    async function initSettings() {
+      setInited(true);
+      await setFeatureSettings(importedFeatures)
+      setSettings(await loadSettings());
+    };
+    initSettings();
+  }, []);
+
+  useEffect(() => {
     getVersion();
   }, [version]);
 
-  const saveSettings = async (settings: Settings) => {
-    setSettings(settings);
-    await chromeSet('settings', settings.toJson());
-  };
-
   if (!inited) {
     return <div />;
+  }
+
+  function buildFeatureCheckbox({id, isEnabled}: any) {
+    return (
+        <Checkbox
+                label={id}
+                defaultChecked={isEnabled}
+                onChange={async (e, checked) => {
+                  await setSettingConfig({id, checked});
+                }}
+              /> 
+    );
   }
 
   return (
@@ -169,28 +200,11 @@ const Options: React.FC = () => {
               )}{' '}
               :
             </p>
-            <Checkbox
-              label={getMessageByLocale(
-                'component_developerCollaborationNetwork_title',
-                settings.locale
-              )}
-              defaultChecked={settings.developerNetwork}
-              onChange={async (e, checked) => {
-                settings.developerNetwork = checked;
-                await saveSettings(settings);
-              }}
-            />
-            <Checkbox
-              label={getMessageByLocale(
-                'component_projectCorrelationNetwork_title',
-                settings.locale
-              )}
-              defaultChecked={settings.projectNetwork}
-              onChange={async (e, checked) => {
-                settings.projectNetwork = checked;
-                await saveSettings(settings);
-              }}
-            />
+            {
+              settings.featureOptions.map(
+                (featureOption) => buildFeatureCheckbox(featureOption)
+              )
+            }
           </Stack>
         </Stack.Item>
         <Stack.Item className="Box">

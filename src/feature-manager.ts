@@ -10,6 +10,7 @@ import isRestorationVisit from './helpers/is-restoration-visit';
 import shouldFeatureRun, {
   ShouldRunConditions,
 } from './helpers/should-feature-run';
+import { loadSettings, getFeatureIsEnabled } from './utils/settings';
 
 type FeatureInit = () => Promisable<void>;
 type FeatureRestore = Function;
@@ -60,7 +61,7 @@ const log = {
 };
 
 // eslint-disable-next-line no-async-promise-executor -- Rule assumes we don't want to leave it pending
-const globalReady = new Promise<void>(async (resolve) => {
+const globalReady = new Promise<object>(async (resolve) => {
   await waitFor(() => document.body);
 
   if (pageDetect.is500() || pageDetect.isPasswordConfirmation()) {
@@ -81,7 +82,9 @@ const globalReady = new Promise<void>(async (resolve) => {
 
   document.documentElement.classList.add('hypercrx');
 
-  resolve();
+  const options = loadSettings();
+
+  resolve(options);
 });
 
 const setupPageLoad = async (
@@ -124,7 +127,9 @@ const add = async (
   ...loaders: FeatureLoader[]
 ): Promise<void> => {
   /* Feature filtering and running */
-  await globalReady;
+  const options = await globalReady;
+
+  if (!getFeatureIsEnabled(options, id)) return;
 
   for (const loader of loaders) {
     // Input defaults and validation

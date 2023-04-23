@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import Graph from '../../../../components/Graph';
 import { getMessageByLocale } from '../../../../utils/utils';
-import Settings, { loadSettings } from '../../../../utils/settings';
+import { defaultSettings, loadSettings } from '../../../../utils/settings';
 
 const DEVELOPER_PERIOD = 90;
 const REPO_PERIOD = 90;
@@ -18,7 +18,7 @@ const View = ({
   repoNetwork,
   developerNetwork,
 }: Props): JSX.Element => {
-  const [settings, setSettings] = useState(new Settings());
+  const [settings, setSettings] = useState(defaultSettings);
 
   useEffect(() => {
     (async () => {

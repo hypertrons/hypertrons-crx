@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { getGithubTheme, getMessageByLocale } from '../../../../utils/utils';
-import Settings, { loadSettings } from '../../../../utils/settings';
+import { defaultSettings, loadSettings } from '../../../../utils/settings';
 import { generateDataByMonth } from '../../../../utils/data';
 import ReactTooltip from 'react-tooltip';
 import StarChart from './StarChart';
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const View = ({ stars: stars }: Props): JSX.Element | null => {
-  const [settings, setSettings] = useState(new Settings());
+  const [settings, setSettings] = useState(defaultSettings);
 
   useEffect(() => {
     (async () => {

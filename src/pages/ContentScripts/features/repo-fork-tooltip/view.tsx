@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { getGithubTheme, getMessageByLocale } from '../../../../utils/utils';
-import Settings, { loadSettings } from '../../../../utils/settings';
+import { loadSettings, defaultSettings } from '../../../../utils/settings';
 import { generateDataByMonth } from '../../../../utils/data';
 import ReactTooltip from 'react-tooltip';
 import ForkChart from './ForkChart';
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const View = ({ forks }: Props): JSX.Element | null => {
-  const [settings, setSettings] = useState(new Settings());
+  const [settings, setSettings] = useState(defaultSettings);
 
   useEffect(() => {
     (async () => {

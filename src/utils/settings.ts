@@ -1,57 +1,69 @@
-import { chromeGet, isNull } from './utils';
+// settings.ts
+// load and save settings through chromeGet and chromeSet
+// all features should load settings first 
+import { chromeGet, chromeSet, isNull } from './utils';
 
-class Settings {
-  isEnabled: boolean | undefined;
-  developerNetwork: boolean | undefined;
-  projectNetwork: boolean | undefined;
-  locale: string;
-
-  constructor() {
-    this.isEnabled = true;
-    this.developerNetwork = true;
-    this.projectNetwork = true;
-    this.locale = 'en'; // temporarily set default language to English
-    // const language = chrome.i18n.getUILanguage();
-    // if (language.startsWith('zh')) {
-    //   this.locale = 'zh_CN';
-    // } else {
-    //   this.locale = 'en';
-    // }
-  }
-
-  loadFromJson(data: { [key: string]: any }): void {
-    if ('isEnabled' in data) {
-      this.isEnabled = data['isEnabled'];
-    }
-    if ('developerNetwork' in data) {
-      this.developerNetwork = data['developerNetwork'];
-    }
-    if ('projectNetwork' in data) {
-      this.projectNetwork = data['projectNetwork'];
-    }
-    if ('locale' in data) {
-      this.locale = data['locale'];
-    }
-  }
-
-  toJson(): { [key: string]: any } {
-    const result: { [key: string]: any } = {};
-    result['isEnabled'] = this.isEnabled;
-    result['developerNetwork'] = this.developerNetwork;
-    result['projectNetwork'] = this.projectNetwork;
-    result['locale'] = this.locale;
-    return result;
-  }
+export interface FeatureOption {
+  id: FeatureID;
+  isEnabled: boolean;
 }
 
-export const loadSettings = async () => {
-  const settings = new Settings();
-  let obj = await chromeGet('settings');
-  if (isNull(obj)) {
-    obj = {};
+export interface Settings {
+  isEnabled: boolean | undefined;
+  featureOptions: FeatureOption[]
+  locale: string;
+}
+
+export async function loadSettings() {
+  let settingsConfig = await chromeGet('settings');
+  if (isNull(settingsConfig)) {
+    settingsConfig = {};
   }
-  settings.loadFromJson(obj);
-  return settings;
+  return {
+    "isEnabled": settingsConfig['isEnabled'],
+    "featureOptions": JSON.parse(settingsConfig['featureOptions']) ,
+    "locale": settingsConfig['locale'],
+  }
 };
 
-export default Settings;
+export const defaultSettings:Settings = {
+  isEnabled: true, featureOptions: [], locale: 'en'
+}
+
+export const saveSettings = async (settings:Settings) => {
+  await chromeSet('settings', {
+    "isEnabled": settings.isEnabled,
+    "featureOptions": JSON.stringify(settings.featureOptions),
+    "locale": settings.locale,
+  });
+};
+
+export async function setFeatureSettings(features:FeatureID[]) {
+  const settingsConfig = await loadSettings()
+  if (!isNull(settingsConfig['featureOptions'])) {
+    return;
+  }
+  let settings = defaultSettings;
+  features.map((id)=>{
+    settings.featureOptions.push({
+      id: id,
+      isEnabled: true
+    });
+  })
+  saveSettings(settings);
+}
+
+export function getFeatureIsEnabled(settings:any, id:FeatureID|string) {
+  const {
+    featureOptions
+  } = settings;
+  const prefix = 'hypercrx-'
+  let res = false;
+  if (featureOptions.length === 0) return true;
+  featureOptions.map((opt:FeatureOption)=>{
+    if (id == `${prefix}${opt.id}`) {
+      res = opt.isEnabled
+    }
+  })
+  return res;
+}
