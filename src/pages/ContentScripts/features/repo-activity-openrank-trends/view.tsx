@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react';
 
 import { getGithubTheme, getMessageByLocale } from '../../../../utils/utils';
 import { generateDataByMonth } from '../../../../utils/data';
-import { Settings, loadSettings, defaultSettings, getFeatureIsEnabled } from '../../../../utils/settings';
+import {
+  Settings,
+  loadSettings,
+  defaultSettings,
+  getFeatureIsEnabled,
+} from '../../../../utils/settings';
 import Bars from '../../../../components/Bars/index';
 
 const githubTheme = getGithubTheme();

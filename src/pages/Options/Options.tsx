@@ -8,33 +8,40 @@ import {
   ChoiceGroup,
   IChoiceGroupOption,
 } from 'office-ui-fabric-react';
-import {Settings, FeatureOption, loadSettings, defaultSettings, saveSettings, setFeatureSettings } from "../../utils/settings";
+import {
+  Settings,
+  FeatureOption,
+  loadSettings,
+  defaultSettings,
+  saveSettings,
+  setFeatureSettings,
+} from '../../utils/settings';
 import { getMessageByLocale } from '../../utils/utils';
 import { HYPERTRONS_CRX_WEBSITE } from '../../constant';
 import './Options.css';
 import { useRefEffect } from '@fluentui/react-hooks';
 
 interface Props {
-  importedFeatures: FeatureID[]
+  importedFeatures: FeatureID[];
 }
 
 const Options = (props: Props): JSX.Element => {
   const [inited, setInited] = useState(false);
   const [version, setVersion] = useState('0.0.0');
-  const {
-    importedFeatures
-  } = props
+  const { importedFeatures } = props;
   const [settings, setSettings] = useState<Settings>(defaultSettings);
 
-  async function setSettingConfig({id, checked}:any) {
+  async function setSettingConfig({ id, checked }: any) {
     setSettings({
       ...settings,
-      featureOptions: settings.featureOptions.map((featureOption:FeatureOption) => {
-        if (featureOption.id === id) {
-          return { ...featureOption, isEnabled: checked };
+      featureOptions: settings.featureOptions.map(
+        (featureOption: FeatureOption) => {
+          if (featureOption.id === id) {
+            return { ...featureOption, isEnabled: checked };
+          }
+          return featureOption;
         }
-        return featureOption;
-      }),
+      ),
     });
   }
 
@@ -56,16 +63,16 @@ const Options = (props: Props): JSX.Element => {
   useEffect(() => {
     const save = async () => {
       await saveSettings(settings);
-    }
+    };
     save();
   }, [settings]);
 
   useEffect(() => {
     async function initSettings() {
       setInited(true);
-      await setFeatureSettings(importedFeatures)
+      await setFeatureSettings(importedFeatures);
       setSettings(await loadSettings());
-    };
+    }
     initSettings();
   }, []);
 
@@ -77,15 +84,15 @@ const Options = (props: Props): JSX.Element => {
     return <div />;
   }
 
-  function buildFeatureCheckbox({id, isEnabled}: any) {
+  function buildFeatureCheckbox({ id, isEnabled }: any) {
     return (
-        <Checkbox
-                label={id}
-                defaultChecked={isEnabled}
-                onChange={async (e, checked) => {
-                  await setSettingConfig({id, checked});
-                }}
-              /> 
+      <Checkbox
+        label={id}
+        defaultChecked={isEnabled}
+        onChange={async (e, checked) => {
+          await setSettingConfig({ id, checked });
+        }}
+      />
     );
   }
 
@@ -200,11 +207,9 @@ const Options = (props: Props): JSX.Element => {
               )}{' '}
               :
             </p>
-            {
-              settings.featureOptions.map(
-                (featureOption) => buildFeatureCheckbox(featureOption)
-              )
-            }
+            {settings.featureOptions.map((featureOption) =>
+              buildFeatureCheckbox(featureOption)
+            )}
           </Stack>
         </Stack.Item>
         <Stack.Item className="Box">
