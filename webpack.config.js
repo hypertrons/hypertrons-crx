@@ -68,10 +68,10 @@ let options = {
   module: {
     rules: [
       {
-        test: /features-loader.js$/,
+        test: /README\.md$/,
         use: [
           {
-            loader: `val-loader`,
+            loader: './utils/features-loader.cjs',
           },
         ],
       },

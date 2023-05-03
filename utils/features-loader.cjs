@@ -10,12 +10,11 @@ function getImportedFeatures() {
   return importedFeatures;
 }
 
-module.exports = () => {
-  // NOTE: this return value will replace the module in the bundle
-  return {
-    cacheable: true,
-    code: `export const importedFeatures = ${JSON.stringify(
-      getImportedFeatures()
-    )}`,
-  };
-};
+// a webpack loader
+function FeaturesLoader(content, map, meta) {
+  return `
+    export const importedFeatures = ${JSON.stringify(getImportedFeatures())}
+  `;
+}
+
+module.exports = FeaturesLoader;
