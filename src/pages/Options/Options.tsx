@@ -19,7 +19,6 @@ import {
 import { getMessageByLocale } from '../../utils/utils';
 import { HYPERTRONS_CRX_WEBSITE } from '../../constant';
 import './Options.css';
-import { useRefEffect } from '@fluentui/react-hooks';
 
 interface Props {
   importedFeatures: FeatureID[];

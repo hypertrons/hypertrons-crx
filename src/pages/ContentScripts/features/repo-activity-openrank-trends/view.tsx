@@ -6,7 +6,6 @@ import {
   Settings,
   loadSettings,
   defaultSettings,
-  getFeatureIsEnabled,
 } from '../../../../utils/settings';
 import Bars from '../../../../components/Bars/index';
 
