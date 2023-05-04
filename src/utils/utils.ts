@@ -34,7 +34,7 @@ export async function chromeSet(key: string, value: any) {
 }
 
 export async function chromeGet(key: string) {
-  return new Promise<{ [key: string]: any }>((resolve, reject) => {
+  return new Promise<any>((resolve, reject) => {
     chrome.storage.local.get(key, (result) => {
       resolve(result[key]);
     });

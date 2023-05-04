@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
   TooltipHost,
   Stack,
-  Toggle,
   Checkbox,
   Link,
   ChoiceGroup,
@@ -24,14 +23,26 @@ interface Props {
   importedFeatures: FeatureID[];
 }
 
+const localeOptions: IChoiceGroupOption[] = [
+  {
+    key: 'en',
+    text: 'English',
+  },
+  {
+    key: 'zh_CN',
+    text: '简体中文 (Simplified Chinese)',
+  },
+];
+
 const Options = (props: Props): JSX.Element => {
+  const { importedFeatures } = props;
+
   const [inited, setInited] = useState(false);
   const [version, setVersion] = useState('0.0.0');
-  const { importedFeatures } = props;
   const [settings, setSettings] = useState<Settings>(defaultSettings);
 
-  async function setSettingConfig({ id, checked }: any) {
-    setSettings({
+  async function toggleFeature({ id, checked }: any) {
+    await saveSettings({
       ...settings,
       featureOptions: settings.featureOptions.map(
         (featureOption: FeatureOption) => {
@@ -44,40 +55,17 @@ const Options = (props: Props): JSX.Element => {
     });
   }
 
-  const localeOptions: IChoiceGroupOption[] = [
-    {
-      key: 'en',
-      text: 'English',
-    },
-    {
-      key: 'zh_CN',
-      text: '简体中文 (Simplified Chinese)',
-    },
-  ];
-  const getVersion = async () => {
-    let version = (await chrome.management.getSelf()).version;
-    setVersion(version);
-  };
-
   useEffect(() => {
-    const save = async () => {
-      await saveSettings(settings);
-    };
-    save();
-  }, [settings]);
+    async function init() {
+      const version = (await chrome.management.getSelf()).version;
+      setVersion(version);
 
-  useEffect(() => {
-    async function initSettings() {
-      setInited(true);
       await setFeatureSettings(importedFeatures);
       setSettings(await loadSettings());
+      setInited(true);
     }
-    initSettings();
+    init();
   }, []);
-
-  useEffect(() => {
-    getVersion();
-  }, [version]);
 
   if (!inited) {
     return <div />;
@@ -89,7 +77,7 @@ const Options = (props: Props): JSX.Element => {
         label={id}
         defaultChecked={isEnabled}
         onChange={async (e, checked) => {
-          await setSettingConfig({ id, checked });
+          await toggleFeature({ id, checked });
         }}
       />
     );
@@ -107,49 +95,6 @@ const Options = (props: Props): JSX.Element => {
           childrenGap: 30,
         }}
       >
-        <Stack.Item className="Box">
-          <TooltipHost
-            content={getMessageByLocale(
-              'options_enable_toolTip',
-              settings.locale
-            )}
-          >
-            <Stack.Item className="Box-header">
-              <h2 className="Box-title">
-                {getMessageByLocale('options_enable_title', settings.locale)}
-              </h2>
-            </Stack.Item>
-          </TooltipHost>
-          <Stack
-            style={{ margin: '10px 25px' }}
-            tokens={{
-              childrenGap: 10,
-            }}
-          >
-            <p>
-              {getMessageByLocale('options_enable_toolTip', settings.locale)}.
-            </p>
-            <Toggle
-              label={getMessageByLocale(
-                'options_enable_toggle_autoCheck',
-                settings.locale
-              )}
-              defaultChecked={settings.isEnabled}
-              onText={getMessageByLocale(
-                'global_toggle_onText',
-                settings.locale
-              )}
-              offText={getMessageByLocale(
-                'global_toggle_offText',
-                settings.locale
-              )}
-              onChange={async (e, checked) => {
-                settings.isEnabled = checked;
-                await saveSettings(settings);
-              }}
-            />
-          </Stack>
-        </Stack.Item>
         <Stack.Item className="Box">
           <TooltipHost
             content={getMessageByLocale(

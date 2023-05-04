@@ -9,41 +9,40 @@ export interface FeatureOption {
 }
 
 export interface Settings {
-  isEnabled: boolean | undefined;
   featureOptions: FeatureOption[];
   locale: string;
 }
 
-export async function loadSettings() {
-  let settingsConfig = await chromeGet('settings');
-  if (isNull(settingsConfig)) {
-    settingsConfig = {};
-  }
-  return {
-    isEnabled: settingsConfig['isEnabled'],
-    featureOptions: JSON.parse(settingsConfig['featureOptions']),
-    locale: settingsConfig['locale'],
-  };
-}
-
 export const defaultSettings: Settings = {
-  isEnabled: true,
   featureOptions: [],
   locale: 'en',
 };
 
+export async function loadSettings() {
+  let settingsConfig = JSON.parse(await chromeGet('settings'));
+  if (isNull(settingsConfig)) {
+    settingsConfig = {};
+  }
+  return {
+    featureOptions: settingsConfig['featureOptions'],
+    locale: settingsConfig['locale'],
+  };
+}
+
 export const saveSettings = async (settings: Settings) => {
-  await chromeSet('settings', {
-    isEnabled: settings.isEnabled,
-    featureOptions: JSON.stringify(settings.featureOptions),
-    locale: settings.locale,
-  });
+  await chromeSet(
+    'settings',
+    JSON.stringify({
+      featureOptions: settings.featureOptions,
+      locale: settings.locale,
+    })
+  );
 };
 
 export async function setFeatureSettings(features: FeatureID[]) {
   const settingsConfig = await loadSettings();
   if (!isNull(settingsConfig['featureOptions'])) {
-    return;
+    return; // already set (not first time)
   }
   let settings = defaultSettings;
   features.map((id) => {
@@ -52,7 +51,7 @@ export async function setFeatureSettings(features: FeatureID[]) {
       isEnabled: true,
     });
   });
-  saveSettings(settings);
+  await saveSettings(settings);
 }
 
 export function getFeatureIsEnabled(settings: any, id: FeatureID | string) {
