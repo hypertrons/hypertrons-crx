@@ -75,31 +75,6 @@ export const compareVersion = (version_1: string, version_2: string) => {
   return 0;
 };
 
-export const getBrowserType = () => {
-  var userAgent = navigator.userAgent;
-  var isOpera = userAgent.indexOf('Opera') > -1;
-  var isEdge = userAgent.indexOf('Edge') > -1;
-  var isFF = userAgent.indexOf('Firefox') > -1;
-  var isSafari =
-    userAgent.indexOf('Safari') > -1 && userAgent.indexOf('Chrome') === -1;
-  var isChrome =
-    userAgent.indexOf('Chrome') > -1 && userAgent.indexOf('Safari') > -1;
-
-  if (isOpera) {
-    return 'Opera';
-  } else if (isEdge) {
-    return 'Edge';
-  } else if (isFF) {
-    return 'FireFox';
-  } else if (isSafari) {
-    return 'Safari';
-  } else if (isChrome) {
-    return 'Chrome';
-  } else {
-    return 'Unknown';
-  }
-};
-
 export async function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
