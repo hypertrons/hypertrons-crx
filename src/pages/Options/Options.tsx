@@ -116,7 +116,10 @@ const Options = (props: Props): JSX.Element => {
               defaultSelectedKey={settings.locale}
               options={localeOptions}
               onChange={async (e, option: any) => {
-                settings.locale = option.key;
+                setSettings({
+                  ...settings,
+                  locale: option.key,
+                });
                 await saveSettings(settings);
               }}
             />
