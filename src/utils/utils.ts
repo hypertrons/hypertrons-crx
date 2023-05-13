@@ -12,6 +12,7 @@ const messages_locale = {
 
 export function isNull(object: any) {
   if (
+    object === undefined ||
     object === null ||
     typeof object === 'undefined' ||
     object === '' ||

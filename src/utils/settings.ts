@@ -19,24 +19,21 @@ export const defaultSettings: Settings = {
 };
 
 export async function loadSettings() {
-  let settingsConfig = JSON.parse(await chromeGet('settings'));
+  let settingsConfig = await chromeGet('settings');
   if (isNull(settingsConfig)) {
-    settingsConfig = {};
+    return defaultSettings;
   }
   return {
-    featureOptions: settingsConfig['featureOptions'],
+    featureOptions: JSON.parse(settingsConfig['featureOptions']),
     locale: settingsConfig['locale'],
   };
 }
 
 export const saveSettings = async (settings: Settings) => {
-  await chromeSet(
-    'settings',
-    JSON.stringify({
-      featureOptions: settings.featureOptions,
-      locale: settings.locale,
-    })
-  );
+  await chromeSet('settings', {
+    featureOptions: JSON.stringify(settings.featureOptions),
+    locale: settings.locale,
+  });
 };
 
 export async function setFeatureSettings(features: FeatureID[]) {
