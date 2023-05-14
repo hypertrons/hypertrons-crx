@@ -35,41 +35,15 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>();
   const [history, setHistory] = useState<[string, string]>(['', '']);
 
+  if (!options) {
+    return <div />;
+  }
+
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
     })();
   }, []);
-
-  if (!options) {
-    return <div />;
-  }
-
-  const subtitle = currentDocsName
-    ? getMessageByLocale('OSS_GPT_subtitle', options.locale).replace(
-        '%v',
-        currentRepo
-      )
-    : getMessageByLocale(
-        'OSS_GPT_subtitle_notAvailable',
-        options.locale
-      ).replace('%v', currentRepo);
-
-  const handleNewUserMessage = async (newMessage: string) => {
-    toggleMsgLoader();
-    toggleInputDisabled();
-
-    if (currentDocsName) {
-      const answer = await getAnswer(currentDocsName, newMessage, history);
-      addResponseMessage(answer);
-      setHistory([newMessage, answer]); // update history
-    } else {
-      displayNotAvailable(currentRepo, options.locale);
-    }
-
-    toggleMsgLoader();
-    toggleInputDisabled();
-  };
 
   useEffect(() => {
     // when repo changes
@@ -105,6 +79,32 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
       observer.disconnect();
     };
   }, []);
+
+  const subtitle = currentDocsName
+    ? getMessageByLocale('OSS_GPT_subtitle', options.locale).replace(
+        '%v',
+        currentRepo
+      )
+    : getMessageByLocale(
+        'OSS_GPT_subtitle_notAvailable',
+        options.locale
+      ).replace('%v', currentRepo);
+
+  const handleNewUserMessage = async (newMessage: string) => {
+    toggleMsgLoader();
+    toggleInputDisabled();
+
+    if (currentDocsName) {
+      const answer = await getAnswer(currentDocsName, newMessage, history);
+      addResponseMessage(answer);
+      setHistory([newMessage, answer]); // update history
+    } else {
+      displayNotAvailable(currentRepo, options.locale);
+    }
+
+    toggleMsgLoader();
+    toggleInputDisabled();
+  };
 
   return (
     <div className={theme}>
