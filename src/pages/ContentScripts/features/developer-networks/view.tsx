@@ -145,14 +145,14 @@ const View = ({
                 options.locale
               )}
             </span>
-            <div className="hypertrons-crx-title-extra">
+            <div className="hypertrons-crx-title-extra developer-tab">
               {getMessageByLocale('global_period', options.locale)}:{' '}
               {REPO_PERIOD} {getMessageByLocale('global_day', options.locale)}
             </div>
           </div>
-          <div className="d-flex flex-wrap flex-items-center">
-            <div className="col-12 col-md-8">
-              <div style={{ margin: '10px 0 20px 20px' }}>
+          <div className="d-flex flex-wrap justify-content-lg-between align-items-center">
+            <div className="col-8 graph-container">
+              <div style={{ margin: '15px 0 20px 0px' }}>
                 <Graph
                   data={developerNetwork}
                   style={GRAPH_STYLE}
@@ -160,11 +160,8 @@ const View = ({
                 />
               </div>
             </div>
-            <div className="col-12 col-md-4">
-              <div
-                className="color-text-secondary"
-                style={{ marginLeft: '35px', marginRight: '35px' }}
-              >
+            <div className="col-4 description-container">
+              <div className="color-text-secondary developer-tab">
                 <p>
                   {getMessageByLocale(
                     'component_developerCollaborationNetwork_description',
@@ -214,17 +211,14 @@ const View = ({
               {getMessageByLocale('global_day', options.locale)}
             </div>
           </div>
-          <div className="d-flex flex-wrap flex-items-center">
-            <div className="col-12 col-md-8">
-              <div style={{ margin: '10px 0 20px 20px' }}>
+          <div className="d-flex flex-wrap justify-content-lg-between align-items-center">
+            <div className="col-lg-8 col-12 graph-container">
+              <div style={{ margin: '15px 0px 20px 0px' }}>
                 <Graph data={repoNetwork} style={GRAPH_STYLE} />
               </div>
             </div>
-            <div className="col-12 col-md-4">
-              <div
-                className="color-text-secondary"
-                style={{ marginLeft: '35px', marginRight: '35px' }}
-              >
+            <div className="col-lg-4 col-12 description-container">
+              <div className="color-text-secondary">
                 <p>
                   {getMessageByLocale(
                     'component_mostParticipatedProjects_description',
