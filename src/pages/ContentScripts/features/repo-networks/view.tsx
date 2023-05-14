@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import Graph from '../../../../components/Graph';
 import { getMessageByLocale } from '../../../../utils/utils';
-import { defaultSettings, loadSettings } from '../../../../utils/settings';
+import optionsStorage, { HypercrxOptions } from '../../../../options-storage';
 
 const DEVELOPER_PERIOD = 90;
 const REPO_PERIOD = 90;
@@ -13,23 +13,27 @@ interface Props {
   developerNetwork: any;
 }
 
+const graphStyle = {
+  width: '100%',
+  height: '380px',
+};
+
 const View = ({
   currentRepo,
   repoNetwork,
   developerNetwork,
 }: Props): JSX.Element => {
-  const [settings, setSettings] = useState(defaultSettings);
+  const [options, setOptions] = useState<HypercrxOptions>();
 
   useEffect(() => {
-    (async () => {
-      setSettings(await loadSettings());
+    (async function () {
+      setOptions(await optionsStorage.getAll());
     })();
   }, []);
 
-  const graphStyle = {
-    width: '100%',
-    height: '380px',
-  };
+  if (!options) {
+    return <div />;
+  }
 
   return (
     <div>
@@ -38,12 +42,12 @@ const View = ({
           <span>
             {getMessageByLocale(
               'component_projectCorrelationNetwork_title',
-              settings.locale
+              options.locale
             )}
           </span>
           <div className="hypertrons-crx-title-extra">
-            {getMessageByLocale('global_period', settings.locale)}:{' '}
-            {REPO_PERIOD} {getMessageByLocale('global_day', settings.locale)}
+            {getMessageByLocale('global_period', options.locale)}: {REPO_PERIOD}{' '}
+            {getMessageByLocale('global_day', options.locale)}
           </div>
         </div>
         <div className="d-flex flex-wrap flex-items-center">
@@ -64,20 +68,20 @@ const View = ({
               <p>
                 {getMessageByLocale(
                   'component_projectCorrelationNetwork_description',
-                  settings.locale
+                  options.locale
                 )}
               </p>
               <ul style={{ margin: '0px 0 10px 15px' }}>
                 <li>
                   {getMessageByLocale(
                     'component_projectCorrelationNetwork_description_node',
-                    settings.locale
+                    options.locale
                   )}
                 </li>
                 <li>
                   {getMessageByLocale(
                     'component_projectCorrelationNetwork_description_edge',
-                    settings.locale
+                    options.locale
                   )}
                 </li>
               </ul>
@@ -90,13 +94,13 @@ const View = ({
           <span>
             {getMessageByLocale(
               'component_activeDeveloperCollaborationNetwork_title',
-              settings.locale
+              options.locale
             )}
           </span>
           <div className="hypertrons-crx-title-extra">
-            {getMessageByLocale('global_period', settings.locale)}:{' '}
+            {getMessageByLocale('global_period', options.locale)}:{' '}
             {DEVELOPER_PERIOD}{' '}
-            {getMessageByLocale('global_day', settings.locale)}
+            {getMessageByLocale('global_day', options.locale)}
           </div>
         </div>
         <div className="d-flex flex-wrap flex-items-center">
@@ -113,20 +117,20 @@ const View = ({
               <p>
                 {getMessageByLocale(
                   'component_activeDeveloperCollaborationNetwork_description',
-                  settings.locale
+                  options.locale
                 )}
               </p>
               <ul style={{ margin: '0px 0 10px 15px' }}>
                 <li>
                   {getMessageByLocale(
                     'component_activeDeveloperCollaborationNetwork_description_node',
-                    settings.locale
+                    options.locale
                   )}
                 </li>
                 <li>
                   {getMessageByLocale(
                     'component_activeDeveloperCollaborationNetwork_description_edge',
-                    settings.locale
+                    options.locale
                   )}
                 </li>
               </ul>

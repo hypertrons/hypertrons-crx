@@ -6,7 +6,7 @@ import {
   isNull,
   isAllNull,
 } from '../../../../utils/utils';
-import { loadSettings, defaultSettings } from '../../../../utils/settings';
+import optionsStorage, { HypercrxOptions } from '../../../../options-storage';
 import { generateDataByMonth } from '../../../../utils/data';
 import ReactTooltip from 'react-tooltip';
 import PRChart from './PRChart';
@@ -49,15 +49,15 @@ const generateMergedLinesChartData = (PRDetail: PRDetail): any => {
 };
 
 const View = ({ currentRepo, PRDetail }: Props): JSX.Element | null => {
-  const [settings, setSettings] = useState(defaultSettings);
+  const [options, setOptions] = useState<HypercrxOptions>();
 
   useEffect(() => {
-    (async () => {
-      setSettings(await loadSettings());
+    (async function () {
+      setOptions(await optionsStorage.getAll());
     })();
   }, []);
 
-  if (isNull(PRDetail) || isAllNull(PRDetail)) return null;
+  if (!options || isNull(PRDetail) || isAllNull(PRDetail)) return null;
 
   const onClick = (curMonth: string, params: any) => {
     const seriesIndex = params.seriesIndex;
@@ -81,7 +81,7 @@ const View = ({ currentRepo, PRDetail }: Props): JSX.Element | null => {
   return (
     <ReactTooltip id="pr-tooltip" clickable={true}>
       <div className="chart-title">
-        {getMessageByLocale('pr_popup_title', settings.locale)}
+        {getMessageByLocale('pr_popup_title', options.locale)}
       </div>
       <PRChart
         theme={githubTheme as 'light' | 'dark'}
@@ -91,7 +91,7 @@ const View = ({ currentRepo, PRDetail }: Props): JSX.Element | null => {
         onClick={onClick}
       />
       <div className="chart-title">
-        {getMessageByLocale('merged_lines_popup_title', settings.locale)}
+        {getMessageByLocale('merged_lines_popup_title', options.locale)}
       </div>
       <MergedLinesChart
         theme={githubTheme as 'light' | 'dark'}

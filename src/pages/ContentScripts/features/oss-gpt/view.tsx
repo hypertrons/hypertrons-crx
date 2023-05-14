@@ -11,7 +11,7 @@ import {
 import { getAnswer } from './service';
 import './rcw.scss';
 import { getMessageByLocale } from '../../../../utils/utils';
-import { defaultSettings, loadSettings } from '../../../../utils/settings';
+import optionsStorage, { HypercrxOptions } from '../../../../options-storage';
 
 interface Props {
   theme: 'light' | 'dark';
@@ -32,29 +32,27 @@ const displayNotAvailable = (repoName: string, locale: string) => {
 };
 
 const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
-  const [inited, setInited] = useState(false);
-  const [settings, setSettings] = useState(defaultSettings);
+  const [options, setOptions] = useState<HypercrxOptions>();
   const [history, setHistory] = useState<[string, string]>(['', '']);
 
   useEffect(() => {
-    const initSettings = async () => {
-      const temp = await loadSettings();
-      setSettings(temp);
-      setInited(true);
-    };
-    if (!inited) {
-      initSettings();
-    }
-  }, [inited, settings]);
+    (async function () {
+      setOptions(await optionsStorage.getAll());
+    })();
+  }, []);
+
+  if (!options) {
+    return <div />;
+  }
 
   const subtitle = currentDocsName
-    ? getMessageByLocale('OSS_GPT_subtitle', settings.locale).replace(
+    ? getMessageByLocale('OSS_GPT_subtitle', options.locale).replace(
         '%v',
         currentRepo
       )
     : getMessageByLocale(
         'OSS_GPT_subtitle_notAvailable',
-        settings.locale
+        options.locale
       ).replace('%v', currentRepo);
 
   const handleNewUserMessage = async (newMessage: string) => {
@@ -66,7 +64,7 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
       addResponseMessage(answer);
       setHistory([newMessage, answer]); // update history
     } else {
-      displayNotAvailable(currentRepo, settings.locale);
+      displayNotAvailable(currentRepo, options.locale);
     }
 
     toggleMsgLoader();
@@ -79,11 +77,11 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
     setHistory(['', '']); // clear history
     if (currentDocsName) {
       // if docs for current repo is available
-      displayWelcome(currentRepo, settings.locale);
+      displayWelcome(currentRepo, options.locale);
     } else {
-      displayNotAvailable(currentRepo, settings.locale);
+      displayNotAvailable(currentRepo, options.locale);
     }
-  }, [settings, currentRepo, currentDocsName]);
+  }, [options, currentRepo, currentDocsName]);
 
   // we cannot change emoji-mart theme with an option, so we have to use MutationObserver and jquery to change the css
   useEffect(() => {

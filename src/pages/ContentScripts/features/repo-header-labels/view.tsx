@@ -6,7 +6,7 @@ import {
   isNull,
 } from '../../../../utils/utils';
 import { numberWithCommas } from '../../../../utils/formatter';
-import { loadSettings, defaultSettings } from '../../../../utils/settings';
+import optionsStorage, { HypercrxOptions } from '../../../../options-storage';
 import { rocketLight, rocketDark } from './base64';
 import ReactTooltip from 'react-tooltip';
 import { generateDataByMonth } from '../../../../utils/data';
@@ -27,19 +27,20 @@ const View = ({
   openrank,
   participant,
 }: Props): JSX.Element | null => {
-  const [settings, setSettings] = useState(defaultSettings);
+  const [options, setOptions] = useState<HypercrxOptions>();
 
   useEffect(() => {
     ReactTooltip.rebuild();
   }, []);
 
   useEffect(() => {
-    (async () => {
-      setSettings(await loadSettings());
+    (async function () {
+      setOptions(await optionsStorage.getAll());
     })();
   }, []);
 
-  if (isNull(activity) || isNull(openrank) || isNull(participant)) return null;
+  if (!options || isNull(activity) || isNull(openrank) || isNull(participant))
+    return null;
 
   const activityData = generateDataByMonth(activity);
   const openrankData = generateDataByMonth(openrank);
@@ -138,7 +139,7 @@ const View = ({
         clickable={true}
       >
         <div className="chart-title">
-          {getMessageByLocale('header_label_activity', settings.locale)}
+          {getMessageByLocale('header_label_activity', options.locale)}
         </div>
         <ActivityChart
           theme={githubTheme as 'light' | 'dark'}
@@ -149,7 +150,7 @@ const View = ({
       </ReactTooltip>
       <ReactTooltip id="openrank-tooltip" clickable={true}>
         <div className="chart-title">
-          {getMessageByLocale('header_label_OpenRank', settings.locale)}
+          {getMessageByLocale('header_label_OpenRank', options.locale)}
         </div>
         <OpenRankChart
           theme={githubTheme as 'light' | 'dark'}
@@ -160,7 +161,7 @@ const View = ({
       </ReactTooltip>
       <ReactTooltip id="participant-tooltip" clickable={true}>
         <div className="chart-title">
-          {getMessageByLocale('header_label_participant', settings.locale)}
+          {getMessageByLocale('header_label_participant', options.locale)}
         </div>
         <ParticipantChart
           theme={githubTheme as 'light' | 'dark'}

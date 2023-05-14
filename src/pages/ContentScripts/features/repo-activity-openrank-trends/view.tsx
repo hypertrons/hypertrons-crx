@@ -2,11 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { getGithubTheme, getMessageByLocale } from '../../../../utils/utils';
 import { generateDataByMonth } from '../../../../utils/data';
-import {
-  Settings,
-  loadSettings,
-  defaultSettings,
-} from '../../../../utils/settings';
+import optionsStorage, { HypercrxOptions } from '../../../../options-storage';
 import Bars from '../../../../components/Bars/index';
 
 const githubTheme = getGithubTheme();
@@ -25,15 +21,15 @@ interface Props {
 }
 
 const View = ({ repoName, activity, openrank }: Props): JSX.Element | null => {
-  const [settings, setSettings] = useState<Settings>(defaultSettings);
+  const [options, setOptions] = useState<HypercrxOptions>();
 
   useEffect(() => {
-    (async () => {
-      setSettings(await loadSettings());
+    (async function () {
+      setOptions(await optionsStorage.getAll());
     })();
   }, []);
 
-  if (!settings || !activity || !openrank) return null;
+  if (!options || !activity || !openrank) return null;
 
   let barsData: any = generateBarsData(activity, openrank);
 
@@ -54,26 +50,26 @@ const View = ({ repoName, activity, openrank }: Props): JSX.Element | null => {
   return (
     <div>
       <h2 className="h4 mb-3">
-        {getMessageByLocale('component_repoActORTrend_title', settings.locale)}
+        {getMessageByLocale('component_repoActORTrend_title', options.locale)}
       </h2>
       <Bars
         theme={githubTheme as 'light' | 'dark'}
         height={350}
         legend1={getMessageByLocale(
           'component_repoActORTrend_legend1',
-          settings.locale
+          options.locale
         )}
         legend2={getMessageByLocale(
           'component_repoActORTrend_legend2',
-          settings.locale
+          options.locale
         )}
         yName1={getMessageByLocale(
           'component_repoActORTrend_yName1',
-          settings.locale
+          options.locale
         )}
         yName2={getMessageByLocale(
           'component_repoActORTrend_yName2',
-          settings.locale
+          options.locale
         )}
         data1={barsData.data1}
         data2={barsData.data2}

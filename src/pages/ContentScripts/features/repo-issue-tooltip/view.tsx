@@ -6,7 +6,7 @@ import {
   isNull,
   isAllNull,
 } from '../../../../utils/utils';
-import { loadSettings, defaultSettings } from '../../../../utils/settings';
+import optionsStorage, { HypercrxOptions } from '../../../../options-storage';
 import { generateDataByMonth } from '../../../../utils/data';
 import ReactTooltip from 'react-tooltip';
 import IssueChart from './IssueChart';
@@ -33,15 +33,15 @@ const generateData = (issueDetail: IssueDetail): any => {
 };
 
 const View = ({ currentRepo, issueDetail }: Props): JSX.Element | null => {
-  const [settings, setSettings] = useState(defaultSettings);
+  const [options, setOptions] = useState<HypercrxOptions>();
 
   useEffect(() => {
-    (async () => {
-      setSettings(await loadSettings());
+    (async function () {
+      setOptions(await optionsStorage.getAll());
     })();
   }, []);
 
-  if (isNull(issueDetail) || isAllNull(issueDetail)) return null;
+  if (!options || isNull(issueDetail) || isAllNull(issueDetail)) return null;
 
   const onClick = (curMonth: string, params: any) => {
     const seriesIndex = params.seriesIndex;
@@ -65,7 +65,7 @@ const View = ({ currentRepo, issueDetail }: Props): JSX.Element | null => {
   return (
     <ReactTooltip id="issue-tooltip" clickable={true}>
       <div className="chart-title">
-        {getMessageByLocale('issue_popup_title', settings.locale)}
+        {getMessageByLocale('issue_popup_title', options.locale)}
       </div>
       <IssueChart
         theme={githubTheme as 'light' | 'dark'}

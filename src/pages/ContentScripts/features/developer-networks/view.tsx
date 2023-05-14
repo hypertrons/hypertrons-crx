@@ -3,7 +3,7 @@ import ReactModal from 'react-modal';
 
 import Graph from '../../../../components/Graph';
 import { getMessageByLocale } from '../../../../utils/utils';
-import { defaultSettings, loadSettings } from '../../../../utils/settings';
+import optionsStorage, { HypercrxOptions } from '../../../../options-storage';
 import { iconDeveloperNetwork, iconRepoNetwork } from './icon-svg-path';
 import './react-modal.scss';
 
@@ -24,15 +24,19 @@ const View = ({
   developerNetwork,
   repoNetwork,
 }: Props): JSX.Element => {
-  const [settings, setSettings] = useState(defaultSettings);
+  const [options, setOptions] = useState<HypercrxOptions>();
   const [showDeveloperNetwork, setShowDeveloperNetwork] = useState(false);
   const [showRepoNetwork, setShowRepoNetwork] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      setSettings(await loadSettings());
+    (async function () {
+      setOptions(await optionsStorage.getAll());
     })();
   }, []);
+
+  if (!options) {
+    return <div />;
+  }
 
   return (
     <div className="border-top color-border-secondary pt-3 mt-3">
@@ -62,10 +66,10 @@ const View = ({
             <span
               title={`${getMessageByLocale(
                 'global_clickToshow',
-                settings.locale
+                options.locale
               )} ${getMessageByLocale(
                 'component_developerCollaborationNetwork_title',
-                settings.locale
+                options.locale
               )}`}
               className="Label"
               style={{
@@ -75,7 +79,7 @@ const View = ({
             >
               {getMessageByLocale(
                 'component_developerCollaborationNetwork_title',
-                settings.locale
+                options.locale
               )}
             </span>
           </button>
@@ -104,10 +108,10 @@ const View = ({
             <span
               title={`${getMessageByLocale(
                 'global_clickToshow',
-                settings.locale
+                options.locale
               )} ${getMessageByLocale(
                 'component_mostParticipatedProjects_title',
-                settings.locale
+                options.locale
               )}`}
               className="Label"
               style={{
@@ -117,7 +121,7 @@ const View = ({
             >
               {getMessageByLocale(
                 'component_mostParticipatedProjects_title',
-                settings.locale
+                options.locale
               )}
             </span>
           </button>
@@ -138,12 +142,12 @@ const View = ({
             <span>
               {getMessageByLocale(
                 'component_developerCollaborationNetwork_title',
-                settings.locale
+                options.locale
               )}
             </span>
             <div className="hypertrons-crx-title-extra">
-              {getMessageByLocale('global_period', settings.locale)}:{' '}
-              {REPO_PERIOD} {getMessageByLocale('global_day', settings.locale)}
+              {getMessageByLocale('global_period', options.locale)}:{' '}
+              {REPO_PERIOD} {getMessageByLocale('global_day', options.locale)}
             </div>
           </div>
           <div className="d-flex flex-wrap flex-items-center">
@@ -164,20 +168,20 @@ const View = ({
                 <p>
                   {getMessageByLocale(
                     'component_developerCollaborationNetwork_description',
-                    settings.locale
+                    options.locale
                   )}
                 </p>
                 <ul style={{ margin: '0px 0 10px 15px' }}>
                   <li>
                     {getMessageByLocale(
                       'component_developerCollaborationNetwork_description_node',
-                      settings.locale
+                      options.locale
                     )}
                   </li>
                   <li>
                     {getMessageByLocale(
                       'component_developerCollaborationNetwork_description_edge',
-                      settings.locale
+                      options.locale
                     )}
                   </li>
                 </ul>
@@ -201,13 +205,13 @@ const View = ({
             <span>
               {getMessageByLocale(
                 'component_mostParticipatedProjects_title',
-                settings.locale
+                options.locale
               )}
             </span>
             <div className="hypertrons-crx-title-extra">
-              {getMessageByLocale('global_period', settings.locale)}:{' '}
+              {getMessageByLocale('global_period', options.locale)}:{' '}
               {DEVELOPER_PERIOD}{' '}
-              {getMessageByLocale('global_day', settings.locale)}
+              {getMessageByLocale('global_day', options.locale)}
             </div>
           </div>
           <div className="d-flex flex-wrap flex-items-center">
@@ -224,20 +228,20 @@ const View = ({
                 <p>
                   {getMessageByLocale(
                     'component_mostParticipatedProjects_description',
-                    settings.locale
+                    options.locale
                   )}
                 </p>
                 <ul style={{ margin: '0px 0 10px 15px' }}>
                   <li>
                     {getMessageByLocale(
                       'component_mostParticipatedProjects_description_node',
-                      settings.locale
+                      options.locale
                     )}
                   </li>
                   <li>
                     {getMessageByLocale(
                       'component_mostParticipatedProjects_description_edge',
-                      settings.locale
+                      options.locale
                     )}
                   </li>
                 </ul>
