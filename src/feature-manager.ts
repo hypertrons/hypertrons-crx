@@ -10,7 +10,7 @@ import isRestorationVisit from './helpers/is-restoration-visit';
 import shouldFeatureRun, {
   ShouldRunConditions,
 } from './helpers/should-feature-run';
-import { loadSettings, getFeatureIsEnabled } from './utils/settings';
+import optionsStorage from './options-storage';
 
 type FeatureInit = () => Promisable<void>;
 type FeatureRestore = Function;
@@ -82,7 +82,7 @@ const globalReady = new Promise<object>(async (resolve) => {
 
   document.documentElement.classList.add('hypercrx');
 
-  const options = loadSettings();
+  const options = await optionsStorage.getAll();
 
   resolve(options);
 });
@@ -129,7 +129,11 @@ const add = async (
   /* Feature filtering and running */
   const options = await globalReady;
 
-  if (!getFeatureIsEnabled(options, id)) return;
+  // If the feature is disabled, skip it
+  if (!options[`feature:${id}` as keyof typeof options]) {
+    log.info('↩️', 'Skipping', id);
+    return;
+  }
 
   for (const loader of loaders) {
     // Input defaults and validation

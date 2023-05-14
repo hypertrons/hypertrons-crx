@@ -7,21 +7,12 @@ import {
   ChoiceGroup,
   IChoiceGroupOption,
 } from 'office-ui-fabric-react';
-import {
-  Settings,
-  FeatureOption,
-  loadSettings,
-  defaultSettings,
-  saveSettings,
-  setFeatureSettings,
-} from '../../utils/settings';
+
+import { importedFeatures } from '../../../README.md';
+import optionsStorage, { HypercrxOptions } from '../../options-storage';
 import { getMessageByLocale } from '../../utils/utils';
 import { HYPERTRONS_CRX_WEBSITE } from '../../constant';
 import './Options.css';
-
-interface Props {
-  importedFeatures: FeatureID[];
-}
 
 const localeOptions: IChoiceGroupOption[] = [
   {
@@ -34,50 +25,30 @@ const localeOptions: IChoiceGroupOption[] = [
   },
 ];
 
-const Options = (props: Props): JSX.Element => {
-  const { importedFeatures } = props;
-
-  const [inited, setInited] = useState(false);
-  const [version, setVersion] = useState('0.0.0');
-  const [settings, setSettings] = useState<Settings>(defaultSettings);
-
-  async function toggleFeature({ id, checked }: any) {
-    await saveSettings({
-      ...settings,
-      featureOptions: settings.featureOptions.map(
-        (featureOption: FeatureOption) => {
-          if (featureOption.id === id) {
-            return { ...featureOption, isEnabled: checked };
-          }
-          return featureOption;
-        }
-      ),
-    });
-  }
+const Options = (): JSX.Element => {
+  const [version, setVersion] = useState<string>();
+  const [options, setOptions] = useState<HypercrxOptions>();
 
   useEffect(() => {
-    async function init() {
-      const version = (await chrome.management.getSelf()).version;
-      setVersion(version);
-
-      await setFeatureSettings(importedFeatures);
-      setSettings(await loadSettings());
-      setInited(true);
-    }
-    init();
+    (async function () {
+      setVersion((await chrome.management.getSelf()).version);
+      setOptions(await optionsStorage.getAll());
+    })();
   }, []);
 
-  if (!inited) {
+  if (!version || !options) {
     return <div />;
   }
 
-  function buildFeatureCheckbox({ id, isEnabled }: any) {
+  function buildFeatureCheckbox(id: FeatureID, isEnabled: boolean) {
     return (
       <Checkbox
+        key={id}
         label={id}
         defaultChecked={isEnabled}
         onChange={async (e, checked) => {
-          await toggleFeature({ id, checked });
+          await optionsStorage.set({ [`feature:${id}`]: checked });
+          setOptions(await optionsStorage.getAll());
         }}
       />
     );
@@ -99,28 +70,25 @@ const Options = (props: Props): JSX.Element => {
           <TooltipHost
             content={getMessageByLocale(
               'options_locale_toolTip',
-              settings.locale
+              options.locale
             )}
           >
             <Stack.Item className="Box-header">
               <h2 className="Box-title">
-                {getMessageByLocale('options_locale_title', settings.locale)}
+                {getMessageByLocale('options_locale_title', options.locale)}
               </h2>
             </Stack.Item>
           </TooltipHost>
           <Stack style={{ margin: '10px 25px' }}>
             <p>
-              {getMessageByLocale('options_locale_toolTip', settings.locale)} :
+              {getMessageByLocale('options_locale_toolTip', options.locale)} :
             </p>
             <ChoiceGroup
-              defaultSelectedKey={settings.locale}
+              defaultSelectedKey={options.locale}
               options={localeOptions}
               onChange={async (e, option: any) => {
-                setSettings({
-                  ...settings,
-                  locale: option.key,
-                });
-                await saveSettings(settings);
+                await optionsStorage.set({ locale: option.key });
+                setOptions(await optionsStorage.getAll());
               }}
             />
           </Stack>
@@ -129,15 +97,12 @@ const Options = (props: Props): JSX.Element => {
           <TooltipHost
             content={getMessageByLocale(
               'options_components_toolTip',
-              settings.locale
+              options.locale
             )}
           >
             <Stack.Item className="Box-header">
               <h2 className="Box-title">
-                {getMessageByLocale(
-                  'options_components_title',
-                  settings.locale
-                )}
+                {getMessageByLocale('options_components_title', options.locale)}
               </h2>
             </Stack.Item>
           </TooltipHost>
@@ -148,38 +113,35 @@ const Options = (props: Props): JSX.Element => {
             }}
           >
             <p>
-              {getMessageByLocale(
-                'options_components_toolTip',
-                settings.locale
-              )}{' '}
+              {getMessageByLocale('options_components_toolTip', options.locale)}{' '}
               :
             </p>
-            {settings.featureOptions.map((featureOption) =>
-              buildFeatureCheckbox(featureOption)
-            )}
+            {importedFeatures.forEach((id) => {
+              buildFeatureCheckbox(id, options[`feature:${id}`]);
+            })}
           </Stack>
         </Stack.Item>
         <Stack.Item className="Box">
           <TooltipHost
             content={getMessageByLocale(
               'options_about_toolTip',
-              settings.locale
+              options.locale
             )}
           >
             <Stack.Item className="Box-header">
               <h2 className="Box-title">
-                {getMessageByLocale('options_about_title', settings.locale)}
+                {getMessageByLocale('options_about_title', options.locale)}
               </h2>
             </Stack.Item>
           </TooltipHost>
           <Stack style={{ margin: '10px 25px' }}>
             <p>
-              {getMessageByLocale('options_about_description', settings.locale)}
+              {getMessageByLocale('options_about_description', options.locale)}
             </p>
             <p>
               {getMessageByLocale(
                 'options_about_description_website',
-                settings.locale
+                options.locale
               )}
             </p>
             <Link href={HYPERTRONS_CRX_WEBSITE} target="_blank" underline>

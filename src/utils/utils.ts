@@ -12,7 +12,6 @@ const messages_locale = {
 
 export function isNull(object: any) {
   if (
-    object === undefined ||
     object === null ||
     typeof object === 'undefined' ||
     object === '' ||
@@ -22,24 +21,6 @@ export function isNull(object: any) {
     return true;
   }
   return false;
-}
-
-export async function chromeSet(key: string, value: any) {
-  const items: { [key: string]: any } = {};
-  items[key] = value;
-  return new Promise<void>((resolve, reject) => {
-    chrome.storage.local.set(items, () => {
-      resolve();
-    });
-  });
-}
-
-export async function chromeGet(key: string) {
-  return new Promise<any>((resolve, reject) => {
-    chrome.storage.local.get(key, (result) => {
-      resolve(result[key]);
-    });
-  });
 }
 
 export function getMessageByLocale(key: string, locale: string) {
