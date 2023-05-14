@@ -1,8 +1,9 @@
 type ThemeType = 'light' | 'dark';
 
-type FeatureID = string;
+type FeatureName = string;
+type FeatureId = `hypercrx-${FeatureName}`;
 
 // It should be just for README.md, but 🤷‍♂️
 declare module '*.md' {
-  export const importedFeatures: FeatureID[];
+  export const importedFeatures: FeatureName[];
 }

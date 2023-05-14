@@ -88,7 +88,7 @@ const globalReady = new Promise<object>(async (resolve) => {
 });
 
 const setupPageLoad = async (
-  id: FeatureID,
+  id: FeatureId,
   config: InternalRunConfig
 ): Promise<void> => {
   const { asLongAs, include, exclude, init } = config;
@@ -111,26 +111,26 @@ const setupPageLoad = async (
 
 // url can be in forms of: "foo/bar/feature-name.tsx" or "foo/bar/feature-name/index.tsx".
 // This function extracts "feature-name" in url and prefixes it with "hypercrx-".
-const getFeatureID = (url: string): FeatureID => {
+const getFeatureID = (url: string): FeatureId => {
   const prefix = 'hypercrx-';
   const pathComponents = url.split('/');
   let name = pathComponents.pop()!.split('.')[0];
   if (name === 'index') {
     name = pathComponents.pop()!;
   }
-  return `${prefix}${name}` as FeatureID;
+  return `${prefix}${name}` as FeatureId;
 };
 
 /** Register a new feature */
 const add = async (
-  id: FeatureID,
+  id: FeatureId,
   ...loaders: FeatureLoader[]
 ): Promise<void> => {
   /* Feature filtering and running */
   const options = await globalReady;
 
   // If the feature is disabled, skip it
-  if (!options[`feature:${id}` as keyof typeof options]) {
+  if (!options[id as keyof typeof options]) {
     log.info('↩️', 'Skipping', id);
     return;
   }

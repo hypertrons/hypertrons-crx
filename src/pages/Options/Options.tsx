@@ -40,14 +40,14 @@ const Options = (): JSX.Element => {
     return <div />;
   }
 
-  function buildFeatureCheckbox(id: FeatureID, isEnabled: boolean) {
+  function buildFeatureCheckbox(name: FeatureName, isEnabled: boolean) {
     return (
       <Checkbox
-        key={id}
-        label={id}
+        key={name}
+        label={name}
         defaultChecked={isEnabled}
         onChange={async (e, checked) => {
-          await optionsStorage.set({ [`feature:${id}`]: checked });
+          await optionsStorage.set({ [`hypercrx-${name}`]: checked });
           setOptions(await optionsStorage.getAll());
         }}
       />
@@ -116,8 +116,8 @@ const Options = (): JSX.Element => {
               {getMessageByLocale('options_components_toolTip', options.locale)}{' '}
               :
             </p>
-            {importedFeatures.forEach((id) => {
-              buildFeatureCheckbox(id, options[`feature:${id}`]);
+            {importedFeatures.map((name: FeatureName) => {
+              return buildFeatureCheckbox(name, options[`hypercrx-${name}`]);
             })}
           </Stack>
         </Stack.Item>
