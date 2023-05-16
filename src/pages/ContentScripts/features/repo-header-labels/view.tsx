@@ -6,7 +6,10 @@ import {
   isNull,
 } from '../../../../utils/utils';
 import { numberWithCommas } from '../../../../utils/formatter';
-import optionsStorage, { HypercrxOptions } from '../../../../options-storage';
+import optionsStorage, {
+  HypercrxOptions,
+  defaults,
+} from '../../../../options-storage';
 import { rocketLight, rocketDark } from './base64';
 import ReactTooltip from 'react-tooltip';
 import { generateDataByMonth } from '../../../../utils/data';
@@ -27,7 +30,7 @@ const View = ({
   openrank,
   participant,
 }: Props): JSX.Element | null => {
-  const [options, setOptions] = useState<HypercrxOptions>();
+  const [options, setOptions] = useState<HypercrxOptions>(defaults);
 
   useEffect(() => {
     ReactTooltip.rebuild();
@@ -39,8 +42,7 @@ const View = ({
     })();
   }, []);
 
-  if (!options || isNull(activity) || isNull(openrank) || isNull(participant))
-    return null;
+  if (isNull(activity) || isNull(openrank) || isNull(participant)) return null;
 
   const activityData = generateDataByMonth(activity);
   const openrankData = generateDataByMonth(openrank);

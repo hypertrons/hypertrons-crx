@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 import { getGithubTheme, getMessageByLocale } from '../../../../utils/utils';
-import optionsStorage, { HypercrxOptions } from '../../../../options-storage';
+import optionsStorage, {
+  HypercrxOptions,
+  defaults,
+} from '../../../../options-storage';
 import { generateDataByMonth } from '../../../../utils/data';
 import ReactTooltip from 'react-tooltip';
 import StarChart from './StarChart';
@@ -13,7 +16,7 @@ interface Props {
 }
 
 const View = ({ stars: stars }: Props): JSX.Element | null => {
-  const [options, setOptions] = useState<HypercrxOptions>();
+  const [options, setOptions] = useState<HypercrxOptions>(defaults);
 
   useEffect(() => {
     (async function () {
@@ -21,7 +24,7 @@ const View = ({ stars: stars }: Props): JSX.Element | null => {
     })();
   }, []);
 
-  if (!options || !stars) return null;
+  if (!stars) return null;
 
   return (
     <ReactTooltip id="star-tooltip" clickable={true}>

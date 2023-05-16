@@ -6,7 +6,10 @@ import {
   isNull,
   isAllNull,
 } from '../../../../utils/utils';
-import optionsStorage, { HypercrxOptions } from '../../../../options-storage';
+import optionsStorage, {
+  HypercrxOptions,
+  defaults,
+} from '../../../../options-storage';
 import { generateDataByMonth } from '../../../../utils/data';
 import ReactTooltip from 'react-tooltip';
 import IssueChart from './IssueChart';
@@ -33,7 +36,7 @@ const generateData = (issueDetail: IssueDetail): any => {
 };
 
 const View = ({ currentRepo, issueDetail }: Props): JSX.Element | null => {
-  const [options, setOptions] = useState<HypercrxOptions>();
+  const [options, setOptions] = useState<HypercrxOptions>(defaults);
 
   useEffect(() => {
     (async function () {
@@ -41,7 +44,7 @@ const View = ({ currentRepo, issueDetail }: Props): JSX.Element | null => {
     })();
   }, []);
 
-  if (!options || isNull(issueDetail) || isAllNull(issueDetail)) return null;
+  if (isNull(issueDetail) || isAllNull(issueDetail)) return null;
 
   const onClick = (curMonth: string, params: any) => {
     const seriesIndex = params.seriesIndex;

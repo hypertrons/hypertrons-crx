@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 
 import Graph from '../../../../components/Graph';
 import { getMessageByLocale } from '../../../../utils/utils';
-import optionsStorage, { HypercrxOptions } from '../../../../options-storage';
+import optionsStorage, {
+  HypercrxOptions,
+  defaults,
+} from '../../../../options-storage';
 
 const DEVELOPER_PERIOD = 90;
 const REPO_PERIOD = 90;
@@ -23,17 +26,13 @@ const View = ({
   repoNetwork,
   developerNetwork,
 }: Props): JSX.Element => {
-  const [options, setOptions] = useState<HypercrxOptions>();
+  const [options, setOptions] = useState<HypercrxOptions>(defaults);
 
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
     })();
   }, []);
-
-  if (!options) {
-    return <div />;
-  }
 
   return (
     <div>

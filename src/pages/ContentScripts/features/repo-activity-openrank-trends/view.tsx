@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 
 import { getGithubTheme, getMessageByLocale } from '../../../../utils/utils';
 import { generateDataByMonth } from '../../../../utils/data';
-import optionsStorage, { HypercrxOptions } from '../../../../options-storage';
+import optionsStorage, {
+  HypercrxOptions,
+  defaults,
+} from '../../../../options-storage';
 import Bars from '../../../../components/Bars/index';
 
 const githubTheme = getGithubTheme();
@@ -21,7 +24,7 @@ interface Props {
 }
 
 const View = ({ repoName, activity, openrank }: Props): JSX.Element | null => {
-  const [options, setOptions] = useState<HypercrxOptions>();
+  const [options, setOptions] = useState<HypercrxOptions>(defaults);
 
   useEffect(() => {
     (async function () {
@@ -29,7 +32,7 @@ const View = ({ repoName, activity, openrank }: Props): JSX.Element | null => {
     })();
   }, []);
 
-  if (!options || !activity || !openrank) return null;
+  if (!activity || !openrank) return null;
 
   let barsData: any = generateBarsData(activity, openrank);
 

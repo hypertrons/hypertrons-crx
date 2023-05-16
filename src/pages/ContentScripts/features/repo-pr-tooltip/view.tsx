@@ -6,7 +6,10 @@ import {
   isNull,
   isAllNull,
 } from '../../../../utils/utils';
-import optionsStorage, { HypercrxOptions } from '../../../../options-storage';
+import optionsStorage, {
+  HypercrxOptions,
+  defaults,
+} from '../../../../options-storage';
 import { generateDataByMonth } from '../../../../utils/data';
 import ReactTooltip from 'react-tooltip';
 import PRChart from './PRChart';
@@ -49,7 +52,7 @@ const generateMergedLinesChartData = (PRDetail: PRDetail): any => {
 };
 
 const View = ({ currentRepo, PRDetail }: Props): JSX.Element | null => {
-  const [options, setOptions] = useState<HypercrxOptions>();
+  const [options, setOptions] = useState<HypercrxOptions>(defaults);
 
   useEffect(() => {
     (async function () {
@@ -57,7 +60,7 @@ const View = ({ currentRepo, PRDetail }: Props): JSX.Element | null => {
     })();
   }, []);
 
-  if (!options || isNull(PRDetail) || isAllNull(PRDetail)) return null;
+  if (isNull(PRDetail) || isAllNull(PRDetail)) return null;
 
   const onClick = (curMonth: string, params: any) => {
     const seriesIndex = params.seriesIndex;

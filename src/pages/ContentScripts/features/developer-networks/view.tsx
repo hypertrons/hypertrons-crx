@@ -3,7 +3,10 @@ import ReactModal from 'react-modal';
 
 import Graph from '../../../../components/Graph';
 import { getMessageByLocale } from '../../../../utils/utils';
-import optionsStorage, { HypercrxOptions } from '../../../../options-storage';
+import optionsStorage, {
+  HypercrxOptions,
+  defaults,
+} from '../../../../options-storage';
 import { iconDeveloperNetwork, iconRepoNetwork } from './icon-svg-path';
 import './react-modal.scss';
 
@@ -24,7 +27,7 @@ const View = ({
   developerNetwork,
   repoNetwork,
 }: Props): JSX.Element => {
-  const [options, setOptions] = useState<HypercrxOptions>();
+  const [options, setOptions] = useState<HypercrxOptions>(defaults);
   const [showDeveloperNetwork, setShowDeveloperNetwork] = useState(false);
   const [showRepoNetwork, setShowRepoNetwork] = useState(false);
 
@@ -33,10 +36,6 @@ const View = ({
       setOptions(await optionsStorage.getAll());
     })();
   }, []);
-
-  if (!options) {
-    return <div />;
-  }
 
   return (
     <div className="border-top color-border-secondary pt-3 mt-3">
