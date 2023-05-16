@@ -2,7 +2,7 @@ import { importedFeatures } from '../README.md';
 
 export type HypercrxOptions = typeof defaults;
 
-const defaults = Object.assign(
+export const defaults = Object.assign(
   {
     locale: 'en',
   },

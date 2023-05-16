@@ -12,7 +12,10 @@ import { getAnswer } from './service';
 import './rcw.scss';
 import exists from '../../../../helpers/exists';
 import { getMessageByLocale } from '../../../../utils/utils';
-import optionsStorage, { HypercrxOptions } from '../../../../options-storage';
+import optionsStorage, {
+  HypercrxOptions,
+  defaults,
+} from '../../../../options-storage';
 
 interface Props {
   theme: 'light' | 'dark';
@@ -33,14 +36,10 @@ const displayNotAvailable = (repoName: string, locale: string) => {
 };
 
 const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
-  const [options, setOptions] = useState<HypercrxOptions>();
+  const [options, setOptions] = useState<HypercrxOptions>(defaults);
   const [history, setHistory] = useState<[string, string]>(['', '']);
   const mouseDownX = useRef(0); // X position when mouse down
   const rcwWidth = useRef(0); // rcw width when mouse down
-
-  if (!options) {
-    return <div />;
-  }
 
   useEffect(() => {
     (async function () {
