@@ -6,7 +6,10 @@ import {
   isNull,
   isAllNull,
 } from '../../../../utils/utils';
-import Settings, { loadSettings } from '../../../../utils/settings';
+import optionsStorage, {
+  HypercrxOptions,
+  defaults,
+} from '../../../../options-storage';
 import { generateDataByMonth } from '../../../../utils/data';
 import ReactTooltip from 'react-tooltip';
 import IssueChart from './IssueChart';
@@ -33,11 +36,11 @@ const generateData = (issueDetail: IssueDetail): any => {
 };
 
 const View = ({ currentRepo, issueDetail }: Props): JSX.Element | null => {
-  const [settings, setSettings] = useState(new Settings());
+  const [options, setOptions] = useState<HypercrxOptions>(defaults);
 
   useEffect(() => {
-    (async () => {
-      setSettings(await loadSettings());
+    (async function () {
+      setOptions(await optionsStorage.getAll());
     })();
   }, []);
 
@@ -65,7 +68,7 @@ const View = ({ currentRepo, issueDetail }: Props): JSX.Element | null => {
   return (
     <ReactTooltip id="issue-tooltip" clickable={true}>
       <div className="chart-title">
-        {getMessageByLocale('issue_popup_title', settings.locale)}
+        {getMessageByLocale('issue_popup_title', options.locale)}
       </div>
       <IssueChart
         theme={githubTheme as 'light' | 'dark'}

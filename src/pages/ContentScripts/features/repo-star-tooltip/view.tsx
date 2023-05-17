@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 import { getGithubTheme, getMessageByLocale } from '../../../../utils/utils';
-import Settings, { loadSettings } from '../../../../utils/settings';
+import optionsStorage, {
+  HypercrxOptions,
+  defaults,
+} from '../../../../options-storage';
 import { generateDataByMonth } from '../../../../utils/data';
 import ReactTooltip from 'react-tooltip';
 import StarChart from './StarChart';
@@ -13,11 +16,11 @@ interface Props {
 }
 
 const View = ({ stars: stars }: Props): JSX.Element | null => {
-  const [settings, setSettings] = useState(new Settings());
+  const [options, setOptions] = useState<HypercrxOptions>(defaults);
 
   useEffect(() => {
-    (async () => {
-      setSettings(await loadSettings());
+    (async function () {
+      setOptions(await optionsStorage.getAll());
     })();
   }, []);
 
@@ -26,7 +29,7 @@ const View = ({ stars: stars }: Props): JSX.Element | null => {
   return (
     <ReactTooltip id="star-tooltip" clickable={true}>
       <div className="chart-title">
-        {getMessageByLocale('star_popup_title', settings.locale)}
+        {getMessageByLocale('star_popup_title', options.locale)}
       </div>
       <StarChart
         theme={githubTheme as 'light' | 'dark'}

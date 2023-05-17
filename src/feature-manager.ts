@@ -10,6 +10,7 @@ import isRestorationVisit from './helpers/is-restoration-visit';
 import shouldFeatureRun, {
   ShouldRunConditions,
 } from './helpers/should-feature-run';
+import optionsStorage from './options-storage';
 
 type FeatureInit = () => Promisable<void>;
 type FeatureRestore = Function;
@@ -60,7 +61,7 @@ const log = {
 };
 
 // eslint-disable-next-line no-async-promise-executor -- Rule assumes we don't want to leave it pending
-const globalReady = new Promise<void>(async (resolve) => {
+const globalReady = new Promise<object>(async (resolve) => {
   await waitFor(() => document.body);
 
   if (pageDetect.is500() || pageDetect.isPasswordConfirmation()) {
@@ -81,11 +82,13 @@ const globalReady = new Promise<void>(async (resolve) => {
 
   document.documentElement.classList.add('hypercrx');
 
-  resolve();
+  const options = await optionsStorage.getAll();
+
+  resolve(options);
 });
 
 const setupPageLoad = async (
-  id: FeatureID,
+  id: FeatureId,
   config: InternalRunConfig
 ): Promise<void> => {
   const { asLongAs, include, exclude, init } = config;
@@ -108,23 +111,29 @@ const setupPageLoad = async (
 
 // url can be in forms of: "foo/bar/feature-name.tsx" or "foo/bar/feature-name/index.tsx".
 // This function extracts "feature-name" in url and prefixes it with "hypercrx-".
-const getFeatureID = (url: string): FeatureID => {
+const getFeatureID = (url: string): FeatureId => {
   const prefix = 'hypercrx-';
   const pathComponents = url.split('/');
   let name = pathComponents.pop()!.split('.')[0];
   if (name === 'index') {
     name = pathComponents.pop()!;
   }
-  return `${prefix}${name}` as FeatureID;
+  return `${prefix}${name}` as FeatureId;
 };
 
 /** Register a new feature */
 const add = async (
-  id: FeatureID,
+  id: FeatureId,
   ...loaders: FeatureLoader[]
 ): Promise<void> => {
   /* Feature filtering and running */
-  await globalReady;
+  const options = await globalReady;
+
+  // If the feature is disabled, skip it
+  if (!options[id as keyof typeof options]) {
+    log.info('↩️', 'Skipping', id);
+    return;
+  }
 
   for (const loader of loaders) {
     // Input defaults and validation

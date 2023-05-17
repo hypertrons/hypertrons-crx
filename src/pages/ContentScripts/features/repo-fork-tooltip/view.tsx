@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 import { getGithubTheme, getMessageByLocale } from '../../../../utils/utils';
-import Settings, { loadSettings } from '../../../../utils/settings';
+import optionsStorage, {
+  HypercrxOptions,
+  defaults,
+} from '../../../../options-storage';
 import { generateDataByMonth } from '../../../../utils/data';
 import ReactTooltip from 'react-tooltip';
 import ForkChart from './ForkChart';
@@ -13,11 +16,11 @@ interface Props {
 }
 
 const View = ({ forks }: Props): JSX.Element | null => {
-  const [settings, setSettings] = useState(new Settings());
+  const [options, setOptions] = useState<HypercrxOptions>(defaults);
 
   useEffect(() => {
-    (async () => {
-      setSettings(await loadSettings());
+    (async function () {
+      setOptions(await optionsStorage.getAll());
     })();
   }, []);
 
@@ -26,7 +29,7 @@ const View = ({ forks }: Props): JSX.Element | null => {
   return (
     <ReactTooltip id="fork-tooltip" clickable={true}>
       <div className="chart-title">
-        {getMessageByLocale('fork_popup_title', settings.locale)}
+        {getMessageByLocale('fork_popup_title', options.locale)}
       </div>
       <ForkChart
         theme={githubTheme as 'light' | 'dark'}

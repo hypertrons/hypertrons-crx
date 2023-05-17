@@ -6,7 +6,10 @@ import {
   isNull,
 } from '../../../../utils/utils';
 import { numberWithCommas } from '../../../../utils/formatter';
-import Settings, { loadSettings } from '../../../../utils/settings';
+import optionsStorage, {
+  HypercrxOptions,
+  defaults,
+} from '../../../../options-storage';
 import { rocketLight, rocketDark } from './base64';
 import ReactTooltip from 'react-tooltip';
 import { generateDataByMonth } from '../../../../utils/data';
@@ -27,15 +30,15 @@ const View = ({
   openrank,
   participant,
 }: Props): JSX.Element | null => {
-  const [settings, setSettings] = useState(new Settings());
+  const [options, setOptions] = useState<HypercrxOptions>(defaults);
 
   useEffect(() => {
     ReactTooltip.rebuild();
   }, []);
 
   useEffect(() => {
-    (async () => {
-      setSettings(await loadSettings());
+    (async function () {
+      setOptions(await optionsStorage.getAll());
     })();
   }, []);
 
@@ -138,7 +141,7 @@ const View = ({
         clickable={true}
       >
         <div className="chart-title">
-          {getMessageByLocale('header_label_activity', settings.locale)}
+          {getMessageByLocale('header_label_activity', options.locale)}
         </div>
         <ActivityChart
           theme={githubTheme as 'light' | 'dark'}
@@ -149,7 +152,7 @@ const View = ({
       </ReactTooltip>
       <ReactTooltip id="openrank-tooltip" clickable={true}>
         <div className="chart-title">
-          {getMessageByLocale('header_label_OpenRank', settings.locale)}
+          {getMessageByLocale('header_label_OpenRank', options.locale)}
         </div>
         <OpenRankChart
           theme={githubTheme as 'light' | 'dark'}
@@ -160,7 +163,7 @@ const View = ({
       </ReactTooltip>
       <ReactTooltip id="participant-tooltip" clickable={true}>
         <div className="chart-title">
-          {getMessageByLocale('header_label_participant', settings.locale)}
+          {getMessageByLocale('header_label_participant', options.locale)}
         </div>
         <ParticipantChart
           theme={githubTheme as 'light' | 'dark'}

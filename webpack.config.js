@@ -68,6 +68,14 @@ let options = {
   module: {
     rules: [
       {
+        test: /README\.md$/,
+        use: [
+          {
+            loader: './utils/features-loader.cjs',
+          },
+        ],
+      },
+      {
         // look for .css or .scss files
         test: /\.(css|scss)$/,
         // in the `src` directory

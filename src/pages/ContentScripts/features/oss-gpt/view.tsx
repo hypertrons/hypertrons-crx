@@ -12,7 +12,10 @@ import { getAnswer } from './service';
 import './rcw.scss';
 import exists from '../../../../helpers/exists';
 import { getMessageByLocale } from '../../../../utils/utils';
-import Settings, { loadSettings } from '../../../../utils/settings';
+import optionsStorage, {
+  HypercrxOptions,
+  defaults,
+} from '../../../../options-storage';
 
 interface Props {
   theme: 'light' | 'dark';
@@ -33,48 +36,16 @@ const displayNotAvailable = (repoName: string, locale: string) => {
 };
 
 const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
-  const [inited, setInited] = useState(false);
-  const [settings, setSettings] = useState(new Settings());
+  const [options, setOptions] = useState<HypercrxOptions>(defaults);
   const [history, setHistory] = useState<[string, string]>(['', '']);
   const mouseDownX = useRef(0); // X position when mouse down
   const rcwWidth = useRef(0); // rcw width when mouse down
 
   useEffect(() => {
-    const initSettings = async () => {
-      const temp = await loadSettings();
-      setSettings(temp);
-      setInited(true);
-    };
-    if (!inited) {
-      initSettings();
-    }
-  }, [inited, settings]);
-
-  const subtitle = currentDocsName
-    ? getMessageByLocale('OSS_GPT_subtitle', settings.locale).replace(
-        '%v',
-        currentRepo
-      )
-    : getMessageByLocale(
-        'OSS_GPT_subtitle_notAvailable',
-        settings.locale
-      ).replace('%v', currentRepo);
-
-  const handleNewUserMessage = async (newMessage: string) => {
-    toggleMsgLoader();
-    toggleInputDisabled();
-
-    if (currentDocsName) {
-      const answer = await getAnswer(currentDocsName, newMessage, history);
-      addResponseMessage(answer);
-      setHistory([newMessage, answer]); // update history
-    } else {
-      displayNotAvailable(currentRepo, settings.locale);
-    }
-
-    toggleMsgLoader();
-    toggleInputDisabled();
-  };
+    (async function () {
+      setOptions(await optionsStorage.getAll());
+    })();
+  }, []);
 
   useEffect(() => {
     // when repo changes
@@ -82,11 +53,11 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
     setHistory(['', '']); // clear history
     if (currentDocsName) {
       // if docs for current repo is available
-      displayWelcome(currentRepo, settings.locale);
+      displayWelcome(currentRepo, options.locale);
     } else {
-      displayNotAvailable(currentRepo, settings.locale);
+      displayNotAvailable(currentRepo, options.locale);
     }
-  }, [settings, currentRepo, currentDocsName]);
+  }, [options, currentRepo, currentDocsName]);
 
   const handleMouseDown = (event: JQuery.MouseDownEvent) => {
     mouseDownX.current = event.clientX;
@@ -144,6 +115,32 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
       observer.disconnect();
     };
   }, []);
+
+  const subtitle = currentDocsName
+    ? getMessageByLocale('OSS_GPT_subtitle', options.locale).replace(
+        '%v',
+        currentRepo
+      )
+    : getMessageByLocale(
+        'OSS_GPT_subtitle_notAvailable',
+        options.locale
+      ).replace('%v', currentRepo);
+
+  const handleNewUserMessage = async (newMessage: string) => {
+    toggleMsgLoader();
+    toggleInputDisabled();
+
+    if (currentDocsName) {
+      const answer = await getAnswer(currentDocsName, newMessage, history);
+      addResponseMessage(answer);
+      setHistory([newMessage, answer]); // update history
+    } else {
+      displayNotAvailable(currentRepo, options.locale);
+    }
+
+    toggleMsgLoader();
+    toggleInputDisabled();
+  };
 
   return (
     <div className={theme}>
