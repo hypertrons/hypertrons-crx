@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import Graph from '../../../../components/Graph';
-import { getMessageByLocale } from '../../../../utils/utils';
+import { getMessageByLocale } from '../../../../helpers/get-message';
 import optionsStorage, {
   HypercrxOptions,
   defaults,

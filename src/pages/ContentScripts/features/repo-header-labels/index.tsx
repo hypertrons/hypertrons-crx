@@ -4,7 +4,7 @@ import elementReady from 'element-ready';
 import $ from 'jquery';
 
 import features from '../../../../feature-manager';
-import { isPublicRepo } from '../../../../utils/utils';
+import { isPublicRepo } from '../../../../helpers/is-public-repo';
 import { getRepoName } from '../../../../helpers/get-repo-info';
 import { getActivity, getOpenrank, getParticipant } from '../../../../api/repo';
 import View from './view';

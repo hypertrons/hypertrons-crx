@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import { getGithubTheme, getMessageByLocale } from '../../../../utils/utils';
-import { generateDataByMonth } from '../../../../utils/data';
+import { getGithubTheme } from '../../../../helpers/get-github-theme';
+import { getMessageByLocale } from '../../../../helpers/get-message';
+import { generateDataByMonth } from '../../../../helpers/data';
 import optionsStorage, {
   HypercrxOptions,
   defaults,
