@@ -77,7 +77,7 @@ We welcome users to install and try our Hypertrons Chrome Extension. If you have
 
 ## Install from released package
 
-The latest release can be found on this page https://github.com/hypertrons/hypertrons-crx/releases , where `hypertrons.crx` and `hypertrons.zip` are available under `Assets`. Currently, the extension can be installed to multiple browsers that use the chromium kernel. Some common ones are listed as follow:
+The latest release can be found on this page https://github.com/hypertrons/hypertrons-crx/releases , where `hypertrons.crx` and `hypertrons.zip` are available under `Assets`. Currently, the extension can be installed to multiple browsers that use the chromium kernel. Some common ones are listed as follows:
 
 - [Chrome](#chrome)
 
@@ -93,7 +93,7 @@ The latest release can be found on this page https://github.com/hypertrons/hyper
 
 2. Open Chrome browser and enter [chrome://extensions](chrome://extensions) in the address bar directing to the extension management page.
 
-3. Turn on the **[Developer Mode]** button on the top right corner of this page, then refresh.
+3. Turn on the **[Developer Mode]** button in the top right corner of this page, then refresh.
 
 4. Click **[Load Unpacked]** button on the top left, and select the folder where the unzipped files are stored( `hypertrons/`).
 
@@ -105,7 +105,7 @@ The latest release can be found on this page https://github.com/hypertrons/hyper
 
 2. Open Edge and enter [edge://extensions/](edge://extensions/) in the address bar directing to the extension management page.
 
-3. Turn on the **[Developer Mode]** button on the bottom left corner of this page, then refresh.
+3. Turn on the **[Developer Mode]** button in the bottom left corner of this page, then refresh.
 
 4. Click **[Load Unpacked]** button on the top right, and select the folder (`/build`) under the folder ( `hypertrons/`) unzipped in step 1.
 
@@ -117,7 +117,7 @@ The latest release can be found on this page https://github.com/hypertrons/hyper
 
 2. Open the browser and enter [se://extensions/](se://extensions/) in the address bar directing to the extension management page.
 
-3. Turn on the **[Developer Mode]** button on the top right corner of, and then refresh.
+3. Turn on the **[Developer Mode]** button in the top right corner of, and then refresh.
 
 4. Drag the downloaded file `hypertrons.crx` into this page.
 
@@ -131,7 +131,7 @@ The latest release can be found on this page https://github.com/hypertrons/hyper
 
 2. Open the browser and enter [chrome://myextensions/extensions](chrome://myextensions/extensions) in the address bar directing to the extension management page.
 
-3. Turn on the **[Developer Mode]** button on the top right corner of, and then refresh.
+3. Turn on the **[Developer Mode]** button in the top right corner of, and then refresh.
 
 4. Drag the downloaded file `hypertrons.crx` into this page.
 
@@ -141,9 +141,9 @@ The latest release can be found on this page https://github.com/hypertrons/hyper
 
 # Additional Configuration
 
-### Adding Github Token
+### Adding GitHub Token
 
-Hypertrons requires a github token for getting the avatar and username from Github repositories and getting the hypertrons.json.
+Hypertrons requires a GitHub token for getting the avatar and username from GitHub repositories and getting the hypertrons.json.
 
 1. Click on the hypertrons icon to open the menu and select set Token
 
@@ -153,7 +153,7 @@ Hypertrons requires a github token for getting the avatar and username from Gith
 
 <img src="assets/en/op.png">
 
-3. You'll need a github token with "public_repo" scope. <a href="https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token">How to generate token?</a>
+3. You'll need a GitHub token with "public_repo" scope. <a href="https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token">How to generate token?</a>
 
 <img src="assets/en/mo.png">
 
