@@ -20,7 +20,7 @@ Before you submit an issue, consider the following guidelines:
 - Please search for related issues. Make sure you are not going to open a duplicate issue.
 - Please specify what kind of issue it is and explain it in the title or content, e.g. `feature`, `bug`, `documentation`, `discussion`, `help wanted`... The issue will be tagged automatically by the robot of the project(Menbotics). See [supported issue labels][issue-label].
 
-To make the issue details as standard as possible, we setup an [Issue Template][issue-template] for issue reporters. Please be sure to follow the instructions to fill fields in template.
+To make the issue details as standard as possible, we set up several [issue templates][issue-template] for issue reporters. Please be sure to follow the instructions to fill fields in template.
 
 There are a lot of cases when you could open an issue:
 
@@ -179,5 +179,5 @@ Please sign our [Contributor License Agreement (CLA)][cla] before sending pull r
 [repo]: https://github.com/hypertrons/hypertrons-crx
 [angular-commit-message-format]: https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines
 [pr-template]: ./.github/pull_request_template.md
-[issue-template]: https://github.com/hypertrons/hypertrons-crx/issues/673
+[issue-template]: https://github.com/hypertrons/hypertrons-crx/tree/master/.github/ISSUE_TEMPLATE
 [cla]: https://cla-assistant.io/hypertrons/hypertrons-crx
