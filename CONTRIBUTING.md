@@ -179,5 +179,5 @@ Please sign our [Contributor License Agreement (CLA)][cla] before sending pull r
 [repo]: https://github.com/hypertrons/hypertrons-crx
 [angular-commit-message-format]: https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines
 [pr-template]: ./.github/pull_request_template.md
-[issue-template]: ./.github/issue_template.md
+[issue-template]: https://github.com/hypertrons/hypertrons-crx/issues/673
 [cla]: https://cla-assistant.io/hypertrons/hypertrons-crx

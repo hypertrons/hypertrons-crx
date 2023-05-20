@@ -55,7 +55,7 @@ You can find these dashboards in:
 </table>
 
 
-### Project Releated
+### Project Related
 
  <table> 
    <thead> 
@@ -105,7 +105,7 @@ You can find these dashboards in:
 - **Repo Details**: Trends of Activity, OpenRank, Participants, Fork Events, Star Events, Open Issue Events, Issue Comment Events, Open PR Events, PR Merge Events, Review Comment Events, Merged Addition & Deletion Code Lines.
 
 
-### Developer Releated
+### Developer Related
 
 <table> 
    <thead> 
