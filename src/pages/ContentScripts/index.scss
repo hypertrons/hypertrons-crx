@@ -28,10 +28,10 @@
 }
 @media screen and (max-width: 1120px) {
   .graph-container {
-    width: 100%;
+    width: 100% !important;
   }
   .description-container {
-    width: 100%;
+    width: 100% !important;
   }
   .color-text-secondary {
     margin-left: 5px;
@@ -45,7 +45,7 @@
   text-align: right;
 }
 
-@media screen and (max-width: 670px) {
+@media screen and (max-width: 650px) {
   .developer-tab {
     float: none;
   }

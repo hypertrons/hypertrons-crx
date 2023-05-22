@@ -1,7 +1,8 @@
 import React, { CSSProperties, useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
 
-import { linearMap, debounce } from '../utils/utils';
+import linearMap from '../helpers/linear-map';
+import debounce from '../helpers/debounce';
 
 interface GraphProps {
   /**

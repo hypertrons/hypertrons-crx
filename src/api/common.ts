@@ -1,5 +1,5 @@
 import { OSS_XLAB_ENDPOINT, ErrorCode } from '../constant';
-import request from '../utils/request';
+import request from '../helpers/request';
 
 export const getMetricByName = async (
   owner: string,

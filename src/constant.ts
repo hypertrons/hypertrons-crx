@@ -9,5 +9,4 @@ export const OSS_XLAB_ENDPOINT = 'https://oss.x-lab.info';
 export const HYPERTRONS_CRX_NEW_ISSUE =
   'https://github.com/hypertrons/hypertrons-crx/issues/new/choose';
 
-export const HYPERTRONS_CRX_WEBSITE =
-  'https://hypertrons.github.io/hypertrons-crx-website/';
+export const HYPERCRX_GITHUB = 'https://github.com/hypertrons/hypertrons-crx';
