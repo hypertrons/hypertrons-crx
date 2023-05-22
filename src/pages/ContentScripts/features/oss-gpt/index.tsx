@@ -3,7 +3,7 @@ import { render, Container } from 'react-dom';
 import $ from 'jquery';
 
 import features from '../../../../feature-manager';
-import { getGithubTheme } from '../../../../helpers/get-github-theme';
+import getGithubTheme from '../../../../helpers/get-github-theme';
 import { isPublicRepo } from '../../../../helpers/is-public-repo';
 import { getRepoName } from '../../../../helpers/get-repo-info';
 import View from './view';
