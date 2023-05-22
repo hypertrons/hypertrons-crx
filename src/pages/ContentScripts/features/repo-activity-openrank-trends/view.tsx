@@ -7,7 +7,7 @@ import optionsStorage, {
   HypercrxOptions,
   defaults,
 } from '../../../../options-storage';
-import Bars from '../../../../components/Bars/index';
+import Bars from '../../../../components/Bars';
 
 const githubTheme = getGithubTheme();
 

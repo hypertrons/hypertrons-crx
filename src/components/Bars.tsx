@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { formatNum } from '../../helpers/formatter';
+import { formatNum } from '../helpers/formatter';
 import * as echarts from 'echarts';
 
 const LIGHT_THEME = {
