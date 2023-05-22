@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import getGithubTheme from '../../../../helpers/get-github-theme';
-import { getMessageByLocale } from '../../../../helpers/get-message';
+import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import optionsStorage, {
   HypercrxOptions,
   defaults,

@@ -10,7 +10,7 @@ import {
 
 import { importedFeatures } from '../../../README.md';
 import optionsStorage, { HypercrxOptions } from '../../options-storage';
-import { getMessageByLocale } from '../../helpers/get-message';
+import getMessageByLocale from '../../helpers/get-message-by-locale';
 import { HYPERCRX_GITHUB } from '../../constant';
 import './Options.css';
 

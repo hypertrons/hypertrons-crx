@@ -6,7 +6,7 @@ const messages_locale = {
   zh_CN: messages_zh_CN,
 };
 
-export function getMessageByLocale(key: string, locale: string) {
+export default function getMessageByLocale(key: string, locale: string) {
   // @ts-ignore
   return messages_locale[locale][key]['message'];
 }
