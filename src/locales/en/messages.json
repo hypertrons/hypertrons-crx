@@ -279,10 +279,7 @@
     "message": "About Perceptor"
   },
   "options_about_description": {
-    "message": "Perceptor aims at tracing and digging GitHub projects and developers. We do this by inserting useful dashboards into some GitHub pages to help users gain the insight into developers and projects quickly."
-  },
-  "options_about_description_website": {
-    "message": "Welcome to visit out website to get more infomation: "
+    "message": "Hypercrx is a browser extension to get more insights into projects and developers on GitHub."
   },
   "hypertrons_tab_title": {
     "message": "Hypertrons Commands"

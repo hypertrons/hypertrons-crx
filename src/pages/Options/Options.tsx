@@ -11,7 +11,7 @@ import {
 import { importedFeatures } from '../../../README.md';
 import optionsStorage, { HypercrxOptions } from '../../options-storage';
 import { getMessageByLocale } from '../../helpers/get-message';
-import { HYPERTRONS_CRX_WEBSITE } from '../../constant';
+import { HYPERCRX_GITHUB } from '../../constant';
 import './Options.css';
 
 const localeOptions: IChoiceGroupOption[] = [
@@ -57,7 +57,7 @@ const Options = (): JSX.Element => {
   return (
     <Stack>
       <Stack horizontalAlign="center" style={{ paddingBottom: '10px' }}>
-        <h1>PERCEPTOR</h1>
+        <h1>Hypercrx</h1>
         <sub>{`version ${version}`}</sub>
       </Stack>
       <Stack
@@ -139,14 +139,11 @@ const Options = (): JSX.Element => {
               {getMessageByLocale('options_about_description', options.locale)}
             </p>
             <p>
-              {getMessageByLocale(
-                'options_about_description_website',
-                options.locale
-              )}
+              GitHub:{' '}
+              <Link href={HYPERCRX_GITHUB} target="_blank" underline>
+                {HYPERCRX_GITHUB}
+              </Link>
             </p>
-            <Link href={HYPERTRONS_CRX_WEBSITE} target="_blank" underline>
-              {HYPERTRONS_CRX_WEBSITE}
-            </Link>
           </Stack>
         </Stack.Item>
       </Stack>
