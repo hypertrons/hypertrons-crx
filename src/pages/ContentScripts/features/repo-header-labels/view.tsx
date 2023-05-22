@@ -10,7 +10,7 @@ import optionsStorage, {
 } from '../../../../options-storage';
 import { rocketLight, rocketDark } from './base64';
 import ReactTooltip from 'react-tooltip';
-import { generateDataByMonth } from '../../../../helpers/data';
+import generateDataByMonth from '../../../../helpers/generate-data-by-month';
 import ActivityChart from './ActivityChart';
 import OpenRankChart from './OpenRankChart';
 import ParticipantChart from './ParticipantChart';

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { getGithubTheme } from '../../../../helpers/get-github-theme';
 import { getMessageByLocale } from '../../../../helpers/get-message';
-import { generateDataByMonth } from '../../../../helpers/data';
+import generateDataByMonth from '../../../../helpers/generate-data-by-month';
 import optionsStorage, {
   HypercrxOptions,
   defaults,

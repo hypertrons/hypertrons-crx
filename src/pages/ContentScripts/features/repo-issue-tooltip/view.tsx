@@ -8,7 +8,7 @@ import optionsStorage, {
   HypercrxOptions,
   defaults,
 } from '../../../../options-storage';
-import { generateDataByMonth } from '../../../../helpers/data';
+import generateDataByMonth from '../../../../helpers/generate-data-by-month';
 import ReactTooltip from 'react-tooltip';
 import IssueChart from './IssueChart';
 
