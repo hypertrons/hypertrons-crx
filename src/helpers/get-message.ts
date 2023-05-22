@@ -7,7 +7,6 @@ const messages_locale = {
 };
 
 export function getMessageByLocale(key: string, locale: string) {
-    // @ts-ignore
-    return messages_locale[locale][key]['message'];
-  }
-  
+  // @ts-ignore
+  return messages_locale[locale][key]['message'];
+}
