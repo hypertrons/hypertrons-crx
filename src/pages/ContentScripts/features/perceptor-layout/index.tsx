@@ -4,7 +4,7 @@ import elementReady from 'element-ready';
 import { render, Container } from 'react-dom';
 
 import features from '../../../../feature-manager';
-import { isPerceptor } from '../../../../helpers/is-perceptor';
+import isPerceptor from '../../../../helpers/is-perceptor';
 import View from './view';
 
 const featureId = features.getFeatureID(import.meta.url);

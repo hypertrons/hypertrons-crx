@@ -3,7 +3,7 @@ import * as pageDetect from 'github-url-detection';
 import elementReady from 'element-ready';
 
 // check if the repository is public
-export async function isPublicRepo() {
+export default async function isPublicRepo() {
   // another selector that also works
   // const repoLabel = $('strong[itemprop="name"]').siblings('span.Label.Label--secondary').text();
   await elementReady('#repository-container-header');

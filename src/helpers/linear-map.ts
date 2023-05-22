@@ -1,4 +1,4 @@
-export function linearMap(
+export default function linearMap(
   val: number,
   domain: number[],
   range: number[]
