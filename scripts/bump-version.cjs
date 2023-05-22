@@ -51,18 +51,6 @@ async function bump({ version, deploy }) {
   }
   update_info.develop.latest_version = version;
   writeJson(infoPath, update_info);
-
-  // update background.data.ts
-  processFile('src/mock/background.data.ts', (content) =>{
-    const pattern = /(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)/g
-
-    String(content).match(pattern).forEach(ver => {
-      if (compare({oldVersion: ver, newVersion: version}) <= 0) {
-        throw new Error('Input version number is not greater than the current version number!');
-      }
-    });
-    return content.replace(/(latest_version)\:.*?,/g, `$1: '${version}',`)
-  });
 }
 
 module.exports = { bump };
