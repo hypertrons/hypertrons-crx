@@ -3,7 +3,7 @@ import { render, Container } from 'react-dom';
 import $ from 'jquery';
 
 import features from '../../../../feature-manager';
-import { isPerceptor } from '../../../../utils/utils';
+import isPerceptor from '../../../../helpers/is-perceptor';
 import { getRepoName } from '../../../../helpers/get-repo-info';
 import { getRepoNetwork, getDeveloperNetwork } from '../../../../api/repo';
 import View from './view';

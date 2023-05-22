@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
 
-import { formatNum, numberWithCommas } from '../../../../utils/formatter';
+import { formatNum, numberWithCommas } from '../../../../helpers/formatter';
 
 const LIGHT_THEME = {
   FG_COLOR: '#24292F',

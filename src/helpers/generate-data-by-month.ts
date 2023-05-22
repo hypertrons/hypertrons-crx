@@ -1,4 +1,4 @@
-export const generateDataByMonth = (originalData: any) => {
+const generateDataByMonth = (originalData: any) => {
   if (originalData === null) {
     return [];
   }
@@ -43,3 +43,5 @@ export const generateDataByMonth = (originalData: any) => {
   }
   return arrayData;
 };
+
+export default generateDataByMonth;

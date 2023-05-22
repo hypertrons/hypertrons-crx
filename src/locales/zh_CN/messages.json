@@ -279,10 +279,7 @@
     "message": "关于 Perceptor"
   },
   "options_about_description": {
-    "message": "Perceptor 用于 GitHub 项目与开发者关系的追踪、挖掘与洞察。通过可视化图表展示各类丰富的行为数据，方便用户快速洞察开发者与项目相关信息。"
-  },
-  "options_about_description_website": {
-    "message": "欢迎访问我们的网站获取更多信息："
+    "message": "Hypercrx 是一款帮助用户洞察 GitHub 上的项目和开发者的浏览器插件。"
   },
   "hypertrons_tab_title": {
     "message": "Hypertrons 指令"

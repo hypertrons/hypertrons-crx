@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-import {
-  getGithubTheme,
-  getMessageByLocale,
-  isNull,
-  isAllNull,
-} from '../../../../utils/utils';
+import getGithubTheme from '../../../../helpers/get-github-theme';
+import getMessageByLocale from '../../../../helpers/get-message-by-locale';
+import { isNull, isAllNull } from '../../../../helpers/is-null';
 import optionsStorage, {
   HypercrxOptions,
   defaults,
 } from '../../../../options-storage';
-import { generateDataByMonth } from '../../../../utils/data';
+import generateDataByMonth from '../../../../helpers/generate-data-by-month';
 import ReactTooltip from 'react-tooltip';
 import PRChart from './PRChart';
 import MergedLinesChart from './MergedLinesChart';

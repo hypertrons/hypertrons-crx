@@ -4,7 +4,8 @@ import elementReady from 'element-ready';
 import $ from 'jquery';
 
 import features from '../../../../feature-manager';
-import { isPublicRepo, getGithubTheme } from '../../../../utils/utils';
+import isPublicRepo from '../../../../helpers/is-public-repo';
+import getGithubTheme from '../../../../helpers/get-github-theme';
 import { getRepoName } from '../../../../helpers/get-repo-info';
 import { getForks } from '../../../../api/repo';
 import View from './view';

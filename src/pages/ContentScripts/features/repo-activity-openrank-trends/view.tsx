@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-import { getGithubTheme, getMessageByLocale } from '../../../../utils/utils';
-import { generateDataByMonth } from '../../../../utils/data';
+import getGithubTheme from '../../../../helpers/get-github-theme';
+import getMessageByLocale from '../../../../helpers/get-message-by-locale';
+import generateDataByMonth from '../../../../helpers/generate-data-by-month';
 import optionsStorage, {
   HypercrxOptions,
   defaults,
 } from '../../../../options-storage';
-import Bars from '../../../../components/Bars/index';
+import Bars from '../../../../components/Bars';
 
 const githubTheme = getGithubTheme();
 

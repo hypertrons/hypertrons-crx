@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-import { getGithubTheme, getMessageByLocale } from '../../../../utils/utils';
+import getGithubTheme from '../../../../helpers/get-github-theme';
+import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import optionsStorage, {
   HypercrxOptions,
   defaults,
 } from '../../../../options-storage';
-import { generateDataByMonth } from '../../../../utils/data';
+import generateDataByMonth from '../../../../helpers/generate-data-by-month';
 import ReactTooltip from 'react-tooltip';
 import ForkChart from './ForkChart';
 

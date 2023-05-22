@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
-import {
-  getGithubTheme,
-  getMessageByLocale,
-  isNull,
-} from '../../../../utils/utils';
-import { numberWithCommas } from '../../../../utils/formatter';
+import getGithubTheme from '../../../../helpers/get-github-theme';
+import getMessageByLocale from '../../../../helpers/get-message-by-locale';
+import { isNull } from '../../../../helpers/is-null';
+import { numberWithCommas } from '../../../../helpers/formatter';
 import optionsStorage, {
   HypercrxOptions,
   defaults,
 } from '../../../../options-storage';
 import { rocketLight, rocketDark } from './base64';
 import ReactTooltip from 'react-tooltip';
-import { generateDataByMonth } from '../../../../utils/data';
+import generateDataByMonth from '../../../../helpers/generate-data-by-month';
 import ActivityChart from './ActivityChart';
 import OpenRankChart from './OpenRankChart';
 import ParticipantChart from './ParticipantChart';
