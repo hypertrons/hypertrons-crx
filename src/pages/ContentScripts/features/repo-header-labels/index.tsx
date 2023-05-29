@@ -36,6 +36,9 @@ const init = async (): Promise<void> => {
   container.id = featureId;
   renderTo(container);
   await elementReady('#repository-container-header');
+
+  if ($('#hypercrx-repo-header-labels').length > 0) return;
+
   $('#repository-container-header')
     .find('span.Label.Label--secondary')
     .after(container);
