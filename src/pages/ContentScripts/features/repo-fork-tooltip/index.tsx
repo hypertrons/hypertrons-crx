@@ -32,7 +32,7 @@ const init = async (): Promise<void> => {
     'data-tip': '',
     'data-for': 'fork-tooltip',
     'data-class': `floating-window ${githubTheme}`,
-    'data-place': 'bottom',
+    'data-place': 'left',
     'data-effect': 'solid',
     'data-delay-hide': 500,
     'data-delay-show': 1000,
