@@ -11,7 +11,12 @@ const TooltipTrigger = ({
   size = 28,
   ...restProps
 }: ITooltipTriggerProps): JSX.Element => (
-  <TooltipHost {...restProps}>
+  <TooltipHost
+    {...restProps}
+    style={{
+      cursor: 'help',
+    }}
+  >
     <svg
       width={`${size}px`}
       height={`${size}px`}

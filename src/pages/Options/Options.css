@@ -34,6 +34,10 @@
   border-top-right-radius: 6px;
 }
 
+.Box-header svg {
+  cursor: help;
+}
+
 .Box-title {
   font-size: 18px;
   font-weight: 600;
