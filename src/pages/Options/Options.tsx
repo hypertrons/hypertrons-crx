@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Stack,
   Checkbox,
@@ -26,13 +26,22 @@ const localeOptions: IChoiceGroupOption[] = [
   },
 ];
 
-const headerStyleOptions = {
-  paddingBottom: '10px',
+const stacksStyleOptions = {
+  headerStack: {
+    paddingBottom: '10px',
+  },
+  mainStack: {
+    marginBottom: '40px',
+  },
+  settingStack: {
+    margin: '10px 25px',
+  },
 };
 
 const Options = (): JSX.Element => {
   const [version, setVersion] = useState<string>();
   const [options, setOptions] = useState<HypercrxOptions>();
+  const [isTooltipEnabled, setIsTooltipEnabled] = useState<boolean>(true);
 
   useEffect(() => {
     (async function () {
@@ -40,6 +49,10 @@ const Options = (): JSX.Element => {
       setOptions(await optionsStorage.getAll());
     })();
   }, []);
+
+  const onToggleChange = useCallback(() => {
+    setIsTooltipEnabled(!isTooltipEnabled);
+  }, [setIsTooltipEnabled, isTooltipEnabled]);
 
   if (!version || !options) {
     return <div />;
@@ -61,7 +74,7 @@ const Options = (): JSX.Element => {
 
   return (
     <Stack>
-      <Stack horizontalAlign="center" style={{ paddingBottom: '10px' }}>
+      <Stack horizontalAlign="center" style={stacksStyleOptions.headerStack}>
         <Stack horizontalAlign="center" verticalAlign="center" horizontal>
           <h1>Hypercrx</h1>
           <Toggle
@@ -75,13 +88,14 @@ const Options = (): JSX.Element => {
               options.locale
             )}
             className="Toggle"
+            onChange={onToggleChange}
           />
         </Stack>
         <sub>{`version ${version}`}</sub>
       </Stack>
       <Stack
         horizontalAlign="center"
-        style={{ marginBottom: '40px' }}
+        style={stacksStyleOptions.mainStack}
         tokens={{
           childrenGap: 30,
         }}
@@ -91,14 +105,16 @@ const Options = (): JSX.Element => {
             <h2 className="Box-title">
               {getMessageByLocale('options_locale_title', options.locale)}
             </h2>
-            <TooltipTrigger
-              content={getMessageByLocale(
-                'options_locale_toolTip',
-                options.locale
-              )}
-            />
+            {isTooltipEnabled && (
+              <TooltipTrigger
+                content={getMessageByLocale(
+                  'options_locale_toolTip',
+                  options.locale
+                )}
+              />
+            )}
           </Stack.Item>
-          <Stack style={{ margin: '10px 25px' }}>
+          <Stack style={stacksStyleOptions.settingStack}>
             <p>
               {getMessageByLocale('options_locale_toolTip', options.locale)} :
             </p>
@@ -117,15 +133,17 @@ const Options = (): JSX.Element => {
             <h2 className="Box-title">
               {getMessageByLocale('options_components_title', options.locale)}
             </h2>
-            <TooltipTrigger
-              content={getMessageByLocale(
-                'options_components_toolTip',
-                options.locale
-              )}
-            />
+            {isTooltipEnabled && (
+              <TooltipTrigger
+                content={getMessageByLocale(
+                  'options_components_toolTip',
+                  options.locale
+                )}
+              />
+            )}
           </Stack.Item>
           <Stack
-            style={{ margin: '10px 25px' }}
+            style={stacksStyleOptions.settingStack}
             tokens={{
               childrenGap: 10,
             }}
@@ -144,14 +162,16 @@ const Options = (): JSX.Element => {
             <h2 className="Box-title">
               {getMessageByLocale('options_about_title', options.locale)}
             </h2>
-            <TooltipTrigger
-              content={getMessageByLocale(
-                'options_about_toolTip',
-                options.locale
-              )}
-            />
+            {isTooltipEnabled && (
+              <TooltipTrigger
+                content={getMessageByLocale(
+                  'options_about_toolTip',
+                  options.locale
+                )}
+              />
+            )}
           </Stack.Item>
-          <Stack style={{ margin: '10px 25px' }}>
+          <Stack style={stacksStyleOptions.settingStack}>
             <p>
               {getMessageByLocale('options_about_description', options.locale)}
             </p>

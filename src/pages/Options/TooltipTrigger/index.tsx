@@ -22,9 +22,9 @@ const TooltipTrigger = ({
       <g
         id="Page-1"
         stroke={iconColor}
-        stroke-width="1"
+        strokeWidth="1"
         fill={iconColor}
-        fill-rule="evenodd"
+        fillRule="evenodd"
       >
         <g
           id="add"
