@@ -197,6 +197,12 @@
   "options_enable_title": {
     "message": "开关"
   },
+  "options_locale_tooltip_enabled": {
+    "message": "工具提示已启用"
+  },
+  "options_locale_tooltip_disabled": {
+    "message": "工具提示已禁用"
+  },
   "options_enable_toolTip": {
     "message": "是否在访问github时启用perceptor"
   },

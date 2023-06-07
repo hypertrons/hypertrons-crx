@@ -21,6 +21,10 @@
 }
 
 .Box-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   padding: 0 25px;
   margin: -1px -1px 0;
   background-color: #242a2e;
@@ -42,4 +46,10 @@ ul {
 li {
   padding: 5px 0;
   list-style-type: none;
+}
+
+.Toggle {
+  position: absolute;
+  right: 10px;
+  margin-bottom: 0px;
 }
