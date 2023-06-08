@@ -197,12 +197,6 @@
   "options_enable_title": {
     "message": "Status"
   },
-  "options_locale_tooltip_enabled": {
-    "message": "Tooltip Enabled"
-  },
-  "options_locale_tooltip_disabled": {
-    "message": "Tooltip Disabled"
-  },
   "options_enable_toolTip": {
     "message": "Choose whether to enable perceptor when visiting github"
   },

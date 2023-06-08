@@ -51,9 +51,3 @@ li {
   padding: 5px 0;
   list-style-type: none;
 }
-
-.Toggle {
-  position: absolute;
-  right: 10px;
-  margin-bottom: 0px;
-}
