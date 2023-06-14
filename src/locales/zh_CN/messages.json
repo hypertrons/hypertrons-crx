@@ -149,8 +149,14 @@
   "component_developerActORTrend_yName2": {
     "message": "OpenRank"
   },
+  "component_projectRacingBar_title": {
+    "message": "项目用户活跃度对比图"
+  },
   "component_projectCorrelationNetwork_title": {
     "message": "项目关系网络图"
+  },
+  "component_projectRacingBar_description": {
+    "message": "项目用户活跃度对比图展示了用户活跃度的变化，用于发现用户参与项目变化趋势。"
   },
   "component_projectCorrelationNetwork_description": {
     "message": "项目关系网络图展示了在给定的时间段内，项目与项目之间的联结关系，用于项目间关系的追踪与挖掘。从该网络图中，可以找出与该项目有联结关系的其他项目。"
