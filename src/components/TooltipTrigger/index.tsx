@@ -13,8 +13,8 @@ interface ITooltipTriggerProps extends ITooltipHostProps {
 const TooltipTrigger = ({
   size = 20,
   iconColor = '#FFFFFF',
-  tooltipBackground = '#676e72',
-  tooltipFontColor = '#FFFFFF',
+  tooltipBackground = '#FFFFFF',
+  tooltipFontColor = '#242A2E',
   ...restProps
 }: ITooltipTriggerProps): JSX.Element => (
   <TooltipHost
