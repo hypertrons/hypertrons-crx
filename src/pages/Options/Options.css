@@ -21,6 +21,10 @@
 }
 
 .Box-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
   padding: 0 25px;
   margin: -1px -1px 0;
   background-color: #242a2e;
@@ -30,9 +34,14 @@
   border-top-right-radius: 6px;
 }
 
+.Box-header svg.tooltip-icon {
+  margin-top: 4px;
+}
+
 .Box-title {
   font-size: 18px;
   font-weight: 600;
+  margin-right: 8px;
 }
 
 ul {
