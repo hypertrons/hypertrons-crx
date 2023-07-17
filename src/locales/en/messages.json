@@ -149,6 +149,9 @@
   "component_developerActORTrend_yName2": {
     "message": "OpenRank"
   },
+  "component_projectRacingBar_title": {
+    "message": "Project User Activity Racing Bar"
+  },
   "component_projectCorrelationNetwork_title": {
     "message": "Project Correlation Network"
   },

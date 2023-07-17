@@ -149,6 +149,9 @@
   "component_developerActORTrend_yName2": {
     "message": "OpenRank"
   },
+  "component_projectRacingBar_title": {
+    "message": "仓库用户活跃度对比图"
+  },
   "component_projectCorrelationNetwork_title": {
     "message": "项目关系网络图"
   },
