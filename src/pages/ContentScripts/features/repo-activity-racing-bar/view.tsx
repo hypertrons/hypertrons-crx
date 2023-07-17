@@ -7,18 +7,10 @@ import optionsStorage, {
 } from '../../../../options-storage';
 import RacingBar from './RacingBar';
 
-const DEVELOPER_PERIOD = 90;
-const REPO_PERIOD = 90;
-
 interface Props {
   currentRepo: string;
   repoActivityDetails: any;
 }
-
-const graphStyle = {
-  width: '100%',
-  height: '380px',
-};
 
 const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
@@ -39,10 +31,6 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
               options.locale
             )}
           </span>
-          <div className="hypertrons-crx-title-extra">
-            {getMessageByLocale('global_period', options.locale)}: {REPO_PERIOD}{' '}
-            {getMessageByLocale('global_day', options.locale)}
-          </div>
         </div>
         <div className="d-flex flex-wrap flex-items-center">
           <div className="col-12 col-md-8">
@@ -62,24 +50,10 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
             >
               <p>
                 {getMessageByLocale(
-                  'component_projectCorrelationNetwork_description',
+                  'component_projectRacingBar_description',
                   options.locale
                 )}
               </p>
-              <ul style={{ margin: '0px 0 10px 15px' }}>
-                <li>
-                  {getMessageByLocale(
-                    'component_projectCorrelationNetwork_description_node',
-                    options.locale
-                  )}
-                </li>
-                <li>
-                  {getMessageByLocale(
-                    'component_projectCorrelationNetwork_description_edge',
-                    options.locale
-                  )}
-                </li>
-              </ul>
             </div>
           </div>
         </div>

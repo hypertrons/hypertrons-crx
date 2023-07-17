@@ -10,11 +10,10 @@ interface RacingBarProps {
 }
 
 const RacingBar = (props: RacingBarProps): JSX.Element => {
-  //const [month,setMonth]=useState(null);
   const [playing, setPlaying] = useState(0);
   const { width, height, data } = props;
   const divEL = useRef(null);
-  const updateFrequency = 2000;
+  const updateFrequency = 3000;
   const colorMap = new Map();
   const option = {
     grid: {
@@ -25,11 +24,6 @@ const RacingBar = (props: RacingBarProps): JSX.Element => {
     },
     xAxis: {
       max: 'dataMax',
-      axisLabel: {
-        formatter: function (n: number) {
-          return Math.round(n) + '';
-        },
-      },
     },
     yAxis: {
       type: 'category',
@@ -109,7 +103,7 @@ const RacingBar = (props: RacingBarProps): JSX.Element => {
     return () => {
       instance.dispose();
     };
-  }, []);
+  }, [playing]);
 
   useEffect(() => {
     let chartDOM = divEL.current;
@@ -117,9 +111,7 @@ const RacingBar = (props: RacingBarProps): JSX.Element => {
     const months = Object.keys(data);
     // 在数据变化时调用图表更新函数
     // 根据传入的新数据进行图表的更新操作
-    // ...
     let startIndex = 0;
-    let startMonth = months[startIndex];
 
     for (let i = startIndex; i < months.length - 1; ++i) {
       (function (i) {

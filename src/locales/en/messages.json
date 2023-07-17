@@ -155,6 +155,9 @@
   "component_projectCorrelationNetwork_title": {
     "message": "Project Correlation Network"
   },
+  "component_projectRacingBar_description": {
+    "message": "Project User Activity Racing Bar Shows the change of user activity, which is used to discover the trend of user participation in projects."
+  },
   "component_projectCorrelationNetwork_description": {
     "message": "Project Correlation Network shows the correlation between projects for a given time period. From this graph you can find the projects that are related to the given project."
   },
