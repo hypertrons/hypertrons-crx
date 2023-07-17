@@ -7,7 +7,7 @@ import isPerceptor from '../../../../helpers/is-perceptor';
 import { getRepoName } from '../../../../helpers/get-repo-info';
 import { getActivityDetails } from '../../../../api/repo';
 import View from './view';
-import DataNotFound from './DataNotFound';
+import DataNotFound from '../repo-networks/DataNotFound';
 import * as pageDetect from 'github-url-detection';
 
 const featureId = features.getFeatureID(import.meta.url);
@@ -19,6 +19,10 @@ const getData = async () => {
 };
 
 const renderTo = (container: Container) => {
+  if (!repoActivityDetails) {
+    render(<DataNotFound />, container);
+    return;
+  }
   render(
     <View currentRepo={repoName} repoActivityDetails={repoActivityDetails} />,
     container

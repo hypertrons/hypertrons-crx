@@ -11,9 +11,10 @@ interface RacingBarProps {
 
 const RacingBar = (props: RacingBarProps): JSX.Element => {
   //const [month,setMonth]=useState(null);
+  const [playing, setPlaying] = useState(0);
   const { width, height, data } = props;
   const divEL = useRef(null);
-  const updateFrequency = 4000;
+  const updateFrequency = 2000;
   const colorMap = new Map();
   const option = {
     grid: {
@@ -113,15 +114,6 @@ const RacingBar = (props: RacingBarProps): JSX.Element => {
   useEffect(() => {
     let chartDOM = divEL.current;
     const instance = echarts.getInstanceByDom(chartDOM as any);
-    if (instance) {
-      // @ts-ignore
-      instance.setOption(option);
-    }
-  }, []);
-
-  useEffect(() => {
-    let chartDOM = divEL.current;
-    const instance = echarts.getInstanceByDom(chartDOM as any);
     const months = Object.keys(data);
     // 在数据变化时调用图表更新函数
     // 根据传入的新数据进行图表的更新操作
@@ -133,7 +125,6 @@ const RacingBar = (props: RacingBarProps): JSX.Element => {
       (function (i) {
         setTimeout(function () {
           updateMonth(months[i + 1]);
-          //setPlaying(false);
           if (i + 1 === months.length - 1) {
           }
         }, (i - startIndex) * updateFrequency);
@@ -163,16 +154,14 @@ const RacingBar = (props: RacingBarProps): JSX.Element => {
       // @ts-ignore
       instance.setOption(option);
     }
-    // 调用 setOption 方法更新图表配置
+  }, [playing]);
+
+  const handleReplayClick = () => {
+    let chartDOM = divEL.current;
+    const instance = echarts.getInstanceByDom(chartDOM as any);
     // @ts-ignore
     instance.setOption(option);
-  }, []);
-  const handleReplayClick = () => {
-    // if (playing) {
-    //     alert("Already playing!");
-    //     return;
-    // }
-    // play();
+    setPlaying(playing + 1);
   };
 
   return (
