@@ -177,32 +177,47 @@ const add = async (
     }
 
     /**
+     * debounce function helps to control the frequency at which a function is triggered in
+     * response to an event. It ensures that the action is executed only once after a certain
+     * duration of inactivity, even if the event is fired multiple times within that duration.
+     *  */
+    const debounce = function (func: Function, delay: number) {
+      let debounceTimer: any;
+      return function () {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(func, delay);
+      };
+    };
+    /**
      * Features are targeted to different GitHub pages, so they will not be all loaded at once.
      * They should be loaded as needed, however, `add()` only runs once for each feature. So
      * how to load features after a turbo:visit? The answer is to make use of turbo events.
      */
-    document.addEventListener('turbo:render', async () => {
-      if (isRestorationVisit()) {
-        /** After experiments I believe turbo:render is fired after the render starts but not
-         * after a render ends. So we need to wait for a while to make sure the DOM tree is
-         * substituted with the cached one, otherwise all operations on DOM in restore() are
-         * applied to the old DOM tree (before turbo:visit). turbo:load is also examined, but
-         * it's fired after turbo:visit, not after a render ends. So it cannot be used as the
-         * timing neither.
-         */
-        await sleep(10); // 10ms seems enough
-      }
-      // if a feature doesn't exist in DOM, try loading it since it might be expected in current page
-      if (!exists(`#${id}`)) {
-        setupPageLoad(id, details);
-      } else {
-        // if already exists, either it's not removed from DOM after a turbo:visit or the
-        // current visit is a restoration visit. For the second case, we should handle.
-        if (restore && isRestorationVisit()) {
-          restore();
+    document.addEventListener(
+      'turbo:render',
+      debounce(async () => {
+        if (isRestorationVisit()) {
+          /** After experiments I believe turbo:render is fired after the render starts but not
+           * after a render ends. So we need to wait for a while to make sure the DOM tree is
+           * substituted with the cached one, otherwise all operations on DOM in restore() are
+           * applied to the old DOM tree (before turbo:visit). turbo:load is also examined, but
+           * it's fired after turbo:visit, not after a render ends. So it cannot be used as the
+           * timing neither.
+           */
+          await sleep(10); // 10ms seems enough
         }
-      }
-    });
+        // if a feature doesn't exist in DOM, try loading it since it might be expected in current page
+        if (!exists(`#${id}`)) {
+          setupPageLoad(id, details);
+        } else {
+          // if already exists, either it's not removed from DOM after a turbo:visit or the
+          // current visit is a restoration visit. For the second case, we should handle.
+          if (restore && isRestorationVisit()) {
+            restore();
+          }
+        }
+      }, 500)
+    );
   }
 };
 
