@@ -37,8 +37,8 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
             <div style={{ margin: '10px 0 20px 20px' }}>
               <RacingBar
                 repoName={currentRepo}
-                height={270}
-                width={600}
+                height={300}
+                width={700}
                 data={repoActivityDetails}
               />
             </div>

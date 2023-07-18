@@ -157,9 +157,13 @@ const RacingBar = (props: RacingBarProps): JSX.Element => {
   };
 
   return (
-    <div>
+    <div className="hypertrons-crx-border">
       <div ref={divEL} style={{ width, height }}></div>
-      <button onClick={handleReplayClick}>Replay</button>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <button className="replay-button" onClick={handleReplayClick}>
+          Replay
+        </button>
+      </div>
     </div>
   );
 };
