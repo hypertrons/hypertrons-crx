@@ -11,6 +11,7 @@ import shouldFeatureRun, {
   ShouldRunConditions,
 } from './helpers/should-feature-run';
 import optionsStorage from './options-storage';
+import { throttle } from 'lodash-es';
 
 type FeatureInit = () => Promisable<void>;
 type FeatureRestore = Function;
@@ -176,12 +177,7 @@ const add = async (
       setupPageLoad(id, details);
     }
 
-    /**
-     * Features are targeted to different GitHub pages, so they will not be all loaded at once.
-     * They should be loaded as needed, however, `add()` only runs once for each feature. So
-     * how to load features after a turbo:visit? The answer is to make use of turbo events.
-     */
-    document.addEventListener('turbo:render', async () => {
+    const throttledHandler = throttle(async () => {
       if (isRestorationVisit()) {
         /** After experiments I believe turbo:render is fired after the render starts but not
          * after a render ends. So we need to wait for a while to make sure the DOM tree is
@@ -202,7 +198,14 @@ const add = async (
           restore();
         }
       }
-    });
+    }, 200);
+
+    /**
+     * Features are targeted to different GitHub pages, so they will not be all loaded at once.
+     * They should be loaded as needed, however, `add()` only runs once for each feature. So
+     * how to load features after a turbo:visit? The answer is to make use of turbo events.
+     */
+    document.addEventListener('turbo:render', throttledHandler);
   }
 };
 
