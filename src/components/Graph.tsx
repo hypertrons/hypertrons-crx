@@ -2,7 +2,7 @@ import React, { CSSProperties, useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
 
 import linearMap from '../helpers/linear-map';
-import debounce from '../helpers/debounce';
+import { debounce } from 'lodash-es';
 
 interface GraphProps {
   /**
@@ -123,7 +123,7 @@ const Graph: React.FC<GraphProps> = ({ data, style = {}, focusedNodeID }) => {
         window.location.href = url;
       });
 
-      const [debouncedResize, teardown] = debounce(() => {
+      const debouncedResize = debounce(() => {
         instance.resize();
       }, 500);
       window.addEventListener('resize', debouncedResize);
