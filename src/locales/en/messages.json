@@ -191,6 +191,21 @@
   "component_activeDeveloperCollaborationNetwork_description_edge": {
     "message": "Edge: Collaborative relationship between developers, the value indicates the closeness of the connection between developers. Edges with values smaller than 2.5 are removed from the network to make it sparse and readable."
   },
+  "component_DynamicRacingBar_title": {
+    "message": "Dynamic Racing Bar"
+  },
+  "component_DynamicRacingBar_description": {
+    "message": "Dynamic Racing Bar shows the contributions of different users in the repository in a Dynamic Racing Bar from the period at which the repository was made untill now"
+  },
+  "component_DynamicRacingBar_description_xaxis": {
+    "message": "X axis denotes the time that have contributed to the repository on github, showing their contributions change dynamically with time compared to other users."
+  },
+  "component_DynamicRacingBar_description_yaxis": {
+    "message": "Y axis denotes the user that have contributed to the repository on github, comparing their contributions with other users, the bars change dynamically."
+  },
+  "Horizontal_Banner_Description": {
+    "message": "Welcome to HyperCRX Repository!"
+  },
   "component_darkMode": {
     "message": "Dark mode"
   },
