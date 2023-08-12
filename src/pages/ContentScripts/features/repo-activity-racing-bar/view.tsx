@@ -51,7 +51,6 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
               <RacingBar
                 repoName={currentRepo}
                 height={300}
-                width={700}
                 data={repoActivityDetails}
                 replay={replay}
               />

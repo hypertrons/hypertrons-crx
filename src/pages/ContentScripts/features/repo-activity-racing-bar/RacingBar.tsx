@@ -3,7 +3,6 @@ import * as echarts from 'echarts';
 
 interface RacingBarProps {
   //theme: 'light' | 'dark';
-  width: number;
   height: number;
   repoName: string;
   data: any;
@@ -11,7 +10,7 @@ interface RacingBarProps {
 }
 
 const RacingBar = (props: RacingBarProps): JSX.Element => {
-  const { width, height, data, replay } = props;
+  const { height, data, replay } = props;
   const divEL = useRef(null);
   const updateFrequency = 3000;
   const colorMap = new Map();
@@ -19,8 +18,8 @@ const RacingBar = (props: RacingBarProps): JSX.Element => {
     grid: {
       top: 10,
       bottom: 30,
-      left: 160,
-      right: 30,
+      left: 150,
+      right: 50,
     },
     xAxis: {
       max: 'dataMax',
@@ -154,10 +153,7 @@ const RacingBar = (props: RacingBarProps): JSX.Element => {
 
   return (
     <div className="hypertrons-crx-border">
-      <div
-        ref={divEL}
-        style={{ width, height, padding: '10px 10px 10px 50px' }}
-      ></div>
+      <div ref={divEL} style={{ width: '100%', height }}></div>
     </div>
   );
 };
