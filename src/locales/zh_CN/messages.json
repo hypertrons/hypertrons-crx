@@ -155,6 +155,9 @@
   "component_projectCorrelationNetwork_title": {
     "message": "项目关系网络图"
   },
+  "component_projectRacingBar_ReplayButton": {
+    "message": "重播"
+  },
   "component_projectRacingBar_description": {
     "message": "项目用户活跃度对比图展示了用户活跃度的变化，用于发现用户参与项目变化趋势。"
   },
