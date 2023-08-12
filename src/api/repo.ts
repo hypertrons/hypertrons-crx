@@ -18,6 +18,7 @@ const metricNameMap = new Map([
   ['merged_code_sum', 'code_change_lines_sum'],
   ['developer_network', 'developer_network'],
   ['repo_network', 'repo_network'],
+  ['activity_details', 'activity_details'],
 ]);
 
 export const getActivity = async (repo: string) => {
@@ -82,4 +83,8 @@ export const getDeveloperNetwork = async (repo: string) => {
 
 export const getRepoNetwork = async (repo: string) => {
   return getMetricByName(repo, metricNameMap, 'repo_network');
+};
+
+export const getActivityDetails = async (repo: string) => {
+  return getMetricByName(repo, metricNameMap, 'activity_details');
 };

@@ -149,8 +149,14 @@
   "component_developerActORTrend_yName2": {
     "message": "OpenRank"
   },
+  "component_projectRacingBar_title": {
+    "message": "Project User Activity Racing Bar"
+  },
   "component_projectCorrelationNetwork_title": {
     "message": "Project Correlation Network"
+  },
+  "component_projectRacingBar_description": {
+    "message": "Project User Activity Racing Bar Shows the change of user activity, which is used to discover the trend of user participation in projects."
   },
   "component_projectCorrelationNetwork_description": {
     "message": "Project Correlation Network shows the correlation between projects for a given time period. From this graph you can find the projects that are related to the given project."
@@ -184,6 +190,21 @@
   },
   "component_activeDeveloperCollaborationNetwork_description_edge": {
     "message": "Edge: Collaborative relationship between developers, the value indicates the closeness of the connection between developers. Edges with values smaller than 2.5 are removed from the network to make it sparse and readable."
+  },
+  "component_DynamicRacingBar_title": {
+    "message": "Dynamic Racing Bar"
+  },
+  "component_DynamicRacingBar_description": {
+    "message": "Dynamic Racing Bar shows the contributions of different users in the repository in a Dynamic Racing Bar from the period at which the repository was made untill now"
+  },
+  "component_DynamicRacingBar_description_xaxis": {
+    "message": "X axis denotes the time that have contributed to the repository on github, showing their contributions change dynamically with time compared to other users."
+  },
+  "component_DynamicRacingBar_description_yaxis": {
+    "message": "Y axis denotes the user that have contributed to the repository on github, comparing their contributions with other users, the bars change dynamically."
+  },
+  "Horizontal_Banner_Description": {
+    "message": "Welcome to HyperCRX Repository!"
   },
   "component_darkMode": {
     "message": "Dark mode"
