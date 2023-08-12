@@ -112,17 +112,19 @@
 
 .replay-button {
   display: inline-block;
-  padding: 5px 10px;
-  font-size: 8px;
-  font-weight: bold;
   text-align: center;
   text-decoration: none;
   border-radius: 4px;
   cursor: pointer;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
-  margin-bottom: 2px;
+  padding: 3px 12px;
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: var(--base-text-weight-medium, 500);
+  color: var(--button-default-fgColor-rest, var(--color-btn-text));
+  background-color: var(--button-default-bgColor-rest, var(--color-btn-bg));
+  border-color: var(--button-default-borderColor-rest, var(--color-btn-border));
+  box-shadow: var(--button-default-shadow-resting, var(--color-btn-shadow)),
+    var(--button-default-shadow-inset, var(--color-btn-inset-shadow));
+  transition: 80ms cubic-bezier(0.33, 1, 0.68, 1);
+  transition-property: color, background-color, box-shadow, border-color;
 }

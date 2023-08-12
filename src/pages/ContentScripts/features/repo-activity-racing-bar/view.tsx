@@ -14,12 +14,17 @@ interface Props {
 
 const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
+  const [replay, setReplay] = useState(0);
 
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
     })();
   }, []);
+
+  const handleReplayClick = () => {
+    setReplay(replay + 1);
+  };
 
   return (
     <div>
@@ -31,6 +36,14 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
               options.locale
             )}
           </span>
+          <div className="hypertrons-crx-title-extra developer-tab">
+            <button className="replay-button" onClick={handleReplayClick}>
+              {getMessageByLocale(
+                'component_projectRacingBar_ReplayButton',
+                options.locale
+              )}
+            </button>
+          </div>
         </div>
         <div className="d-flex flex-wrap flex-items-center">
           <div className="col-12 col-md-8">
@@ -40,6 +53,7 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
                 height={300}
                 width={700}
                 data={repoActivityDetails}
+                replay={replay}
               />
             </div>
           </div>

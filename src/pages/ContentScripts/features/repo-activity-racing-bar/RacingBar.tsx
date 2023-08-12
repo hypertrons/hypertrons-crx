@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
 
 interface RacingBarProps {
@@ -7,11 +7,11 @@ interface RacingBarProps {
   height: number;
   repoName: string;
   data: any;
+  replay: number;
 }
 
 const RacingBar = (props: RacingBarProps): JSX.Element => {
-  const [playing, setPlaying] = useState(0);
-  const { width, height, data } = props;
+  const { width, height, data, replay } = props;
   const divEL = useRef(null);
   const updateFrequency = 3000;
   const colorMap = new Map();
@@ -19,8 +19,8 @@ const RacingBar = (props: RacingBarProps): JSX.Element => {
     grid: {
       top: 10,
       bottom: 30,
-      left: 150,
-      right: 80,
+      left: 160,
+      right: 30,
     },
     xAxis: {
       max: 'dataMax',
@@ -101,13 +101,15 @@ const RacingBar = (props: RacingBarProps): JSX.Element => {
     const instance = echarts.init(chartDOM as any);
     // 组件卸载时销毁图表
     return () => {
-      instance.dispose();
+      if (!instance.isDisposed()) {
+        instance.dispose();
+      }
     };
-  }, [playing]);
+  }, [replay]);
 
   useEffect(() => {
     let chartDOM = divEL.current;
-    const instance = echarts.getInstanceByDom(chartDOM as any);
+    const instance: any = echarts.getInstanceByDom(chartDOM as any);
     const months = Object.keys(data);
     // 在数据变化时调用图表更新函数
     // 根据传入的新数据进行图表的更新操作
@@ -144,26 +146,18 @@ const RacingBar = (props: RacingBarProps): JSX.Element => {
       // @ts-ignore
       option.graphic.elements[0].style.text = month;
       // @ts-ignore
-      instance.setOption(option);
+      if (!instance.isDisposed()) {
+        instance.setOption(option);
+      }
     }
-  }, [playing]);
-
-  const handleReplayClick = () => {
-    let chartDOM = divEL.current;
-    const instance = echarts.getInstanceByDom(chartDOM as any);
-    // @ts-ignore
-    instance.setOption(option);
-    setPlaying(playing + 1);
-  };
+  }, [replay]);
 
   return (
     <div className="hypertrons-crx-border">
-      <div ref={divEL} style={{ width, height }}></div>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <button className="replay-button" onClick={handleReplayClick}>
-          Replay
-        </button>
-      </div>
+      <div
+        ref={divEL}
+        style={{ width, height, padding: '10px 10px 10px 50px' }}
+      ></div>
     </div>
   );
 };
