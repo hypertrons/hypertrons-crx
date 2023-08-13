@@ -4,8 +4,10 @@ import elementReady from 'element-ready';
 import $ from 'jquery';
 
 import features from '../../../../feature-manager';
-import isPublicRepo from '../../../../helpers/is-public-repo';
-import { getRepoName } from '../../../../helpers/get-repo-info';
+import {
+  getRepoName,
+  isPublicRepoWithMeta,
+} from '../../../../helpers/get-repo-info';
 import { getActivity, getOpenrank, getParticipant } from '../../../../api/repo';
 import View from './view';
 
@@ -55,7 +57,7 @@ const restore = async () => {
 };
 
 features.add(featureId, {
-  asLongAs: [isPublicRepo],
+  asLongAs: [isPublicRepoWithMeta],
   awaitDomReady: false,
   init,
   restore,

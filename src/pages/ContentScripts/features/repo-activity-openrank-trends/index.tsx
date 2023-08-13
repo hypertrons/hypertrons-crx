@@ -4,7 +4,10 @@ import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
 
 import features from '../../../../feature-manager';
-import { getRepoName } from '../../../../helpers/get-repo-info';
+import {
+  getRepoName,
+  isPublicRepoWithMeta,
+} from '../../../../helpers/get-repo-info';
 import { getActivity, getOpenrank } from '../../../../api/repo';
 import View from './view';
 
@@ -55,7 +58,7 @@ const restore = async () => {
 };
 
 features.add(featureId, {
-  include: [pageDetect.isRepoHome],
+  asLongAs: [isPublicRepoWithMeta],
   awaitDomReady: true,
   init,
   restore,

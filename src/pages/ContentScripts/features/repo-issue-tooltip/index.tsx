@@ -4,9 +4,11 @@ import elementReady from 'element-ready';
 import $ from 'jquery';
 
 import features from '../../../../feature-manager';
-import isPublicRepo from '../../../../helpers/is-public-repo';
 import getGithubTheme from '../../../../helpers/get-github-theme';
-import { getRepoName } from '../../../../helpers/get-repo-info';
+import {
+  getRepoName,
+  isPublicRepoWithMeta,
+} from '../../../../helpers/get-repo-info';
 import {
   getIssuesOpened,
   getIssuesClosed,
@@ -70,7 +72,7 @@ const restore = async () => {
 };
 
 features.add(featureId, {
-  asLongAs: [isPublicRepo],
+  asLongAs: [isPublicRepoWithMeta],
   awaitDomReady: false,
   init,
   restore,
