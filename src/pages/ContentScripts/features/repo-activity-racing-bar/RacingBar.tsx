@@ -34,6 +34,9 @@ const option: EChartsOption = {
         return `${value} {avatar${value.replaceAll('-', '')}|}`;
       },
     },
+    axisTick: {
+      show: false,
+    },
     animationDuration: 0,
     animationDurationUpdate: 200,
   },
@@ -108,9 +111,13 @@ const updateMonth = (instance: EChartsType, data: any, month: string) => {
   option.series[0].data = data[month];
   // @ts-ignore
   option.graphic.elements[0].style.text = month;
-  if (!instance.isDisposed()) {
-    instance.setOption(option);
-  }
+
+  // it seems that hidden bars are also rendered, so when each setOption merge more data into the chart,
+  // the fps goes down. So we use notMerge to avoid merging data. But this disables the xAxis animation.
+  // Hope we can find a better solution.
+  instance.setOption(option, {
+    notMerge: true,
+  });
 };
 
 let timer: NodeJS.Timeout;
