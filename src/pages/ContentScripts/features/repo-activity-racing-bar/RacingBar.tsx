@@ -1,153 +1,157 @@
 import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
+import type { EChartsOption, EChartsType } from 'echarts';
 
 interface RacingBarProps {
-  //theme: 'light' | 'dark';
   height: number;
   repoName: string;
   data: any;
-  replay: number;
 }
 
-const RacingBar = (props: RacingBarProps): JSX.Element => {
-  const { height, data, replay } = props;
-  const divEL = useRef(null);
-  const updateFrequency = 3000;
-  const colorMap = new Map();
-  const option = {
-    grid: {
-      top: 10,
-      bottom: 30,
-      left: 150,
-      right: 50,
-    },
-    xAxis: {
-      max: 'dataMax',
-    },
-    yAxis: {
-      type: 'category',
-      inverse: true,
-      max: 10,
-      axisLabel: {
-        show: true,
-        fontSize: 14,
-        formatter: function (value: string) {
-          if (!value || value.endsWith('[bot]')) return value;
-          return `${value} {avatar${value.replaceAll('-', '')}|}`;
-        },
-        rich: null,
+// TODO generate color from user avatar
+const colorMap = new Map();
+
+const updateFrequency = 3000;
+
+const option: EChartsOption = {
+  grid: {
+    top: 10,
+    bottom: 30,
+    left: 150,
+    right: 50,
+  },
+  xAxis: {
+    max: 'dataMax',
+  },
+  yAxis: {
+    type: 'category',
+    inverse: true,
+    max: 10,
+    axisLabel: {
+      show: true,
+      fontSize: 14,
+      formatter: function (value: string) {
+        if (!value || value.endsWith('[bot]')) return value;
+        return `${value} {avatar${value.replaceAll('-', '')}|}`;
       },
-      animationDuration: 300,
-      animationDurationUpdate: 300,
     },
-    series: [
+    animationDuration: 300,
+    animationDurationUpdate: 300,
+  },
+  series: [
+    {
+      realtimeSort: true,
+      seriesLayoutBy: 'column',
+      type: 'bar',
+      itemStyle: {
+        color: function (params: any) {
+          const githubId = params.value[0];
+          if (colorMap.has(githubId)) {
+            return colorMap.get(githubId);
+          } else {
+            const randomColor =
+              '#' + Math.floor(Math.random() * 16777215).toString(16);
+            colorMap.set(githubId, randomColor);
+            return randomColor;
+          }
+        },
+      },
+      data: undefined,
+      encode: {
+        x: 1,
+        y: 0,
+      },
+      label: {
+        show: true,
+        precision: 1,
+        position: 'right',
+        valueAnimation: true,
+        fontFamily: 'monospace',
+      },
+    },
+  ],
+  // Disable init animation.
+  animationDuration: 0,
+  animationDurationUpdate: updateFrequency,
+  animationEasing: 'linear',
+  animationEasingUpdate: 'linear',
+  graphic: {
+    elements: [
       {
-        realtimeSort: true,
-        seriesLayoutBy: 'column',
-        type: 'bar',
-        itemStyle: {
-          color: function (params: { value: any[] }) {
-            const githubId = params.value[0];
-            if (colorMap.has(githubId)) {
-              return colorMap.get(githubId);
-            } else {
-              const randomColor =
-                '#' + Math.floor(Math.random() * 16777215).toString(16);
-              colorMap.set(githubId, randomColor);
-              return randomColor;
-            }
-          },
+        type: 'text',
+        right: 60,
+        bottom: 60,
+        style: {
+          text: undefined,
+          font: 'bolder 60px monospace',
+          fill: 'rgba(100, 100, 100, 0.25)',
         },
-        data: null,
-        encode: {
-          x: 1,
-          y: 0,
-        },
-        label: {
-          show: true,
-          precision: 1,
-          position: 'right',
-          valueAnimation: true,
-          fontFamily: 'monospace',
-        },
+        z: 100,
       },
     ],
-    // Disable init animation.
-    animationDuration: 0,
-    animationDurationUpdate: updateFrequency,
-    animationEasing: 'linear',
-    animationEasingUpdate: 'linear',
-    graphic: {
-      elements: [
-        {
-          type: 'text',
-          right: 60,
-          bottom: 60,
-          style: {
-            text: null,
-            font: 'bolder 60px monospace',
-            fill: 'rgba(100, 100, 100, 0.25)',
-          },
-          z: 100,
-        },
-      ],
-    },
+  },
+};
+
+const updateMonth = (instance: EChartsType, data: any, month: string) => {
+  const rich: any = {};
+  data[month].forEach((item: any[]) => {
+    // rich name cannot contain special characters such as '-'
+    rich[`avatar${item[0].replaceAll('-', '')}`] = {
+      backgroundColor: {
+        image: `https://avatars.githubusercontent.com/${item[0]}?s=48&v=4`,
+      },
+      height: 20,
+    };
+  });
+  // @ts-ignore
+  option.yAxis.axisLabel.rich = rich;
+  // @ts-ignore
+  option.series[0].data = data[month];
+  // @ts-ignore
+  option.graphic.elements[0].style.text = month;
+  if (!instance.isDisposed()) {
+    instance.setOption(option);
+  }
+};
+
+let timer: NodeJS.Timeout;
+
+const play = (instance: EChartsType, data: any) => {
+  const months = Object.keys(data);
+  let i = 0;
+
+  const playNext = () => {
+    updateMonth(instance, data, months[i]);
+    i++;
+    if (i < months.length) {
+      timer = setTimeout(playNext, updateFrequency);
+    }
   };
 
+  playNext();
+};
+
+const RacingBar = ({ height, data }: RacingBarProps): JSX.Element => {
+  const divEL = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    // @ts-ignore
-    let chartDOM = divEL.current;
-    const instance = echarts.init(chartDOM as any);
-    // 组件卸载时销毁图表
+    if (!divEL.current) return;
+
+    const chartDOM = divEL.current;
+    const instance = echarts.init(chartDOM);
+
+    play(instance, data);
+
     return () => {
       if (!instance.isDisposed()) {
         instance.dispose();
       }
-    };
-  }, [replay]);
-
-  useEffect(() => {
-    let chartDOM = divEL.current;
-    const instance: any = echarts.getInstanceByDom(chartDOM as any);
-    const months = Object.keys(data);
-    // 在数据变化时调用图表更新函数
-    // 根据传入的新数据进行图表的更新操作
-    let startIndex = 0;
-
-    for (let i = startIndex; i < months.length - 1; ++i) {
-      setTimeout(function () {
-        updateMonth(months[i + 1]);
-        if (i + 1 === months.length - 1) {
-        }
-      }, (i - startIndex) * updateFrequency);
-    }
-
-    // @ts-ignore
-    function updateMonth(month: string | null) {
-      const rich = {};
-      // @ts-ignore
-      data[month].forEach((item: any[]) => {
-        // rich name cannot contain special characters such as '-'
-        // @ts-ignore
-        rich[`avatar${item[0].replaceAll('-', '')}`] = {
-          backgroundColor: {
-            image: `https://avatars.githubusercontent.com/${item[0]}?s=48&v=4`,
-          },
-          height: 20,
-        };
-      });
-      // @ts-ignore
-      option.yAxis.axisLabel.rich = rich;
-      // @ts-ignore
-      option.series[0].data = data[month];
-      // @ts-ignore
-      option.graphic.elements[0].style.text = month;
-      // @ts-ignore
-      if (!instance.isDisposed()) {
-        instance.setOption(option);
+      // clear timer if user replay the chart before it finishes
+      if (timer) {
+        clearTimeout(timer);
       }
-    }
-  }, [replay]);
+    };
+  }, []);
 
   return (
     <div className="hypertrons-crx-border">

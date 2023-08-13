@@ -49,10 +49,10 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
           <div className="col-12 col-md-8">
             <div style={{ margin: '10px 0 20px 20px' }}>
               <RacingBar
+                key={replay}
                 repoName={currentRepo}
                 height={300}
                 data={repoActivityDetails}
-                replay={replay}
               />
             </div>
           </div>
