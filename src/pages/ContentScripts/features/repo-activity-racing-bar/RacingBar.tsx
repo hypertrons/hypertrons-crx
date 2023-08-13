@@ -115,13 +115,11 @@ const RacingBar = (props: RacingBarProps): JSX.Element => {
     let startIndex = 0;
 
     for (let i = startIndex; i < months.length - 1; ++i) {
-      (function (i) {
-        setTimeout(function () {
-          updateMonth(months[i + 1]);
-          if (i + 1 === months.length - 1) {
-          }
-        }, (i - startIndex) * updateFrequency);
-      })(i);
+      setTimeout(function () {
+        updateMonth(months[i + 1]);
+        if (i + 1 === months.length - 1) {
+        }
+      }, (i - startIndex) * updateFrequency);
     }
 
     // @ts-ignore
