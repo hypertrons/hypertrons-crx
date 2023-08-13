@@ -15,6 +15,7 @@ import {
   getIssueComments,
 } from '../../../../api/repo';
 import View, { IssueDetail } from './view';
+import { RepoMeta, metaStore } from '../../../../api/common';
 
 const githubTheme = getGithubTheme();
 const featureId = features.getFeatureID(import.meta.url);
@@ -24,15 +25,20 @@ let issueDetail: IssueDetail = {
   issuesClosed: null,
   issueComments: null,
 };
+let meta: RepoMeta;
 
 const getData = async () => {
   issueDetail.issuesOpened = await getIssuesOpened(repoName);
   issueDetail.issuesClosed = await getIssuesClosed(repoName);
   issueDetail.issueComments = await getIssueComments(repoName);
+  meta = (await metaStore.get(repoName)) as RepoMeta;
 };
 
 const renderTo = (container: Container) => {
-  render(<View currentRepo={repoName} issueDetail={issueDetail} />, container);
+  render(
+    <View currentRepo={repoName} issueDetail={issueDetail} meta={meta} />,
+    container
+  );
 };
 
 const init = async (): Promise<void> => {

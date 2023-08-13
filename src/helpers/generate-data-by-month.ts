@@ -1,4 +1,11 @@
-const generateDataByMonth = (originalData: any) => {
+/**
+ * Months with value of 0 are not listed in data file for size optimization
+ * purpose, this function inserts those missing zeros.
+ * @param originalData
+ * @param updatedAt meta file last updated time
+ * @returns
+ */
+const generateDataByMonth = (originalData: any, updatedAt?: number) => {
   if (originalData === null) {
     return [];
   }
@@ -19,15 +26,16 @@ const generateDataByMonth = (originalData: any) => {
     else if (dateA > dateB) return 1;
     else return 0;
   });
+
+  // get the last month that has data
+  const lastDataAvailableMonth = updatedAt ? new Date(updatedAt) : new Date();
+  lastDataAvailableMonth.setDate(0);
+
   const oldestMonth = orderedMonths[0];
-  const now = new Date();
-  if (now.getDate() === 1) {
-    // data for last month is not ready in the first day of the month (#595)
-    now.setDate(0); // a way to let month - 1
-  }
-  now.setDate(0); // see issue #632
   const newestMonth =
-    now.getFullYear() + '-' + (now.getMonth() + 1).toString().padStart(2, '0');
+    lastDataAvailableMonth.getFullYear() +
+    '-' +
+    (lastDataAvailableMonth.getMonth() + 1).toString().padStart(2, '0');
   // insert no-event months (assigned to 0) and generate final data
   const arrayData: [string, number][] = [];
   const start = new Date(oldestMonth);

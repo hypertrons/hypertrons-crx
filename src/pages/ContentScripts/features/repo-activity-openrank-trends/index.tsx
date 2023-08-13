@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, Container } from 'react-dom';
 import $ from 'jquery';
-import * as pageDetect from 'github-url-detection';
 
 import features from '../../../../feature-manager';
 import {
@@ -9,21 +8,29 @@ import {
   isPublicRepoWithMeta,
 } from '../../../../helpers/get-repo-info';
 import { getActivity, getOpenrank } from '../../../../api/repo';
+import { RepoMeta, metaStore } from '../../../../api/common';
 import View from './view';
 
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
 let activity: any;
 let openrank: any;
+let meta: RepoMeta;
 
 const getData = async () => {
   activity = await getActivity(repoName);
   openrank = await getOpenrank(repoName);
+  meta = (await metaStore.get(repoName)) as RepoMeta;
 };
 
 const renderTo = (container: Container) => {
   render(
-    <View repoName={repoName} activity={activity} openrank={openrank} />,
+    <View
+      repoName={repoName}
+      activity={activity}
+      openrank={openrank}
+      meta={meta}
+    />,
     container
   );
 };

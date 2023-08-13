@@ -17,6 +17,7 @@ import {
   getMergedCodeDeletion,
 } from '../../../../api/repo';
 import View, { PRDetail } from './view';
+import { RepoMeta, metaStore } from '../../../../api/common';
 
 const githubTheme = getGithubTheme();
 const featureId = features.getFeatureID(import.meta.url);
@@ -28,6 +29,7 @@ let PRDetail: PRDetail = {
   mergedCodeAddition: null,
   mergedCodeDeletion: null,
 };
+let meta: RepoMeta;
 
 const getData = async () => {
   PRDetail.PROpened = await getPROpened(repoName);
@@ -35,10 +37,14 @@ const getData = async () => {
   PRDetail.PRReviews = await getPRReviews(repoName);
   PRDetail.mergedCodeAddition = await getMergedCodeAddition(repoName);
   PRDetail.mergedCodeDeletion = await getMergedCodeDeletion(repoName);
+  meta = (await metaStore.get(repoName)) as RepoMeta;
 };
 
 const renderTo = (container: Container) => {
-  render(<View currentRepo={repoName} PRDetail={PRDetail} />, container);
+  render(
+    <View currentRepo={repoName} PRDetail={PRDetail} meta={meta} />,
+    container
+  );
 };
 
 const init = async (): Promise<void> => {

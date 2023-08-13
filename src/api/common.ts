@@ -29,15 +29,15 @@ export const getMetricByName = async (
  * e.g. https://oss.x-lab.info/open_digger/github/tyn1998/meta.json (user meta file)
  * @param name repo name or user name
  */
-interface CommonMeta {
+export interface CommonMeta {
   type: 'user' | 'repo';
   updatedAt: number; // time stamp
   labels: unknown[]; // TODO: define the type
 }
 
-interface RepoMeta extends CommonMeta {}
+export interface RepoMeta extends CommonMeta {}
 
-interface UserMeta extends CommonMeta {
+export interface UserMeta extends CommonMeta {
   repos: unknown[];
 }
 
@@ -91,7 +91,9 @@ class MetaStore {
     if (await this.has(name)) {
       const meta: CommonMeta = await this.responseCache
         .get(name)!
-        .then((res) => res.json());
+        // clone the response to avoid the response being used up
+        // https://stackoverflow.com/a/54115314/10369621
+        .then((res) => res.clone().json());
       return meta;
     }
   }

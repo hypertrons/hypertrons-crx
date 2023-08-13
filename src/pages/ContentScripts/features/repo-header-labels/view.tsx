@@ -14,6 +14,7 @@ import generateDataByMonth from '../../../../helpers/generate-data-by-month';
 import ActivityChart from './ActivityChart';
 import OpenRankChart from './OpenRankChart';
 import ParticipantChart from './ParticipantChart';
+import { RepoMeta } from '../../../../api/common';
 
 const githubTheme = getGithubTheme();
 
@@ -21,12 +22,14 @@ interface Props {
   activity: any;
   openrank: any;
   participant: any;
+  meta: RepoMeta;
 }
 
 const View = ({
   activity,
   openrank,
   participant,
+  meta,
 }: Props): JSX.Element | null => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
 
@@ -42,9 +45,9 @@ const View = ({
 
   if (isNull(activity) || isNull(openrank) || isNull(participant)) return null;
 
-  const activityData = generateDataByMonth(activity);
-  const openrankData = generateDataByMonth(openrank);
-  const participantData = generateDataByMonth(participant);
+  const activityData = generateDataByMonth(activity, meta.updatedAt);
+  const openrankData = generateDataByMonth(openrank, meta.updatedAt);
+  const participantData = generateDataByMonth(participant, meta.updatedAt);
 
   return (
     <div className="d-flex">

@@ -9,6 +9,7 @@ import {
   isPublicRepoWithMeta,
 } from '../../../../helpers/get-repo-info';
 import { getActivity, getOpenrank, getParticipant } from '../../../../api/repo';
+import { RepoMeta, metaStore } from '../../../../api/common';
 import View from './view';
 
 const featureId = features.getFeatureID(import.meta.url);
@@ -16,16 +17,23 @@ let repoName: string;
 let activity: any;
 let openrank: any;
 let participant: any;
+let meta: RepoMeta;
 
 const getData = async () => {
   activity = await getActivity(repoName);
   openrank = await getOpenrank(repoName);
   participant = await getParticipant(repoName);
+  meta = (await metaStore.get(repoName)) as RepoMeta;
 };
 
 const renderTo = (container: Container) => {
   render(
-    <View activity={activity} openrank={openrank} participant={participant} />,
+    <View
+      activity={activity}
+      openrank={openrank}
+      participant={participant}
+      meta={meta}
+    />,
     container
   );
 };
