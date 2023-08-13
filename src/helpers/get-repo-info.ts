@@ -1,4 +1,4 @@
-import { hasMeta } from '../api/common';
+import { metaStore } from '../api/common';
 
 import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
@@ -23,5 +23,5 @@ export async function isPublicRepo() {
 }
 
 export async function isPublicRepoWithMeta() {
-  return (await isPublicRepo()) && (await hasMeta(getRepoName()));
+  return (await isPublicRepo()) && (await metaStore.has(getRepoName()));
 }

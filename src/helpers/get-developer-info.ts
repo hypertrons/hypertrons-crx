@@ -1,4 +1,4 @@
-import { hasMeta } from '../api/common';
+import { metaStore } from '../api/common';
 
 import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
@@ -8,5 +8,7 @@ export function getDeveloperName() {
 }
 
 export async function isDeveloperWithMeta() {
-  return pageDetect.isUserProfile() && (await hasMeta(getDeveloperName()));
+  return (
+    pageDetect.isUserProfile() && (await metaStore.has(getDeveloperName()))
+  );
 }
