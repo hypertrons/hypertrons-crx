@@ -8,18 +8,24 @@ export function getRepoName() {
   return pageDetect.utils.getRepositoryInfo(window.location)!.nameWithOwner;
 }
 
-// check if the repository is public
+export function hasRepoContainerHeader() {
+  const headerElement = $('#repository-container-header');
+  return headerElement && !headerElement.attr('hidden');
+}
+
+export async function isRepoRoot() {
+  return pageDetect.isRepoRoot();
+}
+
+/**
+ * check if the repository is public
+ */
 export async function isPublicRepo() {
-  // another selector that also works
-  // const repoLabel = $('strong[itemprop="name"]').siblings('span.Label.Label--secondary').text();
-  await elementReady('#repository-container-header');
-  const repoLabel = $('#repository-container-header')
-    .find('span.Label.Label--secondary:first')
-    .text();
-  return (
-    pageDetect.isRepo() &&
-    (repoLabel === 'Public' || repoLabel === 'Public template')
-  );
+  const selector = 'meta[name="octolytics-dimension-repository_public"]';
+  await elementReady(selector);
+  // <meta name="octolytics-dimension-repository_public" content="true/false">
+  const isPublic = $(selector).attr('content') === 'true';
+  return pageDetect.isRepo() && isPublic;
 }
 
 export async function isPublicRepoWithMeta() {

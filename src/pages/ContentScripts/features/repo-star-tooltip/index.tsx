@@ -7,6 +7,7 @@ import features from '../../../../feature-manager';
 import getGithubTheme from '../../../../helpers/get-github-theme';
 import {
   getRepoName,
+  hasRepoContainerHeader,
   isPublicRepoWithMeta,
 } from '../../../../helpers/get-repo-info';
 import { getStars } from '../../../../api/repo';
@@ -67,7 +68,7 @@ const restore = async () => {
 };
 
 features.add(featureId, {
-  asLongAs: [isPublicRepoWithMeta],
+  asLongAs: [isPublicRepoWithMeta, hasRepoContainerHeader],
   awaitDomReady: false,
   init,
   restore,

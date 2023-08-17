@@ -6,6 +6,7 @@ import features from '../../../../feature-manager';
 import {
   getRepoName,
   isPublicRepoWithMeta,
+  isRepoRoot,
 } from '../../../../helpers/get-repo-info';
 import { getActivity, getOpenrank } from '../../../../api/repo';
 import { RepoMeta, metaStore } from '../../../../api/common';
@@ -65,7 +66,7 @@ const restore = async () => {
 };
 
 features.add(featureId, {
-  asLongAs: [isPublicRepoWithMeta],
+  asLongAs: [isPublicRepoWithMeta, isRepoRoot],
   awaitDomReady: true,
   init,
   restore,

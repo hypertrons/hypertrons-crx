@@ -29,7 +29,7 @@
     "dom-loaded": "^3.0.0",
     "echarts": "^5.3.0",
     "element-ready": "^6.2.1",
-    "github-url-detection": "^6.1.0",
+    "github-url-detection": "^8.1.0",
     "jquery": "^3.6.0",
     "lodash-es": "^4.17.21",
     "office-ui-fabric-react": "^7.183.0",

@@ -61,7 +61,7 @@ const init = async (): Promise<void> => {
   const container = document.createElement('div');
   container.id = featureId;
   renderTo(container);
-  (await elementReady('#repository-container-header'))?.append(container);
+  (await elementReady('nav.js-repo-nav'))?.append(container);
 };
 
 const restore = async () => {

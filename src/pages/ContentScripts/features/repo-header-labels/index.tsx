@@ -6,6 +6,7 @@ import $ from 'jquery';
 import features from '../../../../feature-manager';
 import {
   getRepoName,
+  hasRepoContainerHeader,
   isPublicRepoWithMeta,
 } from '../../../../helpers/get-repo-info';
 import { getActivity, getOpenrank, getParticipant } from '../../../../api/repo';
@@ -65,7 +66,7 @@ const restore = async () => {
 };
 
 features.add(featureId, {
-  asLongAs: [isPublicRepoWithMeta],
+  asLongAs: [isPublicRepoWithMeta, hasRepoContainerHeader],
   awaitDomReady: false,
   init,
   restore,
