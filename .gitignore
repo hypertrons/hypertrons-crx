@@ -18,6 +18,7 @@
 .env.production.local
 .history
 .vscode
+.idea
 package-lock.json
 
 # secrets
