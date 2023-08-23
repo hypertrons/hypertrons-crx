@@ -1,6 +1,6 @@
 {
   "name": "hypercrx",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "type": "module",
   "private": true,
   "description": "Hypertrons Chromium Extension",
