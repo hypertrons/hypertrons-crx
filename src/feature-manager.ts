@@ -125,7 +125,7 @@ const getFeatureID = (url: string): FeatureId => {
 /** Register a new feature */
 const add = async (
   id: FeatureId,
-  ...loaders: FeatureLoader[]
+  ...loaders: FeatureLoader[] // support multiple loaders for one feature, but currently only one is used
 ): Promise<void> => {
   /* Feature filtering and running */
   const options = await globalReady;

@@ -1,25 +1,33 @@
 import React from 'react';
 import { render, Container } from 'react-dom';
 import $ from 'jquery';
-import * as pageDetect from 'github-url-detection';
 
 import features from '../../../../feature-manager';
-import { getDeveloperName } from '../../../../helpers/get-developer-info';
+import {
+  getDeveloperName,
+  isDeveloperWithMeta,
+} from '../../../../helpers/get-developer-info';
 import { getActivity, getOpenrank } from '../../../../api/developer';
+import { UserMeta, metaStore } from '../../../../api/common';
 import View from './view';
 
 const featureId = features.getFeatureID(import.meta.url);
 let developerName: string;
 let activity: any;
 let openrank: any;
+let meta: UserMeta;
 
 const getData = async () => {
   activity = await getActivity(developerName);
   openrank = await getOpenrank(developerName);
+  meta = (await metaStore.get(developerName)) as UserMeta;
 };
 
 const renderTo = (container: Container) => {
-  render(<View activity={activity} openrank={openrank} />, container);
+  render(
+    <View activity={activity} openrank={openrank} meta={meta} />,
+    container
+  );
 };
 
 const init = async (): Promise<void> => {
@@ -45,10 +53,9 @@ const restore = async () => {
   }
   renderTo($(`#${featureId}`)[0]);
 };
-
 features.add(featureId, {
-  include: [pageDetect.isUserProfile],
-  awaitDomReady: true,
+  asLongAs: [isDeveloperWithMeta],
+  awaitDomReady: false,
   init,
   restore,
 });

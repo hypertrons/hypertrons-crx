@@ -3204,10 +3204,10 @@ get-stream@^6.0.0, get-stream@^6.0.1:
   resolved "https://registry.npmjs.org/get-stream/-/get-stream-6.0.1.tgz#a262d8eef67aced57c2852ad6167526a43cbf7b7"
   integrity sha512-ts6Wi+2j3jQjqi70w5AlN8DFnkSwC+MqmxEzdEALB2qXZYV3X/b1CTfgPLGJNMeAWxdPfU8FO1ms3NUfaHCPYg==
 
-github-url-detection@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.npmjs.org/github-url-detection/-/github-url-detection-6.1.0.tgz#b5a478fa7cb36f673d3da52cd5b3075fb3a43b3a"
-  integrity sha512-Z2z3WmR38cbHegKHN3jiyo2wDBEPRlEn/8HHK05iidiHtNF8KltmjKiaNzB3QdGU+OxF2QhgwT1q4rLT15Z08w==
+github-url-detection@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.npmjs.org/github-url-detection/-/github-url-detection-8.1.0.tgz#f415564f39c8b92ca2e823c22d1386bd0ac3fdf8"
+  integrity sha512-GvKgbLdIP6++wzBMCeJFJhoysFoUunE52m2B1K3ltfVfL3LO4TGQ/lv4utWoVCmVP85dVk+ZWkYA7IB3+fPt7A==
 
 glob-parent@^5.1.1, glob-parent@^5.1.2, glob-parent@~5.1.2:
   version "5.1.2"

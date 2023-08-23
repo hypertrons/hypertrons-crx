@@ -11,6 +11,7 @@ import generateDataByMonth from '../../../../helpers/generate-data-by-month';
 import ReactTooltip from 'react-tooltip';
 import PRChart from './PRChart';
 import MergedLinesChart from './MergedLinesChart';
+import { RepoMeta } from '../../../../api/common';
 
 const githubTheme = getGithubTheme();
 
@@ -25,30 +26,38 @@ export interface PRDetail {
 interface Props {
   currentRepo: string;
   PRDetail: PRDetail;
+  meta: RepoMeta;
 }
 
-const generatePRChartData = (PRDetail: PRDetail): any => {
+const generatePRChartData = (PRDetail: PRDetail, updatedAt: number): any => {
   return {
-    PROpened: generateDataByMonth(PRDetail.PROpened),
-    PRMerged: generateDataByMonth(PRDetail.PRMerged),
-    PRReviews: generateDataByMonth(PRDetail.PRReviews),
+    PROpened: generateDataByMonth(PRDetail.PROpened, updatedAt),
+    PRMerged: generateDataByMonth(PRDetail.PRMerged, updatedAt),
+    PRReviews: generateDataByMonth(PRDetail.PRReviews, updatedAt),
   };
 };
 
-const generateMergedLinesChartData = (PRDetail: PRDetail): any => {
+const generateMergedLinesChartData = (
+  PRDetail: PRDetail,
+  updatedAt: number
+): any => {
   return {
-    mergedCodeAddition: generateDataByMonth(PRDetail.mergedCodeAddition),
-    mergedCodeDeletion: generateDataByMonth(PRDetail.mergedCodeDeletion).map(
-      (item) => {
-        const dataItem = item;
-        dataItem[1] = -item[1];
-        return dataItem;
-      }
+    mergedCodeAddition: generateDataByMonth(
+      PRDetail.mergedCodeAddition,
+      updatedAt
     ),
+    mergedCodeDeletion: generateDataByMonth(
+      PRDetail.mergedCodeDeletion,
+      updatedAt
+    ).map((item) => {
+      const dataItem = item;
+      dataItem[1] = -item[1];
+      return dataItem;
+    }),
   };
 };
 
-const View = ({ currentRepo, PRDetail }: Props): JSX.Element | null => {
+const View = ({ currentRepo, PRDetail, meta }: Props): JSX.Element | null => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
 
   useEffect(() => {
@@ -87,7 +96,7 @@ const View = ({ currentRepo, PRDetail }: Props): JSX.Element | null => {
         theme={githubTheme as 'light' | 'dark'}
         width={330}
         height={200}
-        data={generatePRChartData(PRDetail)}
+        data={generatePRChartData(PRDetail, meta.updatedAt)}
         onClick={onClick}
       />
       <div className="chart-title">
@@ -97,7 +106,7 @@ const View = ({ currentRepo, PRDetail }: Props): JSX.Element | null => {
         theme={githubTheme as 'light' | 'dark'}
         width={330}
         height={200}
-        data={generateMergedLinesChartData(PRDetail)}
+        data={generateMergedLinesChartData(PRDetail, meta.updatedAt)}
       />
     </ReactTooltip>
   );
