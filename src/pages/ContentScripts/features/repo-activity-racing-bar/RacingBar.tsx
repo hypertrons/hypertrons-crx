@@ -16,7 +16,7 @@ const option: EChartsOption = {
   grid: {
     top: 10,
     bottom: 30,
-    left: 150,
+    left: 160,
     right: 50,
   },
   xAxis: {
