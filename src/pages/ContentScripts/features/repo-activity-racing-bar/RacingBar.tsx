@@ -89,6 +89,8 @@ const updateMonth = async (
   const rich: any = {};
   const barData: BarSeriesOption['data'] = await Promise.all(
     data[month].map(async (item) => {
+      const img = new Image();
+      img.src = `https://avatars.githubusercontent.com/${item[0]}?s=24&v=4`;
       // rich name cannot contain special characters such as '-'
       rich[`avatar${item[0].replaceAll('-', '')}`] = {
         backgroundColor: {
@@ -100,7 +102,11 @@ const updateMonth = async (
       return {
         value: item,
         itemStyle: {
-          color: barColor,
+          // color: barColor,
+          color: {
+            image: img,
+            repeat: 'repeat',
+          },
         },
       };
     })
