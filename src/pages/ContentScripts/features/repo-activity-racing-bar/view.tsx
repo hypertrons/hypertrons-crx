@@ -6,10 +6,11 @@ import optionsStorage, {
   defaults,
 } from '../../../../options-storage';
 import RacingBar from './RacingBar';
+import { RepoActivityDetails } from '.';
 
 interface Props {
   currentRepo: string;
-  repoActivityDetails: any;
+  repoActivityDetails: RepoActivityDetails;
 }
 
 const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {

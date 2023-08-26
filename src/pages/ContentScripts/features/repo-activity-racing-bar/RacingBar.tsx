@@ -1,14 +1,14 @@
+import { RepoActivityDetails } from '.';
+import { avatarColorStore } from './AvatarColorStore';
+
 import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
-import type { EChartsOption, EChartsType } from 'echarts';
+import type { EChartsOption, EChartsType, BarSeriesOption } from 'echarts';
 
 interface RacingBarProps {
   repoName: string;
-  data: any;
+  data: RepoActivityDetails;
 }
-
-// TODO generate color from user avatar
-const colorMap = new Map();
 
 const updateFrequency = 3000;
 
@@ -45,19 +45,6 @@ const option: EChartsOption = {
       realtimeSort: true,
       seriesLayoutBy: 'column',
       type: 'bar',
-      itemStyle: {
-        color: function (params: any) {
-          const githubId = params.value[0];
-          if (colorMap.has(githubId)) {
-            return colorMap.get(githubId);
-          } else {
-            const randomColor =
-              '#' + Math.floor(Math.random() * 16777215).toString(16);
-            colorMap.set(githubId, randomColor);
-            return randomColor;
-          }
-        },
-      },
       data: undefined,
       encode: {
         x: 1,
@@ -94,21 +81,34 @@ const option: EChartsOption = {
   },
 };
 
-const updateMonth = (instance: EChartsType, data: any, month: string) => {
+const updateMonth = async (
+  instance: EChartsType,
+  data: RepoActivityDetails,
+  month: string
+) => {
   const rich: any = {};
-  data[month].forEach((item: any[]) => {
-    // rich name cannot contain special characters such as '-'
-    rich[`avatar${item[0].replaceAll('-', '')}`] = {
-      backgroundColor: {
-        image: `https://avatars.githubusercontent.com/${item[0]}?s=48&v=4`,
-      },
-      height: 20,
-    };
-  });
+  const barData: BarSeriesOption['data'] = await Promise.all(
+    data[month].map(async (item) => {
+      // rich name cannot contain special characters such as '-'
+      rich[`avatar${item[0].replaceAll('-', '')}`] = {
+        backgroundColor: {
+          image: `https://avatars.githubusercontent.com/${item[0]}?s=48&v=4`,
+        },
+        height: 20,
+      };
+      const barColor = await avatarColorStore.getColor(item[0]);
+      return {
+        value: item,
+        itemStyle: {
+          color: barColor,
+        },
+      };
+    })
+  );
   // @ts-ignore
   option.yAxis.axisLabel.rich = rich;
   // @ts-ignore
-  option.series[0].data = data[month];
+  option.series[0].data = barData;
   // @ts-ignore
   option.graphic.elements[0].style.text = month;
 
@@ -122,12 +122,12 @@ const updateMonth = (instance: EChartsType, data: any, month: string) => {
 
 let timer: NodeJS.Timeout;
 
-const play = (instance: EChartsType, data: any) => {
+const play = (instance: EChartsType, data: RepoActivityDetails) => {
   const months = Object.keys(data);
   let i = 0;
 
-  const playNext = () => {
-    updateMonth(instance, data, months[i]);
+  const playNext = async () => {
+    await updateMonth(instance, data, months[i]);
     i++;
     if (i < months.length) {
       timer = setTimeout(playNext, updateFrequency);
@@ -140,10 +140,10 @@ const play = (instance: EChartsType, data: any) => {
 /**
  * Count the number of unique contributors in the data
  */
-const countLongTermContributors = (data: any) => {
+const countLongTermContributors = (data: RepoActivityDetails) => {
   const contributors = new Map<string, number>();
   Object.keys(data).forEach((month) => {
-    data[month].forEach((item: any[]) => {
+    data[month].forEach((item) => {
       if (contributors.has(item[0])) {
         contributors.set(item[0], contributors.get(item[0])! + 1);
       } else {
