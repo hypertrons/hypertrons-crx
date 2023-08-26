@@ -89,8 +89,6 @@ const updateMonth = async (
   const rich: any = {};
   const barData: BarSeriesOption['data'] = await Promise.all(
     data[month].map(async (item) => {
-      const img = new Image();
-      img.src = `https://avatars.githubusercontent.com/${item[0]}?s=24&v=4`;
       // rich name cannot contain special characters such as '-'
       rich[`avatar${item[0].replaceAll('-', '')}`] = {
         backgroundColor: {
@@ -98,14 +96,27 @@ const updateMonth = async (
         },
         height: 20,
       };
-      const barColor = await avatarColorStore.getColor(item[0]);
+      const avatarColors = await avatarColorStore.getColors(item[0]);
       return {
         value: item,
         itemStyle: {
-          // color: barColor,
           color: {
-            image: img,
-            repeat: 'repeat',
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 1,
+            y2: 0,
+            colorStops: [
+              {
+                offset: 0,
+                color: avatarColors[0],
+              },
+              {
+                offset: 0.2,
+                color: avatarColors[1],
+              },
+            ],
+            global: false,
           },
         },
       };
