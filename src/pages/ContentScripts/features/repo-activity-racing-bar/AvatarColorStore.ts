@@ -26,7 +26,7 @@ class AvatarColorStore {
       img.crossOrigin = 'anonymous';
       img.onload = () => resolve(img);
       img.onerror = reject;
-      img.src = `https://avatars.githubusercontent.com/${loginId}?s=48&v=4`;
+      img.src = `https://avatars.githubusercontent.com/${loginId}?s=8&v=4`;
     });
   }
 
