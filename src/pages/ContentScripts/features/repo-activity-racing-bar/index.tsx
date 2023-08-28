@@ -8,31 +8,26 @@ import {
   getRepoName,
   isPublicRepoWithMeta,
 } from '../../../../helpers/get-repo-info';
-import { getRepoNetwork, getDeveloperNetwork } from '../../../../api/repo';
+import { getActivityDetails } from '../../../../api/repo';
 import View from './view';
-import DataNotFound from './DataNotFound';
+import DataNotFound from '../repo-networks/DataNotFound';
+import * as pageDetect from 'github-url-detection';
 
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
-let repoNetworks: any;
-let developerNetworks: any;
+let repoActivityDetails: any;
 
 const getData = async () => {
-  repoNetworks = await getRepoNetwork(repoName);
-  developerNetworks = await getDeveloperNetwork(repoName);
+  repoActivityDetails = await getActivityDetails(repoName);
 };
 
 const renderTo = (container: Container) => {
-  if (!repoNetworks || !developerNetworks) {
+  if (!repoActivityDetails) {
     render(<DataNotFound />, container);
     return;
   }
   render(
-    <View
-      currentRepo={repoName}
-      repoNetwork={repoNetworks}
-      developerNetwork={developerNetworks}
-    />,
+    <View currentRepo={repoName} repoActivityDetails={repoActivityDetails} />,
     container
   );
 };
@@ -43,7 +38,10 @@ const init = async (): Promise<void> => {
   const container = document.createElement('div');
   container.id = featureId;
   renderTo(container);
-  $('#hypercrx-perceptor-layout').append(container);
+  const parentElement = document.getElementById('hypercrx-perceptor-layout');
+  if (parentElement) {
+    parentElement.append(container);
+  }
 };
 
 const restore = async () => {
@@ -51,7 +49,6 @@ const restore = async () => {
   // so in a restoration visit we should be careful of the current repo.
   if (repoName !== getRepoName()) {
     repoName = getRepoName();
-    await getData();
   }
   // rerender the chart or it will be empty
   renderTo($(`#${featureId}`)[0]);

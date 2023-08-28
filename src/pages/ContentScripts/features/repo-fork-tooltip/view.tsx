@@ -9,14 +9,16 @@ import optionsStorage, {
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
 import ReactTooltip from 'react-tooltip';
 import ForkChart from './ForkChart';
+import { RepoMeta } from '../../../../api/common';
 
 const githubTheme = getGithubTheme();
 
 interface Props {
   forks: any;
+  meta: RepoMeta;
 }
 
-const View = ({ forks }: Props): JSX.Element | null => {
+const View = ({ forks, meta }: Props): JSX.Element | null => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
 
   useEffect(() => {
@@ -36,7 +38,7 @@ const View = ({ forks }: Props): JSX.Element | null => {
         theme={githubTheme as 'light' | 'dark'}
         width={270}
         height={130}
-        data={generateDataByMonth(forks)}
+        data={generateDataByMonth(forks, meta.updatedAt)}
       />
     </ReactTooltip>
   );

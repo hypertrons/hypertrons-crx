@@ -10,6 +10,7 @@ import optionsStorage, {
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
 import ReactTooltip from 'react-tooltip';
 import IssueChart from './IssueChart';
+import { RepoMeta } from '../../../../api/common';
 
 const githubTheme = getGithubTheme();
 
@@ -22,17 +23,22 @@ export interface IssueDetail {
 interface Props {
   currentRepo: string;
   issueDetail: IssueDetail;
+  meta: RepoMeta;
 }
 
-const generateData = (issueDetail: IssueDetail): any => {
+const generateData = (issueDetail: IssueDetail, updatedAt: number): any => {
   return {
-    issuesOpened: generateDataByMonth(issueDetail.issuesOpened),
-    issuesClosed: generateDataByMonth(issueDetail.issuesClosed),
-    issueComments: generateDataByMonth(issueDetail.issueComments),
+    issuesOpened: generateDataByMonth(issueDetail.issuesOpened, updatedAt),
+    issuesClosed: generateDataByMonth(issueDetail.issuesClosed, updatedAt),
+    issueComments: generateDataByMonth(issueDetail.issueComments, updatedAt),
   };
 };
 
-const View = ({ currentRepo, issueDetail }: Props): JSX.Element | null => {
+const View = ({
+  currentRepo,
+  issueDetail,
+  meta,
+}: Props): JSX.Element | null => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
 
   useEffect(() => {
@@ -71,7 +77,7 @@ const View = ({ currentRepo, issueDetail }: Props): JSX.Element | null => {
         theme={githubTheme as 'light' | 'dark'}
         width={300}
         height={200}
-        data={generateData(issueDetail)}
+        data={generateData(issueDetail, meta.updatedAt)}
         onClick={onClick}
       />
     </ReactTooltip>

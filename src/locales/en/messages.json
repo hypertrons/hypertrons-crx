@@ -149,8 +149,17 @@
   "component_developerActORTrend_yName2": {
     "message": "OpenRank"
   },
+  "component_projectRacingBar_title": {
+    "message": "Contributor Activity Racing Bar"
+  },
   "component_projectCorrelationNetwork_title": {
     "message": "Project Correlation Network"
+  },
+  "component_projectRacingBar_ReplayButton": {
+    "message": "Replay"
+  },
+  "component_projectRacingBar_description": {
+    "message": "This chart shows how the activity values of contributors in this repository evolve."
   },
   "component_projectCorrelationNetwork_description": {
     "message": "Project Correlation Network shows the correlation between projects for a given time period. From this graph you can find the projects that are related to the given project."

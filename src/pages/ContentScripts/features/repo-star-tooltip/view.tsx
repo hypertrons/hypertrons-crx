@@ -9,14 +9,16 @@ import optionsStorage, {
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
 import ReactTooltip from 'react-tooltip';
 import StarChart from './StarChart';
+import { RepoMeta } from '../../../../api/common';
 
 const githubTheme = getGithubTheme();
 
 interface Props {
   stars: any;
+  meta: RepoMeta;
 }
 
-const View = ({ stars: stars }: Props): JSX.Element | null => {
+const View = ({ stars, meta }: Props): JSX.Element | null => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
 
   useEffect(() => {
@@ -36,7 +38,7 @@ const View = ({ stars: stars }: Props): JSX.Element | null => {
         theme={githubTheme as 'light' | 'dark'}
         width={270}
         height={130}
-        data={generateDataByMonth(stars)}
+        data={generateDataByMonth(stars, meta.updatedAt)}
       />
     </ReactTooltip>
   );

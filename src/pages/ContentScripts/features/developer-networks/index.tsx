@@ -5,7 +5,10 @@ import * as pageDetect from 'github-url-detection';
 import elementReady from 'element-ready';
 
 import features from '../../../../feature-manager';
-import { getDeveloperName } from '../../../../helpers/get-developer-info';
+import {
+  getDeveloperName,
+  isDeveloperWithMeta,
+} from '../../../../helpers/get-developer-info';
 import { getDeveloperNetwork, getRepoNetwork } from '../../../../api/developer';
 import View from './view';
 
@@ -58,7 +61,7 @@ const restore = async () => {
 };
 
 features.add(featureId, {
-  asLongAs: [pageDetect.isUserProfile],
+  asLongAs: [isDeveloperWithMeta],
   awaitDomReady: false,
   init,
   restore,

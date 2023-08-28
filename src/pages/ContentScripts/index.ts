@@ -12,3 +12,5 @@ import './features/perceptor-layout';
 import './features/repo-networks';
 import './features/developer-networks';
 import './features/oss-gpt';
+import './features/repo-activity-racing-bar';
+import './features/charts-design';
