@@ -7,6 +7,10 @@ import optionsStorage, {
 } from '../../../../options-storage';
 import { Modal, Row, Col } from 'antd';
 import Bars from '../../../../components/Bars';
+import BarChart from '../../../Options/variable-charts/BarChart';
+import LineChart from '../../../Options/variable-charts/LineChart';
+import PieChart from '../../../Options/variable-charts/PieChart';
+import StackedBarChart from '../../../Options/variable-charts/StackedBarChart';
 
 const githubTheme = getGithubTheme();
 
@@ -55,6 +59,12 @@ const mockData = {
   },
 };
 
+const RepoName = [
+  'X-lab2017/open-digger',
+  'hypertrons/hypertrons-crx',
+  'X-lab2017/oss101',
+];
+
 const View = ({}: Props): JSX.Element | null => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -96,32 +106,32 @@ const View = ({}: Props): JSX.Element | null => {
       >
         <Row>
           <Col span={12}>
-            <h2 style={{ padding: 20 }}>Bar Chart Light Theme</h2>
+            <h2 style={{ padding: 20 }}>Bar Chart</h2>
             <div style={{ background: LIGHT_THEME.BG_COLOR }}>
-              <Bars
-                theme={'light'}
-                height={350}
-                legend1={mockData.bar.legend1}
-                legend2={mockData.bar.legend2}
-                yName1={mockData.bar.yName1}
-                yName2={mockData.bar.yName2}
-                data1={mockData.bar.data1}
-                data2={mockData.bar.data2}
-              />
+              <LineChart RepoName={RepoName} height={300} theme={'light'} />
             </div>
           </Col>
           <Col span={12}>
-            <h2 style={{ padding: 20 }}>Bar Chart Dark Theme</h2>
-            <div style={{ backgroundColor: DARK_THEME.BG_COLOR }}>
-              <Bars
-                theme={'dark'}
-                height={350}
-                legend1={mockData.bar.legend1}
-                legend2={mockData.bar.legend2}
-                yName1={mockData.bar.yName1}
-                yName2={mockData.bar.yName2}
-                data1={mockData.bar.data1}
-                data2={mockData.bar.data2}
+            <h2 style={{ padding: 20 }}>Bar Chart</h2>
+            <div style={{ backgroundColor: LIGHT_THEME.BG_COLOR }}>
+              <BarChart RepoName={RepoName} height={300} theme={'light'} />
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={12}>
+            <h2 style={{ padding: 20 }}>Bar Chart</h2>
+            <div style={{ background: LIGHT_THEME.BG_COLOR }}>
+              <PieChart RepoName={RepoName} height={300} theme={'light'} />
+            </div>
+          </Col>
+          <Col span={12}>
+            <h2 style={{ padding: 20 }}>Bar Chart</h2>
+            <div style={{ backgroundColor: LIGHT_THEME.BG_COLOR }}>
+              <StackedBarChart
+                RepoName={RepoName}
+                height={300}
+                theme={'light'}
               />
             </div>
           </Col>

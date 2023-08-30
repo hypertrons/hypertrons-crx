@@ -19,64 +19,50 @@ const DARK_THEME = {
   PALLET: ['#58a6ff', '#3fb950'],
 };
 
-interface LineChartProps {
+interface PieChartProps {
   theme: 'light' | 'dark';
   height: number;
   RepoName: string[];
 }
 
-const LineChart = (props: LineChartProps): JSX.Element => {
+const PieChart = (props: PieChartProps): JSX.Element => {
   const { theme, height, RepoName } = props;
-
   const divEL = useRef(null);
   const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;
   const [data, setData] = useState<{ [repo: string]: RawRepoData }>({});
+
   const option: echarts.EChartsOption = {
     tooltip: {
-      trigger: 'axis',
+      trigger: 'item',
     },
     legend: {
       type: 'scroll',
     },
-    grid: {
-      left: '5%',
-      right: '4%',
-      bottom: '3%',
-      containLabel: true,
-    },
-    xAxis: {
-      type: 'time',
-      splitLine: {
-        show: false,
-      },
-      axisLabel: {
-        color: TH.FG_COLOR,
-        formatter: {
-          year: '{yearStyle|{yy}}',
-          month: '{MMM}',
+
+    series: [
+      {
+        type: 'pie',
+        radius: ['40%', '70%'],
+        avoidLabelOverlap: false,
+        itemStyle: {
+          borderRadius: 10,
+          borderColor: '#fff',
+          borderWidth: 2,
         },
-        rich: {
-          yearStyle: {
+        label: {
+          show: false,
+          position: 'center',
+        },
+        emphasis: {
+          label: {
+            show: true,
+            fontSize: 20,
             fontWeight: 'bold',
           },
         },
-      },
-    },
-    yAxis: {
-      type: 'value',
-    },
-    dataZoom: [
-      {
-        type: 'slider',
-      },
-      {
-        type: 'inside',
-        // start: 0,
-        // end: 100,
-        minValueSpan: 3600 * 24 * 1000 * 180,
+        data: PieChartData(data),
       },
     ],
-    series: LineChartSeries(data),
   };
 
   useEffect(() => {
@@ -110,19 +96,12 @@ const LineChart = (props: LineChartProps): JSX.Element => {
 
   return <div ref={divEL} style={{ width: '100%', height: height }}></div>;
 };
-const LineChartSeries = (data: {
-  [repo: string]: RawRepoData;
-}): echarts.SeriesOption[] =>
+
+// Retrieve data for the current month
+const PieChartData = (data: { [repo: string]: RawRepoData }) =>
   Object.entries(data).map(([repoName, repoData]) => ({
     name: repoName,
-    type: 'line',
-    symbol: 'none',
-    smooth: true,
-    data: generateDataByMonth(repoData),
-    emphasis: {
-      focus: 'series',
-    },
-    yAxisIndex: 0,
-    triggerLineEvent: true,
+    value: generateDataByMonth(repoData).pop()![1],
   }));
-export default LineChart;
+
+export default PieChart;

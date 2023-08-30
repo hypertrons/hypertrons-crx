@@ -19,18 +19,18 @@ const DARK_THEME = {
   PALLET: ['#58a6ff', '#3fb950'],
 };
 
-interface LineChartProps {
+interface BarChartProps {
   theme: 'light' | 'dark';
   height: number;
   RepoName: string[];
 }
 
-const LineChart = (props: LineChartProps): JSX.Element => {
+const BarChart = (props: BarChartProps): JSX.Element => {
   const { theme, height, RepoName } = props;
-
   const divEL = useRef(null);
   const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;
   const [data, setData] = useState<{ [repo: string]: RawRepoData }>({});
+
   const option: echarts.EChartsOption = {
     tooltip: {
       trigger: 'axis',
@@ -67,16 +67,13 @@ const LineChart = (props: LineChartProps): JSX.Element => {
     },
     dataZoom: [
       {
-        type: 'slider',
-      },
-      {
         type: 'inside',
-        // start: 0,
-        // end: 100,
+        start: 0,
+        end: 100,
         minValueSpan: 3600 * 24 * 1000 * 180,
       },
     ],
-    series: LineChartSeries(data),
+    series: BarChartSeries(data), // / Utilize the transformed series data
   };
 
   useEffect(() => {
@@ -85,7 +82,7 @@ const LineChart = (props: LineChartProps): JSX.Element => {
         try {
           //getStars() to fetch repository data
           const starsData = await getStars(repo);
-          // Update Data
+          // Update Data/
           setData((prevData) => ({ ...prevData, [repo]: starsData }));
         } catch (error) {
           console.error(`Error fetching stars data for ${repo}:`, error);
@@ -110,14 +107,13 @@ const LineChart = (props: LineChartProps): JSX.Element => {
 
   return <div ref={divEL} style={{ width: '100%', height: height }}></div>;
 };
-const LineChartSeries = (data: {
+const BarChartSeries = (data: {
   [repo: string]: RawRepoData;
 }): echarts.SeriesOption[] =>
   Object.entries(data).map(([repoName, repoData]) => ({
     name: repoName,
-    type: 'line',
+    type: 'bar',
     symbol: 'none',
-    smooth: true,
     data: generateDataByMonth(repoData),
     emphasis: {
       focus: 'series',
@@ -125,4 +121,4 @@ const LineChartSeries = (data: {
     yAxisIndex: 0,
     triggerLineEvent: true,
   }));
-export default LineChart;
+export default BarChart;

@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
 import generateDataByMonth from '../../../helpers/generate-data-by-month';
-import { getStars } from '../../../api/repo';
+import {
+  getMergedCodeAddition,
+  getMergedCodeDeletion,
+} from '../../../api/repo';
 
 interface RawRepoData {
   [date: string]: number;
@@ -19,18 +22,18 @@ const DARK_THEME = {
   PALLET: ['#58a6ff', '#3fb950'],
 };
 
-interface LineChartProps {
+interface StackedBarChartProps {
   theme: 'light' | 'dark';
   height: number;
   RepoName: string[];
 }
 
-const LineChart = (props: LineChartProps): JSX.Element => {
+const StackedBarChart = (props: StackedBarChartProps): JSX.Element => {
   const { theme, height, RepoName } = props;
-
   const divEL = useRef(null);
   const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;
   const [data, setData] = useState<{ [repo: string]: RawRepoData }>({});
+
   const option: echarts.EChartsOption = {
     tooltip: {
       trigger: 'axis',
@@ -67,36 +70,39 @@ const LineChart = (props: LineChartProps): JSX.Element => {
     },
     dataZoom: [
       {
-        type: 'slider',
-      },
-      {
         type: 'inside',
-        // start: 0,
-        // end: 100,
+        start: 0,
+        end: 100,
         minValueSpan: 3600 * 24 * 1000 * 180,
       },
     ],
-    series: LineChartSeries(data),
+    series: MCDeletionSeries(data).concat(MCAdditionSeries(data)), // Series Data: Code Addition + Code CodeDeletion
   };
-
+  console.log(
+    'BarChartSeries',
+    MCDeletionSeries(data).concat(MCAdditionSeries(data))
+  );
   useEffect(() => {
     const fetchData = async () => {
       for (const repo of RepoName) {
         try {
-          //getStars() to fetch repository data
-          const starsData = await getStars(repo);
-          // Update Data
-          setData((prevData) => ({ ...prevData, [repo]: starsData }));
+          const MCAdditionData = await getMergedCodeAddition(repo);
+          const MCDeletionData = await getMergedCodeDeletion(repo);
+          const MergedCodeData = {
+            MCAdditionData: MCAdditionData,
+            MCDeletionData: MCDeletionData,
+          };
+          setData((prevData) => ({ ...prevData, [repo]: MergedCodeData }));
         } catch (error) {
           console.error(`Error fetching stars data for ${repo}:`, error);
-          // If the retrieval fails, set the data to an empty object
+
           setData((prevData) => ({ ...prevData, [repo]: {} }));
         }
       }
     };
     fetchData();
   }, []);
-
+  console.log('data', data);
   useEffect(() => {
     let chartDOM = divEL.current;
     const TH = 'light' ? LIGHT_THEME : DARK_THEME;
@@ -110,19 +116,38 @@ const LineChart = (props: LineChartProps): JSX.Element => {
 
   return <div ref={divEL} style={{ width: '100%', height: height }}></div>;
 };
-const LineChartSeries = (data: {
+const MCAdditionSeries = (data: {
   [repo: string]: RawRepoData;
 }): echarts.SeriesOption[] =>
   Object.entries(data).map(([repoName, repoData]) => ({
     name: repoName,
-    type: 'line',
+    type: 'bar',
     symbol: 'none',
-    smooth: true,
-    data: generateDataByMonth(repoData),
+    stack: repoName,
+    data: generateDataByMonth(repoData.MCAdditionData),
     emphasis: {
       focus: 'series',
     },
     yAxisIndex: 0,
     triggerLineEvent: true,
   }));
-export default LineChart;
+const MCDeletionSeries = (data: {
+  [repo: string]: RawRepoData;
+}): echarts.SeriesOption[] =>
+  Object.entries(data).map(([repoName, repoData]) => ({
+    name: repoName,
+    type: 'bar',
+    symbol: 'none',
+    stack: repoName,
+    data: generateDataByMonth(repoData.MCDeletionData).map((item) => [
+      item[0],
+      -item[1],
+    ]),
+    emphasis: {
+      focus: 'series',
+    },
+    yAxisIndex: 0,
+    triggerLineEvent: true,
+  }));
+
+export default StackedBarChart;
