@@ -112,7 +112,7 @@ const updateMonth = async (
                 color: avatarColors[0],
               },
               {
-                offset: 0.2,
+                offset: 0.5,
                 color: avatarColors[1],
               },
             ],

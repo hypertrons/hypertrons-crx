@@ -4,21 +4,25 @@ import ColorThief from 'colorthief';
 type LoginId = string;
 type Color = string;
 type RGB = [number, number, number];
+type ColorCache = Record<
+  LoginId,
+  {
+    colors: Color[];
+    lastUpdated: number; // timestamp
+  }
+>;
 
+/** The number determines how many colors are extracted from the image */
 const COLOR_COUNT = 2;
-/**
- * The number determines how many pixels are skipped before the next one is sampled.
- */
+/** The number determines how many pixels are skipped before the next one is sampled.  */
 const COLOR_QUALITY = 1;
 
 /**
- * @class AvatarColorStore.ts
- * @description Store the colors of the user avatars
+ * A singleton class that stores the avatar colors of users.
  */
 class AvatarColorStore {
   private static instance: AvatarColorStore;
   private colorThief = new ColorThief();
-  private colorCache = new Map<LoginId, Color[]>();
 
   private loadAvatar(loginId: string): Promise<HTMLImageElement> {
     return new Promise((resolve, reject) => {
@@ -31,7 +35,15 @@ class AvatarColorStore {
   }
 
   public async getColors(loginId: LoginId): Promise<Color[]> {
-    if (!this.colorCache.has(loginId)) {
+    const colorCache: ColorCache = (
+      await chrome.storage.local.get('colorCache')
+    ).colorCache;
+    const lastUpdated = colorCache[loginId]?.lastUpdated;
+    const now = new Date().getTime();
+
+    // update the cache if it is not updated in the last 7 days or not exist
+    if (!(lastUpdated && now - lastUpdated < 1000 * 60 * 60 * 24 * 7)) {
+      console.log('miss cache', loginId);
       let colors: Color[];
       // a single white color causes error: https://github.com/lokesh/color-thief/issues/40#issuecomment-802424484
       try {
@@ -51,9 +63,19 @@ class AvatarColorStore {
         );
         colors = Array(COLOR_COUNT).fill('rgb(255, 255, 255)');
       }
-      this.colorCache.set(loginId, colors);
+      await chrome.storage.local.set({
+        colorCache: {
+          ...colorCache,
+          [loginId]: {
+            colors,
+            lastUpdated: now,
+          },
+        },
+      });
+      return colors;
     }
-    return this.colorCache.get(loginId)!;
+
+    return colorCache[loginId].colors;
   }
 
   public static getInstance(): AvatarColorStore {
