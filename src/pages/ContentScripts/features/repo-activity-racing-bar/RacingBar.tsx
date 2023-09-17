@@ -1,9 +1,10 @@
 import { RepoActivityDetails } from '.';
 import { avatarColorStore } from './AvatarColorStore';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import * as echarts from 'echarts';
 import type { EChartsOption, EChartsType, BarSeriesOption } from 'echarts';
+import { Spin } from 'antd';
 
 interface RacingBarProps {
   repoName: string;
@@ -156,8 +157,11 @@ const play = (instance: EChartsType, data: RepoActivityDetails) => {
 
 /**
  * Count the number of unique contributors in the data
+ * @returns [number of long term contributors, contributors' names]
  */
-const countLongTermContributors = (data: RepoActivityDetails) => {
+const countLongTermContributors = (
+  data: RepoActivityDetails
+): [number, string[]] => {
   const contributors = new Map<string, number>();
   Object.keys(data).forEach((month) => {
     data[month].forEach((item) => {
@@ -175,14 +179,16 @@ const countLongTermContributors = (data: RepoActivityDetails) => {
       count++;
     }
   });
-  return count;
+  return [count, [...contributors.keys()]];
 };
 
 const RacingBar = ({ data }: RacingBarProps): JSX.Element => {
+  const [loadedAvatars, setLoadedAvatars] = useState(0);
   const divEL = useRef<HTMLDivElement>(null);
 
   let height = 300;
-  const longTermContributorsCount = countLongTermContributors(data);
+  const [longTermContributorsCount, contributors] =
+    countLongTermContributors(data);
   if (longTermContributorsCount >= 20) {
     // @ts-ignore
     option.yAxis.max = 20;
@@ -190,27 +196,42 @@ const RacingBar = ({ data }: RacingBarProps): JSX.Element => {
   }
 
   useEffect(() => {
-    if (!divEL.current) return;
+    (async () => {
+      if (!divEL.current) return;
 
-    const chartDOM = divEL.current;
-    const instance = echarts.init(chartDOM);
+      const chartDOM = divEL.current;
+      const instance = echarts.init(chartDOM);
 
-    play(instance, data);
+      // load avatars and extract colors before playing the chart
+      const promises = contributors.map(async (contributor) => {
+        await avatarColorStore.getColors(contributor);
+        setLoadedAvatars((loadedAvatars) => loadedAvatars + 1);
+      });
+      await Promise.all(promises);
 
-    return () => {
-      if (!instance.isDisposed()) {
-        instance.dispose();
-      }
-      // clear timer if user replay the chart before it finishes
-      if (timer) {
-        clearTimeout(timer);
-      }
-    };
+      play(instance, data);
+
+      return () => {
+        if (!instance.isDisposed()) {
+          instance.dispose();
+        }
+        // clear timer if user replay the chart before it finishes
+        if (timer) {
+          clearTimeout(timer);
+        }
+      };
+    })();
   }, []);
 
   return (
     <div className="hypertrons-crx-border">
-      <div ref={divEL} style={{ width: '100%', height }}></div>
+      <Spin
+        spinning={loadedAvatars < contributors.length}
+        tip={`Loading avatars ${loadedAvatars}/${contributors.length}`}
+        style={{ maxHeight: 'none' }} // disable maxHeight to make the loading tip be placed in the center
+      >
+        <div ref={divEL} style={{ width: '100%', height }} />
+      </Spin>
     </div>
   );
 };

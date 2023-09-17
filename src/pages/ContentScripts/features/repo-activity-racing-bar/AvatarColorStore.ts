@@ -4,18 +4,17 @@ import ColorThief from 'colorthief';
 type LoginId = string;
 type Color = string;
 type RGB = [number, number, number];
-type ColorCache = Record<
-  LoginId,
-  {
-    colors: Color[];
-    lastUpdated: number; // timestamp
-  }
->;
+interface ColorCache {
+  colors: Color[];
+  lastUpdated: number; // timestamp
+}
 
 /** The number determines how many colors are extracted from the image */
 const COLOR_COUNT = 2;
 /** The number determines how many pixels are skipped before the next one is sampled.  */
 const COLOR_QUALITY = 1;
+/** The number determines how long the cache is valid.  */
+const CACHE_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;
 
 /**
  * A singleton class that stores the avatar colors of users.
@@ -35,15 +34,16 @@ class AvatarColorStore {
   }
 
   public async getColors(loginId: LoginId): Promise<Color[]> {
-    const colorCache: ColorCache = (
-      await chrome.storage.local.get('colorCache')
-    ).colorCache;
-    const lastUpdated = colorCache[loginId]?.lastUpdated;
-    const now = new Date().getTime();
+    // Create a unique key for this user's cache entry.
+    const cacheKey = `color-cache:${loginId}`;
 
-    // update the cache if it is not updated in the last 7 days or not exist
-    if (!(lastUpdated && now - lastUpdated < 1000 * 60 * 60 * 24 * 7)) {
-      console.log('miss cache', loginId);
+    const now = new Date().getTime();
+    const colorCache: ColorCache = (await chrome.storage.local.get(cacheKey))[
+      cacheKey
+    ];
+
+    // Check if the cache is stale or doesn't exist.
+    if (!colorCache || now - colorCache.lastUpdated > CACHE_EXPIRE_TIME) {
       let colors: Color[];
       // a single white color causes error: https://github.com/lokesh/color-thief/issues/40#issuecomment-802424484
       try {
@@ -63,19 +63,20 @@ class AvatarColorStore {
         );
         colors = Array(COLOR_COUNT).fill('rgb(255, 255, 255)');
       }
+
+      // Store the updated cache entry with the unique key.
       await chrome.storage.local.set({
-        colorCache: {
-          ...colorCache,
-          [loginId]: {
-            colors,
-            lastUpdated: now,
-          },
+        [cacheKey]: {
+          colors,
+          lastUpdated: now,
         },
       });
+
       return colors;
     }
 
-    return colorCache[loginId].colors;
+    // Return the cached colors.
+    return colorCache.colors;
   }
 
   public static getInstance(): AvatarColorStore {
