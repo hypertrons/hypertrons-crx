@@ -1,10 +1,21 @@
 import { RepoActivityDetails } from '.';
 import { avatarColorStore } from './AvatarColorStore';
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+  ForwardedRef,
+} from 'react';
 import * as echarts from 'echarts';
-import type { EChartsOption, EChartsType, BarSeriesOption } from 'echarts';
 import { Spin } from 'antd';
+import type { BarSeriesOption, EChartsOption, EChartsType } from 'echarts';
+
+export interface MediaControlers {
+  play: () => void;
+}
 
 interface RacingBarProps {
   repoName: string;
@@ -140,7 +151,7 @@ const updateMonth = async (
 
 let timer: NodeJS.Timeout;
 
-const play = (instance: EChartsType, data: RepoActivityDetails) => {
+const playFromStart = (instance: EChartsType, data: RepoActivityDetails) => {
   const months = Object.keys(data);
   let i = 0;
 
@@ -182,58 +193,71 @@ const countLongTermContributors = (
   return [count, [...contributors.keys()]];
 };
 
-const RacingBar = ({ data }: RacingBarProps): JSX.Element => {
-  const [loadedAvatars, setLoadedAvatars] = useState(0);
-  const divEL = useRef<HTMLDivElement>(null);
+const RacingBar = forwardRef(
+  (
+    { data }: RacingBarProps,
+    forwardedRef: ForwardedRef<MediaControlers>
+  ): JSX.Element => {
+    const [loadedAvatars, setLoadedAvatars] = useState(0);
+    const divEL = useRef<HTMLDivElement>(null);
 
-  let height = 300;
-  const [longTermContributorsCount, contributors] =
-    countLongTermContributors(data);
-  if (longTermContributorsCount >= 20) {
-    // @ts-ignore
-    option.yAxis.max = 20;
-    height = 600;
-  }
+    let height = 300;
+    const [longTermContributorsCount, contributors] =
+      countLongTermContributors(data);
+    if (longTermContributorsCount >= 20) {
+      // @ts-ignore
+      option.yAxis.max = 20;
+      height = 600;
+    }
 
-  useEffect(() => {
-    (async () => {
+    useEffect(() => {
+      (async () => {
+        if (!divEL.current) return;
+
+        // load avatars and extract colors before playing the chart
+        const promises = contributors.map(async (contributor) => {
+          await avatarColorStore.getColors(contributor);
+          setLoadedAvatars((loadedAvatars) => loadedAvatars + 1);
+        });
+        await Promise.all(promises);
+
+        play();
+      })();
+    }, []);
+
+    const play = () => {
       if (!divEL.current) return;
 
+      // clear timer if user replay the chart before it finishes
+      if (timer) {
+        clearTimeout(timer);
+      }
+      let instance = echarts.getInstanceByDom(divEL.current)!;
+      if (instance && !instance.isDisposed()) {
+        instance.dispose();
+      }
       const chartDOM = divEL.current;
-      const instance = echarts.init(chartDOM);
+      instance = echarts.init(chartDOM);
+      playFromStart(instance, data);
+    };
 
-      // load avatars and extract colors before playing the chart
-      const promises = contributors.map(async (contributor) => {
-        await avatarColorStore.getColors(contributor);
-        setLoadedAvatars((loadedAvatars) => loadedAvatars + 1);
-      });
-      await Promise.all(promises);
+    // expose startRecording and stopRecording to parent component
+    useImperativeHandle(forwardedRef, () => ({
+      play,
+    }));
 
-      play(instance, data);
-
-      return () => {
-        if (!instance.isDisposed()) {
-          instance.dispose();
-        }
-        // clear timer if user replay the chart before it finishes
-        if (timer) {
-          clearTimeout(timer);
-        }
-      };
-    })();
-  }, []);
-
-  return (
-    <div className="hypertrons-crx-border">
-      <Spin
-        spinning={loadedAvatars < contributors.length}
-        tip={`Loading avatars ${loadedAvatars}/${contributors.length}`}
-        style={{ maxHeight: 'none' }} // disable maxHeight to make the loading tip be placed in the center
-      >
-        <div ref={divEL} style={{ width: '100%', height }} />
-      </Spin>
-    </div>
-  );
-};
+    return (
+      <div className="hypertrons-crx-border">
+        <Spin
+          spinning={loadedAvatars < contributors.length}
+          tip={`Loading avatars ${loadedAvatars}/${contributors.length}`}
+          style={{ maxHeight: 'none' }} // disable maxHeight to make the loading tip be placed in the center
+        >
+          <div ref={divEL} style={{ width: '100%', height }} />
+        </Spin>
+      </div>
+    );
+  }
+);
 
 export default RacingBar;

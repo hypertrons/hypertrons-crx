@@ -54,7 +54,6 @@ You can find these dashboards in:
   </tbody>
 </table>
 
-
 ### Project Related
 
  <table> 
@@ -93,8 +92,7 @@ You can find these dashboards in:
        </td> 
      </tr> 
    </tbody> 
- </table> 
-
+ </table>
 
 - **Project Correlation Network**: Project Correlation Network shows the correlation between projects for a given time period. From this graph you can find the projects that are related to the given project.
 
@@ -103,7 +101,6 @@ You can find these dashboards in:
 - **Project Activity & OpenRank Trend**: The Project Activity and OpenRank Trend chart presents how the two metrics have evolved since 2015. In the chart, you can zoom and drag using your mouse or touchpad, and you can toggle either of the data by clicking the legend buttons as well.
 
 - **Repo Details**: Trends of Activity, OpenRank, Participants, Fork Events, Star Events, Open Issue Events, Issue Comment Events, Open PR Events, PR Merge Events, Review Comment Events, Merged Addition & Deletion Code Lines.
-
 
 ### Developer Related
 
@@ -133,9 +130,7 @@ You can find these dashboards in:
          /> </td>
      </tr> 
    </tbody> 
- </table> 
-
-
+ </table>
 
 - **Developer Collaboration Network**: Developer Collaboration Network shows the collaboration between developers for a given time period. From this graph you can find other developers who are closest to a given developer.
 - **Developer's Most Participated Repos**: Developer's Most Participated Repos shows the active projects of developers in a given time period. From this graph you can find out the most active repositories for a given developer.
@@ -151,6 +146,7 @@ OSS-GPT is an open source project document answering robot integrated with [Docs
 ## Contributing
 
 Please read [CONTRIBUTING](./CONTRIBUTING.md) if you are new here or not familiar with the basic rules of Git/GitHub world.
+
 ### Requirements
 
 1. node >= 18
