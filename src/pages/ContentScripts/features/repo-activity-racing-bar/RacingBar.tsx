@@ -5,7 +5,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import * as echarts from 'echarts';
 import type { EChartsOption, EChartsType, BarSeriesOption } from 'echarts';
 import { Spin } from 'antd';
-
+import { mediaRecorder, recordingStarted, setRecordingStarted } from './view';
 interface RacingBarProps {
   repoName: string;
   data: RepoActivityDetails;
@@ -149,6 +149,15 @@ const play = (instance: EChartsType, data: RepoActivityDetails) => {
     i++;
     if (i < months.length) {
       timer = setTimeout(playNext, updateFrequency);
+    }
+    if (i == months.length - 1) {
+      // Stop the media recorder after the animation finishes
+      instance.on('finished', function () {
+        if (recordingStarted) {
+          setRecordingStarted(false);
+          mediaRecorder.stop();
+        }
+      });
     }
   };
 
