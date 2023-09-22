@@ -1,11 +1,22 @@
 import { RepoActivityDetails } from '.';
 import { avatarColorStore } from './AvatarColorStore';
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+  ForwardedRef,
+} from 'react';
 import * as echarts from 'echarts';
 import { Spin } from 'antd';
 import type { BarSeriesOption, EChartsOption, EChartsType } from 'echarts';
-import { stopRecording } from './view';
+
+export interface RecordingHandlers {
+  startRecording: () => void;
+  stopRecording: () => void;
+}
 
 interface RacingBarProps {
   repoName: string;
@@ -151,14 +162,6 @@ const play = (instance: EChartsType, data: RepoActivityDetails) => {
     if (i < months.length) {
       timer = setTimeout(playNext, updateFrequency);
     }
-    if (i == months.length - 1) {
-      // Stop the media recorder after the animation finishes
-      // instance.on('finished', function () {
-      stopRecording();
-      const rec = document.getElementById('rec');
-      if (rec != null) rec.innerText = 'record';
-      // });
-    }
   };
 
   playNext();
@@ -191,58 +194,117 @@ const countLongTermContributors = (
   return [count, [...contributors.keys()]];
 };
 
-const RacingBar = ({ data }: RacingBarProps): JSX.Element => {
-  const [loadedAvatars, setLoadedAvatars] = useState(0);
-  const divEL = useRef<HTMLDivElement>(null);
+const RacingBar = forwardRef(
+  (
+    { data }: RacingBarProps,
+    forwardedRef: ForwardedRef<RecordingHandlers>
+  ): JSX.Element => {
+    const [loadedAvatars, setLoadedAvatars] = useState(0);
+    const divEL = useRef<HTMLDivElement>(null);
+    const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+    const chunksRef = useRef<Blob[]>([]);
 
-  let height = 300;
-  const [longTermContributorsCount, contributors] =
-    countLongTermContributors(data);
-  if (longTermContributorsCount >= 20) {
-    // @ts-ignore
-    option.yAxis.max = 20;
-    height = 600;
-  }
+    let height = 300;
+    const [longTermContributorsCount, contributors] =
+      countLongTermContributors(data);
+    if (longTermContributorsCount >= 20) {
+      // @ts-ignore
+      option.yAxis.max = 20;
+      height = 600;
+    }
 
-  useEffect(() => {
-    (async () => {
+    useEffect(() => {
+      (async () => {
+        if (!divEL.current) return;
+
+        const chartDOM = divEL.current;
+        const instance = echarts.init(chartDOM);
+
+        // load avatars and extract colors before playing the chart
+        const promises = contributors.map(async (contributor) => {
+          await avatarColorStore.getColors(contributor);
+          setLoadedAvatars((loadedAvatars) => loadedAvatars + 1);
+        });
+        await Promise.all(promises);
+
+        play(instance, data);
+
+        return () => {
+          if (!instance.isDisposed()) {
+            instance.dispose();
+          }
+          // clear timer if user replay the chart before it finishes
+          if (timer) {
+            clearTimeout(timer);
+          }
+        };
+      })();
+    }, []);
+
+    const startRecording = () => {
       if (!divEL.current) return;
 
-      const chartDOM = divEL.current;
-      const instance = echarts.init(chartDOM);
-
-      // load avatars and extract colors before playing the chart
-      const promises = contributors.map(async (contributor) => {
-        await avatarColorStore.getColors(contributor);
-        setLoadedAvatars((loadedAvatars) => loadedAvatars + 1);
+      console.log('start record');
+      // Start the media recorder
+      const canvas: HTMLCanvasElement =
+        divEL.current.querySelector('div > canvas')!;
+      const stream = canvas.captureStream(60);
+      mediaRecorderRef.current = new MediaRecorder(stream, {
+        mimeType: 'video/mp4',
       });
-      await Promise.all(promises);
 
-      play(instance, data);
-
-      return () => {
-        if (!instance.isDisposed()) {
-          instance.dispose();
-        }
-        // clear timer if user replay the chart before it finishes
-        if (timer) {
-          clearTimeout(timer);
-        }
+      mediaRecorderRef.current.ondataavailable = function (event) {
+        chunksRef.current.push(event.data);
       };
-    })();
-  }, []);
 
-  return (
-    <div className="hypertrons-crx-border">
-      <Spin
-        spinning={loadedAvatars < contributors.length}
-        tip={`Loading avatars ${loadedAvatars}/${contributors.length}`}
-        style={{ maxHeight: 'none' }} // disable maxHeight to make the loading tip be placed in the center
-      >
-        <div ref={divEL} style={{ width: '100%', height }} />
-      </Spin>
-    </div>
-  );
-};
+      // Start recording
+      mediaRecorderRef.current.start();
+    };
+
+    const stopRecording = () => {
+      if (!mediaRecorderRef.current) return;
+
+      console.log('stop record');
+      // Handle the stop event
+      mediaRecorderRef.current.onstop = function () {
+        const blob = new Blob(chunksRef.current, { type: 'video/mp4' });
+        const url = URL.createObjectURL(blob);
+
+        // Create a video element and set the source to the recorded video
+        const video = document.createElement('video');
+        video.src = url;
+
+        // Download the video
+        const a = document.createElement('a');
+        a.download = 'chart_animation.mp4';
+        a.href = url;
+        a.click();
+
+        // Clean up
+        URL.revokeObjectURL(url);
+        chunksRef.current = [];
+      };
+      mediaRecorderRef.current.stop();
+    };
+
+    // expose startRecording and stopRecording to parent component
+    useImperativeHandle(forwardedRef, () => ({
+      startRecording,
+      stopRecording,
+    }));
+
+    return (
+      <div className="hypertrons-crx-border">
+        <Spin
+          spinning={loadedAvatars < contributors.length}
+          tip={`Loading avatars ${loadedAvatars}/${contributors.length}`}
+          style={{ maxHeight: 'none' }} // disable maxHeight to make the loading tip be placed in the center
+        >
+          <div ref={divEL} style={{ width: '100%', height }} />
+        </Spin>
+      </div>
+    );
+  }
+);
 
 export default RacingBar;
