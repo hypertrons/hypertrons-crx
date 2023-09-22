@@ -13,7 +13,8 @@ import * as echarts from 'echarts';
 import { Spin } from 'antd';
 import type { BarSeriesOption, EChartsOption, EChartsType } from 'echarts';
 
-export interface RecordingHandlers {
+export interface MediaControlers {
+  play: () => void;
   startRecording: () => void;
   stopRecording: () => void;
 }
@@ -152,7 +153,7 @@ const updateMonth = async (
 
 let timer: NodeJS.Timeout;
 
-const play = (instance: EChartsType, data: RepoActivityDetails) => {
+const playFromStart = (instance: EChartsType, data: RepoActivityDetails) => {
   const months = Object.keys(data);
   let i = 0;
 
@@ -197,7 +198,7 @@ const countLongTermContributors = (
 const RacingBar = forwardRef(
   (
     { data }: RacingBarProps,
-    forwardedRef: ForwardedRef<RecordingHandlers>
+    forwardedRef: ForwardedRef<MediaControlers>
   ): JSX.Element => {
     const [loadedAvatars, setLoadedAvatars] = useState(0);
     const divEL = useRef<HTMLDivElement>(null);
@@ -217,9 +218,6 @@ const RacingBar = forwardRef(
       (async () => {
         if (!divEL.current) return;
 
-        const chartDOM = divEL.current;
-        const instance = echarts.init(chartDOM);
-
         // load avatars and extract colors before playing the chart
         const promises = contributors.map(async (contributor) => {
           await avatarColorStore.getColors(contributor);
@@ -227,24 +225,30 @@ const RacingBar = forwardRef(
         });
         await Promise.all(promises);
 
-        play(instance, data);
-
-        return () => {
-          if (!instance.isDisposed()) {
-            instance.dispose();
-          }
-          // clear timer if user replay the chart before it finishes
-          if (timer) {
-            clearTimeout(timer);
-          }
-        };
+        play();
       })();
     }, []);
+
+    const play = () => {
+      if (!divEL.current) return;
+
+      // clear timer if user replay the chart before it finishes
+      if (timer) {
+        clearTimeout(timer);
+      }
+      let instance = echarts.getInstanceByDom(divEL.current)!;
+      if (instance && !instance.isDisposed()) {
+        instance.dispose();
+      }
+      const chartDOM = divEL.current;
+      instance = echarts.init(chartDOM);
+      playFromStart(instance, data);
+    };
 
     const startRecording = () => {
       if (!divEL.current) return;
 
-      console.log('start record');
+      console.log('start recording');
       // Start the media recorder
       const canvas: HTMLCanvasElement =
         divEL.current.querySelector('div > canvas')!;
@@ -264,7 +268,7 @@ const RacingBar = forwardRef(
     const stopRecording = () => {
       if (!mediaRecorderRef.current) return;
 
-      console.log('stop record');
+      console.log('stop recording');
       // Handle the stop event
       mediaRecorderRef.current.onstop = function () {
         const blob = new Blob(chunksRef.current, { type: 'video/mp4' });
@@ -289,6 +293,7 @@ const RacingBar = forwardRef(
 
     // expose startRecording and stopRecording to parent component
     useImperativeHandle(forwardedRef, () => ({
+      play,
       startRecording,
       stopRecording,
     }));
