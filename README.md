@@ -153,7 +153,7 @@ OSS-GPT is an open source project document answering robot integrated with [Docs
 Please read [CONTRIBUTING](./CONTRIBUTING.md) if you are new here or not familiar with the basic rules of Git/GitHub world.
 ### Requirements
 
-1. node >= 16.14
+1. node >= 18
 
 2. yarn
 

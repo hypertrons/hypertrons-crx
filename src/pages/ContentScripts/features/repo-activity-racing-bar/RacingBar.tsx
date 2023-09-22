@@ -1,14 +1,15 @@
-import React, { useEffect, useRef } from 'react';
+import { RepoActivityDetails } from '.';
+import { avatarColorStore } from './AvatarColorStore';
+
+import React, { useEffect, useState, useRef } from 'react';
 import * as echarts from 'echarts';
-import type { EChartsOption, EChartsType } from 'echarts';
+import type { EChartsOption, EChartsType, BarSeriesOption } from 'echarts';
+import { Spin } from 'antd';
 
 interface RacingBarProps {
   repoName: string;
-  data: any;
+  data: RepoActivityDetails;
 }
-
-// TODO generate color from user avatar
-const colorMap = new Map();
 
 const updateFrequency = 3000;
 
@@ -16,7 +17,7 @@ const option: EChartsOption = {
   grid: {
     top: 10,
     bottom: 30,
-    left: 150,
+    left: 160,
     right: 50,
   },
   xAxis: {
@@ -45,19 +46,6 @@ const option: EChartsOption = {
       realtimeSort: true,
       seriesLayoutBy: 'column',
       type: 'bar',
-      itemStyle: {
-        color: function (params: any) {
-          const githubId = params.value[0];
-          if (colorMap.has(githubId)) {
-            return colorMap.get(githubId);
-          } else {
-            const randomColor =
-              '#' + Math.floor(Math.random() * 16777215).toString(16);
-            colorMap.set(githubId, randomColor);
-            return randomColor;
-          }
-        },
-      },
       data: undefined,
       encode: {
         x: 1,
@@ -94,21 +82,51 @@ const option: EChartsOption = {
   },
 };
 
-const updateMonth = (instance: EChartsType, data: any, month: string) => {
+const updateMonth = async (
+  instance: EChartsType,
+  data: RepoActivityDetails,
+  month: string
+) => {
   const rich: any = {};
-  data[month].forEach((item: any[]) => {
-    // rich name cannot contain special characters such as '-'
-    rich[`avatar${item[0].replaceAll('-', '')}`] = {
-      backgroundColor: {
-        image: `https://avatars.githubusercontent.com/${item[0]}?s=48&v=4`,
-      },
-      height: 20,
-    };
-  });
+  const barData: BarSeriesOption['data'] = await Promise.all(
+    data[month].map(async (item) => {
+      // rich name cannot contain special characters such as '-'
+      rich[`avatar${item[0].replaceAll('-', '')}`] = {
+        backgroundColor: {
+          image: `https://avatars.githubusercontent.com/${item[0]}?s=48&v=4`,
+        },
+        height: 20,
+      };
+      const avatarColors = await avatarColorStore.getColors(item[0]);
+      return {
+        value: item,
+        itemStyle: {
+          color: {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 1,
+            y2: 0,
+            colorStops: [
+              {
+                offset: 0,
+                color: avatarColors[0],
+              },
+              {
+                offset: 0.5,
+                color: avatarColors[1],
+              },
+            ],
+            global: false,
+          },
+        },
+      };
+    })
+  );
   // @ts-ignore
   option.yAxis.axisLabel.rich = rich;
   // @ts-ignore
-  option.series[0].data = data[month];
+  option.series[0].data = barData;
   // @ts-ignore
   option.graphic.elements[0].style.text = month;
 
@@ -122,12 +140,12 @@ const updateMonth = (instance: EChartsType, data: any, month: string) => {
 
 let timer: NodeJS.Timeout;
 
-const play = (instance: EChartsType, data: any) => {
+const play = (instance: EChartsType, data: RepoActivityDetails) => {
   const months = Object.keys(data);
   let i = 0;
 
-  const playNext = () => {
-    updateMonth(instance, data, months[i]);
+  const playNext = async () => {
+    await updateMonth(instance, data, months[i]);
     i++;
     if (i < months.length) {
       timer = setTimeout(playNext, updateFrequency);
@@ -139,11 +157,14 @@ const play = (instance: EChartsType, data: any) => {
 
 /**
  * Count the number of unique contributors in the data
+ * @returns [number of long term contributors, contributors' names]
  */
-const countLongTermContributors = (data: any) => {
+const countLongTermContributors = (
+  data: RepoActivityDetails
+): [number, string[]] => {
   const contributors = new Map<string, number>();
   Object.keys(data).forEach((month) => {
-    data[month].forEach((item: any[]) => {
+    data[month].forEach((item) => {
       if (contributors.has(item[0])) {
         contributors.set(item[0], contributors.get(item[0])! + 1);
       } else {
@@ -158,14 +179,16 @@ const countLongTermContributors = (data: any) => {
       count++;
     }
   });
-  return count;
+  return [count, [...contributors.keys()]];
 };
 
 const RacingBar = ({ data }: RacingBarProps): JSX.Element => {
+  const [loadedAvatars, setLoadedAvatars] = useState(0);
   const divEL = useRef<HTMLDivElement>(null);
 
   let height = 300;
-  const longTermContributorsCount = countLongTermContributors(data);
+  const [longTermContributorsCount, contributors] =
+    countLongTermContributors(data);
   if (longTermContributorsCount >= 20) {
     // @ts-ignore
     option.yAxis.max = 20;
@@ -173,27 +196,42 @@ const RacingBar = ({ data }: RacingBarProps): JSX.Element => {
   }
 
   useEffect(() => {
-    if (!divEL.current) return;
+    (async () => {
+      if (!divEL.current) return;
 
-    const chartDOM = divEL.current;
-    const instance = echarts.init(chartDOM);
+      const chartDOM = divEL.current;
+      const instance = echarts.init(chartDOM);
 
-    play(instance, data);
+      // load avatars and extract colors before playing the chart
+      const promises = contributors.map(async (contributor) => {
+        await avatarColorStore.getColors(contributor);
+        setLoadedAvatars((loadedAvatars) => loadedAvatars + 1);
+      });
+      await Promise.all(promises);
 
-    return () => {
-      if (!instance.isDisposed()) {
-        instance.dispose();
-      }
-      // clear timer if user replay the chart before it finishes
-      if (timer) {
-        clearTimeout(timer);
-      }
-    };
+      play(instance, data);
+
+      return () => {
+        if (!instance.isDisposed()) {
+          instance.dispose();
+        }
+        // clear timer if user replay the chart before it finishes
+        if (timer) {
+          clearTimeout(timer);
+        }
+      };
+    })();
   }, []);
 
   return (
     <div className="hypertrons-crx-border">
-      <div ref={divEL} style={{ width: '100%', height }}></div>
+      <Spin
+        spinning={loadedAvatars < contributors.length}
+        tip={`Loading avatars ${loadedAvatars}/${contributors.length}`}
+        style={{ maxHeight: 'none' }} // disable maxHeight to make the loading tip be placed in the center
+      >
+        <div ref={divEL} style={{ width: '100%', height }} />
+      </Spin>
     </div>
   );
 };
