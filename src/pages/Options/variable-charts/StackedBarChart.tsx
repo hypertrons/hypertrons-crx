@@ -116,6 +116,8 @@ const StackedBarChart = (props: StackedBarChartProps): JSX.Element => {
 
   return <div ref={divEL} style={{ width: '100%', height: height }}></div>;
 };
+
+//Series：各仓库代码增加行数
 const MCAdditionSeries = (data: {
   [repo: string]: RawRepoData;
 }): echarts.SeriesOption[] =>
@@ -131,6 +133,8 @@ const MCAdditionSeries = (data: {
     yAxisIndex: 0,
     triggerLineEvent: true,
   }));
+
+//Series：各仓库代码删减行数
 const MCDeletionSeries = (data: {
   [repo: string]: RawRepoData;
 }): echarts.SeriesOption[] =>

@@ -1,11 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
 import generateDataByMonth from '../../../helpers/generate-data-by-month';
-import { getStars } from '../../../api/repo';
-
-interface RawRepoData {
-  [date: string]: number;
-}
+import { getIssueResponseTime } from '../../../api/repo';
+import getNewestMonth from '../../../helpers/get-newest-month';
 
 const LIGHT_THEME = {
   FG_COLOR: '#24292f',
@@ -19,22 +16,24 @@ const DARK_THEME = {
   PALLET: ['#58a6ff', '#3fb950'],
 };
 
-interface LineChartProps {
+interface BarChartProps {
   theme: 'light' | 'dark';
   height: number;
   RepoName: string[];
 }
 
-const LineChart = (props: LineChartProps): JSX.Element => {
+const BoxplotChart = (props: BarChartProps): JSX.Element => {
   const { theme, height, RepoName } = props;
-
   const divEL = useRef(null);
   const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;
-  const [data, setData] = useState<{ [repo: string]: RawRepoData }>({});
+  const [data, setData] = useState<{}>({});
 
   const option: echarts.EChartsOption = {
     tooltip: {
-      trigger: 'axis',
+      trigger: 'item',
+      axisPointer: {
+        type: 'shadow',
+      },
     },
     legend: {
       type: 'scroll',
@@ -46,9 +45,14 @@ const LineChart = (props: LineChartProps): JSX.Element => {
       containLabel: true,
     },
     xAxis: {
-      type: 'time',
+      type: 'category',
+      // data: Object.keys(data),
       splitLine: {
         show: false,
+      },
+      data: lastMonthRepoData(data).map((repo) => repo.name),
+      splitArea: {
+        show: true,
       },
       axisLabel: {
         color: TH.FG_COLOR,
@@ -65,19 +69,22 @@ const LineChart = (props: LineChartProps): JSX.Element => {
     },
     yAxis: {
       type: 'value',
+      splitArea: {
+        show: true,
+      },
     },
     dataZoom: [
       {
-        type: 'slider',
-      },
-      {
         type: 'inside',
-        // start: 0,
-        // end: 100,
+        start: 0,
+        end: 100,
         minValueSpan: 3600 * 24 * 1000 * 180,
       },
     ],
-    series: LineChartSeries(data),
+    series: {
+      type: 'boxplot',
+      data: lastMonthRepoData(data),
+    },
   };
 
   useEffect(() => {
@@ -85,8 +92,9 @@ const LineChart = (props: LineChartProps): JSX.Element => {
       for (const repo of RepoName) {
         try {
           //getStars() to fetch repository data
-          const starsData = await getStars(repo);
-          // Update Data
+          const starsData = await getIssueResponseTime(repo);
+          console.log('starsDatastarsData', starsData);
+          // Update Data/
           setData((prevData) => ({ ...prevData, [repo]: starsData }));
         } catch (error) {
           console.error(`Error fetching stars data for ${repo}:`, error);
@@ -96,6 +104,7 @@ const LineChart = (props: LineChartProps): JSX.Element => {
       }
     };
     fetchData();
+    console.log('data', data);
   }, []);
 
   useEffect(() => {
@@ -103,6 +112,8 @@ const LineChart = (props: LineChartProps): JSX.Element => {
     const TH = 'light' ? LIGHT_THEME : DARK_THEME;
 
     const instance = echarts.init(chartDOM as any);
+    console.log('data', data);
+    console.log('lastMonthRepoData', lastMonthRepoData(data));
     instance.setOption(option);
     return () => {
       instance.dispose();
@@ -111,19 +122,31 @@ const LineChart = (props: LineChartProps): JSX.Element => {
 
   return <div ref={divEL} style={{ width: '100%', height: height }}></div>;
 };
-const LineChartSeries = (data: {
-  [repo: string]: RawRepoData;
-}): echarts.SeriesOption[] =>
-  Object.entries(data).map(([repoName, repoData]) => ({
-    name: repoName,
-    type: 'line',
-    symbol: 'none',
-    smooth: true,
-    data: generateDataByMonth(repoData),
-    emphasis: {
-      focus: 'series',
-    },
-    yAxisIndex: 0,
-    triggerLineEvent: true,
-  }));
-export default LineChart;
+
+//原始数据 =>各仓库最近一个月的数据[]
+function lastMonthRepoData(repo_data: any) {
+  const resultArray = [];
+  const lastMonth = getNewestMonth();
+  for (const repoName in repo_data) {
+    if (repo_data.hasOwnProperty(repoName)) {
+      const lastMonthData = {
+        name: repoName,
+        value:
+          repo_data[repoName][`avg`][lastMonth] !== undefined
+            ? Array.from(
+                { length: 5 },
+                (_, q) => repo_data[repoName][`quantile_${q}`][lastMonth]
+              )
+            : [null, null, null, null, null],
+      };
+
+      resultArray.push(lastMonthData);
+      // 将转换后的数据存储为对象，并添加到结果数组中
+      console.log('repoName', repoName);
+      console.log('lastM', repo_data[repoName][`avg`][lastMonth]);
+    }
+  }
+  return resultArray;
+}
+
+export default BoxplotChart;

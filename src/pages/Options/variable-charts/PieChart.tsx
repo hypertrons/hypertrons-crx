@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
 import generateDataByMonth from '../../../helpers/generate-data-by-month';
 import { getStars } from '../../../api/repo';
+import getNewestMonth from '../../../helpers/get-newest-month';
 
 interface RawRepoData {
   [date: string]: number;
@@ -99,9 +100,15 @@ const PieChart = (props: PieChartProps): JSX.Element => {
 
 // Retrieve data for the current month
 const PieChartData = (data: { [repo: string]: RawRepoData }) =>
-  Object.entries(data).map(([repoName, repoData]) => ({
-    name: repoName,
-    value: generateDataByMonth(repoData).pop()![1],
-  }));
+  Object.entries(data).map(([repoName, repoData]) => {
+    const lastData = generateDataByMonth(repoData).at(-1);
+    return {
+      name: repoName,
+      value:
+        lastData !== undefined && lastData[0] === getNewestMonth()
+          ? lastData[1]
+          : 0,
+    };
+  });
 
 export default PieChart;
