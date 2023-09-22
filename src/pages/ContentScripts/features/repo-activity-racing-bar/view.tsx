@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import optionsStorage, {
   HypercrxOptions,
   defaults,
 } from '../../../../options-storage';
-import RacingBar from './RacingBar';
+import RacingBar, { MediaControlers } from './RacingBar';
 import { RepoActivityDetails } from '.';
 
 interface Props {
@@ -15,17 +15,13 @@ interface Props {
 
 const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
-  const [replay, setReplay] = useState(0);
+  const mediaControlersRef = useRef<MediaControlers>(null);
 
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
     })();
   }, []);
-
-  const handleReplayClick = () => {
-    setReplay(replay + 1);
-  };
 
   return (
     <div>
@@ -38,11 +34,26 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
             )}
           </span>
           <div className="hypertrons-crx-title-extra developer-tab">
-            <button className="replay-button" onClick={handleReplayClick}>
+            <button
+              className="perceptor-button"
+              onClick={mediaControlersRef.current?.play}
+            >
               {getMessageByLocale(
                 'component_projectRacingBar_ReplayButton',
                 options.locale
               )}
+            </button>
+            <button
+              className="perceptor-button"
+              onClick={mediaControlersRef.current?.startRecording}
+            >
+              Start Recording
+            </button>
+            <button
+              className="perceptor-button"
+              onClick={mediaControlersRef.current?.stopRecording}
+            >
+              Stop Recording
             </button>
           </div>
         </div>
@@ -50,7 +61,7 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
           <div className="col-12 col-md-8">
             <div style={{ margin: '10px 0 20px 20px' }}>
               <RacingBar
-                key={replay}
+                ref={mediaControlersRef}
                 repoName={currentRepo}
                 data={repoActivityDetails}
               />
