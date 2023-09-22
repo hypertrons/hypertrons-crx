@@ -154,9 +154,9 @@ const play = (instance: EChartsType, data: RepoActivityDetails) => {
     if (i == months.length - 1) {
       // Stop the media recorder after the animation finishes
       // instance.on('finished', function () {
-        stopRecording();
-        const rec = document.getElementById('rec');
-        if(rec!=null) rec.innerText = 'record'
+      stopRecording();
+      const rec = document.getElementById('rec');
+      if (rec != null) rec.innerText = 'record';
       // });
     }
   };

@@ -26,7 +26,6 @@ export function stopRecording() {
     const rec = document.getElementById('rec');
     // @ts-ignore
     rec.innerText = 'record';
-
   }
 }
 const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
@@ -43,7 +42,6 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
     setReplay(replay + 1);
   };
 
-  
   // Event listener for the start button
   const exportToVideo = () => {
     // Start the recording only if it has not already started
@@ -51,22 +49,24 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
       recordingStarted = true;
       // Capture the canvas element
       console.log('start media ' + recordingStarted);
-      const canvas = document.querySelector('#hypercrx-repo-activity-racing-bar > div > div > div.d-flex.flex-wrap.flex-items-center > div.col-12.col-md-8 > div > div > div > div > div > div > canvas') as HTMLCanvasElement;
+      const canvas = document.querySelector(
+        '#hypercrx-repo-activity-racing-bar > div > div > div.d-flex.flex-wrap.flex-items-center > div.col-12.col-md-8 > div > div > div > div > div > div > canvas'
+      ) as HTMLCanvasElement;
       const rec = document.getElementById('rec');
-  
+
       if (!canvas || !rec) {
         return;
       }
-      
+
       rec.innerText = '录制中,点击停止录制并下载';
       const stream = canvas.captureStream();
-      
+
       // Start the media recorder
       const chunks: Blob[] = [];
       mediaRecorder = new MediaRecorder(stream, {
         mimeType: 'video/webm; codecs=vp9',
       });
-      
+
       mediaRecorder.ondataavailable = function (event) {
         chunks.push(event.data);
       };
