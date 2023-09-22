@@ -3,9 +3,10 @@ import { avatarColorStore } from './AvatarColorStore';
 
 import React, { useEffect, useState, useRef } from 'react';
 import * as echarts from 'echarts';
-import type { EChartsOption, EChartsType, BarSeriesOption } from 'echarts';
 import { Spin } from 'antd';
-import { mediaRecorder, recordingStarted, setRecordingStarted } from './view';
+import type { BarSeriesOption, EChartsOption, EChartsType } from 'echarts';
+import { stopRecording } from './view';
+
 interface RacingBarProps {
   repoName: string;
   data: RepoActivityDetails;
@@ -152,12 +153,11 @@ const play = (instance: EChartsType, data: RepoActivityDetails) => {
     }
     if (i == months.length - 1) {
       // Stop the media recorder after the animation finishes
-      instance.on('finished', function () {
-        if (recordingStarted) {
-          setRecordingStarted(false);
-          mediaRecorder.stop();
-        }
-      });
+      // instance.on('finished', function () {
+        stopRecording();
+        const rec = document.getElementById('rec');
+        if(rec!=null) rec.innerText = 'record'
+      // });
     }
   };
 

@@ -13,11 +13,22 @@ interface Props {
   currentRepo: string;
   repoActivityDetails: RepoActivityDetails;
 }
-export let recordingStarted = false;
-export function setRecordingStarted(status: boolean) {
-  recordingStarted = status;
-}
+
+let recordingStarted = false;
 export let mediaRecorder: MediaRecorder;
+export function stopRecording() {
+  console.log('before stop media ' + recordingStarted);
+  if (recordingStarted) {
+    recordingStarted = false;
+    console.log('stop media');
+    mediaRecorder.stop();
+    console.log('------- ed -------');
+    const rec = document.getElementById('rec');
+    // @ts-ignore
+    rec.innerText = 'record';
+
+  }
+}
 const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
   const [replay, setReplay] = useState(0);
@@ -32,30 +43,34 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
     setReplay(replay + 1);
   };
 
-  recordingStarted = false;
-
+  
   // Event listener for the start button
   const exportToVideo = () => {
     // Start the recording only if it has not already started
     if (!recordingStarted) {
       recordingStarted = true;
       // Capture the canvas element
-
-      const canvas = document.querySelector(
-        '#hypercrx-repo-activity-racing-bar > div > div > div.d-flex.flex-wrap.flex-items-center > div.col-12.col-md-8 > div > div > div > div > canvas'
-      ) as HTMLCanvasElement;
+      console.log('start media ' + recordingStarted);
+      const canvas = document.querySelector('#hypercrx-repo-activity-racing-bar > div > div > div.d-flex.flex-wrap.flex-items-center > div.col-12.col-md-8 > div > div > div > div > div > div > canvas') as HTMLCanvasElement;
+      const rec = document.getElementById('rec');
+  
+      if (!canvas || !rec) {
+        return;
+      }
+      
+      rec.innerText = '录制中,点击停止录制并下载';
       const stream = canvas.captureStream();
-
+      
       // Start the media recorder
       const chunks: Blob[] = [];
       mediaRecorder = new MediaRecorder(stream, {
         mimeType: 'video/webm; codecs=vp9',
       });
-
+      
       mediaRecorder.ondataavailable = function (event) {
         chunks.push(event.data);
       };
-
+      handleReplayClick();
       // Start recording
       mediaRecorder.start();
 
@@ -67,7 +82,6 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
         // Create a video element and set the source to the recorded video
         const video = document.createElement('video');
         video.src = url;
-
         // Download the video
         const a = document.createElement('a');
         a.download = 'chart_animation.webm';
@@ -77,6 +91,8 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
         // Clean up
         URL.revokeObjectURL(url);
       };
+
+      rec.onclick = stopRecording;
     }
   };
 
@@ -98,7 +114,7 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
               )}
             </button>
 
-            <button className="replay-button" onClick={exportToVideo}>
+            <button id="rec" className="replay-button" onClick={exportToVideo}>
               Record
             </button>
           </div>
