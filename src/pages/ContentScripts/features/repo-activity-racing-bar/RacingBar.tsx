@@ -1,6 +1,7 @@
 import { RepoActivityDetails } from './data';
 import { avatarColorStore } from './AvatarColorStore';
 import { countLongTermContributors } from './data';
+import { useLoadedAvatars } from './useLoadedAvatars';
 
 import React, {
   useEffect,
@@ -19,7 +20,7 @@ export interface MediaControlers {
 }
 
 interface RacingBarProps {
-  repoName: string;
+  speed: number;
   data: RepoActivityDetails;
 }
 
@@ -169,15 +170,17 @@ const playFromStart = (instance: EChartsType, data: RepoActivityDetails) => {
 
 const RacingBar = forwardRef(
   (
-    { data }: RacingBarProps,
+    { speed, data }: RacingBarProps,
     forwardedRef: ForwardedRef<MediaControlers>
   ): JSX.Element => {
-    const [loadedAvatars, setLoadedAvatars] = useState(0);
     const divEL = useRef<HTMLDivElement>(null);
 
     let height = 300;
     const [longTermContributorsCount, contributors] =
       countLongTermContributors(data);
+
+    const [loadedAvatars, loadAvatars] = useLoadedAvatars(contributors);
+
     if (longTermContributorsCount >= 20) {
       // @ts-ignore
       option.yAxis.max = 20;
@@ -187,14 +190,7 @@ const RacingBar = forwardRef(
     useEffect(() => {
       (async () => {
         if (!divEL.current) return;
-
-        // load avatars and extract colors before playing the chart
-        const promises = contributors.map(async (contributor) => {
-          await avatarColorStore.getColors(contributor);
-          setLoadedAvatars((loadedAvatars) => loadedAvatars + 1);
-        });
-        await Promise.all(promises);
-
+        await loadAvatars();
         play();
       })();
     }, []);

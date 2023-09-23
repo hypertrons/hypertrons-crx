@@ -14,6 +14,7 @@ import {
   PlayCircleFilled,
   StepBackwardFilled,
   StepForwardFilled,
+  PauseCircleFilled,
 } from '@ant-design/icons';
 
 interface Props {
@@ -23,6 +24,8 @@ interface Props {
 
 const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
+  const [speed, setSpeed] = useState<number>(1);
+  const [playing, setPlaying] = useState<boolean>(false);
   const mediaControlersRef = useRef<MediaControlers>(null);
 
   useEffect(() => {
@@ -45,9 +48,9 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
             <Space>
               {/* speed control */}
               <SpeedController
-                speed={1}
+                speed={speed}
                 onSpeedChange={(speed) => {
-                  console.log(speed);
+                  setSpeed(speed);
                 }}
               />
 
@@ -62,8 +65,10 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
                 />
                 {/* play | pause */}
                 <PlayerButton
-                  icon={<PlayCircleFilled />}
-                  onClick={mediaControlersRef.current?.play}
+                  icon={playing ? <PauseCircleFilled /> : <PlayCircleFilled />}
+                  onClick={() => {
+                    setPlaying(!playing);
+                  }}
                 />
                 {/* next month | latest month */}
                 <PlayerButton
@@ -81,7 +86,7 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
             <div style={{ margin: '10px 0 20px 20px' }}>
               <RacingBar
                 ref={mediaControlersRef}
-                repoName={currentRepo}
+                speed={speed}
                 data={repoActivityDetails}
               />
             </div>
