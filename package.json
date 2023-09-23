@@ -19,6 +19,7 @@
     "update-version": "node scripts/bump-version.cjs"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.2.6",
     "@fluentui/react": "^8.62.0",
     "@fluentui/react-hooks": "^8.3.13",
     "@hot-loader/react-dom": "^17.0.2",

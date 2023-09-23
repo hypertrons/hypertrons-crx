@@ -1,5 +1,3 @@
-import React, { useState, useEffect, useRef } from 'react';
-
 import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import optionsStorage, {
   HypercrxOptions,
@@ -7,6 +5,15 @@ import optionsStorage, {
 } from '../../../../options-storage';
 import RacingBar, { MediaControlers } from './RacingBar';
 import { RepoActivityDetails } from '.';
+import { PlayerButton } from './PlayerButton';
+
+import React, { useState, useEffect, useRef } from 'react';
+import { Space } from 'antd';
+import {
+  PlayCircleFilled,
+  StepBackwardFilled,
+  StepForwardFilled,
+} from '@ant-design/icons';
 
 interface Props {
   currentRepo: string;
@@ -34,15 +41,27 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
             )}
           </span>
           <div className="hypertrons-crx-title-extra developer-tab">
-            <button
-              className="perceptor-button"
-              onClick={mediaControlersRef.current?.play}
-            >
-              {getMessageByLocale(
-                'component_projectRacingBar_ReplayButton',
-                options.locale
-              )}
-            </button>
+            <Space size={3}>
+              {/* last month */}
+              <PlayerButton
+                tooltip="Double click to the earliest"
+                icon={<StepBackwardFilled />}
+                onClick={mediaControlersRef.current?.play}
+                onDoubleClick={mediaControlersRef.current?.play}
+              />
+              {/* play | pause */}
+              <PlayerButton
+                icon={<PlayCircleFilled />}
+                onClick={mediaControlersRef.current?.play}
+              />
+              {/* next month */}
+              <PlayerButton
+                tooltip="Double click to the latest"
+                icon={<StepForwardFilled />}
+                onClick={mediaControlersRef.current?.play}
+                onDoubleClick={mediaControlersRef.current?.play}
+              />
+            </Space>
           </div>
         </div>
         <div className="d-flex flex-wrap flex-items-center">
