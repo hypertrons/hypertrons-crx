@@ -4,8 +4,9 @@ import optionsStorage, {
   defaults,
 } from '../../../../options-storage';
 import RacingBar, { MediaControlers } from './RacingBar';
-import { RepoActivityDetails } from '.';
+import { RepoActivityDetails } from './data';
 import { PlayerButton } from './PlayerButton';
+import { SpeedController } from './SpeedController';
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Space } from 'antd';
@@ -41,26 +42,37 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
             )}
           </span>
           <div className="hypertrons-crx-title-extra developer-tab">
-            <Space size={3}>
-              {/* last month */}
-              <PlayerButton
-                tooltip="Double click to the earliest"
-                icon={<StepBackwardFilled />}
-                onClick={mediaControlersRef.current?.play}
-                onDoubleClick={mediaControlersRef.current?.play}
+            <Space>
+              {/* speed control */}
+              <SpeedController
+                speed={1}
+                onSpeedChange={(speed) => {
+                  console.log(speed);
+                }}
               />
-              {/* play | pause */}
-              <PlayerButton
-                icon={<PlayCircleFilled />}
-                onClick={mediaControlersRef.current?.play}
-              />
-              {/* next month */}
-              <PlayerButton
-                tooltip="Double click to the latest"
-                icon={<StepForwardFilled />}
-                onClick={mediaControlersRef.current?.play}
-                onDoubleClick={mediaControlersRef.current?.play}
-              />
+
+              {/* 3 buttons */}
+              <Space size={3}>
+                {/* last month | earliest month */}
+                <PlayerButton
+                  tooltip="Double click to the earliest"
+                  icon={<StepBackwardFilled />}
+                  onClick={mediaControlersRef.current?.play}
+                  onDoubleClick={mediaControlersRef.current?.play}
+                />
+                {/* play | pause */}
+                <PlayerButton
+                  icon={<PlayCircleFilled />}
+                  onClick={mediaControlersRef.current?.play}
+                />
+                {/* next month | latest month */}
+                <PlayerButton
+                  tooltip="Double click to the latest"
+                  icon={<StepForwardFilled />}
+                  onClick={mediaControlersRef.current?.play}
+                  onDoubleClick={mediaControlersRef.current?.play}
+                />
+              </Space>
             </Space>
           </div>
         </div>

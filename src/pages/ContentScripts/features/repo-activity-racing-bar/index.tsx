@@ -11,11 +11,7 @@ import {
 import { getActivityDetails } from '../../../../api/repo';
 import View from './view';
 import DataNotFound from '../repo-networks/DataNotFound';
-
-export interface RepoActivityDetails {
-  // e.g. 2020-05: [["frank-zsy", 4.69], ["heming6666", 3.46], ["menbotics[bot]", 2]]
-  [key: string]: [string, number][];
-}
+import { RepoActivityDetails } from './data';
 
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;

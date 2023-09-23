@@ -1,5 +1,6 @@
-import { RepoActivityDetails } from '.';
+import { RepoActivityDetails } from './data';
 import { avatarColorStore } from './AvatarColorStore';
+import { countLongTermContributors } from './data';
 
 import React, {
   useEffect,
@@ -164,33 +165,6 @@ const playFromStart = (instance: EChartsType, data: RepoActivityDetails) => {
   };
 
   playNext();
-};
-
-/**
- * Count the number of unique contributors in the data
- * @returns [number of long term contributors, contributors' names]
- */
-const countLongTermContributors = (
-  data: RepoActivityDetails
-): [number, string[]] => {
-  const contributors = new Map<string, number>();
-  Object.keys(data).forEach((month) => {
-    data[month].forEach((item) => {
-      if (contributors.has(item[0])) {
-        contributors.set(item[0], contributors.get(item[0])! + 1);
-      } else {
-        contributors.set(item[0], 0);
-      }
-    });
-  });
-  let count = 0;
-  contributors.forEach((value) => {
-    // only count contributors who have contributed more than 3 months
-    if (value >= 3) {
-      count++;
-    }
-  });
-  return [count, [...contributors.keys()]];
 };
 
 const RacingBar = forwardRef(
