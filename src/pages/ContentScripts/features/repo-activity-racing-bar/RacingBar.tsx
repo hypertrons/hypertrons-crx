@@ -15,10 +15,9 @@ import React, {
   useImperativeHandle,
   ForwardedRef,
 } from 'react';
-import * as echarts from 'echarts';
 import { Spin } from 'antd';
+import * as echarts from 'echarts';
 import type { EChartsType } from 'echarts';
-import { set } from 'lodash-es';
 
 export interface MediaControlers {
   play: () => void;
