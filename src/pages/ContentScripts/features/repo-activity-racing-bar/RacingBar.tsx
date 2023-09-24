@@ -1,5 +1,4 @@
-import { RepoActivityDetails } from './data';
-import { avatarColorStore } from './AvatarColorStore';
+import { RepoActivityDetails, getOption } from './data';
 import { countLongTermContributors } from './data';
 import { useLoadedAvatars } from './useLoadedAvatars';
 
@@ -24,124 +23,13 @@ interface RacingBarProps {
   data: RepoActivityDetails;
 }
 
-const updateFrequency = 3000;
-
-const option: EChartsOption = {
-  grid: {
-    top: 10,
-    bottom: 30,
-    left: 160,
-    right: 50,
-  },
-  xAxis: {
-    max: 'dataMax',
-  },
-  yAxis: {
-    type: 'category',
-    inverse: true,
-    max: 10,
-    axisLabel: {
-      show: true,
-      fontSize: 14,
-      formatter: function (value: string) {
-        if (!value || value.endsWith('[bot]')) return value;
-        return `${value} {avatar${value.replaceAll('-', '')}|}`;
-      },
-    },
-    axisTick: {
-      show: false,
-    },
-    animationDuration: 0,
-    animationDurationUpdate: 200,
-  },
-  series: [
-    {
-      realtimeSort: true,
-      seriesLayoutBy: 'column',
-      type: 'bar',
-      data: undefined,
-      encode: {
-        x: 1,
-        y: 0,
-      },
-      label: {
-        show: true,
-        precision: 1,
-        position: 'right',
-        valueAnimation: true,
-        fontFamily: 'monospace',
-      },
-    },
-  ],
-  // Disable init animation.
-  animationDuration: 0,
-  animationDurationUpdate: updateFrequency,
-  animationEasing: 'linear',
-  animationEasingUpdate: 'linear',
-  graphic: {
-    elements: [
-      {
-        type: 'text',
-        right: 60,
-        bottom: 60,
-        style: {
-          text: undefined,
-          font: 'bolder 60px monospace',
-          fill: 'rgba(100, 100, 100, 0.25)',
-        },
-        z: 100,
-      },
-    ],
-  },
-};
-
 const updateMonth = async (
   instance: EChartsType,
   data: RepoActivityDetails,
-  month: string
+  month: string,
+  speed: number
 ) => {
-  const rich: any = {};
-  const barData: BarSeriesOption['data'] = await Promise.all(
-    data[month].map(async (item) => {
-      // rich name cannot contain special characters such as '-'
-      rich[`avatar${item[0].replaceAll('-', '')}`] = {
-        backgroundColor: {
-          image: `https://avatars.githubusercontent.com/${item[0]}?s=48&v=4`,
-        },
-        height: 20,
-      };
-      const avatarColors = await avatarColorStore.getColors(item[0]);
-      return {
-        value: item,
-        itemStyle: {
-          color: {
-            type: 'linear',
-            x: 0,
-            y: 0,
-            x2: 1,
-            y2: 0,
-            colorStops: [
-              {
-                offset: 0,
-                color: avatarColors[0],
-              },
-              {
-                offset: 0.5,
-                color: avatarColors[1],
-              },
-            ],
-            global: false,
-          },
-        },
-      };
-    })
-  );
-  // @ts-ignore
-  option.yAxis.axisLabel.rich = rich;
-  // @ts-ignore
-  option.series[0].data = barData;
-  // @ts-ignore
-  option.graphic.elements[0].style.text = month;
+  const option = await getOption(data, month, speed);
 
   // it seems that hidden bars are also rendered, so when each setOption merge more data into the chart,
   // the fps goes down. So we use notMerge to avoid merging data. But this disables the xAxis animation.
@@ -153,15 +41,19 @@ const updateMonth = async (
 
 let timer: NodeJS.Timeout;
 
-const playFromStart = (instance: EChartsType, data: RepoActivityDetails) => {
+const playFromStart = (
+  instance: EChartsType,
+  data: RepoActivityDetails,
+  speed: number
+) => {
   const months = Object.keys(data);
   let i = 0;
 
   const playNext = async () => {
-    await updateMonth(instance, data, months[i]);
+    await updateMonth(instance, data, months[i], speed);
     i++;
     if (i < months.length) {
-      timer = setTimeout(playNext, updateFrequency);
+      timer = setTimeout(playNext, 3000 / speed);
     }
   };
 
@@ -208,7 +100,7 @@ const RacingBar = forwardRef(
       }
       const chartDOM = divEL.current;
       instance = echarts.init(chartDOM);
-      playFromStart(instance, data);
+      playFromStart(instance, data, speed);
     };
 
     // expose startRecording and stopRecording to parent component
