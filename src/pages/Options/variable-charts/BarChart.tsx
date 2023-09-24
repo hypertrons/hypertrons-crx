@@ -22,11 +22,12 @@ const DARK_THEME = {
 interface BarChartProps {
   theme: 'light' | 'dark';
   height: number;
-  RepoName: string[];
+  repoNames: string[];
+  currentRepo?: string;
 }
 
 const BarChart = (props: BarChartProps): JSX.Element => {
-  const { theme, height, RepoName } = props;
+  const { theme, height, repoNames, currentRepo } = props;
   const divEL = useRef(null);
   const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;
   const [data, setData] = useState<{ [repo: string]: RawRepoData }>({});
@@ -35,9 +36,9 @@ const BarChart = (props: BarChartProps): JSX.Element => {
     tooltip: {
       trigger: 'axis',
     },
-    legend: {
-      type: 'scroll',
-    },
+    // legend: {
+    //   type: 'scroll',
+    // },
     grid: {
       left: '5%',
       right: '4%',
@@ -78,7 +79,7 @@ const BarChart = (props: BarChartProps): JSX.Element => {
 
   useEffect(() => {
     const fetchData = async () => {
-      for (const repo of RepoName) {
+      for (const repo of repoNames) {
         try {
           //getStars() to fetch repository data
           const starsData = await getStars(repo);
@@ -100,10 +101,17 @@ const BarChart = (props: BarChartProps): JSX.Element => {
 
     const instance = echarts.init(chartDOM as any);
     instance.setOption(option);
+    instance.dispatchAction({
+      type: 'highlight',
+      // seriesIndex: Number(currentRepo),
+      // dataIndex: Number(currentRepo),
+      name: repoNames[Number(currentRepo)],
+      seriesName: repoNames[Number(currentRepo)],
+    });
     return () => {
       instance.dispose();
     };
-  }, [data]);
+  }, [data, currentRepo]);
 
   return <div ref={divEL} style={{ width: '100%', height: height }}></div>;
 };

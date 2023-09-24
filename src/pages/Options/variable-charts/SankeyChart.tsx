@@ -18,11 +18,13 @@ const DARK_THEME = {
 interface SankeyChartProps {
   theme: 'light' | 'dark';
   height: number;
-  RepoName: string[];
+  repoNames: string[];
+
+  currentRepo?: string;
 }
 
 const SankeyChart = (props: SankeyChartProps): JSX.Element => {
-  const { theme, height, RepoName } = props;
+  const { theme, height, repoNames, currentRepo } = props;
   const divEL = useRef(null);
   const [data, setData] = useState<{ [repoName: string]: RepoData }>({});
 
@@ -31,20 +33,20 @@ const SankeyChart = (props: SankeyChartProps): JSX.Element => {
       trigger: 'item',
       triggerOn: 'mousemove',
     },
-    legend: {
-      type: 'scroll',
-    },
+    // legend: {
+    //   type: 'scroll',
+    // },
     animation: false,
     grid: {
-      left: '5%',
-      right: '4%',
+      left: '2%',
+      right: '10%',
       bottom: '3%',
-      containLabel: true,
+      // containLabel: true,
     },
     series: [
       {
         type: 'sankey',
-        bottom: '10%',
+        // bottom: '10%',
         emphasis: {
           focus: 'adjacency',
         },
@@ -64,7 +66,7 @@ const SankeyChart = (props: SankeyChartProps): JSX.Element => {
 
   useEffect(() => {
     const fetchData = async () => {
-      for (const repo of RepoName) {
+      for (const repo of repoNames) {
         try {
           //getStars() to fetch repository data
           const starsData = await getActivityDetails(repo);
@@ -85,13 +87,20 @@ const SankeyChart = (props: SankeyChartProps): JSX.Element => {
     const TH = 'light' ? LIGHT_THEME : DARK_THEME;
 
     const instance = echarts.init(chartDOM as any);
-    console.log('sankeydata', data);
-    console.log('lastMonthData', lastMonthData(data));
+    // console.log('sankeydata', data);
+    // console.log('lastMonthData', lastMonthData(data));
     instance.setOption(option);
+    instance.dispatchAction({
+      type: 'highlight',
+      // seriesIndex: Number(currentRepo),
+      // dataIndex: Number(currentRepo),
+      name: repoNames[Number(currentRepo)],
+      seriesName: repoNames[Number(currentRepo)],
+    });
     return () => {
       instance.dispose();
     };
-  }, [data]);
+  }, [data, currentRepo]);
 
   return <div ref={divEL} style={{ width: '100%', height: height }}></div>;
 };
@@ -142,8 +151,8 @@ function lastMonthData(repo_data: {
     ...Object.keys(repo_data).map((repoName) => ({ name: repoName })),
     ...Array.from(userSet).map((userName) => ({ name: userName })),
   ];
-  console.log(data.nodes);
-  console.log(data.links);
+  // console.log(data.nodes);
+  // console.log(data.links);
   return data;
 }
 
