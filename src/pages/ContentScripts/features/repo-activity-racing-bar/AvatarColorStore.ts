@@ -56,6 +56,13 @@ class AvatarColorStore {
               (rgb: RGB) => `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`
             );
           });
+        // Store the updated cache entry with the unique key.
+        await chrome.storage.local.set({
+          [cacheKey]: {
+            colors,
+            lastUpdated: now,
+          },
+        });
       } catch (error) {
         console.error(
           `Cannot extract colors of the avatar of ${loginId}, error info: `,
@@ -63,14 +70,6 @@ class AvatarColorStore {
         );
         colors = Array(COLOR_COUNT).fill('rgb(255, 255, 255)');
       }
-
-      // Store the updated cache entry with the unique key.
-      await chrome.storage.local.set({
-        [cacheKey]: {
-          colors,
-          lastUpdated: now,
-        },
-      });
 
       return colors;
     }
