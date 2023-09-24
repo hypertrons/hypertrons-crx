@@ -34,7 +34,7 @@ export const countLongTermContributors = (
   return [count, [...contributors.keys()]];
 };
 
-export const DEFAULT_FREQUENCY = 3000;
+export const DEFAULT_FREQUENCY = 2000;
 
 /**
  * get the echarts option with the given data, month and speed.
@@ -43,7 +43,8 @@ export const getOption = async (
   data: RepoActivityDetails,
   month: string,
   speed: number,
-  maxBars: number
+  maxBars: number,
+  enableAnimation: boolean
 ): Promise<EChartsOption> => {
   const updateFrequency = DEFAULT_FREQUENCY / speed;
   const rich: any = {};
@@ -110,7 +111,7 @@ export const getOption = async (
         show: false,
       },
       animationDuration: 0,
-      animationDurationUpdate: 200,
+      animationDurationUpdate: enableAnimation ? 200 : 0,
     },
     series: [
       {
@@ -133,7 +134,7 @@ export const getOption = async (
     ],
     // Disable init animation.
     animationDuration: 0,
-    animationDurationUpdate: updateFrequency,
+    animationDurationUpdate: enableAnimation ? updateFrequency : 0,
     animationEasing: 'linear',
     animationEasingUpdate: 'linear',
     graphic: {

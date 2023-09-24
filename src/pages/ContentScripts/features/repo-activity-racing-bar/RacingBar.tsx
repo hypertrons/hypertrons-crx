@@ -5,6 +5,7 @@ import {
   DEFAULT_FREQUENCY,
 } from './data';
 import { useLoadedAvatars } from './useLoadedAvatars';
+import sleep from '../../../../helpers/sleep';
 
 import React, {
   useEffect,
@@ -53,19 +54,18 @@ const RacingBar = forwardRef(
     const height = longTermContributorsCount >= 20 ? 600 : 300;
     const [loadedAvatars, loadAvatars] = useLoadedAvatars(contributors);
 
-    const refreshInstance = () => {
-      if (!divEL.current) return;
-      let instance = echarts.getInstanceByDom(divEL.current)!;
-      if (instance && !instance.isDisposed()) {
-        instance.dispose();
-      }
-      const chartDOM = divEL.current;
-      instance = echarts.init(chartDOM);
-      return instance;
-    };
-
-    const updateMonth = async (instance: EChartsType, month: string) => {
-      const option = await getOption(data, month, speedRef.current, maxBars);
+    const updateMonth = async (
+      instance: EChartsType,
+      month: string,
+      enableAnimation: boolean
+    ) => {
+      const option = await getOption(
+        data,
+        month,
+        speedRef.current,
+        maxBars,
+        enableAnimation
+      );
       // it seems that hidden bars are also rendered, so when each setOption merge more data into the chart,
       // the fps goes down. So we use notMerge to avoid merging data. But this disables the xAxis animation.
       // Hope we can find a better solution.
@@ -74,48 +74,11 @@ const RacingBar = forwardRef(
       });
     };
 
-    const next = () => {
-      if (monthIndexRef.current < months.length - 1) {
-        const instance = refreshInstance();
-        monthIndexRef.current++;
-        instance && updateMonth(instance, months[monthIndexRef.current]);
-      }
-    };
-
-    const previous = () => {
-      if (monthIndexRef.current > 0) {
-        const instance = refreshInstance();
-        monthIndexRef.current--;
-        instance && updateMonth(instance, months[monthIndexRef.current]);
-      }
-    };
-
-    const latest = () => {
-      const instance = refreshInstance();
-      monthIndexRef.current = months.length - 1;
-      instance && updateMonth(instance, months[monthIndexRef.current]);
-    };
-
-    const earliest = () => {
-      const instance = refreshInstance();
-      monthIndexRef.current = 0;
-      instance && updateMonth(instance, months[monthIndexRef.current]);
-    };
-
     const play = async () => {
-      if (!divEL.current) return;
-
-      setPlaying(true);
-
-      if (monthIndexRef.current === months.length - 1) {
-        earliest();
-      }
-
       const nextMonth = async () => {
-        if (!divEL.current) return;
         monthIndexRef.current++;
-        const instance = echarts.getInstanceByDom(divEL.current)!;
-        await updateMonth(instance, months[monthIndexRef.current]);
+        const instance = echarts.getInstanceByDom(divEL.current!)!;
+        updateMonth(instance, months[monthIndexRef.current], true);
         if (monthIndexRef.current < months.length - 1) {
           timerRef.current = setTimeout(
             nextMonth,
@@ -127,6 +90,13 @@ const RacingBar = forwardRef(
           }, DEFAULT_FREQUENCY / speedRef.current);
         }
       };
+
+      setPlaying(true);
+      // if the current month is the latest month, go to the beginning
+      if (monthIndexRef.current === months.length - 1) {
+        earliest();
+        await sleep(DEFAULT_FREQUENCY / speedRef.current);
+      }
       nextMonth();
     };
 
@@ -136,6 +106,37 @@ const RacingBar = forwardRef(
       if (timerRef.current) {
         clearTimeout(timerRef.current);
       }
+    };
+
+    const next = () => {
+      pause();
+      if (monthIndexRef.current < months.length - 1) {
+        const instance = echarts.getInstanceByDom(divEL.current!)!;
+        monthIndexRef.current++;
+        updateMonth(instance, months[monthIndexRef.current], false);
+      }
+    };
+
+    const previous = () => {
+      pause();
+      if (monthIndexRef.current > 0) {
+        const instance = echarts.getInstanceByDom(divEL.current!)!;
+        monthIndexRef.current--;
+        updateMonth(instance, months[monthIndexRef.current], false);
+      }
+    };
+
+    const latest = () => {
+      pause();
+      const instance = echarts.getInstanceByDom(divEL.current!)!;
+      monthIndexRef.current = months.length - 1;
+      updateMonth(instance, months[monthIndexRef.current], false);
+    };
+
+    const earliest = () => {
+      const instance = echarts.getInstanceByDom(divEL.current!)!;
+      monthIndexRef.current = 0;
+      updateMonth(instance, months[monthIndexRef.current], false);
     };
 
     // expose startRecording and stopRecording to parent component
@@ -151,9 +152,19 @@ const RacingBar = forwardRef(
     useEffect(() => {
       (async () => {
         await loadAvatars();
-        const instance = refreshInstance();
-        instance && updateMonth(instance, months[monthIndexRef.current]);
+        const instance = echarts.init(divEL.current!);
+        updateMonth(instance, months[monthIndexRef.current], false);
       })();
+
+      return () => {
+        if (timerRef.current) {
+          clearTimeout(timerRef.current);
+        }
+        const instance = echarts.getInstanceByDom(divEL.current!);
+        if (instance && !instance.isDisposed()) {
+          instance.dispose();
+        }
+      };
     }, []);
 
     return (
