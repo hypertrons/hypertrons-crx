@@ -34,15 +34,18 @@ export const countLongTermContributors = (
   return [count, [...contributors.keys()]];
 };
 
+export const DEFAULT_FREQUENCY = 3000;
+
 /**
  * get the echarts option with the given data, month and speed.
  */
 export const getOption = async (
   data: RepoActivityDetails,
   month: string,
-  speed: number
+  speed: number,
+  maxBars: number
 ): Promise<EChartsOption> => {
-  const updateFrequency = 3000 / speed;
+  const updateFrequency = DEFAULT_FREQUENCY / speed;
   const rich: any = {};
   const barData: BarSeriesOption['data'] = await Promise.all(
     data[month].map(async (item) => {
@@ -79,6 +82,7 @@ export const getOption = async (
       };
     })
   );
+
   return {
     grid: {
       top: 10,
@@ -92,7 +96,7 @@ export const getOption = async (
     yAxis: {
       type: 'category',
       inverse: true,
-      max: 10,
+      max: maxBars,
       axisLabel: {
         show: true,
         fontSize: 14,

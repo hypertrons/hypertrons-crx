@@ -16,6 +16,7 @@ import {
   StepForwardFilled,
   PauseCircleFilled,
 } from '@ant-design/icons';
+import { set } from 'lodash-es';
 
 interface Props {
   currentRepo: string;
@@ -61,13 +62,17 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
                   tooltip="Long press to the earliest"
                   icon={<StepBackwardFilled />}
                   onClick={mediaControlersRef.current?.previous}
-                  onLongPress={mediaControlersRef.current?.previous}
+                  onLongPress={mediaControlersRef.current?.earliest}
                 />
                 {/* play | pause */}
                 <PlayerButton
                   icon={playing ? <PauseCircleFilled /> : <PlayCircleFilled />}
                   onClick={() => {
-                    setPlaying(!playing);
+                    if (playing) {
+                      mediaControlersRef.current?.pause();
+                    } else {
+                      mediaControlersRef.current?.play();
+                    }
                   }}
                 />
                 {/* next month | latest month */}
@@ -75,7 +80,7 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
                   tooltip="Long press to the latest"
                   icon={<StepForwardFilled />}
                   onClick={mediaControlersRef.current?.next}
-                  onLongPress={mediaControlersRef.current?.next}
+                  onLongPress={mediaControlersRef.current?.latest}
                 />
               </Space>
             </Space>
@@ -88,6 +93,7 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
                 ref={mediaControlersRef}
                 speed={speed}
                 data={repoActivityDetails}
+                setPlaying={setPlaying}
               />
             </div>
           </div>
