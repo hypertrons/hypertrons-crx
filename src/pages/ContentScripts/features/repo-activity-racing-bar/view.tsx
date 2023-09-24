@@ -16,7 +16,6 @@ import {
   StepForwardFilled,
   PauseCircleFilled,
 } from '@ant-design/icons';
-import { set } from 'lodash-es';
 
 interface Props {
   currentRepo: string;

@@ -66,12 +66,7 @@ const RacingBar = forwardRef(
         maxBars,
         enableAnimation
       );
-      // it seems that hidden bars are also rendered, so when each setOption merge more data into the chart,
-      // the fps goes down. So we use notMerge to avoid merging data. But this disables the xAxis animation.
-      // Hope we can find a better solution.
-      instance.setOption(option, {
-        notMerge: true,
-      });
+      instance.setOption(option);
     };
 
     const play = async () => {

@@ -1,6 +1,7 @@
 import { avatarColorStore } from './AvatarColorStore';
 
 import type { BarSeriesOption, EChartsOption, EChartsType } from 'echarts';
+import { orderBy, take } from 'lodash-es';
 
 export interface RepoActivityDetails {
   // e.g. 2020-05: [["frank-zsy", 4.69], ["heming6666", 3.46], ["menbotics[bot]", 2]]
@@ -48,8 +49,10 @@ export const getOption = async (
 ): Promise<EChartsOption> => {
   const updateFrequency = DEFAULT_FREQUENCY / speed;
   const rich: any = {};
+  const sortedData = orderBy(data[month], (item) => item[1], 'desc');
+  const topData = take(sortedData, maxBars);
   const barData: BarSeriesOption['data'] = await Promise.all(
-    data[month].map(async (item) => {
+    topData.map(async (item) => {
       // rich name cannot contain special characters such as '-'
       rich[`avatar${item[0].replaceAll('-', '')}`] = {
         backgroundColor: {
