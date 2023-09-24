@@ -58,10 +58,10 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
               <Space size={3}>
                 {/* last month | earliest month */}
                 <PlayerButton
-                  tooltip="Double click to the earliest"
+                  tooltip="Long press to the earliest"
                   icon={<StepBackwardFilled />}
-                  onClick={mediaControlersRef.current?.play}
-                  onDoubleClick={mediaControlersRef.current?.play}
+                  onClick={mediaControlersRef.current?.previous}
+                  onLongPress={mediaControlersRef.current?.previous}
                 />
                 {/* play | pause */}
                 <PlayerButton
@@ -72,10 +72,10 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
                 />
                 {/* next month | latest month */}
                 <PlayerButton
-                  tooltip="Double click to the latest"
+                  tooltip="Long press to the latest"
                   icon={<StepForwardFilled />}
-                  onClick={mediaControlersRef.current?.play}
-                  onDoubleClick={mediaControlersRef.current?.play}
+                  onClick={mediaControlersRef.current?.next}
+                  onLongPress={mediaControlersRef.current?.next}
                 />
               </Space>
             </Space>
