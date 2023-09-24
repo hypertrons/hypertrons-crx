@@ -37,11 +37,9 @@ const init = async (): Promise<void> => {
   await getData();
   const container = document.createElement('div');
   container.id = featureId;
+  // append before render so that the container has computed width
+  $('#hypercrx-perceptor-layout').append(container);
   renderTo(container);
-  const parentElement = document.getElementById('hypercrx-perceptor-layout');
-  if (parentElement) {
-    parentElement.append(container);
-  }
 };
 
 const restore = async () => {
