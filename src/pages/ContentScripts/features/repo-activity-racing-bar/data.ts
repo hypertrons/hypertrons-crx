@@ -1,7 +1,11 @@
 import { avatarColorStore } from './AvatarColorStore';
+import getGithubTheme from '../../../../helpers/get-github-theme';
 
-import type { BarSeriesOption, EChartsOption, EChartsType } from 'echarts';
+import type { BarSeriesOption, EChartsOption } from 'echarts';
 import { orderBy, take } from 'lodash-es';
+
+const theme = getGithubTheme();
+const DARK_TEXT_COLOR = 'rgba(230, 237, 243, 0.9)';
 
 export interface RepoActivityDetails {
   // e.g. 2020-05: [["frank-zsy", 4.69], ["heming6666", 3.46], ["menbotics[bot]", 2]]
@@ -96,6 +100,10 @@ export const getOption = async (
     },
     xAxis: {
       max: 'dataMax',
+      axisLabel: {
+        show: true,
+        color: theme === 'light' ? undefined : DARK_TEXT_COLOR,
+      },
     },
     yAxis: {
       type: 'category',
@@ -103,6 +111,7 @@ export const getOption = async (
       max: maxBars,
       axisLabel: {
         show: true,
+        color: theme === 'light' ? undefined : DARK_TEXT_COLOR,
         fontSize: 14,
         formatter: function (value: string) {
           if (!value || value.endsWith('[bot]')) return value;
@@ -132,6 +141,7 @@ export const getOption = async (
           position: 'right',
           valueAnimation: true,
           fontFamily: 'monospace',
+          color: theme === 'light' ? undefined : DARK_TEXT_COLOR,
         },
       },
     ],
@@ -149,7 +159,8 @@ export const getOption = async (
           style: {
             text: month,
             font: 'bolder 60px monospace',
-            fill: 'rgba(100, 100, 100, 0.25)',
+            fill:
+              theme === 'light' ? 'rgba(100, 100, 100, 0.3)' : DARK_TEXT_COLOR,
           },
           z: 100,
         },
