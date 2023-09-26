@@ -8,6 +8,7 @@ import optionsStorage, {
 import { getRepoName } from '../../../../helpers/get-repo-info';
 import Collection from './Collection';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import collection from './Collection';
 
 const { useToken } = theme;
 
@@ -31,15 +32,6 @@ const Mydropdown = () => {
     </div>
   );
   const defaultCollection = {
-    Xlab2017: [
-      'X-lab2017/open-digger',
-      'X-lab2017/open-leaderboard',
-      'X-lab2017/open-wonderland',
-    ],
-    Hypertrons: ['hypertrons/hypertrons-crx', 'X-lab2017/open-leaderboard'],
-  };
-
-  const defaultCollection2 = {
     Xlab2017: [
       'X-lab2017/open-digger',
       'X-lab2017/open-leaderboard',
@@ -115,17 +107,7 @@ const Mydropdown = () => {
   function handleValueClick(value: string) {
     // open modal
     alert(value);
-    const openFeatureInContentScript = async () => {
-      const [tab] = await chrome.tabs.query({
-        active: true,
-        lastFocusedWindow: true,
-      });
-      const response = await chrome.tabs.sendMessage(tab.id!, {
-        greeting: 'demo',
-      });
-    };
-
-    openFeatureInContentScript();
+    alert(collectionData[value as keyof typeof collectionData]);
   }
 
   const getListData = () => {
