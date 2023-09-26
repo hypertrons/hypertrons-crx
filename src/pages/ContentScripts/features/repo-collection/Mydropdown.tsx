@@ -11,7 +11,7 @@ import { CheckboxChangeEvent } from 'antd/es/checkbox';
 
 const { useToken } = theme;
 
-const View = () => {
+const Mydropdown = () => {
   const { token } = useToken();
   const contentStyle: React.CSSProperties = {
     backgroundColor: token.colorBgElevated,
@@ -93,8 +93,6 @@ const View = () => {
     </div>
   );
 
-  useEffect(() => {}, [collectionData]);
-
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
@@ -113,6 +111,22 @@ const View = () => {
       setItems(temp);
     });
   }, [refresh]);
+
+  function handleValueClick(value: string) {
+    // open modal
+    alert(value);
+    const openFeatureInContentScript = async () => {
+      const [tab] = await chrome.tabs.query({
+        active: true,
+        lastFocusedWindow: true,
+      });
+      const response = await chrome.tabs.sendMessage(tab.id!, {
+        greeting: 'demo',
+      });
+    };
+
+    openFeatureInContentScript();
+  }
 
   const getListData = () => {
     type DataType = {
@@ -143,7 +157,7 @@ const View = () => {
       transformedData[repoName].forEach((value, index) => {
         labels.push({
           key: (index + 1).toString(),
-          label: <div>{value}</div>,
+          label: <div onClick={() => handleValueClick(value)}>{value}</div>,
         });
       });
     }
@@ -292,4 +306,4 @@ const View = () => {
   );
 };
 
-export default View;
+export default Mydropdown;

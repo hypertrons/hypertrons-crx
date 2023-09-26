@@ -5,14 +5,15 @@ import features from '../../../../feature-manager';
 import * as pageDetect from 'github-url-detection';
 import { getDeveloperName } from '../../../../helpers/get-developer-info';
 import isPublicRepo from '../../../../helpers/is-public-repo';
-import View from './view';
+import Mydropdown from './Mydropdown';
+import View from './View';
 import getGithubTheme from '../../../../helpers/get-github-theme';
 import elementReady from 'element-ready';
 
 const featureId = features.getFeatureID(import.meta.url);
 
 const renderTo = (container: Container) => {
-  render(<View />, container);
+  render(<Mydropdown />, container);
 };
 
 const init = async (): Promise<void> => {
@@ -21,6 +22,11 @@ const init = async (): Promise<void> => {
   renderTo(container);
   await elementReady('#repository-container-header');
   $('#repository-details-container').before(container);
+
+  const container2 = document.createElement('div');
+  container2.id = featureId;
+  render(<View />, container2);
+  $('body').append(container2);
 };
 
 features.add(featureId, {

@@ -46,7 +46,7 @@ function getItem(
   } as MenuItem;
 }
 
-const Oldview = () => {
+const View = () => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
 
   useEffect(() => {
@@ -123,9 +123,11 @@ const Oldview = () => {
       };
     });
 
+    console.log('jsonarry', jsonArray);
+
     chrome.storage.sync.set({ UserCollection: jsonArray }).then(() => {
       setCollectionData(jsonArray);
-      console.log('data', jsonArray);
+      console.log('codata', collectionData);
       console.log('UserCollection is set');
     });
   };
@@ -420,4 +422,4 @@ const Oldview = () => {
   );
 };
 
-export default Oldview;
+export default View;
