@@ -1,13 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Dropdown, Space, Button, Input, theme, Checkbox } from 'antd';
-import {
-  DownOutlined,
-  AppstoreOutlined,
-  GithubOutlined,
-  SettingOutlined,
-  DeleteOutlined,
-  FolderAddOutlined,
-} from '@ant-design/icons';
+import { DownOutlined } from '@ant-design/icons';
 import optionsStorage, {
   HypercrxOptions,
   defaults,
@@ -15,14 +8,6 @@ import optionsStorage, {
 import { getRepoName } from '../../../../helpers/get-repo-info';
 import Collection from './Collection';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
-
-const iconMap: any = {
-  AppstoreOutlined: AppstoreOutlined,
-  GithubOutlined: GithubOutlined,
-  SettingOutlined: SettingOutlined,
-  DeleteOutlined: DeleteOutlined,
-  FolderAddOutlined: FolderAddOutlined,
-};
 
 const { useToken } = theme;
 
@@ -40,12 +25,21 @@ const View = () => {
     <div className="text-right">
       <Space style={{ padding: 8 }}>
         <Button type="primary" onClick={editRepo}>
-          Add to new repo
+          编辑
         </Button>
       </Space>
     </div>
   );
   const defaultCollection = {
+    Xlab2017: [
+      'X-lab2017/open-digger',
+      'X-lab2017/open-leaderboard',
+      'X-lab2017/open-wonderland',
+    ],
+    Hypertrons: ['hypertrons/hypertrons-crx', 'X-lab2017/open-leaderboard'],
+  };
+
+  const defaultCollection2 = {
     Xlab2017: [
       'X-lab2017/open-digger',
       'X-lab2017/open-leaderboard',
@@ -70,6 +64,7 @@ const View = () => {
   ]);
   const [collectionData, setCollectionData] = useState(defaultCollection);
   const [newCollectionName, setNewCollectionName] = useState('');
+  const [refresh, setRefresh] = useState(0);
 
   const editFooter = (
     <div className="text-right">
@@ -98,6 +93,8 @@ const View = () => {
     </div>
   );
 
+  useEffect(() => {}, [collectionData]);
+
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
@@ -105,22 +102,23 @@ const View = () => {
   }, []);
 
   useEffect(() => {
-    chrome.storage.local.get(['userCollectionData']).then((result) => {
-      if (result.collectionData) {
-        console.log('hi,loading', result.collectionData);
+    chrome.storage.sync.get(['userCollectionData']).then((result) => {
+      if (result.userCollectionData) {
+        console.log('hi,loading', result.userCollectionData);
       }
-      setCollectionData(result.collectionData);
+      setCollectionData(result.userCollectionData);
       console.log('collectiondata', collectionData);
       const temp = getListData();
       console.log('listdata', temp);
       setItems(temp);
     });
-  }, []);
+  }, [refresh]);
 
   const getListData = () => {
     type DataType = {
       [key: string]: string[];
     };
+    console.log('hello collection', collectionData);
     const originalData: DataType = collectionData;
     const transformedData: DataType = {};
 
@@ -181,27 +179,32 @@ const View = () => {
 
   function applyChange() {
     // items变化
-
+    const temp = getListData();
+    setItems(temp);
     // footer变化
     setFooterContent(listFooter);
   }
   const handleCheckboxChange = (e: CheckboxChangeEvent, key: string) => {
     const newData = { ...collectionData }; // 创建数据的副本
-    console.log(key);
-    console.log('newdata', newData);
+    console.log('newData', newData);
+    console.log('e', e);
     if (e.target.checked) {
-      newData[key as keyof typeof collectionData].push(repoName);
+      newData[key as keyof typeof newData].push(repoName);
       console.log('add', newData);
     } else {
-      newData[key as keyof typeof collectionData] = newData[
-        key as keyof typeof collectionData
+      newData[key as keyof typeof newData] = newData[
+        key as keyof typeof newData
       ].filter((item) => item !== repoName);
       console.log('remove', newData);
     }
 
-    setCollectionData(newData); // 更新状态
-    chrome.storage.local.set({ userCollectionData: newData }).then(() => {
-      console.log('Data is setting', newData);
+    setCollectionData({
+      ...newData,
+      [key]: newData[key as keyof typeof newData],
+    });
+    // 更新状态
+    chrome.storage.sync.set({ userCollectionData: newData }).then(() => {
+      console.log('Data is setting collectionData', collectionData);
     });
   };
   function updateCollectionList() {
