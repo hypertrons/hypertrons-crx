@@ -1,12 +1,21 @@
-import React, { useState, useEffect } from 'react';
-
 import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import optionsStorage, {
   HypercrxOptions,
   defaults,
 } from '../../../../options-storage';
-import RacingBar from './RacingBar';
-import { RepoActivityDetails } from '.';
+import RacingBar, { MediaControlers } from './RacingBar';
+import { RepoActivityDetails } from './data';
+import { PlayerButton } from './PlayerButton';
+import { SpeedController } from './SpeedController';
+
+import React, { useState, useEffect, useRef } from 'react';
+import { Space } from 'antd';
+import {
+  PlayCircleFilled,
+  StepBackwardFilled,
+  StepForwardFilled,
+  PauseCircleFilled,
+} from '@ant-design/icons';
 
 interface Props {
   currentRepo: string;
@@ -15,17 +24,15 @@ interface Props {
 
 const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
-  const [replay, setReplay] = useState(0);
+  const [speed, setSpeed] = useState<number>(1);
+  const [playing, setPlaying] = useState<boolean>(false);
+  const mediaControlersRef = useRef<MediaControlers>(null);
 
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
     })();
   }, []);
-
-  const handleReplayClick = () => {
-    setReplay(replay + 1);
-  };
 
   return (
     <div>
@@ -38,21 +45,54 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
             )}
           </span>
           <div className="hypertrons-crx-title-extra developer-tab">
-            <button className="replay-button" onClick={handleReplayClick}>
-              {getMessageByLocale(
-                'component_projectRacingBar_ReplayButton',
-                options.locale
-              )}
-            </button>
+            <Space>
+              {/* speed control */}
+              <SpeedController
+                speed={speed}
+                onSpeedChange={(speed) => {
+                  setSpeed(speed);
+                }}
+              />
+
+              {/* 3 buttons */}
+              <Space size={3}>
+                {/* last month | earliest month */}
+                <PlayerButton
+                  tooltip="Long press to the earliest"
+                  icon={<StepBackwardFilled />}
+                  onClick={mediaControlersRef.current?.previous}
+                  onLongPress={mediaControlersRef.current?.earliest}
+                />
+                {/* play | pause */}
+                <PlayerButton
+                  icon={playing ? <PauseCircleFilled /> : <PlayCircleFilled />}
+                  onClick={() => {
+                    if (playing) {
+                      mediaControlersRef.current?.pause();
+                    } else {
+                      mediaControlersRef.current?.play();
+                    }
+                  }}
+                />
+                {/* next month | latest month */}
+                <PlayerButton
+                  tooltip="Long press to the latest"
+                  icon={<StepForwardFilled />}
+                  onClick={mediaControlersRef.current?.next}
+                  onLongPress={mediaControlersRef.current?.latest}
+                />
+              </Space>
+            </Space>
           </div>
         </div>
         <div className="d-flex flex-wrap flex-items-center">
           <div className="col-12 col-md-8">
             <div style={{ margin: '10px 0 20px 20px' }}>
               <RacingBar
-                key={replay}
-                repoName={currentRepo}
+                ref={mediaControlersRef}
+                speed={speed}
                 data={repoActivityDetails}
+                setPlaying={setPlaying}
               />
             </div>
           </div>

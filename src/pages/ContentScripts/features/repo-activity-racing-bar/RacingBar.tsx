@@ -1,239 +1,178 @@
-import { RepoActivityDetails } from '.';
-import { avatarColorStore } from './AvatarColorStore';
+import {
+  RepoActivityDetails,
+  getOption,
+  countLongTermContributors,
+  DEFAULT_FREQUENCY,
+} from './data';
+import { useLoadedAvatars } from './useLoadedAvatars';
+import sleep from '../../../../helpers/sleep';
 
-import React, { useEffect, useState, useRef } from 'react';
-import * as echarts from 'echarts';
-import type { EChartsOption, EChartsType, BarSeriesOption } from 'echarts';
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+  ForwardedRef,
+} from 'react';
 import { Spin } from 'antd';
+import * as echarts from 'echarts';
+import type { EChartsType } from 'echarts';
 
-interface RacingBarProps {
-  repoName: string;
-  data: RepoActivityDetails;
+export interface MediaControlers {
+  play: () => void;
+  pause: () => void;
+  next: () => void;
+  previous: () => void;
+  latest: () => void;
+  earliest: () => void;
 }
 
-const updateFrequency = 3000;
+interface RacingBarProps {
+  speed: number;
+  data: RepoActivityDetails;
+  setPlaying: (playing: boolean) => void;
+}
 
-const option: EChartsOption = {
-  grid: {
-    top: 10,
-    bottom: 30,
-    left: 160,
-    right: 50,
-  },
-  xAxis: {
-    max: 'dataMax',
-  },
-  yAxis: {
-    type: 'category',
-    inverse: true,
-    max: 10,
-    axisLabel: {
-      show: true,
-      fontSize: 14,
-      formatter: function (value: string) {
-        if (!value || value.endsWith('[bot]')) return value;
-        return `${value} {avatar${value.replaceAll('-', '')}|}`;
-      },
-    },
-    axisTick: {
-      show: false,
-    },
-    animationDuration: 0,
-    animationDurationUpdate: 200,
-  },
-  series: [
-    {
-      realtimeSort: true,
-      seriesLayoutBy: 'column',
-      type: 'bar',
-      data: undefined,
-      encode: {
-        x: 1,
-        y: 0,
-      },
-      label: {
-        show: true,
-        precision: 1,
-        position: 'right',
-        valueAnimation: true,
-        fontFamily: 'monospace',
-      },
-    },
-  ],
-  // Disable init animation.
-  animationDuration: 0,
-  animationDurationUpdate: updateFrequency,
-  animationEasing: 'linear',
-  animationEasingUpdate: 'linear',
-  graphic: {
-    elements: [
-      {
-        type: 'text',
-        right: 60,
-        bottom: 60,
-        style: {
-          text: undefined,
-          font: 'bolder 60px monospace',
-          fill: 'rgba(100, 100, 100, 0.25)',
-        },
-        z: 100,
-      },
-    ],
-  },
-};
+const RacingBar = forwardRef(
+  (
+    { speed, data, setPlaying }: RacingBarProps,
+    forwardedRef: ForwardedRef<MediaControlers>
+  ): JSX.Element => {
+    const divEL = useRef<HTMLDivElement>(null);
+    const timerRef = useRef<NodeJS.Timeout>();
+    const speedRef = useRef<number>(speed);
+    speedRef.current = speed;
 
-const updateMonth = async (
-  instance: EChartsType,
-  data: RepoActivityDetails,
-  month: string
-) => {
-  const rich: any = {};
-  const barData: BarSeriesOption['data'] = await Promise.all(
-    data[month].map(async (item) => {
-      // rich name cannot contain special characters such as '-'
-      rich[`avatar${item[0].replaceAll('-', '')}`] = {
-        backgroundColor: {
-          image: `https://avatars.githubusercontent.com/${item[0]}?s=48&v=4`,
-        },
-        height: 20,
+    const months = Object.keys(data);
+    const monthIndexRef = useRef<number>(months.length - 1);
+
+    const [longTermContributorsCount, contributors] =
+      countLongTermContributors(data);
+    const maxBars = longTermContributorsCount >= 20 ? 20 : 10;
+    const height = longTermContributorsCount >= 20 ? 600 : 300;
+    const [loadedAvatars, loadAvatars] = useLoadedAvatars(contributors);
+
+    const updateMonth = async (
+      instance: EChartsType,
+      month: string,
+      enableAnimation: boolean
+    ) => {
+      const option = await getOption(
+        data,
+        month,
+        speedRef.current,
+        maxBars,
+        enableAnimation
+      );
+      instance.setOption(option);
+    };
+
+    const play = async () => {
+      const nextMonth = async () => {
+        monthIndexRef.current++;
+        const instance = echarts.getInstanceByDom(divEL.current!)!;
+        updateMonth(instance, months[monthIndexRef.current], true);
+        if (monthIndexRef.current < months.length - 1) {
+          timerRef.current = setTimeout(
+            nextMonth,
+            DEFAULT_FREQUENCY / speedRef.current
+          );
+        } else {
+          setTimeout(() => {
+            setPlaying(false);
+          }, DEFAULT_FREQUENCY / speedRef.current);
+        }
       };
-      const avatarColors = await avatarColorStore.getColors(item[0]);
-      return {
-        value: item,
-        itemStyle: {
-          color: {
-            type: 'linear',
-            x: 0,
-            y: 0,
-            x2: 1,
-            y2: 0,
-            colorStops: [
-              {
-                offset: 0,
-                color: avatarColors[0],
-              },
-              {
-                offset: 0.5,
-                color: avatarColors[1],
-              },
-            ],
-            global: false,
-          },
-        },
-      };
-    })
-  );
-  // @ts-ignore
-  option.yAxis.axisLabel.rich = rich;
-  // @ts-ignore
-  option.series[0].data = barData;
-  // @ts-ignore
-  option.graphic.elements[0].style.text = month;
 
-  // it seems that hidden bars are also rendered, so when each setOption merge more data into the chart,
-  // the fps goes down. So we use notMerge to avoid merging data. But this disables the xAxis animation.
-  // Hope we can find a better solution.
-  instance.setOption(option, {
-    notMerge: true,
-  });
-};
-
-let timer: NodeJS.Timeout;
-
-const play = (instance: EChartsType, data: RepoActivityDetails) => {
-  const months = Object.keys(data);
-  let i = 0;
-
-  const playNext = async () => {
-    await updateMonth(instance, data, months[i]);
-    i++;
-    if (i < months.length) {
-      timer = setTimeout(playNext, updateFrequency);
-    }
-  };
-
-  playNext();
-};
-
-/**
- * Count the number of unique contributors in the data
- * @returns [number of long term contributors, contributors' names]
- */
-const countLongTermContributors = (
-  data: RepoActivityDetails
-): [number, string[]] => {
-  const contributors = new Map<string, number>();
-  Object.keys(data).forEach((month) => {
-    data[month].forEach((item) => {
-      if (contributors.has(item[0])) {
-        contributors.set(item[0], contributors.get(item[0])! + 1);
-      } else {
-        contributors.set(item[0], 0);
+      setPlaying(true);
+      // if the current month is the latest month, go to the beginning
+      if (monthIndexRef.current === months.length - 1) {
+        earliest();
+        await sleep(DEFAULT_FREQUENCY / speedRef.current);
       }
-    });
-  });
-  let count = 0;
-  contributors.forEach((value) => {
-    // only count contributors who have contributed more than 3 months
-    if (value >= 3) {
-      count++;
-    }
-  });
-  return [count, [...contributors.keys()]];
-};
+      nextMonth();
+    };
 
-const RacingBar = ({ data }: RacingBarProps): JSX.Element => {
-  const [loadedAvatars, setLoadedAvatars] = useState(0);
-  const divEL = useRef<HTMLDivElement>(null);
+    const pause = () => {
+      setPlaying(false);
 
-  let height = 300;
-  const [longTermContributorsCount, contributors] =
-    countLongTermContributors(data);
-  if (longTermContributorsCount >= 20) {
-    // @ts-ignore
-    option.yAxis.max = 20;
-    height = 600;
-  }
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
 
-  useEffect(() => {
-    (async () => {
-      if (!divEL.current) return;
+    const next = () => {
+      pause();
+      if (monthIndexRef.current < months.length - 1) {
+        const instance = echarts.getInstanceByDom(divEL.current!)!;
+        monthIndexRef.current++;
+        updateMonth(instance, months[monthIndexRef.current], false);
+      }
+    };
 
-      const chartDOM = divEL.current;
-      const instance = echarts.init(chartDOM);
+    const previous = () => {
+      pause();
+      if (monthIndexRef.current > 0) {
+        const instance = echarts.getInstanceByDom(divEL.current!)!;
+        monthIndexRef.current--;
+        updateMonth(instance, months[monthIndexRef.current], false);
+      }
+    };
 
-      // load avatars and extract colors before playing the chart
-      const promises = contributors.map(async (contributor) => {
-        await avatarColorStore.getColors(contributor);
-        setLoadedAvatars((loadedAvatars) => loadedAvatars + 1);
-      });
-      await Promise.all(promises);
+    const latest = () => {
+      pause();
+      const instance = echarts.getInstanceByDom(divEL.current!)!;
+      monthIndexRef.current = months.length - 1;
+      updateMonth(instance, months[monthIndexRef.current], false);
+    };
 
-      play(instance, data);
+    const earliest = () => {
+      const instance = echarts.getInstanceByDom(divEL.current!)!;
+      monthIndexRef.current = 0;
+      updateMonth(instance, months[monthIndexRef.current], false);
+    };
+
+    // expose startRecording and stopRecording to parent component
+    useImperativeHandle(forwardedRef, () => ({
+      play,
+      pause,
+      next,
+      previous,
+      latest,
+      earliest,
+    }));
+
+    useEffect(() => {
+      (async () => {
+        await loadAvatars();
+        const instance = echarts.init(divEL.current!);
+        updateMonth(instance, months[monthIndexRef.current], false);
+      })();
 
       return () => {
-        if (!instance.isDisposed()) {
+        if (timerRef.current) {
+          clearTimeout(timerRef.current);
+        }
+        const instance = echarts.getInstanceByDom(divEL.current!);
+        if (instance && !instance.isDisposed()) {
           instance.dispose();
         }
-        // clear timer if user replay the chart before it finishes
-        if (timer) {
-          clearTimeout(timer);
-        }
       };
-    })();
-  }, []);
+    }, []);
 
-  return (
-    <div className="hypertrons-crx-border">
-      <Spin
-        spinning={loadedAvatars < contributors.length}
-        tip={`Loading avatars ${loadedAvatars}/${contributors.length}`}
-        style={{ maxHeight: 'none' }} // disable maxHeight to make the loading tip be placed in the center
-      >
-        <div ref={divEL} style={{ width: '100%', height }} />
-      </Spin>
-    </div>
-  );
-};
+    return (
+      <div className="hypertrons-crx-border">
+        <Spin
+          spinning={loadedAvatars < contributors.length}
+          tip={`Loading avatars ${loadedAvatars}/${contributors.length}`}
+          style={{ maxHeight: 'none' }} // disable maxHeight to make the loading tip be placed in the center
+        >
+          <div ref={divEL} style={{ width: '100%', height }} />
+        </Spin>
+      </div>
+    );
+  }
+);
 
 export default RacingBar;

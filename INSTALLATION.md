@@ -8,7 +8,7 @@ We welcome users to install and try our Hypertrons Chrome Extension. If you have
 
 ### Chrome / Edge
 
-1. Install our extension from [Chrome Web Store](https://chrome.google.com/webstore/detail/hypercrx/ijchfbpdgeljmhnhokmekkecpbdkgabc) or  [Edge Extensions Home](https://microsoftedge.microsoft.com/addons/detail/hypercrx/lbbajaehiibofpconjgdjonmkidpcome?hl=zh-CN)
+1. Install our extension from [Chrome Web Store](https://chrome.google.com/webstore/detail/hypercrx/ijchfbpdgeljmhnhokmekkecpbdkgabc) or [Edge Extensions Home](https://microsoftedge.microsoft.com/addons/detail/hypercrx/lbbajaehiibofpconjgdjonmkidpcome?hl=zh-CN)
 
 [Chrome] Visit [Chrome Web Store](https://chrome.google.com/webstore/detail/hypercrx/ijchfbpdgeljmhnhokmekkecpbdkgabc)，and click **[Add to Chrome]**.
 
@@ -46,7 +46,6 @@ We welcome users to install and try our Hypertrons Chrome Extension. If you have
   </tbody>
 </table>
 
-
 3. You can change configuration of hypertrons-crx by visiting the setting page:
 
 <table>
@@ -73,7 +72,6 @@ We welcome users to install and try our Hypertrons Chrome Extension. If you have
     </tr>
   </tbody>
 </table>
-
 
 ## Install from released package
 

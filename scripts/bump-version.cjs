@@ -1,14 +1,15 @@
 // according to https://github.com/TriPSs/conventional-changelog-action#pre-commit-hook
 // this script should be a CommonJS module
 
-const semver = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/i
+const semver =
+  /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/i;
 
-function validate({version}) {
+function validate({ version }) {
   // validate if the given version conforms semver
   return String(version).match(semver) === null;
 }
 
-function compare({oldVersion, newVersion}) {
+function compare({ oldVersion, newVersion }) {
   // compare oldVersion and newVersion number
   // return -1 if oldVersion is greater;
   //         0 if two versions are equal;
@@ -32,8 +33,10 @@ async function bump({ version, deploy }) {
   // update package.json
   const pkgPath = 'package.json';
   const pkg = await readJson(pkgPath);
-  if (compare({oldVersion: pkg.version, newVersion: version}) <= 0) {
-    throw new Error('Input version number is not greater than the current version number!');
+  if (compare({ oldVersion: pkg.version, newVersion: version }) <= 0) {
+    throw new Error(
+      'Input version number is not greater than the current version number!'
+    );
   }
   pkg.version = version;
   writeJson(pkgPath, pkg);
@@ -46,8 +49,15 @@ async function bump({ version, deploy }) {
     update_info.chrome.latest_version = version;
     update_info.edge.latest_version = version;
   }
-  if (compare({oldVersion: update_info.develop.latest_version, newVersion: version}) <= 0) {
-    throw new Error('Input version number is not greater than the current version number!');
+  if (
+    compare({
+      oldVersion: update_info.develop.latest_version,
+      newVersion: version,
+    }) <= 0
+  ) {
+    throw new Error(
+      'Input version number is not greater than the current version number!'
+    );
   }
   update_info.develop.latest_version = version;
   writeJson(infoPath, update_info);
@@ -58,7 +68,7 @@ module.exports = { bump };
 try {
   const [nodePath, scriptPath, versionNumber, ...otherArgs] = process.argv;
   if (versionNumber !== undefined) {
-    if (validate({version: versionNumber})) {
+    if (validate({ version: versionNumber })) {
       // version number is not valid
       throw new Error('Input version number is valid');
     }
@@ -69,4 +79,3 @@ try {
   return -1;
 }
 return 0;
-
