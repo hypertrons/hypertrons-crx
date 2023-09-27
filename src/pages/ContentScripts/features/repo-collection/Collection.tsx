@@ -27,7 +27,7 @@ const Collection = (props: CollectionProps): JSX.Element => {
   };
 
   const handleCancel = () => {
-    setOpen(false);
+    props.closeModal();
   };
   return (
     <>

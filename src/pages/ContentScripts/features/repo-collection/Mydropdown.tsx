@@ -123,6 +123,7 @@ const Mydropdown = () => {
   const closeModal = () => {
     // close modal
     setModalVisible(false);
+    setOpen(true);
   };
 
   const getListData = () => {
