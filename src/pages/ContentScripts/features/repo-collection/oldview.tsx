@@ -417,7 +417,6 @@ const View = () => {
           </Space>
         </a>
       </Dropdown>
-      <Collection data={collectionData} showRef={collectionRef} />
     </div>
   );
 };

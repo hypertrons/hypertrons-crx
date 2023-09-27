@@ -8,7 +8,6 @@ import optionsStorage, {
 import { getRepoName } from '../../../../helpers/get-repo-info';
 import Collection from './Collection';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
-import collection from './Collection';
 
 const { useToken } = theme;
 
@@ -22,12 +21,20 @@ const Mydropdown = () => {
   const menuStyle: React.CSSProperties = {
     boxShadow: 'none',
   };
+
+  const [open, setOpen] = useState(false);
+
   const listFooter = (
     <div className="text-right">
-      <Space style={{ padding: 8 }}>
-        <Button type="primary" onClick={editRepo}>
+      <Space>
+        <button className="btn" onClick={() => setOpen(false)}>
+          {' '}
+          返回
+        </button>{' '}
+        <button className="btn-primary btn" onClick={editRepo}>
+          {' '}
           编辑
-        </Button>
+        </button>{' '}
       </Space>
     </div>
   );
@@ -42,7 +49,7 @@ const Mydropdown = () => {
 
   const repoName = getRepoName();
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
-  const [open, setOpen] = useState(false);
+
   const [footerContent, setFooterContent] = useState(listFooter);
   const [items, setItems] = useState([
     {
@@ -57,18 +64,19 @@ const Mydropdown = () => {
   const [collectionData, setCollectionData] = useState(defaultCollection);
   const [newCollectionName, setNewCollectionName] = useState('');
   const [refresh, setRefresh] = useState(0);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [modalValue, setModalValue] = useState(['', ['']]);
 
   const editFooter = (
     <div className="text-right">
       <Space style={{ padding: 8 }}>
-        <button className="btn-primary btn" onClick={backToList}>
+        <button className="btn" onClick={backToList}>
           {' '}
           返回
         </button>{' '}
         <Input
           style={{ width: '180px' }}
           placeholder="输入添加合集名称"
-          allowClear
           size="middle"
           value={newCollectionName}
           onChange={(e) => setNewCollectionName(e.target.value)}
@@ -77,7 +85,7 @@ const Mydropdown = () => {
           {' '}
           添加
         </button>{' '}
-        <button className="btn" onClick={applyChange}>
+        <button className="btn-primary btn" onClick={applyChange}>
           {' '}
           应用
         </button>{' '}
@@ -97,18 +105,25 @@ const Mydropdown = () => {
         console.log('hi,loading', result.userCollectionData);
       }
       setCollectionData(result.userCollectionData);
-      console.log('collectiondata', collectionData);
+      console.log('collectionData', collectionData);
       const temp = getListData();
-      console.log('listdata', temp);
+      console.log('listData', temp);
       setItems(temp);
     });
   }, [refresh]);
 
   function handleValueClick(value: string) {
+    const temp = collectionData[value as keyof typeof collectionData];
+    setModalValue([value, temp]);
     // open modal
-    alert(value);
-    alert(collectionData[value as keyof typeof collectionData]);
+    setModalVisible(true);
+    setOpen(false);
   }
+
+  const closeModal = () => {
+    // close modal
+    setModalVisible(false);
+  };
 
   const getListData = () => {
     type DataType = {
@@ -122,7 +137,6 @@ const Mydropdown = () => {
     for (const key in originalData) {
       const values = originalData[key];
 
-      // 遍历每个值，并将其添加到transformedData中
       values.forEach((value) => {
         if (!transformedData[value]) {
           transformedData[value] = [];
@@ -284,6 +298,9 @@ const Mydropdown = () => {
           </Button>
         </Space>
       </Dropdown>
+      {isModalVisible && (
+        <Collection data={modalValue} closeModal={closeModal} />
+      )}
     </div>
   );
 };

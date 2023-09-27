@@ -1,26 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Modal } from 'antd';
+import { Button, Col, List, Modal, Row, Tabs } from 'antd';
 
 interface CollectionProps {
   data: any;
-  showRef: React.RefObject<() => void>;
+  closeModal: () => void;
 }
 
 // ToDo forwardRef
 
 const Collection = (props: CollectionProps): JSX.Element => {
+  const collectionData = props.data;
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
+  const listData = collectionData[1];
 
   const showModal = () => {
     setOpen(true);
   };
-
-  // 使用 ref 将 showModal 函数暴露出去
-  // @ts-ignore
-  React.useImperativeHandle(props.showRef, (): { showModal: () => void } => ({
-    showModal,
-  }));
 
   const handleOk = () => {
     setLoading(true);
@@ -36,31 +32,50 @@ const Collection = (props: CollectionProps): JSX.Element => {
   return (
     <>
       <Modal
-        width={1000}
+        width={1200}
         centered
         open={open}
-        title="Repo Collection"
+        title={
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '24px',
+              fontWeight: 'bold',
+              marginBottom: '20px',
+            }}
+          >
+            '{collectionData[0]}' Collection Dashboard
+          </div>
+        }
         onOk={handleOk}
         onCancel={handleCancel}
         footer={[
-          <Button key="back" onClick={handleCancel}>
-            Return
-          </Button>,
-          <Button
-            key="submit"
-            type="primary"
-            loading={loading}
-            onClick={handleOk}
-          >
-            Submit
-          </Button>,
+          <button className={'btn'} onClick={handleCancel}>
+            返回
+          </button>,
         ]}
       >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        <Row>
+          <Col xs={{ span: 5, offset: 1 }} lg={{ span: 4 }}>
+            <div style={{ marginTop: '50px' }}>
+              <List
+                header={
+                  <div style={{ fontSize: '18px', fontWeight: 'bold' }}>
+                    Repositories
+                  </div>
+                }
+                bordered
+                dataSource={listData}
+                renderItem={(item) => <List.Item>{item}</List.Item>}
+              />
+            </div>
+          </Col>
+          <Col xs={{ span: 11, offset: 1 }} lg={{ span: 12, offset: 2 }}>
+            Graph is here
+          </Col>
+        </Row>
       </Modal>
     </>
   );
