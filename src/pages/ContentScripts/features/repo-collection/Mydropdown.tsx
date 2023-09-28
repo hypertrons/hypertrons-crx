@@ -63,7 +63,6 @@ const Mydropdown = () => {
   ]);
   const [collectionData, setCollectionData] = useState(defaultCollection);
   const [newCollectionName, setNewCollectionName] = useState('');
-  const [refresh, setRefresh] = useState(0);
   const [isModalVisible, setModalVisible] = useState(false);
   const [modalValue, setModalValue] = useState(['', ['']]);
 
@@ -110,7 +109,7 @@ const Mydropdown = () => {
       console.log('listData', temp);
       setItems(temp);
     });
-  }, [refresh]);
+  }, []);
 
   function handleValueClick(value: string) {
     const temp = collectionData[value as keyof typeof collectionData];
@@ -214,9 +213,12 @@ const Mydropdown = () => {
       [key]: newData[key as keyof typeof newData],
     });
     // 更新状态
+    console.log('collectionData', collectionData);
+    /*
     chrome.storage.sync.set({ userCollectionData: newData }).then(() => {
       console.log('Data is setting collectionData', collectionData);
     });
+     */
   };
   function updateCollectionList() {
     const labels: { key: string; label: JSX.Element }[] = [];
