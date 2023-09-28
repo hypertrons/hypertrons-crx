@@ -158,7 +158,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
         <Col span={24}>
           <Table
             rowSelection={rowSelection}
-            dataSource={dataSource}
+            dataSource={isEdit ? dataSource : []}
             columns={columns}
           />
         </Col>
