@@ -4,40 +4,10 @@ import optionsStorage, {
   HypercrxOptions,
   defaults,
 } from '../../../../options-storage';
-import {
-  Modal,
-  Tabs,
-  List,
-  Col,
-  Row,
-  Button,
-  Form,
-  Input,
-  Table,
-  Divider,
-} from 'antd';
-import type { ColumnsType } from 'antd/es/table';
+import { Modal, Tabs, List, Col, Row, Button } from 'antd';
+import CollectionEditor from './CollectionEditor';
 
 type TargetKey = React.MouseEvent | React.KeyboardEvent | string;
-
-interface Values {
-  name: string;
-  quickImport: string;
-}
-
-interface DataType {
-  key: React.Key;
-  name: string;
-  description: string;
-}
-
-interface CollectionCreateFormProps {
-  open: boolean;
-  onCreate: (values: Values) => void;
-  onCancel: () => void;
-  isEdit: boolean | undefined;
-  collectionName: string;
-}
 
 const initialItems = [
   { label: 'Tab 1', children: 'Content of Tab 1', key: '1' },
@@ -55,117 +25,6 @@ const defaultCollection = {
 };
 
 interface Props {}
-
-const dataSource = [
-  {
-    key: '1',
-    name: 'hypertrons/hypertrons-crx',
-    description:
-      'A browser extension to get more insights into projects and developers on GitHub.',
-  },
-  {
-    key: '2',
-    name: 'X-lab2017/open-leaderboard',
-    description: 'OpenLeaderboard',
-  },
-];
-
-const columns: ColumnsType<DataType> = [
-  {
-    title: 'name',
-    dataIndex: 'name',
-  },
-  {
-    title: 'description',
-    dataIndex: 'description',
-  },
-];
-
-const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
-  open,
-  onCreate,
-  onCancel,
-  isEdit,
-  collectionName,
-}) => {
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([1, 2]);
-  const [form] = Form.useForm();
-
-  const initialValues = {
-    collectionName: isEdit ? collectionName : '', // 设置字段的初始值
-  };
-  const modalTitle = isEdit ? 'Collection Editor' : 'Creat a new collection';
-
-  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    console.log('selectedRowKeys changed: ', newSelectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
-  return (
-    <Modal
-      width={900}
-      open={open}
-      title={modalTitle}
-      okText="Confirm"
-      cancelText="Cancel"
-      onCancel={onCancel}
-      onOk={() => {
-        form
-          .validateFields()
-          .then((values) => {
-            form.resetFields();
-            onCreate(values);
-          })
-          .catch((info) => {
-            console.log('Validate Failed:', info);
-          });
-      }}
-    >
-      <Form
-        form={form}
-        layout="inline"
-        name="form_in_modal"
-        initialValues={initialValues}
-      >
-        <Form.Item
-          name="collectionName"
-          label="Name"
-          rules={[
-            {
-              required: true,
-              message: 'Please input the title of collection!',
-            },
-          ]}
-        >
-          <Input placeholder={'input name here'} />
-        </Form.Item>
-        <Form.Item name="Quick import" label="Quick import">
-          <Input type="textarea" placeholder={'user/organization'} />
-        </Form.Item>
-        <div
-          style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}
-        >
-          <Button>inquire</Button>
-          <Button>import</Button>
-        </div>
-      </Form>
-      <Divider />
-      <Row>
-        <Col span={24}>
-          <Table
-            rowSelection={rowSelection}
-            dataSource={isEdit ? dataSource : []}
-            columns={columns}
-          />
-        </Col>
-      </Row>
-    </Modal>
-  );
-};
 
 const View = ({}: Props): JSX.Element | null => {
   const [open, setOpen] = useState(false);
@@ -366,7 +225,7 @@ const View = ({}: Props): JSX.Element | null => {
         </Row>
       </Modal>
       {isClick && (
-        <CollectionCreateForm
+        <CollectionEditor
           open={open}
           onCreate={onCreate}
           onCancel={() => {
