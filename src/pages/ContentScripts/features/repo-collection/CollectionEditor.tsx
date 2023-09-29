@@ -21,7 +21,7 @@ interface RepositoryInfo {
 
 interface CollectionEditorProps {
   open: boolean;
-  onCreate: (values: Values) => void;
+  onCreate: (values: Values, newRepoData: string[] | undefined) => void;
   onCancel: () => void;
   isEdit: boolean | undefined;
   collectionName: string;
@@ -95,6 +95,7 @@ const CollectionEditor: React.FC<CollectionEditorProps> = ({
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [form] = Form.useForm();
   const [dataSource, setDataSource] = useState<DataSourceType[]>();
+  const [newRepoData, setNewRepoData] = useState<string[]>();
 
   async function fetchRepositoryDescription(repositoryName: string) {
     const apiUrl = `https://api.github.com/repos/${repositoryName}`;
@@ -132,12 +133,17 @@ const CollectionEditor: React.FC<CollectionEditorProps> = ({
   };
   const modalTitle = isEdit ? 'Collection Editor' : 'Creat a new collection';
 
-  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
+  const onSelectChange = (
+    newSelectedRowKeys: React.Key[],
+    selectedRows: DataType[]
+  ) => {
     console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+    console.log('selected Rows', selectedRows);
+    setNewRepoData(selectedRows.map((item) => item.name));
     setSelectedRowKeys(newSelectedRowKeys);
   };
 
-  const defaultSelectedRowKeys: React.Key[] = [1, 2];
+  const defaultSelectedRowKeys: React.Key[] = ['0', '1'];
   const rowSelection = {
     defaultSelectedRowKeys,
     selectedRowKeys,
@@ -179,6 +185,10 @@ const CollectionEditor: React.FC<CollectionEditorProps> = ({
     fetchRepositories();
   };
 
+  function handleImportClick() {
+    console.log('newRepoData', newRepoData);
+  }
+
   return (
     <Modal
       width={900}
@@ -192,7 +202,7 @@ const CollectionEditor: React.FC<CollectionEditorProps> = ({
           .validateFields()
           .then((values) => {
             form.resetFields();
-            onCreate(values);
+            onCreate(values, newRepoData);
           })
           .catch((info) => {
             console.log('Validate Failed:', info);
@@ -224,7 +234,7 @@ const CollectionEditor: React.FC<CollectionEditorProps> = ({
           style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}
         >
           <Button onClick={handleInquireClick}>inquire</Button>
-          <Button>import</Button>
+          <Button onClick={handleImportClick}>import</Button>
         </div>
       </Form>
       <Divider />

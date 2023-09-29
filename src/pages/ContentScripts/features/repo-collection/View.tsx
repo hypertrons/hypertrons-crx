@@ -35,7 +35,9 @@ const View = ({}: Props): JSX.Element | null => {
   const [items, setItems] = useState(initialItems);
   const newTabIndex = useRef(0);
   const [collectionData, setCollectionData] = useState(defaultCollection);
-  const [listData, setListData] = useState(defaultCollection.Xlab2017);
+  const [listData, setListData] = useState<string[] | undefined>(
+    defaultCollection.Xlab2017
+  );
   const [isClick, setIsClick] = useState(false);
   const [isEdit, setIsEdit] = useState<boolean>();
 
@@ -86,10 +88,31 @@ const View = ({}: Props): JSX.Element | null => {
     });
   }, []);
 
-  const onCreate = (values: any) => {
+  const onCreate = (values: any, newRepoData: string[] | undefined) => {
+    setListData(newRepoData);
+    if (isEdit) {
+      const updatedItems = items.map((item) => {
+        if (item.key === activeKey.toString()) {
+          return { ...item, label: values.collectionName };
+        }
+        return item;
+      });
+      setItems(updatedItems);
+    } else {
+      const newActiveKey = (items.length + 1).toString();
+      const newPanes = [...items];
+      newPanes.push({
+        label: values.collectionName,
+        children: `Content of ${values.collectionName}`,
+        key: newActiveKey,
+      });
+      setItems(newPanes);
+      setActiveKey(newActiveKey);
+    }
     console.log('Received values of form: ', values);
     setOpen(false);
     setIsClick(false);
+    setIsEdit(undefined);
   };
   const onChange = (newActiveKey: string) => {
     console.log('active key', newActiveKey);
@@ -232,6 +255,7 @@ const View = ({}: Props): JSX.Element | null => {
           onCancel={() => {
             setOpen(false);
             setIsClick(false);
+            setIsEdit(undefined);
           }}
           isEdit={isEdit}
           collectionName={items[parseInt(activeKey) - 1].label}
