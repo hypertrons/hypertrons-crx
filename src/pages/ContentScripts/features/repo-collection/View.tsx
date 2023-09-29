@@ -15,6 +15,7 @@ const initialItems = [
   { label: 'Tab 3', children: 'Content of Tab 3', key: '3' },
 ];
 
+// TODO collectionData的格式要改！ 应该是[{name:'collection1',repo:['A','B']},{name:'collection2',repo:['C','D']}]
 const defaultCollection = {
   Xlab2017: [
     'X-lab2017/open-digger',
@@ -234,6 +235,8 @@ const View = ({}: Props): JSX.Element | null => {
           }}
           isEdit={isEdit}
           collectionName={items[parseInt(activeKey) - 1].label}
+          // TODO collectionData还需要优化，存储结构要改
+          collectionData={collectionData.Hypertrons}
         />
       )}
     </div>
