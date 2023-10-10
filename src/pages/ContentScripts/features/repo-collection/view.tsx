@@ -219,6 +219,7 @@ const View = ({}: Props): JSX.Element | null => {
         onOk={handleModalOk}
         onCancel={handleModalOk}
         width={1200}
+        bodyStyle={{ height: '50vh' }}
       >
         <Row>
           <Col xs={{ span: 5, offset: 1 }} lg={{ span: 4 }}>

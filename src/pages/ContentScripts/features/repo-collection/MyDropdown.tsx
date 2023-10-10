@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Dropdown, Space, Button, Input, theme, Checkbox } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
+import { CheckboxChangeEvent } from 'antd/es/checkbox';
+
 import optionsStorage, {
   HypercrxOptions,
   defaults,
 } from '../../../../options-storage';
 import { getRepoName } from '../../../../helpers/get-repo-info';
 import Collection from './Collection';
-import { CheckboxChangeEvent } from 'antd/es/checkbox';
 
 const { useToken } = theme;
 
