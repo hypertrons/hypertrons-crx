@@ -16,14 +16,22 @@ const initialItems = [
 ];
 
 // TODO collectionData的格式要改！ 应该是[{name:'collection1',repo:['A','B']},{name:'collection2',repo:['C','D']}]
-const defaultCollection = {
-  Xlab2017: [
-    'X-lab2017/open-digger',
-    'X-lab2017/open-leaderboard',
-    'X-lab2017/open-wonderland',
-  ],
-  Hypertrons: ['hypertrons/hypertrons-crx', 'X-lab2017/open-leaderboard'],
-};
+const defaultCollection = [
+  {
+    name: 'Xlab2017',
+    repos: [
+      'X-lab2017/open-digger',
+      'X-lab2017/open-leaderboard',
+      'X-lab2017/open-wonderland',
+    ],
+    key: '1',
+  },
+  {
+    name: 'Hypertrons',
+    repos: ['hypertrons/hypertrons-crx', 'X-lab2017/open-leaderboard'],
+    key: '2',
+  },
+];
 
 interface Props {}
 
@@ -36,7 +44,7 @@ const View = ({}: Props): JSX.Element | null => {
   const newTabIndex = useRef(0);
   const [collectionData, setCollectionData] = useState(defaultCollection);
   const [listData, setListData] = useState<string[] | undefined>(
-    defaultCollection.Xlab2017
+    defaultCollection[0].repos
   );
   const [isClick, setIsClick] = useState(false);
   const [isEdit, setIsEdit] = useState<boolean>();
@@ -69,7 +77,7 @@ const View = ({}: Props): JSX.Element | null => {
       if (result.userCollectionData) {
         console.log('loading in modal', result.userCollectionData);
       }
-      setCollectionData(result.userCollectionData);
+      //setCollectionData(result.userCollectionData);
       console.log('collectionData in modal', collectionData);
       const transformedData = Object.keys(result.userCollectionData).map(
         (key, index) => ({
@@ -117,14 +125,10 @@ const View = ({}: Props): JSX.Element | null => {
   const onChange = (newActiveKey: string) => {
     console.log('active key', newActiveKey);
 
-    const foundItem = items.find((item) => item.key === newActiveKey);
-
+    const foundItem = collectionData.find((item) => item.key === newActiveKey);
+    console.log('founditem', foundItem);
     if (foundItem) {
-      const labelToFind = foundItem.label;
-      const newListData =
-        collectionData[labelToFind as keyof typeof collectionData];
-      console.log('newlistdata', newListData);
-      setListData(newListData);
+      setListData(foundItem.repos);
     }
 
     setActiveKey(newActiveKey);
@@ -261,7 +265,7 @@ const View = ({}: Props): JSX.Element | null => {
           isEdit={isEdit}
           collectionName={items[parseInt(activeKey) - 1].label}
           // TODO collectionData还需要优化，存储结构要改
-          collectionData={collectionData.Hypertrons}
+          collectionData={collectionData[0].repos}
         />
       )}
     </div>

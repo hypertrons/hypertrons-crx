@@ -12,7 +12,7 @@ import Collection from './Collection';
 
 const { useToken } = theme;
 
-const Mydropdown = () => {
+const MyDropdown = () => {
   const { token } = useToken();
   const contentStyle: React.CSSProperties = {
     backgroundColor: token.colorBgElevated,
@@ -309,4 +309,4 @@ const Mydropdown = () => {
   );
 };
 
-export default Mydropdown;
+export default MyDropdown;

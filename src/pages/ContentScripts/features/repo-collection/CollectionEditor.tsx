@@ -71,7 +71,7 @@ async function getUserOrOrgRepos(
 }
 
 // TODO 需要找到一个合适的方法解决Token的问题...
-const accessToken = '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';
+const accessToken = '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';
 
 const columns: ColumnsType<DataType> = [
   {

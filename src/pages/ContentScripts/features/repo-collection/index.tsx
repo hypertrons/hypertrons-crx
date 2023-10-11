@@ -20,10 +20,10 @@ const init = async (): Promise<void> => {
   await elementReady('#repository-container-header');
   $('#repository-details-container').before(myDropdownContainer);
 
-  const ViewContainer = document.createElement('div');
-  ViewContainer.id = featureId;
-  render(<View />, ViewContainer);
-  $('body').append(ViewContainer);
+  const viewContainer = document.createElement('div');
+  viewContainer.id = featureId;
+  render(<View />, viewContainer);
+  $('body').append(viewContainer);
 };
 
 features.add(featureId, {
