@@ -7,8 +7,18 @@ import React, { useContext } from 'react';
  */
 export const CollectionList = () => {
   const contextValue = useContext(CollectionContext);
-  const { hideCollectionList, setHideAddToCollections, setHideCollectionList } =
-    contextValue;
+  const {
+    hideCollectionList,
+    setHideAddToCollections,
+    setHideCollectionList,
+    setSelectedCollection,
+    setShowModal,
+  } = contextValue;
+
+  const handleCollectionClick = (collectionId: string) => {
+    setSelectedCollection(collectionId);
+    setShowModal(true);
+  };
 
   const goToAddToCollections = () => {
     setHideAddToCollections(false);
@@ -63,12 +73,22 @@ export const CollectionList = () => {
             </header>
             {/* list */}
             <div className="overflow-y-auto" style={{ maxHeight: '340px' }}>
-              <div className="SelectMenu-item flex-items-start btn border-0 rounded-0">
+              <div
+                className="SelectMenu-item flex-items-start btn border-0 rounded-0"
+                onClick={() => {
+                  handleCollectionClick('X-lab');
+                }}
+              >
                 <span className="text-small text-normal wb-break-all">
                   X-lab
                 </span>
               </div>
-              <div className="SelectMenu-item flex-items-start btn border-0 rounded-0">
+              <div
+                className="SelectMenu-item flex-items-start btn border-0 rounded-0"
+                onClick={() => {
+                  handleCollectionClick('Hypertrons');
+                }}
+              >
                 <span className="text-small text-normal wb-break-all">
                   Hypertrons
                 </span>

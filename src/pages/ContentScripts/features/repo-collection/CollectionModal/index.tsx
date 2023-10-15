@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
-
 import optionsStorage, {
   HypercrxOptions,
   defaults,
 } from '../../../../../options-storage';
-import { Modal, Tabs, List, Col, Row, Button } from 'antd';
+import { CollectionContext } from '../context';
 import CollectionEditor from './CollectionEditor';
+
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { Modal, Tabs, List, Col, Row, Button } from 'antd';
 
 type TargetKey = React.MouseEvent | React.KeyboardEvent | string;
 
@@ -36,9 +37,10 @@ const defaultCollection = [
 interface Props {}
 
 export const CollectionModal = ({}: Props): JSX.Element | null => {
-  const [open, setOpen] = useState(false);
-  const [options, setOptions] = useState<HypercrxOptions>(defaults);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const contextValue = useContext(CollectionContext);
+  const { showModal, setShowModal, selectedCollection, setSelectedCollection } =
+    contextValue;
+
   const [activeKey, setActiveKey] = useState(initialItems[0].key);
   const [items, setItems] = useState(initialItems);
   const newTabIndex = useRef(0);
@@ -55,7 +57,7 @@ export const CollectionModal = ({}: Props): JSX.Element | null => {
         onClick={() => {
           setIsClick(true);
           setIsEdit(false);
-          setOpen(true);
+          setShowModal(true);
         }}
       >
         Add New Collection
@@ -64,7 +66,7 @@ export const CollectionModal = ({}: Props): JSX.Element | null => {
         onClick={() => {
           setIsClick(true);
           setIsEdit(true);
-          setOpen(true);
+          setShowModal(true);
         }}
       >
         Edit Collection
@@ -118,7 +120,7 @@ export const CollectionModal = ({}: Props): JSX.Element | null => {
       setActiveKey(newActiveKey);
     }
     console.log('Received values of form: ', values);
-    setOpen(false);
+    setShowModal(false);
     setIsClick(false);
     setIsEdit(undefined);
   };
@@ -176,31 +178,6 @@ export const CollectionModal = ({}: Props): JSX.Element | null => {
       remove(targetKey);
     }
   };
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleModalOk = () => {
-    setIsModalOpen(false);
-  };
-
-  useEffect(() => {
-    (async function () {
-      setOptions(await optionsStorage.getAll());
-    })();
-  }, []);
-
-  // receive message from popup
-  chrome.runtime.onMessage.addListener(function (
-    request,
-    sender,
-    sendResponse
-  ) {
-    if (request.greeting === 'demo') {
-      showModal();
-      focus(); // change the focus to the browser content
-    }
-  });
 
   return (
     <div>
@@ -219,9 +196,11 @@ export const CollectionModal = ({}: Props): JSX.Element | null => {
             Repo Collection Dashboard
           </div>
         }
-        open={isModalOpen}
-        onOk={handleModalOk}
-        onCancel={handleModalOk}
+        open={showModal}
+        onCancel={() => {
+          setShowModal(false);
+        }}
+        footer={null}
         width={1200}
         bodyStyle={{ height: '50vh' }}
       >
@@ -255,10 +234,10 @@ export const CollectionModal = ({}: Props): JSX.Element | null => {
       </Modal>
       {isClick && (
         <CollectionEditor
-          open={open}
+          open={showModal}
           onCreate={onCreate}
           onCancel={() => {
-            setOpen(false);
+            setShowModal(false);
             setIsClick(false);
             setIsEdit(undefined);
           }}

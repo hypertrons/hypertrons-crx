@@ -8,11 +8,19 @@ const View = () => {
   const [hideCollectionList, setHideCollectionList] = useState(false);
   const [hideAddToCollections, setHideAddToCollections] = useState(true);
 
+  const [showModal, setShowModal] = useState(false);
+  const [selectedCollection, setSelectedCollection] = useState<string>();
+
   const contextValue = {
     hideCollectionList,
     setHideCollectionList,
     hideAddToCollections,
     setHideAddToCollections,
+
+    showModal,
+    setShowModal,
+    selectedCollection,
+    setSelectedCollection,
   };
 
   return (
