@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import optionsStorage, {
   HypercrxOptions,
   defaults,
-} from '../../../../options-storage';
+} from '../../../../../options-storage';
 import { Modal, Tabs, List, Col, Row, Button } from 'antd';
 import CollectionEditor from './CollectionEditor';
 
