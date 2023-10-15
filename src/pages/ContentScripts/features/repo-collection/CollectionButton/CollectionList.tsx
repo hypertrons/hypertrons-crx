@@ -1,11 +1,22 @@
-import React from 'react';
+import { CollectionContext } from '../context';
+
+import React, { useContext } from 'react';
 
 /**
  * The modal that shows the collections that the repo belongs to
  */
 export const CollectionList = () => {
+  const contextValue = useContext(CollectionContext);
+  const { hideCollectionList, setHideAddToCollections, setHideCollectionList } =
+    contextValue;
+
+  const goToAddToCollections = () => {
+    setHideAddToCollections(false);
+    setHideCollectionList(true);
+  };
+
   return (
-    <div className="SelectMenu right-0">
+    <div className="SelectMenu" hidden={hideCollectionList}>
       <div className="SelectMenu-modal">
         <button
           className="SelectMenu-closeButton position-absolute right-0 m-2"
@@ -65,7 +76,10 @@ export const CollectionList = () => {
             </div>
             {/* footer */}
             <footer className="SelectMenu-footer p-0 position-sticky">
-              <div className="SelectMenu-item btn rounded-0 border-bottom-0 text-normal f6">
+              <div
+                className="SelectMenu-item btn rounded-0 border-bottom-0 text-normal f6"
+                onClick={goToAddToCollections}
+              >
                 <svg
                   width="20"
                   aria-hidden="true"

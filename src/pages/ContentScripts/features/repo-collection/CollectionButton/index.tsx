@@ -1,13 +1,16 @@
-import { ButtonContent } from './ButtonCotent';
 import { CollectionList } from './CollectionList';
 import { AddToCollections } from './AddToCollections';
 
-import React, { useState } from 'react';
+import React from 'react';
+import { FundProjectionScreenOutlined } from '@ant-design/icons';
 
 /**
  * The entry of the repo collections feature
  */
 export const CollectionButton = () => {
+  /** How many collections the repo belongs to */
+  const collectionCount = 2;
+
   return (
     <div className="f5 position-relative">
       <details
@@ -15,10 +18,24 @@ export const CollectionButton = () => {
         className="details-reset details-overlay f5 position-relative"
       >
         <summary className="btn-sm btn" role="button">
-          <ButtonContent />
+          <span>
+            <FundProjectionScreenOutlined
+              style={{ fontSize: '14px', color: 'var(--color-fg-muted)' }}
+            />
+            {' Collections '}
+          </span>
+          <span
+            data-pjax-replace="true"
+            data-turbo-replace="true"
+            title="14"
+            className="Counter"
+          >
+            {collectionCount}
+          </span>
+          <span className="dropdown-caret"></span>
         </summary>
         <CollectionList />
-        {/* <AddToCollections /> */}
+        <AddToCollections />
       </details>
     </div>
   );
