@@ -25,9 +25,8 @@ export const CollectionButton = () => {
             {' Collections '}
           </span>
           <span
-            data-pjax-replace="true"
-            data-turbo-replace="true"
-            title="14"
+            data-pjax-replace="true" // not confirmed to be necessary
+            data-turbo-replace="true" // this one, either.
             className="Counter"
           >
             {collectionCount}
