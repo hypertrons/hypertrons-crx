@@ -19,7 +19,8 @@ export const AddToCollections = () => {
   };
 
   const apply = () => {
-    // TODO
+    // save and update
+    goToCollectionList();
   };
 
   const cancel = () => {
@@ -62,23 +63,26 @@ export const AddToCollections = () => {
             Select collections you want the current repository to be added to.
           </div>
         </legend>
-        <div className="form-checkbox mr-3 ml-6 ml-sm-5 mb-2 mt-0">
-          <label className="f5 text-normal">
-            <input type="checkbox" value="Hypertrons" checked />
-            Hypertrons
-          </label>
-        </div>
-        <div className="form-checkbox mr-3 ml-6 ml-sm-5 mb-2 mt-0">
-          <label className="f5 text-normal">
-            <input type="checkbox" value="X-lab" checked />
-            X-lab
-          </label>
-        </div>
-        <div className="form-checkbox mr-3 ml-6 ml-sm-5 mb-2 mt-0">
-          <label className="f5 text-normal">
-            <input type="checkbox" value="Mulan" />
-            Mulan
-          </label>
+        {/* TODO: add search bar */}
+        <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+          <div className="form-checkbox mr-3 ml-6 ml-sm-5 mb-2 mt-0">
+            <label className="f5 text-normal">
+              <input type="checkbox" value="Hypertrons" checked />
+              Hypertrons
+            </label>
+          </div>
+          <div className="form-checkbox mr-3 ml-6 ml-sm-5 mb-2 mt-0">
+            <label className="f5 text-normal">
+              <input type="checkbox" value="X-lab" checked />
+              X-lab
+            </label>
+          </div>
+          <div className="form-checkbox mr-3 ml-6 ml-sm-5 mb-2 mt-0">
+            <label className="f5 text-normal">
+              <input type="checkbox" value="Mulan" />
+              Mulan
+            </label>
+          </div>
         </div>
         <div className="pt-2 pb-3 px-3 d-flex flex-justify-start flex-row-reverse">
           <button
