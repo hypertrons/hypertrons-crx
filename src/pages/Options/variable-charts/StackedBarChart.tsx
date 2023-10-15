@@ -1,10 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
 import generateDataByMonth from '../../../helpers/generate-data-by-month';
-import {
-  getMergedCodeAddition,
-  getMergedCodeDeletion,
-} from '../../../api/repo';
+import { getStars } from '../../../api/repo';
 
 interface RawRepoData {
   [date: string]: number;
@@ -78,23 +75,15 @@ const StackedBarChart = (props: StackedBarChartProps): JSX.Element => {
         minValueSpan: 3600 * 24 * 1000 * 180,
       },
     ],
-    series: MCDeletionSeries(data).concat(MCAdditionSeries(data)), // Series Data: Code Addition + Code CodeDeletion
+    series: StarSeries(data),
   };
-  console.log(
-    'BarChartSeries',
-    MCDeletionSeries(data).concat(MCAdditionSeries(data))
-  );
+  console.log('BarChartSeries??', StarSeries(data));
   useEffect(() => {
     const fetchData = async () => {
       for (const repo of repoNames) {
         try {
-          const MCAdditionData = await getMergedCodeAddition(repo);
-          const MCDeletionData = await getMergedCodeDeletion(repo);
-          const MergedCodeData = {
-            MCAdditionData: MCAdditionData,
-            MCDeletionData: MCDeletionData,
-          };
-          setData((prevData) => ({ ...prevData, [repo]: MergedCodeData }));
+          const StarData = await getStars(repo);
+          setData((prevData) => ({ ...prevData, [repo]: StarData }));
         } catch (error) {
           console.error(`Error fetching stars data for ${repo}:`, error);
 
@@ -104,7 +93,7 @@ const StackedBarChart = (props: StackedBarChartProps): JSX.Element => {
     };
     fetchData();
   }, []);
-  console.log('data', data);
+  // console.log('datatest', data);
   useEffect(() => {
     let chartDOM = divEL.current;
     const TH = 'light' ? LIGHT_THEME : DARK_THEME;
@@ -113,8 +102,8 @@ const StackedBarChart = (props: StackedBarChartProps): JSX.Element => {
     instance.setOption(option);
     instance.dispatchAction({
       type: 'highlight',
-      // seriesIndex: Number(currentRepo),
-      // dataIndex: Number(currentRepo),
+      seriesIndex: Number(currentRepo),
+      dataIndex: Number(currentRepo),
       name: repoNames[Number(currentRepo)],
       seriesName: repoNames[Number(currentRepo)],
     });
@@ -127,39 +116,19 @@ const StackedBarChart = (props: StackedBarChartProps): JSX.Element => {
 };
 
 //Series：各仓库代码增加行数
-const MCAdditionSeries = (data: {
+const StarSeries = (data: {
   [repo: string]: RawRepoData;
 }): echarts.SeriesOption[] =>
   Object.entries(data).map(([repoName, repoData]) => ({
     name: repoName,
     type: 'bar',
-    symbol: 'none',
-    stack: repoName,
-    data: generateDataByMonth(repoData.MCAdditionData),
+    stack: 'total',
+    // emphasis: emphasisStyle,
+    data: generateDataByMonth(repoData),
     emphasis: {
       focus: 'series',
     },
-    yAxisIndex: 0,
-    triggerLineEvent: true,
-  }));
-
-//Series：各仓库代码删减行数
-const MCDeletionSeries = (data: {
-  [repo: string]: RawRepoData;
-}): echarts.SeriesOption[] =>
-  Object.entries(data).map(([repoName, repoData]) => ({
-    name: repoName,
-    type: 'bar',
-    symbol: 'none',
-    stack: repoName,
-    data: generateDataByMonth(repoData.MCDeletionData).map((item) => [
-      item[0],
-      -item[1],
-    ]),
-    emphasis: {
-      focus: 'series',
-    },
-    yAxisIndex: 0,
+    // yAxisIndex: 0,
     triggerLineEvent: true,
   }));
 

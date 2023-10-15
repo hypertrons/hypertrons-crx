@@ -37,17 +37,17 @@ const BoxplotChart = (props: BarChartProps): JSX.Element => {
         type: 'shadow',
       },
     },
-    // legend: {
-    //   type: 'scroll',
-    // },
+    legend: {
+      type: 'scroll',
+    },
     grid: {
-      top: '5%',
-      left: '10%',
+      left: '5%',
       right: '4%',
-      bottom: '15%',
-      // containLabel: true,
+      bottom: '3%',
+      containLabel: true,
     },
     xAxis: {
+      show: false,
       type: 'category',
       boundaryGap: true,
       nameGap: 30,
@@ -58,7 +58,7 @@ const BoxplotChart = (props: BarChartProps): JSX.Element => {
       splitLine: {
         show: false,
       },
-      data: lastMonthRepoData(data).map((repo) => repo.name),
+      // data: lastMonthRepoData(data).map((repo) => repo.name),
     },
     yAxis: {
       type: 'value',
@@ -75,12 +75,18 @@ const BoxplotChart = (props: BarChartProps): JSX.Element => {
     //     minValueSpan: 3600 * 24 * 1000 * 180,
     //   },
     // ],
-    series: {
-      type: 'boxplot',
-      data: lastMonthRepoData(data),
-    },
+    series: lastMonthRepoData(data).map((repoData) => {
+      return {
+        type: 'boxplot',
+        name: repoData.name,
+        data: [repoData],
+      };
+    }),
+    //     {
+    //   type: 'boxplot',
+    //   data: lastMonthRepoData(data),
+    // },
   };
-
   useEffect(() => {
     const fetchData = async () => {
       for (const repo of repoNames) {
@@ -98,7 +104,7 @@ const BoxplotChart = (props: BarChartProps): JSX.Element => {
       }
     };
     fetchData();
-    console.log('data', data);
+    // console.log('data', data);
   }, []);
 
   useEffect(() => {

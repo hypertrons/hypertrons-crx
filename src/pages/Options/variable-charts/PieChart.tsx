@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
 import generateDataByMonth from '../../../helpers/generate-data-by-month';
-import { getStars } from '../../../api/repo';
+import { getParticipant } from '../../../api/repo';
 import getNewestMonth from '../../../helpers/get-newest-month';
 
 interface RawRepoData {
@@ -73,7 +73,7 @@ const PieChart = (props: PieChartProps): JSX.Element => {
       for (const repo of repoNames) {
         try {
           //getStars() to fetch repository data
-          const starsData = await getStars(repo);
+          const starsData = await getParticipant(repo);
           // Update Data
           setData((prevData) => ({ ...prevData, [repo]: starsData }));
         } catch (error) {
