@@ -1,12 +1,12 @@
 import React from 'react';
 import { FundProjectionScreenOutlined } from '@ant-design/icons';
 
-export const Summary = () => {
+export const ButtonContent = () => {
   /** How many collections the repo belongs to */
   const collectionCount = 2;
 
   return (
-    <summary className="btn-sm btn" role="button">
+    <>
       <span>
         <FundProjectionScreenOutlined
           style={{ fontSize: '14px', color: 'var(--color-fg-muted)' }}
@@ -22,6 +22,6 @@ export const Summary = () => {
         {collectionCount}
       </span>
       <span className="dropdown-caret"></span>
-    </summary>
+    </>
   );
 };
