@@ -8,22 +8,24 @@ import optionsStorage, {
   defaults,
 } from '../../../../options-storage';
 import Bars from '../../../../components/Bars';
+import { UserMeta } from '../../../../api/common';
 
 const githubTheme = getGithubTheme();
 
-const generateBarsData = (activity: any, openrank: any) => {
+const generateBarsData = (activity: any, openrank: any, updatedAt: number) => {
   return {
-    data1: generateDataByMonth(activity),
-    data2: generateDataByMonth(openrank),
+    data1: generateDataByMonth(activity, updatedAt),
+    data2: generateDataByMonth(openrank, updatedAt),
   };
 };
 
 interface Props {
   activity: any;
   openrank: any;
+  meta: UserMeta;
 }
 
-const View = ({ activity, openrank }: Props): JSX.Element | null => {
+const View = ({ activity, openrank, meta }: Props): JSX.Element | null => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
 
   useEffect(() => {
@@ -34,7 +36,7 @@ const View = ({ activity, openrank }: Props): JSX.Element | null => {
 
   if (!activity || !openrank) return null;
 
-  let barsData: any = generateBarsData(activity, openrank);
+  let barsData: any = generateBarsData(activity, openrank, meta.updatedAt);
 
   return (
     <div className="border-top color-border-secondary pt-3 mt-3">

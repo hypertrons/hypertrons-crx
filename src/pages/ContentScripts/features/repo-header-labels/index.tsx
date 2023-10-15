@@ -4,9 +4,13 @@ import elementReady from 'element-ready';
 import $ from 'jquery';
 
 import features from '../../../../feature-manager';
-import isPublicRepo from '../../../../helpers/is-public-repo';
-import { getRepoName } from '../../../../helpers/get-repo-info';
+import {
+  getRepoName,
+  hasRepoContainerHeader,
+  isPublicRepoWithMeta,
+} from '../../../../helpers/get-repo-info';
 import { getActivity, getOpenrank, getParticipant } from '../../../../api/repo';
+import { RepoMeta, metaStore } from '../../../../api/common';
 import View from './view';
 
 const featureId = features.getFeatureID(import.meta.url);
@@ -14,16 +18,23 @@ let repoName: string;
 let activity: any;
 let openrank: any;
 let participant: any;
+let meta: RepoMeta;
 
 const getData = async () => {
   activity = await getActivity(repoName);
   openrank = await getOpenrank(repoName);
   participant = await getParticipant(repoName);
+  meta = (await metaStore.get(repoName)) as RepoMeta;
 };
 
 const renderTo = (container: Container) => {
   render(
-    <View activity={activity} openrank={openrank} participant={participant} />,
+    <View
+      activity={activity}
+      openrank={openrank}
+      participant={participant}
+      meta={meta}
+    />,
     container
   );
 };
@@ -55,7 +66,7 @@ const restore = async () => {
 };
 
 features.add(featureId, {
-  asLongAs: [isPublicRepo],
+  asLongAs: [isPublicRepoWithMeta, hasRepoContainerHeader],
   awaitDomReady: false,
   init,
   restore,

@@ -3427,10 +3427,10 @@ get-stream@^6.0.0, get-stream@^6.0.1:
   resolved "https://registry.npmjs.org/get-stream/-/get-stream-6.0.1.tgz#a262d8eef67aced57c2852ad6167526a43cbf7b7"
   integrity sha512-ts6Wi+2j3jQjqi70w5AlN8DFnkSwC+MqmxEzdEALB2qXZYV3X/b1CTfgPLGJNMeAWxdPfU8FO1ms3NUfaHCPYg==
 
-github-url-detection@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.npmjs.org/github-url-detection/-/github-url-detection-6.1.0.tgz#b5a478fa7cb36f673d3da52cd5b3075fb3a43b3a"
-  integrity sha512-Z2z3WmR38cbHegKHN3jiyo2wDBEPRlEn/8HHK05iidiHtNF8KltmjKiaNzB3QdGU+OxF2QhgwT1q4rLT15Z08w==
+github-url-detection@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.npmjs.org/github-url-detection/-/github-url-detection-8.1.0.tgz#f415564f39c8b92ca2e823c22d1386bd0ac3fdf8"
+  integrity sha512-GvKgbLdIP6++wzBMCeJFJhoysFoUunE52m2B1K3ltfVfL3LO4TGQ/lv4utWoVCmVP85dVk+ZWkYA7IB3+fPt7A==
 
 glob-parent@^5.1.1, glob-parent@^5.1.2, glob-parent@~5.1.2:
   version "5.1.2"
@@ -5310,6 +5310,11 @@ regenerator-runtime@^0.13.11:
   version "0.13.11"
   resolved "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.13.11.tgz#f6dca3e7ceec20590d07ada785636a90cdca17f9"
   integrity sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==
+
+regenerator-runtime@^0.14.0:
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.14.0.tgz#5e19d68eb12d486f797e15a3c6a918f7cec5eb45"
+  integrity sha512-srw17NI0TUWHuGa5CFGGmhfNIeja30WMBfbslPNhf6JrqQlLN5gcrvig1oqPxiVaXb0oW0XRKtH6Nngs5lKCIA==
 
 regenerator-transform@^0.15.1:
   version "0.15.1"

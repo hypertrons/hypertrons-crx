@@ -4,23 +4,29 @@ import elementReady from 'element-ready';
 import $ from 'jquery';
 
 import features from '../../../../feature-manager';
-import isPublicRepo from '../../../../helpers/is-public-repo';
 import getGithubTheme from '../../../../helpers/get-github-theme';
-import { getRepoName } from '../../../../helpers/get-repo-info';
+import {
+  getRepoName,
+  hasRepoContainerHeader,
+  isPublicRepoWithMeta,
+} from '../../../../helpers/get-repo-info';
 import { getForks } from '../../../../api/repo';
+import { RepoMeta, metaStore } from '../../../../api/common';
 import View from './view';
 
 const githubTheme = getGithubTheme();
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
 let forks: any;
+let meta: RepoMeta;
 
 const getData = async () => {
   forks = await getForks(repoName);
+  meta = (await metaStore.get(repoName)) as RepoMeta;
 };
 
 const renderTo = (container: Container) => {
-  render(<View forks={forks} />, container);
+  render(<View forks={forks} meta={meta} />, container);
 };
 
 const init = async (): Promise<void> => {
@@ -60,7 +66,7 @@ const restore = async () => {
 };
 
 features.add(featureId, {
-  asLongAs: [isPublicRepo],
+  asLongAs: [isPublicRepoWithMeta, hasRepoContainerHeader],
   awaitDomReady: false,
   init,
   restore,

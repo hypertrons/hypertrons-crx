@@ -8,13 +8,14 @@ import optionsStorage, {
   defaults,
 } from '../../../../options-storage';
 import Bars from '../../../../components/Bars';
+import { RepoMeta } from '../../../../api/common';
 
 const githubTheme = getGithubTheme();
 
-const generateBarsData = (activity: any, openrank: any) => {
+const generateBarsData = (activity: any, openrank: any, updatedAt: number) => {
   return {
-    data1: generateDataByMonth(activity),
-    data2: generateDataByMonth(openrank),
+    data1: generateDataByMonth(activity, updatedAt),
+    data2: generateDataByMonth(openrank, updatedAt),
   };
 };
 
@@ -22,9 +23,15 @@ interface Props {
   repoName: string;
   activity: any;
   openrank: any;
+  meta: RepoMeta;
 }
 
-const View = ({ repoName, activity, openrank }: Props): JSX.Element | null => {
+const View = ({
+  repoName,
+  activity,
+  openrank,
+  meta,
+}: Props): JSX.Element | null => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
 
   useEffect(() => {
@@ -35,7 +42,7 @@ const View = ({ repoName, activity, openrank }: Props): JSX.Element | null => {
 
   if (!activity || !openrank) return null;
 
-  let barsData: any = generateBarsData(activity, openrank);
+  let barsData: any = generateBarsData(activity, openrank, meta.updatedAt);
 
   const onClick = (params: any) => {
     const { seriesIndex, data } = params;

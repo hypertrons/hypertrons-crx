@@ -5,22 +5,28 @@ import $ from 'jquery';
 
 import features from '../../../../feature-manager';
 import getGithubTheme from '../../../../helpers/get-github-theme';
-import isPublicRepo from '../../../../helpers/is-public-repo';
-import { getRepoName } from '../../../../helpers/get-repo-info';
+import {
+  getRepoName,
+  hasRepoContainerHeader,
+  isPublicRepoWithMeta,
+} from '../../../../helpers/get-repo-info';
 import { getStars } from '../../../../api/repo';
 import View from './view';
+import { RepoMeta, metaStore } from '../../../../api/common';
 
 const githubTheme = getGithubTheme();
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
 let stars: any;
+let meta: RepoMeta;
 
 const getData = async () => {
   stars = await getStars(repoName);
+  meta = (await metaStore.get(repoName)) as RepoMeta;
 };
 
 const renderTo = (container: Container) => {
-  render(<View stars={stars} />, container);
+  render(<View stars={stars} meta={meta} />, container);
 };
 
 const init = async (): Promise<void> => {
@@ -62,7 +68,7 @@ const restore = async () => {
 };
 
 features.add(featureId, {
-  asLongAs: [isPublicRepo],
+  asLongAs: [isPublicRepoWithMeta, hasRepoContainerHeader],
   awaitDomReady: false,
   init,
   restore,

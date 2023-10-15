@@ -5,6 +5,7 @@ import { render, Container } from 'react-dom';
 
 import features from '../../../../feature-manager';
 import isPerceptor from '../../../../helpers/is-perceptor';
+import { isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
 import View from './view';
 
 const featureId = features.getFeatureID(import.meta.url);
@@ -33,7 +34,7 @@ const init = async (): Promise<void> => {
 };
 
 features.add(featureId, {
-  asLongAs: [isPerceptor],
+  asLongAs: [isPerceptor, isPublicRepoWithMeta],
   awaitDomReady: false,
   init,
 });

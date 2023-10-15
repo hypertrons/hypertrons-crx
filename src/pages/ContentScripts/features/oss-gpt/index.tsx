@@ -4,8 +4,7 @@ import $ from 'jquery';
 
 import features from '../../../../feature-manager';
 import getGithubTheme from '../../../../helpers/get-github-theme';
-import isPublicRepo from '../../../../helpers/is-public-repo';
-import { getRepoName } from '../../../../helpers/get-repo-info';
+import { getRepoName, isPublicRepo } from '../../../../helpers/get-repo-info';
 import View from './view';
 
 interface DocsMetaItem {

@@ -1,4 +1,5 @@
-const isPerceptor = (): boolean =>
-  window.location.search.includes('?redirect=perceptor');
+const isPerceptor = (): boolean => {
+  return window.location.search.includes('?redirect=perceptor');
+};
 
 export default isPerceptor;
