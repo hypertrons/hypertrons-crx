@@ -1,27 +1,20 @@
+import features from '../../../../feature-manager';
+import { isPublicRepo } from '../../../../helpers/get-repo-info';
+import View from './View';
+
 import React from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
 import elementReady from 'element-ready';
 
-import features from '../../../../feature-manager';
-import { isPublicRepo } from '../../../../helpers/get-repo-info';
-import View from './view';
-import { CollectionButton } from './CollectionButton';
-
 const featureId = features.getFeatureID(import.meta.url);
 
 const init = async (): Promise<void> => {
-  // insert the button
-  const buttonContainer = document.createElement('li');
-  buttonContainer.id = `${featureId}-button`;
-  render(<CollectionButton />, buttonContainer);
+  const container = document.createElement('li');
+  container.id = featureId;
+  render(<View />, container);
   await elementReady('#repository-details-container');
-  $('#repository-details-container>ul').prepend(buttonContainer);
-  // insert the modal
-  const modalContainer = document.createElement('div');
-  modalContainer.id = featureId;
-  render(<View />, modalContainer);
-  $('body').append(modalContainer);
+  $('#repository-details-container>ul').prepend(container);
 };
 
 features.add(featureId, {
