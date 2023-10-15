@@ -28,6 +28,10 @@ export const AddToCollections = () => {
     goToCollectionList();
   };
 
+  const manage = () => {
+    // open modal to manage collections
+  };
+
   return (
     <div
       className="notifications-component-dialog"
@@ -92,8 +96,11 @@ export const AddToCollections = () => {
           >
             Apply
           </button>
-          <button className="btn-sm btn" onClick={cancel}>
+          <button className="btn-sm btn ml-2" onClick={cancel}>
             Cancel
+          </button>
+          <button className="btn-sm btn" onClick={manage}>
+            Manage
           </button>
         </div>
       </div>
