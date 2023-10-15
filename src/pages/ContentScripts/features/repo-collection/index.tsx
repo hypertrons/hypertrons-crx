@@ -19,7 +19,7 @@ const init = async (): Promise<void> => {
   $('#repository-details-container>ul').prepend(buttonContainer);
   // insert the modal
   const modalContainer = document.createElement('div');
-  modalContainer.id = `${featureId}-modal`;
+  modalContainer.id = featureId;
   render(<View />, modalContainer);
   $('body').append(modalContainer);
 };
