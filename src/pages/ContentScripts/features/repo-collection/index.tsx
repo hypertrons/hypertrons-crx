@@ -4,7 +4,7 @@ import $ from 'jquery';
 import elementReady from 'element-ready';
 
 import features from '../../../../feature-manager';
-import isPublicRepo from '../../../../helpers/is-public-repo';
+import { isPublicRepo } from '../../../../helpers/get-repo-info';
 import View from './view';
 import { CollectionButton } from './CollectionButton';
 
