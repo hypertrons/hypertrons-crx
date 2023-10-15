@@ -155,9 +155,6 @@
   "component_projectCorrelationNetwork_title": {
     "message": "项目关系网络图"
   },
-  "component_projectRacingBar_ReplayButton": {
-    "message": "重播"
-  },
   "component_projectRacingBar_description": {
     "message": "贡献者活跃度滚榜展示了项目贡献者的活跃度演化过程。"
   },

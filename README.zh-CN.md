@@ -16,15 +16,15 @@ Language : [English](./README.md) | 中文
 
 ## 安装与使用 📢
 
-<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/chrome/chrome.svg" width="48" alt="Chrome" valign="middle"> [前往Chrome商店安装插件](https://chrome.google.com/webstore/detail/hypercrx/ijchfbpdgeljmhnhokmekkecpbdkgabc)
+<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/chrome/chrome.svg" width="48" alt="Chrome" valign="middle"> [前往 Chrome 商店安装插件](https://chrome.google.com/webstore/detail/hypercrx/ijchfbpdgeljmhnhokmekkecpbdkgabc)
 
-<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/edge/edge.svg" width="48" alt="Edge" valign="middle"> [前往Edge商店安装插件](https://microsoftedge.microsoft.com/addons/detail/hypercrx/lbbajaehiibofpconjgdjonmkidpcome)
+<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/edge/edge.svg" width="48" alt="Edge" valign="middle"> [前往 Edge 商店安装插件](https://microsoftedge.microsoft.com/addons/detail/hypercrx/lbbajaehiibofpconjgdjonmkidpcome)
 
 获取更多信息，请查阅[安装指南](./INSTALLATION.zh-CN.md)。
 
 ## 数据来源
 
-`Hypercrx`呈现的所有数据都由[OpenDigger](https://github.com/X-lab2017/open-digger)产生。OpenDigger是一个聚焦于开源分析的开源项目。数据会在每个月第二天更新。
+`Hypercrx`呈现的所有数据都由[OpenDigger](https://github.com/X-lab2017/open-digger)产生。OpenDigger 是一个聚焦于开源分析的开源项目。数据会在每个月第二天更新。
 
 ## 可视化看板 🔥🔥🔥
 
@@ -94,16 +94,15 @@ Language : [English](./README.md) | 中文
        </td> 
      </tr> 
    </tbody> 
- </table> 
-
+ </table>
 
 - **项目关系网络图**: 项目关系网络图展示了在给定的时间段内，项目与项目之间的联结关系，**_用于项目间关系的追踪与挖掘_**。从该网络图中，可以找出与该项目有联结关系的其他项目。
 
 - **项目活跃开发者协作网络图**: 项目活跃开发者协作网络图展示了在给定的时间段内，项目内部活跃的开发者之间的协作关系，**_用于项目内部开发者关系的追踪与挖掘_**。从该网络图中，可以找出该项目中最活跃的开发者，及开发者之间的协作关系。
 
-- **项目活跃度&OpenRank趋势图**：项目活跃度和OpenRank趋势图显示了项目成立至今的活跃度和OpenRank这两个指标的变化。您可以利用鼠标或触控板在图表内缩放和拖拽，此外，您还可以点击Legend按钮来控制图例的显示和隐藏。
+- **项目活跃度&OpenRank 趋势图**：项目活跃度和 OpenRank 趋势图显示了项目成立至今的活跃度和 OpenRank 这两个指标的变化。您可以利用鼠标或触控板在图表内缩放和拖拽，此外，您还可以点击 Legend 按钮来控制图例的显示和隐藏。
 
-- **仓库详情**: 显示了以下统计指标的历史值。活跃度、OpenRank、参与人数、Fork事件、Star事件、Issue创建事件、Issue评论事件、PR创建事件、PR合入事件、Review评论事件、通过PR合入增加和删除的代码行数。
+- **仓库详情**: 显示了以下统计指标的历史值。活跃度、OpenRank、参与人数、Fork 事件、Star 事件、Issue 创建事件、Issue 评论事件、PR 创建事件、PR 合入事件、Review 评论事件、通过 PR 合入增加和删除的代码行数。
 
 ### 开发者关系挖掘
 
@@ -133,17 +132,15 @@ Language : [English](./README.md) | 中文
          /> </td>
      </tr> 
    </tbody> 
- </table> 
+ </table>
 
-
-
-- **开发者协作网络图**: 开发者协作网络图展示了在给定的时间段内，开发者与开发者之间的协作关系, ***用于开发者关系的追踪与挖掘***。从该网络图中，可以找出与指定开发者联系较为紧密的其他开发者。
-- **活跃仓库网络图**: 活跃仓库网络图展示了在给定的时间段内，开发者的活跃项目，***用于开发者行为的追踪与挖掘***。从该网络图中，可以找出该开发者在哪些项目中活跃。
-- **开发者活跃度&OpenRank趋势图**：开发者活跃度和OpenRank趋势图显示了项目成立至今的活跃度和OpenRank这两个指标的变化。您可以利用鼠标或触控板在图表内缩放和拖拽，此外，您还可以点击Legend按钮来控制图例的显示和隐藏。
+- **开发者协作网络图**: 开发者协作网络图展示了在给定的时间段内，开发者与开发者之间的协作关系, **_用于开发者关系的追踪与挖掘_**。从该网络图中，可以找出与指定开发者联系较为紧密的其他开发者。
+- **活跃仓库网络图**: 活跃仓库网络图展示了在给定的时间段内，开发者的活跃项目，**_用于开发者行为的追踪与挖掘_**。从该网络图中，可以找出该开发者在哪些项目中活跃。
+- **开发者活跃度&OpenRank 趋势图**：开发者活跃度和 OpenRank 趋势图显示了项目成立至今的活跃度和 OpenRank 这两个指标的变化。您可以利用鼠标或触控板在图表内缩放和拖拽，此外，您还可以点击 Legend 按钮来控制图例的显示和隐藏。
 
 ## OSS-GPT
 
-OSS-GPT是集成了[DocsGPT](https://github.com/arc53/docsgpt)能力的开源项目文档问答机器人。对已经支持的项目，只需打开对应的项目仓库主页，即可询问有关于该仓库的任何问题。你可以通过[issue#609](https://github.com/hypertrons/hypertrons-crx/issues/609)以使你的开源项目获得OSS-GPT的支持。
+OSS-GPT 是集成了[DocsGPT](https://github.com/arc53/docsgpt)能力的开源项目文档问答机器人。对已经支持的项目，只需打开对应的项目仓库主页，即可询问有关于该仓库的任何问题。你可以通过[issue#609](https://github.com/hypertrons/hypertrons-crx/issues/609)以使你的开源项目获得 OSS-GPT 的支持。
 
 <img 
   src="https://user-images.githubusercontent.com/104072573/228415232-cc81eab2-5566-4775-bf27-c385881deb20.png"
@@ -158,6 +155,7 @@ OSS-GPT是集成了[DocsGPT](https://github.com/arc53/docsgpt)能力的开源项
 1. node >= 16.14
 
 2. yarn
+
 ### 快速开始
 
 1. git clone https://github.com/hypertrons/hypertrons-crx

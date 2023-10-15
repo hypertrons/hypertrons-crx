@@ -109,28 +109,3 @@
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
 }
-
-.replay-button {
-  display: inline-block;
-  text-align: center;
-  text-decoration: none;
-  border-radius: 4px;
-  cursor: pointer;
-  padding: 3px 12px;
-  font-size: 12px;
-  line-height: 20px;
-  font-weight: var(--base-text-weight-medium, 500);
-  color: var(--button-default-fgColor-rest, var(--color-btn-text));
-  background-color: var(--button-default-bgColor-rest, var(--color-btn-bg));
-  border-color: var(--button-default-borderColor-rest, var(--color-btn-border));
-  box-shadow: var(--button-default-shadow-resting, var(--color-btn-shadow)),
-    var(--button-default-shadow-inset, var(--color-btn-inset-shadow));
-  transition: 80ms cubic-bezier(0.33, 1, 0.68, 1);
-  transition-property: color, background-color, box-shadow, border-color;
-}
-
-.repo-collection {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-}

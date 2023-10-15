@@ -12,7 +12,7 @@ Hypertrons-crx 现已登陆 [Chrome 网上应用商店](https://chrome.google.co
 
 ### Chrome 浏览器 / Edge 浏览器
 
-1. 安装Hypertrons-crx插件
+1. 安装 Hypertrons-crx 插件
 
 [Chrome]点击 [此链接](https://chrome.google.com/webstore/detail/hypercrx/ijchfbpdgeljmhnhokmekkecpbdkgabc) 访问 “Hypercrx” 扩展程序主页，点击 “添加至 Chrome” ，并确认。
 
@@ -50,9 +50,6 @@ Hypertrons-crx 现已登陆 [Chrome 网上应用商店](https://chrome.google.co
   </tbody>
 </table>
 
-
-
-
 3. 如需对插件进行设置，请点击以下按钮，可以进入到插件设置页面。在设置页面，您可以更改相关配置。
 
 <table>
@@ -79,7 +76,6 @@ Hypertrons-crx 现已登陆 [Chrome 网上应用商店](https://chrome.google.co
     </tr>
   </tbody>
 </table>
-
 
 ## 手动下载安装包
 
