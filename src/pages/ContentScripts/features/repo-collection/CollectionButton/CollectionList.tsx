@@ -1,12 +1,34 @@
 import { useRepoCollectionContext } from '../context';
+import { Collection } from '../context/store';
 
-import React, { useContext } from 'react';
+import React from 'react';
+
+const ListItem = (
+  collection: Collection,
+  onClick: (collectionId: Collection['id']) => void
+) => {
+  const handleClick = () => {
+    onClick(collection.id);
+  };
+
+  return (
+    <div
+      className="SelectMenu-item flex-items-start btn border-0 rounded-0"
+      onClick={handleClick}
+    >
+      <span className="text-small text-normal wb-break-all">
+        {collection.name}
+      </span>
+    </div>
+  );
+};
 
 /**
  * The modal that shows the collections that the repo belongs to
  */
 export const CollectionList = () => {
   const {
+    currentRepositoryCollections,
     hideCollectionList,
     setHideAddToCollections,
     setHideCollectionList,
@@ -14,7 +36,7 @@ export const CollectionList = () => {
     setShowModal,
   } = useRepoCollectionContext();
 
-  const handleCollectionClick = (collectionId: string) => {
+  const handleCollectionClick = (collectionId: Collection['id']) => {
     setSelectedCollection(collectionId);
     setShowModal(true);
   };
@@ -72,26 +94,9 @@ export const CollectionList = () => {
             </header>
             {/* list */}
             <div className="overflow-y-auto" style={{ maxHeight: '340px' }}>
-              <div
-                className="SelectMenu-item flex-items-start btn border-0 rounded-0"
-                onClick={() => {
-                  handleCollectionClick('X-lab');
-                }}
-              >
-                <span className="text-small text-normal wb-break-all">
-                  X-lab
-                </span>
-              </div>
-              <div
-                className="SelectMenu-item flex-items-start btn border-0 rounded-0"
-                onClick={() => {
-                  handleCollectionClick('Hypertrons');
-                }}
-              >
-                <span className="text-small text-normal wb-break-all">
-                  Hypertrons
-                </span>
-              </div>
+              {currentRepositoryCollections.map((collection) =>
+                ListItem(collection, handleCollectionClick)
+              )}
             </div>
             {/* footer */}
             <footer className="SelectMenu-footer p-0 position-sticky">

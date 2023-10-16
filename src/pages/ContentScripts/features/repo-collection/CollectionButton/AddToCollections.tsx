@@ -88,6 +88,7 @@ export const AddToCollections = () => {
           </div>
         </div>
         <div className="pt-2 pb-3 px-3 d-flex flex-justify-start flex-row-reverse">
+          {/* TODO: the "Apply" button should be disabled if no change */}
           <button
             disabled={false}
             className="btn-primary btn-sm btn ml-2"

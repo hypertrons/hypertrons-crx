@@ -1,5 +1,6 @@
 import { CollectionList } from './CollectionList';
 import { AddToCollections } from './AddToCollections';
+import { useRepoCollectionContext } from '../context';
 
 import React from 'react';
 import { FundProjectionScreenOutlined } from '@ant-design/icons';
@@ -8,8 +9,7 @@ import { FundProjectionScreenOutlined } from '@ant-design/icons';
  * The entry of the repo collections feature
  */
 export const CollectionButton = () => {
-  /** How many collections the repo belongs to */
-  const collectionCount = 2;
+  const { currentRepositoryCollections } = useRepoCollectionContext();
 
   return (
     <div className="f5 position-relative">
@@ -29,7 +29,7 @@ export const CollectionButton = () => {
             data-turbo-replace="true" // this one, either.
             className="Counter"
           >
-            {collectionCount}
+            {currentRepositoryCollections.length}
           </span>
           <span className="dropdown-caret"></span>
         </summary>
