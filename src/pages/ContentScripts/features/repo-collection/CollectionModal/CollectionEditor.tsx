@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from 'react';
 
-import { Modal, Col, Row, Button, Form, Input, Table, Divider } from 'antd';
+import {
+  Modal,
+  Col,
+  Row,
+  Button,
+  Form,
+  Input,
+  Table,
+  Divider,
+  Radio,
+} from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 
 interface Values {
@@ -36,7 +46,7 @@ interface DataSourceType {
 
 async function getUserOrOrgRepos(
   username: string,
-  isOrg: boolean = false,
+  isOrg: boolean,
   accessToken: string // GitHub Personal Access Token
 ): Promise<RepositoryInfo[]> {
   try {
@@ -71,7 +81,8 @@ async function getUserOrOrgRepos(
 }
 
 // TODO 需要找到一个合适的方法解决Token的问题...
-const accessToken = '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';
+const accessToken =
+  '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';
 
 const columns: ColumnsType<DataType> = [
   {
@@ -96,6 +107,7 @@ const CollectionEditor: React.FC<CollectionEditorProps> = ({
   const [form] = Form.useForm();
   const [dataSource, setDataSource] = useState<DataSourceType[]>();
   const [newRepoData, setNewRepoData] = useState<string[]>();
+  const [isOrg, setIsOrg] = useState<boolean>(false);
 
   async function fetchRepositoryDescription(repositoryName: string) {
     const apiUrl = `https://api.github.com/repos/${repositoryName}`;
@@ -143,10 +155,12 @@ const CollectionEditor: React.FC<CollectionEditorProps> = ({
     setSelectedRowKeys(newSelectedRowKeys);
   };
 
-  const defaultSelectedRowKeys: React.Key[] = ['0', '1'];
+  const defaultSelectedRowKeys: React.Key[] = Array.from(
+    { length: collectionData.length },
+    (_, index) => index.toString()
+  );
   const rowSelection = {
     defaultSelectedRowKeys,
-    selectedRowKeys,
     onChange: onSelectChange,
   };
 
@@ -155,7 +169,7 @@ const CollectionEditor: React.FC<CollectionEditorProps> = ({
     const inputValue = form.getFieldValue('Quick import');
     async function fetchRepositories() {
       try {
-        const result = await getUserOrOrgRepos(inputValue, true, accessToken);
+        const result = await getUserOrOrgRepos(inputValue, isOrg, accessToken);
         // 在这里可以访问 "repositories"，它将包含获取的仓库信息
         console.log('Repositories:', result);
         let nextKey: number;
@@ -191,7 +205,7 @@ const CollectionEditor: React.FC<CollectionEditorProps> = ({
 
   return (
     <Modal
-      width={900}
+      width={1000}
       open={open}
       title={modalTitle}
       okText="Confirm"
@@ -228,11 +242,25 @@ const CollectionEditor: React.FC<CollectionEditorProps> = ({
           <Input placeholder={'input name here'} />
         </Form.Item>
         <Form.Item name="Quick import" label="Quick import">
-          <Input type="textarea" placeholder={'user/organization'} />
+          <Input
+            type="textarea"
+            placeholder={isOrg ? 'organization' : 'user'}
+          />
         </Form.Item>
         <div
           style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}
         >
+          <Radio.Group
+            defaultValue="User"
+            buttonStyle="solid"
+            onChange={(e) => {
+              const selectedValue = e.target.value;
+              setIsOrg(selectedValue === 'Organization');
+            }}
+          >
+            <Radio.Button value="User">User</Radio.Button>
+            <Radio.Button value="Organization">Organization</Radio.Button>
+          </Radio.Group>
           <Button onClick={handleInquireClick}>inquire</Button>
           <Button onClick={handleImportClick}>import</Button>
         </div>
@@ -241,10 +269,10 @@ const CollectionEditor: React.FC<CollectionEditorProps> = ({
       <Row>
         <Col span={24}>
           <Table
-            rowSelection={rowSelection}
             dataSource={isEdit ? dataSource : []}
             columns={columns}
             rowKey="key"
+            rowSelection={rowSelection}
           />
         </Col>
       </Row>
