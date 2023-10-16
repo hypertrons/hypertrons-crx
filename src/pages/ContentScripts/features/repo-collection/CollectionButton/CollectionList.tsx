@@ -1,4 +1,4 @@
-import { CollectionContext } from '../context';
+import { useRepoCollectionContext } from '../context';
 
 import React, { useContext } from 'react';
 
@@ -6,14 +6,13 @@ import React, { useContext } from 'react';
  * The modal that shows the collections that the repo belongs to
  */
 export const CollectionList = () => {
-  const contextValue = useContext(CollectionContext);
   const {
     hideCollectionList,
     setHideAddToCollections,
     setHideCollectionList,
     setSelectedCollection,
     setShowModal,
-  } = contextValue;
+  } = useRepoCollectionContext();
 
   const handleCollectionClick = (collectionId: string) => {
     setSelectedCollection(collectionId);

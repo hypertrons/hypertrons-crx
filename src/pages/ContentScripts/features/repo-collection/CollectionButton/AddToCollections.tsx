@@ -1,4 +1,4 @@
-import { CollectionContext } from '../context';
+import { useRepoCollectionContext } from '../context';
 
 import React, { useContext } from 'react';
 
@@ -6,12 +6,11 @@ import React, { useContext } from 'react';
  * The modal for quickly adding the current repository to exsiting collections (also for removing)
  */
 export const AddToCollections = () => {
-  const contextValue = useContext(CollectionContext);
   const {
     hideAddToCollections,
     setHideAddToCollections,
     setHideCollectionList,
-  } = contextValue;
+  } = useRepoCollectionContext();
 
   const goToCollectionList = () => {
     setHideAddToCollections(true);

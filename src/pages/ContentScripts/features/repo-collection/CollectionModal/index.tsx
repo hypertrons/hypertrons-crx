@@ -2,17 +2,25 @@ import optionsStorage, {
   HypercrxOptions,
   defaults,
 } from '../../../../../options-storage';
-import {
-  CollectionContext,
-  CollectionTabType,
-  CollectionDataType,
-} from '../context';
+import { useRepoCollectionContext } from '../context';
 import CollectionEditor from './CollectionEditor';
 
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { Modal, Tabs, List, Col, Row, Button } from 'antd';
 
 type TargetKey = React.MouseEvent | React.KeyboardEvent | string;
+
+export type CollectionDataType = {
+  name: string;
+  repos: string[];
+  key: string;
+};
+
+export type CollectionTabType = {
+  label: string;
+  children: string;
+  key: string;
+};
 
 const initialItems = [
   { label: 'Tab 1', children: 'Content of Tab 1', key: '1' },
@@ -40,9 +48,8 @@ const defaultCollection: CollectionDataType[] = [
 interface Props {}
 
 export const CollectionModal = ({}: Props): JSX.Element | null => {
-  const contextValue = useContext(CollectionContext);
   const { showModal, setShowModal, selectedCollection, setSelectedCollection } =
-    contextValue;
+    useRepoCollectionContext();
 
   const [activeKey, setActiveKey] = useState(initialItems[0].key);
   const [items, setItems] = useState<CollectionTabType[]>(initialItems);

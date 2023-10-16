@@ -28,6 +28,7 @@
     "antd": "^5.9.1",
     "buffer": "^6.0.3",
     "colorthief": "^2.4.0",
+    "constate": "^3.3.2",
     "delay": "^5.0.0",
     "dom-loaded": "^3.0.0",
     "echarts": "^5.3.0",
