@@ -2,7 +2,11 @@ import optionsStorage, {
   HypercrxOptions,
   defaults,
 } from '../../../../../options-storage';
-import { CollectionContext } from '../context';
+import {
+  CollectionContext,
+  CollectionTabType,
+  CollectionDataType,
+} from '../context';
 import CollectionEditor from './CollectionEditor';
 
 import React, { useState, useEffect, useRef, useContext } from 'react';
@@ -16,13 +20,7 @@ const initialItems = [
   { label: 'Tab 3', children: 'Content of Tab 3', key: '3' },
 ];
 
-type itemType = {
-  label: string;
-  children: string;
-  key: string;
-};
-
-const defaultCollection = [
+const defaultCollection: CollectionDataType[] = [
   {
     name: 'X-lab',
     repos: [
@@ -47,9 +45,10 @@ export const CollectionModal = ({}: Props): JSX.Element | null => {
     contextValue;
 
   const [activeKey, setActiveKey] = useState(initialItems[0].key);
-  const [items, setItems] = useState<itemType[]>(initialItems);
+  const [items, setItems] = useState<CollectionTabType[]>(initialItems);
   const newTabIndex = useRef(0);
-  const [collectionData, setCollectionData] = useState(defaultCollection);
+  const [collectionData, setCollectionData] =
+    useState<CollectionDataType[]>(defaultCollection);
   const [listData, setListData] = useState<string[] | undefined>(
     defaultCollection[0].repos
   );
