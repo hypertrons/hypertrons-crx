@@ -1,6 +1,6 @@
 import features from '../../../../feature-manager';
 import { isPublicRepo } from '../../../../helpers/get-repo-info';
-import View from './View';
+import View from './view';
 
 import React from 'react';
 import { render } from 'react-dom';
