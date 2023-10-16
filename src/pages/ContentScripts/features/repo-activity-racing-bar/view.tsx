@@ -4,7 +4,7 @@ import optionsStorage, {
   defaults,
 } from '../../../../options-storage';
 import RacingBar, { MediaControlers } from './RacingBar';
-import { RepoActivityDetails } from './data';
+import { RepoActivityDetails, getMonthlyData } from './data';
 import { PlayerButton } from './PlayerButton';
 import { SpeedController } from './SpeedController';
 
@@ -91,7 +91,7 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
               <RacingBar
                 ref={mediaControlersRef}
                 speed={speed}
-                data={repoActivityDetails}
+                data={getMonthlyData(repoActivityDetails)}
                 setPlaying={setPlaying}
               />
             </div>

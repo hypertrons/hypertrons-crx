@@ -13,6 +13,25 @@ export interface RepoActivityDetails {
 }
 
 /**
+ * Filter and extract monthly data from the given data structure, which includes various date formats such as "yyyy", "yyyy-Qq", and "yyyy-mm".
+ * This function extracts and returns only the monthly data in the "yyyy-mm" format.
+ *
+ * @param data: RepoActivityDetails
+ * @returns RepoActivityDetails
+ */
+export function getMonthlyData(data: RepoActivityDetails) {
+  const monthlyData: RepoActivityDetails = {};
+
+  for (const key in data) {
+    // Check if the key matches the yyyy-mm format (e.g., "2020-05")
+    if (/^\d{4}-\d{2}$/.test(key)) {
+      monthlyData[key] = data[key];
+    }
+  }
+  return monthlyData;
+}
+
+/**
  * Count the number of unique contributors in the data
  * @returns [number of long term contributors, contributors' names]
  */
