@@ -16,10 +16,15 @@ const initialItems = [
   { label: 'Tab 3', children: 'Content of Tab 3', key: '3' },
 ];
 
-// TODO collectionData的格式要改！ 应该是[{name:'collection1',repo:['A','B']},{name:'collection2',repo:['C','D']}]
+type itemType = {
+  label: string;
+  children: string;
+  key: string;
+};
+
 const defaultCollection = [
   {
-    name: 'Xlab2017',
+    name: 'X-lab',
     repos: [
       'X-lab2017/open-digger',
       'X-lab2017/open-leaderboard',
@@ -42,7 +47,7 @@ export const CollectionModal = ({}: Props): JSX.Element | null => {
     contextValue;
 
   const [activeKey, setActiveKey] = useState(initialItems[0].key);
-  const [items, setItems] = useState(initialItems);
+  const [items, setItems] = useState<itemType[]>(initialItems);
   const newTabIndex = useRef(0);
   const [collectionData, setCollectionData] = useState(defaultCollection);
   const [listData, setListData] = useState<string[] | undefined>(
@@ -68,6 +73,7 @@ export const CollectionModal = ({}: Props): JSX.Element | null => {
           setIsEdit(true);
           setShowModal(true);
         }}
+        disabled={items.length === 0}
       >
         Edit Collection
       </Button>
@@ -78,25 +84,27 @@ export const CollectionModal = ({}: Props): JSX.Element | null => {
     chrome.storage.sync.get(['userCollectionData']).then((result) => {
       if (result.userCollectionData) {
         console.log('loading in modal', result.userCollectionData);
+        setCollectionData(result.userCollectionData);
       }
-      //setCollectionData(result.userCollectionData);
       console.log('collectionData in modal', collectionData);
-      const transformedData = Object.keys(result.userCollectionData).map(
-        (key, index) => ({
-          label: key,
-          children: `Content of Collection ${key}`,
-          key: (index + 1).toString(),
-        })
-      );
-
-      const firstKey = Object.keys(result.userCollectionData)[0];
-      setListData(result.userCollectionData[firstKey]);
-
-      console.log('list Data', listData);
-      console.log(transformedData);
-      setItems(transformedData);
     });
-  }, []);
+    const transformedData = collectionData.map((item, index) => ({
+      label: item.name,
+      children: `Content of Collection ${item.name},it has repository ${item.repos}`,
+      key: (index + 1).toString(),
+    }));
+    const temp = collectionData.find(
+      (item) => item.name === selectedCollection
+    )?.key;
+    if (temp) {
+      setActiveKey(temp);
+    }
+    console.log('temp value', temp);
+    setListData(collectionData[temp ? parseInt(temp) - 1 : 0].repos);
+    console.log('list Data', listData);
+    console.log(transformedData);
+    setItems(transformedData);
+  }, [showModal]);
 
   const onCreate = (values: any, newRepoData: string[] | undefined) => {
     setListData(newRepoData);
@@ -128,7 +136,7 @@ export const CollectionModal = ({}: Props): JSX.Element | null => {
     console.log('active key', newActiveKey);
 
     const foundItem = collectionData.find((item) => item.key === newActiveKey);
-    console.log('founditem', foundItem);
+    console.log('foundItem', foundItem);
     if (foundItem) {
       setListData(foundItem.repos);
     }
@@ -149,23 +157,32 @@ export const CollectionModal = ({}: Props): JSX.Element | null => {
   };
 
   const remove = (targetKey: TargetKey) => {
-    let newActiveKey = activeKey;
-    let lastIndex = -1;
-    items.forEach((item, i) => {
-      if (item.key === targetKey) {
-        lastIndex = i - 1;
-      }
+    Modal.confirm({
+      title: 'Confirm Deletion',
+      content: 'Are you sure you want to delete this collection？',
+      okText: 'Confirm',
+      onOk() {
+        // 用户点击确认按钮时执行的操作
+        let newActiveKey = activeKey;
+        let lastIndex = -1;
+        items.forEach((item, i) => {
+          if (item.key === targetKey) {
+            lastIndex = i - 1;
+          }
+        });
+        const newPanes = items.filter((item) => item.key !== targetKey);
+        if (newPanes.length && newActiveKey === targetKey) {
+          if (lastIndex >= 0) {
+            newActiveKey = newPanes[lastIndex].key;
+          } else {
+            newActiveKey = newPanes[0].key;
+          }
+        }
+        setItems(newPanes);
+        setActiveKey(newActiveKey);
+      },
+      onCancel() {},
     });
-    const newPanes = items.filter((item) => item.key !== targetKey);
-    if (newPanes.length && newActiveKey === targetKey) {
-      if (lastIndex >= 0) {
-        newActiveKey = newPanes[lastIndex].key;
-      } else {
-        newActiveKey = newPanes[0].key;
-      }
-    }
-    setItems(newPanes);
-    setActiveKey(newActiveKey);
   };
 
   const onEdit = (
@@ -201,8 +218,8 @@ export const CollectionModal = ({}: Props): JSX.Element | null => {
           setShowModal(false);
         }}
         footer={null}
-        width={1200}
-        bodyStyle={{ height: '50vh' }}
+        width={'95%'}
+        bodyStyle={{ height: '70vh' }}
       >
         <Row>
           <Col xs={{ span: 5, offset: 1 }} lg={{ span: 4 }}>
@@ -237,14 +254,13 @@ export const CollectionModal = ({}: Props): JSX.Element | null => {
           open={showModal}
           onCreate={onCreate}
           onCancel={() => {
-            setShowModal(false);
+            //setShowModal(false);
             setIsClick(false);
             setIsEdit(undefined);
           }}
           isEdit={isEdit}
           collectionName={items[parseInt(activeKey) - 1].label}
-          // TODO collectionData还需要优化，存储结构要改
-          collectionData={collectionData[0].repos}
+          collectionData={collectionData[parseInt(activeKey) - 1].repos}
         />
       )}
     </div>
