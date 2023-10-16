@@ -4,9 +4,13 @@ import { RepoCollectionProvider } from './context';
 
 import React from 'react';
 
-const View = () => {
+interface Props {
+  repoName: string;
+}
+
+const View = ({ repoName }: Props) => {
   return (
-    <RepoCollectionProvider>
+    <RepoCollectionProvider currentRepositoryId={repoName}>
       <CollectionButton />
       <CollectionModal />
     </RepoCollectionProvider>
