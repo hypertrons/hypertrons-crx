@@ -18,6 +18,7 @@ const RELATIONS_STORE_KEY =
   'hypercrx:repo-collection:repository-collection-relations';
 const COLLECTIONS_STORE_KEY = 'hypercrx:repo-collection:collections';
 
+// TODO: delete other collections except for X-lab before the PR is merged
 const defaultCollections: Collection[] = [
   {
     id: 'X-lab',
@@ -26,6 +27,10 @@ const defaultCollections: Collection[] = [
   {
     id: 'Hypertrons',
     name: 'Hypertrons',
+  },
+  {
+    id: 'Mulan',
+    name: 'Mulan',
   },
 ];
 const defaultRelations: Relation[] = [
@@ -43,8 +48,14 @@ const defaultRelations: Relation[] = [
   },
 ];
 
+/**
+ * Store for repo collection
+ */
 class RepoCollectionStore {
   private static instance: RepoCollectionStore;
+  // a simple lock mechanism to prevent concurrent updates
+  private isUpdatingRelations: boolean = false;
+  private isUpdatingCollection: boolean = false;
 
   public static getInstance(): RepoCollectionStore {
     if (!RepoCollectionStore.instance) {
@@ -54,31 +65,53 @@ class RepoCollectionStore {
   }
 
   public async addCollection(collection: Collection): Promise<void> {
-    const collections = await this.getAllCollections();
-    collections.push(collection);
-    await chrome.storage.sync.set({
-      [COLLECTIONS_STORE_KEY]: collections,
-    });
+    if (this.isUpdatingCollection) {
+      // Another update is in progress, wait for it to finish
+      await this.waitForUpdateToFinish();
+    }
+
+    this.isUpdatingCollection = true;
+
+    try {
+      const collections = await this.getAllCollections();
+      collections.push(collection);
+      await chrome.storage.sync.set({
+        [COLLECTIONS_STORE_KEY]: collections,
+      });
+    } finally {
+      this.isUpdatingCollection = false;
+    }
   }
 
   public async removeCollection(collectionId: Collection['id']): Promise<void> {
-    const collections = await this.getAllCollections();
-    const index = collections.findIndex((c) => c.id === collectionId);
-    if (index === -1) {
-      return;
+    if (this.isUpdatingCollection) {
+      // Another update is in progress, wait for it to finish
+      await this.waitForUpdateToFinish();
     }
-    // remove its relations first
-    const relations = await this.getAllRelations();
-    relations.forEach((r) => {
-      if (r.collectionId === collectionId) {
-        this.removeRelation(r);
+
+    this.isUpdatingCollection = true;
+
+    try {
+      const collections = await this.getAllCollections();
+      const index = collections.findIndex((c) => c.id === collectionId);
+      if (index === -1) {
+        return;
       }
-    });
-    // then remove the collection
-    collections.splice(index, 1);
-    await chrome.storage.sync.set({
-      [COLLECTIONS_STORE_KEY]: collections,
-    });
+      // Remove its relations first
+      const relations = await this.getAllRelations();
+      relations.forEach((r) => {
+        if (r.collectionId === collectionId) {
+          this.removeRelations([r]);
+        }
+      });
+      // Then remove the collection
+      collections.splice(index, 1);
+      await chrome.storage.sync.set({
+        [COLLECTIONS_STORE_KEY]: collections,
+      });
+    } finally {
+      this.isUpdatingCollection = false;
+    }
   }
 
   public async getAllCollections(): Promise<Collection[]> {
@@ -89,37 +122,60 @@ class RepoCollectionStore {
   }
 
   public async addRelations(relations: Relation[]): Promise<void> {
-    const allRelations = await this.getAllRelations();
-    // remove duplicate relations
-    relations = relations.filter((r) => {
-      return (
-        allRelations.findIndex(
+    if (this.isUpdatingRelations) {
+      // Another update is in progress, wait for it to finish
+      await this.waitForUpdateToFinish();
+    }
+
+    this.isUpdatingRelations = true;
+
+    try {
+      const allRelations = await this.getAllRelations();
+      // Remove duplicate relations
+      relations = relations.filter((r) => {
+        return (
+          allRelations.findIndex(
+            (rr) =>
+              rr.repositoryId === r.repositoryId &&
+              rr.collectionId === r.collectionId
+          ) === -1
+        );
+      });
+      allRelations.push(...relations);
+      await chrome.storage.sync.set({
+        [RELATIONS_STORE_KEY]: allRelations,
+      });
+    } finally {
+      this.isUpdatingRelations = false;
+    }
+  }
+
+  public async removeRelations(relations: Relation[]): Promise<void> {
+    if (this.isUpdatingRelations) {
+      // Another update is in progress, wait for it to finish
+      await this.waitForUpdateToFinish();
+    }
+
+    this.isUpdatingRelations = true;
+
+    try {
+      const allRelations = await this.getAllRelations();
+      relations.forEach((r) => {
+        const index = allRelations.findIndex(
           (rr) =>
             rr.repositoryId === r.repositoryId &&
             rr.collectionId === r.collectionId
-        ) === -1
-      );
-    });
-    allRelations.push(...relations);
-    await chrome.storage.sync.set({
-      [RELATIONS_STORE_KEY]: allRelations,
-    });
-  }
-
-  public async removeRelation(relation: Relation): Promise<void> {
-    const relations = await this.getAllRelations();
-    const index = relations.findIndex(
-      (r) =>
-        r.repositoryId === relation.repositoryId &&
-        r.collectionId === relation.collectionId
-    );
-    if (index === -1) {
-      return;
+        );
+        if (index !== -1) {
+          allRelations.splice(index, 1);
+        }
+      });
+      await chrome.storage.sync.set({
+        [RELATIONS_STORE_KEY]: allRelations,
+      });
+    } finally {
+      this.isUpdatingRelations = false;
     }
-    relations.splice(index, 1);
-    await chrome.storage.sync.set({
-      [RELATIONS_STORE_KEY]: relations,
-    });
   }
 
   public async getAllRelations(): Promise<Relation[]> {
@@ -127,6 +183,19 @@ class RepoCollectionStore {
       [RELATIONS_STORE_KEY]: defaultRelations,
     });
     return relations[RELATIONS_STORE_KEY];
+  }
+
+  private async waitForUpdateToFinish(): Promise<void> {
+    return new Promise((resolve) => {
+      const check = () => {
+        if (!this.isUpdatingRelations) {
+          resolve();
+        } else {
+          setTimeout(check, 10); // Check again after a short delay
+        }
+      };
+      check();
+    });
   }
 }
 
