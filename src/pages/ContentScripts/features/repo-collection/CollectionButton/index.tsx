@@ -6,7 +6,7 @@ import React from 'react';
 import { FundProjectionScreenOutlined } from '@ant-design/icons';
 
 /**
- * The entry of the repo collections feature
+ * The "Collections" button, which is in the left of the "Edit Pins" button
  */
 export const CollectionButton = () => {
   const { currentRepositoryCollections } = useRepoCollectionContext();

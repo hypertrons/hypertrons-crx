@@ -13,6 +13,7 @@ const ListItem = (
 
   return (
     <div
+      key={collection.id}
       className="SelectMenu-item flex-items-start btn border-0 rounded-0"
       onClick={handleClick}
     >

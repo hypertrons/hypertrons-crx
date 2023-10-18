@@ -21,8 +21,8 @@ export const useStore = () => {
     fetchAllRelations();
   };
 
-  const removeRelation = async (relation: Relation) => {
-    await repoCollectionStore.removeRelation(relation);
+  const removeRelations = async (relations: Relation[]) => {
+    await repoCollectionStore.removeRelations(relations);
     fetchAllRelations();
   };
 
@@ -38,7 +38,7 @@ export const useStore = () => {
 
   const updaters = {
     addRelations,
-    removeRelation,
+    removeRelations,
     addCollection,
     removeCollection,
   };
