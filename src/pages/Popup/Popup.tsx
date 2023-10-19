@@ -15,7 +15,7 @@ export default function Popup() {
   };
   return (
     <div>
-      <Space direction="vertical" style={{ width: '100%' }}>
+      <Space direction="vertical" style={{ width: '100px' }}>
         <Button
           type="text"
           block
