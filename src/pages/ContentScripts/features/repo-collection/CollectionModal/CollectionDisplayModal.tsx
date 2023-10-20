@@ -1,40 +1,38 @@
+import { useRepoCollectionContext } from '../context';
+
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Col, List, Modal, Row, Tabs } from 'antd';
+import { Col, List, Modal, Row } from 'antd';
 
-interface CollectionProps {
-  data: any;
-  closeModal: () => void;
-}
+export const CollectionDisplayModal = (): JSX.Element => {
+  const [listData, setListData] = useState<string[]>();
 
-// ToDo forwardRef
+  const {
+    allRelations,
+    selectedCollection,
+    showDisplayModal,
+    setHideCollectionList,
+    setShowDisplayModal,
+  } = useRepoCollectionContext();
 
-const Collection = (props: CollectionProps): JSX.Element => {
-  const collectionData = props.data;
-  const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(true);
-  const listData = collectionData[1];
-
-  const showModal = () => {
-    setOpen(true);
-  };
-
-  const handleOk = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setOpen(false);
-    }, 3000);
-  };
+  useEffect(() => {
+    setListData(
+      allRelations
+        .filter((relation) => relation.collectionId === selectedCollection)
+        .map((relation) => relation.repositoryId)
+    );
+  }, [showDisplayModal]);
 
   const handleCancel = () => {
-    props.closeModal();
+    setShowDisplayModal(false);
+    setHideCollectionList(false);
   };
   return (
     <>
       <Modal
-        width={1200}
+        width={'95%'}
+        bodyStyle={{ height: '70vh' }}
         centered
-        open={open}
+        open={showDisplayModal}
         title={
           <div
             style={{
@@ -46,14 +44,13 @@ const Collection = (props: CollectionProps): JSX.Element => {
               marginBottom: '20px',
             }}
           >
-            '{collectionData[0]}' Collection Dashboard
+            {selectedCollection}
           </div>
         }
-        onOk={handleOk}
         onCancel={handleCancel}
         footer={[
           <button className={'btn'} onClick={handleCancel}>
-            返回
+            Cancel
           </button>,
         ]}
       >
@@ -73,6 +70,7 @@ const Collection = (props: CollectionProps): JSX.Element => {
             </div>
           </Col>
           <Col xs={{ span: 11, offset: 1 }} lg={{ span: 12, offset: 2 }}>
+            {/* Graph */}
             Graph is here
           </Col>
         </Row>
@@ -80,5 +78,3 @@ const Collection = (props: CollectionProps): JSX.Element => {
     </>
   );
 };
-
-export default Collection;

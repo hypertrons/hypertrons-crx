@@ -143,7 +143,9 @@ const CollectionEditor: React.FC<CollectionEditorProps> = ({
   const initialValues = {
     collectionName: isEdit ? collectionName : '', // 设置字段的初始值
   };
-  const modalTitle = isEdit ? 'Collection Editor' : 'Creat a new collection';
+  const modalTitle = isEdit
+    ? 'CollectionDisplayModal Editor'
+    : 'Creat a new collection';
 
   const onSelectChange = (
     newSelectedRowKeys: React.Key[],

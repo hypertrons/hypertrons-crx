@@ -21,7 +21,8 @@ const useRepoCollection = ({
   const [hideCollectionList, setHideCollectionList] = useState(false);
   const [hideAddToCollections, setHideAddToCollections] = useState(true);
 
-  const [showModal, setShowModal] = useState(false);
+  const [showManageModal, setShowManageModal] = useState(false);
+  const [showDisplayModal, setShowDisplayModal] = useState(false);
   const [selectedCollection, setSelectedCollection] = useState<string>();
 
   return {
@@ -36,8 +37,11 @@ const useRepoCollection = ({
     hideAddToCollections,
     setHideAddToCollections,
 
-    showModal,
-    setShowModal,
+    showManageModal,
+    setShowManageModal,
+    showDisplayModal,
+    setShowDisplayModal,
+
     selectedCollection,
     setSelectedCollection,
   };

@@ -47,9 +47,13 @@ const defaultCollection: CollectionDataType[] = [
 
 interface Props {}
 
-export const CollectionModal = ({}: Props): JSX.Element | null => {
-  const { showModal, setShowModal, selectedCollection, setSelectedCollection } =
-    useRepoCollectionContext();
+export const CollectionManageModal = ({}: Props): JSX.Element | null => {
+  const {
+    showManageModal,
+    setShowManageModal,
+    selectedCollection,
+    setSelectedCollection,
+  } = useRepoCollectionContext();
 
   const [activeKey, setActiveKey] = useState(initialItems[0].key);
   const [items, setItems] = useState<CollectionTabType[]>(initialItems);
@@ -68,7 +72,7 @@ export const CollectionModal = ({}: Props): JSX.Element | null => {
         onClick={() => {
           setIsClick(true);
           setIsEdit(false);
-          setShowModal(true);
+          setShowManageModal(true);
         }}
       >
         Add New Collection
@@ -77,7 +81,7 @@ export const CollectionModal = ({}: Props): JSX.Element | null => {
         onClick={() => {
           setIsClick(true);
           setIsEdit(true);
-          setShowModal(true);
+          setShowManageModal(true);
         }}
         disabled={items.length === 0}
       >
@@ -110,7 +114,7 @@ export const CollectionModal = ({}: Props): JSX.Element | null => {
     console.log('list Data', listData);
     console.log(transformedData);
     setItems(transformedData);
-  }, [showModal]);
+  }, [showManageModal]);
 
   const onCreate = (values: any, newRepoData: string[] | undefined) => {
     setListData(newRepoData);
@@ -134,7 +138,7 @@ export const CollectionModal = ({}: Props): JSX.Element | null => {
       setActiveKey(newActiveKey);
     }
     console.log('Received values of form: ', values);
-    setShowModal(false);
+    setShowManageModal(false);
     setIsClick(false);
     setIsEdit(undefined);
   };
@@ -219,9 +223,9 @@ export const CollectionModal = ({}: Props): JSX.Element | null => {
             Repo Collection Dashboard
           </div>
         }
-        open={showModal}
+        open={showManageModal}
         onCancel={() => {
-          setShowModal(false);
+          setShowManageModal(false);
         }}
         footer={null}
         width={'95%'}
@@ -257,7 +261,7 @@ export const CollectionModal = ({}: Props): JSX.Element | null => {
       </Modal>
       {isClick && (
         <CollectionEditor
-          open={showModal}
+          open={showManageModal}
           onCreate={onCreate}
           onCancel={() => {
             //setShowModal(false);

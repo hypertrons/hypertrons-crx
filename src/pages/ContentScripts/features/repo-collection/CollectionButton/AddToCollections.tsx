@@ -31,7 +31,7 @@ const CheckListItem = (
 };
 
 /**
- * The modal for quickly adding the current repository to exsiting collections (also for removing)
+ * The modal for quickly adding the current repository to existing collections (also for removing)
  */
 export const AddToCollections = () => {
   const {
@@ -42,7 +42,7 @@ export const AddToCollections = () => {
     hideAddToCollections,
     setHideAddToCollections,
     setHideCollectionList,
-    setShowModal,
+    setShowManageModal,
   } = useRepoCollectionContext();
 
   const [checkedCollectionIds, setCheckedCollectionIds] = useState<
@@ -110,7 +110,7 @@ export const AddToCollections = () => {
 
   const manage = () => {
     // open modal to manage collections
-    setShowModal(true);
+    setShowManageModal(true);
   };
 
   // if the ids of currentRepositoryCollections are the same as the ids of selectedCollectionIds, then the "Apply" button should be disabled
