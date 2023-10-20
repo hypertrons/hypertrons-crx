@@ -166,21 +166,23 @@ export const AddToCollections = () => {
           })}
         </div>
         {/* 3 buttons */}
-        <div className="pt-2 pb-3 px-3 d-flex flex-justify-start flex-row-reverse">
-          <button
-            disabled={isApplyDisabled}
-            className="btn-primary btn-sm btn ml-2"
-            onClick={apply}
-          >
-            Apply
-          </button>
-          <button className="btn-sm btn ml-2" onClick={cancel}>
-            Cancel
-          </button>
-          <button className="btn-sm btn" onClick={manage}>
-            Manage
-          </button>
-        </div>
+        <footer className="SelectMenu-footer">
+          <div className="pt-2 pb-3 px-3 d-flex flex-justify-start flex-row-reverse">
+            <button
+              disabled={isApplyDisabled}
+              className="btn-primary btn-sm btn ml-2"
+              onClick={apply}
+            >
+              Apply
+            </button>
+            <button className="btn-sm btn ml-2" onClick={cancel}>
+              Cancel
+            </button>
+            <button className="btn-sm btn" onClick={manage}>
+              Manage
+            </button>
+          </div>
+        </footer>
       </div>
     </div>
   );
