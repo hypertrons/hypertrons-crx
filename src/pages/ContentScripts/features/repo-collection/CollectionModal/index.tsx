@@ -1,11 +1,7 @@
-import optionsStorage, {
-  HypercrxOptions,
-  defaults,
-} from '../../../../../options-storage';
 import { useRepoCollectionContext } from '../context';
 import CollectionEditor from './CollectionEditor';
 
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Modal, Tabs, List, Col, Row, Button } from 'antd';
 
 type TargetKey = React.MouseEvent | React.KeyboardEvent | string;

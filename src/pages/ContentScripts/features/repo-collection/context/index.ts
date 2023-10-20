@@ -39,8 +39,6 @@ const useRepoCollection = ({
 
     showManageModal,
     setShowManageModal,
-    showDisplayModal,
-    setShowDisplayModal,
 
     selectedCollection,
     setSelectedCollection,

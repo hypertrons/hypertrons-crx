@@ -81,8 +81,7 @@ async function getUserOrOrgRepos(
 }
 
 // TODO 需要找到一个合适的方法解决Token的问题...
-const accessToken =
-  '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';
+const accessToken = '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roll';
 
 const columns: ColumnsType<DataType> = [
   {
