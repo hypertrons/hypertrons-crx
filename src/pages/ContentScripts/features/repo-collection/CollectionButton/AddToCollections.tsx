@@ -114,7 +114,7 @@ export const AddToCollections = () => {
   };
 
   // if the ids of currentRepositoryCollections are the same as the ids of selectedCollectionIds, then the "Apply" button should be disabled
-  let isApplyDisabled = true;
+  let isApplyDisabled: boolean;
   if (currentRepositoryCollections.length !== checkedCollectionIds.length) {
     isApplyDisabled = false;
   } else {
