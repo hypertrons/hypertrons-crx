@@ -77,34 +77,7 @@ export const CollectionManageModal = () => {
 
   useEffect(() => {}, []);
 
-  const onCreate = (values: any, newRepoData: string[] | undefined) => {
-    /*
-     * remove collection and its relations
-     */
-    if (selectedCollection) {
-      updaters.removeCollection(selectedCollection);
-      updaters.removeRelations(
-        allRelations.filter(
-          (relation) => relation.collectionId === selectedCollection
-        )
-      );
-    }
-
-    /*
-     * add newCollection and its relations
-     */
-    setSelectedCollection(values.collectionName);
-    if (newRepoData) {
-      updaters.addCollection(values.collectionName);
-      updaters.addRelations(
-        newRepoData.map((repo) => ({
-          collectionId: values.collectionName,
-          repositoryId: repo,
-        }))
-      );
-    }
-
-    setListData(newRepoData);
+  const onCreate = async (values: any, newRepoData: string[] | undefined) => {
     if (isEdit) {
       const updatedItems = items.map((item) => {
         if (item.key === activeKey?.toString()) {
@@ -123,8 +96,41 @@ export const CollectionManageModal = () => {
       setItems(newPanes);
       setActiveKey(values.collectionName);
     }
+
+    try {
+      /*
+       * remove collection and its relations
+       */
+      if (selectedCollection) {
+        await updaters.removeCollection(selectedCollection);
+        const relationsToRemove = allRelations.filter(
+          (relation) => relation.collectionId === selectedCollection
+        );
+        await updaters.removeRelations(relationsToRemove);
+      }
+
+      /*
+       * add newCollection and its relations
+       */
+
+      await updaters.addCollection({
+        id: values.collectionName,
+        name: values.collectionName,
+      });
+      if (newRepoData) {
+        const relationsToAdd = newRepoData.map((repo) => ({
+          collectionId: values.collectionName,
+          repositoryId: repo,
+        }));
+        await updaters.addRelations(relationsToAdd);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
     console.log('Received values of form: ', values);
 
+    setListData(newRepoData);
+    setSelectedCollection(values.collectionName);
     setIsClick(false);
     setIsEdit(undefined);
   };
@@ -139,7 +145,7 @@ export const CollectionManageModal = () => {
       title: 'Confirm Deletion',
       content: 'Are you sure you want to delete this collection？',
       okText: 'Confirm',
-      onOk() {
+      async onOk() {
         // 用户点击确认按钮时执行的操作
         let newActiveKey = activeKey;
         let lastIndex = -1;
@@ -158,12 +164,13 @@ export const CollectionManageModal = () => {
         }
         setItems(newPanes);
         setActiveKey(newActiveKey);
-        updaters.removeCollection(targetKey.toString());
-        updaters.removeRelations(
+        await updaters.removeCollection(targetKey.toString());
+        await updaters.removeRelations(
           allRelations.filter(
             (relation) => relation.collectionId === targetKey.toString()
           )
         );
+        setSelectedCollection(newActiveKey);
       },
       onCancel() {},
     });
