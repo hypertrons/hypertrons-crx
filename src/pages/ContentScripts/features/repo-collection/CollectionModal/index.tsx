@@ -1,63 +1,34 @@
 import { useRepoCollectionContext } from '../context';
 import CollectionEditor from './CollectionEditor';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Tabs, List, Col, Row, Button } from 'antd';
 
 type TargetKey = React.MouseEvent | React.KeyboardEvent | string;
 
-export type CollectionDataType = {
-  name: string;
-  repos: string[];
-  key: string;
-};
-
-export type CollectionTabType = {
+type CollectionTabType = {
   label: string;
   children: string;
   key: string;
 };
 
-const initialItems = [
-  { label: 'Tab 1', children: 'Content of Tab 1', key: '1' },
-  { label: 'Tab 2', children: 'Content of Tab 2', key: '2' },
-  { label: 'Tab 3', children: 'Content of Tab 3', key: '3' },
-];
-
-const defaultCollection: CollectionDataType[] = [
-  {
-    name: 'X-lab',
-    repos: [
-      'X-lab2017/open-digger',
-      'X-lab2017/open-leaderboard',
-      'X-lab2017/open-wonderland',
-    ],
-    key: '1',
-  },
-  {
-    name: 'Hypertrons',
-    repos: ['hypertrons/hypertrons-crx', 'X-lab2017/open-leaderboard'],
-    key: '2',
-  },
-];
-
-interface Props {}
-
-export const CollectionManageModal = ({}: Props): JSX.Element | null => {
+export const CollectionManageModal = () => {
   const {
     showManageModal,
     setShowManageModal,
     selectedCollection,
     setSelectedCollection,
+    updaters,
+    allCollections,
+    allRelations,
   } = useRepoCollectionContext();
 
-  const [activeKey, setActiveKey] = useState(initialItems[0].key);
-  const [items, setItems] = useState<CollectionTabType[]>(initialItems);
-  const newTabIndex = useRef(0);
-  const [collectionData, setCollectionData] =
-    useState<CollectionDataType[]>(defaultCollection);
+  const [activeKey, setActiveKey] = useState<string>();
+  const [items, setItems] = useState<CollectionTabType[]>([]);
   const [listData, setListData] = useState<string[] | undefined>(
-    defaultCollection[0].repos
+    allRelations
+      .filter((relation) => relation.collectionId === allCollections[0].id)
+      .map((relation) => relation.repositoryId)
   );
   const [isClick, setIsClick] = useState(false);
   const [isEdit, setIsEdit] = useState<boolean>();
@@ -79,7 +50,7 @@ export const CollectionManageModal = ({}: Props): JSX.Element | null => {
           setIsEdit(true);
           setShowManageModal(true);
         }}
-        disabled={items.length === 0}
+        disabled={items.length === 0 || selectedCollection === undefined}
       >
         Edit Collection
       </Button>
@@ -87,36 +58,30 @@ export const CollectionManageModal = ({}: Props): JSX.Element | null => {
   );
 
   useEffect(() => {
-    chrome.storage.sync.get(['userCollectionData']).then((result) => {
-      if (result.userCollectionData) {
-        console.log('loading in modal', result.userCollectionData);
-        setCollectionData(result.userCollectionData);
-      }
-      console.log('collectionData in modal', collectionData);
-    });
-    const transformedData = collectionData.map((item, index) => ({
-      label: item.name,
-      children: `Content of Collection ${item.name},it has repository ${item.repos}`,
-      key: (index + 1).toString(),
+    const initialItems = allCollections.map((collection, index) => ({
+      label: collection.name,
+      children: `Content of ${collection.name}`,
+      key: collection.id,
     }));
-    const temp = collectionData.find(
-      (item) => item.name === selectedCollection
-    )?.key;
-    if (temp) {
-      setActiveKey(temp);
-    }
-    console.log('temp value', temp);
-    setListData(collectionData[temp ? parseInt(temp) - 1 : 0].repos);
-    console.log('list Data', listData);
-    console.log(transformedData);
-    setItems(transformedData);
+    const initialListData = allRelations
+      .filter((relation) =>
+        relation.collectionId === selectedCollection
+          ? selectedCollection
+          : allCollections[0].name
+      )
+      .map((relation) => relation.repositoryId);
+    setActiveKey(selectedCollection);
+    setItems(initialItems);
+    setListData(initialListData);
   }, [showManageModal]);
+
+  useEffect(() => {}, []);
 
   const onCreate = (values: any, newRepoData: string[] | undefined) => {
     setListData(newRepoData);
     if (isEdit) {
       const updatedItems = items.map((item) => {
-        if (item.key === activeKey.toString()) {
+        if (item.key === activeKey?.toString()) {
           return { ...item, label: values.collectionName };
         }
         return item;
@@ -138,28 +103,10 @@ export const CollectionManageModal = ({}: Props): JSX.Element | null => {
     setIsClick(false);
     setIsEdit(undefined);
   };
+
   const onChange = (newActiveKey: string) => {
-    console.log('active key', newActiveKey);
-
-    const foundItem = collectionData.find((item) => item.key === newActiveKey);
-    console.log('foundItem', foundItem);
-    if (foundItem) {
-      setListData(foundItem.repos);
-    }
-
     setActiveKey(newActiveKey);
-  };
-
-  const add = () => {
-    const newActiveKey = `newTab${newTabIndex.current++}`;
-    const newPanes = [...items];
-    newPanes.push({
-      label: 'New Tab',
-      children: 'Content of new Tab',
-      key: newActiveKey,
-    });
-    setItems(newPanes);
-    setActiveKey(newActiveKey);
+    setSelectedCollection(newActiveKey);
   };
 
   const remove = (targetKey: TargetKey) => {
@@ -186,6 +133,12 @@ export const CollectionManageModal = ({}: Props): JSX.Element | null => {
         }
         setItems(newPanes);
         setActiveKey(newActiveKey);
+        updaters.removeCollection(targetKey.toString());
+        updaters.removeRelations(
+          allRelations.filter(
+            (relation) => relation.collectionId === targetKey.toString()
+          )
+        );
       },
       onCancel() {},
     });
@@ -195,33 +148,16 @@ export const CollectionManageModal = ({}: Props): JSX.Element | null => {
     targetKey: React.MouseEvent | React.KeyboardEvent | string,
     action: 'add' | 'remove'
   ) => {
-    if (action === 'add') {
-      add();
-    } else {
-      remove(targetKey);
-    }
+    if (action === 'remove') remove(targetKey);
   };
 
   return (
     <div>
       <Modal
-        title={
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '24px',
-              fontWeight: 'bold',
-              marginBottom: '20px',
-            }}
-          >
-            Repo Collection Dashboard
-          </div>
-        }
         open={showManageModal}
         onCancel={() => {
           setShowManageModal(false);
+          setSelectedCollection(undefined);
         }}
         footer={null}
         width={'95%'}
@@ -233,16 +169,22 @@ export const CollectionManageModal = ({}: Props): JSX.Element | null => {
               <List
                 header={
                   <div style={{ fontSize: '18px', fontWeight: 'bold' }}>
-                    Repositories
+                    {selectedCollection
+                      ? selectedCollection
+                      : 'Select tab first'}
                   </div>
                 }
                 bordered
-                dataSource={listData}
+                dataSource={allRelations
+                  .filter(
+                    (relation) => relation.collectionId === selectedCollection
+                  )
+                  .map((relation) => relation.repositoryId)}
                 renderItem={(item) => <List.Item>{item}</List.Item>}
               />
             </div>
           </Col>
-          <Col xs={{ span: 11, offset: 1 }} lg={{ span: 18 }}>
+          <Col xs={{ span: 10, offset: 1 }} lg={{ span: 17 }}>
             <Tabs
               hideAdd
               type="editable-card"
@@ -265,8 +207,10 @@ export const CollectionManageModal = ({}: Props): JSX.Element | null => {
             setIsEdit(undefined);
           }}
           isEdit={isEdit}
-          collectionName={items[parseInt(activeKey) - 1].label}
-          collectionData={collectionData[parseInt(activeKey) - 1].repos}
+          collectionName={selectedCollection ? selectedCollection : ''}
+          collectionData={allRelations
+            .filter((relation) => relation.collectionId === selectedCollection)
+            .map((relation) => relation.repositoryId)}
         />
       )}
     </div>
