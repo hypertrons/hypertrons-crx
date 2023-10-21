@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useRepoCollectionContext } from '../context';
 
+import React, { useEffect, useState } from 'react';
 import {
   Modal,
   Col,
@@ -81,7 +82,7 @@ async function getUserOrOrgRepos(
 }
 
 // TODO 需要找到一个合适的方法解决Token的问题...
-const accessToken = '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roll';
+const accessToken = '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';
 
 const columns: ColumnsType<DataType> = [
   {
@@ -105,7 +106,7 @@ const CollectionEditor: React.FC<CollectionEditorProps> = ({
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [form] = Form.useForm();
   const [dataSource, setDataSource] = useState<DataSourceType[]>();
-  const [newRepoData, setNewRepoData] = useState<string[]>();
+  const [newRepoData, setNewRepoData] = useState<string[]>(collectionData);
   const [isOrg, setIsOrg] = useState<boolean>(false);
 
   async function fetchRepositoryDescription(repositoryName: string) {
@@ -142,9 +143,7 @@ const CollectionEditor: React.FC<CollectionEditorProps> = ({
   const initialValues = {
     collectionName: isEdit ? collectionName : '', // 设置字段的初始值
   };
-  const modalTitle = isEdit
-    ? 'CollectionDisplayModal Editor'
-    : 'Creat a new collection';
+  const modalTitle = isEdit ? 'Collection Editor' : 'Creat a new collection';
 
   const onSelectChange = (
     newSelectedRowKeys: React.Key[],

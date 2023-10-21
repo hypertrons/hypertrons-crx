@@ -78,6 +78,32 @@ export const CollectionManageModal = () => {
   useEffect(() => {}, []);
 
   const onCreate = (values: any, newRepoData: string[] | undefined) => {
+    /*
+     * remove collection and its relations
+     */
+    if (selectedCollection) {
+      updaters.removeCollection(selectedCollection);
+      updaters.removeRelations(
+        allRelations.filter(
+          (relation) => relation.collectionId === selectedCollection
+        )
+      );
+    }
+
+    /*
+     * add newCollection and its relations
+     */
+    setSelectedCollection(values.collectionName);
+    if (newRepoData) {
+      updaters.addCollection(values.collectionName);
+      updaters.addRelations(
+        newRepoData.map((repo) => ({
+          collectionId: values.collectionName,
+          repositoryId: repo,
+        }))
+      );
+    }
+
     setListData(newRepoData);
     if (isEdit) {
       const updatedItems = items.map((item) => {
@@ -88,18 +114,17 @@ export const CollectionManageModal = () => {
       });
       setItems(updatedItems);
     } else {
-      const newActiveKey = (items.length + 1).toString();
       const newPanes = [...items];
       newPanes.push({
         label: values.collectionName,
         children: `Content of ${values.collectionName}`,
-        key: newActiveKey,
+        key: values.collectionName,
       });
       setItems(newPanes);
-      setActiveKey(newActiveKey);
+      setActiveKey(values.collectionName);
     }
     console.log('Received values of form: ', values);
-    setShowManageModal(false);
+
     setIsClick(false);
     setIsEdit(undefined);
   };
@@ -202,7 +227,6 @@ export const CollectionManageModal = () => {
           open={showManageModal}
           onCreate={onCreate}
           onCancel={() => {
-            //setShowModal(false);
             setIsClick(false);
             setIsEdit(undefined);
           }}
