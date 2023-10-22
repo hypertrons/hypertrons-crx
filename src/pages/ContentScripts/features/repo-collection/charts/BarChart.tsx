@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
-import generateDataByMonth from '../../../helpers/generate-data-by-month';
-import { getStars } from '../../../api/repo';
-import getNewestMonth from '../../../helpers/get-newest-month';
+import generateDataByMonth from '../../../../../helpers/generate-data-by-month';
+import { getStars } from '../../../../../api/repo';
 
 interface RawRepoData {
   [date: string]: number;
@@ -27,26 +26,57 @@ interface BarChartProps {
   currentRepo?: string;
 }
 
-const NumericPanel = (props: BarChartProps): JSX.Element => {
+const BarChart = (props: BarChartProps): JSX.Element => {
   const { theme, height, repoNames, currentRepo } = props;
   const divEL = useRef(null);
   const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;
   const [data, setData] = useState<{ [repo: string]: RawRepoData }>({});
 
   const option: echarts.EChartsOption = {
-    graphic: [
-      {
-        type: 'text',
-        left: 'center',
-        top: 'center',
-        style: {
-          fill: '#333',
-          text: valueSum(data).toString(),
-          font: 'bold 48px Arial',
+    tooltip: {
+      trigger: 'axis',
+    },
+    // legend: {
+    //   type: 'scroll',
+    // },
+    grid: {
+      left: '5%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true,
+    },
+    xAxis: {
+      type: 'time',
+      splitLine: {
+        show: false,
+      },
+      axisLabel: {
+        color: TH.FG_COLOR,
+        formatter: {
+          year: '{yearStyle|{yy}}',
+          month: '{MMM}',
+        },
+        rich: {
+          yearStyle: {
+            fontWeight: 'bold',
+          },
         },
       },
+    },
+    yAxis: {
+      type: 'value',
+    },
+    dataZoom: [
+      {
+        type: 'inside',
+        start: 0,
+        end: 100,
+        minValueSpan: 3600 * 24 * 1000 * 180,
+      },
     ],
+    series: BarChartSeries(data), // / Utilize the transformed series data
   };
+  console.log('bar', BarChartSeries(data));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -86,16 +116,22 @@ const NumericPanel = (props: BarChartProps): JSX.Element => {
 
   return <div ref={divEL} style={{ width: '100%', height: height }}></div>;
 };
+const BarChartSeries = (data: {
+  [repo: string]: RawRepoData;
+}): echarts.SeriesOption[] =>
+  Object.entries(data).map(([repoName, repoData]) => ({
+    name: repoName,
+    type: 'bar',
+    symbol: 'none',
+    data: getLastSixMonth(generateDataByMonth(repoData)),
+    emphasis: {
+      focus: 'series',
+    },
+    yAxisIndex: 0,
+    triggerLineEvent: true,
+  }));
 
-function valueSum(data: Record<string, RawRepoData>): number {
-  return Object.values(data).reduce((sum, repoData) => {
-    const lastData = generateDataByMonth(repoData).at(-1);
-    const value =
-      lastData !== undefined && lastData[0] === getNewestMonth()
-        ? lastData[1]
-        : 0;
-    return sum + value;
-  }, 0);
-}
+const getLastSixMonth = (data: any[]) =>
+  data.length > 6 ? data.slice(-6) : data;
 
-export default NumericPanel;
+export default BarChart;

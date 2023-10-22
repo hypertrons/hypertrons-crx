@@ -1,14 +1,15 @@
+import LineChart from '../charts/LineChart';
+import BarChart from '../charts/BarChart';
+import SankeyChart from '../charts/SankeyChart';
+import PieChart from '../charts/PieChart';
+import StackedBarChart from '../charts/StackedBarChart';
+import CodeStackedBarChart from '../charts/CodeStackedBarChart';
+import BoxplotChart from '../charts/BoxplotChart';
+import ChartCard from './ChartCard';
+import NumericPanel from '../charts/NumericPanel';
+
 import React from 'react';
 import { Row, Col } from 'antd';
-import LineChart from '../../../Options/variable-charts/LineChart';
-import BarChart from '../../../Options/variable-charts/BarChart';
-import SankeyChart from '../../../Options/variable-charts/SankeyChart';
-import PieChart from '../../../Options/variable-charts/PieChart';
-import StackedBarChart from '../../../Options/variable-charts/StackedBarChart';
-import CodeStackedBarChart from '../../../Options/variable-charts/CodeStackedBarChart';
-import BoxplotChart from '../../../Options/variable-charts/BoxplotChart';
-import ChartCard from './ChartCard';
-import NumericPanel from '../../../Options/variable-charts/NumericPanel';
 
 interface CollectionDashboardProps {
   repoNames: string[];

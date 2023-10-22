@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
-import generateDataByMonth from '../../../helpers/generate-data-by-month';
-import { getStars } from '../../../api/repo';
+import generateDataByMonth from '../../../../../helpers/generate-data-by-month';
+import { getParticipant } from '../../../../../api/repo';
+import getNewestMonth from '../../../../../helpers/get-newest-month';
 
 interface RawRepoData {
   [date: string]: number;
@@ -19,7 +20,7 @@ const DARK_THEME = {
   PALLET: ['#58a6ff', '#3fb950'],
 };
 
-interface StackedBarChartProps {
+interface PieChartProps {
   theme: 'light' | 'dark';
   height: number;
   repoNames: string[];
@@ -27,7 +28,7 @@ interface StackedBarChartProps {
   currentRepo?: string;
 }
 
-const StackedBarChart = (props: StackedBarChartProps): JSX.Element => {
+const PieChart = (props: PieChartProps): JSX.Element => {
   const { theme, height, repoNames, currentRepo } = props;
   const divEL = useRef(null);
   const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;
@@ -35,77 +36,67 @@ const StackedBarChart = (props: StackedBarChartProps): JSX.Element => {
 
   const option: echarts.EChartsOption = {
     tooltip: {
-      trigger: 'axis',
+      trigger: 'item',
     },
     legend: {
       type: 'scroll',
     },
-    grid: {
-      left: '5%',
-      right: '4%',
-      bottom: '3%',
-      containLabel: true,
-    },
-    xAxis: {
-      type: 'time',
-      splitLine: {
-        show: false,
-      },
-      axisLabel: {
-        color: TH.FG_COLOR,
-        formatter: {
-          year: '{yearStyle|{yy}}',
-          month: '{MMM}',
+
+    series: [
+      {
+        type: 'pie',
+        radius: ['40%', '70%'],
+        avoidLabelOverlap: false,
+        itemStyle: {
+          borderRadius: 10,
+          borderColor: '#fff',
+          borderWidth: 2,
         },
-        rich: {
-          yearStyle: {
+        label: {
+          show: false,
+          position: 'center',
+        },
+        emphasis: {
+          label: {
+            show: true,
+            fontSize: 20,
             fontWeight: 'bold',
           },
         },
-      },
-    },
-    yAxis: {
-      type: 'value',
-    },
-    dataZoom: [
-      {
-        type: 'inside',
-        start: 0,
-        end: 100,
-        minValueSpan: 3600 * 24 * 1000 * 180,
+        data: PieChartData(data),
       },
     ],
-    series: StarSeries(data),
   };
-  console.log('BarChartSeries??', StarSeries(data));
+
   useEffect(() => {
     const fetchData = async () => {
       for (const repo of repoNames) {
         try {
-          const StarData = await getStars(repo);
-          setData((prevData) => ({ ...prevData, [repo]: StarData }));
+          //getStars() to fetch repository data
+          const starsData = await getParticipant(repo);
+          // Update Data
+          setData((prevData) => ({ ...prevData, [repo]: starsData }));
         } catch (error) {
           console.error(`Error fetching stars data for ${repo}:`, error);
-
+          // If the retrieval fails, set the data to an empty object
           setData((prevData) => ({ ...prevData, [repo]: {} }));
         }
       }
     };
     fetchData();
   }, []);
-  // console.log('datatest', data);
+
   useEffect(() => {
     let chartDOM = divEL.current;
     const TH = 'light' ? LIGHT_THEME : DARK_THEME;
 
     const instance = echarts.init(chartDOM as any);
     instance.setOption(option);
+    console.log('pieChart,currentRepo', currentRepo);
     instance.dispatchAction({
       type: 'highlight',
-      seriesIndex: Number(currentRepo),
+      // seriesIndex: 0,
       dataIndex: Number(currentRepo),
-      name: repoNames[Number(currentRepo)],
-      seriesName: repoNames[Number(currentRepo)],
     });
     return () => {
       instance.dispose();
@@ -115,21 +106,17 @@ const StackedBarChart = (props: StackedBarChartProps): JSX.Element => {
   return <div ref={divEL} style={{ width: '100%', height: height }}></div>;
 };
 
-//Series：各仓库代码增加行数
-const StarSeries = (data: {
-  [repo: string]: RawRepoData;
-}): echarts.SeriesOption[] =>
-  Object.entries(data).map(([repoName, repoData]) => ({
-    name: repoName,
-    type: 'bar',
-    stack: 'total',
-    // emphasis: emphasisStyle,
-    data: generateDataByMonth(repoData),
-    emphasis: {
-      focus: 'series',
-    },
-    // yAxisIndex: 0,
-    triggerLineEvent: true,
-  }));
+// Retrieve data for the current month
+const PieChartData = (data: { [repo: string]: RawRepoData }) =>
+  Object.entries(data).map(([repoName, repoData]) => {
+    const lastData = generateDataByMonth(repoData).at(-1);
+    return {
+      name: repoName,
+      value:
+        lastData !== undefined && lastData[0] === getNewestMonth()
+          ? lastData[1]
+          : 0,
+    };
+  });
 
-export default StackedBarChart;
+export default PieChart;

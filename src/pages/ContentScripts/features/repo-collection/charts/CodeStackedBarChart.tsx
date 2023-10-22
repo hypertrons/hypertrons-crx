@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
-import generateDataByMonth from '../../../helpers/generate-data-by-month';
+import generateDataByMonth from '../../../../../helpers/generate-data-by-month';
 import {
   getMergedCodeAddition,
   getMergedCodeDeletion,
-} from '../../../api/repo';
+} from '../../../../../api/repo';
 
 interface RawRepoData {
   [date: string]: number;

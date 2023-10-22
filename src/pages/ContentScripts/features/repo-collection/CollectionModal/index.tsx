@@ -1,5 +1,6 @@
 import { useRepoCollectionContext } from '../context';
 import CollectionEditor from './CollectionEditor';
+import CollectionContent from '../CollectionContent';
 
 import React, { useState, useEffect } from 'react';
 import { Modal, Tabs, List, Col, Row, Button } from 'antd';
@@ -8,7 +9,7 @@ type TargetKey = React.MouseEvent | React.KeyboardEvent | string;
 
 type CollectionTabType = {
   label: string;
-  children: string;
+  children: React.ReactNode;
   key: string;
 };
 
@@ -25,7 +26,7 @@ export const CollectionManageModal = () => {
 
   const [activeKey, setActiveKey] = useState<string>();
   const [items, setItems] = useState<CollectionTabType[]>([]);
-  const [listData, setListData] = useState<string[] | undefined>(
+  const [listData, setListData] = useState<string[]>(
     allRelations
       .filter((relation) => relation.collectionId === allCollections[0].id)
       .map((relation) => relation.repositoryId)
@@ -58,11 +59,16 @@ export const CollectionManageModal = () => {
   );
 
   useEffect(() => {
-    const initialItems = allCollections.map((collection, index) => ({
-      label: collection.name,
-      children: `Content of ${collection.name}`,
-      key: collection.id,
-    }));
+    const initialItems = allCollections.map((collection) => {
+      const repoList = allRelations
+        .filter((relation) => relation.collectionId === collection.name)
+        .map((relation) => relation.repositoryId);
+      return {
+        label: collection.name,
+        children: <CollectionContent repoNames={repoList} />,
+        key: collection.id,
+      };
+    });
     const initialListData = allRelations
       .filter((relation) =>
         relation.collectionId === selectedCollection
@@ -77,7 +83,7 @@ export const CollectionManageModal = () => {
 
   useEffect(() => {}, []);
 
-  const onCreate = async (values: any, newRepoData: string[] | undefined) => {
+  const onCreate = async (values: any, newRepoData: string[]) => {
     if (isEdit) {
       const updatedItems = items.map((item) => {
         if (item.key === activeKey?.toString()) {
@@ -90,7 +96,7 @@ export const CollectionManageModal = () => {
       const newPanes = [...items];
       newPanes.push({
         label: values.collectionName,
-        children: `Content of ${values.collectionName}`,
+        children: <CollectionContent repoNames={listData} />,
         key: values.collectionName,
       });
       setItems(newPanes);
@@ -199,41 +205,17 @@ export const CollectionManageModal = () => {
           height: '100vh',
           maxWidth: 'unset',
         }}
-        bodyStyle={{ height: 'calc(100vh - 40px)' }} // 40px is the sum of top and bottom padding
+        bodyStyle={{ height: 'calc(100vh - 40px)', overflow: 'auto' }} // 40px is the sum of top and bottom padding
       >
-        <Row>
-          <Col xs={{ span: 5, offset: 1 }} lg={{ span: 4 }}>
-            <div style={{ marginTop: '50px' }}>
-              <List
-                header={
-                  <div style={{ fontSize: '18px', fontWeight: 'bold' }}>
-                    {selectedCollection
-                      ? selectedCollection
-                      : 'Select tab first'}
-                  </div>
-                }
-                bordered
-                dataSource={allRelations
-                  .filter(
-                    (relation) => relation.collectionId === selectedCollection
-                  )
-                  .map((relation) => relation.repositoryId)}
-                renderItem={(item) => <List.Item>{item}</List.Item>}
-              />
-            </div>
-          </Col>
-          <Col xs={{ span: 10, offset: 1 }} lg={{ span: 17 }}>
-            <Tabs
-              hideAdd
-              type="editable-card"
-              onChange={onChange}
-              activeKey={activeKey}
-              onEdit={onEdit}
-              items={items}
-              tabBarExtraContent={editTab}
-            />
-          </Col>
-        </Row>
+        <Tabs
+          hideAdd
+          type="editable-card"
+          onChange={onChange}
+          activeKey={activeKey}
+          onEdit={onEdit}
+          items={items}
+          tabBarExtraContent={editTab}
+        />
       </Modal>
       {isClick && (
         <CollectionEditor

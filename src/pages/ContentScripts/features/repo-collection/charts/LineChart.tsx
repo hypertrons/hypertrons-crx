@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
-import generateDataByMonth from '../../../helpers/generate-data-by-month';
-import { getParticipant } from '../../../api/repo';
-import getNewestMonth from '../../../helpers/get-newest-month';
+import generateDataByMonth from '../../../../../helpers/generate-data-by-month';
+import { getStars } from '../../../../../api/repo';
 
 interface RawRepoData {
   [date: string]: number;
@@ -20,7 +19,7 @@ const DARK_THEME = {
   PALLET: ['#58a6ff', '#3fb950'],
 };
 
-interface PieChartProps {
+interface LineChartProps {
   theme: 'light' | 'dark';
   height: number;
   repoNames: string[];
@@ -28,44 +27,59 @@ interface PieChartProps {
   currentRepo?: string;
 }
 
-const PieChart = (props: PieChartProps): JSX.Element => {
+const LineChart = (props: LineChartProps): JSX.Element => {
   const { theme, height, repoNames, currentRepo } = props;
+
   const divEL = useRef(null);
   const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;
   const [data, setData] = useState<{ [repo: string]: RawRepoData }>({});
 
   const option: echarts.EChartsOption = {
     tooltip: {
-      trigger: 'item',
+      trigger: 'axis',
     },
     legend: {
       type: 'scroll',
     },
-
-    series: [
-      {
-        type: 'pie',
-        radius: ['40%', '70%'],
-        avoidLabelOverlap: false,
-        itemStyle: {
-          borderRadius: 10,
-          borderColor: '#fff',
-          borderWidth: 2,
+    grid: {
+      left: '5%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true,
+    },
+    xAxis: {
+      type: 'time',
+      splitLine: {
+        show: false,
+      },
+      axisLabel: {
+        color: TH.FG_COLOR,
+        formatter: {
+          year: '{yearStyle|{yy}}',
+          month: '{MMM}',
         },
-        label: {
-          show: false,
-          position: 'center',
-        },
-        emphasis: {
-          label: {
-            show: true,
-            fontSize: 20,
+        rich: {
+          yearStyle: {
             fontWeight: 'bold',
           },
         },
-        data: PieChartData(data),
+      },
+    },
+    yAxis: {
+      type: 'value',
+    },
+    dataZoom: [
+      {
+        type: 'slider',
+      },
+      {
+        type: 'inside',
+        // start: 0,
+        // end: 100,
+        minValueSpan: 3600 * 24 * 1000 * 180,
       },
     ],
+    series: LineChartSeries(data),
   };
 
   useEffect(() => {
@@ -73,7 +87,7 @@ const PieChart = (props: PieChartProps): JSX.Element => {
       for (const repo of repoNames) {
         try {
           //getStars() to fetch repository data
-          const starsData = await getParticipant(repo);
+          const starsData = await getStars(repo);
           // Update Data
           setData((prevData) => ({ ...prevData, [repo]: starsData }));
         } catch (error) {
@@ -92,11 +106,12 @@ const PieChart = (props: PieChartProps): JSX.Element => {
 
     const instance = echarts.init(chartDOM as any);
     instance.setOption(option);
-    console.log('pieChart,currentRepo', currentRepo);
     instance.dispatchAction({
       type: 'highlight',
-      // seriesIndex: 0,
-      dataIndex: Number(currentRepo),
+      // seriesIndex: Number(currentRepo),
+      // dataIndex: Number(currentRepo),
+      name: repoNames[Number(currentRepo)],
+      seriesName: repoNames[Number(currentRepo)],
     });
     return () => {
       instance.dispose();
@@ -105,18 +120,19 @@ const PieChart = (props: PieChartProps): JSX.Element => {
 
   return <div ref={divEL} style={{ width: '100%', height: height }}></div>;
 };
-
-// Retrieve data for the current month
-const PieChartData = (data: { [repo: string]: RawRepoData }) =>
-  Object.entries(data).map(([repoName, repoData]) => {
-    const lastData = generateDataByMonth(repoData).at(-1);
-    return {
-      name: repoName,
-      value:
-        lastData !== undefined && lastData[0] === getNewestMonth()
-          ? lastData[1]
-          : 0,
-    };
-  });
-
-export default PieChart;
+const LineChartSeries = (data: {
+  [repo: string]: RawRepoData;
+}): echarts.SeriesOption[] =>
+  Object.entries(data).map(([repoName, repoData]) => ({
+    name: repoName,
+    type: 'line',
+    symbol: 'none',
+    smooth: true,
+    data: generateDataByMonth(repoData),
+    emphasis: {
+      focus: 'series',
+    },
+    yAxisIndex: 0,
+    triggerLineEvent: true,
+  }));
+export default LineChart;

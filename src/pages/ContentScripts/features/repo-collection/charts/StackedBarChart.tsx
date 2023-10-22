@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
-import generateDataByMonth from '../../../helpers/generate-data-by-month';
-import { getStars } from '../../../api/repo';
+import generateDataByMonth from '../../../../../helpers/generate-data-by-month';
+import { getStars } from '../../../../../api/repo';
 
 interface RawRepoData {
   [date: string]: number;
@@ -19,14 +19,15 @@ const DARK_THEME = {
   PALLET: ['#58a6ff', '#3fb950'],
 };
 
-interface BarChartProps {
+interface StackedBarChartProps {
   theme: 'light' | 'dark';
   height: number;
   repoNames: string[];
+
   currentRepo?: string;
 }
 
-const BarChart = (props: BarChartProps): JSX.Element => {
+const StackedBarChart = (props: StackedBarChartProps): JSX.Element => {
   const { theme, height, repoNames, currentRepo } = props;
   const divEL = useRef(null);
   const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;
@@ -36,9 +37,9 @@ const BarChart = (props: BarChartProps): JSX.Element => {
     tooltip: {
       trigger: 'axis',
     },
-    // legend: {
-    //   type: 'scroll',
-    // },
+    legend: {
+      type: 'scroll',
+    },
     grid: {
       left: '5%',
       right: '4%',
@@ -74,28 +75,25 @@ const BarChart = (props: BarChartProps): JSX.Element => {
         minValueSpan: 3600 * 24 * 1000 * 180,
       },
     ],
-    series: BarChartSeries(data), // / Utilize the transformed series data
+    series: StarSeries(data),
   };
-  console.log('bar', BarChartSeries(data));
-
+  console.log('BarChartSeries??', StarSeries(data));
   useEffect(() => {
     const fetchData = async () => {
       for (const repo of repoNames) {
         try {
-          //getStars() to fetch repository data
-          const starsData = await getStars(repo);
-          // Update Data/
-          setData((prevData) => ({ ...prevData, [repo]: starsData }));
+          const StarData = await getStars(repo);
+          setData((prevData) => ({ ...prevData, [repo]: StarData }));
         } catch (error) {
           console.error(`Error fetching stars data for ${repo}:`, error);
-          // If the retrieval fails, set the data to an empty object
+
           setData((prevData) => ({ ...prevData, [repo]: {} }));
         }
       }
     };
     fetchData();
   }, []);
-
+  // console.log('datatest', data);
   useEffect(() => {
     let chartDOM = divEL.current;
     const TH = 'light' ? LIGHT_THEME : DARK_THEME;
@@ -104,8 +102,8 @@ const BarChart = (props: BarChartProps): JSX.Element => {
     instance.setOption(option);
     instance.dispatchAction({
       type: 'highlight',
-      // seriesIndex: Number(currentRepo),
-      // dataIndex: Number(currentRepo),
+      seriesIndex: Number(currentRepo),
+      dataIndex: Number(currentRepo),
       name: repoNames[Number(currentRepo)],
       seriesName: repoNames[Number(currentRepo)],
     });
@@ -116,22 +114,22 @@ const BarChart = (props: BarChartProps): JSX.Element => {
 
   return <div ref={divEL} style={{ width: '100%', height: height }}></div>;
 };
-const BarChartSeries = (data: {
+
+//Series：各仓库代码增加行数
+const StarSeries = (data: {
   [repo: string]: RawRepoData;
 }): echarts.SeriesOption[] =>
   Object.entries(data).map(([repoName, repoData]) => ({
     name: repoName,
     type: 'bar',
-    symbol: 'none',
-    data: getLastSixMonth(generateDataByMonth(repoData)),
+    stack: 'total',
+    // emphasis: emphasisStyle,
+    data: generateDataByMonth(repoData),
     emphasis: {
       focus: 'series',
     },
-    yAxisIndex: 0,
+    // yAxisIndex: 0,
     triggerLineEvent: true,
   }));
 
-const getLastSixMonth = (data: any[]) =>
-  data.length > 6 ? data.slice(-6) : data;
-
-export default BarChart;
+export default StackedBarChart;

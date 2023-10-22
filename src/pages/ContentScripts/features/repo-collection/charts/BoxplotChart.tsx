@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
-import { getIssueResponseTime } from '../../../api/repo';
-import getNewestMonth from '../../../helpers/get-newest-month';
+import { getIssueResponseTime } from '../../../../../api/repo';
+import getNewestMonth from '../../../../../helpers/get-newest-month';
 
 const LIGHT_THEME = {
   FG_COLOR: '#24292f',

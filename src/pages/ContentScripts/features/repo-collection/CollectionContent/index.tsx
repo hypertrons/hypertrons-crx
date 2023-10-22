@@ -1,11 +1,11 @@
-// CollectionContent.tsx
+// Index.tsx
 import React, { useState, useEffect } from 'react';
 import { Layout, Menu, theme } from 'antd';
 
 import CollectionDashboard from './CollectionDashboard';
 
 const { Content, Sider } = Layout;
-interface CollectionContent {
+interface Index {
   repoNames: string[];
 
   currentRepo?: string;
@@ -15,10 +15,7 @@ const LIGHT_THEME = {
   BG_COLOR: '#ffffff',
 };
 
-const CollectionContent: React.FC<CollectionContent> = ({
-  repoNames,
-  currentRepo,
-}) => {
+const CollectionContent: React.FC<Index> = ({ repoNames, currentRepo }) => {
   const menuItems = repoNames.map((repo, index) => ({
     key: index,
     label: repo,

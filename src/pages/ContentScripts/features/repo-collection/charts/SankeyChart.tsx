@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
-import getNewestMonth from '../../../helpers/get-newest-month';
-import { getActivityDetails } from '../../../api/repo';
+import getNewestMonth from '../../../../../helpers/get-newest-month';
+import { getActivityDetails } from '../../../../../api/repo';
 
 const LIGHT_THEME = {
   FG_COLOR: '#24292f',

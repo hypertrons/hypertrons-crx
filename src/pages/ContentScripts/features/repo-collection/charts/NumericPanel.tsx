@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
-import generateDataByMonth from '../../../helpers/generate-data-by-month';
-import { getStars } from '../../../api/repo';
+import generateDataByMonth from '../../../../../helpers/generate-data-by-month';
+import { getStars } from '../../../../../api/repo';
+import getNewestMonth from '../../../../../helpers/get-newest-month';
 
 interface RawRepoData {
   [date: string]: number;
@@ -19,67 +20,32 @@ const DARK_THEME = {
   PALLET: ['#58a6ff', '#3fb950'],
 };
 
-interface LineChartProps {
+interface BarChartProps {
   theme: 'light' | 'dark';
   height: number;
   repoNames: string[];
-
   currentRepo?: string;
 }
 
-const LineChart = (props: LineChartProps): JSX.Element => {
+const NumericPanel = (props: BarChartProps): JSX.Element => {
   const { theme, height, repoNames, currentRepo } = props;
-
   const divEL = useRef(null);
   const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;
   const [data, setData] = useState<{ [repo: string]: RawRepoData }>({});
 
   const option: echarts.EChartsOption = {
-    tooltip: {
-      trigger: 'axis',
-    },
-    legend: {
-      type: 'scroll',
-    },
-    grid: {
-      left: '5%',
-      right: '4%',
-      bottom: '3%',
-      containLabel: true,
-    },
-    xAxis: {
-      type: 'time',
-      splitLine: {
-        show: false,
-      },
-      axisLabel: {
-        color: TH.FG_COLOR,
-        formatter: {
-          year: '{yearStyle|{yy}}',
-          month: '{MMM}',
-        },
-        rich: {
-          yearStyle: {
-            fontWeight: 'bold',
-          },
-        },
-      },
-    },
-    yAxis: {
-      type: 'value',
-    },
-    dataZoom: [
+    graphic: [
       {
-        type: 'slider',
-      },
-      {
-        type: 'inside',
-        // start: 0,
-        // end: 100,
-        minValueSpan: 3600 * 24 * 1000 * 180,
+        type: 'text',
+        left: 'center',
+        top: 'center',
+        style: {
+          fill: '#333',
+          text: valueSum(data).toString(),
+          font: 'bold 48px Arial',
+        },
       },
     ],
-    series: LineChartSeries(data),
   };
 
   useEffect(() => {
@@ -88,7 +54,7 @@ const LineChart = (props: LineChartProps): JSX.Element => {
         try {
           //getStars() to fetch repository data
           const starsData = await getStars(repo);
-          // Update Data
+          // Update Data/
           setData((prevData) => ({ ...prevData, [repo]: starsData }));
         } catch (error) {
           console.error(`Error fetching stars data for ${repo}:`, error);
@@ -120,19 +86,16 @@ const LineChart = (props: LineChartProps): JSX.Element => {
 
   return <div ref={divEL} style={{ width: '100%', height: height }}></div>;
 };
-const LineChartSeries = (data: {
-  [repo: string]: RawRepoData;
-}): echarts.SeriesOption[] =>
-  Object.entries(data).map(([repoName, repoData]) => ({
-    name: repoName,
-    type: 'line',
-    symbol: 'none',
-    smooth: true,
-    data: generateDataByMonth(repoData),
-    emphasis: {
-      focus: 'series',
-    },
-    yAxisIndex: 0,
-    triggerLineEvent: true,
-  }));
-export default LineChart;
+
+function valueSum(data: Record<string, RawRepoData>): number {
+  return Object.values(data).reduce((sum, repoData) => {
+    const lastData = generateDataByMonth(repoData).at(-1);
+    const value =
+      lastData !== undefined && lastData[0] === getNewestMonth()
+        ? lastData[1]
+        : 0;
+    return sum + value;
+  }, 0);
+}
+
+export default NumericPanel;

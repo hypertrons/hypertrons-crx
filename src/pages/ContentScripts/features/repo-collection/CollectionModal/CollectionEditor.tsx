@@ -32,7 +32,7 @@ interface RepositoryInfo {
 
 interface CollectionEditorProps {
   open: boolean;
-  onCreate: (values: Values, newRepoData: string[] | undefined) => void;
+  onCreate: (values: Values, newRepoData: string[]) => void;
   onCancel: () => void;
   isEdit: boolean | undefined;
   collectionName: string;
