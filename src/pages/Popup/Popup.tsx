@@ -14,8 +14,8 @@ export default function Popup() {
     });
   };
   return (
-    <div>
-      <Space direction="vertical" style={{ width: '100%' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100px' }}>
+      <Space direction="vertical">
         <Button
           type="text"
           block

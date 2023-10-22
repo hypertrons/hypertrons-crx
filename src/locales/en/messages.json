@@ -155,9 +155,6 @@
   "component_projectCorrelationNetwork_title": {
     "message": "Project Correlation Network"
   },
-  "component_projectRacingBar_ReplayButton": {
-    "message": "Replay"
-  },
   "component_projectRacingBar_description": {
     "message": "This chart shows how the activity values of contributors in this repository evolve."
   },
