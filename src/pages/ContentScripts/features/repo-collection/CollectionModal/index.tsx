@@ -192,8 +192,14 @@ export const CollectionManageModal = () => {
           setSelectedCollection(undefined);
         }}
         footer={null}
-        width={'95%'}
-        bodyStyle={{ height: '70vh' }}
+        width={'100%'}
+        style={{
+          top: '0px',
+          bottom: '0px',
+          height: '100vh',
+          maxWidth: 'unset',
+        }}
+        bodyStyle={{ height: 'calc(100vh - 40px)' }} // 40px is the sum of top and bottom padding
       >
         <Row>
           <Col xs={{ span: 5, offset: 1 }} lg={{ span: 4 }}>
