@@ -35,7 +35,7 @@ export const CollectionManageModal = () => {
   const [isEdit, setIsEdit] = useState<boolean>();
 
   const editTab = (
-    <div style={{ display: 'flex', gap: '10px' }}>
+    <div style={{ display: 'flex', gap: '10px', marginRight: '15px' }}>
       <Button
         onClick={() => {
           setIsClick(true);
@@ -198,14 +198,13 @@ export const CollectionManageModal = () => {
           setSelectedCollection(undefined);
         }}
         footer={null}
-        width={'100%'}
+        width={'95%'}
         style={{
-          top: '0px',
-          bottom: '0px',
-          height: '100vh',
-          maxWidth: 'unset',
+          top: '10px',
+          bottom: '10px',
+          height: '95vh',
         }}
-        bodyStyle={{ height: 'calc(100vh - 40px)', overflow: 'auto' }} // 40px is the sum of top and bottom padding
+        bodyStyle={{ height: 'calc(95vh - 30px)', overflow: 'auto' }} // 40px is the sum of top and bottom padding
       >
         <Tabs
           hideAdd
@@ -215,6 +214,7 @@ export const CollectionManageModal = () => {
           onEdit={onEdit}
           items={items}
           tabBarExtraContent={editTab}
+          style={{ margin: '0px 24px' }}
         />
       </Modal>
       {isClick && (

@@ -36,7 +36,7 @@ const CollectionContent: React.FC<Index> = ({ repoNames, currentRepo }) => {
   };
 
   return (
-    <Layout style={{ padding: '24px 0', background: colorBgContainer }}>
+    <Layout style={{ padding: '18px 0', background: colorBgContainer }}>
       <Sider style={{ background: colorBgContainer }} width={200}>
         <Menu
           mode="inline"
@@ -46,7 +46,7 @@ const CollectionContent: React.FC<Index> = ({ repoNames, currentRepo }) => {
           onClick={({ key }) => handleMenuClick(key)} //点击切换选中的repo
         />
       </Sider>
-      <Content style={{ padding: '0 24px', minHeight: 280 }}>
+      <Content style={{ paddingLeft: '24px', minHeight: 280 }}>
         <CollectionDashboard repoNames={repoNames} currentRepo={selectedRepo} />
       </Content>
     </Layout>
