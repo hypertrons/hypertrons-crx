@@ -3,8 +3,8 @@ import React from 'react';
 const View = (): JSX.Element => {
   return (
     <>
-      <div id="hypercrx-repo-activity-racing-bar" />
-      <div id="hypercrx-repo-networks" />
+      <div id="hypercrx-perceptor-slot-repo-activity-racing-bar" />
+      <div id="hypercrx-perceptor-slot-repo-networks" />
     </>
   );
 };
