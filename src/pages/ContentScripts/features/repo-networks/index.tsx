@@ -43,7 +43,7 @@ const init = async (): Promise<void> => {
   const container = document.createElement('div');
   container.id = featureId;
   renderTo(container);
-  $('#hypercrx-repo-networks').append(container);
+  $('#hypercrx-perceptor-slot-repo-networks').append(container);
 };
 
 const restore = async () => {
