@@ -38,7 +38,7 @@ const init = async (): Promise<void> => {
   const container = document.createElement('div');
   container.id = featureId;
   // append before render so that the container has computed width
-  $('#hypercrx-perceptor-layout').append(container);
+  $('#hypercrx-perceptor-slot-repo-activity-racing-bar').append(container);
   renderTo(container);
 };
 
