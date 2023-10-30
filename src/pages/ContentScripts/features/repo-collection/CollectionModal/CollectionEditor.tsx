@@ -2,15 +2,15 @@ import { useRepoCollectionContext } from '../context';
 
 import React, { useEffect, useState } from 'react';
 import {
-  Modal,
-  Col,
-  Row,
   Button,
+  Col,
+  Divider,
   Form,
   Input,
-  Table,
-  Divider,
+  Modal,
   Radio,
+  Row,
+  Table,
 } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 
@@ -51,14 +51,16 @@ let currentTokenIndex = 0;
 
 async function getUserOrOrgRepos(
   username: string,
-  isOrg: boolean
+  addType: string
 ): Promise<RepositoryInfo[]> {
   try {
     const currentAccessToken = accessTokens[currentTokenIndex];
-
-    const apiUrl = isOrg
-      ? `https://api.github.com/orgs/${username}/repos`
-      : `https://api.github.com/users/${username}/repos`;
+    let apiUrl = '';
+    if (addType === 'User') {
+      apiUrl = `https://api.github.com/users/${username}/repos`;
+    } else if (addType === 'Organization') {
+      apiUrl = `https://api.github.com/orgs/${username}/repos`;
+    }
 
     const response = await fetch(apiUrl, {
       headers: {
@@ -69,7 +71,7 @@ async function getUserOrOrgRepos(
     if (!response.ok) {
       if (response.status === 401) {
         currentTokenIndex = (currentTokenIndex + 1) % accessTokens.length; // switch to next token
-        return getUserOrOrgRepos(username, isOrg);
+        return getUserOrOrgRepos(username, addType);
       } else {
         throw new Error(
           `GitHub API request failed with status: ${response.status}`
@@ -79,12 +81,10 @@ async function getUserOrOrgRepos(
 
     const reposData = await response.json();
 
-    const repositories: RepositoryInfo[] = reposData.map((repo: any) => ({
+    return reposData.map((repo: any) => ({
       name: repo.name,
       description: repo.description || '',
     }));
-
-    return repositories;
   } catch (error) {
     console.error('Error fetching repositories:', error);
     throw error;
@@ -117,7 +117,7 @@ const CollectionEditor: React.FC<CollectionEditorProps> = ({
   const [form] = Form.useForm();
   const [dataSource, setDataSource] = useState<DataSourceType[]>();
   const [newRepoData, setNewRepoData] = useState<string[]>(collectionData);
-  const [isOrg, setIsOrg] = useState<boolean>(false);
+  const [addType, setAddType] = useState<string>('FullName');
 
   async function fetchRepositoryDescription(repositoryName: string) {
     const apiUrl = `https://api.github.com/repos/${repositoryName}`;
@@ -172,11 +172,30 @@ const CollectionEditor: React.FC<CollectionEditorProps> = ({
     onChange: onSelectChange,
   };
 
-  const handleInquireClick = () => {
+  const handleSearchClick = () => {
     const inputValue = form.getFieldValue('Quick import');
+    if (addType === 'FullName') {
+      fetchRepositoryDescription(inputValue)
+        .then((repoDescription) => {
+          const key = dataSource ? dataSource.length + 1 : 1;
+          repoDescription.key = key.toString();
+          console.log('Repository Description:', repoDescription);
+          if (dataSource) {
+            setDataSource([...dataSource, repoDescription]);
+          } else {
+            setDataSource([repoDescription]);
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching repository description:', error);
+        });
+    } else {
+      fetchRepositories();
+    }
+
     async function fetchRepositories() {
       try {
-        const result = await getUserOrOrgRepos(inputValue, isOrg);
+        const result = await getUserOrOrgRepos(inputValue, addType);
         let nextKey: number;
         if (dataSource) {
           nextKey = dataSource.length + 1;
@@ -200,8 +219,6 @@ const CollectionEditor: React.FC<CollectionEditorProps> = ({
         console.error('Error:', error);
       }
     }
-
-    fetchRepositories();
   };
 
   function handleImportClick() {
@@ -210,7 +227,7 @@ const CollectionEditor: React.FC<CollectionEditorProps> = ({
 
   return (
     <Modal
-      width={1000}
+      width={1200}
       open={open}
       title={modalTitle}
       okText="Confirm"
@@ -244,8 +261,11 @@ const CollectionEditor: React.FC<CollectionEditorProps> = ({
             },
             {
               validator: (rule, value) => {
-                const existingNames = allCollections;
-                if (existingNames.some((item) => item.name === value)) {
+                const editedCollectionName = isEdit ? collectionName : null;
+                if (value === editedCollectionName) {
+                  return Promise.resolve();
+                }
+                if (allCollections.some((item) => item.name === value)) {
                   return Promise.reject('Collection name already exists.');
                 }
                 return Promise.resolve();
@@ -257,26 +277,24 @@ const CollectionEditor: React.FC<CollectionEditorProps> = ({
         </Form.Item>
 
         <Form.Item name="Quick import" label="Quick import">
-          <Input
-            type="textarea"
-            placeholder={isOrg ? 'organization' : 'user'}
-          />
+          <Input type="textarea" placeholder={addType} />
         </Form.Item>
         <div
           style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}
         >
           <Radio.Group
-            defaultValue="User"
+            defaultValue="FullName"
             buttonStyle="solid"
             onChange={(e) => {
               const selectedValue = e.target.value;
-              setIsOrg(selectedValue === 'Organization');
+              setAddType(selectedValue);
             }}
           >
+            <Radio.Button value="FullName">FullName</Radio.Button>
             <Radio.Button value="User">User</Radio.Button>
             <Radio.Button value="Organization">Organization</Radio.Button>
           </Radio.Group>
-          <Button onClick={handleInquireClick}>inquire</Button>
+          <Button onClick={handleSearchClick}>search</Button>
           <Button onClick={handleImportClick}>import</Button>
         </div>
       </Form>
