@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import * as echarts from 'echarts';
 import generateDataByMonth from '../../../../../helpers/generate-data-by-month';
 import { getStars } from '../../../../../api/repo';
@@ -32,6 +32,26 @@ const StackedBarChart = (props: StackedBarChartProps): JSX.Element => {
   const divEL = useRef(null);
   const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;
   const [data, setData] = useState<{ [repo: string]: RawRepoData }>({});
+
+  // Fetch data for the specified repositories
+  useEffect(() => {
+    const fetchData = async () => {
+      const repoData: { [repo: string]: RawRepoData } = {};
+      for (const repo of repoNames) {
+        try {
+          repoData[repo] = await getStars(repo);
+        } catch (error) {
+          console.error(`Error fetching stars data for ${repo}:`, error);
+          repoData[repo] = {};
+        }
+      }
+      setData(repoData);
+    };
+    fetchData();
+  }, [repoNames]);
+
+  // Preprocess the data
+  const preprocessedData = useMemo(() => addPreviousMonth(data), [data]);
 
   const option: echarts.EChartsOption = {
     tooltip: {
@@ -75,28 +95,12 @@ const StackedBarChart = (props: StackedBarChartProps): JSX.Element => {
         minValueSpan: 3600 * 24 * 1000 * 180,
       },
     ],
-    series: StarSeries(data),
+    series: StarSeries(preprocessedData),
   };
-  console.log('BarChartSeries??', StarSeries(data));
-  useEffect(() => {
-    const fetchData = async () => {
-      for (const repo of repoNames) {
-        try {
-          const StarData = await getStars(repo);
-          setData((prevData) => ({ ...prevData, [repo]: StarData }));
-        } catch (error) {
-          console.error(`Error fetching stars data for ${repo}:`, error);
+  //console.log('StackedBarChartseries', StarSeries(preprocessedData));
 
-          setData((prevData) => ({ ...prevData, [repo]: {} }));
-        }
-      }
-    };
-    fetchData();
-  }, []);
-  // console.log('datatest', data);
   useEffect(() => {
     let chartDOM = divEL.current;
-    const TH = 'light' ? LIGHT_THEME : DARK_THEME;
 
     const instance = echarts.init(chartDOM as any);
     instance.setOption(option);
@@ -110,25 +114,51 @@ const StackedBarChart = (props: StackedBarChartProps): JSX.Element => {
     return () => {
       instance.dispose();
     };
-  }, [data, currentRepo]);
+  }, [option, currentRepo]);
 
   return <div ref={divEL} style={{ width: '100%', height: height }}></div>;
 };
 
-//Series：各仓库代码增加行数
+// Preprocess data by adding previous month data
+const addPreviousMonth = (data: { [repo: string]: RawRepoData }) => {
+  const preprocessedData: { [repo: string]: [string, number][] } = {};
+  let maxLength = 0;
+
+  // Iterate through the data of each repository
+  for (const [repoName, repoData] of Object.entries(data)) {
+    const generatedData = generateDataByMonth(repoData);
+    preprocessedData[repoName] = generatedData;
+
+    // Update the maximum length
+    maxLength = Math.max(maxLength, generatedData.length);
+  }
+  // // Fill in arrays with months
+  for (const repoData of Object.values(preprocessedData)) {
+    while (repoData.length < maxLength) {
+      const [year, month] = repoData[0][0].split('-');
+      const previousMonth = new Date(parseInt(year), parseInt(month) - 1, 1)
+        .toISOString()
+        .slice(0, 7);
+      repoData.unshift([previousMonth, 0]);
+    }
+  }
+
+  return preprocessedData;
+};
+
+// Generate chart series for each repository
 const StarSeries = (data: {
-  [repo: string]: RawRepoData;
+  [repo: string]: [string, number][];
 }): echarts.SeriesOption[] =>
   Object.entries(data).map(([repoName, repoData]) => ({
     name: repoName,
     type: 'bar',
     stack: 'total',
     // emphasis: emphasisStyle,
-    data: generateDataByMonth(repoData),
+    data: repoData,
     emphasis: {
       focus: 'series',
     },
-    // yAxisIndex: 0,
     triggerLineEvent: true,
   }));
 
