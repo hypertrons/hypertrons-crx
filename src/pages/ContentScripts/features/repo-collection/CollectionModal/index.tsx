@@ -26,13 +26,8 @@ export const CollectionManageModal = () => {
 
   const [activeKey, setActiveKey] = useState<string>();
   const [items, setItems] = useState<CollectionTabType[]>([]);
-  const [listData, setListData] = useState<string[]>(
-    allRelations
-      .filter((relation) => relation.collectionId === allCollections[0].id)
-      .map((relation) => relation.repositoryId)
-  );
   const [isClick, setIsClick] = useState(false);
-  const [isEdit, setIsEdit] = useState<boolean>();
+  const [isEdit, setIsEdit] = useState<boolean>(false);
 
   const editTab = (
     <div style={{ display: 'flex', gap: '10px', marginRight: '15px' }}>
@@ -69,25 +64,20 @@ export const CollectionManageModal = () => {
         key: collection.id,
       };
     });
-    const initialListData = allRelations
-      .filter((relation) =>
-        relation.collectionId === selectedCollection
-          ? selectedCollection
-          : allCollections[0].name
-      )
-      .map((relation) => relation.repositoryId);
+
     setActiveKey(selectedCollection);
     setItems(initialItems);
-    setListData(initialListData);
   }, [showManageModal]);
-
-  useEffect(() => {}, []);
 
   const onCreate = async (values: any, newRepoData: string[]) => {
     if (isEdit) {
       const updatedItems = items.map((item) => {
         if (item.key === activeKey?.toString()) {
-          return { ...item, label: values.collectionName };
+          return {
+            label: values.collectionName,
+            children: <CollectionContent repoNames={newRepoData} />,
+            key: values.collectionName,
+          };
         }
         return item;
       });
@@ -96,7 +86,7 @@ export const CollectionManageModal = () => {
       const newPanes = [...items];
       newPanes.push({
         label: values.collectionName,
-        children: <CollectionContent repoNames={listData} />,
+        children: <CollectionContent repoNames={newRepoData} />,
         key: values.collectionName,
       });
       setItems(newPanes);
@@ -135,10 +125,9 @@ export const CollectionManageModal = () => {
     }
     console.log('Received values of form: ', values);
 
-    setListData(newRepoData);
     setSelectedCollection(values.collectionName);
     setIsClick(false);
-    setIsEdit(undefined);
+    setIsEdit(false);
   };
 
   const onChange = (newActiveKey: string) => {
@@ -151,8 +140,7 @@ export const CollectionManageModal = () => {
       title: 'Confirm Deletion',
       content: 'Are you sure you want to delete this collection？',
       okText: 'Confirm',
-      async onOk() {
-        // 用户点击确认按钮时执行的操作
+      onOk() {
         let newActiveKey = activeKey;
         let lastIndex = -1;
         items.forEach((item, i) => {
@@ -170,12 +158,7 @@ export const CollectionManageModal = () => {
         }
         setItems(newPanes);
         setActiveKey(newActiveKey);
-        await updaters.removeCollection(targetKey.toString());
-        await updaters.removeRelations(
-          allRelations.filter(
-            (relation) => relation.collectionId === targetKey.toString()
-          )
-        );
+        updaters.removeCollection(targetKey.toString());
         setSelectedCollection(newActiveKey);
       },
       onCancel() {},
@@ -223,13 +206,19 @@ export const CollectionManageModal = () => {
           onCreate={onCreate}
           onCancel={() => {
             setIsClick(false);
-            setIsEdit(undefined);
+            setIsEdit(false);
           }}
           isEdit={isEdit}
           collectionName={selectedCollection ? selectedCollection : ''}
-          collectionData={allRelations
-            .filter((relation) => relation.collectionId === selectedCollection)
-            .map((relation) => relation.repositoryId)}
+          collectionData={
+            isEdit
+              ? allRelations
+                  .filter(
+                    (relation) => relation.collectionId === selectedCollection
+                  )
+                  .map((relation) => relation.repositoryId)
+              : ['']
+          }
         />
       )}
     </div>

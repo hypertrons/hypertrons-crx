@@ -137,17 +137,19 @@ const CollectionEditor: React.FC<CollectionEditorProps> = ({
   }
 
   useEffect(() => {
-    Promise.all(
-      collectionData.map((repositoryName) =>
-        fetchRepositoryDescription(repositoryName)
+    if (isEdit) {
+      Promise.all(
+        collectionData.map((repositoryName) =>
+          fetchRepositoryDescription(repositoryName)
+        )
       )
-    )
-      .then((repositoryDescriptions) => {
-        setDataSource(repositoryDescriptions);
-      })
-      .catch((error) => {
-        console.error('Error fetching repository descriptions:', error);
-      });
+        .then((repositoryDescriptions) => {
+          setDataSource(repositoryDescriptions);
+        })
+        .catch((error) => {
+          console.error('Error fetching repository descriptions:', error);
+        });
+    }
   }, []);
 
   const initialValues = {
@@ -179,10 +181,11 @@ const CollectionEditor: React.FC<CollectionEditorProps> = ({
         .then((repoDescription) => {
           const key = dataSource ? dataSource.length + 1 : 1;
           repoDescription.key = key.toString();
-          console.log('Repository Description:', repoDescription);
+          console.log('repoDescription', repoDescription);
           if (dataSource) {
             setDataSource([...dataSource, repoDescription]);
           } else {
+            console.log('repoDescription', repoDescription);
             setDataSource([repoDescription]);
           }
         })
@@ -215,7 +218,6 @@ const CollectionEditor: React.FC<CollectionEditorProps> = ({
           setDataSource(addKeyValue);
         }
       } catch (error) {
-        // 处理错误
         console.error('Error:', error);
       }
     }
@@ -302,7 +304,7 @@ const CollectionEditor: React.FC<CollectionEditorProps> = ({
       <Row>
         <Col span={24}>
           <Table
-            dataSource={isEdit ? dataSource : []}
+            dataSource={dataSource}
             columns={columns}
             rowKey="key"
             rowSelection={rowSelection}
