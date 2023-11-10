@@ -34,12 +34,12 @@ export const CollectionList = () => {
     setHideAddToCollections,
     setHideCollectionList,
     setSelectedCollection,
-    setShowManageModal,
+    setShowCollectionModal,
   } = useRepoCollectionContext();
 
   const handleCollectionClick = (collectionId: Collection['id']) => {
     setSelectedCollection(collectionId);
-    setShowManageModal(true);
+    setShowCollectionModal(true);
   };
 
   const goToAddToCollections = () => {

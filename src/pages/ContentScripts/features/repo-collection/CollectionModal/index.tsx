@@ -5,6 +5,8 @@ import CollectionContent from '../CollectionContent';
 import React, { useState, useEffect } from 'react';
 import { Modal, Tabs, List, Col, Row, Button } from 'antd';
 
+const { TabPane } = Tabs;
+
 type TargetKey = React.MouseEvent | React.KeyboardEvent | string;
 
 type CollectionTabType = {
@@ -15,8 +17,8 @@ type CollectionTabType = {
 
 export const CollectionManageModal = () => {
   const {
-    showManageModal,
-    setShowManageModal,
+    showCollectionModal,
+    setShowCollectionModal,
     selectedCollection,
     setSelectedCollection,
     updaters,
@@ -26,25 +28,22 @@ export const CollectionManageModal = () => {
 
   const [activeKey, setActiveKey] = useState<string>();
   const [items, setItems] = useState<CollectionTabType[]>([]);
-  const [isClick, setIsClick] = useState(false);
-  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [isInEditMode, setIsInEditMode] = useState<boolean>(false);
 
   const editTab = (
     <div style={{ display: 'flex', gap: '10px', marginRight: '15px' }}>
       <Button
         onClick={() => {
-          setIsClick(true);
-          setIsEdit(false);
-          setShowManageModal(true);
+          setIsInEditMode(false);
+          setShowCollectionModal(true);
         }}
       >
         Add New Collection
       </Button>
       <Button
         onClick={() => {
-          setIsClick(true);
-          setIsEdit(true);
-          setShowManageModal(true);
+          setIsInEditMode(true);
+          setShowCollectionModal(true);
         }}
         disabled={items.length === 0 || selectedCollection === undefined}
       >
@@ -67,10 +66,10 @@ export const CollectionManageModal = () => {
 
     setActiveKey(selectedCollection);
     setItems(initialItems);
-  }, [showManageModal]);
+  }, [showCollectionModal]);
 
   const onCreate = async (values: any, newRepoData: string[]) => {
-    if (isEdit) {
+    if (isInEditMode) {
       const updatedItems = items.map((item) => {
         if (item.key === activeKey?.toString()) {
           return {
@@ -126,8 +125,7 @@ export const CollectionManageModal = () => {
     console.log('Received values of form: ', values);
 
     setSelectedCollection(values.collectionName);
-    setIsClick(false);
-    setIsEdit(false);
+    setIsInEditMode(false);
   };
 
   const onChange = (newActiveKey: string) => {
@@ -175,9 +173,9 @@ export const CollectionManageModal = () => {
   return (
     <div>
       <Modal
-        open={showManageModal}
+        open={showCollectionModal}
         onCancel={() => {
-          setShowManageModal(false);
+          setShowCollectionModal(false);
           setSelectedCollection(undefined);
         }}
         footer={null}
@@ -187,7 +185,7 @@ export const CollectionManageModal = () => {
           bottom: '10px',
           height: '95vh',
         }}
-        bodyStyle={{ height: 'calc(95vh - 30px)', overflow: 'auto' }} // 40px is the sum of top and bottom padding
+        bodyStyle={{ height: 'calc(95vh - 30px)' }} // 40px is the sum of top and bottom padding
       >
         <Tabs
           hideAdd
@@ -197,30 +195,27 @@ export const CollectionManageModal = () => {
           onEdit={onEdit}
           items={items}
           tabBarExtraContent={editTab}
-          style={{ margin: '0px 24px' }}
+          style={{ height: '100%', margin: '0px 24px' }}
         />
       </Modal>
-      {isClick && (
-        <CollectionEditor
-          open={showManageModal}
-          onCreate={onCreate}
-          onCancel={() => {
-            setIsClick(false);
-            setIsEdit(false);
-          }}
-          isEdit={isEdit}
-          collectionName={selectedCollection ? selectedCollection : ''}
-          collectionData={
-            isEdit
-              ? allRelations
-                  .filter(
-                    (relation) => relation.collectionId === selectedCollection
-                  )
-                  .map((relation) => relation.repositoryId)
-              : ['']
-          }
-        />
-      )}
+      <CollectionEditor
+        open={isInEditMode}
+        onCreate={onCreate}
+        onCancel={() => {
+          setIsInEditMode(false);
+        }}
+        isEdit={isInEditMode}
+        collectionName={selectedCollection ? selectedCollection : ''}
+        collectionData={
+          isInEditMode
+            ? allRelations
+                .filter(
+                  (relation) => relation.collectionId === selectedCollection
+                )
+                .map((relation) => relation.repositoryId)
+            : ['']
+        }
+      />
     </div>
   );
 };

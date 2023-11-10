@@ -42,7 +42,7 @@ export const AddToCollections = () => {
     hideAddToCollections,
     setHideAddToCollections,
     setHideCollectionList,
-    setShowManageModal,
+    setShowCollectionModal,
   } = useRepoCollectionContext();
 
   const [checkedCollectionIds, setCheckedCollectionIds] = useState<
@@ -110,7 +110,7 @@ export const AddToCollections = () => {
 
   const manage = () => {
     // open modal to manage collections
-    setShowManageModal(true);
+    setShowCollectionModal(true);
   };
 
   // if the ids of currentRepositoryCollections are the same as the ids of selectedCollectionIds, then the "Apply" button should be disabled

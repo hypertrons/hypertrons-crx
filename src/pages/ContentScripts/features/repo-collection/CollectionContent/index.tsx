@@ -36,7 +36,14 @@ const CollectionContent: React.FC<Index> = ({ repoNames, currentRepo }) => {
   };
 
   return (
-    <Layout style={{ padding: '18px 0', background: colorBgContainer }}>
+    <Layout
+      style={{
+        height: '100%',
+        padding: '18px 0',
+        background: colorBgContainer,
+        overflow: 'auto',
+      }}
+    >
       <Sider style={{ background: colorBgContainer }} width={200}>
         <Menu
           mode="inline"
