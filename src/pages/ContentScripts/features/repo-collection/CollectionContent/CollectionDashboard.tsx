@@ -11,6 +11,8 @@ import NumericPanel from '../charts/NumericPanel';
 import React from 'react';
 import { Row, Col } from 'antd';
 
+import './index.scss';
+
 interface CollectionDashboardProps {
   repoNames: string[];
   currentRepo?: string;
@@ -21,7 +23,7 @@ const CollectionDashboard: React.FC<CollectionDashboardProps> = ({
   currentRepo,
 }) => {
   return (
-    <div>
+    <>
       <Row gutter={[16, 16]}>
         <Col span={8}>
           <ChartCard title="Total Star Count">
@@ -80,7 +82,10 @@ const CollectionDashboard: React.FC<CollectionDashboardProps> = ({
                 />
               </ChartCard>
             </Col>
+          </Row>
 
+          <div style={{ margin: '16px 0' }}></div>
+          <Row gutter={[16, 16]}>
             <Col span={12}>
               <ChartCard title="Star Count Over Time">
                 <StackedBarChart
@@ -101,7 +106,10 @@ const CollectionDashboard: React.FC<CollectionDashboardProps> = ({
                 />
               </ChartCard>
             </Col>
+          </Row>
 
+          <div style={{ margin: '16px 0' }}></div>
+          <Row gutter={[16, 16]}>
             <Col span={24}>
               <ChartCard title="Code Line Additions/Deletions Bar Chart">
                 <CodeStackedBarChart
@@ -114,6 +122,7 @@ const CollectionDashboard: React.FC<CollectionDashboardProps> = ({
             </Col>
           </Row>
         </Col>
+
         <Col span={8}>
           <Row gutter={[16, 16]}>
             <Col span={24}>
@@ -163,7 +172,7 @@ const CollectionDashboard: React.FC<CollectionDashboardProps> = ({
           </ChartCard>
         </Col>
       </Row>
-    </div>
+    </>
   );
 };
 

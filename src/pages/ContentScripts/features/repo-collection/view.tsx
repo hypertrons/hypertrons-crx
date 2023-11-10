@@ -1,5 +1,5 @@
 import { CollectionButton } from './CollectionButton';
-import { CollectionManageModal } from './CollectionModal';
+import { CollectionModal } from './CollectionModal';
 import { RepoCollectionProvider } from './context';
 
 import React from 'react';
@@ -12,7 +12,7 @@ const View = ({ repoName }: Props) => {
   return (
     <RepoCollectionProvider currentRepositoryId={repoName}>
       <CollectionButton />
-      <CollectionManageModal />
+      <CollectionModal />
     </RepoCollectionProvider>
   );
 };

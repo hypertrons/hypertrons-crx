@@ -2,10 +2,10 @@ import { useRepoCollectionContext } from '../context';
 import CollectionEditor from './CollectionEditor';
 import CollectionContent from '../CollectionContent';
 
-import React, { useState, useEffect } from 'react';
-import { Modal, Tabs, List, Col, Row, Button } from 'antd';
+import React, { useState } from 'react';
+import { Modal, Tabs, Button } from 'antd';
 
-const { TabPane } = Tabs;
+import './index.scss';
 
 type TargetKey = React.MouseEvent | React.KeyboardEvent | string;
 
@@ -15,7 +15,7 @@ type CollectionTabType = {
   key: string;
 };
 
-export const CollectionManageModal = () => {
+export const CollectionModal = () => {
   const {
     showCollectionModal,
     setShowCollectionModal,
@@ -51,22 +51,6 @@ export const CollectionManageModal = () => {
       </Button>
     </div>
   );
-
-  useEffect(() => {
-    const initialItems = allCollections.map((collection) => {
-      const repoList = allRelations
-        .filter((relation) => relation.collectionId === collection.name)
-        .map((relation) => relation.repositoryId);
-      return {
-        label: collection.name,
-        children: <CollectionContent repoNames={repoList} />,
-        key: collection.id,
-      };
-    });
-
-    setActiveKey(selectedCollection);
-    setItems(initialItems);
-  }, [showCollectionModal]);
 
   const onCreate = async (values: any, newRepoData: string[]) => {
     if (isInEditMode) {
@@ -170,6 +154,17 @@ export const CollectionManageModal = () => {
     if (action === 'remove') remove(targetKey);
   };
 
+  const tabItems = allCollections.map((collection) => {
+    const repoList = allRelations
+      .filter((relation) => relation.collectionId === collection.name)
+      .map((relation) => relation.repositoryId);
+    return {
+      label: collection.name,
+      children: <CollectionContent repoNames={repoList} />,
+      key: collection.id,
+    };
+  });
+
   return (
     <div>
       <Modal
@@ -193,9 +188,9 @@ export const CollectionManageModal = () => {
           onChange={onChange}
           activeKey={activeKey}
           onEdit={onEdit}
-          items={items}
+          items={tabItems}
           tabBarExtraContent={editTab}
-          style={{ height: '100%', margin: '0px 24px' }}
+          style={{ height: '100%', marginRight: '24px' }}
         />
       </Modal>
       <CollectionEditor
