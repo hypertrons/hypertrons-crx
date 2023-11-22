@@ -60,6 +60,8 @@ const MergedLinesChart = (props: MergedLinesChartProps): JSX.Element => {
     },
     xAxis: {
       type: 'time',
+      // 30 * 3600 * 24 * 1000  milliseconds
+      minInterval: 2592000000,
       splitLine: {
         show: false,
       },
