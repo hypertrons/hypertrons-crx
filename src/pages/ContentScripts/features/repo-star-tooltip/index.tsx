@@ -13,6 +13,7 @@ import {
 import { getStars } from '../../../../api/repo';
 import View from './view';
 import { RepoMeta, metaStore } from '../../../../api/common';
+import { checkLogined } from '../../../../helpers/get-developer-info';
 
 const githubTheme = getGithubTheme();
 const featureId = features.getFeatureID(import.meta.url);
@@ -33,7 +34,11 @@ const init = async (): Promise<void> => {
   repoName = getRepoName();
   await getData();
 
-  await elementReady('a[data-ga-click*="star button"]');
+  const isLogined = checkLogined();
+  const selector = isLogined
+    ? 'button[data-ga-click*="star button"]'
+    : 'a[data-hydro-click*="star button"]';
+  await elementReady(selector);
   const attributes = {
     'data-tip': '',
     'data-for': 'star-tooltip',
@@ -46,7 +51,7 @@ const init = async (): Promise<void> => {
     'data-text-color': githubTheme === 'light' ? '#24292F' : '#C9D1D9',
     'data-background-color': githubTheme === 'light' ? 'white' : '#161B22',
   };
-  $('button[data-ga-click*="star button"]').attr(attributes);
+  $(selector).attr(attributes);
 
   const container = document.createElement('div');
   container.id = featureId;

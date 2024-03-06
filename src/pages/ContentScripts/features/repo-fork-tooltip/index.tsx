@@ -33,8 +33,9 @@ const init = async (): Promise<void> => {
   repoName = getRepoName();
   await getData();
 
-  await elementReady('a[data-ga-click*="show fork modal"]');
-  $('a[data-ga-click*="show fork modal"]').attr({
+  const selector = '#fork-button';
+  await elementReady(selector);
+  $(selector).attr({
     'data-tip': '',
     'data-for': 'fork-tooltip',
     'data-class': `floating-window ${githubTheme}`,
