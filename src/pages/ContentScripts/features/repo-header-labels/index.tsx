@@ -47,9 +47,7 @@ const init = async (): Promise<void> => {
   container.id = featureId;
   renderTo(container);
   await elementReady('#repository-container-header');
-  $('#repository-container-header')
-    .find('span.Label.Label--secondary')
-    .after(container);
+  $('#repository-container-header').find('span.Label').after(container);
 };
 
 const restore = async () => {
