@@ -28,7 +28,7 @@
   margin-left: auto;
 }
 .rcw-client .rcw-message-text {
-  background-color: var(--color-accent-subtle);
+  background-color: var(--bgColor-accent-muted);
   border-radius: 10px;
   max-width: 350px;
   padding: 15px;
@@ -45,7 +45,7 @@
   align-items: flex-start;
 }
 .rcw-response .rcw-message-text {
-  background-color: var(--color-canvas-subtle);
+  background-color: var(--bgColor-inset);
   border-radius: 10px;
   max-width: 450px;
   padding: 15px;
@@ -100,7 +100,7 @@
   color: #fff;
 }
 .rcw-conversation-container .rcw-header {
-  background-color: var(--color-header-bg);
+  background-color: var(--header-bgColor);
   border-radius: 10px 10px 0 0;
   color: #fff;
   display: flex;
@@ -175,7 +175,7 @@
   display: flex;
 }
 .loader-container {
-  background-color: var(--color-canvas-subtle);
+  background-color: var(--bgColor-inset);
   border-radius: 10px;
   padding: 15px;
   max-width: 215px;
@@ -220,7 +220,7 @@
   }
 }
 .rcw-messages-container {
-  background-color: var(--color-canvas-default);
+  background-color: var(--bgColor-default);
   height: 55vh;
   max-height: 600px;
   overflow-y: auto;
@@ -830,7 +830,7 @@ img.rcw-picker-icon {
   animation-name: slide-in;
   animation-fill-mode: forwards;
   align-self: flex-end;
-  background-color: var(--color-header-bg);
+  background-color: var(--header-bgColor);
   border: 0;
   border-radius: 50%;
   box-shadow: 0 2px 10px 1px var(--color-shadow);
