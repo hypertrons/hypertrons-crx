@@ -5,7 +5,7 @@
 }
 
 .hypertrons-crx-border {
-  border: 1px solid var(--borderColor-default);
+  border: 1px solid var(--borderColor-default, var(--color-border-default));
   border-radius: 6px;
 }
 
@@ -15,8 +15,8 @@
   margin: 0;
   font-size: 14px;
   line-height: 35px;
-  background-color: var(--bgColor-inset);
-  border: 1px solid var(--borderColor-default);
+  background-color: var(--bgColor-inset, var(--color-canvas-subtle));
+  border: 1px solid var(--borderColor-default, var(--color-border-default));
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
 }

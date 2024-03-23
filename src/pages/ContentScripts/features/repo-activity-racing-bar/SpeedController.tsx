@@ -29,7 +29,7 @@ export const SpeedController = ({
     <Segmented
       style={{
         backgroundColor: 'var(--color-btn-bg)',
-        color: 'var(--fgColor-default)',
+        color: 'var(--fgColor-default, var(--color-fg-default))',
       }}
       options={options}
       value={speed}

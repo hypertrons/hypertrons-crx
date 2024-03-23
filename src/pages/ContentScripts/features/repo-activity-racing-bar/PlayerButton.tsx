@@ -48,7 +48,9 @@ export const PlayerButton = ({
     >
       <Button
         style={{ backgroundColor: 'var(--color-btn-bg)' }}
-        styles={{ icon: { color: 'var(--fgColor-default)' } }}
+        styles={{
+          icon: { color: 'var(--fgColor-default, var(--color-fg-default))' },
+        }}
         icon={icon}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
