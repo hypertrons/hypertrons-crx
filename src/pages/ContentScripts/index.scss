@@ -5,8 +5,7 @@
 }
 
 .hypertrons-crx-border {
-  background-color: var(--color-canvas-default);
-  border: 1px solid var(--color-border-default);
+  border: 1px solid var(--borderColor-default, var(--color-border-default));
   border-radius: 6px;
 }
 
@@ -16,10 +15,10 @@
   margin: 0;
   font-size: 14px;
   line-height: 35px;
-  background-color: var(--color-canvas-subtle);
-  border: 1px solid var(--color-border-default);
-  border-bottom: 0;
-  border-radius: 6px;
+  background-color: var(--bgColor-inset, var(--color-canvas-subtle));
+  border: 1px solid var(--borderColor-default, var(--color-border-default));
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
 }
 .color-text-secondary {
   margin-left: 35px;
