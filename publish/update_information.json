@@ -1,14 +1,14 @@
 {
   "chrome": {
-    "latest_version": "1.9.4",
+    "latest_version": "1.9.5",
     "url": "https://chrome.google.com/webstore/detail/hypercrx/ijchfbpdgeljmhnhokmekkecpbdkgabc"
   },
   "edge": {
-    "latest_version": "1.9.4",
+    "latest_version": "1.9.5",
     "url": "https://microsoftedge.microsoft.com/addons/detail/hypercrx/lbbajaehiibofpconjgdjonmkidpcome"
   },
   "develop": {
-    "latest_version": "1.9.4",
+    "latest_version": "1.9.5",
     "url": "https://github.com/hypertrons/hypertrons-crx/releases"
   }
 }
