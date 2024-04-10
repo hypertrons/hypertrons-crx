@@ -51,7 +51,7 @@ const init = async (): Promise<void> => {
   // Load colors from storage
   colors =
     (await chrome.storage.local.get('calendar_level_colors'))[
-    'calendar_level_colors'
+      'calendar_level_colors'
     ] || colors;
 
   for (let i = 0; i < colors.length; i++) {
