@@ -18,6 +18,7 @@ let repoName: string;
 let activity: any;
 let openrank: any;
 let participant: any;
+let contributor: any;
 let meta: RepoMeta;
 
 const getData = async () => {
@@ -33,6 +34,7 @@ const renderTo = (container: Container) => {
       activity={activity}
       openrank={openrank}
       participant={participant}
+      contributor={contributor}
       meta={meta}
     />,
     container
