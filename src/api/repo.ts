@@ -5,7 +5,7 @@ const metricNameMap = new Map([
   ['activity', 'activity'],
   ['openrank', 'openrank'],
   ['participant', 'participants'],
-  ['contributor', 'newContributors'],
+  ['contributor', 'new_contributors'],
   ['forks', 'technical_fork'],
   ['stars', 'stars'],
   ['issues_opened', 'issues_new'],
@@ -35,7 +35,7 @@ export const getParticipant = async (repo: string) => {
 };
 
 export const getContributor = async (repo: string) => {
-  return getMetricByName(repo, metricNameMap, 'contributor')
+  return getMetricByName(repo, metricNameMap, 'contributor');
 };
 
 export const getForks = async (repo: string) => {
