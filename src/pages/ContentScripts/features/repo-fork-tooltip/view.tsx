@@ -7,7 +7,6 @@ import optionsStorage, {
   defaults,
 } from '../../../../options-storage';
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
-import ReactTooltip from 'react-tooltip';
 import ForkChart from './ForkChart';
 import { RepoMeta } from '../../../../api/common';
 
@@ -30,7 +29,7 @@ const View = ({ forks, meta }: Props): JSX.Element | null => {
   if (!forks) return null;
 
   return (
-    <ReactTooltip id="fork-tooltip" clickable={true}>
+    <>
       <div className="chart-title">
         {getMessageByLocale('fork_popup_title', options.locale)}
       </div>
@@ -40,7 +39,7 @@ const View = ({ forks, meta }: Props): JSX.Element | null => {
         height={130}
         data={generateDataByMonth(forks, meta.updatedAt)}
       />
-    </ReactTooltip>
+    </>
   );
 };
 

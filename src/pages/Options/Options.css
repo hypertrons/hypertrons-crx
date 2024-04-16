@@ -52,3 +52,7 @@ li {
   padding: 5px 0;
   list-style-type: none;
 }
+
+a {
+  color: blue;
+}

@@ -1,10 +1,7 @@
-import React from 'react';
-import { render, Container } from 'react-dom';
-import elementReady from 'element-ready';
-import $ from 'jquery';
-
 import features from '../../../../feature-manager';
-import getGithubTheme from '../../../../helpers/get-github-theme';
+import View, { IssueDetail } from './view';
+import { NativePopover } from '../../components/NativePopover';
+import elementReady from 'element-ready';
 import {
   getRepoName,
   isPublicRepoWithMeta,
@@ -14,10 +11,13 @@ import {
   getIssuesClosed,
   getIssueComments,
 } from '../../../../api/repo';
-import View, { IssueDetail } from './view';
+
 import { RepoMeta, metaStore } from '../../../../api/common';
 
-const githubTheme = getGithubTheme();
+import React from 'react';
+import { render } from 'react-dom';
+import $ from 'jquery';
+
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
 let issueDetail: IssueDetail = {
@@ -34,48 +34,24 @@ const getData = async () => {
   meta = (await metaStore.get(repoName)) as RepoMeta;
 };
 
-const renderTo = (container: Container) => {
-  render(
-    <View currentRepo={repoName} issueDetail={issueDetail} meta={meta} />,
-    container
-  );
-};
-
 const init = async (): Promise<void> => {
   repoName = getRepoName();
   await getData();
 
   await elementReady('#issues-tab');
-  $('#issues-tab').attr({
-    'data-tip': '',
-    'data-for': 'issue-tooltip',
-    'data-class': `floating-window ${githubTheme}`,
-    'data-place': 'bottom',
-    'data-effect': 'solid',
-    'data-delay-hide': 500,
-    'data-delay-show': 1000,
-    style: { color: githubTheme === 'light' ? '#24292f' : '#c9d1d9' },
-    'data-text-color': githubTheme === 'light' ? '#24292F' : '#C9D1D9',
-    'data-background-color': githubTheme === 'light' ? 'white' : '#161B22',
-  });
-  const container = document.createElement('div');
-  container.id = featureId;
-  renderTo(container);
-  (await elementReady('nav.js-repo-nav'))?.append(container);
+  const $issueTab = $('#issues-tab');
+  const placeholderElement = $('<div class="NativePopover" />').appendTo(
+    'body'
+  )[0];
+  render(
+    <NativePopover anchor={$issueTab} width={310} arrowPosition="top-middle">
+      <View currentRepo={repoName} issueDetail={issueDetail} meta={meta} />
+    </NativePopover>,
+    placeholderElement
+  );
 };
 
-const restore = async () => {
-  // Clicking another repo link in one repo will trigger a turbo:visit,
-  // so in a restoration visit we should be careful of the current repo.
-  if (repoName !== getRepoName()) {
-    repoName = getRepoName();
-    await getData();
-  }
-  // Ideally, we should do nothing if the container already exists. But after a tubor
-  // restoration visit, tooltip cannot be triggered though it exists in DOM tree. One
-  // way to solve this is to rerender the view to the container. At least this way works.
-  renderTo($(`#${featureId}`)[0]);
-};
+const restore = async () => {};
 
 features.add(featureId, {
   asLongAs: [isPublicRepoWithMeta],
