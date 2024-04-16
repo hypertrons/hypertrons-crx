@@ -19,6 +19,7 @@ const metricNameMap = new Map([
   ['developer_network', 'developer_network'],
   ['repo_network', 'repo_network'],
   ['activity_details', 'activity_details'],
+  ['issue_response_time', 'issue_response_time'],
 ]);
 
 export const getActivity = async (repo: string) => {
@@ -87,4 +88,8 @@ export const getRepoNetwork = async (repo: string) => {
 
 export const getActivityDetails = async (repo: string) => {
   return getMetricByName(repo, metricNameMap, 'activity_details');
+};
+
+export const getIssueResponseTime = async (repo: string) => {
+  return getMetricByName(repo, metricNameMap, 'issue_response_time');
 };
