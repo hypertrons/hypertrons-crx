@@ -44,24 +44,54 @@ const ForkChart = (props: ForkChartProps): JSX.Element => {
     },
     grid: {
       top: '5%',
-      bottom: '5%',
+      bottom: '15%',
       left: '5%',
       right: '5%',
       containLabel: true,
     },
     xAxis: {
+      name: 'Date',
+      nameLocation: 'middle',
+      nameGap: 25,
       type: 'time',
       // 30 * 3600 * 24 * 1000  milliseconds
-      minInterval: 2592000000,
+      maxInterval: 31536000000,
+      minInterval: 30 * 3600 * 24 * 1000,
+
       splitLine: {
         show: false,
       },
+
       axisLabel: {
         color: TH.FG_COLOR,
         formatter: {
           year: '{yearStyle|{yy}}',
           month: '{MMM}',
         },
+        // formatter: function (value: number) {
+        //   var date = new Date(value);
+        //   // var nextDate = new Date(value);
+        //   var nextYear = date.getFullYear() + 1;
+        //   var nextMonth = date.getMonth();
+        //   // var nextDate = new Date(nextYear, nextMonth, 1);
+        //   var nextDate = new Date(nextYear, 0, 1);
+
+        //   // nextDate.setFullYear(date.getFullYear() + 1);
+
+        //   if (nextDate.getTime() - value < 31536000000) {
+        //     console.log(11);
+        //     console.log(echarts.time.format(value, '{MMM}', true));
+        //     // return echarts.time.format(value, '{MMM}', true);
+
+        //     return '{MMM}';
+        //   } else {
+        //     console.log(22);
+
+        //     // return echarts.time.format(value, '{yy}', true);
+        //     return '{yearStyle|{yy}}';
+        //   }
+        // },
+
         rich: {
           yearStyle: {
             fontWeight: 'bold',

@@ -55,13 +55,16 @@ const PRChart = (props: PRChartProps): JSX.Element => {
     },
     grid: {
       top: '15%',
-      bottom: '5%',
+      bottom: '10%',
       left: '5%',
       right: '5%',
       containLabel: true,
     },
     xAxis: {
       type: 'time',
+      name: 'Date',
+      nameLocation: 'middle',
+      nameGap: 25,
       // 30 * 3600 * 24 * 1000  milliseconds
       minInterval: 2592000000,
       splitLine: {

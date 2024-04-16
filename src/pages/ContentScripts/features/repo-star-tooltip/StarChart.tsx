@@ -43,13 +43,16 @@ const StarChart = (props: StarChartProps): JSX.Element => {
     },
     grid: {
       top: '5%',
-      bottom: '5%',
+      bottom: '15%',
       left: '5%',
       right: '5%',
       containLabel: true,
     },
     xAxis: {
       type: 'time',
+      name: 'Date',
+      nameLocation: 'middle',
+      nameGap: 25,
       // 30 * 3600 * 24 * 1000  milliseconds
       minInterval: 2592000000,
       splitLine: {
