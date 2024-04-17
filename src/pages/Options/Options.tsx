@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
   Stack,
   Checkbox,
-  Link,
   ChoiceGroup,
   IChoiceGroupOption,
 } from 'office-ui-fabric-react';
@@ -150,9 +149,9 @@ const Options = (): JSX.Element => {
             </p>
             <p>
               GitHub:{' '}
-              <Link href={HYPERCRX_GITHUB} target="_blank" underline>
+              <a href={HYPERCRX_GITHUB} target="_blank">
                 {HYPERCRX_GITHUB}
-              </Link>
+              </a>
             </p>
           </Stack>
         </Stack.Item>
