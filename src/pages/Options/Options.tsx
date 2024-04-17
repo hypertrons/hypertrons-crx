@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Stack, ChoiceGroup, IChoiceGroupOption } from 'office-ui-fabric-react';
-import { Checkbox } from 'antd';
+import { Stack } from 'office-ui-fabric-react';
+import { Checkbox, Radio, Space } from 'antd';
 
 import { importedFeatures } from '../../../README.md';
 import optionsStorage, { HypercrxOptions } from '../../options-storage';
@@ -8,17 +8,6 @@ import getMessageByLocale from '../../helpers/get-message-by-locale';
 import { HYPERCRX_GITHUB } from '../../constant';
 import TooltipTrigger from '../../components/TooltipTrigger';
 import './Options.css';
-
-const localeOptions: IChoiceGroupOption[] = [
-  {
-    key: 'en',
-    text: 'English',
-  },
-  {
-    key: 'zh_CN',
-    text: '简体中文 (Simplified Chinese)',
-  },
-];
 
 const stacksStyleOptions = {
   headerStack: {
@@ -91,14 +80,18 @@ const Options = (): JSX.Element => {
             <p>
               {getMessageByLocale('options_locale_toolTip', options.locale)} :
             </p>
-            <ChoiceGroup
-              defaultSelectedKey={options.locale}
-              options={localeOptions}
-              onChange={async (e, option: any) => {
-                await optionsStorage.set({ locale: option.key });
+            <Radio.Group
+              defaultValue={options.locale}
+              onChange={async (e) => {
+                await optionsStorage.set({ locale: e.target.value });
                 setOptions(await optionsStorage.getAll());
               }}
-            />
+            >
+              <Space direction="vertical">
+                <Radio value={'en'}>English</Radio>
+                <Radio value={'zh_CN'}>简体中文 (Simplified Chinese)</Radio>
+              </Space>
+            </Radio.Group>
           </Stack>
         </Stack.Item>
         <Stack.Item className="Box">
