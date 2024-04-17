@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Stack,
-  Checkbox,
-  ChoiceGroup,
-  IChoiceGroupOption,
-} from 'office-ui-fabric-react';
+import { Stack, ChoiceGroup, IChoiceGroupOption } from 'office-ui-fabric-react';
+import { Checkbox } from 'antd';
 
 import { importedFeatures } from '../../../README.md';
 import optionsStorage, { HypercrxOptions } from '../../options-storage';
@@ -55,13 +51,14 @@ const Options = (): JSX.Element => {
     return (
       <Checkbox
         key={name}
-        label={name}
         defaultChecked={isEnabled}
-        onChange={async (e, checked) => {
-          await optionsStorage.set({ [`hypercrx-${name}`]: checked });
+        onChange={async (e) => {
+          await optionsStorage.set({ [`hypercrx-${name}`]: e.target.checked });
           setOptions(await optionsStorage.getAll());
         }}
-      />
+      >
+        {name}
+      </Checkbox>
     );
   }
 
