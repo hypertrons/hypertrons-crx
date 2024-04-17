@@ -55,18 +55,15 @@ const IssueChart = (props: IssueChartProps): JSX.Element => {
     },
     grid: {
       top: '15%',
-      bottom: '10%',
+      bottom: '5%',
       left: '5%',
       right: '5%',
       containLabel: true,
     },
     xAxis: {
       type: 'time',
-      name: 'Date',
-      nameLocation: 'middle',
-      nameGap: 25,
       // 30 * 3600 * 24 * 1000  milliseconds
-      minInterval: 30 * 3600 * 24 * 1000,
+      minInterval: 365 * 24 * 3600 * 1000,
       splitLine: {
         show: false,
       },
@@ -160,6 +157,20 @@ const IssueChart = (props: IssueChartProps): JSX.Element => {
     let chartDOM = divEL.current;
     const instance = echarts.getInstanceByDom(chartDOM as any);
     if (instance) {
+      instance.on('dataZoom', (params: any) => {
+        const option = instance.getOption() as {
+          xAxis: { minInterval?: any }[];
+        };
+        const startValue = params.batch[0].start;
+        let minInterval: number;
+        if (startValue != 0) {
+          minInterval = 30 * 24 * 3600 * 1000;
+        } else {
+          minInterval = 365 * 24 * 3600 * 1000;
+        }
+        option.xAxis[0].minInterval = minInterval;
+        instance.setOption(option);
+      });
       instance.setOption(option);
       if (onClick) {
         instance.on('click', (params) => {
