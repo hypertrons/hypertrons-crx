@@ -37,7 +37,7 @@ const View = ({ forks, meta }: Props): JSX.Element | null => {
       <ForkChart
         theme={githubTheme as 'light' | 'dark'}
         width={270}
-        height={150}
+        height={130}
         data={generateDataByMonth(forks, meta.updatedAt)}
       />
     </ReactTooltip>
