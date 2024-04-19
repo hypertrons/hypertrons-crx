@@ -162,11 +162,12 @@ const IssueChart = (props: IssueChartProps): JSX.Element => {
           xAxis: { minInterval?: any }[];
         };
         const startValue = params.batch[0].start;
+        const endValue = params.batch[0].end;
         let minInterval: number;
-        if (startValue != 0) {
-          minInterval = 30 * 24 * 3600 * 1000;
-        } else {
+        if (startValue == 0 && endValue == 100) {
           minInterval = 365 * 24 * 3600 * 1000;
+        } else {
+          minInterval = 30 * 24 * 3600 * 1000;
         }
         option.xAxis[0].minInterval = minInterval;
         instance.setOption(option);
