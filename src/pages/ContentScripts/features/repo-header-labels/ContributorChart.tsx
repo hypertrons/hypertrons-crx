@@ -43,9 +43,9 @@ const ContributorChart = (props: ContributorChartProps): JSX.Element => {
       formatter: tooltipFormatter,
     },
     grid: {
-      top: '5%',
+      top: '10%',
       bottom: '5%',
-      left: '5%',
+      left: '8%',
       right: '5%',
       containLabel: true,
     },
@@ -97,7 +97,7 @@ const ContributorChart = (props: ContributorChartProps): JSX.Element => {
         type: 'bar',
         data: data,
         itemStyle: {
-          color: TH.BAR_COLOR,
+          color: '#ff8061',
         },
         emphasis: {
           focus: 'series',
@@ -108,7 +108,7 @@ const ContributorChart = (props: ContributorChartProps): JSX.Element => {
         type: 'line',
         symbol: 'none',
         lineStyle: {
-          color: TH.LINE_COLOR,
+          color: '#ff8061',
         },
         data: data,
         emphasis: {

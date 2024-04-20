@@ -15,6 +15,7 @@ import ActivityChart from './ActivityChart';
 import OpenRankChart from './OpenRankChart';
 import ParticipantChart from './ParticipantChart';
 import ContributorChart from './ContributorChart';
+import PRChart from '../repo-pr-tooltip/PRChart';
 import { RepoMeta } from '../../../../api/common';
 
 const githubTheme = getGithubTheme();
@@ -182,6 +183,15 @@ const View = ({
           width={270}
           height={130}
           data={participantData}
+        />
+        <div className="chart-title">
+          {getMessageByLocale('header_label_contributor', options.locale)}
+        </div>
+        <ContributorChart
+          theme={githubTheme as 'light' | 'dark'}
+          width={270}
+          height={130}
+          data={contributorData}
         />
       </ReactTooltip>
     </div>
