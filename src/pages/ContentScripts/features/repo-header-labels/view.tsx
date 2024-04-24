@@ -176,15 +176,6 @@ const View = ({
       </ReactTooltip>
       <ReactTooltip id="participant-tooltip" clickable={true}>
         <div className="chart-title">
-          {getMessageByLocale('header_label_participant', options.locale)}
-        </div>
-        <ParticipantChart
-          theme={githubTheme as 'light' | 'dark'}
-          width={270}
-          height={130}
-          data={participantData}
-        />
-        <div className="chart-title">
           {getMessageByLocale('header_label_contributor', options.locale)}
         </div>
         <ContributorChart
@@ -192,6 +183,15 @@ const View = ({
           width={270}
           height={130}
           data={contributorData}
+        />
+        <div className="chart-title">
+          {getMessageByLocale('header_label_participant', options.locale)}
+        </div>
+        <ParticipantChart
+          theme={githubTheme as 'light' | 'dark'}
+          width={270}
+          height={130}
+          data={participantData}
         />
       </ReactTooltip>
     </div>
