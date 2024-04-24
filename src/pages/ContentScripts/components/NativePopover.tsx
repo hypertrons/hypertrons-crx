@@ -41,6 +41,7 @@ export const NativePopover = ({
           }
           const { top, left } = anchorOffset;
 
+          $popoverContent.css('padding', '10px 5px');
           $popoverContent.css('width', width);
           $popoverContainer.css('top', `${top + anchorHeight + 10}px`);
           $popoverContainer.css(

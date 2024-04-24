@@ -38,7 +38,7 @@ const init = async (): Promise<void> => {
     'body'
   )[0];
   render(
-    <NativePopover anchor={$starButton} width={270} arrowPosition="top-middle">
+    <NativePopover anchor={$starButton} width={280} arrowPosition="top-middle">
       <View stars={stars} meta={meta} />
     </NativePopover>,
     placeholderElement
