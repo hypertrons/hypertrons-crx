@@ -62,10 +62,11 @@ const init = async (): Promise<void> => {
         return;
       }
       $popoverContainer.css('top', `${top + height + 10}px`);
-      $popoverContent.removeClass('Popover-message--bottom-left');
-      $popoverContent.removeClass('Popover-message--large');
       $popoverContainer.css('left', `${left - (contentWidth - width) / 2}px`);
-      $popoverContent.addClass('Popover-message--top-middle');
+      $popoverContent.attr(
+        'class',
+        'Popover-message Box color-shadow-large Popover-message--top-middle'
+      );
       renderTo($popoverContent[0]);
       $popoverContainer.css('display', 'block');
     }, 1000);
@@ -74,10 +75,10 @@ const init = async (): Promise<void> => {
   const hidePopover = () => {
     popoverTimer && clearTimeout(popoverTimer);
     $popoverContent.addClass('Popover-message--large');
-    $popoverContainer.css('display', 'none');
     if ($popoverContent.children().length > 0) {
       unmountComponentAtNode($popoverContent[0]);
     }
+    $popoverContainer.css('display', 'none');
   };
 
   $starButton[0].addEventListener('mouseenter', () => {
@@ -87,7 +88,7 @@ const init = async (): Promise<void> => {
   });
 
   $starButton[0].addEventListener('mouseleave', () => {
-    leaveTimer = setTimeout(hidePopover, 500);
+    leaveTimer = setTimeout(hidePopover, 200);
   });
 
   $popoverContainer[0].addEventListener('mouseenter', () => {
@@ -95,7 +96,7 @@ const init = async (): Promise<void> => {
   });
 
   $popoverContainer[0].addEventListener('mouseleave', () => {
-    leaveTimer = setTimeout(hidePopover, 500);
+    leaveTimer = setTimeout(hidePopover, 200);
   });
 };
 
