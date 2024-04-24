@@ -305,6 +305,9 @@
   "header_label_participant": {
     "message": "参与人数"
   },
+  "header_label_contributor": {
+    "message": "贡献人数"
+  },
   "fork_popup_title": {
     "message": "Fork 事件"
   },
