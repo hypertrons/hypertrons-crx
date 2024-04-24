@@ -305,6 +305,9 @@
   "header_label_participant": {
     "message": "Participants"
   },
+  "header_label_contributor": {
+    "message": "Contributors"
+  },
   "fork_popup_title": {
     "message": "Fork Events"
   },
