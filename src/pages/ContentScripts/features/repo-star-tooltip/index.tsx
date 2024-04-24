@@ -1,5 +1,6 @@
 import features from '../../../../feature-manager';
 import View from './view';
+import { NativePopover } from '../../components/NativePopover';
 import { checkLogined } from '../../../../helpers/get-developer-info';
 import elementReady from 'element-ready';
 import {
@@ -11,7 +12,7 @@ import { getStars } from '../../../../api/repo';
 import { RepoMeta, metaStore } from '../../../../api/common';
 
 import React from 'react';
-import { render, Container, unmountComponentAtNode } from 'react-dom';
+import { render } from 'react-dom';
 import $ from 'jquery';
 
 const featureId = features.getFeatureID(import.meta.url);
@@ -24,10 +25,6 @@ const getData = async () => {
   meta = (await metaStore.get(repoName)) as RepoMeta;
 };
 
-const renderTo = (container: Container) => {
-  render(<View stars={stars} meta={meta} />, container);
-};
-
 const init = async (): Promise<void> => {
   repoName = getRepoName();
   await getData();
@@ -37,69 +34,15 @@ const init = async (): Promise<void> => {
     : 'a[data-hydro-click*="star button"]';
   await elementReady(starButtonSelector);
   const $starButton = $(starButtonSelector);
-  // get the position of the star button
-  const offset = $starButton.offset();
-  if (!offset) {
-    return;
-  }
-  const { top, left } = offset;
-  const width = $starButton.outerWidth();
-  const height = $starButton.outerHeight();
-  if (!height || !width) {
-    return;
-  }
-
-  await elementReady('div.Popover');
-  await elementReady('div.Popover-message');
-  const $popoverContainer = $('div.Popover');
-  const $popoverContent = $('div.Popover-message');
-  let popoverTimer: NodeJS.Timeout | null = null;
-  let leaveTimer: NodeJS.Timeout | null = null;
-
-  const showPopover = () => {
-    popoverTimer = setTimeout(() => {
-      $popoverContent.css('width', '270px');
-      const contentWidth = $popoverContent.outerWidth();
-      if (!contentWidth) {
-        return;
-      }
-      $popoverContainer.css('top', `${top + height + 10}px`);
-      $popoverContainer.css('left', `${left - (contentWidth - width) / 2}px`);
-      $popoverContent.attr(
-        'class',
-        'Popover-message Box color-shadow-large Popover-message--top-middle'
-      );
-      renderTo($popoverContent[0]);
-      $popoverContainer.css('display', 'block');
-    }, 1000);
-  };
-
-  const hidePopover = () => {
-    popoverTimer && clearTimeout(popoverTimer);
-    $popoverContent.addClass('Popover-message--large');
-    if ($popoverContent.children().length > 0) {
-      unmountComponentAtNode($popoverContent[0]);
-    }
-    $popoverContainer.css('display', 'none');
-  };
-
-  $starButton[0].addEventListener('mouseenter', () => {
-    popoverTimer = null;
-    leaveTimer && clearTimeout(leaveTimer);
-    showPopover();
-  });
-
-  $starButton[0].addEventListener('mouseleave', () => {
-    leaveTimer = setTimeout(hidePopover, 200);
-  });
-
-  $popoverContainer[0].addEventListener('mouseenter', () => {
-    leaveTimer && clearTimeout(leaveTimer);
-  });
-
-  $popoverContainer[0].addEventListener('mouseleave', () => {
-    leaveTimer = setTimeout(hidePopover, 200);
-  });
+  const placeholderElement = $('<div class="NativePopover" />').appendTo(
+    'body'
+  )[0];
+  render(
+    <NativePopover anchor={$starButton} width={270} arrowPosition="top-middle">
+      <View stars={stars} meta={meta} />
+    </NativePopover>,
+    placeholderElement
+  );
 };
 
 const restore = async () => {};
