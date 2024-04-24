@@ -49,34 +49,53 @@ const init = async (): Promise<void> => {
     return;
   }
 
-  $starButton[0].addEventListener('mouseenter', () => {
-    const popoverContainerSelector = 'div.Popover';
-    const popoverContentSelector = 'div.Popover-message';
-    const $popoverContent = $(popoverContentSelector);
-    const contentWidth = $popoverContent.outerWidth();
-    if (!contentWidth) {
-      return;
-    }
-    const $popoverContainer = $(popoverContainerSelector);
-    $popoverContainer.css('display', 'block');
-    $popoverContainer.css('top', `${top + height + 10}px`);
-    $popoverContent.removeClass('Popover-message--bottom-left');
-    $popoverContent.removeClass('Popover-message--large');
-    $popoverContent.css('width', '270px');
-    $popoverContainer.css('left', `${left - (contentWidth - width) / 2}px`);
-    $popoverContent.addClass('Popover-message--top-middle');
-    renderTo($popoverContent[0]);
-  });
-  $starButton[0].addEventListener('mouseleave', () => {
-    const popoverContainerSelector = 'div.Popover';
-    const popoverContentSelector = 'div.Popover-message';
-    const $popoverContent = $(popoverContentSelector);
-    const $popoverContainer = $(popoverContainerSelector);
+  const $popoverContainer = $('div.Popover');
+  const $popoverContent = $('div.Popover-message');
+  let popoverTimer: NodeJS.Timeout | null = null;
+  let leaveTimer: NodeJS.Timeout | null = null;
+
+  const showPopover = () => {
+    popoverTimer = setTimeout(() => {
+      $popoverContent.css('width', '270px');
+      const contentWidth = $popoverContent.outerWidth();
+      if (!contentWidth) {
+        return;
+      }
+      $popoverContainer.css('top', `${top + height + 10}px`);
+      $popoverContent.removeClass('Popover-message--bottom-left');
+      $popoverContent.removeClass('Popover-message--large');
+      $popoverContainer.css('left', `${left - (contentWidth - width) / 2}px`);
+      $popoverContent.addClass('Popover-message--top-middle');
+      renderTo($popoverContent[0]);
+      $popoverContainer.css('display', 'block');
+    }, 1000);
+  };
+
+  const hidePopover = () => {
+    popoverTimer && clearTimeout(popoverTimer);
     $popoverContent.addClass('Popover-message--large');
     $popoverContainer.css('display', 'none');
     if ($popoverContent.children().length > 0) {
       unmountComponentAtNode($popoverContent[0]);
     }
+  };
+
+  $starButton[0].addEventListener('mouseenter', () => {
+    popoverTimer = null;
+    leaveTimer && clearTimeout(leaveTimer);
+    showPopover();
+  });
+
+  $starButton[0].addEventListener('mouseleave', () => {
+    leaveTimer = setTimeout(hidePopover, 500);
+  });
+
+  $popoverContainer[0].addEventListener('mouseenter', () => {
+    leaveTimer && clearTimeout(leaveTimer);
+  });
+
+  $popoverContainer[0].addEventListener('mouseleave', () => {
+    leaveTimer = setTimeout(hidePopover, 500);
   });
 };
 
