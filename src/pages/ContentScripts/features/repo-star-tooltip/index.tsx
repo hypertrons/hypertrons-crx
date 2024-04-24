@@ -49,6 +49,8 @@ const init = async (): Promise<void> => {
     return;
   }
 
+  await elementReady('div.Popover');
+  await elementReady('div.Popover-message');
   const $popoverContainer = $('div.Popover');
   const $popoverContent = $('div.Popover-message');
   let popoverTimer: NodeJS.Timeout | null = null;
