@@ -4,18 +4,19 @@ import getGithubTheme from '../../../../helpers/get-github-theme';
 import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import { isNull } from '../../../../helpers/is-null';
 import { numberWithCommas } from '../../../../helpers/formatter';
+import { NativePopover } from '../../components/NativePopover';
 import optionsStorage, {
   HypercrxOptions,
   defaults,
 } from '../../../../options-storage';
 import { rocketLight, rocketDark } from './base64';
-import ReactTooltip from 'react-tooltip';
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
 import ActivityChart from './ActivityChart';
 import OpenRankChart from './OpenRankChart';
 import ParticipantChart from './ParticipantChart';
 import ContributorChart from './ContributorChart';
 import { RepoMeta } from '../../../../api/common';
+import $ from 'jquery';
 
 const githubTheme = getGithubTheme();
 
@@ -35,10 +36,6 @@ const View = ({
   meta,
 }: Props): JSX.Element | null => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
-
-  useEffect(() => {
-    ReactTooltip.rebuild();
-  }, []);
 
   useEffect(() => {
     (async function () {
@@ -147,10 +144,10 @@ const View = ({
         {numberWithCommas(contributorData[contributorData.length - 1][1])}/
         {numberWithCommas(participantData[participantData.length - 1][1])}
       </span>
-      <ReactTooltip
-        id="activity-tooltip"
-        className={githubTheme === 'dark' ? 'custom-react-tooltip' : ''}
-        clickable={true}
+      <NativePopover
+        anchor={$('#activity-header-label')}
+        width={280}
+        arrowPosition="top-middle"
       >
         <div className="chart-title">
           {getMessageByLocale('header_label_activity', options.locale)}
@@ -161,8 +158,12 @@ const View = ({
           height={130}
           data={activityData}
         />
-      </ReactTooltip>
-      <ReactTooltip id="openrank-tooltip" clickable={true}>
+      </NativePopover>
+      <NativePopover
+        anchor={$('#OpenRank-header-label')}
+        width={280}
+        arrowPosition="top-middle"
+      >
         <div className="chart-title">
           {getMessageByLocale('header_label_OpenRank', options.locale)}
         </div>
@@ -172,8 +173,12 @@ const View = ({
           height={130}
           data={openrankData}
         />
-      </ReactTooltip>
-      <ReactTooltip id="participant-tooltip" clickable={true}>
+      </NativePopover>
+      <NativePopover
+        anchor={$('#participant-header-label')}
+        width={280}
+        arrowPosition="top-middle"
+      >
         <div className="chart-title">
           {getMessageByLocale('header_label_contributor', options.locale)}
         </div>
@@ -192,7 +197,7 @@ const View = ({
           height={130}
           data={participantData}
         />
-      </ReactTooltip>
+      </NativePopover>
     </div>
   );
 };
