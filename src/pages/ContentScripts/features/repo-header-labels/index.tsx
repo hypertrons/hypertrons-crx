@@ -1,6 +1,5 @@
 import features from '../../../../feature-manager';
 import View from './view';
-import { NativePopover } from '../../components/NativePopover';
 import elementReady from 'element-ready';
 import {
   getRepoName,

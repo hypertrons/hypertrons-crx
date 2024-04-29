@@ -1,5 +1,3 @@
-import React, { useState, useEffect } from 'react';
-
 import getGithubTheme from '../../../../helpers/get-github-theme';
 import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import { isNull } from '../../../../helpers/is-null';
@@ -16,6 +14,9 @@ import OpenRankChart from './OpenRankChart';
 import ParticipantChart from './ParticipantChart';
 import ContributorChart from './ContributorChart';
 import { RepoMeta } from '../../../../api/common';
+
+import React, { useState, useEffect } from 'react';
+import { render } from 'react-dom';
 import $ from 'jquery';
 
 const githubTheme = getGithubTheme();
@@ -41,6 +42,71 @@ const View = ({
     (async function () {
       setOptions(await optionsStorage.getAll());
     })();
+  }, []);
+
+  useEffect(() => {
+    const placeholderElement = $('<div class="NativePopover" />').appendTo(
+      'body'
+    )[0];
+    render(
+      <>
+        <NativePopover
+          anchor={$('#activity-header-label')}
+          width={280}
+          arrowPosition="top-middle"
+        >
+          <div className="chart-title">
+            {getMessageByLocale('header_label_activity', options.locale)}
+          </div>
+          <ActivityChart
+            theme={githubTheme as 'light' | 'dark'}
+            width={270}
+            height={130}
+            data={activityData}
+          />
+        </NativePopover>
+        <NativePopover
+          anchor={$('#OpenRank-header-label')}
+          width={280}
+          arrowPosition="top-middle"
+        >
+          <div className="chart-title">
+            {getMessageByLocale('header_label_OpenRank', options.locale)}
+          </div>
+          <OpenRankChart
+            theme={githubTheme as 'light' | 'dark'}
+            width={270}
+            height={130}
+            data={openrankData}
+          />
+        </NativePopover>
+        <NativePopover
+          anchor={$('#participant-header-label')}
+          width={280}
+          arrowPosition="top-middle"
+        >
+          <div className="chart-title">
+            {getMessageByLocale('header_label_contributor', options.locale)}
+          </div>
+          <ContributorChart
+            theme={githubTheme as 'light' | 'dark'}
+            width={270}
+            height={130}
+            data={contributorData}
+          />
+          <div className="chart-title">
+            {getMessageByLocale('header_label_participant', options.locale)}
+          </div>
+          <ParticipantChart
+            theme={githubTheme as 'light' | 'dark'}
+            width={270}
+            height={130}
+            data={participantData}
+          />
+        </NativePopover>
+      </>,
+      placeholderElement
+    );
   }, []);
 
   if (
@@ -144,60 +210,6 @@ const View = ({
         {numberWithCommas(contributorData[contributorData.length - 1][1])}/
         {numberWithCommas(participantData[participantData.length - 1][1])}
       </span>
-      <NativePopover
-        anchor={$('#activity-header-label')}
-        width={280}
-        arrowPosition="top-middle"
-      >
-        <div className="chart-title">
-          {getMessageByLocale('header_label_activity', options.locale)}
-        </div>
-        <ActivityChart
-          theme={githubTheme as 'light' | 'dark'}
-          width={270}
-          height={130}
-          data={activityData}
-        />
-      </NativePopover>
-      <NativePopover
-        anchor={$('#OpenRank-header-label')}
-        width={280}
-        arrowPosition="top-middle"
-      >
-        <div className="chart-title">
-          {getMessageByLocale('header_label_OpenRank', options.locale)}
-        </div>
-        <OpenRankChart
-          theme={githubTheme as 'light' | 'dark'}
-          width={270}
-          height={130}
-          data={openrankData}
-        />
-      </NativePopover>
-      <NativePopover
-        anchor={$('#participant-header-label')}
-        width={280}
-        arrowPosition="top-middle"
-      >
-        <div className="chart-title">
-          {getMessageByLocale('header_label_contributor', options.locale)}
-        </div>
-        <ContributorChart
-          theme={githubTheme as 'light' | 'dark'}
-          width={270}
-          height={130}
-          data={contributorData}
-        />
-        <div className="chart-title">
-          {getMessageByLocale('header_label_participant', options.locale)}
-        </div>
-        <ParticipantChart
-          theme={githubTheme as 'light' | 'dark'}
-          width={270}
-          height={130}
-          data={participantData}
-        />
-      </NativePopover>
     </div>
   );
 };
