@@ -8,7 +8,6 @@ import optionsStorage, {
   defaults,
 } from '../../../../options-storage';
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
-import ReactTooltip from 'react-tooltip';
 import IssueChart from './IssueChart';
 import { RepoMeta } from '../../../../api/common';
 
@@ -69,7 +68,7 @@ const View = ({
   };
 
   return (
-    <ReactTooltip id="issue-tooltip" clickable={true}>
+    <>
       <div className="chart-title">
         {getMessageByLocale('issue_popup_title', options.locale)}
       </div>
@@ -80,7 +79,7 @@ const View = ({
         data={generateData(issueDetail, meta.updatedAt)}
         onClick={onClick}
       />
-    </ReactTooltip>
+    </>
   );
 };
 

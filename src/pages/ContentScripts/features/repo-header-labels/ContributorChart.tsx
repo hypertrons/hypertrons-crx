@@ -19,14 +19,14 @@ const DARK_THEME = {
   LINE_COLOR: '#82BBFF',
 };
 
-interface ParticipantChartProps {
+interface ContributorChartProps {
   theme: 'light' | 'dark';
   width: number;
   height: number;
   data: [string, number][];
 }
 
-const ParticipantChart = (props: ParticipantChartProps): JSX.Element => {
+const ContributorChart = (props: ContributorChartProps): JSX.Element => {
   const { theme, width, height, data } = props;
   const startTime = Number(data[0][0].split('-')[0]);
   const endTime = Number(data[data.length - 1][0].split('-')[0]);
@@ -34,7 +34,6 @@ const ParticipantChart = (props: ParticipantChartProps): JSX.Element => {
   const minInterval =
     timeLength > 2 ? 365 * 24 * 3600 * 1000 : 30 * 3600 * 24 * 1000;
   const divEL = useRef(null);
-
   const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;
 
   const option: echarts.EChartsOption = {
@@ -47,9 +46,9 @@ const ParticipantChart = (props: ParticipantChartProps): JSX.Element => {
       formatter: tooltipFormatter,
     },
     grid: {
-      top: '5%',
+      top: '10%',
       bottom: '5%',
-      left: '5%',
+      left: '8%',
       right: '5%',
       containLabel: true,
     },
@@ -101,7 +100,7 @@ const ParticipantChart = (props: ParticipantChartProps): JSX.Element => {
         type: 'bar',
         data: data,
         itemStyle: {
-          color: TH.BAR_COLOR,
+          color: '#ff8061',
         },
         emphasis: {
           focus: 'series',
@@ -112,7 +111,7 @@ const ParticipantChart = (props: ParticipantChartProps): JSX.Element => {
         type: 'line',
         symbol: 'none',
         lineStyle: {
-          color: TH.LINE_COLOR,
+          color: '#ff8061',
         },
         data: data,
         emphasis: {
@@ -175,4 +174,4 @@ const tooltipFormatter = (params: any) => {
   return res;
 };
 
-export default ParticipantChart;
+export default ContributorChart;

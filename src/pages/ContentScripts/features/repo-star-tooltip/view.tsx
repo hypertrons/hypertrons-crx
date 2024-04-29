@@ -7,7 +7,6 @@ import optionsStorage, {
   defaults,
 } from '../../../../options-storage';
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
-import ReactTooltip from 'react-tooltip';
 import StarChart from './StarChart';
 import { RepoMeta } from '../../../../api/common';
 
@@ -30,7 +29,7 @@ const View = ({ stars, meta }: Props): JSX.Element | null => {
   if (!stars) return null;
 
   return (
-    <ReactTooltip id="star-tooltip" clickable={true}>
+    <>
       <div className="chart-title">
         {getMessageByLocale('star_popup_title', options.locale)}
       </div>
@@ -40,7 +39,7 @@ const View = ({ stars, meta }: Props): JSX.Element | null => {
         height={130}
         data={generateDataByMonth(stars, meta.updatedAt)}
       />
-    </ReactTooltip>
+    </>
   );
 };
 

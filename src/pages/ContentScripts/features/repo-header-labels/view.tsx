@@ -1,20 +1,23 @@
-import React, { useState, useEffect } from 'react';
-
 import getGithubTheme from '../../../../helpers/get-github-theme';
 import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import { isNull } from '../../../../helpers/is-null';
 import { numberWithCommas } from '../../../../helpers/formatter';
+import { NativePopover } from '../../components/NativePopover';
 import optionsStorage, {
   HypercrxOptions,
   defaults,
 } from '../../../../options-storage';
 import { rocketLight, rocketDark } from './base64';
-import ReactTooltip from 'react-tooltip';
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
 import ActivityChart from './ActivityChart';
 import OpenRankChart from './OpenRankChart';
 import ParticipantChart from './ParticipantChart';
+import ContributorChart from './ContributorChart';
 import { RepoMeta } from '../../../../api/common';
+
+import React, { useState, useEffect } from 'react';
+import { render } from 'react-dom';
+import $ from 'jquery';
 
 const githubTheme = getGithubTheme();
 
@@ -22,6 +25,7 @@ interface Props {
   activity: any;
   openrank: any;
   participant: any;
+  contributor: any;
   meta: RepoMeta;
 }
 
@@ -29,13 +33,10 @@ const View = ({
   activity,
   openrank,
   participant,
+  contributor,
   meta,
 }: Props): JSX.Element | null => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
-
-  useEffect(() => {
-    ReactTooltip.rebuild();
-  }, []);
 
   useEffect(() => {
     (async function () {
@@ -43,11 +44,83 @@ const View = ({
     })();
   }, []);
 
-  if (isNull(activity) || isNull(openrank) || isNull(participant)) return null;
+  useEffect(() => {
+    const placeholderElement = $('<div class="NativePopover" />').appendTo(
+      'body'
+    )[0];
+    render(
+      <>
+        <NativePopover
+          anchor={$('#activity-header-label')}
+          width={280}
+          arrowPosition="top-middle"
+        >
+          <div className="chart-title">
+            {getMessageByLocale('header_label_activity', options.locale)}
+          </div>
+          <ActivityChart
+            theme={githubTheme as 'light' | 'dark'}
+            width={270}
+            height={130}
+            data={activityData}
+          />
+        </NativePopover>
+        <NativePopover
+          anchor={$('#OpenRank-header-label')}
+          width={280}
+          arrowPosition="top-middle"
+        >
+          <div className="chart-title">
+            {getMessageByLocale('header_label_OpenRank', options.locale)}
+          </div>
+          <OpenRankChart
+            theme={githubTheme as 'light' | 'dark'}
+            width={270}
+            height={130}
+            data={openrankData}
+          />
+        </NativePopover>
+        <NativePopover
+          anchor={$('#participant-header-label')}
+          width={280}
+          arrowPosition="top-middle"
+        >
+          <div className="chart-title">
+            {getMessageByLocale('header_label_contributor', options.locale)}
+          </div>
+          <ContributorChart
+            theme={githubTheme as 'light' | 'dark'}
+            width={270}
+            height={130}
+            data={contributorData}
+          />
+          <div className="chart-title">
+            {getMessageByLocale('header_label_participant', options.locale)}
+          </div>
+          <ParticipantChart
+            theme={githubTheme as 'light' | 'dark'}
+            width={270}
+            height={130}
+            data={participantData}
+          />
+        </NativePopover>
+      </>,
+      placeholderElement
+    );
+  }, []);
+
+  if (
+    isNull(activity) ||
+    isNull(openrank) ||
+    isNull(participant) ||
+    isNull(contributor)
+  )
+    return null;
 
   const activityData = generateDataByMonth(activity, meta.updatedAt);
   const openrankData = generateDataByMonth(openrank, meta.updatedAt);
   const participantData = generateDataByMonth(participant, meta.updatedAt);
+  const contributorData = generateDataByMonth(contributor, meta.updatedAt);
 
   return (
     <div className="d-flex">
@@ -134,45 +207,9 @@ const View = ({
             d="M448 170.666667a192 192 0 0 1 98.56 356.821333A320.085333 320.085333 0 0 1 768 832a42.666667 42.666667 0 0 1-85.333333 0 234.666667 234.666667 0 0 0-469.333334 0 42.666667 42.666667 0 0 1-85.333333 0 320.128 320.128 0 0 1 221.44-304.554667A192 192 0 0 1 448 170.666667z m256 42.666666a149.333333 149.333333 0 0 1 107.434667 253.056A212.992 212.992 0 0 1 917.333333 650.666667a42.666667 42.666667 0 0 1-85.333333 0 128 128 0 0 0-128-128 42.666667 42.666667 0 0 1-42.325333-48.042667 42.666667 42.666667 0 0 1 37.376-47.701333L704 426.666667a64 64 0 0 0 6.144-127.701334L704 298.666667a42.666667 42.666667 0 0 1 0-85.333334z m-256 42.666667a106.666667 106.666667 0 1 0 0 213.333333 106.666667 106.666667 0 0 0 0-213.333333z"
           />
         </svg>
+        {numberWithCommas(contributorData[contributorData.length - 1][1])}/
         {numberWithCommas(participantData[participantData.length - 1][1])}
       </span>
-      <ReactTooltip
-        id="activity-tooltip"
-        className={githubTheme === 'dark' ? 'custom-react-tooltip' : ''}
-        clickable={true}
-      >
-        <div className="chart-title">
-          {getMessageByLocale('header_label_activity', options.locale)}
-        </div>
-        <ActivityChart
-          theme={githubTheme as 'light' | 'dark'}
-          width={270}
-          height={130}
-          data={activityData}
-        />
-      </ReactTooltip>
-      <ReactTooltip id="openrank-tooltip" clickable={true}>
-        <div className="chart-title">
-          {getMessageByLocale('header_label_OpenRank', options.locale)}
-        </div>
-        <OpenRankChart
-          theme={githubTheme as 'light' | 'dark'}
-          width={270}
-          height={130}
-          data={openrankData}
-        />
-      </ReactTooltip>
-      <ReactTooltip id="participant-tooltip" clickable={true}>
-        <div className="chart-title">
-          {getMessageByLocale('header_label_participant', options.locale)}
-        </div>
-        <ParticipantChart
-          theme={githubTheme as 'light' | 'dark'}
-          width={270}
-          height={130}
-          data={participantData}
-        />
-      </ReactTooltip>
     </div>
   );
 };

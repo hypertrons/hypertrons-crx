@@ -8,7 +8,6 @@ import optionsStorage, {
   defaults,
 } from '../../../../options-storage';
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
-import ReactTooltip from 'react-tooltip';
 import PRChart from './PRChart';
 import MergedLinesChart from './MergedLinesChart';
 import { RepoMeta } from '../../../../api/common';
@@ -88,7 +87,7 @@ const View = ({ currentRepo, PRDetail, meta }: Props): JSX.Element | null => {
   };
 
   return (
-    <ReactTooltip id="pr-tooltip" clickable={true}>
+    <>
       <div className="chart-title">
         {getMessageByLocale('pr_popup_title', options.locale)}
       </div>
@@ -108,7 +107,7 @@ const View = ({ currentRepo, PRDetail, meta }: Props): JSX.Element | null => {
         height={200}
         data={generateMergedLinesChartData(PRDetail, meta.updatedAt)}
       />
-    </ReactTooltip>
+    </>
   );
 };
 

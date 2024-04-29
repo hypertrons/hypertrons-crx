@@ -1,29 +1,36 @@
-import React from 'react';
-import { render, Container } from 'react-dom';
-import elementReady from 'element-ready';
-import $ from 'jquery';
-
 import features from '../../../../feature-manager';
+import View from './view';
+import elementReady from 'element-ready';
 import {
   getRepoName,
   hasRepoContainerHeader,
   isPublicRepoWithMeta,
 } from '../../../../helpers/get-repo-info';
-import { getActivity, getOpenrank, getParticipant } from '../../../../api/repo';
+import {
+  getActivity,
+  getOpenrank,
+  getParticipant,
+  getContributor,
+} from '../../../../api/repo';
 import { RepoMeta, metaStore } from '../../../../api/common';
-import View from './view';
+
+import React from 'react';
+import { render, Container } from 'react-dom';
+import $ from 'jquery';
 
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
 let activity: any;
 let openrank: any;
 let participant: any;
+let contributor: any;
 let meta: RepoMeta;
 
 const getData = async () => {
   activity = await getActivity(repoName);
   openrank = await getOpenrank(repoName);
   participant = await getParticipant(repoName);
+  contributor = await getContributor(repoName);
   meta = (await metaStore.get(repoName)) as RepoMeta;
 };
 
@@ -33,6 +40,7 @@ const renderTo = (container: Container) => {
       activity={activity}
       openrank={openrank}
       participant={participant}
+      contributor={contributor}
       meta={meta}
     />,
     container
