@@ -1,21 +1,20 @@
-import React from 'react';
-import { render, Container } from 'react-dom';
-import elementReady from 'element-ready';
-import $ from 'jquery';
-
 import features from '../../../../feature-manager';
-import getGithubTheme from '../../../../helpers/get-github-theme';
+import View from './view';
+import { NativePopover } from '../../components/NativePopover';
+import { checkLogined } from '../../../../helpers/get-developer-info';
+import elementReady from 'element-ready';
 import {
   getRepoName,
   hasRepoContainerHeader,
   isPublicRepoWithMeta,
 } from '../../../../helpers/get-repo-info';
 import { getStars } from '../../../../api/repo';
-import View from './view';
 import { RepoMeta, metaStore } from '../../../../api/common';
-import { checkLogined } from '../../../../helpers/get-developer-info';
 
-const githubTheme = getGithubTheme();
+import React from 'react';
+import { render } from 'react-dom';
+import $ from 'jquery';
+
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
 let stars: any;
@@ -26,51 +25,27 @@ const getData = async () => {
   meta = (await metaStore.get(repoName)) as RepoMeta;
 };
 
-const renderTo = (container: Container) => {
-  render(<View stars={stars} meta={meta} />, container);
-};
-
 const init = async (): Promise<void> => {
   repoName = getRepoName();
   await getData();
-
   const isLogined = checkLogined();
-  const selector = isLogined
+  const starButtonSelector = isLogined
     ? 'button[data-ga-click*="star button"]'
     : 'a[data-hydro-click*="star button"]';
-  await elementReady(selector);
-  const attributes = {
-    'data-tip': '',
-    'data-for': 'star-tooltip',
-    'data-class': `floating-window ${githubTheme}`,
-    'data-place': 'left',
-    'data-effect': 'solid',
-    'data-delay-hide': 500,
-    'data-delay-show': 1000,
-    style: { color: githubTheme === 'light' ? '#24292f' : '#c9d1d9' },
-    'data-text-color': githubTheme === 'light' ? '#24292F' : '#C9D1D9',
-    'data-background-color': githubTheme === 'light' ? 'white' : '#161B22',
-  };
-  $(selector).attr(attributes);
-
-  const container = document.createElement('div');
-  container.id = featureId;
-  renderTo(container);
-  (await elementReady('#repository-container-header'))?.append(container);
+  await elementReady(starButtonSelector);
+  const $starButton = $(starButtonSelector);
+  const placeholderElement = $('<div class="NativePopover" />').appendTo(
+    'body'
+  )[0];
+  render(
+    <NativePopover anchor={$starButton} width={280} arrowPosition="top-middle">
+      <View stars={stars} meta={meta} />
+    </NativePopover>,
+    placeholderElement
+  );
 };
 
-const restore = async () => {
-  // Clicking another repo link in one repo will trigger a turbo:visit,
-  // so in a restoration visit we should be careful of the current repo.
-  if (repoName !== getRepoName()) {
-    repoName = getRepoName();
-    await getData();
-  }
-  // Ideally, we should do nothing if the container already exists. But after a tubor
-  // restoration visit, tooltip cannot be triggered though it exists in DOM tree. One
-  // way to solve this is to rerender the view to the container. At least this way works.
-  renderTo($(`#${featureId}`)[0]);
-};
+const restore = async () => {};
 
 features.add(featureId, {
   asLongAs: [isPublicRepoWithMeta, hasRepoContainerHeader],

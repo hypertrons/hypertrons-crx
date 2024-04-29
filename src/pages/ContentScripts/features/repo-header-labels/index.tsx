@@ -1,9 +1,6 @@
-import React from 'react';
-import { render, Container } from 'react-dom';
-import elementReady from 'element-ready';
-import $ from 'jquery';
-
 import features from '../../../../feature-manager';
+import View from './view';
+import elementReady from 'element-ready';
 import {
   getRepoName,
   hasRepoContainerHeader,
@@ -16,7 +13,10 @@ import {
   getContributor,
 } from '../../../../api/repo';
 import { RepoMeta, metaStore } from '../../../../api/common';
-import View from './view';
+
+import React from 'react';
+import { render, Container } from 'react-dom';
+import $ from 'jquery';
 
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
