@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Checkbox, Radio, Space, Row, Col } from 'antd'; // 引入 Grid 组件
+import { Checkbox, Radio, Space, Row, Col } from 'antd';
 import { importedFeatures } from '../../../README.md';
 import optionsStorage, { HypercrxOptions } from '../../options-storage';
 import getMessageByLocale from '../../helpers/get-message-by-locale';
