@@ -282,10 +282,10 @@
     "message": "关于"
   },
   "options_about_toolTip": {
-    "message": "关于 Perceptor"
+    "message": "关于 HyperCRX"
   },
   "options_about_description": {
-    "message": "Hypercrx 是一款帮助用户洞察 GitHub 上的项目和开发者的浏览器插件。"
+    "message": "HyperCRX 是一款帮助用户洞察 GitHub 上的项目和开发者的浏览器插件。"
   },
   "hypertrons_tab_title": {
     "message": "Hypertrons 指令"

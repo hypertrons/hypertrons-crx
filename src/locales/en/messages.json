@@ -282,10 +282,10 @@
     "message": "About"
   },
   "options_about_toolTip": {
-    "message": "About Perceptor"
+    "message": "About HyperCRX"
   },
   "options_about_description": {
-    "message": "Hypercrx is a browser extension to get more insights into projects and developers on GitHub."
+    "message": "HyperCRX is a browser extension to get more insights into projects and developers on GitHub."
   },
   "hypertrons_tab_title": {
     "message": "Hypertrons Commands"
