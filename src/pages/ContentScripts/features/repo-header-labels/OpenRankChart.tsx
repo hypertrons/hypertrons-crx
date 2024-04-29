@@ -28,7 +28,11 @@ interface OpenRankChartProps {
 
 const OpenRankChart = (props: OpenRankChartProps): JSX.Element => {
   const { theme, width, height, data } = props;
-
+  const startTime = Number(data[0][0].split('-')[0]);
+  const endTime = Number(data[data.length - 1][0].split('-')[0]);
+  const timeLength = endTime - startTime;
+  const minInterval =
+    timeLength > 2 ? 365 * 24 * 3600 * 1000 : 30 * 3600 * 24 * 1000;
   const divEL = useRef(null);
 
   const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;
@@ -52,7 +56,7 @@ const OpenRankChart = (props: OpenRankChartProps): JSX.Element => {
     xAxis: {
       type: 'time',
       // 30 * 3600 * 24 * 1000  milliseconds
-      minInterval: 2592000000,
+      minInterval: minInterval,
       splitLine: {
         show: false,
       },
@@ -136,6 +140,23 @@ const OpenRankChart = (props: OpenRankChartProps): JSX.Element => {
     let chartDOM = divEL.current;
     const instance = echarts.getInstanceByDom(chartDOM as any);
     if (instance) {
+      if (timeLength > 2) {
+        instance.on('dataZoom', (params: any) => {
+          let option = instance.getOption() as {
+            xAxis: { minInterval?: any }[];
+          };
+          const startValue = params.batch[0].start;
+          const endValue = params.batch[0].end;
+          let minInterval: number;
+          if (startValue == 0 && endValue == 100) {
+            minInterval = 365 * 24 * 3600 * 1000;
+          } else {
+            minInterval = 30 * 24 * 3600 * 1000;
+          }
+          option.xAxis[0].minInterval = minInterval;
+          instance.setOption(option);
+        });
+      }
       instance.setOption(option);
     }
   }, []);

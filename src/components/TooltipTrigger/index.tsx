@@ -1,36 +1,26 @@
 import React from 'react';
-import { ITooltipHostProps, TooltipHost } from 'office-ui-fabric-react';
-
+import { Tooltip } from 'antd';
 import { iconTooltipTrigger } from './icon-svg-path';
 
-interface ITooltipTriggerProps extends ITooltipHostProps {
+interface ITooltipTriggerProps {
   size?: number;
   iconColor?: string;
   tooltipBackground?: string;
   tooltipFontColor?: string;
+  content?: string;
 }
 
-const TooltipTrigger = ({
+const TooltipTrigger: React.FC<ITooltipTriggerProps> = ({
   size = 20,
   iconColor = '#FFFFFF',
   tooltipBackground = '#FFFFFF',
   tooltipFontColor = '#242A2E',
-  ...restProps
-}: ITooltipTriggerProps): JSX.Element => (
-  <TooltipHost
-    tooltipProps={{
-      styles: {
-        content: { color: tooltipFontColor },
-      },
-      calloutProps: {
-        styles: {
-          beak: { backgroundColor: tooltipBackground },
-          beakCurtain: { backgroundColor: tooltipBackground },
-          calloutMain: { backgroundColor: tooltipBackground, cursor: 'help' },
-        },
-      },
-    }}
-    {...restProps}
+  content,
+}) => (
+  <Tooltip
+    placement="top"
+    title={<span style={{ color: tooltipFontColor }}>{content}</span>}
+    color={tooltipBackground}
   >
     <svg
       className="tooltip-icon"
@@ -41,7 +31,7 @@ const TooltipTrigger = ({
     >
       <path fill={iconColor} d={iconTooltipTrigger}></path>
     </svg>
-  </TooltipHost>
+  </Tooltip>
 );
 
 export default TooltipTrigger;
