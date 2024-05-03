@@ -11,21 +11,38 @@ import './index.scss'; // 需要引入自定义的样式来覆盖antd ColorPicke
 
 const featureId = features.getFeatureID(import.meta.url);
 
-const CALENDAR_LEVEL_COLORS = [
-  '#ebedf0',
-  '#ffedf9',
-  '#ffc3eb',
-  '#ff3ebf',
-  '#c70085',
-];
+// const CALENDAR_LEVEL_COLORS = [
+//   '#ebedf0',
+//   '#ffedf9',
+//   '#ffc3eb',
+//   '#ff3ebf',
+//   '#c70085',
+// ];
+//
+// const changeLevelColor = (level: number, color: string) => {
+//   const root = document.documentElement;
+//   if (level === 0) {
+//     root.style.setProperty(`--color-calendar-graph-day-bg`, color);
+//   } else {
+//     root.style.setProperty(`--color-calendar-graph-day-L${level}-bg`, color);
+//   }
+// };
 
-const changeLevelColor = (level: number, color: string) => {
+let colors = ['#ebedf0', '#ffedf9', '#ffc3eb', '#ff3ebf', '#c70085'];
+
+const changeLevelColor = async (level: number, color: string) => {
   const root = document.documentElement;
   if (level === 0) {
     root.style.setProperty(`--color-calendar-graph-day-bg`, color);
   } else {
     root.style.setProperty(`--color-calendar-graph-day-L${level}-bg`, color);
   }
+  // Save to storage
+  const newColors = [...colors];
+  newColors[level] = color;
+  await chrome.storage.local.set({
+    calendar_level_colors: newColors,
+  });
 };
 
 const replaceLegendToColorPicker = async (
@@ -47,10 +64,24 @@ const replaceLegendToColorPicker = async (
   $legend.replaceWith(container); // 使用jQuery的replaceWith方法将图例格子替换为ColorPicker
 };
 
+// const init = async (): Promise<void> => {
+//   for (let i = 0; i < CALENDAR_LEVEL_COLORS.length; i++) {
+//     changeLevelColor(i, CALENDAR_LEVEL_COLORS[i]); // 初始化时就按照给定的颜色改变日历格子的颜色
+//     await replaceLegendToColorPicker(i, CALENDAR_LEVEL_COLORS[i]);
+//   }
+// };
+
 const init = async (): Promise<void> => {
-  for (let i = 0; i < CALENDAR_LEVEL_COLORS.length; i++) {
-    changeLevelColor(i, CALENDAR_LEVEL_COLORS[i]); // 初始化时就按照给定的颜色改变日历格子的颜色
-    await replaceLegendToColorPicker(i, CALENDAR_LEVEL_COLORS[i]);
+  // Load colors from storage
+  colors =
+    (await chrome.storage.local.get('calendar_level_colors'))[
+      // (await localStorage.get('calendar_level_colors'))[
+      'calendar_level_colors'
+    ] || colors;
+
+  for (let i = 0; i < colors.length; i++) {
+    changeLevelColor(i, colors[i]);
+    replaceLegendToColorPicker(i, colors[i]);
   }
 };
 
