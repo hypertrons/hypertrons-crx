@@ -59,7 +59,6 @@ const ForkChart = (props: ForkChartProps): JSX.Element => {
       splitLine: {
         show: false,
       },
-
       minInterval: minInterval,
       axisLabel: {
         color: TH.FG_COLOR,
