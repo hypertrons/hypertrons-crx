@@ -45,7 +45,7 @@ const View = ({ forks, meta }: Props): JSX.Element | null => {
         <TooltipTrigger
           iconColor="000000"
           size={13}
-          content={getMessageByLocale('options_locale_toolTip', options.locale)}
+          content={getMessageByLocale('fork_icon', options.locale)}
         />
       </div>
 
