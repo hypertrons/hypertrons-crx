@@ -18,7 +18,7 @@ import { RepoMeta } from '../../../../api/common';
 import React, { useState, useEffect } from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
-
+import TooltipTrigger from '../../../../components/TooltipTrigger';
 const githubTheme = getGithubTheme();
 
 interface Props {
@@ -55,8 +55,22 @@ const View = ({
           width={280}
           arrowPosition="top-middle"
         >
-          <div className="chart-title">
-            {getMessageByLocale('header_label_activity', options.locale)}
+          <div
+            className="chart-title"
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <div style={{ marginRight: '5px' }}>
+              {getMessageByLocale('header_label_activity', options.locale)}
+            </div>
+            <TooltipTrigger
+              iconColor="000000"
+              size={13}
+              content={getMessageByLocale('activity_icon', options.locale)}
+            />
           </div>
           <ActivityChart
             theme={githubTheme as 'light' | 'dark'}
@@ -70,8 +84,22 @@ const View = ({
           width={280}
           arrowPosition="top-middle"
         >
-          <div className="chart-title">
-            {getMessageByLocale('header_label_OpenRank', options.locale)}
+          <div
+            className="chart-title"
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <div style={{ marginRight: '5px' }}>
+              {getMessageByLocale('header_label_OpenRank', options.locale)}
+            </div>
+            <TooltipTrigger
+              iconColor="000000"
+              size={13}
+              content={getMessageByLocale('openrank_icon', options.locale)}
+            />
           </div>
           <OpenRankChart
             theme={githubTheme as 'light' | 'dark'}
@@ -85,8 +113,25 @@ const View = ({
           width={280}
           arrowPosition="top-middle"
         >
-          <div className="chart-title">
-            {getMessageByLocale('header_label_contributor', options.locale)}
+          <div
+            className="chart-title"
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <div style={{ marginRight: '5px' }}>
+              {getMessageByLocale('header_label_contributor', options.locale)}
+            </div>
+            <TooltipTrigger
+              iconColor="000000"
+              size={13}
+              content={getMessageByLocale(
+                'header_label_contributor',
+                options.locale
+              )}
+            />
           </div>
           <ContributorChart
             theme={githubTheme as 'light' | 'dark'}
@@ -94,8 +139,25 @@ const View = ({
             height={130}
             data={contributorData}
           />
-          <div className="chart-title">
-            {getMessageByLocale('header_label_participant', options.locale)}
+          <div
+            className="chart-title"
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <div style={{ marginRight: '5px' }}>
+              {getMessageByLocale('header_label_participant', options.locale)}
+            </div>
+            <TooltipTrigger
+              iconColor="000000"
+              size={13}
+              content={getMessageByLocale(
+                'options_locale_toolTip',
+                options.locale
+              )}
+            />
           </div>
           <ParticipantChart
             theme={githubTheme as 'light' | 'dark'}
