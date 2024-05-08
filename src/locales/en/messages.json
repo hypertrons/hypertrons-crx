@@ -337,5 +337,29 @@
   },
   "OSS_GPT_notAvailable": {
     "message": "OSS-GPT currently is **NOT AVAILABLE** for %v. If you want docs support for the repository, please check [this issue](https://github.com/hypertrons/hypertrons-crx/issues/609) and make a request there :)\n\nSee [all available docs](https://oss.x-lab.info/hypercrx/docsgpt_active_docs.json)\n\nThis chat widget can also be enabled/disabled in the extension options page whenever you want."
+  },
+  "issue_icon": {
+    "message": "GitHub repository issue count over time.And you can zoom in/out on the axes using the mouse scroll wheel."
+  },
+  "pr_icon": {
+    "message": "GitHub repository pr count over time.And you can zoom in/out on the axes using the mouse scroll wheel."
+  },
+  "fork_icon": {
+    "message": "GitHub repository fork count over time.And you can zoom in/out on the axes using the mouse scroll wheel."
+  },
+  "star_icon": {
+    "message": "GitHub repository star count over time.And you can zoom in/out on the axes using the mouse scroll wheel."
+  },
+  "activity_icon": {
+    "message": "GitHub repository activity count over time.And you can zoom in/out on the axes using the mouse scroll wheel."
+  },
+  "openrank_icon": {
+    "message": "GitHub repository openrank count over time.And you can zoom in/out on the axes using the mouse scroll wheel."
+  },
+  "contributors_participants_icon": {
+    "message": "GitHub repository contributors and participants count over time.And you can zoom in/out on the axes using the mouse scroll wheel."
+  },
+  "merged_lines_icon": {
+    "message": "GitHub repository code lines change count over time.And you can zoom in/out on the axes using the mouse scroll wheel."
   }
 }
