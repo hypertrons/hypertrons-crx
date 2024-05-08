@@ -128,7 +128,7 @@ const View = ({
               iconColor="000000"
               size={13}
               content={getMessageByLocale(
-                'header_label_contributor',
+                'contributors_participants_icon',
                 options.locale
               )}
             />
@@ -154,7 +154,7 @@ const View = ({
               iconColor="000000"
               size={13}
               content={getMessageByLocale(
-                'options_locale_toolTip',
+                'contributors_participants_icon',
                 options.locale
               )}
             />
