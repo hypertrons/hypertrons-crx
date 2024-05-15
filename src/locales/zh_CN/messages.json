@@ -339,6 +339,6 @@
     "message": "OSS-GPT 暂未支持 %v。如果您想使此仓库得到文档问答支持，请前往[该 issue](https://github.com/hypertrons/hypertrons-crx/issues/609) 提交需求 :)\n\n查看[所有已支持文档](https://oss.x-lab.info/hypercrx/docsgpt_active_docs.json)\n\n您也可以随时在扩展选项页面中启用/禁用此聊天小部件。"
   },
   "OSS_GPT_errorMessage": {
-    "message": "很抱歉，由于成本原因，目前 OSS-GPT 功能处于停止使用的状态。请关注 [HyperCRX](https://github.com/hypertrons/hypertrons-crx) 获取最新消息。"
+    "message": "很抱歉，由于成本原因，目前 OSS-GPT 功能处于停用状态。请关注 [HyperCRX](https://github.com/hypertrons/hypertrons-crx) 获取最新消息。"
   }
 }
