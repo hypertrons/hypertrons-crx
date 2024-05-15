@@ -35,6 +35,11 @@ const displayNotAvailable = (repoName: string, locale: string) => {
   );
 };
 
+// Due to cost reasons, backend is not available now. This part can be removed when the backend is restored.
+const backendNotAvailable = (locale: string) => {
+  addResponseMessage(getMessageByLocale('OSS_GPT_errorMessage', locale));
+};
+
 const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
   const [history, setHistory] = useState<[string, string]>(['', '']);
@@ -132,8 +137,12 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
 
     if (currentDocsName) {
       const answer = await getAnswer(currentDocsName, newMessage, history);
-      addResponseMessage(answer);
-      setHistory([newMessage, answer]); // update history
+      if (answer == 'error') {
+        backendNotAvailable(options.locale);
+      } else {
+        addResponseMessage(answer);
+        setHistory([newMessage, answer]); // update history
+      }
     } else {
       displayNotAvailable(currentRepo, options.locale);
     }
