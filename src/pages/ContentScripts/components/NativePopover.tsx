@@ -76,6 +76,10 @@ export const NativePopover = ({
         leaveTimer = setTimeout(hidePopover, 200);
       });
 
+      anchor[0].addEventListener('click', () => {
+        hidePopover();
+      });
+
       $popoverContainer[0].addEventListener('mouseenter', () => {
         leaveTimer && clearTimeout(leaveTimer);
       });
