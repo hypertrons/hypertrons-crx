@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import $ from 'jquery';
+import moment from 'moment';
 import {
   Widget,
   addResponseMessage,
   deleteMessages,
   toggleMsgLoader,
   toggleInputDisabled,
+  renderCustomComponent,
 } from 'react-chat-widget';
 
 import { getAnswer } from './service';
@@ -23,21 +25,40 @@ interface Props {
   currentDocsName: string | null;
 }
 
+const ResponseTimeStamp: React.FC = () => {
+  return (
+    <div style={{ fontSize: '11px', marginLeft: '50px' }}>
+      {moment().format('LT')}
+    </div>
+  );
+};
+
+const UserTimeStamp: React.FC = () => {
+  return (
+    <div style={{ fontSize: '11px', textAlign: 'right', width: '100%' }}>
+      {moment().format('LT')}
+    </div>
+  );
+};
+
 const displayWelcome = (repoName: string, locale: string) => {
   addResponseMessage(
     getMessageByLocale('OSS_GPT_welcome', locale).replace('%v', repoName)
   );
+  renderCustomComponent(ResponseTimeStamp, {});
 };
 
 const displayNotAvailable = (repoName: string, locale: string) => {
   addResponseMessage(
     getMessageByLocale('OSS_GPT_notAvailable', locale).replace('%v', repoName)
   );
+  renderCustomComponent(ResponseTimeStamp, {});
 };
 
 // Due to cost reasons, backend is not available now. This part can be removed when the backend is restored.
 const backendNotAvailable = (locale: string) => {
   addResponseMessage(getMessageByLocale('OSS_GPT_errorMessage', locale));
+  renderCustomComponent(ResponseTimeStamp, {});
 };
 
 const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
@@ -132,6 +153,7 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
       ).replace('%v', currentRepo);
 
   const handleNewUserMessage = async (newMessage: string) => {
+    renderCustomComponent(UserTimeStamp, {});
     toggleMsgLoader();
     toggleInputDisabled();
 
@@ -141,6 +163,8 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
         backendNotAvailable(options.locale);
       } else {
         addResponseMessage(answer);
+        renderCustomComponent(ResponseTimeStamp, {});
+
         setHistory([newMessage, answer]); // update history
       }
     } else {
@@ -160,6 +184,7 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
         handleNewUserMessage={handleNewUserMessage}
         showBadge={false}
         profileAvatar={chrome.runtime.getURL('main.png')}
+        showTimeStamp={false}
       />
     </div>
   );
