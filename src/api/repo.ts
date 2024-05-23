@@ -5,7 +5,7 @@ const metricNameMap = new Map([
   ['activity', 'activity'],
   ['openrank', 'openrank'],
   ['participant', 'participants'],
-  ['contributor', 'new_contributors'],
+  ['contributor', 'contributors'],
   ['forks', 'technical_fork'],
   ['stars', 'stars'],
   ['issues_opened', 'issues_new'],
