@@ -6,9 +6,7 @@ export const defaults = Object.assign(
   {
     locale: 'en',
   },
-  Object.fromEntries(
-    importedFeatures.map((name) => [`hypercrx-${name}` as FeatureId, true])
-  )
+  Object.fromEntries(importedFeatures.map((name) => [`hypercrx-${name}` as FeatureId, true]))
 );
 
 class OptionsStorage {

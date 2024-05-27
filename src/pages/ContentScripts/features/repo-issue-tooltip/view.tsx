@@ -3,10 +3,7 @@ import React, { useState, useEffect } from 'react';
 import getGithubTheme from '../../../../helpers/get-github-theme';
 import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import { isNull, isAllNull } from '../../../../helpers/is-null';
-import optionsStorage, {
-  HypercrxOptions,
-  defaults,
-} from '../../../../options-storage';
+import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
 import IssueChart from './IssueChart';
 import { RepoMeta } from '../../../../api/common';
@@ -34,11 +31,7 @@ const generateData = (issueDetail: IssueDetail, updatedAt: number): any => {
   };
 };
 
-const View = ({
-  currentRepo,
-  issueDetail,
-  meta,
-}: Props): JSX.Element | null => {
+const View = ({ currentRepo, issueDetail, meta }: Props): JSX.Element | null => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
 
   useEffect(() => {
@@ -63,9 +56,7 @@ const View = ({
     if (month.length < 2) {
       month = '0' + month;
     }
-    window.open(
-      `/${currentRepo}/issues?q=is:issue ${type}:${year}-${month} sort:updated-asc`
-    );
+    window.open(`/${currentRepo}/issues?q=is:issue ${type}:${year}-${month} sort:updated-asc`);
   };
 
   return (
@@ -78,15 +69,9 @@ const View = ({
           alignItems: 'center',
         }}
       >
-        <div style={{ marginRight: '5px' }}>
-          {getMessageByLocale('issue_popup_title', options.locale)}
-        </div>
+        <div style={{ marginRight: '5px' }}>{getMessageByLocale('issue_popup_title', options.locale)}</div>
 
-        <TooltipTrigger
-          iconColor="grey"
-          size={13}
-          content={getMessageByLocale('issue_icon', options.locale)}
-        />
+        <TooltipTrigger iconColor="grey" size={13} content={getMessageByLocale('issue_icon', options.locale)} />
       </div>
 
       <IssueChart

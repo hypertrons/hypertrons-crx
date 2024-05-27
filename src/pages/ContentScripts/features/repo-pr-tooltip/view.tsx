@@ -3,10 +3,7 @@ import React, { useState, useEffect } from 'react';
 import getGithubTheme from '../../../../helpers/get-github-theme';
 import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import { isNull, isAllNull } from '../../../../helpers/is-null';
-import optionsStorage, {
-  HypercrxOptions,
-  defaults,
-} from '../../../../options-storage';
+import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
 import PRChart from './PRChart';
 import MergedLinesChart from './MergedLinesChart';
@@ -36,19 +33,10 @@ const generatePRChartData = (PRDetail: PRDetail, updatedAt: number): any => {
   };
 };
 
-const generateMergedLinesChartData = (
-  PRDetail: PRDetail,
-  updatedAt: number
-): any => {
+const generateMergedLinesChartData = (PRDetail: PRDetail, updatedAt: number): any => {
   return {
-    mergedCodeAddition: generateDataByMonth(
-      PRDetail.mergedCodeAddition,
-      updatedAt
-    ),
-    mergedCodeDeletion: generateDataByMonth(
-      PRDetail.mergedCodeDeletion,
-      updatedAt
-    ).map((item) => {
+    mergedCodeAddition: generateDataByMonth(PRDetail.mergedCodeAddition, updatedAt),
+    mergedCodeDeletion: generateDataByMonth(PRDetail.mergedCodeDeletion, updatedAt).map((item) => {
       const dataItem = item;
       dataItem[1] = -item[1];
       return dataItem;
@@ -81,9 +69,7 @@ const View = ({ currentRepo, PRDetail, meta }: Props): JSX.Element | null => {
     if (month.length < 2) {
       month = '0' + month;
     }
-    window.open(
-      `/${currentRepo}/pulls?q=is:pr ${type}:${year}-${month} sort:updated-asc`
-    );
+    window.open(`/${currentRepo}/pulls?q=is:pr ${type}:${year}-${month} sort:updated-asc`);
   };
 
   return (
@@ -96,14 +82,8 @@ const View = ({ currentRepo, PRDetail, meta }: Props): JSX.Element | null => {
           alignItems: 'center',
         }}
       >
-        <div style={{ marginRight: '5px' }}>
-          {getMessageByLocale('pr_popup_title', options.locale)}
-        </div>
-        <TooltipTrigger
-          iconColor="grey"
-          size={13}
-          content={getMessageByLocale('pr_icon', options.locale)}
-        />
+        <div style={{ marginRight: '5px' }}>{getMessageByLocale('pr_popup_title', options.locale)}</div>
+        <TooltipTrigger iconColor="grey" size={13} content={getMessageByLocale('pr_icon', options.locale)} />
       </div>
 
       <PRChart
@@ -122,14 +102,8 @@ const View = ({ currentRepo, PRDetail, meta }: Props): JSX.Element | null => {
           alignItems: 'center',
         }}
       >
-        <div style={{ marginRight: '5px' }}>
-          {getMessageByLocale('merged_lines_popup_title', options.locale)}
-        </div>
-        <TooltipTrigger
-          iconColor="grey"
-          size={13}
-          content={getMessageByLocale('merged_lines_icon', options.locale)}
-        />
+        <div style={{ marginRight: '5px' }}>{getMessageByLocale('merged_lines_popup_title', options.locale)}</div>
+        <TooltipTrigger iconColor="grey" size={13} content={getMessageByLocale('merged_lines_icon', options.locale)} />
       </div>
 
       <MergedLinesChart

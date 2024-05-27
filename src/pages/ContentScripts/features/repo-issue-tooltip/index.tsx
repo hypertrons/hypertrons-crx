@@ -2,15 +2,8 @@ import features from '../../../../feature-manager';
 import View, { IssueDetail } from './view';
 import { NativePopover } from '../../components/NativePopover';
 import elementReady from 'element-ready';
-import {
-  getRepoName,
-  isPublicRepoWithMeta,
-} from '../../../../helpers/get-repo-info';
-import {
-  getIssuesOpened,
-  getIssuesClosed,
-  getIssueComments,
-} from '../../../../api/repo';
+import { getRepoName, isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
+import { getIssuesOpened, getIssuesClosed, getIssueComments } from '../../../../api/repo';
 
 import { RepoMeta, metaStore } from '../../../../api/common';
 
@@ -40,9 +33,7 @@ const init = async (): Promise<void> => {
 
   await elementReady('#issues-tab');
   const $issueTab = $('#issues-tab');
-  const placeholderElement = $('<div class="NativePopover" />').appendTo(
-    'body'
-  )[0];
+  const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
   render(
     <NativePopover anchor={$issueTab} width={310} arrowPosition="top-middle">
       <View currentRepo={repoName} issueDetail={issueDetail} meta={meta} />

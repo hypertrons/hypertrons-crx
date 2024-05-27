@@ -82,10 +82,7 @@
       "status": "Data does not exist",
       "measure": {
         "text": "Possible causes:",
-        "tips": [
-          "Recently created, has not been computed",
-          "No actions in selected period, nothing to be computed"
-        ]
+        "tips": ["Recently created, has not been computed", "No actions in selected period, nothing to be computed"]
       }
     }
   },

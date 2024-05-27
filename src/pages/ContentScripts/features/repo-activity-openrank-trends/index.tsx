@@ -3,11 +3,7 @@ import { render, Container } from 'react-dom';
 import $ from 'jquery';
 
 import features from '../../../../feature-manager';
-import {
-  getRepoName,
-  isPublicRepoWithMeta,
-  isRepoRoot,
-} from '../../../../helpers/get-repo-info';
+import { getRepoName, isPublicRepoWithMeta, isRepoRoot } from '../../../../helpers/get-repo-info';
 import { getActivity, getOpenrank } from '../../../../api/repo';
 import { RepoMeta, metaStore } from '../../../../api/common';
 import View from './view';
@@ -25,15 +21,7 @@ const getData = async () => {
 };
 
 const renderTo = (container: Container) => {
-  render(
-    <View
-      repoName={repoName}
-      activity={activity}
-      openrank={openrank}
-      meta={meta}
-    />,
-    container
-  );
+  render(<View repoName={repoName} activity={activity} openrank={openrank} meta={meta} />, container);
 };
 
 const init = async (): Promise<void> => {

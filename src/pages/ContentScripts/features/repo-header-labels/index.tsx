@@ -1,17 +1,8 @@
 import features from '../../../../feature-manager';
 import View from './view';
 import elementReady from 'element-ready';
-import {
-  getRepoName,
-  hasRepoContainerHeader,
-  isPublicRepoWithMeta,
-} from '../../../../helpers/get-repo-info';
-import {
-  getActivity,
-  getOpenrank,
-  getParticipant,
-  getContributor,
-} from '../../../../api/repo';
+import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
+import { getActivity, getOpenrank, getParticipant, getContributor } from '../../../../api/repo';
 import { RepoMeta, metaStore } from '../../../../api/common';
 
 import React from 'react';
@@ -36,13 +27,7 @@ const getData = async () => {
 
 const renderTo = (container: Container) => {
   render(
-    <View
-      activity={activity}
-      openrank={openrank}
-      participant={participant}
-      contributor={contributor}
-      meta={meta}
-    />,
+    <View activity={activity} openrank={openrank} participant={participant} contributor={contributor} meta={meta} />,
     container
   );
 };

@@ -32,8 +32,7 @@ const ForkChart = (props: ForkChartProps): JSX.Element => {
   const startTime = Number(data[0][0].split('-')[0]);
   const endTime = Number(data[data.length - 1][0].split('-')[0]);
   const timeLength = endTime - startTime;
-  const minInterval =
-    timeLength > 2 ? 365 * 24 * 3600 * 1000 : 30 * 3600 * 24 * 1000;
+  const minInterval = timeLength > 2 ? 365 * 24 * 3600 * 1000 : 30 * 3600 * 24 * 1000;
   const divEL = useRef(null);
 
   const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;
