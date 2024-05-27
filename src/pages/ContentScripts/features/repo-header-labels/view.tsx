@@ -67,7 +67,7 @@ const View = ({
               {getMessageByLocale('header_label_activity', options.locale)}
             </div>
             <TooltipTrigger
-              iconColor="000000"
+              iconColor="grey"
               size={13}
               content={getMessageByLocale('activity_icon', options.locale)}
             />
@@ -96,7 +96,7 @@ const View = ({
               {getMessageByLocale('header_label_OpenRank', options.locale)}
             </div>
             <TooltipTrigger
-              iconColor="000000"
+              iconColor="grey"
               size={13}
               content={getMessageByLocale('openrank_icon', options.locale)}
             />
@@ -125,7 +125,7 @@ const View = ({
               {getMessageByLocale('header_label_contributor', options.locale)}
             </div>
             <TooltipTrigger
-              iconColor="000000"
+              iconColor="grey"
               size={13}
               content={getMessageByLocale(
                 'contributors_participants_icon',
@@ -151,7 +151,7 @@ const View = ({
               {getMessageByLocale('header_label_participant', options.locale)}
             </div>
             <TooltipTrigger
-              iconColor="000000"
+              iconColor="grey"
               size={13}
               content={getMessageByLocale(
                 'contributors_participants_icon',
