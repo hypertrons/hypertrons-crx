@@ -9,6 +9,7 @@ import optionsStorage, {
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
 import StarChart from './StarChart';
 import { RepoMeta } from '../../../../api/common';
+import TooltipTrigger from '../../../../components/TooltipTrigger';
 
 const githubTheme = getGithubTheme();
 
@@ -30,9 +31,25 @@ const View = ({ stars, meta }: Props): JSX.Element | null => {
 
   return (
     <>
-      <div className="chart-title">
-        {getMessageByLocale('star_popup_title', options.locale)}
+      <div
+        className="chart-title"
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <div style={{ marginRight: '5px' }}>
+          {getMessageByLocale('star_popup_title', options.locale)}
+        </div>
+
+        <TooltipTrigger
+          iconColor="grey"
+          size={13}
+          content={getMessageByLocale('star_icon', options.locale)}
+        />
       </div>
+
       <StarChart
         theme={githubTheme as 'light' | 'dark'}
         width={270}

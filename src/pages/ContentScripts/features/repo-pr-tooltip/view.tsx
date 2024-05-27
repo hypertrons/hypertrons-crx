@@ -11,7 +11,7 @@ import generateDataByMonth from '../../../../helpers/generate-data-by-month';
 import PRChart from './PRChart';
 import MergedLinesChart from './MergedLinesChart';
 import { RepoMeta } from '../../../../api/common';
-
+import TooltipTrigger from '../../../../components/TooltipTrigger';
 const githubTheme = getGithubTheme();
 
 export interface PRDetail {
@@ -88,9 +88,24 @@ const View = ({ currentRepo, PRDetail, meta }: Props): JSX.Element | null => {
 
   return (
     <>
-      <div className="chart-title">
-        {getMessageByLocale('pr_popup_title', options.locale)}
+      <div
+        className="chart-title"
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <div style={{ marginRight: '5px' }}>
+          {getMessageByLocale('pr_popup_title', options.locale)}
+        </div>
+        <TooltipTrigger
+          iconColor="grey"
+          size={13}
+          content={getMessageByLocale('pr_icon', options.locale)}
+        />
       </div>
+
       <PRChart
         theme={githubTheme as 'light' | 'dark'}
         width={330}
@@ -98,9 +113,25 @@ const View = ({ currentRepo, PRDetail, meta }: Props): JSX.Element | null => {
         data={generatePRChartData(PRDetail, meta.updatedAt)}
         onClick={onClick}
       />
-      <div className="chart-title">
-        {getMessageByLocale('merged_lines_popup_title', options.locale)}
+
+      <div
+        className="chart-title"
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <div style={{ marginRight: '5px' }}>
+          {getMessageByLocale('merged_lines_popup_title', options.locale)}
+        </div>
+        <TooltipTrigger
+          iconColor="grey"
+          size={13}
+          content={getMessageByLocale('merged_lines_icon', options.locale)}
+        />
       </div>
+
       <MergedLinesChart
         theme={githubTheme as 'light' | 'dark'}
         width={330}

@@ -10,6 +10,7 @@ import optionsStorage, {
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
 import IssueChart from './IssueChart';
 import { RepoMeta } from '../../../../api/common';
+import TooltipTrigger from '../../../../components/TooltipTrigger';
 
 const githubTheme = getGithubTheme();
 
@@ -69,9 +70,25 @@ const View = ({
 
   return (
     <>
-      <div className="chart-title">
-        {getMessageByLocale('issue_popup_title', options.locale)}
+      <div
+        className="chart-title"
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <div style={{ marginRight: '5px' }}>
+          {getMessageByLocale('issue_popup_title', options.locale)}
+        </div>
+
+        <TooltipTrigger
+          iconColor="grey"
+          size={13}
+          content={getMessageByLocale('issue_icon', options.locale)}
+        />
       </div>
+
       <IssueChart
         theme={githubTheme as 'light' | 'dark'}
         width={300}

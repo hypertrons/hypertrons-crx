@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
 
 import { formatNum, numberWithCommas } from '../../../../helpers/formatter';
+import { min } from 'lodash-es';
 
 const LIGHT_THEME = {
   FG_COLOR: '#24292F',
@@ -58,7 +59,6 @@ const ForkChart = (props: ForkChartProps): JSX.Element => {
       splitLine: {
         show: false,
       },
-
       minInterval: minInterval,
       axisLabel: {
         color: TH.FG_COLOR,
