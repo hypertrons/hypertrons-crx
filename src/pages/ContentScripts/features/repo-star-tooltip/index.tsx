@@ -33,7 +33,17 @@ const init = async (): Promise<void> => {
     ? 'button[data-ga-click*="star button"]'
     : 'a[data-hydro-click*="star button"]';
   await elementReady(starButtonSelector);
-  const $starButton = $(starButtonSelector);
+  // <div data-view-component="true" class="starred BtnGroup flex-1 ml-0">
+  // <div data-view-component="true" class="unstarred BtnGroup ml-0 flex-1">
+  // No matter the repo is starred or not, the two button are always there
+  // So we need to filter the visible one
+  const $starButton = $(starButtonSelector).filter(function () {
+    if ($(this).parent().parent().css('display') !== 'none') {
+      return true;
+    } else {
+      return false;
+    }
+  });
   const placeholderElement = $('<div class="NativePopover" />').appendTo(
     'body'
   )[0];

@@ -361,5 +361,8 @@
   },
   "merged_lines_icon": {
     "message": "GitHub仓库在当月的代码变化量"
+  },
+  "OSS_GPT_errorMessage": {
+    "message": "很抱歉，由于成本原因，目前 OSS-GPT 功能处于停用状态。请关注 [HyperCRX](https://github.com/hypertrons/hypertrons-crx) 获取最新消息。"
   }
 }

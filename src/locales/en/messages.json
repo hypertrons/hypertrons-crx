@@ -362,5 +362,8 @@
   },
   "merged_lines_icon": {
     "message": "GitHub repository code lines change count over time. And you can zoom in/out on the axes using the mouse scroll wheel."
+  },
+  "OSS_GPT_errorMessage": {
+    "message": "Sorry, due to cost reasons, the OSS-GPT function is currently not available. Please follow [HyperCRX](https://github.com/hypertrons/hypertrons-crx) for the latest news."
   }
 }
