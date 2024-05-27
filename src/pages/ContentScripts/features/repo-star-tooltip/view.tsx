@@ -44,7 +44,7 @@ const View = ({ stars, meta }: Props): JSX.Element | null => {
         </div>
 
         <TooltipTrigger
-          iconColor="000000"
+          iconColor="grey"
           size={13}
           content={getMessageByLocale('star_icon', options.locale)}
         />

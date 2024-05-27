@@ -83,7 +83,7 @@ const View = ({
         </div>
 
         <TooltipTrigger
-          iconColor="000000"
+          iconColor="grey"
           size={13}
           content={getMessageByLocale('issue_icon', options.locale)}
         />

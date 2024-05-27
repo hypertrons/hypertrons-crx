@@ -100,7 +100,7 @@ const View = ({ currentRepo, PRDetail, meta }: Props): JSX.Element | null => {
           {getMessageByLocale('pr_popup_title', options.locale)}
         </div>
         <TooltipTrigger
-          iconColor="000000"
+          iconColor="grey"
           size={13}
           content={getMessageByLocale('pr_icon', options.locale)}
         />
@@ -126,7 +126,7 @@ const View = ({ currentRepo, PRDetail, meta }: Props): JSX.Element | null => {
           {getMessageByLocale('merged_lines_popup_title', options.locale)}
         </div>
         <TooltipTrigger
-          iconColor="000000"
+          iconColor="grey"
           size={13}
           content={getMessageByLocale('merged_lines_icon', options.locale)}
         />
