@@ -1,20 +1,8 @@
-import {
-  RepoActivityDetails,
-  getOption,
-  countLongTermContributors,
-  DEFAULT_FREQUENCY,
-} from './data';
+import { RepoActivityDetails, getOption, countLongTermContributors, DEFAULT_FREQUENCY } from './data';
 import { useLoadedAvatars } from './useLoadedAvatars';
 import sleep from '../../../../helpers/sleep';
 
-import React, {
-  useEffect,
-  useState,
-  useRef,
-  forwardRef,
-  useImperativeHandle,
-  ForwardedRef,
-} from 'react';
+import React, { useEffect, useState, useRef, forwardRef, useImperativeHandle, ForwardedRef } from 'react';
 import { Spin } from 'antd';
 import * as echarts from 'echarts';
 import type { EChartsType } from 'echarts';
@@ -35,10 +23,7 @@ interface RacingBarProps {
 }
 
 const RacingBar = forwardRef(
-  (
-    { speed, data, setPlaying }: RacingBarProps,
-    forwardedRef: ForwardedRef<MediaControlers>
-  ): JSX.Element => {
+  ({ speed, data, setPlaying }: RacingBarProps, forwardedRef: ForwardedRef<MediaControlers>): JSX.Element => {
     const divEL = useRef<HTMLDivElement>(null);
     const timerRef = useRef<NodeJS.Timeout>();
     const speedRef = useRef<number>(speed);
@@ -47,24 +32,13 @@ const RacingBar = forwardRef(
     const months = Object.keys(data);
     const monthIndexRef = useRef<number>(months.length - 1);
 
-    const [longTermContributorsCount, contributors] =
-      countLongTermContributors(data);
+    const [longTermContributorsCount, contributors] = countLongTermContributors(data);
     const maxBars = longTermContributorsCount >= 20 ? 20 : 10;
     const height = longTermContributorsCount >= 20 ? 600 : 300;
     const [loadedAvatars, loadAvatars] = useLoadedAvatars(contributors);
 
-    const updateMonth = async (
-      instance: EChartsType,
-      month: string,
-      enableAnimation: boolean
-    ) => {
-      const option = await getOption(
-        data,
-        month,
-        speedRef.current,
-        maxBars,
-        enableAnimation
-      );
+    const updateMonth = async (instance: EChartsType, month: string, enableAnimation: boolean) => {
+      const option = await getOption(data, month, speedRef.current, maxBars, enableAnimation);
       instance.setOption(option);
     };
 
@@ -74,10 +48,7 @@ const RacingBar = forwardRef(
         const instance = echarts.getInstanceByDom(divEL.current!)!;
         updateMonth(instance, months[monthIndexRef.current], true);
         if (monthIndexRef.current < months.length - 1) {
-          timerRef.current = setTimeout(
-            nextMonth,
-            DEFAULT_FREQUENCY / speedRef.current
-          );
+          timerRef.current = setTimeout(nextMonth, DEFAULT_FREQUENCY / speedRef.current);
         } else {
           setTimeout(() => {
             setPlaying(false);

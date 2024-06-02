@@ -1,10 +1,6 @@
 const DOCS_GPT_ENDPOINT = 'https://oss-gpt.frankzhao.cn/api';
 
-export const getAnswer = async (
-  activeDocs: string,
-  question: string,
-  history: [string, string]
-) => {
+export const getAnswer = async (activeDocs: string, question: string, history: [string, string]) => {
   try {
     const response = await fetch(`${DOCS_GPT_ENDPOINT}/answer`, {
       method: 'POST',

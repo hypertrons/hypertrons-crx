@@ -2,11 +2,7 @@ import features from '../../../../feature-manager';
 import View from './view';
 import { NativePopover } from '../../components/NativePopover';
 import elementReady from 'element-ready';
-import {
-  getRepoName,
-  hasRepoContainerHeader,
-  isPublicRepoWithMeta,
-} from '../../../../helpers/get-repo-info';
+import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
 import { getForks } from '../../../../api/repo';
 import { RepoMeta, metaStore } from '../../../../api/common';
 
@@ -31,9 +27,7 @@ const init = async (): Promise<void> => {
   const forkButtonSelector = '#fork-button';
   await elementReady(forkButtonSelector);
   const $forkButton = $(forkButtonSelector);
-  const placeholderElement = $('<div class="NativePopover" />').appendTo(
-    'body'
-  )[0];
+  const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
   render(
     <NativePopover anchor={$forkButton} width={280} arrowPosition="top-middle">
       <View forks={forks} meta={meta} />

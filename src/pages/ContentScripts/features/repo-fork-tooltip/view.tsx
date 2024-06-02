@@ -2,10 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import getGithubTheme from '../../../../helpers/get-github-theme';
 import getMessageByLocale from '../../../../helpers/get-message-by-locale';
-import optionsStorage, {
-  HypercrxOptions,
-  defaults,
-} from '../../../../options-storage';
+import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
 import ForkChart from './ForkChart';
 import { RepoMeta } from '../../../../api/common';
@@ -38,15 +35,9 @@ const View = ({ forks, meta }: Props): JSX.Element | null => {
           alignItems: 'center',
         }}
       >
-        <div style={{ marginRight: '5px' }}>
-          {getMessageByLocale('fork_popup_title', options.locale)}
-        </div>
+        <div style={{ marginRight: '5px' }}>{getMessageByLocale('fork_popup_title', options.locale)}</div>
 
-        <TooltipTrigger
-          iconColor="grey"
-          size={13}
-          content={getMessageByLocale('fork_icon', options.locale)}
-        />
+        <TooltipTrigger iconColor="grey" size={13} content={getMessageByLocale('fork_icon', options.locale)} />
       </div>
 
       <ForkChart

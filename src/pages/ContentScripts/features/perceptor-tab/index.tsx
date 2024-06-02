@@ -11,10 +11,7 @@ const featureId = features.getFeatureID(import.meta.url);
 
 const addPerceptorTab = async (): Promise<void | false> => {
   // the creation of the Perceptor tab is based on the Insights tab
-  const insightsTab = await elementReady(
-    'a.UnderlineNav-item[id="insights-tab"]',
-    { waitForChildren: false }
-  );
+  const insightsTab = await elementReady('a.UnderlineNav-item[id="insights-tab"]', { waitForChildren: false });
   if (!insightsTab) {
     // if the selector failed to find the Insights tab
     return false;
@@ -53,10 +50,7 @@ const addPerceptorTab = async (): Promise<void | false> => {
   if (!repoNavigationDropdown) {
     return false;
   }
-  const insightsTabDataItem = $(
-    'li[data-menu-item$="insights-tab"]',
-    repoNavigationDropdown
-  );
+  const insightsTabDataItem = $('li[data-menu-item$="insights-tab"]', repoNavigationDropdown);
   const perceptorTabDataItem = insightsTabDataItem.clone(true);
   perceptorTabDataItem.attr('data-menu-item', featureId);
   perceptorTabDataItem.children('a').text('Perceptor').attr({

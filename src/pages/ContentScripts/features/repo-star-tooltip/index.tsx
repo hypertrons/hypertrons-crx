@@ -3,11 +3,7 @@ import View from './view';
 import { NativePopover } from '../../components/NativePopover';
 import { checkLogined } from '../../../../helpers/get-developer-info';
 import elementReady from 'element-ready';
-import {
-  getRepoName,
-  hasRepoContainerHeader,
-  isPublicRepoWithMeta,
-} from '../../../../helpers/get-repo-info';
+import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
 import { getStars } from '../../../../api/repo';
 import { RepoMeta, metaStore } from '../../../../api/common';
 
@@ -29,9 +25,7 @@ const init = async (): Promise<void> => {
   repoName = getRepoName();
   await getData();
   const isLogined = checkLogined();
-  const starButtonSelector = isLogined
-    ? 'button[data-ga-click*="star button"]'
-    : 'a[data-hydro-click*="star button"]';
+  const starButtonSelector = isLogined ? 'button[data-ga-click*="star button"]' : 'a[data-hydro-click*="star button"]';
   await elementReady(starButtonSelector);
   // <div data-view-component="true" class="starred BtnGroup flex-1 ml-0">
   // <div data-view-component="true" class="unstarred BtnGroup ml-0 flex-1">
@@ -44,9 +38,7 @@ const init = async (): Promise<void> => {
       return false;
     }
   });
-  const placeholderElement = $('<div class="NativePopover" />').appendTo(
-    'body'
-  )[0];
+  const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
   render(
     <NativePopover anchor={$starButton} width={280} arrowPosition="top-middle">
       <View stars={stars} meta={meta} />

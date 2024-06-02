@@ -2,10 +2,7 @@ import features from '../../../../feature-manager';
 import View, { PRDetail } from './view';
 import { NativePopover } from '../../components/NativePopover';
 import elementReady from 'element-ready';
-import {
-  getRepoName,
-  isPublicRepoWithMeta,
-} from '../../../../helpers/get-repo-info';
+import { getRepoName, isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
 import {
   getPROpened,
   getPRMerged,
@@ -45,9 +42,7 @@ const init = async (): Promise<void> => {
 
   await elementReady('#pull-requests-tab');
   const $prTab = $('#pull-requests-tab');
-  const placeholderElement = $('<div class="NativePopover" />').appendTo(
-    'body'
-  )[0];
+  const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
   render(
     <NativePopover anchor={$prTab} width={340} arrowPosition="top-middle">
       <View currentRepo={repoName} PRDetail={PRDetail} meta={meta} />

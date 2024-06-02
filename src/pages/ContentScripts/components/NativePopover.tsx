@@ -7,21 +7,10 @@ interface NativePopoverProps extends PropsWithChildren<any> {
   anchor: JQuery<HTMLElement>;
   width: number;
   // for now, only support top-middle
-  arrowPosition:
-    | 'top-left'
-    | 'top-middle'
-    | 'top-right'
-    | 'bottom-left'
-    | 'bottom-middle'
-    | 'bottom-right';
+  arrowPosition: 'top-left' | 'top-middle' | 'top-right' | 'bottom-left' | 'bottom-middle' | 'bottom-right';
 }
 
-export const NativePopover = ({
-  anchor,
-  width,
-  arrowPosition,
-  children,
-}: NativePopoverProps): JSX.Element => {
+export const NativePopover = ({ anchor, width, arrowPosition, children }: NativePopoverProps): JSX.Element => {
   useEffect(() => {
     (async () => {
       await elementReady('div.Popover');
@@ -44,14 +33,8 @@ export const NativePopover = ({
           $popoverContent.css('padding', '10px 5px');
           $popoverContent.css('width', width);
           $popoverContainer.css('top', `${top + anchorHeight + 10}px`);
-          $popoverContainer.css(
-            'left',
-            `${left - (width - anchorWidth) / 2}px`
-          );
-          $popoverContent.attr(
-            'class',
-            `Popover-message Box color-shadow-large Popover-message--${arrowPosition}`
-          );
+          $popoverContainer.css('left', `${left - (width - anchorWidth) / 2}px`);
+          $popoverContent.attr('class', `Popover-message Box color-shadow-large Popover-message--${arrowPosition}`);
           render(children, $popoverContent[0]);
           $popoverContainer.css('display', 'block');
         }, 1000);

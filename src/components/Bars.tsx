@@ -27,22 +27,11 @@ interface BarsProps {
 }
 
 const Bars = (props: BarsProps): JSX.Element => {
-  const {
-    theme,
-    height,
-    legend1,
-    legend2,
-    yName1,
-    yName2,
-    data1,
-    data2,
-    onClick,
-  } = props;
+  const { theme, height, legend1, legend2, yName1, yName2, data1, data2, onClick } = props;
   const startTime = Number(data1[0][0].split('-')[0]);
   const endTime = Number(data1[data1.length - 1][0].split('-')[0]);
   const timeLength = endTime - startTime;
-  const minInterval =
-    timeLength > 2 ? 365 * 24 * 3600 * 1000 : 30 * 3600 * 24 * 1000;
+  const minInterval = timeLength > 2 ? 365 * 24 * 3600 * 1000 : 30 * 3600 * 24 * 1000;
   const divEL = useRef(null);
 
   const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;

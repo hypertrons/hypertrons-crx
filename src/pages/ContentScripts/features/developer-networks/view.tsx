@@ -3,10 +3,7 @@ import ReactModal from 'react-modal';
 
 import Graph from '../../../../components/Graph';
 import getMessageByLocale from '../../../../helpers/get-message-by-locale';
-import optionsStorage, {
-  HypercrxOptions,
-  defaults,
-} from '../../../../options-storage';
+import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import { iconDeveloperNetwork, iconRepoNetwork } from './icon-svg-path';
 import './react-modal.scss';
 
@@ -22,11 +19,7 @@ interface Props {
   repoNetwork: any;
 }
 
-const View = ({
-  currentRepo: currentDeveloper,
-  developerNetwork,
-  repoNetwork,
-}: Props): JSX.Element => {
+const View = ({ currentRepo: currentDeveloper, developerNetwork, repoNetwork }: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
   const [showDeveloperNetwork, setShowDeveloperNetwork] = useState(false);
   const [showRepoNetwork, setShowRepoNetwork] = useState(false);
@@ -63,10 +56,7 @@ const View = ({
             }}
           >
             <span
-              title={`${getMessageByLocale(
-                'global_clickToshow',
-                options.locale
-              )} ${getMessageByLocale(
+              title={`${getMessageByLocale('global_clickToshow', options.locale)} ${getMessageByLocale(
                 'component_developerCollaborationNetwork_title',
                 options.locale
               )}`}
@@ -76,10 +66,7 @@ const View = ({
                 fontWeight: 'var(--base-text-weight-normal, 400)',
               }}
             >
-              {getMessageByLocale(
-                'component_developerCollaborationNetwork_title',
-                options.locale
-              )}
+              {getMessageByLocale('component_developerCollaborationNetwork_title', options.locale)}
             </span>
           </button>
         </li>
@@ -105,10 +92,7 @@ const View = ({
             }}
           >
             <span
-              title={`${getMessageByLocale(
-                'global_clickToshow',
-                options.locale
-              )} ${getMessageByLocale(
+              title={`${getMessageByLocale('global_clickToshow', options.locale)} ${getMessageByLocale(
                 'component_mostParticipatedProjects_title',
                 options.locale
               )}`}
@@ -118,10 +102,7 @@ const View = ({
                 fontWeight: 'var(--base-text-weight-normal, 400)',
               }}
             >
-              {getMessageByLocale(
-                'component_mostParticipatedProjects_title',
-                options.locale
-              )}
+              {getMessageByLocale('component_mostParticipatedProjects_title', options.locale)}
             </span>
           </button>
         </li>
@@ -138,47 +119,27 @@ const View = ({
       >
         <div>
           <div className="hypertrons-crx-title">
-            <span>
-              {getMessageByLocale(
-                'component_developerCollaborationNetwork_title',
-                options.locale
-              )}
-            </span>
+            <span>{getMessageByLocale('component_developerCollaborationNetwork_title', options.locale)}</span>
             <div className="hypertrons-crx-title-extra developer-tab">
-              {getMessageByLocale('global_period', options.locale)}:{' '}
-              {REPO_PERIOD} {getMessageByLocale('global_day', options.locale)}
+              {getMessageByLocale('global_period', options.locale)}: {REPO_PERIOD}{' '}
+              {getMessageByLocale('global_day', options.locale)}
             </div>
           </div>
           <div className="d-flex flex-wrap justify-content-lg-between align-items-center">
             <div className="col-8 graph-container">
               <div style={{ margin: '15px 0 20px 0px' }}>
-                <Graph
-                  data={developerNetwork}
-                  style={GRAPH_STYLE}
-                  focusedNodeID={currentDeveloper}
-                />
+                <Graph data={developerNetwork} style={GRAPH_STYLE} focusedNodeID={currentDeveloper} />
               </div>
             </div>
             <div className="col-4 description-container">
               <div className="color-text-secondary developer-tab">
-                <p>
-                  {getMessageByLocale(
-                    'component_developerCollaborationNetwork_description',
-                    options.locale
-                  )}
-                </p>
+                <p>{getMessageByLocale('component_developerCollaborationNetwork_description', options.locale)}</p>
                 <ul style={{ margin: '0px 0 10px 15px' }}>
                   <li>
-                    {getMessageByLocale(
-                      'component_developerCollaborationNetwork_description_node',
-                      options.locale
-                    )}
+                    {getMessageByLocale('component_developerCollaborationNetwork_description_node', options.locale)}
                   </li>
                   <li>
-                    {getMessageByLocale(
-                      'component_developerCollaborationNetwork_description_edge',
-                      options.locale
-                    )}
+                    {getMessageByLocale('component_developerCollaborationNetwork_description_edge', options.locale)}
                   </li>
                 </ul>
               </div>
@@ -198,15 +159,9 @@ const View = ({
       >
         <div>
           <div className="hypertrons-crx-title">
-            <span>
-              {getMessageByLocale(
-                'component_mostParticipatedProjects_title',
-                options.locale
-              )}
-            </span>
+            <span>{getMessageByLocale('component_mostParticipatedProjects_title', options.locale)}</span>
             <div className="hypertrons-crx-title-extra">
-              {getMessageByLocale('global_period', options.locale)}:{' '}
-              {DEVELOPER_PERIOD}{' '}
+              {getMessageByLocale('global_period', options.locale)}: {DEVELOPER_PERIOD}{' '}
               {getMessageByLocale('global_day', options.locale)}
             </div>
           </div>
@@ -218,25 +173,10 @@ const View = ({
             </div>
             <div className="col-lg-4 col-12 description-container">
               <div className="color-text-secondary">
-                <p>
-                  {getMessageByLocale(
-                    'component_mostParticipatedProjects_description',
-                    options.locale
-                  )}
-                </p>
+                <p>{getMessageByLocale('component_mostParticipatedProjects_description', options.locale)}</p>
                 <ul style={{ margin: '0px 0 10px 15px' }}>
-                  <li>
-                    {getMessageByLocale(
-                      'component_mostParticipatedProjects_description_node',
-                      options.locale
-                    )}
-                  </li>
-                  <li>
-                    {getMessageByLocale(
-                      'component_mostParticipatedProjects_description_edge',
-                      options.locale
-                    )}
-                  </li>
+                  <li>{getMessageByLocale('component_mostParticipatedProjects_description_node', options.locale)}</li>
+                  <li>{getMessageByLocale('component_mostParticipatedProjects_description_edge', options.locale)}</li>
                 </ul>
               </div>
             </div>

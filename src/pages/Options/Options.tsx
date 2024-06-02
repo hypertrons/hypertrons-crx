@@ -78,21 +78,11 @@ const Options = (): JSX.Element => {
           >
             <div className="Box">
               <div className="Box-header">
-                <h2 className="Box-title">
-                  {getMessageByLocale('options_locale_title', options.locale)}
-                </h2>
-                <TooltipTrigger
-                  content={getMessageByLocale(
-                    'options_locale_toolTip',
-                    options.locale
-                  )}
-                />
+                <h2 className="Box-title">{getMessageByLocale('options_locale_title', options.locale)}</h2>
+                <TooltipTrigger content={getMessageByLocale('options_locale_toolTip', options.locale)} />
               </div>
               <div style={stacksStyleOptions.settingStack}>
-                <p>
-                  {getMessageByLocale('options_locale_toolTip', options.locale)}{' '}
-                  :
-                </p>
+                <p>{getMessageByLocale('options_locale_toolTip', options.locale)} :</p>
                 <Radio.Group
                   defaultValue={options.locale}
                   onChange={async (e) => {
@@ -118,33 +108,14 @@ const Options = (): JSX.Element => {
           >
             <div className="Box">
               <div className="Box-header">
-                <h2 className="Box-title">
-                  {getMessageByLocale(
-                    'options_components_title',
-                    options.locale
-                  )}
-                </h2>
-                <TooltipTrigger
-                  content={getMessageByLocale(
-                    'options_components_toolTip',
-                    options.locale
-                  )}
-                />
+                <h2 className="Box-title">{getMessageByLocale('options_components_title', options.locale)}</h2>
+                <TooltipTrigger content={getMessageByLocale('options_components_toolTip', options.locale)} />
               </div>
               <Row style={stacksStyleOptions.settingStack} gutter={[16, 10]}>
-                <p>
-                  {getMessageByLocale(
-                    'options_components_toolTip',
-                    options.locale
-                  )}{' '}
-                  :
-                </p>
+                <p>{getMessageByLocale('options_components_toolTip', options.locale)} :</p>
 
                 {importedFeatures.map((name: FeatureName) => {
-                  return buildFeatureCheckbox(
-                    name,
-                    options[`hypercrx-${name}`]
-                  );
+                  return buildFeatureCheckbox(name, options[`hypercrx-${name}`]);
                 })}
               </Row>
             </div>
@@ -159,23 +130,11 @@ const Options = (): JSX.Element => {
           >
             <div className="Box">
               <div className="Box-header">
-                <h2 className="Box-title">
-                  {getMessageByLocale('options_about_title', options.locale)}
-                </h2>
-                <TooltipTrigger
-                  content={getMessageByLocale(
-                    'options_about_toolTip',
-                    options.locale
-                  )}
-                />
+                <h2 className="Box-title">{getMessageByLocale('options_about_title', options.locale)}</h2>
+                <TooltipTrigger content={getMessageByLocale('options_about_toolTip', options.locale)} />
               </div>
               <div style={stacksStyleOptions.settingStack}>
-                <p>
-                  {getMessageByLocale(
-                    'options_about_description',
-                    options.locale
-                  )}
-                </p>
+                <p>{getMessageByLocale('options_about_description', options.locale)}</p>
                 <p>
                   GitHub:{' '}
                   <a href={HYPERCRX_GITHUB} target="_blank">

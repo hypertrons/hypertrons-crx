@@ -19,10 +19,7 @@ const init = async (): Promise<void> => {
   const parentContainer = await elementReady('#repo-content-turbo-frame');
   $('h1.sr-only', parentContainer).text('Perceptor');
 
-  const perceptorLayoutContainer = $(
-    'div.clearfix.container-xl:first',
-    parentContainer
-  );
+  const perceptorLayoutContainer = $('div.clearfix.container-xl:first', parentContainer);
   perceptorLayoutContainer.children('div').remove();
 
   // create the new one: the percepter container
