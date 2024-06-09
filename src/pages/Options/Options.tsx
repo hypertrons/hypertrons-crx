@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Checkbox, Radio, Space, Row, Col } from 'antd';
 import { importedFeatures } from '../../../README.md';
 import optionsStorage, { HypercrxOptions } from '../../options-storage';
-import getMessageByLocale from '../../helpers/get-message-by-locale';
+// import getMessageByLocale from '../../helpers/get-message-by-locale';
 import { HYPERCRX_GITHUB } from '../../constant';
 import TooltipTrigger from '../../components/TooltipTrigger';
 import './Options.css';
-
+import { useTranslation } from 'react-i18next';
+import '../../helpers/i18n';
 const stacksStyleOptions = {
   headerStack: {
     paddingBottom: '10px',
@@ -23,6 +24,8 @@ const Options = (): JSX.Element => {
   const [version, setVersion] = useState<string>();
   const [options, setOptions] = useState<HypercrxOptions>();
 
+  const { t, i18n } = useTranslation();
+  console.log('language using: {}', i18n.language);
   useEffect(() => {
     (async function () {
       setVersion((await chrome.management.getSelf()).version);
@@ -78,15 +81,16 @@ const Options = (): JSX.Element => {
           >
             <div className="Box">
               <div className="Box-header">
-                <h2 className="Box-title">{getMessageByLocale('options_locale_title', options.locale)}</h2>
-                <TooltipTrigger content={getMessageByLocale('options_locale_toolTip', options.locale)} />
+                <h2 className="Box-title">{t('options_locale_title.message')}</h2>
+                <TooltipTrigger content={t('options_locale_toolTip.message')} />
               </div>
               <div style={stacksStyleOptions.settingStack}>
-                <p>{getMessageByLocale('options_locale_toolTip', options.locale)} :</p>
+                <p>{t('options_locale_toolTip.message')} :</p>
                 <Radio.Group
                   defaultValue={options.locale}
                   onChange={async (e) => {
                     await optionsStorage.set({ locale: e.target.value });
+                    i18n.changeLanguage(e.target.value);
                     setOptions(await optionsStorage.getAll());
                   }}
                 >
@@ -108,11 +112,11 @@ const Options = (): JSX.Element => {
           >
             <div className="Box">
               <div className="Box-header">
-                <h2 className="Box-title">{getMessageByLocale('options_components_title', options.locale)}</h2>
-                <TooltipTrigger content={getMessageByLocale('options_components_toolTip', options.locale)} />
+                <h2 className="Box-title">{t('options_components_title.message')}</h2>
+                <TooltipTrigger content={t('options_components_toolTip.message')} />
               </div>
               <Row style={stacksStyleOptions.settingStack} gutter={[16, 10]}>
-                <p>{getMessageByLocale('options_components_toolTip', options.locale)} :</p>
+                <p>{t('options_components_toolTip.message')} :</p>
 
                 {importedFeatures.map((name: FeatureName) => {
                   return buildFeatureCheckbox(name, options[`hypercrx-${name}`]);
@@ -130,11 +134,11 @@ const Options = (): JSX.Element => {
           >
             <div className="Box">
               <div className="Box-header">
-                <h2 className="Box-title">{getMessageByLocale('options_about_title', options.locale)}</h2>
-                <TooltipTrigger content={getMessageByLocale('options_about_toolTip', options.locale)} />
+                <h2 className="Box-title">{t('options_about_title.message')}</h2>
+                <TooltipTrigger content={t('options_about_toolTip.message')} />
               </div>
               <div style={stacksStyleOptions.settingStack}>
-                <p>{getMessageByLocale('options_about_description', options.locale)}</p>
+                <p>{t('options_about_description.message')}</p>
                 <p>
                   GitHub:{' '}
                   <a href={HYPERCRX_GITHUB} target="_blank">
