@@ -81,11 +81,11 @@ const Options = (): JSX.Element => {
           >
             <div className="Box">
               <div className="Box-header">
-                <h2 className="Box-title">{t('options_locale_title.message')}</h2>
-                <TooltipTrigger content={t('options_locale_toolTip.message')} />
+                <h2 className="Box-title">{t('options_locale_title')}</h2>
+                <TooltipTrigger content={t('options_locale_toolTip')} />
               </div>
               <div style={stacksStyleOptions.settingStack}>
-                <p>{t('options_locale_toolTip.message')} :</p>
+                <p>{t('options_locale_toolTip')} :</p>
                 <Radio.Group
                   defaultValue={options.locale}
                   onChange={async (e) => {
@@ -112,11 +112,11 @@ const Options = (): JSX.Element => {
           >
             <div className="Box">
               <div className="Box-header">
-                <h2 className="Box-title">{t('options_components_title.message')}</h2>
-                <TooltipTrigger content={t('options_components_toolTip.message')} />
+                <h2 className="Box-title">{t('options_components_title')}</h2>
+                <TooltipTrigger content={t('options_components_toolTip')} />
               </div>
               <Row style={stacksStyleOptions.settingStack} gutter={[16, 10]}>
-                <p>{t('options_components_toolTip.message')} :</p>
+                <p>{t('options_components_toolTip')} :</p>
 
                 {importedFeatures.map((name: FeatureName) => {
                   return buildFeatureCheckbox(name, options[`hypercrx-${name}`]);
@@ -134,11 +134,11 @@ const Options = (): JSX.Element => {
           >
             <div className="Box">
               <div className="Box-header">
-                <h2 className="Box-title">{t('options_about_title.message')}</h2>
-                <TooltipTrigger content={t('options_about_toolTip.message')} />
+                <h2 className="Box-title">{t('options_about_title')}</h2>
+                <TooltipTrigger content={t('options_about_toolTip')} />
               </div>
               <div style={stacksStyleOptions.settingStack}>
-                <p>{t('options_about_description.message')}</p>
+                <p>{t('options_about_description')}</p>
                 <p>
                   GitHub:{' '}
                   <a href={HYPERCRX_GITHUB} target="_blank">

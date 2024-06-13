@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import getGithubTheme from '../../../../helpers/get-github-theme';
-import getMessageByLocale from '../../../../helpers/get-message-by-locale';
+// import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import { isNull, isAllNull } from '../../../../helpers/is-null';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
@@ -10,6 +10,8 @@ import MergedLinesChart from './MergedLinesChart';
 import { RepoMeta } from '../../../../api/common';
 import TooltipTrigger from '../../../../components/TooltipTrigger';
 const githubTheme = getGithubTheme();
+import { useTranslation } from 'react-i18next';
+import '../../../../helpers/i18n';
 
 export interface PRDetail {
   PROpened: any;
@@ -46,12 +48,13 @@ const generateMergedLinesChartData = (PRDetail: PRDetail, updatedAt: number): an
 
 const View = ({ currentRepo, PRDetail, meta }: Props): JSX.Element | null => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
-
+  const { t, i18n } = useTranslation();
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
+      i18n.changeLanguage(options.locale);
     })();
-  }, []);
+  }, [options.locale]);
 
   if (isNull(PRDetail) || isAllNull(PRDetail)) return null;
 
@@ -82,8 +85,8 @@ const View = ({ currentRepo, PRDetail, meta }: Props): JSX.Element | null => {
           alignItems: 'center',
         }}
       >
-        <div style={{ marginRight: '5px' }}>{getMessageByLocale('pr_popup_title', options.locale)}</div>
-        <TooltipTrigger iconColor="grey" size={13} content={getMessageByLocale('pr_icon', options.locale)} />
+        <div style={{ marginRight: '5px' }}>{t('pr_popup_title')}</div>
+        <TooltipTrigger iconColor="grey" size={13} content={t('pr_icon')} />
       </div>
 
       <PRChart
@@ -102,8 +105,8 @@ const View = ({ currentRepo, PRDetail, meta }: Props): JSX.Element | null => {
           alignItems: 'center',
         }}
       >
-        <div style={{ marginRight: '5px' }}>{getMessageByLocale('merged_lines_popup_title', options.locale)}</div>
-        <TooltipTrigger iconColor="grey" size={13} content={getMessageByLocale('merged_lines_icon', options.locale)} />
+        <div style={{ marginRight: '5px' }}>{t('merged_lines_popup_title')}</div>
+        <TooltipTrigger iconColor="grey" size={13} content={t('merged_lines_icon')} />
       </div>
 
       <MergedLinesChart

@@ -1,5 +1,5 @@
 import getGithubTheme from '../../../../helpers/get-github-theme';
-import getMessageByLocale from '../../../../helpers/get-message-by-locale';
+// import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import { isNull } from '../../../../helpers/is-null';
 import { numberWithCommas } from '../../../../helpers/formatter';
 import { NativePopover } from '../../components/NativePopover';
@@ -16,6 +16,9 @@ import React, { useState, useEffect } from 'react';
 import { render } from 'react-dom';
 import $ from 'jquery';
 import TooltipTrigger from '../../../../components/TooltipTrigger';
+
+import { useTranslation } from 'react-i18next';
+import '../../../../helpers/i18n';
 const githubTheme = getGithubTheme();
 
 interface Props {
@@ -28,12 +31,13 @@ interface Props {
 
 const View = ({ activity, openrank, participant, contributor, meta }: Props): JSX.Element | null => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
-
+  const { t, i18n } = useTranslation();
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
+      i18n.changeLanguage(options.locale);
     })();
-  }, []);
+  }, [options.locale]);
 
   useEffect(() => {
     const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
@@ -48,8 +52,8 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
               alignItems: 'center',
             }}
           >
-            <div style={{ marginRight: '5px' }}>{getMessageByLocale('header_label_activity', options.locale)}</div>
-            <TooltipTrigger iconColor="grey" size={13} content={getMessageByLocale('activity_icon', options.locale)} />
+            <div style={{ marginRight: '5px' }}>{t('header_label_activity')}</div>
+            <TooltipTrigger iconColor="grey" size={13} content={t('activity_icon')} />
           </div>
           <ActivityChart theme={githubTheme as 'light' | 'dark'} width={270} height={130} data={activityData} />
         </NativePopover>
@@ -62,8 +66,8 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
               alignItems: 'center',
             }}
           >
-            <div style={{ marginRight: '5px' }}>{getMessageByLocale('header_label_OpenRank', options.locale)}</div>
-            <TooltipTrigger iconColor="grey" size={13} content={getMessageByLocale('openrank_icon', options.locale)} />
+            <div style={{ marginRight: '5px' }}>{t('header_label_OpenRank')}</div>
+            <TooltipTrigger iconColor="grey" size={13} content={t('openrank_icon')} />
           </div>
           <OpenRankChart theme={githubTheme as 'light' | 'dark'} width={270} height={130} data={openrankData} />
         </NativePopover>
@@ -76,11 +80,11 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
               alignItems: 'center',
             }}
           >
-            <div style={{ marginRight: '5px' }}>{getMessageByLocale('header_label_contributor', options.locale)}</div>
+            <div style={{ marginRight: '5px' }}>{t('header_label_contributor')}</div>
             <TooltipTrigger
               iconColor="grey"
               size={13}
-              content={getMessageByLocale('contributors_participants_icon', options.locale)}
+              content={t('contributors_participants_icon')}
             />
           </div>
           <ContributorChart theme={githubTheme as 'light' | 'dark'} width={270} height={130} data={contributorData} />
@@ -92,11 +96,11 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
               alignItems: 'center',
             }}
           >
-            <div style={{ marginRight: '5px' }}>{getMessageByLocale('header_label_participant', options.locale)}</div>
+            <div style={{ marginRight: '5px' }}>{t('header_label_participant')}</div>
             <TooltipTrigger
               iconColor="grey"
               size={13}
-              content={getMessageByLocale('contributors_participants_icon', options.locale)}
+              content={t('contributors_participants_icon')}
             />
           </div>
           <ParticipantChart theme={githubTheme as 'light' | 'dark'} width={270} height={130} data={participantData} />

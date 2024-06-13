@@ -6,7 +6,8 @@ import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import { iconDeveloperNetwork, iconRepoNetwork } from './icon-svg-path';
 import './react-modal.scss';
-
+import { useTranslation } from 'react-i18next';
+import '../../../../helpers/i18n';
 const DEVELOPER_PERIOD = 90;
 const REPO_PERIOD = 90;
 const GRAPH_STYLE = {
@@ -23,12 +24,13 @@ const View = ({ currentRepo: currentDeveloper, developerNetwork, repoNetwork }: 
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
   const [showDeveloperNetwork, setShowDeveloperNetwork] = useState(false);
   const [showRepoNetwork, setShowRepoNetwork] = useState(false);
-
+  const { t, i18n } = useTranslation();
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
+      
     })();
-  }, []);
+  }, [options.locale]);
 
   return (
     <div className="border-top color-border-secondary pt-3 mt-3">
