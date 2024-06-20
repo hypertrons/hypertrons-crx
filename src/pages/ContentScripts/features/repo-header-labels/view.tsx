@@ -40,6 +40,7 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
   }, [options.locale]);
 
   useEffect(() => {
+    console.log("useEffect NativaPopover");
     const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
     render(
       <>
@@ -81,11 +82,7 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
             }}
           >
             <div style={{ marginRight: '5px' }}>{t('header_label_contributor')}</div>
-            <TooltipTrigger
-              iconColor="grey"
-              size={13}
-              content={t('contributors_participants_icon')}
-            />
+            <TooltipTrigger iconColor="grey" size={13} content={t('contributors_participants_icon')} />
           </div>
           <ContributorChart theme={githubTheme as 'light' | 'dark'} width={270} height={130} data={contributorData} />
           <div
@@ -97,11 +94,7 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
             }}
           >
             <div style={{ marginRight: '5px' }}>{t('header_label_participant')}</div>
-            <TooltipTrigger
-              iconColor="grey"
-              size={13}
-              content={t('contributors_participants_icon')}
-            />
+            <TooltipTrigger iconColor="grey" size={13} content={t('contributors_participants_icon')} />
           </div>
           <ParticipantChart theme={githubTheme as 'light' | 'dark'} width={270} height={130} data={participantData} />
         </NativePopover>
