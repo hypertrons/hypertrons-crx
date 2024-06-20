@@ -13,7 +13,7 @@ import {
 import { getAnswer } from './service';
 import './rcw.scss';
 import exists from '../../../../helpers/exists';
-import getMessageByLocale from '../../../../helpers/get-message-by-locale';
+// import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';

@@ -57,9 +57,7 @@ const View = ({ currentRepo: currentDeveloper, developerNetwork, repoNetwork }: 
             }}
           >
             <span
-              title={`${t('global_clickToshow')} ${t(
-                'component_developerCollaborationNetwork_title'
-              )}`}
+              title={`${t('global_clickToshow')} ${t('component_developerCollaborationNetwork_title')}`}
               className="Label"
               style={{
                 color: 'var(--color-fg-default)',
@@ -92,9 +90,7 @@ const View = ({ currentRepo: currentDeveloper, developerNetwork, repoNetwork }: 
             }}
           >
             <span
-              title={`${t('global_clickToshow')} ${t(
-                'component_mostParticipatedProjects_title'
-              )}`}
+              title={`${t('global_clickToshow')} ${t('component_mostParticipatedProjects_title')}`}
               className="Label"
               style={{
                 color: 'var(--color-fg-default)',
@@ -120,8 +116,7 @@ const View = ({ currentRepo: currentDeveloper, developerNetwork, repoNetwork }: 
           <div className="hypertrons-crx-title">
             <span>{t('component_developerCollaborationNetwork_title')}</span>
             <div className="hypertrons-crx-title-extra developer-tab">
-              {t('global_period')}: {REPO_PERIOD}{' '}
-              {t('global_day')}
+              {t('global_period')}: {REPO_PERIOD} {t('global_day')}
             </div>
           </div>
           <div className="d-flex flex-wrap justify-content-lg-between align-items-center">
@@ -134,12 +129,8 @@ const View = ({ currentRepo: currentDeveloper, developerNetwork, repoNetwork }: 
               <div className="color-text-secondary developer-tab">
                 <p>{t('component_developerCollaborationNetwork_description')}</p>
                 <ul style={{ margin: '0px 0 10px 15px' }}>
-                  <li>
-                    {t('component_developerCollaborationNetwork_description_node')}
-                  </li>
-                  <li>
-                    {t('component_developerCollaborationNetwork_description_edge')}
-                  </li>
+                  <li>{t('component_developerCollaborationNetwork_description_node')}</li>
+                  <li>{t('component_developerCollaborationNetwork_description_edge')}</li>
                 </ul>
               </div>
             </div>
@@ -160,8 +151,7 @@ const View = ({ currentRepo: currentDeveloper, developerNetwork, repoNetwork }: 
           <div className="hypertrons-crx-title">
             <span>{t('component_mostParticipatedProjects_title')}</span>
             <div className="hypertrons-crx-title-extra">
-              {t('global_period')}: {DEVELOPER_PERIOD}{' '}
-              {t('global_day')}
+              {t('global_period')}: {DEVELOPER_PERIOD} {t('global_day')}
             </div>
           </div>
           <div className="d-flex flex-wrap justify-content-lg-between align-items-center">

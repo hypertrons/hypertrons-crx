@@ -40,7 +40,7 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
   }, [options.locale]);
 
   useEffect(() => {
-    console.log("useEffect NativaPopover");
+    console.log('useEffect NativaPopover');
     const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
     render(
       <>

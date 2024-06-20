@@ -42,8 +42,6 @@ const init = async (): Promise<void> => {
 
   await elementReady('#repository-container-header');
   $('#repository-container-header').find('span.Label').after(container);
-
-
 };
 
 const restore = async () => {
