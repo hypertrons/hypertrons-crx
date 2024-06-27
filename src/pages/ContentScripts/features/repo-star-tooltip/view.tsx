@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
-// import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import getGithubTheme from '../../../../helpers/get-github-theme';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
@@ -41,7 +39,7 @@ const View = ({ stars, meta }: Props): JSX.Element | null => {
       >
         <div style={{ marginRight: '5px' }}>{t('star_popup_title')}</div>
 
-        <TooltipTrigger iconColor="grey" size={13} content={t('star_icon')} />
+        <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', {val:'$t(star_icon)'})} />
       </div>
 
       <StarChart

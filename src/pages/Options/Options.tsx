@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Checkbox, Radio, Space, Row, Col } from 'antd';
 import { importedFeatures } from '../../../README.md';
 import optionsStorage, { HypercrxOptions } from '../../options-storage';
-// import getMessageByLocale from '../../helpers/get-message-by-locale';
 import { HYPERCRX_GITHUB } from '../../constant';
 import TooltipTrigger from '../../components/TooltipTrigger';
 import './Options.css';
@@ -25,7 +24,6 @@ const Options = (): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>();
 
   const { t, i18n } = useTranslation();
-  console.log('language using: {}', i18n.language);
   useEffect(() => {
     (async function () {
       setVersion((await chrome.management.getSelf()).version);

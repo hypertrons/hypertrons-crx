@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 import getGithubTheme from '../../../../helpers/get-github-theme';
-// import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import { isNull, isAllNull } from '../../../../helpers/is-null';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
@@ -73,7 +72,7 @@ const View = ({ currentRepo, issueDetail, meta }: Props): JSX.Element | null => 
       >
         <div style={{ marginRight: '5px' }}>{t('issue_popup_title')}</div>
 
-        <TooltipTrigger iconColor="grey" size={13} content={t('issue_icon')} />
+        <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', {val:'$t(issue_icon)'})} />
       </div>
 
       <IssueChart

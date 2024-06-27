@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
 import getGithubTheme from '../../../../helpers/get-github-theme';
-// import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import { isNull, isAllNull } from '../../../../helpers/is-null';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
@@ -86,7 +84,7 @@ const View = ({ currentRepo, PRDetail, meta }: Props): JSX.Element | null => {
         }}
       >
         <div style={{ marginRight: '5px' }}>{t('pr_popup_title')}</div>
-        <TooltipTrigger iconColor="grey" size={13} content={t('pr_icon')} />
+        <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', {val:'$t(pr_icon)'})} />
       </div>
 
       <PRChart
@@ -106,7 +104,7 @@ const View = ({ currentRepo, PRDetail, meta }: Props): JSX.Element | null => {
         }}
       >
         <div style={{ marginRight: '5px' }}>{t('merged_lines_popup_title')}</div>
-        <TooltipTrigger iconColor="grey" size={13} content={t('merged_lines_icon')} />
+        <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip',  {val:'$t(merged_lines_icon)'})} />
       </div>
 
       <MergedLinesChart

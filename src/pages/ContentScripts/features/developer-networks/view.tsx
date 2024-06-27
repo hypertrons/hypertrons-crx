@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactModal from 'react-modal';
-
 import Graph from '../../../../components/Graph';
-// import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import { iconDeveloperNetwork, iconRepoNetwork } from './icon-svg-path';
 import './react-modal.scss';
@@ -116,7 +114,7 @@ const View = ({ currentRepo: currentDeveloper, developerNetwork, repoNetwork }: 
           <div className="hypertrons-crx-title">
             <span>{t('component_developerCollaborationNetwork_title')}</span>
             <div className="hypertrons-crx-title-extra developer-tab">
-              {t('global_period')}: {REPO_PERIOD} {t('global_day')}
+              {t('global_period')}: {REPO_PERIOD} {t('global_day', {count:REPO_PERIOD})}
             </div>
           </div>
           <div className="d-flex flex-wrap justify-content-lg-between align-items-center">
@@ -151,7 +149,7 @@ const View = ({ currentRepo: currentDeveloper, developerNetwork, repoNetwork }: 
           <div className="hypertrons-crx-title">
             <span>{t('component_mostParticipatedProjects_title')}</span>
             <div className="hypertrons-crx-title-extra">
-              {t('global_period')}: {DEVELOPER_PERIOD} {t('global_day')}
+              {t('global_period')}: {DEVELOPER_PERIOD} {t('global_day', {count:REPO_PERIOD})}
             </div>
           </div>
           <div className="d-flex flex-wrap justify-content-lg-between align-items-center">

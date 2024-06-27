@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
 import getGithubTheme from '../../../../helpers/get-github-theme';
-// import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
 import ForkChart from './ForkChart';
@@ -41,7 +39,7 @@ const View = ({ forks, meta }: Props): JSX.Element | null => {
       >
         <div style={{ marginRight: '5px' }}>{t('fork_popup_title')}</div>
 
-        <TooltipTrigger iconColor="grey" size={13} content={t('fork_icon')} />
+        <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', {val:'$t(fork_icon)'})} />
       </div>
 
       <ForkChart

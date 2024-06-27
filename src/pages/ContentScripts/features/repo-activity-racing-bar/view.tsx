@@ -1,4 +1,3 @@
-// import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import RacingBar, { MediaControlers } from './RacingBar';
 import { RepoActivityDetails, getMonthlyData } from './data';

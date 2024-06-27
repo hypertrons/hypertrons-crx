@@ -13,7 +13,6 @@ import {
 import { getAnswer } from './service';
 import './rcw.scss';
 import exists from '../../../../helpers/exists';
-// import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
@@ -31,21 +30,10 @@ const UserTimeStamp: React.FC = () => {
   return <div style={{ fontSize: '11px', textAlign: 'right', width: '100%' }}>{moment().format('LT')}</div>;
 };
 
-const displayWelcome = (repoName: string, locale: string) => {
-  addResponseMessage(locale.replace('%v', repoName));
-  renderCustomComponent(ResponseTimeStamp, {});
-};
-
-const displayNotAvailable = (repoName: string, locale: string) => {
-  addResponseMessage(locale.replace('%v', repoName));
-  renderCustomComponent(ResponseTimeStamp, {});
-};
-
-// Due to cost reasons, backend is not available now. This part can be removed when the backend is restored.
-const backendNotAvailable = (locale: string) => {
+const displayResponseMessage = (locale: string) => {
   addResponseMessage(locale);
   renderCustomComponent(ResponseTimeStamp, {});
-};
+}
 
 const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
@@ -66,9 +54,9 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
     setHistory(['', '']); // clear history
     if (currentDocsName) {
       // if docs for current repo is available
-      displayWelcome(currentRepo, t('OSS_GPT_welcome'));
+      displayResponseMessage(t('OSS_GPT_welcome', {val:currentRepo}));
     } else {
-      displayNotAvailable(currentRepo, t('OSS_GPT_notAvailable'));
+      displayResponseMessage(t('OSS_GPT_notAvailable', {val:currentRepo}));
     }
   }, [options, currentRepo, currentDocsName]);
 
@@ -121,8 +109,8 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
   }, []);
 
   const subtitle = currentDocsName
-    ? t('OSS_GPT_subtitle').replace('%v', currentRepo)
-    : t('OSS_GPT_subtitle_notAvailable').replace('%v', currentRepo);
+    ? t('OSS_GPT_subtitle', {val:currentRepo})
+    : t('OSS_GPT_subtitle_notAvailable', {val:currentRepo})
 
   const handleNewUserMessage = async (newMessage: string) => {
     renderCustomComponent(UserTimeStamp, {});
@@ -132,7 +120,7 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
     if (currentDocsName) {
       const answer = await getAnswer(currentDocsName, newMessage, history);
       if (answer == 'error') {
-        backendNotAvailable(t('OSS_GPT_errorMessage'));
+        displayResponseMessage(t('OSS_GPT_errorMessage'));
       } else {
         addResponseMessage(answer);
         renderCustomComponent(ResponseTimeStamp, {});
@@ -140,7 +128,7 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
         setHistory([newMessage, answer]); // update history
       }
     } else {
-      displayNotAvailable(currentRepo, t('OSS_GPT_notAvailable'));
+      displayResponseMessage(t('OSS_GPT_notAvailable', {val:currentRepo}));
     }
 
     toggleMsgLoader();
