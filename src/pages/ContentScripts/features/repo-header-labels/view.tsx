@@ -1,20 +1,12 @@
 import getGithubTheme from '../../../../helpers/get-github-theme';
 import { isNull } from '../../../../helpers/is-null';
 import { numberWithCommas } from '../../../../helpers/formatter';
-import { NativePopover } from '../../components/NativePopover';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import { rocketLight, rocketDark } from './base64';
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
-import ActivityChart from './ActivityChart';
-import OpenRankChart from './OpenRankChart';
-import ParticipantChart from './ParticipantChart';
-import ContributorChart from './ContributorChart';
 import { RepoMeta } from '../../../../api/common';
 
 import React, { useState, useEffect } from 'react';
-import { render } from 'react-dom';
-import $ from 'jquery';
-import TooltipTrigger from '../../../../components/TooltipTrigger';
 
 import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
@@ -37,77 +29,6 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
       i18n.changeLanguage(options.locale);
     })();
   }, [options.locale]);
-
-  useEffect(() => {
-    const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
-    render(
-      <>
-        <NativePopover anchor={$('#activity-header-label')} width={280} arrowPosition="top-middle">
-          <div
-            className="chart-title"
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <div style={{ marginRight: '5px' }}>{t('header_label_activity')}</div>
-            <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', { icon_content: '$t(activity_icon)' })} />
-          </div>
-          <ActivityChart theme={githubTheme as 'light' | 'dark'} width={270} height={130} data={activityData} />
-        </NativePopover>
-        <NativePopover anchor={$('#OpenRank-header-label')} width={280} arrowPosition="top-middle">
-          <div
-            className="chart-title"
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <div style={{ marginRight: '5px' }}>{t('header_label_OpenRank')}</div>
-            <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', { icon_content: '$t(openrank_icon)' })} />
-          </div>
-          <OpenRankChart theme={githubTheme as 'light' | 'dark'} width={270} height={130} data={openrankData} />
-        </NativePopover>
-        <NativePopover anchor={$('#participant-header-label')} width={280} arrowPosition="top-middle">
-          <div
-            className="chart-title"
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <div style={{ marginRight: '5px' }}>{t('header_label_contributor')}</div>
-            <TooltipTrigger
-              iconColor="grey"
-              size={13}
-              content={t('icon_tip', { icon_content: '$t(contributors_participants_icon)' })}
-            />
-          </div>
-          <ContributorChart theme={githubTheme as 'light' | 'dark'} width={270} height={130} data={contributorData} />
-          <div
-            className="chart-title"
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <div style={{ marginRight: '5px' }}>{t('header_label_participant')}</div>
-            <TooltipTrigger
-              iconColor="grey"
-              size={13}
-              content={t('icon_tip', { icon_content: '$t(contributors_participants_icon)' })}
-            />
-          </div>
-          <ParticipantChart theme={githubTheme as 'light' | 'dark'} width={270} height={130} data={participantData} />
-        </NativePopover>
-      </>,
-      placeholderElement
-    );
-  }, []);
 
   if (isNull(activity) || isNull(openrank) || isNull(participant) || isNull(contributor)) return null;
 
