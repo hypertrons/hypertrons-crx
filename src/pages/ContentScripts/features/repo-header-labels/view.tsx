@@ -39,7 +39,6 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
   }, [options.locale]);
 
   useEffect(() => {
-
     const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
     render(
       <>
@@ -53,7 +52,7 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
             }}
           >
             <div style={{ marginRight: '5px' }}>{t('header_label_activity')}</div>
-            <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', {val:'$t(activity_icon)'})} />
+            <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', { icon_content: '$t(activity_icon)' })} />
           </div>
           <ActivityChart theme={githubTheme as 'light' | 'dark'} width={270} height={130} data={activityData} />
         </NativePopover>
@@ -67,7 +66,7 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
             }}
           >
             <div style={{ marginRight: '5px' }}>{t('header_label_OpenRank')}</div>
-            <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', {val:'$t(openrank_icon)'})} />
+            <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', { icon_content: '$t(openrank_icon)' })} />
           </div>
           <OpenRankChart theme={githubTheme as 'light' | 'dark'} width={270} height={130} data={openrankData} />
         </NativePopover>
@@ -81,7 +80,11 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
             }}
           >
             <div style={{ marginRight: '5px' }}>{t('header_label_contributor')}</div>
-            <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', {val:'$t(contributors_participants_icon)'})} />
+            <TooltipTrigger
+              iconColor="grey"
+              size={13}
+              content={t('icon_tip', { icon_content: '$t(contributors_participants_icon)' })}
+            />
           </div>
           <ContributorChart theme={githubTheme as 'light' | 'dark'} width={270} height={130} data={contributorData} />
           <div
@@ -93,7 +96,11 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
             }}
           >
             <div style={{ marginRight: '5px' }}>{t('header_label_participant')}</div>
-            <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', {val:'$t(contributors_participants_icon)'})} />
+            <TooltipTrigger
+              iconColor="grey"
+              size={13}
+              content={t('icon_tip', { icon_content: '$t(contributors_participants_icon)' })}
+            />
           </div>
           <ParticipantChart theme={githubTheme as 'light' | 'dark'} width={270} height={130} data={participantData} />
         </NativePopover>

@@ -72,7 +72,7 @@ const View = ({ currentRepo, issueDetail, meta }: Props): JSX.Element | null => 
       >
         <div style={{ marginRight: '5px' }}>{t('issue_popup_title')}</div>
 
-        <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', {val:'$t(issue_icon)'})} />
+        <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', { icon_content: '$t(issue_icon)' })} />
       </div>
 
       <IssueChart

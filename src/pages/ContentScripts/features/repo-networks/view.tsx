@@ -34,7 +34,7 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
         <div className="hypertrons-crx-title">
           <span>{t('component_projectCorrelationNetwork_title')}</span>
           <div className="hypertrons-crx-title-extra">
-            {t('global_period')}: {REPO_PERIOD} {t('global_day', {count:REPO_PERIOD})}
+            {t('global_period')}: {REPO_PERIOD} {t('global_day', { count: REPO_PERIOD })}
           </div>
         </div>
         <div className="d-flex flex-wrap flex-items-center">
@@ -58,7 +58,7 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
         <div className="hypertrons-crx-title">
           <span>{t('component_activeDeveloperCollaborationNetwork_title')}</span>
           <div className="hypertrons-crx-title-extra">
-            {t('global_period')}: {DEVELOPER_PERIOD} {t('global_day', {count:REPO_PERIOD})}
+            {t('global_period')}: {DEVELOPER_PERIOD} {t('global_day', { count: REPO_PERIOD })}
           </div>
         </div>
         <div className="d-flex flex-wrap flex-items-center">

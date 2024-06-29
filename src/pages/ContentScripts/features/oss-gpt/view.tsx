@@ -33,7 +33,7 @@ const UserTimeStamp: React.FC = () => {
 const displayResponseMessage = (locale: string) => {
   addResponseMessage(locale);
   renderCustomComponent(ResponseTimeStamp, {});
-}
+};
 
 const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
@@ -54,9 +54,9 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
     setHistory(['', '']); // clear history
     if (currentDocsName) {
       // if docs for current repo is available
-      displayResponseMessage(t('OSS_GPT_welcome', {val:currentRepo}));
+      displayResponseMessage(t('OSS_GPT_welcome', { repoName: currentRepo }));
     } else {
-      displayResponseMessage(t('OSS_GPT_notAvailable', {val:currentRepo}));
+      displayResponseMessage(t('OSS_GPT_notAvailable', { repoName: currentRepo }));
     }
   }, [options, currentRepo, currentDocsName]);
 
@@ -109,8 +109,8 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
   }, []);
 
   const subtitle = currentDocsName
-    ? t('OSS_GPT_subtitle', {val:currentRepo})
-    : t('OSS_GPT_subtitle_notAvailable', {val:currentRepo})
+    ? t('OSS_GPT_subtitle', { repoName: currentRepo })
+    : t('OSS_GPT_subtitle_notAvailable', { repoName: currentRepo });
 
   const handleNewUserMessage = async (newMessage: string) => {
     renderCustomComponent(UserTimeStamp, {});
@@ -128,7 +128,7 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
         setHistory([newMessage, answer]); // update history
       }
     } else {
-      displayResponseMessage(t('OSS_GPT_notAvailable', {val:currentRepo}));
+      displayResponseMessage(t('OSS_GPT_notAvailable', { repoName: currentRepo }));
     }
 
     toggleMsgLoader();

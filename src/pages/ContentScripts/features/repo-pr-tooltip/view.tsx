@@ -84,7 +84,7 @@ const View = ({ currentRepo, PRDetail, meta }: Props): JSX.Element | null => {
         }}
       >
         <div style={{ marginRight: '5px' }}>{t('pr_popup_title')}</div>
-        <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', {val:'$t(pr_icon)'})} />
+        <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', { icon_content: '$t(pr_icon)' })} />
       </div>
 
       <PRChart
@@ -104,7 +104,7 @@ const View = ({ currentRepo, PRDetail, meta }: Props): JSX.Element | null => {
         }}
       >
         <div style={{ marginRight: '5px' }}>{t('merged_lines_popup_title')}</div>
-        <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip',  {val:'$t(merged_lines_icon)'})} />
+        <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', { icon_content: '$t(merged_lines_icon)' })} />
       </div>
 
       <MergedLinesChart

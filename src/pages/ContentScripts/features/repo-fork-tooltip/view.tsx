@@ -39,7 +39,7 @@ const View = ({ forks, meta }: Props): JSX.Element | null => {
       >
         <div style={{ marginRight: '5px' }}>{t('fork_popup_title')}</div>
 
-        <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', {val:'$t(fork_icon)'})} />
+        <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', { icon_content: '$t(fork_icon)' })} />
       </div>
 
       <ForkChart
