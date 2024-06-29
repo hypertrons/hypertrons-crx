@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from 'react';
 import getGithubTheme from '../../../../helpers/get-github-theme';
+import { isNull } from '../../../../helpers/is-null';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
-import ForkChart from './ForkChart';
+import ActivityChart from './ActivityChart';
 import { RepoMeta } from '../../../../api/common';
+import React, { useState, useEffect } from 'react';
 import TooltipTrigger from '../../../../components/TooltipTrigger';
+
 import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
-
 const githubTheme = getGithubTheme();
 
 interface Props {
-  forks: any;
+  activity: any;
   meta: RepoMeta;
 }
 
-const View = ({ forks, meta }: Props): JSX.Element | null => {
+const ActivityView = ({ activity, meta }: Props): JSX.Element | null => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
   const { t, i18n } = useTranslation();
   useEffect(() => {
@@ -25,8 +26,9 @@ const View = ({ forks, meta }: Props): JSX.Element | null => {
     })();
   }, [options.locale]);
 
-  if (!forks) return null;
+  if (isNull(activity)) return null;
 
+  const activityData = generateDataByMonth(activity, meta.updatedAt);
   return (
     <>
       <div
@@ -37,19 +39,12 @@ const View = ({ forks, meta }: Props): JSX.Element | null => {
           alignItems: 'center',
         }}
       >
-        <div style={{ marginRight: '5px' }}>{t('fork_popup_title')}</div>
-
-        <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', { icon_content: '$t(fork_icon)' })} />
+        <div style={{ marginRight: '5px' }}>{t('header_label_activity')}</div>
+        <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', { icon_content: '$t(activity_icon)' })} />
       </div>
-
-      <ForkChart
-        theme={githubTheme as 'light' | 'dark'}
-        width={270}
-        height={130}
-        data={generateDataByMonth(forks, meta.updatedAt)}
-      />
+      <ActivityChart theme={githubTheme as 'light' | 'dark'} width={270} height={130} data={activityData} />
     </>
   );
 };
 
-export default View;
+export default ActivityView;

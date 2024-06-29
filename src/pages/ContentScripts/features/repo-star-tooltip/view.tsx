@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-
-import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import getGithubTheme from '../../../../helpers/get-github-theme';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
 import StarChart from './StarChart';
 import { RepoMeta } from '../../../../api/common';
 import TooltipTrigger from '../../../../components/TooltipTrigger';
+import { useTranslation } from 'react-i18next';
+import '../../../../helpers/i18n';
 
 const githubTheme = getGithubTheme();
 
@@ -17,12 +17,13 @@ interface Props {
 
 const View = ({ stars, meta }: Props): JSX.Element | null => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
-
+  const { t, i18n } = useTranslation();
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
+      i18n.changeLanguage(options.locale);
     })();
-  }, []);
+  }, [options.locale]);
 
   if (!stars) return null;
 
@@ -36,9 +37,9 @@ const View = ({ stars, meta }: Props): JSX.Element | null => {
           alignItems: 'center',
         }}
       >
-        <div style={{ marginRight: '5px' }}>{getMessageByLocale('star_popup_title', options.locale)}</div>
+        <div style={{ marginRight: '5px' }}>{t('star_popup_title')}</div>
 
-        <TooltipTrigger iconColor="grey" size={13} content={getMessageByLocale('star_icon', options.locale)} />
+        <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', { icon_content: '$t(star_icon)' })} />
       </div>
 
       <StarChart
