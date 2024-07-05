@@ -13,9 +13,9 @@ import {
 import { getAnswer } from './service';
 import './rcw.scss';
 import exists from '../../../../helpers/exists';
-import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
-
+import { useTranslation } from 'react-i18next';
+import '../../../../helpers/i18n';
 interface Props {
   theme: 'light' | 'dark';
   currentRepo: string;
@@ -30,19 +30,8 @@ const UserTimeStamp: React.FC = () => {
   return <div style={{ fontSize: '11px', textAlign: 'right', width: '100%' }}>{moment().format('LT')}</div>;
 };
 
-const displayWelcome = (repoName: string, locale: string) => {
-  addResponseMessage(getMessageByLocale('OSS_GPT_welcome', locale).replace('%v', repoName));
-  renderCustomComponent(ResponseTimeStamp, {});
-};
-
-const displayNotAvailable = (repoName: string, locale: string) => {
-  addResponseMessage(getMessageByLocale('OSS_GPT_notAvailable', locale).replace('%v', repoName));
-  renderCustomComponent(ResponseTimeStamp, {});
-};
-
-// Due to cost reasons, backend is not available now. This part can be removed when the backend is restored.
-const backendNotAvailable = (locale: string) => {
-  addResponseMessage(getMessageByLocale('OSS_GPT_errorMessage', locale));
+const displayResponseMessage = (locale: string) => {
+  addResponseMessage(locale);
   renderCustomComponent(ResponseTimeStamp, {});
 };
 
@@ -51,12 +40,13 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
   const [history, setHistory] = useState<[string, string]>(['', '']);
   const mouseDownX = useRef(0); // X position when mouse down
   const rcwWidth = useRef(0); // rcw width when mouse down
-
+  const { t, i18n } = useTranslation();
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
+      i18n.changeLanguage(options.locale);
     })();
-  }, []);
+  }, [options.locale]);
 
   useEffect(() => {
     // when repo changes
@@ -64,9 +54,9 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
     setHistory(['', '']); // clear history
     if (currentDocsName) {
       // if docs for current repo is available
-      displayWelcome(currentRepo, options.locale);
+      displayResponseMessage(t('OSS_GPT_welcome', { repoName: currentRepo }));
     } else {
-      displayNotAvailable(currentRepo, options.locale);
+      displayResponseMessage(t('OSS_GPT_notAvailable', { repoName: currentRepo }));
     }
   }, [options, currentRepo, currentDocsName]);
 
@@ -119,8 +109,8 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
   }, []);
 
   const subtitle = currentDocsName
-    ? getMessageByLocale('OSS_GPT_subtitle', options.locale).replace('%v', currentRepo)
-    : getMessageByLocale('OSS_GPT_subtitle_notAvailable', options.locale).replace('%v', currentRepo);
+    ? t('OSS_GPT_subtitle', { repoName: currentRepo })
+    : t('OSS_GPT_subtitle_notAvailable', { repoName: currentRepo });
 
   const handleNewUserMessage = async (newMessage: string) => {
     renderCustomComponent(UserTimeStamp, {});
@@ -130,7 +120,7 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
     if (currentDocsName) {
       const answer = await getAnswer(currentDocsName, newMessage, history);
       if (answer == 'error') {
-        backendNotAvailable(options.locale);
+        displayResponseMessage(t('OSS_GPT_errorMessage'));
       } else {
         addResponseMessage(answer);
         renderCustomComponent(ResponseTimeStamp, {});
@@ -138,7 +128,7 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
         setHistory([newMessage, answer]); // update history
       }
     } else {
-      displayNotAvailable(currentRepo, options.locale);
+      displayResponseMessage(t('OSS_GPT_notAvailable', { repoName: currentRepo }));
     }
 
     toggleMsgLoader();
