@@ -5,7 +5,6 @@ import elementReady from 'element-ready';
 
 const featureId = features.getFeatureID(import.meta.url);
 
-
 const getData = async (developerName: string): Promise<string | null> => {
   const jsonData = await getOpenrank(developerName);
   if (!jsonData) return null;
@@ -42,12 +41,12 @@ const init = async (): Promise<void> => {
         return;
       }
 
-      console.log("developerName", developerName);
+      console.log('developerName', developerName);
 
       // 获取悬浮卡片容器
       const $popoverContainer = 'body > div.sr-only.mt-n1';
       const popover = await elementReady($popoverContainer, { stopOnDomReady: false });
-      console.log("popover", popover);
+      console.log('popover', popover);
 
       // 获取开发者的排名信息
       const openrank = await getData(developerName);
