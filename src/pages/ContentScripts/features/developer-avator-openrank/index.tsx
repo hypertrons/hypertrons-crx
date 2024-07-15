@@ -1,11 +1,21 @@
 import features from '../../../../feature-manager';
 
 import { getOpenrank } from '../../../../api/developer';
+import elementReady from 'element-ready';
 
 const featureId = features.getFeatureID(import.meta.url);
 
+
 const getData = async (developerName: string): Promise<string | null> => {
-  return await getOpenrank(developerName);
+  const jsonData = await getOpenrank(developerName);
+  if (!jsonData) return null;
+
+  const keys = Object.keys(jsonData);
+  if (keys.length === 0) return null;
+
+  keys.sort(); // 按键排序，假设键是 ISO 日期格式
+  const latestKey = keys[keys.length - 1];
+  return jsonData[latestKey];
 };
 
 // 获取开发者名称的函数
@@ -19,37 +29,25 @@ const getDeveloperName = (target: HTMLElement): string | null => {
 };
 
 // 初始化函数
-// 初始化函数
 const init = async (): Promise<void> => {
-  // 监听全局鼠标悬停事件
-  document.onmouseover = async (event) => {
-    const target = event.target as HTMLElement;
+  // 监听具有 data-hovercard-type="user" 属性的元素
+  document.querySelectorAll('[data-hovercard-type="user"]').forEach((element) => {
+    element.addEventListener('mouseover', async () => {
+      console.log('mouseover', element);
 
-    console.log('target:', target.id);
-
-    // 检查是否悬停在 img 元素或其最近的父元素上
-    let elementWithHovercard: HTMLElement | null = null;
-
-    if (target.tagName === 'img' && target.hasAttribute('data-hovercard-type')) {
-      elementWithHovercard = target;
-    } else {
-      elementWithHovercard = target.closest('[data-hovercard-type]');
-    }
-
-    if (elementWithHovercard) {
       // 获取开发者名称
-      const developerName = getDeveloperName(elementWithHovercard);
+      const developerName = getDeveloperName(element as HTMLElement);
       if (!developerName) {
         console.error('Developer name not found');
         return;
       }
 
-      // 获取 js-global-screen-reader-notice 容器
-      const noticeContainer = document.getElementById('js-global-screen-reader-notice');
-      if (!noticeContainer) {
-        console.error('Notice container not found');
-        return;
-      }
+      console.log("developerName", developerName);
+
+      // 获取悬浮卡片容器
+      const $popoverContainer = 'body > div.sr-only.mt-n1';
+      const popover = await elementReady($popoverContainer, { stopOnDomReady: false });
+      console.log("popover", popover);
 
       // 获取开发者的排名信息
       const openrank = await getData(developerName);
@@ -58,16 +56,12 @@ const init = async (): Promise<void> => {
         return;
       }
 
-      // 创建新的 HTML 元素
-      const para = document.createElement('p');
-      para.id = 'current-developer-openrank';
-      para.innerHTML = `OpenRank ${openrank}`;
-      para.style.color = 'red';
-
-      // 将新创建的元素插入到容器内容的前面
-      noticeContainer.insertBefore(para, noticeContainer.firstChild);
-    }
-  };
+      // 将 OpenRank 信息作为红色文本直接插入到悬浮卡片容器内容的前面
+      if (popover) {
+        popover.innerHTML = `OpenRank ${openrank} ` + popover.innerHTML;
+      }
+    });
+  });
 };
 
 features.add(featureId, {
