@@ -47,11 +47,8 @@ const init = async (): Promise<void> => {
       return;
     }
 
-    console.log('Developer Name:', developerName);
-
     let openrank = await getData(developerName);
     if (openrank === null) {
-      console.error('Rank data not found');
       openrank = 'OpenRank data not found';
     } else {
       openrank = `OpenRank ${openrank}`;
