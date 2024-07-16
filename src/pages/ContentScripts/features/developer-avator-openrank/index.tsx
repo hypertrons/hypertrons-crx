@@ -40,7 +40,6 @@ const createTooltip = (text: string): HTMLDivElement => {
 };
 
 const init = async (): Promise<void> => {
-  // 函数来处理鼠标悬停事件
   const handleMouseOver = async (element: HTMLElement, event: MouseEvent) => {
     const developerName = getDeveloperName(element);
     if (!developerName) {
@@ -50,19 +49,19 @@ const init = async (): Promise<void> => {
 
     console.log('Developer Name:', developerName);
 
-    const openrank = await getData(developerName);
+    let openrank = await getData(developerName);
     if (openrank === null) {
       console.error('Rank data not found');
-      return;
+      openrank = 'OpenRank data not found';
+    } else {
+      openrank = `OpenRank ${openrank}`;
     }
 
-    const openrankText = `OpenRank ${openrank}`;
     let tooltip = document.getElementById('openrank-tooltip') as HTMLDivElement;
-
     if (!tooltip) {
-      tooltip = createTooltip(openrankText);
+      tooltip = createTooltip(openrank);
     } else {
-      tooltip.innerText = openrankText;
+      tooltip.innerText = openrank;
     }
 
     const updateTooltipPosition = (e: MouseEvent) => {
@@ -74,22 +73,18 @@ const init = async (): Promise<void> => {
       let left = e.clientX + offsetX + window.scrollX;
       let top = e.clientY + offsetY + window.scrollY;
 
-      // Check if the tooltip goes beyond the right edge of the viewport
       if (left + tooltipWidth > window.innerWidth + window.scrollX) {
         left = e.clientX - tooltipWidth - offsetX + window.scrollX;
       }
 
-      // Check if the tooltip goes beyond the bottom edge of the viewport
       if (top + tooltipHeight > window.innerHeight + window.scrollY) {
         top = e.clientY - tooltipHeight - offsetY + window.scrollY;
       }
 
-      // Ensure tooltip doesn't go beyond the left edge of the viewport
       if (left < window.scrollX) {
         left = window.scrollX;
       }
 
-      // Ensure tooltip doesn't go beyond the top edge of the viewport
       if (top < window.scrollY) {
         top = window.scrollY;
       }
@@ -123,10 +118,8 @@ const init = async (): Promise<void> => {
     });
   };
 
-  // 初始绑定
   bindEventListeners();
 
-  // 观察 DOM 变化，动态为新添加的元素绑定事件
   const observer = new MutationObserver(() => {
     bindEventListeners();
   });
