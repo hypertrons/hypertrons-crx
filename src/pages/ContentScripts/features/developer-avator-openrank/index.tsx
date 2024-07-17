@@ -26,7 +26,6 @@ const init = async (): Promise<void> => {
   // 监听具有 data-hovercard-type="user" 属性的元素
   document.querySelectorAll('[data-hovercard-type="user"]').forEach((element) => {
     element.addEventListener('mouseover', async () => {
-      console.log('mouseover', element);
 
       // 获取开发者名称
       const developerName = getDeveloperName(element as HTMLElement);
@@ -34,8 +33,6 @@ const init = async (): Promise<void> => {
         console.error('Developer name not found');
         return;
       }
-
-      console.log('developerName', developerName);
 
       // 获取开发者的排名信息
       const openrank = await getData(developerName);
@@ -59,7 +56,7 @@ const init = async (): Promise<void> => {
         openRankDiv.textContent = ` OpenRank ${openrank} `;
         popover.appendChild(openRankDiv);
       } else {
-        console.error('Popover container not found or OpenRank info already inserted');
+        console.error('OpenRank info already inserted');
       }
     });
   });
