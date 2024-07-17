@@ -26,7 +26,6 @@ const init = async (): Promise<void> => {
   // 监听具有 data-hovercard-type="user" 属性的元素
   document.querySelectorAll('[data-hovercard-type="user"]').forEach((element) => {
     element.addEventListener('mouseover', async () => {
-
       // 获取开发者名称
       const developerName = getDeveloperName(element as HTMLElement);
       if (!developerName) {
@@ -45,7 +44,6 @@ const init = async (): Promise<void> => {
       const $popoverContainer =
         'body > div.logged-in.env-production.page-responsive > div.Popover.js-hovercard-content.position-absolute > div > div > div';
       const popover = await elementReady($popoverContainer, { stopOnDomReady: false });
-      console.log('popover', popover);
 
       // 检查是否已经插入了 OpenRank 信息
       if (popover && !popover.querySelector('.openrank-info')) {
