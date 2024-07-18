@@ -24,10 +24,14 @@ const getDeveloperName = (target: HTMLElement): string | null => {
 };
 
 const init = async (): Promise<void> => {
-  // Listen for elements with data-hovercard-type="user" attribute
-  document.querySelectorAll('[data-hovercard-type="user"]').forEach((element) => {
+  const hovercardSelector = '[data-hovercard-type="user"]';
+
+  document.querySelectorAll(hovercardSelector).forEach((element) => {
     element.addEventListener('mouseover', async () => {
       const developerName = getDeveloperName(element as HTMLElement) as string;
+
+      // Create a unique identifier for the popover
+      const popoverId = `popover-${developerName}`;
 
       // Get the floating card container
       const $popoverContainer =
@@ -44,12 +48,20 @@ const init = async (): Promise<void> => {
         }
       }
 
+      // Set the popover's unique identifier
+      popover?.setAttribute('data-popover-id', popoverId);
+
       const openrank = (await getDeveloperLatestOpenrank(developerName)) as string;
 
+      if (!openrank) {
+        return;
+      }
+
       if (popover) {
-        renderOpenRank(popover, developerName, openrank);
-      } else {
-        console.error('Popover container not found');
+        // Check if the popover is still associated with the correct developer
+        if (popover.getAttribute('data-popover-id') === popoverId) {
+          renderOpenRank(popover, developerName, openrank);
+        }
       }
     });
   });
