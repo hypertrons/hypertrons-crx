@@ -4,7 +4,6 @@ import getGithubTheme from '../../../../helpers/get-github-theme';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
-import { numberWithCommas } from '../../../../helpers/formatter';
 import { rocketLight, rocketDark } from './base64';
 
 interface OpenRankProps {
@@ -43,7 +42,7 @@ const OpenRankView: React.FC<OpenRankProps> = ({ developerName, openrank }) => {
         <img
           width={20}
           height={20}
-          style={{ float: 'left', marginLeft: '0px' }}
+          style={{ display: 'inline-block', verticalAlign: 'middle', position: 'relative', left: '-3px' }}
           src={theme === 'light' ? rocketLight : rocketDark}
           alt=""
         />
