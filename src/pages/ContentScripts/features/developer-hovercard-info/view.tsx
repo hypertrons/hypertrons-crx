@@ -43,7 +43,7 @@ const OpenRankView: React.FC<OpenRankProps> = ({ developerName, openrank }) => {
         <img
           width={20}
           height={20}
-          style={{ float: 'left' }}
+          style={{ float: 'left', marginLeft: '0px' }}
           src={theme === 'light' ? rocketLight : rocketDark}
           alt=""
         />

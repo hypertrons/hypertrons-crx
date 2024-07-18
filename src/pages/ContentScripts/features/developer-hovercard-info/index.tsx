@@ -27,11 +27,7 @@ const init = async (): Promise<void> => {
   // Listen for elements with data-hovercard-type="user" attribute
   document.querySelectorAll('[data-hovercard-type="user"]').forEach((element) => {
     element.addEventListener('mouseover', async () => {
-      const developerName = getDeveloperName(element as HTMLElement);
-      if (!developerName) {
-        console.error('Developer name not found');
-        return;
-      }
+      const developerName = getDeveloperName(element as HTMLElement) as string;
 
       // Get the floating card container
       const $popoverContainer =
@@ -48,11 +44,7 @@ const init = async (): Promise<void> => {
         }
       }
 
-      const openrank = await getDeveloperLatestOpenrank(developerName);
-      if (openrank === null) {
-        console.error('Rank data not found');
-        return;
-      }
+      const openrank = (await getDeveloperLatestOpenrank(developerName)) as string;
 
       if (popover) {
         renderOpenRank(popover, developerName, openrank);
