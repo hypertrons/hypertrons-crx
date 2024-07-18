@@ -25,9 +25,15 @@ const getDeveloperName = (target: HTMLElement): string | null => {
 
 const init = async (): Promise<void> => {
   const hovercardSelector = '[data-hovercard-type="user"]';
-
   document.querySelectorAll(hovercardSelector).forEach((element) => {
+    let isProcessing = false;
+
     element.addEventListener('mouseover', async () => {
+      if (isProcessing) {
+        return;
+      }
+      isProcessing = true;
+
       const developerName = getDeveloperName(element as HTMLElement) as string;
 
       // Create a unique identifier for the popover
@@ -63,6 +69,8 @@ const init = async (): Promise<void> => {
           renderOpenRank(popover, developerName, openrank);
         }
       }
+
+      isProcessing = false;
     });
   });
 };
