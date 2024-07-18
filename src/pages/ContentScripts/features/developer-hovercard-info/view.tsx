@@ -42,11 +42,11 @@ const OpenRankView: React.FC<OpenRankProps> = ({ developerName, openrank }) => {
         <img
           width={20}
           height={20}
-          style={{ display: 'inline-block', verticalAlign: 'middle', position: 'relative', left: '-3px' }}
+          style={{ display: 'inline-block', verticalAlign: 'middle', position: 'relative', left: '-2.5px' }}
           src={theme === 'light' ? rocketLight : rocketDark}
           alt=""
         />
-        OpenRank {openrank}
+        <span style={{ display: 'inline-block', verticalAlign: 'middle' }}>OpenRank {openrank}</span>
       </div>
     </div>
   );
