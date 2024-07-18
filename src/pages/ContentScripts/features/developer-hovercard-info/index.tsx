@@ -26,6 +26,7 @@ const getDeveloperName = (target: HTMLElement): string | null => {
 const init = async (): Promise<void> => {
   const hovercardSelector = '[data-hovercard-type="user"]';
   document.querySelectorAll(hovercardSelector).forEach((element) => {
+    // isProcessing is used to Prevent OpenRank from adding duplicates
     let isProcessing = false;
 
     element.addEventListener('mouseover', async () => {
@@ -55,6 +56,7 @@ const init = async (): Promise<void> => {
       }
 
       // Set the popover's unique identifier
+      // make the current OpenRank information and person match
       popover?.setAttribute('data-popover-id', popoverId);
 
       const openrank = (await getDeveloperLatestOpenrank(developerName)) as string;
@@ -70,6 +72,7 @@ const init = async (): Promise<void> => {
         }
       }
 
+      // Regardless of whether the current event is being processed, check and update the openrank information if necessary.
       isProcessing = false;
     });
   });
