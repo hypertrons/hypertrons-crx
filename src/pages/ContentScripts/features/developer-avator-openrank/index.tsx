@@ -4,21 +4,21 @@ import elementReady from 'element-ready';
 
 const featureId = features.getFeatureID(import.meta.url);
 
-const getData = async (developerName: string): Promise<string | null> => {
+const getDeveloperLatestOpenrank = async (developerName: string): Promise<string | null> => {
   const data = await getOpenrank(developerName);
   if (data) {
-    const keys = Object.keys(data);
-    const latestKey = keys[keys.length - 1];
-    return data[latestKey];
+    const values = Object.values(data) as string[];
+    const latestValue = values[values.length - 1];
+    return latestValue;
   }
   return null;
 };
 
 const getDeveloperName = (target: HTMLElement): string | null => {
-  const hovercardUrl = target.getAttribute('data-hovercard-url');
-  if (!hovercardUrl) return null;
+  const hovercardUrlAttribute = target.getAttribute('data-hovercard-url');
+  if (!hovercardUrlAttribute) return null;
 
-  const matches = hovercardUrl.match(/\/users\/([^\/]+)\/hovercard/);
+  const matches = hovercardUrlAttribute.match(/\/users\/([^\/]+)\/hovercard/);
   return matches ? matches[1] : null;
 };
 
@@ -34,7 +34,7 @@ const init = async (): Promise<void> => {
       }
 
       // 获取开发者的排名信息
-      const openrank = await getData(developerName);
+      const openrank = await getDeveloperLatestOpenrank(developerName);
       if (openrank === null) {
         console.error('Rank data not found');
         return;
