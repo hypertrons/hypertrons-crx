@@ -505,8 +505,8 @@ img.rcw-picker-icon {
   box-shadow: none;
 }
 .emoji-mart-emoji-native {
-  font-family: Segoe UI Emoji, Segoe UI Symbol, Segoe UI, Apple Color Emoji,
-    Twemoji Mozilla, Noto Color Emoji, Android Emoji;
+  font-family: Segoe UI Emoji, Segoe UI Symbol, Segoe UI, Apple Color Emoji, Twemoji Mozilla, Noto Color Emoji,
+    Android Emoji;
 }
 .emoji-mart-no-results {
   font-size: 14px;
@@ -679,8 +679,7 @@ img.rcw-picker-icon {
   height: 38px;
   padding: 0 2px 0 0;
 }
-.emoji-mart-skin-swatches.custom.opened
-  .emoji-mart-skin-swatch.custom.selected:after {
+.emoji-mart-skin-swatches.custom.opened .emoji-mart-skin-swatch.custom.selected:after {
   opacity: 0.75;
 }
 .emoji-mart-skin-text.opened {

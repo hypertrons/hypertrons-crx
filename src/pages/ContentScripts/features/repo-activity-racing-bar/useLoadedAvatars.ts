@@ -2,9 +2,7 @@ import { avatarColorStore } from './AvatarColorStore';
 
 import { useState } from 'react';
 
-export const useLoadedAvatars = (
-  contributors: string[]
-): [number, () => void] => {
+export const useLoadedAvatars = (contributors: string[]): [number, () => void] => {
   const [loadedAvatars, setLoadedAvatars] = useState(0);
 
   const load = async () => {

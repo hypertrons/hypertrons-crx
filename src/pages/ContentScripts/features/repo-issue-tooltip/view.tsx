@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
 import getGithubTheme from '../../../../helpers/get-github-theme';
-import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import { isNull, isAllNull } from '../../../../helpers/is-null';
-import optionsStorage, {
-  HypercrxOptions,
-  defaults,
-} from '../../../../options-storage';
+import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
-import ReactTooltip from 'react-tooltip';
 import IssueChart from './IssueChart';
 import { RepoMeta } from '../../../../api/common';
-
+import TooltipTrigger from '../../../../components/TooltipTrigger';
+import { useTranslation } from 'react-i18next';
+import '../../../../helpers/i18n';
 const githubTheme = getGithubTheme();
 
 export interface IssueDetail {
@@ -34,18 +31,15 @@ const generateData = (issueDetail: IssueDetail, updatedAt: number): any => {
   };
 };
 
-const View = ({
-  currentRepo,
-  issueDetail,
-  meta,
-}: Props): JSX.Element | null => {
+const View = ({ currentRepo, issueDetail, meta }: Props): JSX.Element | null => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
-
+  const { t, i18n } = useTranslation();
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
+      i18n.changeLanguage(options.locale);
     })();
-  }, []);
+  }, [options.locale]);
 
   if (isNull(issueDetail) || isAllNull(issueDetail)) return null;
 
@@ -63,16 +57,24 @@ const View = ({
     if (month.length < 2) {
       month = '0' + month;
     }
-    window.open(
-      `/${currentRepo}/issues?q=is:issue ${type}:${year}-${month} sort:updated-asc`
-    );
+    window.open(`/${currentRepo}/issues?q=is:issue ${type}:${year}-${month} sort:updated-asc`);
   };
 
   return (
-    <ReactTooltip id="issue-tooltip" clickable={true}>
-      <div className="chart-title">
-        {getMessageByLocale('issue_popup_title', options.locale)}
+    <>
+      <div
+        className="chart-title"
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <div style={{ marginRight: '5px' }}>{t('issue_popup_title')}</div>
+
+        <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', { icon_content: '$t(issue_icon)' })} />
       </div>
+
       <IssueChart
         theme={githubTheme as 'light' | 'dark'}
         width={300}
@@ -80,7 +82,7 @@ const View = ({
         data={generateData(issueDetail, meta.updatedAt)}
         onClick={onClick}
       />
-    </ReactTooltip>
+    </>
   );
 };
 

@@ -21,10 +21,7 @@ interface GraphProps {
 
 const NODE_SIZE = [10, 25];
 
-const generateEchartsData = (
-  data: any,
-  focusedNodeID: string | undefined
-): any => {
+const generateEchartsData = (data: any, focusedNodeID: string | undefined): any => {
   const generateNodes = (nodes: any[]): any => {
     const values: number[] = nodes.map((item) => item[1]);
     const minMax = [Math.min(...values), Math.max(...values)];

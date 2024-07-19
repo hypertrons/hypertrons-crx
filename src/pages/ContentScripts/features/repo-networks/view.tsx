@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
 import Graph from '../../../../components/Graph';
-import getMessageByLocale from '../../../../helpers/get-message-by-locale';
-import optionsStorage, {
-  HypercrxOptions,
-  defaults,
-} from '../../../../options-storage';
-
+import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
+import { useTranslation } from 'react-i18next';
+import '../../../../helpers/i18n';
 const DEVELOPER_PERIOD = 90;
 const REPO_PERIOD = 90;
 
@@ -21,68 +18,37 @@ const graphStyle = {
   height: '380px',
 };
 
-const View = ({
-  currentRepo,
-  repoNetwork,
-  developerNetwork,
-}: Props): JSX.Element => {
+const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
-
+  const { t, i18n } = useTranslation();
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
+      i18n.changeLanguage(options.locale);
     })();
-  }, []);
+  }, [options.locale]);
 
   return (
     <div>
       <div className="hypertrons-crx-border hypertrons-crx-container">
         <div className="hypertrons-crx-title">
-          <span>
-            {getMessageByLocale(
-              'component_projectCorrelationNetwork_title',
-              options.locale
-            )}
-          </span>
+          <span>{t('component_projectCorrelationNetwork_title')}</span>
           <div className="hypertrons-crx-title-extra">
-            {getMessageByLocale('global_period', options.locale)}: {REPO_PERIOD}{' '}
-            {getMessageByLocale('global_day', options.locale)}
+            {t('global_period')}: {REPO_PERIOD} {t('global_day', { count: REPO_PERIOD })}
           </div>
         </div>
         <div className="d-flex flex-wrap flex-items-center">
           <div className="col-12 col-md-8">
             <div style={{ margin: '10px 0 20px 20px' }}>
-              <Graph
-                data={repoNetwork}
-                style={graphStyle}
-                focusedNodeID={currentRepo}
-              />
+              <Graph data={repoNetwork} style={graphStyle} focusedNodeID={currentRepo} />
             </div>
           </div>
           <div className="col-12 col-md-4">
-            <div
-              className="color-text-secondary"
-              style={{ marginLeft: '35px', marginRight: '35px' }}
-            >
-              <p>
-                {getMessageByLocale(
-                  'component_projectCorrelationNetwork_description',
-                  options.locale
-                )}
-              </p>
+            <div className="color-text-secondary" style={{ marginLeft: '35px', marginRight: '35px' }}>
+              <p>{t('component_projectCorrelationNetwork_description')}</p>
               <ul style={{ margin: '0px 0 10px 15px' }}>
-                <li>
-                  {getMessageByLocale(
-                    'component_projectCorrelationNetwork_description_node',
-                    options.locale
-                  )}
-                </li>
-                <li>
-                  {getMessageByLocale(
-                    'component_projectCorrelationNetwork_description_edge',
-                    options.locale
-                  )}
-                </li>
+                <li>{t('component_projectCorrelationNetwork_description_node')}</li>
+                <li>{t('component_projectCorrelationNetwork_description_edge')}</li>
               </ul>
             </div>
           </div>
@@ -90,16 +56,9 @@ const View = ({
       </div>
       <div className="hypertrons-crx-border hypertrons-crx-container">
         <div className="hypertrons-crx-title">
-          <span>
-            {getMessageByLocale(
-              'component_activeDeveloperCollaborationNetwork_title',
-              options.locale
-            )}
-          </span>
+          <span>{t('component_activeDeveloperCollaborationNetwork_title')}</span>
           <div className="hypertrons-crx-title-extra">
-            {getMessageByLocale('global_period', options.locale)}:{' '}
-            {DEVELOPER_PERIOD}{' '}
-            {getMessageByLocale('global_day', options.locale)}
+            {t('global_period')}: {DEVELOPER_PERIOD} {t('global_day', { count: REPO_PERIOD })}
           </div>
         </div>
         <div className="d-flex flex-wrap flex-items-center">
@@ -109,29 +68,11 @@ const View = ({
             </div>
           </div>
           <div className="col-12 col-md-4">
-            <div
-              className="color-text-secondary"
-              style={{ marginLeft: '35px', marginRight: '35px' }}
-            >
-              <p>
-                {getMessageByLocale(
-                  'component_activeDeveloperCollaborationNetwork_description',
-                  options.locale
-                )}
-              </p>
+            <div className="color-text-secondary" style={{ marginLeft: '35px', marginRight: '35px' }}>
+              <p>{t('component_activeDeveloperCollaborationNetwork_description')}</p>
               <ul style={{ margin: '0px 0 10px 15px' }}>
-                <li>
-                  {getMessageByLocale(
-                    'component_activeDeveloperCollaborationNetwork_description_node',
-                    options.locale
-                  )}
-                </li>
-                <li>
-                  {getMessageByLocale(
-                    'component_activeDeveloperCollaborationNetwork_description_edge',
-                    options.locale
-                  )}
-                </li>
+                <li>{t('component_activeDeveloperCollaborationNetwork_description_node')}</li>
+                <li>{t('component_activeDeveloperCollaborationNetwork_description_edge')}</li>
               </ul>
             </div>
           </div>

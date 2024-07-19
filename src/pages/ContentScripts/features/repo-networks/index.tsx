@@ -4,10 +4,7 @@ import $ from 'jquery';
 
 import features from '../../../../feature-manager';
 import isPerceptor from '../../../../helpers/is-perceptor';
-import {
-  getRepoName,
-  isPublicRepoWithMeta,
-} from '../../../../helpers/get-repo-info';
+import { getRepoName, isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
 import { getRepoNetwork, getDeveloperNetwork } from '../../../../api/repo';
 import View from './view';
 import DataNotFound from './DataNotFound';
@@ -27,14 +24,7 @@ const renderTo = (container: Container) => {
     render(<DataNotFound />, container);
     return;
   }
-  render(
-    <View
-      currentRepo={repoName}
-      repoNetwork={repoNetworks}
-      developerNetwork={developerNetworks}
-    />,
-    container
-  );
+  render(<View currentRepo={repoName} repoNetwork={repoNetworks} developerNetwork={developerNetworks} />, container);
 };
 
 const init = async (): Promise<void> => {

@@ -1,8 +1,4 @@
-import getMessageByLocale from '../../../../helpers/get-message-by-locale';
-import optionsStorage, {
-  HypercrxOptions,
-  defaults,
-} from '../../../../options-storage';
+import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import RacingBar, { MediaControlers } from './RacingBar';
 import { RepoActivityDetails, getMonthlyData } from './data';
 import { PlayerButton } from './PlayerButton';
@@ -10,13 +6,9 @@ import { SpeedController } from './SpeedController';
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Space } from 'antd';
-import {
-  PlayCircleFilled,
-  StepBackwardFilled,
-  StepForwardFilled,
-  PauseCircleFilled,
-} from '@ant-design/icons';
-
+import { PlayCircleFilled, StepBackwardFilled, StepForwardFilled, PauseCircleFilled } from '@ant-design/icons';
+import { useTranslation } from 'react-i18next';
+import '../../../../helpers/i18n';
 interface Props {
   currentRepo: string;
   repoActivityDetails: RepoActivityDetails;
@@ -27,23 +19,19 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
   const [speed, setSpeed] = useState<number>(1);
   const [playing, setPlaying] = useState<boolean>(false);
   const mediaControlersRef = useRef<MediaControlers>(null);
-
+  const { t, i18n } = useTranslation();
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
+      i18n.changeLanguage(options.locale);
     })();
-  }, []);
+  }, [options.locale]);
 
   return (
     <div>
       <div className="hypertrons-crx-border hypertrons-crx-container">
         <div className="hypertrons-crx-title">
-          <span>
-            {getMessageByLocale(
-              'component_projectRacingBar_title',
-              options.locale
-            )}
-          </span>
+          <span>{t('component_projectRacingBar_title')}</span>
           <div className="hypertrons-crx-title-extra developer-tab">
             <Space>
               {/* speed control */}
@@ -97,16 +85,8 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
             </div>
           </div>
           <div className="col-12 col-md-4">
-            <div
-              className="color-text-secondary"
-              style={{ marginLeft: '35px', marginRight: '35px' }}
-            >
-              <p>
-                {getMessageByLocale(
-                  'component_projectRacingBar_description',
-                  options.locale
-                )}
-              </p>
+            <div className="color-text-secondary" style={{ marginLeft: '35px', marginRight: '35px' }}>
+              <p>{t('component_projectRacingBar_description')}</p>
             </div>
           </div>
         </div>

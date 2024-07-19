@@ -5,10 +5,7 @@ import * as pageDetect from 'github-url-detection';
 import elementReady from 'element-ready';
 
 import features from '../../../../feature-manager';
-import {
-  getDeveloperName,
-  isDeveloperWithMeta,
-} from '../../../../helpers/get-developer-info';
+import { getDeveloperName, isDeveloperWithMeta } from '../../../../helpers/get-developer-info';
 import { getDeveloperNetwork, getRepoNetwork } from '../../../../api/developer';
 import View from './view';
 
@@ -27,11 +24,7 @@ const renderTo = (container: Container) => {
     return;
   }
   render(
-    <View
-      currentRepo={developerName}
-      developerNetwork={developerNetworks}
-      repoNetwork={repoNetworks}
-    />,
+    <View currentRepo={developerName} developerNetwork={developerNetworks} repoNetwork={repoNetworks} />,
     container
   );
 };

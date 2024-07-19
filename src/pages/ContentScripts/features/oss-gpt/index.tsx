@@ -13,8 +13,7 @@ interface DocsMetaItem {
   key: string; // corresponding docs name
 }
 
-const DOCS_META_DATA_URL =
-  'https://oss.x-lab.info/hypercrx/docsgpt_active_docs.json';
+const DOCS_META_DATA_URL = 'https://oss.x-lab.info/hypercrx/docsgpt_active_docs.json';
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
 let docsMetaData: DocsMetaItem[];

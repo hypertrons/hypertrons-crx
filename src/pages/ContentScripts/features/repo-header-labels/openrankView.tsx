@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from 'react';
 import getGithubTheme from '../../../../helpers/get-github-theme';
+import { isNull } from '../../../../helpers/is-null';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
-import ForkChart from './ForkChart';
+import OpenRankChart from './OpenRankChart';
 import { RepoMeta } from '../../../../api/common';
+import React, { useState, useEffect } from 'react';
 import TooltipTrigger from '../../../../components/TooltipTrigger';
+
 import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
-
 const githubTheme = getGithubTheme();
 
 interface Props {
-  forks: any;
+  openrank: any;
   meta: RepoMeta;
 }
 
-const View = ({ forks, meta }: Props): JSX.Element | null => {
+const OpenrankView = ({ openrank, meta }: Props): JSX.Element | null => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
   const { t, i18n } = useTranslation();
   useEffect(() => {
@@ -25,8 +26,9 @@ const View = ({ forks, meta }: Props): JSX.Element | null => {
     })();
   }, [options.locale]);
 
-  if (!forks) return null;
+  if (isNull(openrank)) return null;
 
+  const openrankData = generateDataByMonth(openrank, meta.updatedAt);
   return (
     <>
       <div
@@ -37,19 +39,12 @@ const View = ({ forks, meta }: Props): JSX.Element | null => {
           alignItems: 'center',
         }}
       >
-        <div style={{ marginRight: '5px' }}>{t('fork_popup_title')}</div>
-
-        <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', { icon_content: '$t(fork_icon)' })} />
+        <div style={{ marginRight: '5px' }}>{t('header_label_OpenRank')}</div>
+        <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', { icon_content: '$t(openrank_icon)' })} />
       </div>
-
-      <ForkChart
-        theme={githubTheme as 'light' | 'dark'}
-        width={270}
-        height={130}
-        data={generateDataByMonth(forks, meta.updatedAt)}
-      />
+      <OpenRankChart theme={githubTheme as 'light' | 'dark'} width={270} height={130} data={openrankData} />
     </>
   );
 };
 
-export default View;
+export default OpenrankView;
