@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import ReactModal from 'react-modal';
+
 import Graph from '../../../../components/Graph';
+import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import { iconDeveloperNetwork, iconRepoNetwork } from './icon-svg-path';
 import './react-modal.scss';
-import { useTranslation } from 'react-i18next';
-import '../../../../helpers/i18n';
+
 const DEVELOPER_PERIOD = 90;
 const REPO_PERIOD = 90;
 const GRAPH_STYLE = {
@@ -22,12 +23,12 @@ const View = ({ currentRepo: currentDeveloper, developerNetwork, repoNetwork }: 
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
   const [showDeveloperNetwork, setShowDeveloperNetwork] = useState(false);
   const [showRepoNetwork, setShowRepoNetwork] = useState(false);
-  const { t, i18n } = useTranslation();
+
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
     })();
-  }, [options.locale]);
+  }, []);
 
   return (
     <div className="border-top color-border-secondary pt-3 mt-3">
@@ -55,14 +56,17 @@ const View = ({ currentRepo: currentDeveloper, developerNetwork, repoNetwork }: 
             }}
           >
             <span
-              title={`${t('global_clickToshow')} ${t('component_developerCollaborationNetwork_title')}`}
+              title={`${getMessageByLocale('global_clickToshow', options.locale)} ${getMessageByLocale(
+                'component_developerCollaborationNetwork_title',
+                options.locale
+              )}`}
               className="Label"
               style={{
                 color: 'var(--color-fg-default)',
                 fontWeight: 'var(--base-text-weight-normal, 400)',
               }}
             >
-              {t('component_developerCollaborationNetwork_title')}
+              {getMessageByLocale('component_developerCollaborationNetwork_title', options.locale)}
             </span>
           </button>
         </li>
@@ -88,14 +92,17 @@ const View = ({ currentRepo: currentDeveloper, developerNetwork, repoNetwork }: 
             }}
           >
             <span
-              title={`${t('global_clickToshow')} ${t('component_mostParticipatedProjects_title')}`}
+              title={`${getMessageByLocale('global_clickToshow', options.locale)} ${getMessageByLocale(
+                'component_mostParticipatedProjects_title',
+                options.locale
+              )}`}
               className="Label"
               style={{
                 color: 'var(--color-fg-default)',
                 fontWeight: 'var(--base-text-weight-normal, 400)',
               }}
             >
-              {t('component_mostParticipatedProjects_title')}
+              {getMessageByLocale('component_mostParticipatedProjects_title', options.locale)}
             </span>
           </button>
         </li>
@@ -112,9 +119,10 @@ const View = ({ currentRepo: currentDeveloper, developerNetwork, repoNetwork }: 
       >
         <div>
           <div className="hypertrons-crx-title">
-            <span>{t('component_developerCollaborationNetwork_title')}</span>
+            <span>{getMessageByLocale('component_developerCollaborationNetwork_title', options.locale)}</span>
             <div className="hypertrons-crx-title-extra developer-tab">
-              {t('global_period')}: {REPO_PERIOD} {t('global_day', { count: REPO_PERIOD })}
+              {getMessageByLocale('global_period', options.locale)}: {REPO_PERIOD}{' '}
+              {getMessageByLocale('global_day', options.locale)}
             </div>
           </div>
           <div className="d-flex flex-wrap justify-content-lg-between align-items-center">
@@ -125,10 +133,14 @@ const View = ({ currentRepo: currentDeveloper, developerNetwork, repoNetwork }: 
             </div>
             <div className="col-4 description-container">
               <div className="color-text-secondary developer-tab">
-                <p>{t('component_developerCollaborationNetwork_description')}</p>
+                <p>{getMessageByLocale('component_developerCollaborationNetwork_description', options.locale)}</p>
                 <ul style={{ margin: '0px 0 10px 15px' }}>
-                  <li>{t('component_developerCollaborationNetwork_description_node')}</li>
-                  <li>{t('component_developerCollaborationNetwork_description_edge')}</li>
+                  <li>
+                    {getMessageByLocale('component_developerCollaborationNetwork_description_node', options.locale)}
+                  </li>
+                  <li>
+                    {getMessageByLocale('component_developerCollaborationNetwork_description_edge', options.locale)}
+                  </li>
                 </ul>
               </div>
             </div>
@@ -147,9 +159,10 @@ const View = ({ currentRepo: currentDeveloper, developerNetwork, repoNetwork }: 
       >
         <div>
           <div className="hypertrons-crx-title">
-            <span>{t('component_mostParticipatedProjects_title')}</span>
+            <span>{getMessageByLocale('component_mostParticipatedProjects_title', options.locale)}</span>
             <div className="hypertrons-crx-title-extra">
-              {t('global_period')}: {DEVELOPER_PERIOD} {t('global_day', { count: REPO_PERIOD })}
+              {getMessageByLocale('global_period', options.locale)}: {DEVELOPER_PERIOD}{' '}
+              {getMessageByLocale('global_day', options.locale)}
             </div>
           </div>
           <div className="d-flex flex-wrap justify-content-lg-between align-items-center">
@@ -160,10 +173,10 @@ const View = ({ currentRepo: currentDeveloper, developerNetwork, repoNetwork }: 
             </div>
             <div className="col-lg-4 col-12 description-container">
               <div className="color-text-secondary">
-                <p>{t('component_mostParticipatedProjects_description')}</p>
+                <p>{getMessageByLocale('component_mostParticipatedProjects_description', options.locale)}</p>
                 <ul style={{ margin: '0px 0 10px 15px' }}>
-                  <li>{t('component_mostParticipatedProjects_description_node')}</li>
-                  <li>{t('component_mostParticipatedProjects_description_edge')}</li>
+                  <li>{getMessageByLocale('component_mostParticipatedProjects_description_node', options.locale)}</li>
+                  <li>{getMessageByLocale('component_mostParticipatedProjects_description_edge', options.locale)}</li>
                 </ul>
               </div>
             </div>

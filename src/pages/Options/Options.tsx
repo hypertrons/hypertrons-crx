@@ -1,12 +1,14 @@
+// src/pages/Options/index.tsx
 import React, { useState, useEffect } from 'react';
 import { Checkbox, Radio, Space, Row, Col } from 'antd';
 import { importedFeatures } from '../../../README.md';
 import optionsStorage, { HypercrxOptions } from '../../options-storage';
+import getMessageByLocale from '../../helpers/get-message-by-locale';
 import { HYPERCRX_GITHUB } from '../../constant';
 import TooltipTrigger from '../../components/TooltipTrigger';
+import GitHubToken from './GitHubToken'; // 引入 GitHubToken 组件
 import './Options.css';
-import { useTranslation } from 'react-i18next';
-import '../../helpers/i18n';
+
 const stacksStyleOptions = {
   headerStack: {
     paddingBottom: '10px',
@@ -23,7 +25,6 @@ const Options = (): JSX.Element => {
   const [version, setVersion] = useState<string>();
   const [options, setOptions] = useState<HypercrxOptions>();
 
-  const { t, i18n } = useTranslation();
   useEffect(() => {
     (async function () {
       setVersion((await chrome.management.getSelf()).version);
@@ -79,16 +80,15 @@ const Options = (): JSX.Element => {
           >
             <div className="Box">
               <div className="Box-header">
-                <h2 className="Box-title">{t('options_locale_title')}</h2>
-                <TooltipTrigger content={t('options_locale_toolTip')} />
+                <h2 className="Box-title">{getMessageByLocale('options_locale_title', options.locale)}</h2>
+                <TooltipTrigger content={getMessageByLocale('options_locale_toolTip', options.locale)} />
               </div>
               <div style={stacksStyleOptions.settingStack}>
-                <p>{t('options_locale_toolTip')} :</p>
+                <p>{getMessageByLocale('options_locale_toolTip', options.locale)} :</p>
                 <Radio.Group
                   defaultValue={options.locale}
                   onChange={async (e) => {
                     await optionsStorage.set({ locale: e.target.value });
-                    i18n.changeLanguage(e.target.value);
                     setOptions(await optionsStorage.getAll());
                   }}
                 >
@@ -110,11 +110,11 @@ const Options = (): JSX.Element => {
           >
             <div className="Box">
               <div className="Box-header">
-                <h2 className="Box-title">{t('options_components_title')}</h2>
-                <TooltipTrigger content={t('options_components_toolTip')} />
+                <h2 className="Box-title">{getMessageByLocale('options_components_title', options.locale)}</h2>
+                <TooltipTrigger content={getMessageByLocale('options_components_toolTip', options.locale)} />
               </div>
               <Row style={stacksStyleOptions.settingStack} gutter={[16, 10]}>
-                <p>{t('options_components_toolTip')} :</p>
+                <p>{getMessageByLocale('options_components_toolTip', options.locale)} :</p>
 
                 {importedFeatures.map((name: FeatureName) => {
                   return buildFeatureCheckbox(name, options[`hypercrx-${name}`]);
@@ -132,11 +132,11 @@ const Options = (): JSX.Element => {
           >
             <div className="Box">
               <div className="Box-header">
-                <h2 className="Box-title">{t('options_about_title')}</h2>
-                <TooltipTrigger content={t('options_about_toolTip')} />
+                <h2 className="Box-title">{getMessageByLocale('options_about_title', options.locale)}</h2>
+                <TooltipTrigger content={getMessageByLocale('options_about_toolTip', options.locale)} />
               </div>
               <div style={stacksStyleOptions.settingStack}>
-                <p>{t('options_about_description')}</p>
+                <p>{getMessageByLocale('options_about_description', options.locale)}</p>
                 <p>
                   GitHub:{' '}
                   <a href={HYPERCRX_GITHUB} target="_blank">
@@ -145,6 +145,16 @@ const Options = (): JSX.Element => {
                 </p>
               </div>
             </div>
+          </Col>
+          <Col
+            span={24}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <GitHubToken /> {/* 添加 GitHubToken 组件 */}
           </Col>
         </Row>
       </Space>

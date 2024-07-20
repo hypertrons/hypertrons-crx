@@ -1,15 +1,21 @@
 import getGithubTheme from '../../../../helpers/get-github-theme';
+import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import { isNull } from '../../../../helpers/is-null';
 import { numberWithCommas } from '../../../../helpers/formatter';
+import { NativePopover } from '../../components/NativePopover';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import { rocketLight, rocketDark } from './base64';
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
+import ActivityChart from './ActivityChart';
+import OpenRankChart from './OpenRankChart';
+import ParticipantChart from './ParticipantChart';
+import ContributorChart from './ContributorChart';
 import { RepoMeta } from '../../../../api/common';
 
 import React, { useState, useEffect } from 'react';
-
-import { useTranslation } from 'react-i18next';
-import '../../../../helpers/i18n';
+import { render } from 'react-dom';
+import $ from 'jquery';
+import TooltipTrigger from '../../../../components/TooltipTrigger';
 const githubTheme = getGithubTheme();
 
 interface Props {
@@ -22,13 +28,83 @@ interface Props {
 
 const View = ({ activity, openrank, participant, contributor, meta }: Props): JSX.Element | null => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
-  const { t, i18n } = useTranslation();
+
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
-      i18n.changeLanguage(options.locale);
     })();
-  }, [options.locale]);
+  }, []);
+
+  useEffect(() => {
+    const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
+    render(
+      <>
+        <NativePopover anchor={$('#activity-header-label')} width={280} arrowPosition="top-middle">
+          <div
+            className="chart-title"
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <div style={{ marginRight: '5px' }}>{getMessageByLocale('header_label_activity', options.locale)}</div>
+            <TooltipTrigger iconColor="grey" size={13} content={getMessageByLocale('activity_icon', options.locale)} />
+          </div>
+          <ActivityChart theme={githubTheme as 'light' | 'dark'} width={270} height={130} data={activityData} />
+        </NativePopover>
+        <NativePopover anchor={$('#OpenRank-header-label')} width={280} arrowPosition="top-middle">
+          <div
+            className="chart-title"
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <div style={{ marginRight: '5px' }}>{getMessageByLocale('header_label_OpenRank', options.locale)}</div>
+            <TooltipTrigger iconColor="grey" size={13} content={getMessageByLocale('openrank_icon', options.locale)} />
+          </div>
+          <OpenRankChart theme={githubTheme as 'light' | 'dark'} width={270} height={130} data={openrankData} />
+        </NativePopover>
+        <NativePopover anchor={$('#participant-header-label')} width={280} arrowPosition="top-middle">
+          <div
+            className="chart-title"
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <div style={{ marginRight: '5px' }}>{getMessageByLocale('header_label_contributor', options.locale)}</div>
+            <TooltipTrigger
+              iconColor="grey"
+              size={13}
+              content={getMessageByLocale('contributors_participants_icon', options.locale)}
+            />
+          </div>
+          <ContributorChart theme={githubTheme as 'light' | 'dark'} width={270} height={130} data={contributorData} />
+          <div
+            className="chart-title"
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <div style={{ marginRight: '5px' }}>{getMessageByLocale('header_label_participant', options.locale)}</div>
+            <TooltipTrigger
+              iconColor="grey"
+              size={13}
+              content={getMessageByLocale('contributors_participants_icon', options.locale)}
+            />
+          </div>
+          <ParticipantChart theme={githubTheme as 'light' | 'dark'} width={270} height={130} data={participantData} />
+        </NativePopover>
+      </>,
+      placeholderElement
+    );
+  }, []);
 
   if (isNull(activity) || isNull(openrank) || isNull(participant) || isNull(contributor)) return null;
 
