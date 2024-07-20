@@ -44,7 +44,7 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
             </div>
           </div>
           <div className="col-12 col-md-4">
-            <div className="color-text-secondary" style={{ marginLeft: '35px', marginRight: '35px' }}>
+            <div className="color-text-secondary-2" style={{ marginLeft: '35px', marginRight: '35px' }}>
               <p>{t('component_projectCorrelationNetwork_description')}</p>
               <ul style={{ margin: '0px 0 10px 15px' }}>
                 <li>{t('component_projectCorrelationNetwork_description_node')}</li>
@@ -68,7 +68,7 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
             </div>
           </div>
           <div className="col-12 col-md-4">
-            <div className="color-text-secondary" style={{ marginLeft: '35px', marginRight: '35px' }}>
+            <div className="color-text-secondary-3" style={{ marginLeft: '35px', marginRight: '35px' }}>
               <p>{t('component_activeDeveloperCollaborationNetwork_description')}</p>
               <ul style={{ margin: '0px 0 10px 15px' }}>
                 <li>{t('component_activeDeveloperCollaborationNetwork_description_node')}</li>

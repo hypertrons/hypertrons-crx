@@ -64,7 +64,20 @@ const Graph: React.FC<GraphProps> = ({ data, style = {}, focusedNodeID }) => {
   const divEL = useRef(null);
   const graphData = generateEchartsData(data, focusedNodeID);
   const option = {
-    tooltip: {},
+    tooltip: {
+      trigger: 'item',
+      triggerOn: 'mousemove',
+      formatter: function (params) {
+        if (params.dataType === 'node') {
+          // console.log(params)
+          const nodeDataIndex = params.data.id; // 获取悬停节点的数据索引
+          document.dispatchEvent(new CustomEvent('nodeHovered', { detail: nodeDataIndex }));
+          return nodeDataIndex + '   ' + params.data.value; // 返回自定义的 tooltip 内容
+        } else {
+          return params.data.source + ' > ' + params.data.target + ' : ' + params.data.value;
+        }
+      },
+    },
     animation: true,
     animationDuration: 2000,
     series: [
