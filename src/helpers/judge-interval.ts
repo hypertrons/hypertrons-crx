@@ -3,10 +3,10 @@ export function getInterval(data: any) {
   const endTime = Number(data[data.length - 1][0].split('-')[0]);
   const timeLength = endTime - startTime;
   const minInterval = timeLength > 2 ? 365 * 24 * 3600 * 1000 : 30 * 3600 * 24 * 1000;
-  return {timeLength, minInterval};
-  }
-  
-export function judgeInterval(instance:any, option:any,timeLength:number) {
+  return { timeLength, minInterval };
+}
+
+export function judgeInterval(instance: any, option: any, timeLength: number) {
   if (timeLength > 2) {
     instance.on('dataZoom', (params: any) => {
       let option = instance.getOption() as {
@@ -24,4 +24,4 @@ export function judgeInterval(instance:any, option:any,timeLength:number) {
       instance.setOption(option);
     });
   }
-  }
+}

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { formatNum } from '../helpers/formatter';
 import * as echarts from 'echarts';
-import {getInterval,judgeInterval} from '../helpers/judge-interval';
+import { getInterval, judgeInterval } from '../helpers/judge-interval';
 const LIGHT_THEME = {
   FG_COLOR: '#24292f',
   BG_COLOR: '#ffffff',
@@ -28,7 +28,7 @@ interface BarsProps {
 
 const Bars = (props: BarsProps): JSX.Element => {
   const { theme, height, legend1, legend2, yName1, yName2, data1, data2, onClick } = props;
-  const {timeLength,minInterval} = getInterval(data1);
+  const { timeLength, minInterval } = getInterval(data1);
   const divEL = useRef(null);
 
   const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;
@@ -152,7 +152,7 @@ const Bars = (props: BarsProps): JSX.Element => {
     let chartDOM = divEL.current;
     const instance = echarts.getInstanceByDom(chartDOM as any);
     if (instance) {
-      judgeInterval(instance,option,timeLength);
+      judgeInterval(instance, option, timeLength);
       instance.setOption(option);
       if (onClick) {
         instance.on('click', (params) => {

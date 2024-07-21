@@ -3,7 +3,7 @@ import * as echarts from 'echarts';
 
 import { formatNum, numberWithCommas } from '../../../../helpers/formatter';
 import { min } from 'lodash-es';
-import {getInterval,judgeInterval} from '../../../../helpers/judge-interval';
+import { getInterval, judgeInterval } from '../../../../helpers/judge-interval';
 const LIGHT_THEME = {
   FG_COLOR: '#24292F',
   BG_COLOR: '#ffffff',
@@ -29,7 +29,7 @@ interface ForkChartProps {
 
 const ForkChart = (props: ForkChartProps): JSX.Element => {
   const { theme, width, height, data } = props;
-  const {timeLength,minInterval} = getInterval(data);
+  const { timeLength, minInterval } = getInterval(data);
   const divEL = useRef(null);
 
   const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;
@@ -137,7 +137,7 @@ const ForkChart = (props: ForkChartProps): JSX.Element => {
     let chartDOM = divEL.current;
     const instance = echarts.getInstanceByDom(chartDOM as any);
     if (instance) {
-      judgeInterval(instance,option,timeLength);
+      judgeInterval(instance, option, timeLength);
       instance.setOption(option);
     }
   }, []);

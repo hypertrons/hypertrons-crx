@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
 
 import { formatNum, numberWithCommas } from '../../../../helpers/formatter';
-import {getInterval,judgeInterval} from '../../../../helpers/judge-interval';
+import { getInterval, judgeInterval } from '../../../../helpers/judge-interval';
 const LIGHT_THEME = {
   FG_COLOR: '#24292F',
   BG_COLOR: '#ffffff',
@@ -26,7 +26,7 @@ interface MergedLinesChartProps {
 
 const MergedLinesChart = (props: MergedLinesChartProps): JSX.Element => {
   const { theme, width, height, data } = props;
-  const {timeLength,minInterval} = getInterval(data['mergedCodeAddition']);
+  const { timeLength, minInterval } = getInterval(data['mergedCodeAddition']);
   const divEL = useRef(null);
 
   const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;
@@ -151,7 +151,7 @@ const MergedLinesChart = (props: MergedLinesChartProps): JSX.Element => {
     let chartDOM = divEL.current;
     const instance = echarts.getInstanceByDom(chartDOM as any);
     if (instance) {
-      judgeInterval(instance,option,timeLength);
+      judgeInterval(instance, option, timeLength);
       instance.setOption(option);
     }
   }, []);
