@@ -6,6 +6,8 @@ import isPerceptor from '../../../../helpers/is-perceptor';
 import { getRepoName, isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
 import { getRepoNetwork, getDeveloperNetwork } from '../../../../api/repo';
 import React, { useEffect, useRef } from 'react';
+import View from './view';
+import ReactDOM from 'react-dom';
 
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
@@ -13,7 +15,6 @@ let repoNetworks: any;
 let developerNetworks: any;
 let repoEdges: any;
 let developerEdges: any;
-const allNodes = new Set<string>();
 
 const getData = async () => {
   repoNetworks = await getRepoNetwork(repoName);
@@ -45,45 +46,9 @@ function onHover(nodeName: string): [string, number][] {
   return adjacentNodes;
 }
 
-function addTable(adjacentNodes, nodeListSpan) {
-  const table = document.createElement('table');
-  table.style.borderCollapse = 'collapse';
-  table.style.width = '100%';
-
-  // 添加表头
-  const headerRow = document.createElement('tr');
-  const headerKey = document.createElement('th');
-  headerKey.innerText = 'Related Repository';
-  headerKey.style.border = '1px solid white';
-  // headerKey.style.backgroundColor = '#f2f2f2';
-  const headerValue = document.createElement('th');
-  headerValue.innerText = 'Relation value';
-  headerValue.style.border = '1px solid white';
-  // headerValue.style.backgroundColor = '#f2f2f2';
-  headerRow.appendChild(headerKey);
-  headerRow.appendChild(headerValue);
-  table.appendChild(headerRow);
-
-  // 添加数据行
-  adjacentNodes.forEach((item: [string, number]) => {
-    const row = document.createElement('tr');
-    const cellKey = document.createElement('td');
-    cellKey.innerText = item[0];
-    cellKey.style.border = '1px solid white';
-    const cellValue = document.createElement('td');
-    cellValue.innerText = item[1].toString();
-    cellValue.style.border = '1px solid white';
-    row.appendChild(cellKey);
-    row.appendChild(cellValue);
-    table.appendChild(row);
-  });
-
-  // 将表格插入到指定元素中
-  for (const element of nodeListSpan) {
-    element.innerHTML = '';
-    element.appendChild(table);
-  }
-}
+const renderTo = (container: Element, adjacentNodes: [string, number][]) => {
+  ReactDOM.render(<View adjacentNodes={adjacentNodes} />, container);
+};
 
 const init = async (): Promise<void> => {
   repoName = getRepoName();
@@ -93,29 +58,20 @@ const init = async (): Promise<void> => {
   const con3 = document.getElementsByClassName('color-text-secondary-3');
   const text3 = con3[0].innerHTML;
   document.addEventListener('nodeHovered', function (event) {
-    const nodeData = event.detail; // 获取节点数据
+    const customEvent = event as CustomEvent;
+    const nodeData = customEvent.detail; // 获取节点数据
     const adjacentNodes = onHover(nodeData);
-    // console.log(adjacentNodes)
+
     if (nodeData.includes('/')) {
       const nodeListSpan = document.getElementsByClassName('color-text-secondary-2');
-      // const spanElements = adjacentNodes.map(item => `<span>${item}</span>`);
-      // console.log(spanElements)
-      // for (const element of nodeListSpan) {
-      //     element.innerHTML = spanElements.join('<br>');
-
-      // }
-      addTable(adjacentNodes, nodeListSpan);
+      renderTo(nodeListSpan[0], adjacentNodes);
       document.addEventListener('mouseout', function () {
         // 恢复最初的文本
         nodeListSpan[0].innerHTML = text2;
       });
     } else {
       const nodeListSpan = document.getElementsByClassName('color-text-secondary-3');
-      // const spanElements = adjacentNodes.map(item => `<span>${item}</span>`);
-      // for (const element of nodeListSpan) {
-      //     element.innerHTML = spanElements.join('<br>');
-      // }
-      addTable(adjacentNodes, nodeListSpan);
+      renderTo(nodeListSpan[0], adjacentNodes);
       document.addEventListener('mouseout', function () {
         // 恢复最初的文本
         nodeListSpan[0].innerHTML = text3;

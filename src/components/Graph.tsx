@@ -66,8 +66,8 @@ const Graph: React.FC<GraphProps> = ({ data, style = {}, focusedNodeID }) => {
   const option = {
     tooltip: {
       trigger: 'item',
-      triggerOn: 'mousemove',
-      formatter: function (params) {
+      triggerOn: 'mousemove|click',
+      formatter: function (params: any) {
         if (params.dataType === 'node') {
           // console.log(params)
           const nodeDataIndex = params.data.id; // 获取悬停节点的数据索引
