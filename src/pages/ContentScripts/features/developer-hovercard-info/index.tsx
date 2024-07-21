@@ -3,7 +3,7 @@ import { getOpenrank } from '../../../../api/developer';
 import elementReady from 'element-ready';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import View from './view'; // 引入 OpenRankView 组件
+import View from './view';
 
 const featureId = features.getFeatureID(import.meta.url);
 
@@ -73,7 +73,7 @@ const init = async (): Promise<void> => {
 
       if (popover && popover.getAttribute('data-popover-id') === popoverId) {
         // Check if the popover is still associated with the correct developer
-        renderTo(popover, developerName, openrank); // 调用 renderTo 函数
+        renderTo(popover, developerName, openrank);
       }
 
       // Regardless of whether the current event is being processed, check and update the openrank information if necessary.
