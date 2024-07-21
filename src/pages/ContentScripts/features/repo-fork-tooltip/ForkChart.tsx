@@ -3,7 +3,7 @@ import * as echarts from 'echarts';
 
 import { formatNum, numberWithCommas } from '../../../../helpers/formatter';
 import { min } from 'lodash-es';
-
+import { getInterval, judgeInterval } from '../../../../helpers/judge-interval';
 const LIGHT_THEME = {
   FG_COLOR: '#24292F',
   BG_COLOR: '#ffffff',
@@ -29,10 +29,7 @@ interface ForkChartProps {
 
 const ForkChart = (props: ForkChartProps): JSX.Element => {
   const { theme, width, height, data } = props;
-  const startTime = Number(data[0][0].split('-')[0]);
-  const endTime = Number(data[data.length - 1][0].split('-')[0]);
-  const timeLength = endTime - startTime;
-  const minInterval = timeLength > 2 ? 365 * 24 * 3600 * 1000 : 30 * 3600 * 24 * 1000;
+  const { timeLength, minInterval } = getInterval(data);
   const divEL = useRef(null);
 
   const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;
@@ -140,23 +137,7 @@ const ForkChart = (props: ForkChartProps): JSX.Element => {
     let chartDOM = divEL.current;
     const instance = echarts.getInstanceByDom(chartDOM as any);
     if (instance) {
-      if (timeLength > 2) {
-        instance.on('dataZoom', (params: any) => {
-          let option = instance.getOption() as {
-            xAxis: { minInterval?: any }[];
-          };
-          const startValue = params.batch[0].start;
-          const endValue = params.batch[0].end;
-          let minInterval: number;
-          if (startValue == 0 && endValue == 100) {
-            minInterval = 365 * 24 * 3600 * 1000;
-          } else {
-            minInterval = 30 * 24 * 3600 * 1000;
-          }
-          option.xAxis[0].minInterval = minInterval;
-          instance.setOption(option);
-        });
-      }
+      judgeInterval(instance, option, timeLength);
       instance.setOption(option);
     }
   }, []);
