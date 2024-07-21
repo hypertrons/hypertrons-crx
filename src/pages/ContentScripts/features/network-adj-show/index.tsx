@@ -57,11 +57,11 @@ const init = async (): Promise<void> => {
   const text2 = con2[0].innerHTML;
   const con3 = document.getElementsByClassName('color-text-secondary-3');
   const text3 = con3[0].innerHTML;
+
   document.addEventListener('nodeHovered', function (event) {
     const customEvent = event as CustomEvent;
     const nodeData = customEvent.detail; // 获取节点数据
     const adjacentNodes = onHover(nodeData);
-
     if (nodeData.includes('/')) {
       const nodeListSpan = document.getElementsByClassName('color-text-secondary-2');
       renderTo(nodeListSpan[0], adjacentNodes);
@@ -78,6 +78,31 @@ const init = async (): Promise<void> => {
       });
     }
   });
+
+  // document.addEventListener('nodeHovered', function (event) {
+  //   const customEvent = event as CustomEvent;
+  //   const nodeData = customEvent.detail; // 获取节点数据
+  //   const adjacentNodes = onHover(nodeData);
+  //   if (nodeData.includes('/')) {
+  //     const nodeListSpan = document.getElementsByClassName('color-text-secondary-2');
+  //     renderTo(nodeListSpan[0], adjacentNodes);
+  //   } else {
+  //     const nodeListSpan = document.getElementsByClassName('color-text-secondary-3');
+  //     renderTo(nodeListSpan[0], adjacentNodes);
+  //   }
+  // });
+
+  // document.addEventListener('nodeHoverOut', function (event) {
+  //   const customEvent = event as CustomEvent;
+  //   const nodeData = customEvent.detail;
+  //   if (nodeData.includes('/')) {
+  //     const nodeListSpan = document.getElementsByClassName('color-text-secondary-2');
+  //     nodeListSpan[0].innerHTML = text2;
+  //   } else {
+  //     const nodeListSpan = document.getElementsByClassName('color-text-secondary-3');
+  //     nodeListSpan[0].innerHTML = text3;
+  //   }
+  // });
 };
 
 const restore = async () => {

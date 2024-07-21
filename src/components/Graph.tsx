@@ -67,16 +67,16 @@ const Graph: React.FC<GraphProps> = ({ data, style = {}, focusedNodeID }) => {
     tooltip: {
       trigger: 'item',
       triggerOn: 'mousemove|click',
-      formatter: function (params: any) {
-        if (params.dataType === 'node') {
-          // console.log(params)
-          const nodeDataIndex = params.data.id; // 获取悬停节点的数据索引
-          document.dispatchEvent(new CustomEvent('nodeHovered', { detail: nodeDataIndex }));
-          return nodeDataIndex + '   ' + params.data.value; // 返回自定义的 tooltip 内容
-        } else {
-          return params.data.source + ' > ' + params.data.target + ' : ' + params.data.value;
-        }
-      },
+      // formatter: function (params: any) {
+      //   if (params.dataType === 'node') {
+      //     // console.log(params)
+      //     const nodeDataIndex = params.data.id; // 获取悬停节点的数据索引
+      //     document.dispatchEvent(new CustomEvent('nodeHovered', { detail: nodeDataIndex }));
+      //     return nodeDataIndex + '   ' + params.data.value; // 返回自定义的 tooltip 内容
+      //   } else {
+      //     return params.data.source + ' > ' + params.data.target + ' : ' + params.data.value;
+      //   }
+      // },
     },
     animation: true,
     animationDuration: 2000,
@@ -128,6 +128,19 @@ const Graph: React.FC<GraphProps> = ({ data, style = {}, focusedNodeID }) => {
     const instance = echarts.getInstanceByDom(chartDOM as any);
     if (instance) {
       instance.setOption(option);
+      instance.on('mouseover', function (param: any) {
+        if (param.dataType === 'node') {
+          const nodeDataIndex = param.data.id;
+          document.dispatchEvent(new CustomEvent('nodeHovered', { detail: nodeDataIndex }));
+        }
+      });
+      instance.on('mouseout', function (param: any) {
+        if (param.dataType === 'node') {
+          const nodeDataIndex = param.data.id;
+          // document.dispatchEvent(new CustomEvent('nodeHoverOut', { detail: nodeDataIndex }));
+        }
+      });
+
       instance.on('click', (params: any) => {
         const url = 'https://github.com/' + params.data.id;
         window.location.href = url;
