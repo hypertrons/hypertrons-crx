@@ -1,3 +1,4 @@
+// src/pages/Options/index.tsx
 import React, { useState, useEffect } from 'react';
 import { Checkbox, Radio, Space, Row, Col } from 'antd';
 import { importedFeatures } from '../../../README.md';
@@ -7,6 +8,8 @@ import TooltipTrigger from '../../components/TooltipTrigger';
 import './Options.css';
 import { useTranslation } from 'react-i18next';
 import '../../helpers/i18n';
+import GitHubToken from './GitHubToken'; // 引入 GitHubToken 组件
+
 const stacksStyleOptions = {
   headerStack: {
     paddingBottom: '10px',
@@ -146,6 +149,16 @@ const Options = (): JSX.Element => {
               </div>
             </div>
           </Col>
+          <Col
+            span={24}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <GitHubToken /> {/* 添加 GitHubToken 组件 */}
+          </Col>
         </Row>
       </Space>
     </div>
@@ -153,3 +166,4 @@ const Options = (): JSX.Element => {
 };
 
 export default Options;
+
