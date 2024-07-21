@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { formatNum } from '../helpers/formatter';
 import * as echarts from 'echarts';
-
+import { getInterval, judgeInterval } from '../helpers/judge-interval';
 const LIGHT_THEME = {
   FG_COLOR: '#24292f',
   BG_COLOR: '#ffffff',
@@ -28,10 +28,7 @@ interface BarsProps {
 
 const Bars = (props: BarsProps): JSX.Element => {
   const { theme, height, legend1, legend2, yName1, yName2, data1, data2, onClick } = props;
-  const startTime = Number(data1[0][0].split('-')[0]);
-  const endTime = Number(data1[data1.length - 1][0].split('-')[0]);
-  const timeLength = endTime - startTime;
-  const minInterval = timeLength > 2 ? 365 * 24 * 3600 * 1000 : 30 * 3600 * 24 * 1000;
+  const { timeLength, minInterval } = getInterval(data1);
   const divEL = useRef(null);
 
   const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;
@@ -155,23 +152,7 @@ const Bars = (props: BarsProps): JSX.Element => {
     let chartDOM = divEL.current;
     const instance = echarts.getInstanceByDom(chartDOM as any);
     if (instance) {
-      if (timeLength > 2) {
-        instance.on('dataZoom', (params: any) => {
-          let option = instance.getOption() as {
-            xAxis: { minInterval?: any }[];
-          };
-          const startValue = params.batch[0].start;
-          const endValue = params.batch[0].end;
-          let minInterval: number;
-          if (startValue == 0 && endValue == 100) {
-            minInterval = 365 * 24 * 3600 * 1000;
-          } else {
-            minInterval = 30 * 24 * 3600 * 1000;
-          }
-          option.xAxis[0].minInterval = minInterval;
-          instance.setOption(option);
-        });
-      }
+      judgeInterval(instance, option, timeLength);
       instance.setOption(option);
       if (onClick) {
         instance.on('click', (params) => {
