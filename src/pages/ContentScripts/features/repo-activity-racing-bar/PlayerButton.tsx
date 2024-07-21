@@ -8,12 +8,7 @@ interface PlayerButtonProps {
   onLongPress?: () => void;
 }
 
-export const PlayerButton = ({
-  tooltip,
-  icon,
-  onClick,
-  onLongPress,
-}: PlayerButtonProps): JSX.Element => {
+export const PlayerButton = ({ tooltip, icon, onClick, onLongPress }: PlayerButtonProps): JSX.Element => {
   const pressingRef = useRef(false);
   const longPressDetectedRef = useRef(false);
   const timerRef = useRef<NodeJS.Timeout>();
@@ -41,11 +36,7 @@ export const PlayerButton = ({
   };
 
   return (
-    <Tooltip
-      style={{ visibility: tooltip ? 'visible' : 'hidden' }}
-      title={tooltip}
-      mouseEnterDelay={1}
-    >
+    <Tooltip style={{ visibility: tooltip ? 'visible' : 'hidden' }} title={tooltip} mouseEnterDelay={1}>
       <Button
         style={{ backgroundColor: 'var(--color-btn-bg)' }}
         styles={{

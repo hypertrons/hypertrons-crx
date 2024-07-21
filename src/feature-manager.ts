@@ -7,9 +7,7 @@ import exists from './helpers/exists';
 import waitFor from './helpers/wait-for';
 import sleep from './helpers/sleep';
 import isRestorationVisit from './helpers/is-restoration-visit';
-import shouldFeatureRun, {
-  ShouldRunConditions,
-} from './helpers/should-feature-run';
+import shouldFeatureRun, { ShouldRunConditions } from './helpers/should-feature-run';
 import optionsStorage from './options-storage';
 import { throttle } from 'lodash-es';
 
@@ -88,10 +86,7 @@ const globalReady = new Promise<object>(async (resolve) => {
   resolve(options);
 });
 
-const setupPageLoad = async (
-  id: FeatureId,
-  config: InternalRunConfig
-): Promise<void> => {
+const setupPageLoad = async (id: FeatureId, config: InternalRunConfig): Promise<void> => {
   const { asLongAs, include, exclude, init } = config;
 
   if (!(await shouldFeatureRun({ asLongAs, include, exclude }))) {
@@ -138,27 +133,14 @@ const add = async (
 
   for (const loader of loaders) {
     // Input defaults and validation
-    const {
-      asLongAs,
-      include,
-      exclude,
-      init,
-      restore,
-      awaitDomReady = true,
-    } = loader;
+    const { asLongAs, include, exclude, init, restore, awaitDomReady = true } = loader;
 
     if (include?.length === 0) {
-      throw new Error(
-        `${id}: \`include\` cannot be an empty array, it means "run nowhere"`
-      );
+      throw new Error(`${id}: \`include\` cannot be an empty array, it means "run nowhere"`);
     }
 
     // 404 pages should only run 404-only features
-    if (
-      pageDetect.is404() &&
-      !include?.includes(pageDetect.is404) &&
-      !asLongAs?.includes(pageDetect.is404)
-    ) {
+    if (pageDetect.is404() && !include?.includes(pageDetect.is404) && !asLongAs?.includes(pageDetect.is404)) {
       continue;
     }
 

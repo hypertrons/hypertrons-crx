@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from 'react';
-
 import getGithubTheme from '../../../../helpers/get-github-theme';
-import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import { isNull, isAllNull } from '../../../../helpers/is-null';
-import optionsStorage, {
-  HypercrxOptions,
-  defaults,
-} from '../../../../options-storage';
+import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
-import ReactTooltip from 'react-tooltip';
 import PRChart from './PRChart';
 import MergedLinesChart from './MergedLinesChart';
 import { RepoMeta } from '../../../../api/common';
-
+import TooltipTrigger from '../../../../components/TooltipTrigger';
 const githubTheme = getGithubTheme();
+import { useTranslation } from 'react-i18next';
+import '../../../../helpers/i18n';
 
 export interface PRDetail {
   PROpened: any;
@@ -37,19 +33,10 @@ const generatePRChartData = (PRDetail: PRDetail, updatedAt: number): any => {
   };
 };
 
-const generateMergedLinesChartData = (
-  PRDetail: PRDetail,
-  updatedAt: number
-): any => {
+const generateMergedLinesChartData = (PRDetail: PRDetail, updatedAt: number): any => {
   return {
-    mergedCodeAddition: generateDataByMonth(
-      PRDetail.mergedCodeAddition,
-      updatedAt
-    ),
-    mergedCodeDeletion: generateDataByMonth(
-      PRDetail.mergedCodeDeletion,
-      updatedAt
-    ).map((item) => {
+    mergedCodeAddition: generateDataByMonth(PRDetail.mergedCodeAddition, updatedAt),
+    mergedCodeDeletion: generateDataByMonth(PRDetail.mergedCodeDeletion, updatedAt).map((item) => {
       const dataItem = item;
       dataItem[1] = -item[1];
       return dataItem;
@@ -59,12 +46,13 @@ const generateMergedLinesChartData = (
 
 const View = ({ currentRepo, PRDetail, meta }: Props): JSX.Element | null => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
-
+  const { t, i18n } = useTranslation();
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
+      i18n.changeLanguage(options.locale);
     })();
-  }, []);
+  }, [options.locale]);
 
   if (isNull(PRDetail) || isAllNull(PRDetail)) return null;
 
@@ -82,16 +70,23 @@ const View = ({ currentRepo, PRDetail, meta }: Props): JSX.Element | null => {
     if (month.length < 2) {
       month = '0' + month;
     }
-    window.open(
-      `/${currentRepo}/pulls?q=is:pr ${type}:${year}-${month} sort:updated-asc`
-    );
+    window.open(`/${currentRepo}/pulls?q=is:pr ${type}:${year}-${month} sort:updated-asc`);
   };
 
   return (
-    <ReactTooltip id="pr-tooltip" clickable={true}>
-      <div className="chart-title">
-        {getMessageByLocale('pr_popup_title', options.locale)}
+    <>
+      <div
+        className="chart-title"
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <div style={{ marginRight: '5px' }}>{t('pr_popup_title')}</div>
+        <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', { icon_content: '$t(pr_icon)' })} />
       </div>
+
       <PRChart
         theme={githubTheme as 'light' | 'dark'}
         width={330}
@@ -99,16 +94,26 @@ const View = ({ currentRepo, PRDetail, meta }: Props): JSX.Element | null => {
         data={generatePRChartData(PRDetail, meta.updatedAt)}
         onClick={onClick}
       />
-      <div className="chart-title">
-        {getMessageByLocale('merged_lines_popup_title', options.locale)}
+
+      <div
+        className="chart-title"
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <div style={{ marginRight: '5px' }}>{t('merged_lines_popup_title')}</div>
+        <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', { icon_content: '$t(merged_lines_icon)' })} />
       </div>
+
       <MergedLinesChart
         theme={githubTheme as 'light' | 'dark'}
         width={330}
         height={200}
         data={generateMergedLinesChartData(PRDetail, meta.updatedAt)}
       />
-    </ReactTooltip>
+    </>
   );
 };
 

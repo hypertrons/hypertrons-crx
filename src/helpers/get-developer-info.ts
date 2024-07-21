@@ -8,9 +8,7 @@ export function getDeveloperName() {
 }
 
 export async function isDeveloperWithMeta() {
-  return (
-    pageDetect.isUserProfile() && (await metaStore.has(getDeveloperName()))
-  );
+  return pageDetect.isUserProfile() && (await metaStore.has(getDeveloperName()));
 }
 
 export function checkLogined() {

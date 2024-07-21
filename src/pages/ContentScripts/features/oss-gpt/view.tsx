@@ -1,38 +1,38 @@
 import React, { useState, useEffect, useRef } from 'react';
 import $ from 'jquery';
+import moment from 'moment';
 import {
   Widget,
   addResponseMessage,
   deleteMessages,
   toggleMsgLoader,
   toggleInputDisabled,
+  renderCustomComponent,
 } from 'react-chat-widget';
 
 import { getAnswer } from './service';
 import './rcw.scss';
 import exists from '../../../../helpers/exists';
-import getMessageByLocale from '../../../../helpers/get-message-by-locale';
-import optionsStorage, {
-  HypercrxOptions,
-  defaults,
-} from '../../../../options-storage';
-
+import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
+import { useTranslation } from 'react-i18next';
+import '../../../../helpers/i18n';
 interface Props {
   theme: 'light' | 'dark';
   currentRepo: string;
   currentDocsName: string | null;
 }
 
-const displayWelcome = (repoName: string, locale: string) => {
-  addResponseMessage(
-    getMessageByLocale('OSS_GPT_welcome', locale).replace('%v', repoName)
-  );
+const ResponseTimeStamp: React.FC = () => {
+  return <div style={{ fontSize: '11px', marginLeft: '50px' }}>{moment().format('LT')}</div>;
 };
 
-const displayNotAvailable = (repoName: string, locale: string) => {
-  addResponseMessage(
-    getMessageByLocale('OSS_GPT_notAvailable', locale).replace('%v', repoName)
-  );
+const UserTimeStamp: React.FC = () => {
+  return <div style={{ fontSize: '11px', textAlign: 'right', width: '100%' }}>{moment().format('LT')}</div>;
+};
+
+const displayResponseMessage = (locale: string) => {
+  addResponseMessage(locale);
+  renderCustomComponent(ResponseTimeStamp, {});
 };
 
 const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
@@ -40,12 +40,13 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
   const [history, setHistory] = useState<[string, string]>(['', '']);
   const mouseDownX = useRef(0); // X position when mouse down
   const rcwWidth = useRef(0); // rcw width when mouse down
-
+  const { t, i18n } = useTranslation();
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
+      i18n.changeLanguage(options.locale);
     })();
-  }, []);
+  }, [options.locale]);
 
   useEffect(() => {
     // when repo changes
@@ -53,27 +54,21 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
     setHistory(['', '']); // clear history
     if (currentDocsName) {
       // if docs for current repo is available
-      displayWelcome(currentRepo, options.locale);
+      displayResponseMessage(t('OSS_GPT_welcome', { repoName: currentRepo }));
     } else {
-      displayNotAvailable(currentRepo, options.locale);
+      displayResponseMessage(t('OSS_GPT_notAvailable', { repoName: currentRepo }));
     }
   }, [options, currentRepo, currentDocsName]);
 
   const handleMouseDown = (event: JQuery.MouseDownEvent) => {
     mouseDownX.current = event.clientX;
-    rcwWidth.current = parseInt(
-      $('#rcw-conversation-container').css('width'),
-      10
-    );
+    rcwWidth.current = parseInt($('#rcw-conversation-container').css('width'), 10);
     $(document).on('mousemove', handleMouseMove);
     $(document).on('mouseup', handleMouseUp);
   };
 
   const handleMouseMove = (event: JQuery.MouseMoveEvent) => {
-    $('#rcw-conversation-container').css(
-      'width',
-      `${rcwWidth.current - (event.clientX - mouseDownX.current)}px`
-    );
+    $('#rcw-conversation-container').css('width', `${rcwWidth.current - (event.clientX - mouseDownX.current)}px`);
   };
 
   const handleMouseUp = (event: JQuery.MouseUpEvent) => {
@@ -90,10 +85,7 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
     // Callback function to execute when mutations are observed
     const callback: MutationCallback = (mutationList, observer) => {
       // hacking code for resizer
-      if (
-        !exists('.rcw-conversation-resizer') &&
-        exists('.rcw-conversation-container')
-      ) {
+      if (!exists('.rcw-conversation-resizer') && exists('.rcw-conversation-container')) {
         //we only add a resizer when conversation container is active
         const resizerDiv = $('<div>');
         resizerDiv.attr('class', 'rcw-conversation-resizer');
@@ -117,25 +109,26 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
   }, []);
 
   const subtitle = currentDocsName
-    ? getMessageByLocale('OSS_GPT_subtitle', options.locale).replace(
-        '%v',
-        currentRepo
-      )
-    : getMessageByLocale(
-        'OSS_GPT_subtitle_notAvailable',
-        options.locale
-      ).replace('%v', currentRepo);
+    ? t('OSS_GPT_subtitle', { repoName: currentRepo })
+    : t('OSS_GPT_subtitle_notAvailable', { repoName: currentRepo });
 
   const handleNewUserMessage = async (newMessage: string) => {
+    renderCustomComponent(UserTimeStamp, {});
     toggleMsgLoader();
     toggleInputDisabled();
 
     if (currentDocsName) {
       const answer = await getAnswer(currentDocsName, newMessage, history);
-      addResponseMessage(answer);
-      setHistory([newMessage, answer]); // update history
+      if (answer == 'error') {
+        displayResponseMessage(t('OSS_GPT_errorMessage'));
+      } else {
+        addResponseMessage(answer);
+        renderCustomComponent(ResponseTimeStamp, {});
+
+        setHistory([newMessage, answer]); // update history
+      }
     } else {
-      displayNotAvailable(currentRepo, options.locale);
+      displayResponseMessage(t('OSS_GPT_notAvailable', { repoName: currentRepo }));
     }
 
     toggleMsgLoader();
@@ -151,6 +144,7 @@ const View = ({ theme, currentRepo, currentDocsName }: Props): JSX.Element => {
         handleNewUserMessage={handleNewUserMessage}
         showBadge={false}
         profileAvatar={chrome.runtime.getURL('main.png')}
+        showTimeStamp={false}
       />
     </div>
   );
