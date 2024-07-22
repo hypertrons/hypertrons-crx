@@ -3,7 +3,7 @@ import { getOpenrank } from '../../../../api/developer';
 import elementReady from 'element-ready';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import View from './view'; // 引入 OpenRankView 组件
+import View from './view';
 
 const featureId = features.getFeatureID(import.meta.url);
 
@@ -32,16 +32,14 @@ const renderTo = (container: HTMLElement, developerName: string, openrank: strin
 };
 
 const init = async (): Promise<void> => {
+  let abortController = new AbortController();
   const hovercardSelector = '[data-hovercard-type="user"]';
   document.querySelectorAll(hovercardSelector).forEach((element) => {
     // isProcessing is used to Prevent OpenRank from adding duplicates
-    let isProcessing = false;
-
     element.addEventListener('mouseover', async () => {
-      if (isProcessing) {
-        return;
-      }
-      isProcessing = true;
+      abortController.abort();
+      abortController = new AbortController();
+      const signal = abortController.signal;
 
       const developerName = getDeveloperName(element as HTMLElement) as string;
 
@@ -53,7 +51,7 @@ const init = async (): Promise<void> => {
         'body > div.logged-in.env-production.page-responsive > div.Popover.js-hovercard-content.position-absolute > div > div > div';
       const popover = await elementReady($popoverContainer, { stopOnDomReady: false });
 
-      const openRankDiv = popover?.querySelector('.openrank-info-container');
+      const openRankDiv = popover?.querySelector('.hypercrx-openrank-info');
       const existingDeveloperName = openRankDiv?.getAttribute('data-developer-name');
       if (existingDeveloperName === developerName) {
         return;
@@ -67,17 +65,13 @@ const init = async (): Promise<void> => {
       const openrank = await getDeveloperLatestOpenrank(developerName);
 
       if (!openrank) {
-        isProcessing = false;
         return;
       }
 
-      if (popover && popover.getAttribute('data-popover-id') === popoverId) {
+      if (!signal.aborted && popover && popover.getAttribute('data-popover-id') === popoverId) {
         // Check if the popover is still associated with the correct developer
-        renderTo(popover, developerName, openrank); // 调用 renderTo 函数
+        renderTo(popover, developerName, openrank);
       }
-
-      // Regardless of whether the current event is being processed, check and update the openrank information if necessary.
-      isProcessing = false;
     });
   });
 };

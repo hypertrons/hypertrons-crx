@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import getGithubTheme from '../../../../helpers/get-github-theme';
 import '../../../../helpers/i18n';
 import { rocketLight, rocketDark } from './base64';
@@ -16,7 +15,7 @@ const View: React.FC<OpenRankProps> = ({ developerName, openrank }) => {
   const fontSize = '13px';
 
   return (
-    <div className={`openrank-info-container ${theme}`} data-developer-name={developerName}>
+    <div className={`hypercrx-openrank-info ${theme}`} data-developer-name={developerName}>
       <div className="openrank-info">
         <img
           width={20}
