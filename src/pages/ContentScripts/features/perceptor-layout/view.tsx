@@ -5,6 +5,8 @@ const View = (): JSX.Element => {
     <>
       <div id="hypercrx-perceptor-slot-repo-activity-racing-bar" />
       <div id="hypercrx-perceptor-slot-repo-networks" />
+      <div id="hypercrx-perceptor-slot-community-openrank-racing-bar" />
+      <div id="hypercrx-perceptor-slot-community-openrank-network" />
     </>
   );
 };
