@@ -1,0 +1,31 @@
+#details_table {
+  width: 95%;
+  margin: 10px;
+  tr:nth-child(even) {
+    background-color: #d6eeee;
+  }
+  th,
+  td {
+    border: 1px solid black;
+    text-align: center; /* 水平居中 */
+    vertical-align: middle; /* 垂直居中 */
+  }
+}
+
+#details_title {
+  text-align: center;
+  font-size: 12px;
+}
+
+.bordered {
+  border: 2px solid grey;
+}
+
+#details_div {
+  height: 250px;
+}
+
+.scrollit {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
