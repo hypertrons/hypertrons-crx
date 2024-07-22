@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
 
 import { formatNum, numberWithCommas } from '../../../../helpers/formatter';
-
+import { getInterval, judgeInterval } from '../../../../helpers/judge-interval';
 const LIGHT_THEME = {
   FG_COLOR: '#24292F',
   BG_COLOR: '#ffffff',
@@ -26,7 +26,7 @@ interface MergedLinesChartProps {
 
 const MergedLinesChart = (props: MergedLinesChartProps): JSX.Element => {
   const { theme, width, height, data } = props;
-
+  const { timeLength, minInterval } = getInterval(data['mergedCodeAddition']);
   const divEL = useRef(null);
 
   const TH = theme == 'light' ? LIGHT_THEME : DARK_THEME;
@@ -60,8 +60,9 @@ const MergedLinesChart = (props: MergedLinesChartProps): JSX.Element => {
     },
     xAxis: {
       type: 'time',
+
       // 30 * 3600 * 24 * 1000  milliseconds
-      minInterval: 2592000000,
+      minInterval: minInterval,
       splitLine: {
         show: false,
       },
@@ -150,6 +151,7 @@ const MergedLinesChart = (props: MergedLinesChartProps): JSX.Element => {
     let chartDOM = divEL.current;
     const instance = echarts.getInstanceByDom(chartDOM as any);
     if (instance) {
+      judgeInterval(instance, option, timeLength);
       instance.setOption(option);
     }
   }, []);
@@ -164,16 +166,12 @@ const tooltipFormatter = (params: any) => {
   const html0 = series0
     ? `
     <span style="float:left;">${series0.marker}${series0.seriesName}</span>
-    <span style="float:right;font-weight:bold;">${numberWithCommas(
-      series0.data[1]
-    )}</span><br/> `
+    <span style="float:right;font-weight:bold;">${numberWithCommas(series0.data[1])}</span><br/> `
     : '';
   const html1 = series1
     ? `
     <span style="float:left;">${series1.marker}${series1.seriesName}</span>
-    <span style="float:right;font-weight:bold;">${numberWithCommas(
-      series1.data[1]
-    )}</span><br/> `
+    <span style="float:right;font-weight:bold;">${numberWithCommas(series1.data[1])}</span><br/> `
     : '';
   let res = `
     <div style="width:140px;">

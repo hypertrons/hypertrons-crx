@@ -4,9 +4,7 @@ export type ShouldRunConditions = {
   exclude: ((() => boolean) | (() => Promise<boolean>))[] | undefined;
 };
 
-export default async function shouldFeatureRun(
-  props: ShouldRunConditions
-): Promise<boolean> {
+export default async function shouldFeatureRun(props: ShouldRunConditions): Promise<boolean> {
   const {
     /** Every condition must be true */
     asLongAs = [() => true],
@@ -16,14 +14,8 @@ export default async function shouldFeatureRun(
     exclude = [() => false],
   } = props;
   return (
-    (await Promise.all(asLongAs.map((c) => c())).then((flags) =>
-      flags.every((flag) => flag === true)
-    )) &&
-    (await Promise.all(include.map((c) => c())).then((flags) =>
-      flags.some((flag) => flag === true)
-    )) &&
-    (await Promise.all(exclude.map((c) => c())).then((flags) =>
-      flags.every((flag) => flag === false)
-    ))
+    (await Promise.all(asLongAs.map((c) => c())).then((flags) => flags.every((flag) => flag === true))) &&
+    (await Promise.all(include.map((c) => c())).then((flags) => flags.some((flag) => flag === true))) &&
+    (await Promise.all(exclude.map((c) => c())).then((flags) => flags.every((flag) => flag === false)))
   );
 }

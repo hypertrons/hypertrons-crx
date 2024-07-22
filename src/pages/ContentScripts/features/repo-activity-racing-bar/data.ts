@@ -35,9 +35,7 @@ export function getMonthlyData(data: RepoActivityDetails) {
  * Count the number of unique contributors in the data
  * @returns [number of long term contributors, contributors' names]
  */
-export const countLongTermContributors = (
-  data: RepoActivityDetails
-): [number, string[]] => {
+export const countLongTermContributors = (data: RepoActivityDetails): [number, string[]] => {
   const contributors = new Map<string, number>();
   Object.keys(data).forEach((month) => {
     data[month].forEach((item) => {
@@ -178,8 +176,7 @@ export const getOption = async (
           style: {
             text: month,
             font: 'bolder 60px monospace',
-            fill:
-              theme === 'light' ? 'rgba(100, 100, 100, 0.3)' : DARK_TEXT_COLOR,
+            fill: theme === 'light' ? 'rgba(100, 100, 100, 0.3)' : DARK_TEXT_COLOR,
           },
           z: 100,
         },

@@ -5,8 +5,7 @@ const logger = (msg) => {
 logger('content script client up.');
 
 chrome.runtime.onMessage.addListener((request, _sender, sendResp) => {
-  const shouldReload =
-    request.from === 'backgroundClient' && request.action === 'reload-yourself';
+  const shouldReload = request.from === 'backgroundClient' && request.action === 'reload-yourself';
   if (shouldReload) {
     sendResp({ from: 'contentScriptClient', action: 'yes-sir' });
     // wait 100ms for extension reload.

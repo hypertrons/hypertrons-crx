@@ -1,22 +1,15 @@
-import React, { useState, useEffect } from 'react';
-
 import getGithubTheme from '../../../../helpers/get-github-theme';
-import getMessageByLocale from '../../../../helpers/get-message-by-locale';
 import { isNull } from '../../../../helpers/is-null';
 import { numberWithCommas } from '../../../../helpers/formatter';
-import optionsStorage, {
-  HypercrxOptions,
-  defaults,
-} from '../../../../options-storage';
+import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import { rocketLight, rocketDark } from './base64';
-import ReactTooltip from 'react-tooltip';
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
-import ActivityChart from './ActivityChart';
-import OpenRankChart from './OpenRankChart';
-import ParticipantChart from './ParticipantChart';
-import ContributorChart from './ContributorChart';
 import { RepoMeta } from '../../../../api/common';
 
+import React, { useState, useEffect } from 'react';
+
+import { useTranslation } from 'react-i18next';
+import '../../../../helpers/i18n';
 const githubTheme = getGithubTheme();
 
 interface Props {
@@ -27,32 +20,17 @@ interface Props {
   meta: RepoMeta;
 }
 
-const View = ({
-  activity,
-  openrank,
-  participant,
-  contributor,
-  meta,
-}: Props): JSX.Element | null => {
+const View = ({ activity, openrank, participant, contributor, meta }: Props): JSX.Element | null => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
-
-  useEffect(() => {
-    ReactTooltip.rebuild();
-  }, []);
-
+  const { t, i18n } = useTranslation();
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
+      i18n.changeLanguage(options.locale);
     })();
-  }, []);
+  }, [options.locale]);
 
-  if (
-    isNull(activity) ||
-    isNull(openrank) ||
-    isNull(participant) ||
-    isNull(contributor)
-  )
-    return null;
+  if (isNull(activity) || isNull(openrank) || isNull(participant) || isNull(contributor)) return null;
 
   const activityData = generateDataByMonth(activity, meta.updatedAt);
   const openrankData = generateDataByMonth(openrank, meta.updatedAt);
@@ -147,52 +125,6 @@ const View = ({
         {numberWithCommas(contributorData[contributorData.length - 1][1])}/
         {numberWithCommas(participantData[participantData.length - 1][1])}
       </span>
-      <ReactTooltip
-        id="activity-tooltip"
-        className={githubTheme === 'dark' ? 'custom-react-tooltip' : ''}
-        clickable={true}
-      >
-        <div className="chart-title">
-          {getMessageByLocale('header_label_activity', options.locale)}
-        </div>
-        <ActivityChart
-          theme={githubTheme as 'light' | 'dark'}
-          width={270}
-          height={130}
-          data={activityData}
-        />
-      </ReactTooltip>
-      <ReactTooltip id="openrank-tooltip" clickable={true}>
-        <div className="chart-title">
-          {getMessageByLocale('header_label_OpenRank', options.locale)}
-        </div>
-        <OpenRankChart
-          theme={githubTheme as 'light' | 'dark'}
-          width={270}
-          height={130}
-          data={openrankData}
-        />
-      </ReactTooltip>
-      <ReactTooltip id="participant-tooltip" clickable={true}>
-        <div className="chart-title">
-          {getMessageByLocale('header_label_contributor', options.locale)}
-        </div>
-        <ContributorChart
-          theme={githubTheme as 'light' | 'dark'}
-          width={270}
-          height={130}
-          data={contributorData}
-        />
-        <div className="chart-title">
-          {getMessageByLocale('header_label_participant', options.locale)}
-        </div>
-        <ParticipantChart
-          theme={githubTheme as 'light' | 'dark'}
-          width={270}
-          height={130}
-          data={participantData}
-        />
-      </ReactTooltip>
     </div>
   );
 };

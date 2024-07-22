@@ -21,10 +21,7 @@ const options: SegmentedProps['options'] = [
   },
 ];
 
-export const SpeedController = ({
-  speed,
-  onSpeedChange,
-}: SpeedControllerProps): JSX.Element => {
+export const SpeedController = ({ speed, onSpeedChange }: SpeedControllerProps): JSX.Element => {
   return (
     <Segmented
       style={{

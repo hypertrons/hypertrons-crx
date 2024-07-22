@@ -38,9 +38,7 @@ class AvatarColorStore {
     const cacheKey = `color-cache:${loginId}`;
 
     const now = new Date().getTime();
-    const colorCache: ColorCache = (await chrome.storage.local.get(cacheKey))[
-      cacheKey
-    ];
+    const colorCache: ColorCache = (await chrome.storage.local.get(cacheKey))[cacheKey];
 
     // Check if the cache is stale or doesn't exist.
     if (!colorCache || now - colorCache.lastUpdated > CACHE_EXPIRE_TIME) {
@@ -48,13 +46,9 @@ class AvatarColorStore {
       // a single white color causes error: https://github.com/lokesh/color-thief/issues/40#issuecomment-802424484
       try {
         colors = await this.loadAvatar(loginId)
-          .then((img) =>
-            this.colorThief.getPalette(img, COLOR_COUNT, COLOR_QUALITY)
-          )
+          .then((img) => this.colorThief.getPalette(img, COLOR_COUNT, COLOR_QUALITY))
           .then((rgbs) => {
-            return rgbs.map(
-              (rgb: RGB) => `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`
-            );
+            return rgbs.map((rgb: RGB) => `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`);
           });
         // Store the updated cache entry with the unique key.
         await chrome.storage.local.set({
@@ -64,10 +58,7 @@ class AvatarColorStore {
           },
         });
       } catch (error) {
-        console.error(
-          `Cannot extract colors of the avatar of ${loginId}, error info: `,
-          error
-        );
+        console.error(`Cannot extract colors of the avatar of ${loginId}, error info: `, error);
         colors = Array(COLOR_COUNT).fill('rgb(255, 255, 255)');
       }
 

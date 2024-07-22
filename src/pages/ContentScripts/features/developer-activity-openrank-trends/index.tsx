@@ -3,10 +3,7 @@ import { render, Container } from 'react-dom';
 import $ from 'jquery';
 
 import features from '../../../../feature-manager';
-import {
-  getDeveloperName,
-  isDeveloperWithMeta,
-} from '../../../../helpers/get-developer-info';
+import { getDeveloperName, isDeveloperWithMeta } from '../../../../helpers/get-developer-info';
 import { getActivity, getOpenrank } from '../../../../api/developer';
 import { UserMeta, metaStore } from '../../../../api/common';
 import View from './view';
@@ -24,10 +21,7 @@ const getData = async () => {
 };
 
 const renderTo = (container: Container) => {
-  render(
-    <View activity={activity} openrank={openrank} meta={meta} />,
-    container
-  );
+  render(<View activity={activity} openrank={openrank} meta={meta} />, container);
 };
 
 const init = async (): Promise<void> => {
