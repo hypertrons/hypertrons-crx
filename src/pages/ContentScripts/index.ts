@@ -1,6 +1,5 @@
 import './index.scss';
 
-import './features/colorful-calendar';
 import './features/repo-activity-openrank-trends';
 import './features/developer-activity-openrank-trends';
 import './features/repo-header-labels';
