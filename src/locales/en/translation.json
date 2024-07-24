@@ -5,6 +5,8 @@
   "global_clickToshow": "Click to show",
   "component_communityOpenRankNetwork_title": "Community OpenRank Detail Network",
   "component_communityOpenRankNetwork_description": "Community OpenRank Detail Network shows the OpenRank about the project by month. Double-click a node in this network to view the details of OpenRank for that node in the table on the right. ",
+  "component_communityOpenRankRacingBar_title": "Community OpenRank Racing Bar",
+  "component_communityOpenRankRacingBar_description": "This chart shows how the OpenRank in this community evolve. ",
   "component_developerCollaborationNetwork_title": "Developer Collaboration Network",
   "component_developerCollaborationNetwork_description": "Developer Collaboration Network shows the collaboration between developers for a given time period. From this graph you can find other developers who are closet to a given developer.",
   "component_developerCollaborationNetwork_description_node": "Node: Developer, node size and shades of color indicate developer activity.",
