@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-import getGithubTheme from '../../../../helpers/get-github-theme';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import { RepoMeta } from '../../../../api/common';
 import { t } from 'i18next';
-import Network from './Network';
+import Network, { DateControllers } from './Network';
 import { DatePicker } from 'antd';
 import dayjs from 'dayjs';
 
@@ -19,18 +18,20 @@ const graphStyle = {
   height: '380px',
 };
 
-const onChange = (value: any) => {
-  console.log(value); // 打印选中的年月
-};
-
 const View = ({ repoName, openrank, meta }: Props): JSX.Element | null => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
+  const dateControllersRef = useRef<DateControllers>(null);
 
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
     })();
   }, []);
+
+  const onChange = (newDate: dayjs.Dayjs) => {
+    let date = newDate.format('YYYY-MM');
+    dateControllersRef.current?.update(date);
+  };
 
   if (!openrank) return null;
 
@@ -40,13 +41,25 @@ const View = ({ repoName, openrank, meta }: Props): JSX.Element | null => {
         <div className="hypertrons-crx-title">
           <span>{t('component_communityOpenRankNetwork_title')}</span>
           <div className="hypertrons-crx-title-extra">
-            <DatePicker defaultValue={dayjs('2023-09', 'YYYY-MM')} picker="month" format="YYYY-MM" />
+            <DatePicker
+              id={'community-openrank-date-picker'}
+              onChange={onChange}
+              defaultValue={dayjs('2023-09', 'YYYY-MM')}
+              picker="month"
+              format="YYYY-MM"
+            />
           </div>
         </div>
         <div className="d-flex flex-wrap flex-items-center">
           <div className="col-12 col-md-8">
             <div style={{ margin: '10px 0 20px 20px', width: '100%', height: '100%' }}>
-              <Network data={openrank} style={graphStyle} focusedNodeID={repoName} date={'2023-09'} />
+              <Network
+                ref={dateControllersRef}
+                data={openrank}
+                style={graphStyle}
+                focusedNodeID={repoName}
+                date={'2023-09'}
+              />
             </div>
           </div>
           <div className="col-12 col-md-4">

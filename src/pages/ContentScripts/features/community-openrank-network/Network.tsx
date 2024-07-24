@@ -1,9 +1,16 @@
-import React, { CSSProperties, useEffect, useRef } from 'react';
+import React, { CSSProperties, forwardRef, useEffect, useRef, ForwardedRef, useImperativeHandle } from 'react';
 import * as echarts from 'echarts';
 
-import linearMap from '../../../../helpers/linear-map';
+import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
+
 import { debounce } from 'lodash-es';
 import getGithubTheme from '../../../../helpers/get-github-theme';
+import dayjs from 'dayjs';
+import { getOpenRank } from '../../../../api/community';
+
+export interface DateControllers {
+  update: (newDate: string) => void;
+}
 
 interface NetworkProps {
   /**
@@ -14,10 +21,8 @@ interface NetworkProps {
    * `style` for graph container
    */
   readonly style?: CSSProperties;
-  /**
-   * callback function when click node
-   */
-  readonly focusedNodeID?: string;
+
+  readonly focusedNodeID: string;
 
   date?: string;
 }
@@ -67,20 +72,14 @@ const generateEchartsData = (data: any, focusedNodeID: string | undefined): any 
   };
 };
 
-const Network: React.FC<NetworkProps> = ({ data, style = {}, focusedNodeID, date }) => {
-  const divEL = useRef(null);
-  const graphData = generateEchartsData(data, focusedNodeID);
-  const option = {
+const getOption = (data: any, date: string | undefined) => {
+  return {
     tooltip: {
       trigger: 'item',
     },
     animation: true,
     animationDuration: 2000,
-    // title: {
-    //   text: `OpenRank details for ${focusedNodeID} in ${date}`,
-    //   top: 'bottom',
-    //   left: 'right'
-    // },
+
     legend: [
       {
         data: categories,
@@ -91,8 +90,8 @@ const Network: React.FC<NetworkProps> = ({ data, style = {}, focusedNodeID, date
         name: 'Collaborative graph',
         type: 'graph',
         layout: 'force',
-        nodes: graphData.nodes,
-        edges: graphData.edges,
+        nodes: data.nodes,
+        edges: data.edges,
         categories: categories.map((c) => {
           return { name: c };
         }),
@@ -139,81 +138,121 @@ const Network: React.FC<NetworkProps> = ({ data, style = {}, focusedNodeID, date
       ],
     },
   };
-
-  const clearDiv = (id: string) => {
-    var div = document.getElementById(id);
-    if (div && div.hasChildNodes()) {
-      var children = div.childNodes;
-      for (var child of children) {
-        div.removeChild(child);
-      }
-    }
-  };
-
-  const addRow = (table: HTMLElement | null, texts: any[]) => {
-    // @ts-ignore
-    var tr = table.insertRow();
-    for (var t of texts) {
-      var td = tr.insertCell();
-      td.appendChild(document.createTextNode(t));
-    }
-  };
-
-  const setDetails = (graph: { links: any[]; nodes: any[] }, node: { r: number; i: number; id: any }) => {
-    clearDiv('details_table');
-    var table = document.getElementById('details_table');
-    addRow(table, ['From', 'Ratio', 'Value', 'OpenRank']);
-    addRow(table, ['Self', node.r, node.i, (node.r * node.i).toFixed(3)]);
-    var other = graph.links
-      .filter((l) => l.t == node.id)
-      .map((l) => {
-        var source = graph.nodes.find((n) => n.id == l.s);
-        return [
-          genName(source),
-          parseFloat(((1 - node.r) * l.w).toFixed(3)),
-          source.v,
-          parseFloat(((1 - node.r) * l.w * source.v).toFixed(3)),
-        ];
-      })
-      .sort((a, b) => b[3] - a[3]);
-    for (var r of other) {
-      addRow(table, r);
-    }
-  };
-
-  useEffect(() => {
-    let chartDOM = divEL.current;
-    const instance = echarts.init(chartDOM as any);
-
-    return () => {
-      instance.dispose();
-    };
-  }, []);
-
-  useEffect(() => {
-    let chartDOM = divEL.current;
-    const instance = echarts.getInstanceByDom(chartDOM as any);
-    if (instance) {
-      instance.setOption(option);
-      instance.on('dblclick', function (params) {
-        setDetails(
-          data,
-          // @ts-ignore
-          data.nodes.find((i: { id: any }) => i.id === params.data.id)
-        );
-      });
-      const debouncedResize = debounce(() => {
-        instance.resize();
-      }, 1000);
-      window.addEventListener('resize', debouncedResize);
-    }
-  }, []);
-
-  return (
-    <div className="hypertrons-crx-border">
-      <div ref={divEL} style={style}></div>
-    </div>
-  );
 };
+
+const Network = forwardRef(
+  (
+    { data, style = {}, focusedNodeID, date }: NetworkProps,
+    forwardedRef: ForwardedRef<DateControllers>
+  ): JSX.Element => {
+    const divEL = useRef(null);
+    let graphData = generateEchartsData(data, focusedNodeID);
+    let option = getOption(graphData, date);
+
+    const clearDiv = (id: string) => {
+      var div = document.getElementById(id);
+      if (div && div.hasChildNodes()) {
+        var children = div.childNodes;
+        for (var child of children) {
+          div.removeChild(child);
+        }
+      }
+    };
+
+    const addRow = (table: HTMLElement | null, texts: any[]) => {
+      // @ts-ignore
+      var tr = table.insertRow();
+      for (var t of texts) {
+        var td = tr.insertCell();
+        td.appendChild(document.createTextNode(t));
+      }
+    };
+
+    const update = (newDate: string) => {
+      getOpenRank(focusedNodeID, newDate).then((openRank) => {
+        let chartDOM = divEL.current;
+        const instance = echarts.getInstanceByDom(chartDOM as any);
+        if (instance) {
+          if (openRank == null) {
+            instance.setOption(
+              {
+                title: {
+                  text: `OpenRank for ${focusedNodeID} in ${newDate} is has not been generated`,
+                  top: 'middle',
+                  left: 'center',
+                },
+              },
+              { notMerge: true }
+            );
+          } else {
+            graphData = generateEchartsData(openRank, focusedNodeID);
+            option = getOption(graphData, newDate);
+            instance.setOption(option, { notMerge: true });
+          }
+        }
+      });
+    };
+
+    const setDetails = (graph: { links: any[]; nodes: any[] }, node: { r: number; i: number; id: any }) => {
+      clearDiv('details_table');
+      var table = document.getElementById('details_table');
+      addRow(table, ['From', 'Ratio', 'Value', 'OpenRank']);
+      addRow(table, ['Self', node.r, node.i, (node.r * node.i).toFixed(3)]);
+      var other = graph.links
+        .filter((l) => l.t == node.id)
+        .map((l) => {
+          var source = graph.nodes.find((n) => n.id == l.s);
+          return [
+            genName(source),
+            parseFloat(((1 - node.r) * l.w).toFixed(3)),
+            source.v,
+            parseFloat(((1 - node.r) * l.w * source.v).toFixed(3)),
+          ];
+        })
+        .sort((a, b) => b[3] - a[3]);
+      for (var r of other) {
+        addRow(table, r);
+      }
+    };
+
+    useImperativeHandle(forwardedRef, () => ({
+      update,
+    }));
+
+    useEffect(() => {
+      let chartDOM = divEL.current;
+      const instance = echarts.init(chartDOM as any);
+
+      return () => {
+        instance.dispose();
+      };
+    }, []);
+
+    useEffect(() => {
+      let chartDOM = divEL.current;
+      const instance = echarts.getInstanceByDom(chartDOM as any);
+      if (instance) {
+        instance.setOption(option);
+        instance.on('dblclick', function (params) {
+          setDetails(
+            data,
+            // @ts-ignore
+            data.nodes.find((i: { id: any }) => i.id === params.data.id)
+          );
+        });
+        const debouncedResize = debounce(() => {
+          instance.resize();
+        }, 1000);
+        window.addEventListener('resize', debouncedResize);
+      }
+    }, []);
+
+    return (
+      <div className="hypertrons-crx-border">
+        <div ref={divEL} style={style}></div>
+      </div>
+    );
+  }
+);
 
 export default Network;

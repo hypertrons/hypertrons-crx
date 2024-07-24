@@ -5,34 +5,38 @@ import $ from 'jquery';
 import features from '../../../../feature-manager';
 import isPerceptor from '../../../../helpers/is-perceptor';
 import { getRepoName, isPublicRepoWithMeta, isRepoRoot } from '../../../../helpers/get-repo-info';
-import { getOpenrank } from '../../../../api/community';
+import { getOpenRank } from '../../../../api/community';
 import { RepoMeta, metaStore } from '../../../../api/common';
 import View from './view';
 import './index.scss';
+import DataNotFound from '../repo-networks/DataNotFound';
 
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
-let openrank: any;
+let openRank: any;
 let meta: RepoMeta;
 
 const getData = async () => {
   meta = (await metaStore.get(repoName)) as RepoMeta;
-  const lastDataAvailableMonth = meta.updatedAt ? new Date(meta.updatedAt) : new Date();
-  lastDataAvailableMonth.setDate(0);
-
-  const newestMonth =
-    lastDataAvailableMonth.getFullYear() + '-' + (lastDataAvailableMonth.getMonth() + 1).toString().padStart(2, '0');
-  openrank = await getOpenrank(repoName, '2023-09');
+  // const lastDataAvailableMonth = meta.updatedAt ? new Date(meta.updatedAt) : new Date();
+  // lastDataAvailableMonth.setDate(0);
+  //
+  // const newestMonth =
+  //   lastDataAvailableMonth.getFullYear() + '-' + (lastDataAvailableMonth.getMonth() + 1).toString().padStart(2, '0');
+  openRank = await getOpenRank(repoName, '2023-09');
 };
 
 const renderTo = (container: Container) => {
-  render(<View repoName={repoName} openrank={openrank} meta={meta} />, container);
+  if (!openRank) {
+    render(<DataNotFound />, container);
+    return;
+  }
+  render(<View repoName={repoName} openrank={openRank} meta={meta} />, container);
 };
 
 const init = async (): Promise<void> => {
   repoName = getRepoName();
   await getData();
-
   // create container
   const container = document.createElement('div');
   container.id = featureId;
