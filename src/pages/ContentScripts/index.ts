@@ -16,3 +16,4 @@ import './features/oss-gpt';
 import './features/repo-activity-racing-bar';
 import './features/community-openrank-network';
 import './features/community-openrank-racing-bar';
+import './features/developer-hovercard-info';
