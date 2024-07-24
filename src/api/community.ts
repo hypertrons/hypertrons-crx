@@ -2,8 +2,9 @@ import request from '../helpers/request';
 import { ErrorCode, OSS_XLAB_ENDPOINT } from '../constant';
 
 export const getMetricByDate = async (repoName: string, date: string) => {
+  let response;
   try {
-    return await request(
+    response = await request(
       `${OSS_XLAB_ENDPOINT}/open_digger/github/${repoName}/project_openrank_detail/${date}.json`
     );
   } catch (error) {
@@ -15,8 +16,9 @@ export const getMetricByDate = async (repoName: string, date: string) => {
       throw error;
     }
   }
+  return response;
 };
 
-export const getOpenrank = async (repo: string, date: string) => {
+export const getOpenRank = async (repo: string, date: string) => {
   return getMetricByDate(repo, date);
 };
