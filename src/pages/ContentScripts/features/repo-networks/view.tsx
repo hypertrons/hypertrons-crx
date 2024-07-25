@@ -34,7 +34,7 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
   }, [options.locale]);
 
   const onProjectNetworkNodeToolTipChange = (nodeData: any, isShown: boolean) => {
-    setProjectDescriptionShow(!isShown);
+    setProjectDescriptionShow(isShown);
     let newAdjacentNodes: [string, number][] = [];
     if (nodeData.includes('/')) {
       repoNetwork.edges.forEach((edge: [string, string, number]) => {
@@ -49,7 +49,7 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
   };
 
   const onDeveloperNetworkNodeToolTipChange = (nodeData: any, isShown: boolean) => {
-    setDeveloperDescriptionShow(!isShown);
+    setDeveloperDescriptionShow(isShown);
     let newAdjacentNodes: [string, number][] = [];
     developerNetwork.edges.forEach((edge: [string, string, number]) => {
       if (edge[0] === nodeData && edge[2] >= 2.5) {
