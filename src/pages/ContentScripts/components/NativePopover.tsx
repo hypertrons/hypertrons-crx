@@ -13,13 +13,12 @@ interface NativePopoverProps extends PropsWithChildren<any> {
 export const NativePopover = ({ anchor, width, arrowPosition, children }: NativePopoverProps): JSX.Element => {
   useEffect(() => {
     (async () => {
-      await elementReady('div.Popover');
+      await elementReady('div.Popover.js-hovercard-content');
       await elementReady('div.Popover-message');
       const $popoverContainer = $('div.Popover');
       const $popoverContent = $('div.Popover-message');
       let popoverTimer: NodeJS.Timeout | null = null;
       let leaveTimer: NodeJS.Timeout | null = null;
-
       const showPopover = () => {
         popoverTimer = setTimeout(() => {
           const anchorOffset = anchor.offset();
