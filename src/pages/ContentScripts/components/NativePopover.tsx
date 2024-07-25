@@ -15,7 +15,7 @@ export const NativePopover = ({ anchor, width, arrowPosition, children }: Native
     (async () => {
       await elementReady('div.Popover.js-hovercard-content');
       await elementReady('div.Popover-message');
-      const $popoverContainer = $('div.Popover');
+      const $popoverContainer = $('div.Popover.js-hovercard-content');
       const $popoverContent = $('div.Popover-message');
       let popoverTimer: NodeJS.Timeout | null = null;
       let leaveTimer: NodeJS.Timeout | null = null;
