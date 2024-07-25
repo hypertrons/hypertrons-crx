@@ -1,18 +1,18 @@
-import { CommunityOpenRankDetails, getOption, countLongTermContributors, DEFAULT_FREQUENCY } from './data';
+import { CommunityOpenRankDetails, getOption, countLongTermItems, DEFAULT_FREQUENCY } from './data';
 import sleep from '../../../../helpers/sleep';
 
 import React, { useEffect, useRef, forwardRef, useImperativeHandle, ForwardedRef } from 'react';
-import { Spin } from 'antd';
 import * as echarts from 'echarts';
 import type { EChartsType } from 'echarts';
 
-export interface MediaControlers {
+export interface MediaControllers {
   play: () => void;
   pause: () => void;
   next: () => void;
   previous: () => void;
   latest: () => void;
   earliest: () => void;
+  updateType: (type: string) => void;
 }
 
 interface RacingBarProps {
@@ -22,21 +22,23 @@ interface RacingBarProps {
 }
 
 const RacingBar = forwardRef(
-  ({ speed, data, setPlaying }: RacingBarProps, forwardedRef: ForwardedRef<MediaControlers>): JSX.Element => {
+  ({ speed, data, setPlaying }: RacingBarProps, forwardedRef: ForwardedRef<MediaControllers>): JSX.Element => {
     const divEL = useRef<HTMLDivElement>(null);
     const timerRef = useRef<NodeJS.Timeout>();
     const speedRef = useRef<number>(speed);
+    const openRankRef = useRef<CommunityOpenRankDetails>(data);
     speedRef.current = speed;
 
-    const months = Object.keys(data);
-    const monthIndexRef = useRef<number>(months.length - 1);
+    const monthsRef = useRef<string[]>(Object.keys(openRankRef.current));
+    const monthIndexRef = useRef<number>(monthsRef.current.length - 1);
 
-    const [longTermContributorsCount, contributors] = countLongTermContributors(data);
-    const maxBars = longTermContributorsCount >= 20 ? 20 : 10;
-    const height = longTermContributorsCount >= 20 ? 600 : 300;
+    let longTermItemsCount = countLongTermItems(openRankRef.current);
+
+    const maxBarsRef = useRef<number>(longTermItemsCount >= 20 ? 20 : 10);
+    const heightRef = useRef<number>(longTermItemsCount >= 20 ? 600 : 300);
 
     const updateMonth = async (instance: EChartsType, month: string, enableAnimation: boolean) => {
-      const option = await getOption(data, month, speedRef.current, maxBars, enableAnimation);
+      const option = await getOption(openRankRef.current, month, speedRef.current, maxBarsRef.current, enableAnimation);
       instance.setOption(option);
     };
 
@@ -44,8 +46,8 @@ const RacingBar = forwardRef(
       const nextMonth = async () => {
         monthIndexRef.current++;
         const instance = echarts.getInstanceByDom(divEL.current!)!;
-        updateMonth(instance, months[monthIndexRef.current], true);
-        if (monthIndexRef.current < months.length - 1) {
+        updateMonth(instance, monthsRef.current[monthIndexRef.current], true);
+        if (monthIndexRef.current < monthsRef.current.length - 1) {
           timerRef.current = setTimeout(nextMonth, DEFAULT_FREQUENCY / speedRef.current);
         } else {
           setTimeout(() => {
@@ -56,7 +58,7 @@ const RacingBar = forwardRef(
 
       setPlaying(true);
       // if the current month is the latest month, go to the beginning
-      if (monthIndexRef.current === months.length - 1) {
+      if (monthIndexRef.current === monthsRef.current.length - 1) {
         earliest();
         await sleep(DEFAULT_FREQUENCY / speedRef.current);
       }
@@ -65,7 +67,6 @@ const RacingBar = forwardRef(
 
     const pause = () => {
       setPlaying(false);
-
       if (timerRef.current) {
         clearTimeout(timerRef.current);
       }
@@ -73,10 +74,10 @@ const RacingBar = forwardRef(
 
     const next = () => {
       pause();
-      if (monthIndexRef.current < months.length - 1) {
+      if (monthIndexRef.current < monthsRef.current.length - 1) {
         const instance = echarts.getInstanceByDom(divEL.current!)!;
         monthIndexRef.current++;
-        updateMonth(instance, months[monthIndexRef.current], false);
+        updateMonth(instance, monthsRef.current[monthIndexRef.current], false);
       }
     };
 
@@ -85,21 +86,53 @@ const RacingBar = forwardRef(
       if (monthIndexRef.current > 0) {
         const instance = echarts.getInstanceByDom(divEL.current!)!;
         monthIndexRef.current--;
-        updateMonth(instance, months[monthIndexRef.current], false);
+        updateMonth(instance, monthsRef.current[monthIndexRef.current], false);
       }
     };
 
     const latest = () => {
       pause();
       const instance = echarts.getInstanceByDom(divEL.current!)!;
-      monthIndexRef.current = months.length - 1;
-      updateMonth(instance, months[monthIndexRef.current], false);
+      monthIndexRef.current = monthsRef.current.length - 1;
+      updateMonth(instance, monthsRef.current[monthIndexRef.current], false);
     };
 
     const earliest = () => {
       const instance = echarts.getInstanceByDom(divEL.current!)!;
       monthIndexRef.current = 0;
-      updateMonth(instance, months[monthIndexRef.current], false);
+      updateMonth(instance, monthsRef.current[monthIndexRef.current], false);
+    };
+
+    const getOpenRankByType = (data: CommunityOpenRankDetails, type: string): CommunityOpenRankDetails => {
+      if (type === 'a') {
+        return data;
+      }
+      const filteredData: CommunityOpenRankDetails = {};
+
+      for (const [date, nodes] of Object.entries(data)) {
+        let typedData = nodes.filter(([_, c]) => c === type);
+        if (typedData.length != 0) {
+          filteredData[date] = typedData;
+        }
+      }
+      return filteredData;
+    };
+
+    const updateType = (type: string) => {
+      openRankRef.current = getOpenRankByType(data, type);
+      monthsRef.current = Object.keys(openRankRef.current);
+      monthIndexRef.current = monthsRef.current.length - 1;
+
+      getOption(
+        openRankRef.current,
+        monthsRef.current[monthIndexRef.current],
+        speedRef.current,
+        maxBarsRef.current,
+        false
+      ).then((newOption) => {
+        const instance = echarts.getInstanceByDom(divEL.current!)!;
+        instance.setOption(newOption);
+      });
     };
 
     // expose startRecording and stopRecording to parent component
@@ -110,12 +143,13 @@ const RacingBar = forwardRef(
       previous,
       latest,
       earliest,
+      updateType,
     }));
 
     useEffect(() => {
       (async () => {
         const instance = echarts.init(divEL.current!);
-        updateMonth(instance, months[monthIndexRef.current], false);
+        updateMonth(instance, monthsRef.current[monthIndexRef.current], false);
       })();
 
       return () => {
@@ -131,7 +165,7 @@ const RacingBar = forwardRef(
 
     return (
       <div className="hypertrons-crx-border">
-        <div ref={divEL} style={{ width: '100%', height }} />
+        <div ref={divEL} style={{ width: '100%', height: heightRef.current }} />
       </div>
     );
   }

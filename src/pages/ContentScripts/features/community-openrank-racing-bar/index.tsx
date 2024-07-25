@@ -6,11 +6,8 @@ import features from '../../../../feature-manager';
 import isPerceptor from '../../../../helpers/is-perceptor';
 import { getRepoName, isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
 import { getOpenRank } from '../../../../api/community';
-import { getActivityDetails } from '../../../../api/repo';
 import View from './view';
-import DataNotFound from '../repo-networks/DataNotFound';
 import { CommunityOpenRankDetails } from './data';
-import { JsonObject } from 'type-fest';
 
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
@@ -28,20 +25,9 @@ const getData = async () => {
     }
   }
 };
-const filterNodesByType = (data: CommunityOpenRankDetails, type: string): CommunityOpenRankDetails => {
-  const filteredData: CommunityOpenRankDetails = {};
 
-  for (const [date, nodes] of Object.entries(data)) {
-    filteredData[date] = nodes.filter(([_, c]) => c === type);
-  }
-
-  return filteredData;
-};
-const filterByI = filterNodesByType(communityOpenRankDetails, 'i');
-const filterByP = filterNodesByType(communityOpenRankDetails, 'p');
-const filterByU = filterNodesByType(communityOpenRankDetails, 'u');
 const renderTo = (container: Container) => {
-  render(<View currentRepo={repoName} communityOpenRankDetails={communityOpenRankDetails} />, container);
+  render(<View communityOpenRankDetails={communityOpenRankDetails} />, container);
 };
 
 const init = async (): Promise<void> => {

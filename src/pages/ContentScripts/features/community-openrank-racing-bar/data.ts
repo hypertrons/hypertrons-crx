@@ -31,10 +31,10 @@ export function getMonthlyData(data: CommunityOpenRankDetails) {
 }
 
 /**
- * Count the number of unique contributors in the data
- * @returns [number of long term contributors, contributors' names]
+ * Count the number of unique items in the data
+ * @returns [number of long term items, items' names]
  */
-export const countLongTermContributors = (data: CommunityOpenRankDetails): [number, string[]] => {
+export const countLongTermItems = (data: CommunityOpenRankDetails): number => {
   const map = new Map<string, number>();
   Object.keys(data).forEach((month) => {
     data[month].forEach((item) => {
@@ -52,7 +52,7 @@ export const countLongTermContributors = (data: CommunityOpenRankDetails): [numb
       count++;
     }
   });
-  return [count, [...map.keys()]];
+  return count;
 };
 
 export const DEFAULT_FREQUENCY = 2000;
