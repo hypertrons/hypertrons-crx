@@ -69,7 +69,7 @@ export const getOption = async (
 ): Promise<EChartsOption> => {
   const updateFrequency = DEFAULT_FREQUENCY / speed;
   const rich: any = {};
-  const sortedData = orderBy(data[month], (item) => item[1], 'desc');
+  const sortedData = orderBy(data[month], (item) => item[2], 'desc');
   const topData = take(sortedData, maxBars);
   const colorMap = new Map([
     ['r', '#72a8d6'],
