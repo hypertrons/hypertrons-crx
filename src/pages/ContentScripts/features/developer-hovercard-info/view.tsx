@@ -11,8 +11,8 @@ interface OpenRankProps {
 const View: React.FC<OpenRankProps> = ({ developerName, openrank }) => {
   const theme = getGithubTheme() as 'light' | 'dark';
 
-  const textColor = theme === 'light' ? '#717981' : '#878f98';
-  const fontSize = '13px';
+  const textColor = theme === 'light' ? '#636c76' : '#8d96a0';
+  const fontSize = '12px';
 
   return (
     <div className={`hypercrx-openrank-info ${theme}`} data-developer-name={developerName}>
@@ -24,7 +24,15 @@ const View: React.FC<OpenRankProps> = ({ developerName, openrank }) => {
           src={theme === 'light' ? rocketLight : rocketDark}
           alt=""
         />
-        <span style={{ display: 'inline-block', verticalAlign: 'middle', color: textColor, fontSize: fontSize }}>
+        <span
+          style={{
+            display: 'inline-block',
+            verticalAlign: 'middle',
+            lineHeight: '1.25 !important ',
+            color: textColor,
+            fontSize: fontSize,
+          }}
+        >
           OpenRank {openrank}
         </span>
       </div>
