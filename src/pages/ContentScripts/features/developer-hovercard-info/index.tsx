@@ -83,7 +83,6 @@ const init = async (): Promise<void> => {
       popover?.setAttribute('data-popover-id', popoverId);
 
       const openrank = await getDeveloperLatestOpenrank(developerName);
-      console.log('openrank ' + openrank);
 
       if (!openrank) {
         return;
