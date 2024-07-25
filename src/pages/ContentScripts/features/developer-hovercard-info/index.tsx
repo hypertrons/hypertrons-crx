@@ -31,11 +31,31 @@ const renderTo = (container: HTMLElement, developerName: string, openrank: strin
   ReactDOM.render(<View developerName={developerName} openrank={openrank} />, openRankContainer);
 };
 
+const elementReadyWithTimeout = async (selector: string, options: { stopOnDomReady: boolean }, timeout: number) => {
+  return Promise.race([
+    elementReady(selector, options),
+    new Promise((_, reject) => setTimeout(() => reject(new Error(`Timeout waiting for ${selector}`)), timeout)),
+  ]);
+};
+
 const init = async (): Promise<void> => {
   let abortController = new AbortController();
-  const hovercardSelector = '[data-hovercard-type="user"]';
+  const hovercardSelector = '[data-hovercard-url]';
+
+  await elementReady(hovercardSelector, { stopOnDomReady: false });
+  // The loading time for the element with data-testid=github-avatar is 1500ms.
+  // If the timeout is not set, OpenRank will not be added normally.
+  try {
+    await elementReadyWithTimeout('[data-testid=github-avatar]', { stopOnDomReady: false }, 1500);
+  } catch (error) {
+    console.error(error);
+  }
+
   document.querySelectorAll(hovercardSelector).forEach((element) => {
-    // isProcessing is used to Prevent OpenRank from adding duplicates
+    const hovercardUrl = element.getAttribute('data-hovercard-url');
+    if (!hovercardUrl || !hovercardUrl.startsWith('/users')) {
+      return;
+    }
     element.addEventListener('mouseover', async () => {
       abortController.abort();
       abortController = new AbortController();
@@ -63,6 +83,7 @@ const init = async (): Promise<void> => {
       popover?.setAttribute('data-popover-id', popoverId);
 
       const openrank = await getDeveloperLatestOpenrank(developerName);
+      console.log('openrank ' + openrank);
 
       if (!openrank) {
         return;
