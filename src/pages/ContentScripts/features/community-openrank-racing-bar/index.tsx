@@ -28,7 +28,18 @@ const getData = async () => {
     }
   }
 };
+const filterNodesByType = (data: CommunityOpenRankDetails, type: string): CommunityOpenRankDetails => {
+  const filteredData: CommunityOpenRankDetails = {};
 
+  for (const [date, nodes] of Object.entries(data)) {
+    filteredData[date] = nodes.filter(([_, c]) => c === type);
+  }
+
+  return filteredData;
+};
+const filterByI = filterNodesByType(communityOpenRankDetails, 'i');
+const filterByP = filterNodesByType(communityOpenRankDetails, 'p');
+const filterByU = filterNodesByType(communityOpenRankDetails, 'u');
 const renderTo = (container: Container) => {
   render(<View currentRepo={repoName} communityOpenRankDetails={communityOpenRankDetails} />, container);
 };
