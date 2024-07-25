@@ -1,11 +1,8 @@
 import React, { CSSProperties, forwardRef, useEffect, useRef, ForwardedRef, useImperativeHandle } from 'react';
 import * as echarts from 'echarts';
 
-import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
-
 import { debounce } from 'lodash-es';
 import getGithubTheme from '../../../../helpers/get-github-theme';
-import dayjs from 'dayjs';
 import { getOpenRank } from '../../../../api/community';
 
 export interface DateControllers {
@@ -102,10 +99,7 @@ const getOption = (data: any, date: string | undefined) => {
           show: true,
         },
         force: {
-          // initLayout: 'circular',
-          // gravity: 0.1,
           repulsion: 300,
-          // edgeLength: [50, 100],
           // Disable the iteration animation of layout
           layoutAnimation: false,
         },
