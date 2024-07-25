@@ -17,6 +17,11 @@ interface GraphProps {
    * callback function when click node
    */
   readonly focusedNodeID?: string;
+
+  /**
+   * callback function when mouse hover node
+   */
+  readonly onToolTipChange?: (params: any, isShown: boolean) => void;
 }
 
 const NODE_SIZE = [10, 25];
@@ -60,24 +65,11 @@ const generateEchartsData = (data: any, focusedNodeID: string | undefined): any 
   };
 };
 
-const Graph: React.FC<GraphProps> = ({ data, style = {}, focusedNodeID }) => {
+const Graph: React.FC<GraphProps> = ({ data, style = {}, focusedNodeID, onToolTipChange }) => {
   const divEL = useRef(null);
   const graphData = generateEchartsData(data, focusedNodeID);
   const option = {
-    tooltip: {
-      trigger: 'item',
-      triggerOn: 'mousemove|click',
-      // formatter: function (params: any) {
-      //   if (params.dataType === 'node') {
-      //     // console.log(params)
-      //     const nodeDataIndex = params.data.id; // 获取悬停节点的数据索引
-      //     document.dispatchEvent(new CustomEvent('nodeHovered', { detail: nodeDataIndex }));
-      //     return nodeDataIndex + '   ' + params.data.value; // 返回自定义的 tooltip 内容
-      //   } else {
-      //     return params.data.source + ' > ' + params.data.target + ' : ' + params.data.value;
-      //   }
-      // },
-    },
+    tooltip: {},
     animation: true,
     animationDuration: 2000,
     series: [
@@ -131,13 +123,17 @@ const Graph: React.FC<GraphProps> = ({ data, style = {}, focusedNodeID }) => {
       instance.on('mouseover', function (param: any) {
         if (param.dataType === 'node') {
           const nodeDataIndex = param.data.id;
-          document.dispatchEvent(new CustomEvent('nodeHovered', { detail: nodeDataIndex }));
+          if (onToolTipChange) {
+            onToolTipChange(nodeDataIndex, true);
+          }
         }
       });
       instance.on('mouseout', function (param: any) {
         if (param.dataType === 'node') {
           const nodeDataIndex = param.data.id;
-          // document.dispatchEvent(new CustomEvent('nodeHoverOut', { detail: nodeDataIndex }));
+          if (onToolTipChange) {
+            onToolTipChange(nodeDataIndex, false);
+          }
         }
       });
 

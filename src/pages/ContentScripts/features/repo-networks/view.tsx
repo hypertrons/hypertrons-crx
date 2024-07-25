@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import Graph from '../../../../components/Graph';
+import Table from '../../../../components/Table';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
@@ -20,6 +21,10 @@ const graphStyle = {
 
 const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
+  const [projectDescriptionShow, setProjectDescriptionShow] = useState(true);
+  const [developerDescriptionShow, setDeveloperDescriptionShow] = useState(true);
+  const [adjacentNodes, setAdjacentNodes] = useState<[string, number][]>([]);
+  const [developerAdjacentNodes, setDeveloperAdjacentNodes] = useState<[string, number][]>([]);
   const { t, i18n } = useTranslation();
   useEffect(() => {
     (async function () {
@@ -27,6 +32,34 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
       i18n.changeLanguage(options.locale);
     })();
   }, [options.locale]);
+
+  const onProjectNetworkNodeToolTipChange = (nodeData: any, isShown: boolean) => {
+    setProjectDescriptionShow(!isShown);
+    let newAdjacentNodes: [string, number][] = [];
+    if (nodeData.includes('/')) {
+      repoNetwork.edges.forEach((edge: [string, string, number]) => {
+        if (edge[0] === nodeData && edge[2] >= 10) {
+          newAdjacentNodes.push([edge[1], edge[2]]);
+        } else if (edge[1] === nodeData && edge[2] >= 10) {
+          newAdjacentNodes.push([edge[0], edge[2]]);
+        }
+      });
+    }
+    setAdjacentNodes(newAdjacentNodes);
+  };
+
+  const onDeveloperNetworkNodeToolTipChange = (nodeData: any, isShown: boolean) => {
+    setDeveloperDescriptionShow(!isShown);
+    let newAdjacentNodes: [string, number][] = [];
+    developerNetwork.edges.forEach((edge: [string, string, number]) => {
+      if (edge[0] === nodeData && edge[2] >= 2.5) {
+        newAdjacentNodes.push([edge[1], edge[2]]);
+      } else if (edge[1] === nodeData && edge[2] >= 2.5) {
+        newAdjacentNodes.push([edge[0], edge[2]]);
+      }
+    });
+    setDeveloperAdjacentNodes(newAdjacentNodes);
+  };
 
   return (
     <div>
@@ -40,17 +73,26 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
         <div className="d-flex flex-wrap flex-items-center">
           <div className="col-12 col-md-8">
             <div style={{ margin: '10px 0 20px 20px' }}>
-              <Graph data={repoNetwork} style={graphStyle} focusedNodeID={currentRepo} />
+              <Graph
+                data={repoNetwork}
+                style={graphStyle}
+                focusedNodeID={currentRepo}
+                onToolTipChange={onProjectNetworkNodeToolTipChange}
+              />
             </div>
           </div>
           <div className="col-12 col-md-4">
-            <div className="color-text-secondary-2" style={{ marginLeft: '35px', marginRight: '35px' }}>
-              <p>{t('component_projectCorrelationNetwork_description')}</p>
-              <ul style={{ margin: '0px 0 10px 15px' }}>
-                <li>{t('component_projectCorrelationNetwork_description_node')}</li>
-                <li>{t('component_projectCorrelationNetwork_description_edge')}</li>
-              </ul>
-            </div>
+            {projectDescriptionShow ? (
+              <div className="color-text-secondary" style={{ marginLeft: '35px', marginRight: '35px' }}>
+                <p>{t('component_projectCorrelationNetwork_description')}</p>
+                <ul style={{ margin: '0px 0 10px 15px' }}>
+                  <li>{t('component_projectCorrelationNetwork_description_node')}</li>
+                  <li>{t('component_projectCorrelationNetwork_description_edge')}</li>
+                </ul>
+              </div>
+            ) : (
+              <Table adjacentNodes={adjacentNodes} />
+            )}
           </div>
         </div>
       </div>
@@ -64,17 +106,21 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
         <div className="d-flex flex-wrap flex-items-center">
           <div className="col-12 col-md-8">
             <div style={{ margin: '10px 0 20px 20px' }}>
-              <Graph data={developerNetwork} style={graphStyle} />
+              <Graph data={developerNetwork} style={graphStyle} onToolTipChange={onDeveloperNetworkNodeToolTipChange} />
             </div>
           </div>
           <div className="col-12 col-md-4">
-            <div className="color-text-secondary-3" style={{ marginLeft: '35px', marginRight: '35px' }}>
-              <p>{t('component_activeDeveloperCollaborationNetwork_description')}</p>
-              <ul style={{ margin: '0px 0 10px 15px' }}>
-                <li>{t('component_activeDeveloperCollaborationNetwork_description_node')}</li>
-                <li>{t('component_activeDeveloperCollaborationNetwork_description_edge')}</li>
-              </ul>
-            </div>
+            {developerDescriptionShow ? (
+              <div className="color-text-secondary" style={{ marginLeft: '35px', marginRight: '35px' }}>
+                <p>{t('component_activeDeveloperCollaborationNetwork_description')}</p>
+                <ul style={{ margin: '0px 0 10px 15px' }}>
+                  <li>{t('component_activeDeveloperCollaborationNetwork_description_node')}</li>
+                  <li>{t('component_activeDeveloperCollaborationNetwork_description_edge')}</li>
+                </ul>
+              </div>
+            ) : (
+              <Table adjacentNodes={developerAdjacentNodes} />
+            )}
           </div>
         </div>
       </div>
