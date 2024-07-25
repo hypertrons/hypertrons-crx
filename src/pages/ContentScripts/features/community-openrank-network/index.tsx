@@ -4,7 +4,7 @@ import $ from 'jquery';
 
 import features from '../../../../feature-manager';
 import isPerceptor from '../../../../helpers/is-perceptor';
-import { getRepoName, isPublicRepoWithMeta, isRepoRoot } from '../../../../helpers/get-repo-info';
+import { getRepoName, isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
 import { getOpenRank } from '../../../../api/community';
 import { RepoMeta, metaStore } from '../../../../api/common';
 import View from './view';
@@ -18,11 +18,6 @@ let meta: RepoMeta;
 
 const getData = async () => {
   meta = (await metaStore.get(repoName)) as RepoMeta;
-  // const lastDataAvailableMonth = meta.updatedAt ? new Date(meta.updatedAt) : new Date();
-  // lastDataAvailableMonth.setDate(0);
-  //
-  // const newestMonth =
-  //   lastDataAvailableMonth.getFullYear() + '-' + (lastDataAvailableMonth.getMonth() + 1).toString().padStart(2, '0');
   openRank = await getOpenRank(repoName, '2023-09');
 };
 
