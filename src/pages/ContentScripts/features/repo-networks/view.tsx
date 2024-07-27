@@ -35,7 +35,7 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
 
   const onProjectNetworkNodeToolTipChange = (nodeData: any, isShown: boolean) => {
     setProjectDescriptionShow(!isShown);
-    let newAdjacentNodes: [string, number][] = [];
+    const newAdjacentNodes: [string, number][] = [];
     if (nodeData.includes('/')) {
       repoNetwork.edges.forEach((edge: [string, string, number]) => {
         if (edge[0] === nodeData && edge[2] >= 10) {
@@ -50,7 +50,7 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
 
   const onDeveloperNetworkNodeToolTipChange = (nodeData: any, isShown: boolean) => {
     setDeveloperDescriptionShow(!isShown);
-    let newAdjacentNodes: [string, number][] = [];
+    const newAdjacentNodes: [string, number][] = [];
     developerNetwork.edges.forEach((edge: [string, string, number]) => {
       if (edge[0] === nodeData && edge[2] >= 2.5) {
         newAdjacentNodes.push([edge[1], edge[2]]);
@@ -59,6 +59,22 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
       }
     });
     setDeveloperAdjacentNodes(newAdjacentNodes);
+  };
+
+  const handleMouseEnterProject = () => {
+    setProjectDescriptionShow(false);
+  };
+
+  const handleMouseLeaveProject = () => {
+    setProjectDescriptionShow(true);
+  };
+
+  const handleMouseEnterDeveloper = () => {
+    setDeveloperDescriptionShow(false);
+  };
+
+  const handleMouseLeaveDeveloper = () => {
+    setDeveloperDescriptionShow(true);
   };
 
   return (
@@ -81,7 +97,11 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
               />
             </div>
           </div>
-          <div className="col-12 col-md-4">
+          <div
+            className="col-12 col-md-4"
+            onMouseEnter={handleMouseEnterProject}
+            onMouseLeave={handleMouseLeaveProject}
+          >
             {projectDescriptionShow ? (
               <div className="color-text-secondary" style={{ marginLeft: '35px', marginRight: '35px' }}>
                 <p>{t('component_projectCorrelationNetwork_description')}</p>
@@ -109,7 +129,11 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
               <Graph data={developerNetwork} style={graphStyle} onToolTipChange={onDeveloperNetworkNodeToolTipChange} />
             </div>
           </div>
-          <div className="col-12 col-md-4">
+          <div
+            className="col-12 col-md-4"
+            onMouseEnter={handleMouseEnterDeveloper}
+            onMouseLeave={handleMouseLeaveDeveloper}
+          >
             {developerDescriptionShow ? (
               <div className="color-text-secondary" style={{ marginLeft: '35px', marginRight: '35px' }}>
                 <p>{t('component_activeDeveloperCollaborationNetwork_description')}</p>
