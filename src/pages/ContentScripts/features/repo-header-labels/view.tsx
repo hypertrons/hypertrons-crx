@@ -37,6 +37,28 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
   const participantData = generateDataByMonth(participant, meta.updatedAt);
   const contributorData = generateDataByMonth(contributor, meta.updatedAt);
 
+  // define a type to describe the structure of Label
+  type Label = {
+    id: string;
+    name: string;
+    type: string;
+  };
+
+  const labels: Label[] = meta.labels as Label[];
+
+  const meta_labels = labels.map((label) => (
+    <span
+      key={label.id} // use label.id as the key
+      id={label.id}
+      className="Label Label--secondary v-align-middle mr-1 unselectable"
+      style={{
+        color: githubTheme === 'light' ? '#24292f' : '#c9d1d9',
+      }}
+    >
+      {label.name}
+    </span>
+  ));
+
   return (
     <div className="d-flex">
       <span
@@ -125,6 +147,8 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
         {numberWithCommas(contributorData[contributorData.length - 1][1])}/
         {numberWithCommas(participantData[participantData.length - 1][1])}
       </span>
+
+      {meta_labels}
     </div>
   );
 };

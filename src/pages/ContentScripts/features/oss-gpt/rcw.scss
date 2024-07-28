@@ -339,7 +339,11 @@ img.rcw-picker-icon {
   line-height: 1.15;
 }
 .emoji-mart {
-  font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    Helvetica Neue,
+    sans-serif;
   font-size: 16px;
   display: inline-block;
   color: #222427;
@@ -505,7 +509,13 @@ img.rcw-picker-icon {
   box-shadow: none;
 }
 .emoji-mart-emoji-native {
-  font-family: Segoe UI Emoji, Segoe UI Symbol, Segoe UI, Apple Color Emoji, Twemoji Mozilla, Noto Color Emoji,
+  font-family:
+    Segoe UI Emoji,
+    Segoe UI Symbol,
+    Segoe UI,
+    Apple Color Emoji,
+    Twemoji Mozilla,
+    Noto Color Emoji,
     Android Emoji;
 }
 .emoji-mart-no-results {
@@ -771,14 +781,18 @@ img.rcw-picker-icon {
 .rcw-conversation-container.active {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 .rcw-conversation-container.hidden {
   z-index: -1;
   pointer-events: none;
   opacity: 0;
   transform: translateY(10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 .rcw-conversation-resizer {
   cursor: col-resize;
