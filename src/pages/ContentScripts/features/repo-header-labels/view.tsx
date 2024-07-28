@@ -37,7 +37,10 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
   const participantData = generateDataByMonth(participant, meta.updatedAt);
   const contributorData = generateDataByMonth(contributor, meta.updatedAt);
 
+<<<<<<< HEAD
   // define a type to describe the structure of Label
+=======
+>>>>>>> b5aa7102155b3b53bb28adbcf469426bd84f978f
   type Label = {
     id: string;
     name: string;
@@ -46,6 +49,7 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
 
   const labels: Label[] = meta.labels as Label[];
 
+<<<<<<< HEAD
   const meta_labels = labels.map((label) => (
     <span
       key={label.id} // use label.id as the key
@@ -53,6 +57,15 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
       className="Label Label--secondary v-align-middle mr-1 unselectable"
       style={{
         color: githubTheme === 'light' ? '#24292f' : '#c9d1d9',
+=======
+  const spans = labels.map((label, index) => (
+    <span
+      key={label.id} // 使用label的id作为key
+      id={label.id}
+      className="Label Label--secondary v-align-middle mr-1 unselectable"
+      style={{
+        color: githubTheme === 'light' ? '#24292f' : '#c9d1d9'
+>>>>>>> b5aa7102155b3b53bb28adbcf469426bd84f978f
       }}
     >
       {label.name}
@@ -148,7 +161,12 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
         {numberWithCommas(participantData[participantData.length - 1][1])}
       </span>
 
+<<<<<<< HEAD
       {meta_labels}
+=======
+      {spans}
+
+>>>>>>> b5aa7102155b3b53bb28adbcf469426bd84f978f
     </div>
   );
 };
