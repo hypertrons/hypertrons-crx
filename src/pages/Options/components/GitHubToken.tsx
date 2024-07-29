@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 message.config({
   top: 1130,
-  duration: 2, 
+  duration: 2,
   maxCount: 3,
 });
 
@@ -40,7 +40,7 @@ const GitHubToken = () => {
   const handleTestToken = async () => {
     try {
       const userData = await githubRequest('/user', {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       message.success(t('github_token_success_valid', { username: userData.login }));
     } catch (error) {
@@ -79,9 +79,15 @@ const GitHubToken = () => {
               <li>
                 {t('github_token_step4')}
                 <ul>
-                  <li><strong>{t('github_token_note')}</strong>: {t('github_token_note_description')}</li>
-                  <li><strong>{t('github_token_expiration')}</strong>: {t('github_token_expiration_description')}</li>
-                  <li><strong>{t('github_token_scopes')}</strong>: {t('github_token_scopes_description')}</li>
+                  <li>
+                    <strong>{t('github_token_note')}</strong>: {t('github_token_note_description')}
+                  </li>
+                  <li>
+                    <strong>{t('github_token_expiration')}</strong>: {t('github_token_expiration_description')}
+                  </li>
+                  <li>
+                    <strong>{t('github_token_scopes')}</strong>: {t('github_token_scopes_description')}
+                  </li>
                 </ul>
               </li>
               <li>{t('github_token_step5')}</li>
@@ -92,26 +98,29 @@ const GitHubToken = () => {
       </div>
       <div style={{ marginBottom: '10px' }} id="message-container"></div> {/* Container for displaying messages */}
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <input 
-          type="text" 
-          value={isEditing ? token : obfuscateToken(token)} 
-          onChange={(e) => setToken(e.target.value)} 
-          placeholder={t('github_token_placeholder')} 
-          style={{ marginRight: '10px', flex: 1 }} 
+        <input
+          type="text"
+          value={isEditing ? token : obfuscateToken(token)}
+          onChange={(e) => setToken(e.target.value)}
+          placeholder={t('github_token_placeholder')}
+          style={{ marginRight: '10px', flex: 1 }}
           disabled={!isEditing}
         />
         {isEditing ? (
-          <button onClick={handleSave} style={{ marginRight: '10px', marginTop: '17px' }}>{t('github_token_save')}</button>
+          <button onClick={handleSave} style={{ marginRight: '10px', marginTop: '17px' }}>
+            {t('github_token_save')}
+          </button>
         ) : (
-          <button onClick={handleEdit} style={{ marginRight: '10px', marginTop: '17px' }}>{t('github_token_edit')}</button>
+          <button onClick={handleEdit} style={{ marginRight: '10px', marginTop: '17px' }}>
+            {t('github_token_edit')}
+          </button>
         )}
-        <button onClick={handleTestToken} style={{ marginTop: '17px' }}>{t('github_token_test')}</button>
+        <button onClick={handleTestToken} style={{ marginTop: '17px' }}>
+          {t('github_token_test')}
+        </button>
       </div>
     </div>
   );
 };
 
 export default GitHubToken;
-
-
-

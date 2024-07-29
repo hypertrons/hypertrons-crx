@@ -2,7 +2,7 @@ let githubToken = '';
 
 export const saveToken = (token: string) => {
   githubToken = token;
-  localStorage.setItem('github_token', token); 
+  localStorage.setItem('github_token', token);
 };
 
 export const getToken = () => {

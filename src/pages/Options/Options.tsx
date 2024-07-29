@@ -69,11 +69,7 @@ const Options = (): JSX.Element => {
           </Space>
         </Row>
 
-        <Row
-          justify="center"
-          style={stacksStyleOptions.mainStack}
-          gutter={[30, 30]}
-        >
+        <Row justify="center" style={stacksStyleOptions.mainStack} gutter={[30, 30]}>
           <Col
             span={24}
             style={{
