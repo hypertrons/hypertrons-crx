@@ -1,4 +1,3 @@
-// src/pages/Options/index.tsx
 import React, { useState, useEffect } from 'react';
 import { Checkbox, Radio, Space, Row, Col } from 'antd';
 import { importedFeatures } from '../../../README.md';
@@ -8,7 +7,7 @@ import TooltipTrigger from '../../components/TooltipTrigger';
 import './Options.css';
 import { useTranslation } from 'react-i18next';
 import '../../helpers/i18n';
-import GitHubToken from './GitHubToken'; // 引入 GitHubToken 组件
+import GitHubToken from './components/GitHubToken';
 
 const stacksStyleOptions = {
   headerStack: {
@@ -18,6 +17,9 @@ const stacksStyleOptions = {
     marginBottom: '40px',
   },
   settingStack: {
+    margin: '10px 25px',
+  },
+  tokenStack: {
     margin: '10px 25px',
   },
 };
@@ -70,7 +72,7 @@ const Options = (): JSX.Element => {
         <Row
           justify="center"
           style={stacksStyleOptions.mainStack}
-          gutter={[30, 30]} // 设置间距
+          gutter={[30, 30]}
         >
           <Col
             span={24}
@@ -155,9 +157,10 @@ const Options = (): JSX.Element => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              margin: stacksStyleOptions.tokenStack.margin,
             }}
           >
-            <GitHubToken /> {/* 添加 GitHubToken 组件 */}
+            <GitHubToken /> {/* Add GitHubToken component */}
           </Col>
         </Row>
       </Space>
@@ -166,4 +169,3 @@ const Options = (): JSX.Element => {
 };
 
 export default Options;
-

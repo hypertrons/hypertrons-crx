@@ -1,9 +1,8 @@
-// src/api/githubApi.ts
 let githubToken = '';
 
 export const saveToken = (token: string) => {
   githubToken = token;
-  localStorage.setItem('github_token', token); // 保存 token 到 localStorage
+  localStorage.setItem('github_token', token); 
 };
 
 export const getToken = () => {
