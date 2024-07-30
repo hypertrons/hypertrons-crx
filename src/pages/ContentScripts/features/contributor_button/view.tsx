@@ -21,6 +21,22 @@ const graphStyle = {
   height: '400px',
 };
 
+const targetStyle = {
+  width: '296px',
+  height: '100px',
+  display: "flex",
+  "justify-content": "flex-start",
+  "align-items": "flex-start",
+  "align-content": "flex-start",
+  "flex-wrap": "wrap",
+};
+
+const buttonStyle = {
+  margin: "-5px 0px 10px 0px",
+  padding: '8px',
+  "border-radius": '15px',
+};
+
 // 定义View组件
 const View = ({ developerNetwork, target}: Props): JSX.Element => {
   // 定义状态变量，包括选项、是否显示图表和是否显示仓库网络
@@ -42,7 +58,7 @@ const View = ({ developerNetwork, target}: Props): JSX.Element => {
   // 返回JSX元素，包括一个按钮和一个条件渲染的图表或目标HTML
   return (
     <div>
-      <button onClick={() => setShowGraph(!showGraph)}>
+      <button onClick={() => setShowGraph(!showGraph)} style={buttonStyle}>
         切换视图
       </button>
       {showGraph ? (
@@ -54,7 +70,7 @@ const View = ({ developerNetwork, target}: Props): JSX.Element => {
           </div>
         </div>
       ) : (
-            <div dangerouslySetInnerHTML={{ __html: target }} style={{margin: '0', padding: "0"}} />
+            <div  dangerouslySetInnerHTML={{ __html: target }} style={ targetStyle} />
       )}
     </div>
   );
