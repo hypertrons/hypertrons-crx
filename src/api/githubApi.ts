@@ -21,5 +21,3 @@ export const githubRequest = async (endpoint: string, options: RequestInit = {})
 };
 
 export { saveToken, getToken };
-
-
