@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import TooltipTrigger from '../../../components/TooltipTrigger';
-import { saveToken, getToken, githubRequest } from '../../../helpers/githubApi';
+import { saveToken, getToken, githubRequest } from '../../../api/githubApi';
 import { message } from 'antd';
 import { useTranslation } from 'react-i18next';
 
@@ -38,18 +38,18 @@ const GitHubToken = () => {
   };
 
   const handleTestToken = async () => {
-    try {
-      const userData = await githubRequest('/user', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      message.success(t('github_token_success_valid', { username: userData.login }));
-    } catch (error) {
-      console.error('Token test failed:', error);
+    const userData = await githubRequest('/user', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (userData === null || userData.message) {
       message.error(t('github_token_error_invalid'));
+    } else {
+      message.success(t('github_token_success_valid', { username: userData.login }));
     }
   };
 
-  const obfuscateToken = (token: string) => {
+  const obfuscateToken = (token: string): string => {
     if (token.length <= 4) return token;
     return `${token[0]}${'*'.repeat(token.length - 2)}${token[token.length - 1]}`;
   };
@@ -96,7 +96,7 @@ const GitHubToken = () => {
           </div>
         )}
       </div>
-      <div style={{ marginBottom: '10px' }} id="message-container"></div> {/* Container for displaying messages */}
+      <div style={{ marginBottom: '10px' }} id="message-container"></div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <input
           type="text"
@@ -124,3 +124,7 @@ const GitHubToken = () => {
 };
 
 export default GitHubToken;
+
+
+
+
