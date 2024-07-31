@@ -8,10 +8,10 @@ import { render } from 'react-dom';
 import $ from 'jquery';
 import View from './view';
 import { getRepoName } from '../../../../helpers/get-repo-info';
-import {getDeveloperNetwork, getRepoNetwork} from "../../../../api/repo";
+import { getDeveloperNetwork, getRepoNetwork } from '../../../../api/repo';
 import features from '../../../../feature-manager';
 import * as pageDetect from 'github-url-detection';
-import elementReady from "element-ready";
+import elementReady from 'element-ready';
 
 // 全局变量用于存储仓库名称和网络数据，以便在不同函数间共享
 // 定义全局变量，用于存储仓库名称和网络数据。
@@ -68,11 +68,10 @@ const restore = async () => {
   replaceContributorList(target);
 };
 
-
 // 将功能添加到特性管理器中，配置初始化和恢复函数。
 features.add(featureId, {
-//   asLongAs: [pageDetect.isUserProfile],
+  //   asLongAs: [pageDetect.isUserProfile],
   awaitDomReady: false,
-    init,
+  init,
   restore,
 });

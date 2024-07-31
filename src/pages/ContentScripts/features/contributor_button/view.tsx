@@ -24,21 +24,21 @@ const graphStyle = {
 const targetStyle = {
   width: '296px',
   height: '100px',
-  display: "flex",
-  "justify-content": "flex-start",
-  "align-items": "flex-start",
-  "align-content": "flex-start",
-  "flex-wrap": "wrap",
+  display: 'flex',
+  'justify-content': 'flex-start',
+  'align-items': 'flex-start',
+  'align-content': 'flex-start',
+  'flex-wrap': 'wrap',
 };
 
 const buttonStyle = {
-  margin: "-5px 0px 10px 0px",
+  margin: '-5px 0px 10px 0px',
   padding: '8px',
-  "border-radius": '15px',
+  'border-radius': '15px',
 };
 
 // 定义View组件
-const View = ({ developerNetwork, target}: Props): JSX.Element => {
+const View = ({ developerNetwork, target }: Props): JSX.Element => {
   // 定义状态变量，包括选项、是否显示图表和是否显示仓库网络
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
   const [showGraph, setShowGraph] = useState(true);
@@ -63,14 +63,14 @@ const View = ({ developerNetwork, target}: Props): JSX.Element => {
       </button>
       {showGraph ? (
         <div className="hypertrons-crx-border hypertrons-crx-container">
-          <div className="d-flex flex-wrap flex-items-center" style={{ margin: '0 0 0 0', padding: "0"}}>
-              <div style={{ margin: '0 0 0 0', padding: "0", display: "block"}}>
-                <Graph data={developerNetwork} style={graphStyle} />
-              </div>
+          <div className="d-flex flex-wrap flex-items-center" style={{ margin: '0 0 0 0', padding: '0' }}>
+            <div style={{ margin: '0 0 0 0', padding: '0', display: 'block' }}>
+              <Graph data={developerNetwork} style={graphStyle} />
+            </div>
           </div>
         </div>
       ) : (
-            <div  dangerouslySetInnerHTML={{ __html: target }} style={ targetStyle} />
+        <div dangerouslySetInnerHTML={{ __html: target }} style={targetStyle} />
       )}
     </div>
   );
