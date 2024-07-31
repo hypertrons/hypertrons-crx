@@ -1,20 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import TooltipTrigger from '../../../components/TooltipTrigger';
 import { saveToken, getToken, githubRequest } from '../../../api/githubApi';
 import { message } from 'antd';
 import { useTranslation } from 'react-i18next';
-
-message.config({
-  top: 1130,
-  duration: 2,
-  maxCount: 3,
-});
 
 const GitHubToken = () => {
   const [token, setToken] = useState('');
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const { t } = useTranslation();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const storedToken = getToken();
@@ -25,11 +20,11 @@ const GitHubToken = () => {
 
   const handleSave = () => {
     if (!token.trim()) {
-      message.error(t('github_token_error_empty'));
+      showMessage(t('github_token_error_empty'), 'error');
       return;
     }
     saveToken(token);
-    message.success(t('github_token_success_save'));
+    showMessage(t('github_token_success_save'), 'success');
     setIsEditing(false);
   };
 
@@ -43,15 +38,27 @@ const GitHubToken = () => {
     });
 
     if (userData === null || userData.message) {
-      message.error(t('github_token_error_invalid'));
+      showMessage(t('github_token_error_invalid'), 'error');
     } else {
-      message.success(t('github_token_success_valid', { username: userData.login }));
+      showMessage(t('github_token_success_valid', { username: userData.login }), 'success');
     }
   };
 
   const obfuscateToken = (token: string): string => {
     if (token.length <= 4) return token;
     return `${token[0]}${'*'.repeat(token.length - 2)}${token[token.length - 1]}`;
+  };
+
+  const showMessage = (content: string, type: 'success' | 'error') => {
+    if (inputRef.current) {
+      const rect = inputRef.current.getBoundingClientRect();
+      message.config({
+        top: rect.top - 50,
+        duration: 2,
+        maxCount: 3,
+      });
+      message[type](content);
+    }
   };
 
   return (
@@ -100,6 +107,7 @@ const GitHubToken = () => {
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <input
           type="text"
+          ref={inputRef}
           value={isEditing ? token : obfuscateToken(token)}
           onChange={(e) => setToken(e.target.value)}
           placeholder={t('github_token_placeholder')}
