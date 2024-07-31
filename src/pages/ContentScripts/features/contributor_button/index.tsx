@@ -1,6 +1,6 @@
 /**
- * 该模块负责在GitHub仓库页面中，增强贡献者列表的功能。
- * 它使用React来渲染贡献者列表，并通过API获取额外的网络数据。
+ * This module is responsible for enhancing the contributor list on the GitHub repository page.
+ * It uses React to render the contributor list and fetches additional network data through the API.
  */
 
 import React, { useState, useEffect } from 'react';
@@ -8,23 +8,23 @@ import { render } from 'react-dom';
 import $ from 'jquery';
 import View from './view';
 import { getRepoName } from '../../../../helpers/get-repo-info';
-import {getDeveloperNetwork, getRepoNetwork} from "../../../../api/repo";
+import { getDeveloperNetwork, getRepoNetwork } from '../../../../api/repo';
 import features from '../../../../feature-manager';
 import * as pageDetect from 'github-url-detection';
-import elementReady from "element-ready";
+import elementReady from 'element-ready';
 
-// 全局变量用于存储仓库名称和网络数据，以便在不同函数间共享
-// 定义全局变量，用于存储仓库名称和网络数据。
+// Global variables are used to store the repository name and network data for sharing between different functions.
+// Define global variables to store the repository name and network data.
 let repoName: string;
 let developerNetworks: any;
 let repoNetworks: any;
 let target: any;
 
-// 获取当前模块的特征ID，用于特性管理。
+// Get the feature ID of the current module for feature management.
 const featureId = features.getFeatureID(import.meta.url);
 
 /**
- * 异步获取仓库开发者和仓库的网络数据。
+ * Asynchronously fetch network data of the repository developer and the repository.
  */
 const getData = async () => {
   developerNetworks = await getDeveloperNetwork(repoName);
@@ -32,10 +32,10 @@ const getData = async () => {
 };
 
 /**
- * 替换贡献者列表为React组件。
- * @param target 要替换的目标元素。
+ * Replace the contributor list with a React component.
+ * @param target The target element to be replaced.
  */
-const replaceContributorList = (target: HTMLElement) => {
+const renderTo = (target: HTMLElement) => {
   const originalHTML = target.innerHTML;
 
   render(
@@ -47,17 +47,17 @@ const replaceContributorList = (target: HTMLElement) => {
 };
 
 /**
- * 初始化功能，包括获取仓库名称和数据，以及替换贡献者列表。
+ * Initialize the feature, including fetching the repository name and data, and replacing the contributor list.
  */
 const init = async (): Promise<void> => {
   repoName = getRepoName();
   const targetElement = document.querySelector('.list-style-none.d-flex.flex-wrap.mb-n2') as HTMLElement;
   await getData();
-  replaceContributorList(targetElement);
+  renderTo(targetElement);
 };
 
 /**
- * 在页面刷新或导航时恢复功能，重新加载数据和渲染列表。
+ * Restore the feature when the page is refreshed or navigated, reload the data and render the list.
  */
 const restore = async () => {
   if (repoName !== getRepoName()) {
@@ -65,14 +65,13 @@ const restore = async () => {
     await getData();
   }
   $('div.ReactModalPortal').remove();
-  replaceContributorList(target);
+  renderTo(target);
 };
 
-
-// 将功能添加到特性管理器中，配置初始化和恢复函数。
+// Add the feature to the feature manager, configure the initialization and restore functions.
 features.add(featureId, {
-//   asLongAs: [pageDetect.isUserProfile],
+  //   asLongAs: [pageDetect.isUserProfile],
   awaitDomReady: false,
-    init,
+  init,
   restore,
 });

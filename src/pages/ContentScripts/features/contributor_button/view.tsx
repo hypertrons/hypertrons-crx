@@ -5,17 +5,21 @@ import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-s
 import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
 
-// 定义开发者和仓库的时间周期
+// Define the time period for the developer and the repository
 const DEVELOPER_PERIOD = 90;
 const REPO_PERIOD = 90;
 
-// 定义Props接口，包括开发者网络和目标HTML
+// Define the Props interface, including the developer network and the target HTML
 interface Props {
   developerNetwork: any;
   target: any;
 }
 
-// 定义图表样式
+const borderStyle = {
+  'margin-top': '0',
+};
+
+// Define the chart style
 const graphStyle = {
   width: '296px',
   height: '400px',
@@ -23,31 +27,42 @@ const graphStyle = {
 
 const targetStyle = {
   width: '296px',
-  height: '100px',
-  display: "flex",
-  "justify-content": "flex-start",
-  "align-items": "flex-start",
-  "align-content": "flex-start",
-  "flex-wrap": "wrap",
+  height: '80px',
+  display: 'flex',
+  'justify-content': 'flex-start',
+  'align-items': 'flex-start',
+  'align-content': 'flex-start',
+  'flex-wrap': 'wrap',
 };
 
 const buttonStyle = {
-  margin: "-5px 0px 10px 0px",
-  padding: '8px',
-  "border-radius": '15px',
+  margin: '-5px 0px 10px 0px',
+  padding: '6px 14px',
+  'font-size': '14px',
+  'font-family': 'inherit',
+  'font-weight': '500',
+  'box-shadow':
+    'var(--button-default-shadow-resting, var(--color-btn-shadow, 0 1px 0 rgba(27, 31, 36, 0.04))), var(--button-default-shadow-inset, var(--color-btn-inset-shadow, inset 0 1px 0 rgba(255, 255, 255, 0.25)))',
+  'border-radius': '6px',
+  'border-width': '1px',
+  'border-style': 'solid',
+  'border-image': 'initial',
+  'border-color':
+    'var(--button-default-borderColor-rest, var(--button-default-borderColor-rest, var(--color-btn-border, rgba(27, 31, 36, 0.15))))',
+  'text-decoration': 'none',
 };
 
-// 定义View组件
-const View = ({ developerNetwork, target}: Props): JSX.Element => {
-  // 定义状态变量，包括选项、是否显示图表和是否显示仓库网络
+// Define the View component
+const View = ({ developerNetwork, target }: Props): JSX.Element => {
+  // Define state variables, including options, whether to show the chart, and whether to show the repository network
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
   const [showGraph, setShowGraph] = useState(true);
   const [showRepoNetwork, setShowRepoNetwork] = useState(false);
 
-  // 使用翻译函数
+  // Use the translation function
   const { t, i18n } = useTranslation();
 
-  // 使用useEffect钩子来处理副作用，包括获取选项和改变语言
+  // Use the useEffect hook to handle side effects, including fetching options and changing the language
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
@@ -55,26 +70,26 @@ const View = ({ developerNetwork, target}: Props): JSX.Element => {
     })();
   }, [options.locale]);
 
-  // 返回JSX元素，包括一个按钮和一个条件渲染的图表或目标HTML
+  // Return JSX elements, including a button and a conditionally rendered chart or target HTML
   return (
     <div>
       <button onClick={() => setShowGraph(!showGraph)} style={buttonStyle}>
-        切换视图
+        {showGraph ? 'Contributor List' : 'Developer Collaboration Network'}
       </button>
       {showGraph ? (
         <div className="hypertrons-crx-border hypertrons-crx-container">
-          <div className="d-flex flex-wrap flex-items-center" style={{ margin: '0 0 0 0', padding: "0"}}>
-              <div style={{ margin: '0 0 0 0', padding: "0", display: "block"}}>
-                <Graph data={developerNetwork} style={graphStyle} />
-              </div>
+          <div className="d-flex flex-wrap flex-items-center" style={{ margin: '0 0 0 0', padding: '0' }}>
+            <div style={{ margin: '0 0 0 0', padding: '0', display: 'block' }}>
+              <Graph data={developerNetwork} style={graphStyle} />
+            </div>
           </div>
         </div>
       ) : (
-            <div  dangerouslySetInnerHTML={{ __html: target }} style={ targetStyle} />
+        <div dangerouslySetInnerHTML={{ __html: target }} style={targetStyle} />
       )}
     </div>
   );
 };
 
-// 导出View组件
+// Export the View component
 export default View;
