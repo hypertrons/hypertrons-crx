@@ -20,7 +20,7 @@ interface GraphProps {
   /**
    * callback function when mouse hover and out on a node data
    */
-  readonly onToolTipChange?: (params: any, isShown: boolean) => void;
+  readonly onToolTipChange?: (params: any) => void;
 }
 
 const NODE_SIZE = [10, 25];
@@ -121,12 +121,12 @@ const Graph: React.FC<GraphProps> = ({ data, style = {}, focusedNodeID, onToolTi
       instance.setOption(option);
       instance.on('mouseover', function (param: any) {
         if (param.dataType === 'node') {
-          onToolTipChange && onToolTipChange(param.data.id, true);
+          onToolTipChange && onToolTipChange(param.data.id);
         }
       });
       instance.on('mouseout', function (param: any) {
         if (param.dataType === 'node') {
-          onToolTipChange && onToolTipChange(param.data.id, false);
+          onToolTipChange && onToolTipChange(param.data.id);
         }
       });
 

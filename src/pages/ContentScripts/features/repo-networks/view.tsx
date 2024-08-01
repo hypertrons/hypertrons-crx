@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Popover } from 'antd';
+import { InfoCircleOutlined } from '@ant-design/icons';
 
 import Graph from '../../../../components/Graph';
 import Table from '../../../../components/Table';
@@ -21,8 +23,6 @@ const graphStyle = {
 
 const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
-  const [projectDescriptionShow, setProjectDescriptionShow] = useState(true);
-  const [developerDescriptionShow, setDeveloperDescriptionShow] = useState(true);
   const [adjacentNodes, setAdjacentNodes] = useState<[string, number][]>([]);
   const [developerAdjacentNodes, setDeveloperAdjacentNodes] = useState<[string, number][]>([]);
   const { t, i18n } = useTranslation();
@@ -33,8 +33,32 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
     })();
   }, [options.locale]);
 
-  const onProjectNetworkNodeToolTipChange = (nodeData: any, isShown: boolean) => {
-    setProjectDescriptionShow(!isShown);
+  useEffect(() => {
+    const newAdjacentNodes: [string, number][] = [];
+    repoNetwork.edges.forEach((edge: [string, string, number]) => {
+      if (edge[0] === currentRepo && edge[2] >= 10) {
+        newAdjacentNodes.push([edge[1], edge[2]]);
+      } else if (edge[1] === currentRepo && edge[2] >= 10) {
+        newAdjacentNodes.push([edge[0], edge[2]]);
+      }
+    });
+    setAdjacentNodes(newAdjacentNodes);
+    if (developerNetwork.nodes.length > 0) {
+      console.log(developerNetwork);
+      const firstDeveloper = developerNetwork.nodes[0][0];
+      const newDeveloperAdjacentNodes: [string, number][] = [];
+      developerNetwork.edges.forEach((edge: [string, string, number]) => {
+        if (edge[0] === firstDeveloper && edge[2] >= 2.5) {
+          newDeveloperAdjacentNodes.push([edge[1], edge[2]]);
+        } else if (edge[1] === firstDeveloper && edge[2] >= 2.5) {
+          newDeveloperAdjacentNodes.push([edge[0], edge[2]]);
+        }
+      });
+      setDeveloperAdjacentNodes(newDeveloperAdjacentNodes);
+    }
+  }, [currentRepo, repoNetwork.edges, developerNetwork.nodes, developerNetwork.edges]);
+
+  const onProjectNetworkNodeToolTipChange = (nodeData: any) => {
     const newAdjacentNodes: [string, number][] = [];
     if (nodeData.includes('/')) {
       repoNetwork.edges.forEach((edge: [string, string, number]) => {
@@ -48,8 +72,7 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
     setAdjacentNodes(newAdjacentNodes);
   };
 
-  const onDeveloperNetworkNodeToolTipChange = (nodeData: any, isShown: boolean) => {
-    setDeveloperDescriptionShow(!isShown);
+  const onDeveloperNetworkNodeToolTipChange = (nodeData: any) => {
     const newAdjacentNodes: [string, number][] = [];
     developerNetwork.edges.forEach((edge: [string, string, number]) => {
       if (edge[0] === nodeData && edge[2] >= 2.5) {
@@ -61,27 +84,25 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
     setDeveloperAdjacentNodes(newAdjacentNodes);
   };
 
-  const handleMouseEnterProject = () => {
-    setProjectDescriptionShow(false);
-  };
-
-  const handleMouseLeaveProject = () => {
-    setProjectDescriptionShow(true);
-  };
-
-  const handleMouseEnterDeveloper = () => {
-    setDeveloperDescriptionShow(false);
-  };
-
-  const handleMouseLeaveDeveloper = () => {
-    setDeveloperDescriptionShow(true);
-  };
-
   return (
     <div>
       <div className="hypertrons-crx-border hypertrons-crx-container">
         <div className="hypertrons-crx-title">
           <span>{t('component_projectCorrelationNetwork_title')}</span>
+          <Popover
+            content={
+              <div className="color-text-secondary">
+                <p>{t('component_projectCorrelationNetwork_description')}</p>
+                <ul style={{ margin: '0px 0 10px 15px' }}>
+                  <li>{t('component_projectCorrelationNetwork_description_node')}</li>
+                  <li>{t('component_projectCorrelationNetwork_description_edge')}</li>
+                </ul>
+              </div>
+            }
+            overlayStyle={{ width: '500px' }}
+          >
+            <InfoCircleOutlined style={{ marginLeft: '10px' }} />
+          </Popover>
           <div className="hypertrons-crx-title-extra">
             {t('global_period')}: {REPO_PERIOD} {t('global_day', { count: REPO_PERIOD })}
           </div>
@@ -97,28 +118,28 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
               />
             </div>
           </div>
-          <div
-            className="col-12 col-md-4"
-            onMouseEnter={handleMouseEnterProject}
-            onMouseLeave={handleMouseLeaveProject}
-          >
-            {projectDescriptionShow ? (
-              <div className="color-text-secondary" style={{ marginLeft: '35px', marginRight: '35px' }}>
-                <p>{t('component_projectCorrelationNetwork_description')}</p>
-                <ul style={{ margin: '0px 0 10px 15px' }}>
-                  <li>{t('component_projectCorrelationNetwork_description_node')}</li>
-                  <li>{t('component_projectCorrelationNetwork_description_edge')}</li>
-                </ul>
-              </div>
-            ) : (
-              <Table adjacentNodes={adjacentNodes} />
-            )}
+          <div className="col-12 col-md-4">
+            <Table adjacentNodes={adjacentNodes} />
           </div>
         </div>
       </div>
       <div className="hypertrons-crx-border hypertrons-crx-container">
         <div className="hypertrons-crx-title">
           <span>{t('component_activeDeveloperCollaborationNetwork_title')}</span>
+          <Popover
+            content={
+              <div className="color-text-secondary">
+                <p>{t('component_activeDeveloperCollaborationNetwork_description')}</p>
+                <ul style={{ margin: '0px 0 10px 15px' }}>
+                  <li>{t('component_activeDeveloperCollaborationNetwork_description_node')}</li>
+                  <li>{t('component_activeDeveloperCollaborationNetwork_description_edge')}</li>
+                </ul>
+              </div>
+            }
+            overlayStyle={{ width: '500px' }}
+          >
+            <InfoCircleOutlined style={{ marginLeft: '10px' }} />
+          </Popover>
           <div className="hypertrons-crx-title-extra">
             {t('global_period')}: {DEVELOPER_PERIOD} {t('global_day', { count: REPO_PERIOD })}
           </div>
@@ -129,22 +150,8 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
               <Graph data={developerNetwork} style={graphStyle} onToolTipChange={onDeveloperNetworkNodeToolTipChange} />
             </div>
           </div>
-          <div
-            className="col-12 col-md-4"
-            onMouseEnter={handleMouseEnterDeveloper}
-            onMouseLeave={handleMouseLeaveDeveloper}
-          >
-            {developerDescriptionShow ? (
-              <div className="color-text-secondary" style={{ marginLeft: '35px', marginRight: '35px' }}>
-                <p>{t('component_activeDeveloperCollaborationNetwork_description')}</p>
-                <ul style={{ margin: '0px 0 10px 15px' }}>
-                  <li>{t('component_activeDeveloperCollaborationNetwork_description_node')}</li>
-                  <li>{t('component_activeDeveloperCollaborationNetwork_description_edge')}</li>
-                </ul>
-              </div>
-            ) : (
-              <Table adjacentNodes={developerAdjacentNodes} />
-            )}
+          <div className="col-12 col-md-4">
+            <Table adjacentNodes={developerAdjacentNodes} />
           </div>
         </div>
       </div>
