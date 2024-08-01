@@ -9,10 +9,6 @@ export const githubRequest = async (endpoint: string, options: RequestInit = {})
   try {
     const response = await fetch(`https://api.github.com${endpoint}`, {
       ...options,
-      headers: {
-        ...options.headers,
-        Authorization: `Bearer ${token}`,
-      },
     });
     return response.json();
   } catch (error) {
