@@ -7,6 +7,8 @@ import TooltipTrigger from '../../components/TooltipTrigger';
 import './Options.css';
 import { useTranslation } from 'react-i18next';
 import '../../helpers/i18n';
+import GitHubToken from './components/GitHubToken';
+
 const stacksStyleOptions = {
   headerStack: {
     paddingBottom: '10px',
@@ -15,6 +17,9 @@ const stacksStyleOptions = {
     marginBottom: '40px',
   },
   settingStack: {
+    margin: '10px 25px',
+  },
+  tokenStack: {
     margin: '10px 25px',
   },
 };
@@ -64,11 +69,7 @@ const Options = (): JSX.Element => {
           </Space>
         </Row>
 
-        <Row
-          justify="center"
-          style={stacksStyleOptions.mainStack}
-          gutter={[30, 30]} // 设置间距
-        >
+        <Row justify="center" style={stacksStyleOptions.mainStack} gutter={[30, 30]}>
           <Col
             span={24}
             style={{
@@ -145,6 +146,17 @@ const Options = (): JSX.Element => {
                 </p>
               </div>
             </div>
+          </Col>
+          <Col
+            span={24}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              margin: stacksStyleOptions.tokenStack.margin,
+            }}
+          >
+            <GitHubToken /> {/* Add GitHubToken component */}
           </Col>
         </Row>
       </Space>
