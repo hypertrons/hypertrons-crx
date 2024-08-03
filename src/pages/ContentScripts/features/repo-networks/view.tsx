@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Popover } from 'antd';
+import React, { useState, useEffect, useRef } from 'react';
+import { NativePopover } from '../../components/NativePopover';
 import { InfoCircleOutlined } from '@ant-design/icons';
 
 import Graph from '../../../../components/Graph';
@@ -7,6 +7,7 @@ import Table from '../../../../components/Table';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
+import $ from 'jquery';
 const DEVELOPER_PERIOD = 90;
 const REPO_PERIOD = 90;
 
@@ -26,6 +27,9 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
   const [adjacentNodes, setAdjacentNodes] = useState<[string, number][]>([]);
   const [developerAdjacentNodes, setDeveloperAdjacentNodes] = useState<[string, number][]>([]);
   const { t, i18n } = useTranslation();
+  const projectTitleRef = useRef<HTMLDivElement>(null);
+  const developerTitleRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
@@ -44,7 +48,6 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
     });
     setAdjacentNodes(newAdjacentNodes);
     if (developerNetwork.nodes.length > 0) {
-      console.log(developerNetwork);
       const firstDeveloper = developerNetwork.nodes[0][0];
       const newDeveloperAdjacentNodes: [string, number][] = [];
       developerNetwork.edges.forEach((edge: [string, string, number]) => {
@@ -87,10 +90,10 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
   return (
     <div>
       <div className="hypertrons-crx-border hypertrons-crx-container">
-        <div className="hypertrons-crx-title">
+        <div className="hypertrons-crx-title" ref={projectTitleRef}>
           <span>{t('component_projectCorrelationNetwork_title')}</span>
-          <Popover
-            content={
+          {projectTitleRef.current && (
+            <NativePopover anchor={$(projectTitleRef.current)} width={500} arrowPosition="top-middle">
               <div className="color-text-secondary">
                 <p>{t('component_projectCorrelationNetwork_description')}</p>
                 <ul style={{ margin: '0px 0 10px 15px' }}>
@@ -98,11 +101,10 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
                   <li>{t('component_projectCorrelationNetwork_description_edge')}</li>
                 </ul>
               </div>
-            }
-            overlayStyle={{ width: '500px' }}
-          >
-            <InfoCircleOutlined style={{ marginLeft: '10px' }} />
-          </Popover>
+            </NativePopover>
+          )}
+          <InfoCircleOutlined style={{ marginLeft: '10px' }} />
+
           <div className="hypertrons-crx-title-extra">
             {t('global_period')}: {REPO_PERIOD} {t('global_day', { count: REPO_PERIOD })}
           </div>
@@ -124,10 +126,10 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
         </div>
       </div>
       <div className="hypertrons-crx-border hypertrons-crx-container">
-        <div className="hypertrons-crx-title">
+        <div className="hypertrons-crx-title" ref={developerTitleRef}>
           <span>{t('component_activeDeveloperCollaborationNetwork_title')}</span>
-          <Popover
-            content={
+          {developerTitleRef.current && (
+            <NativePopover anchor={$(developerTitleRef.current)} width={500} arrowPosition="top-middle">
               <div className="color-text-secondary">
                 <p>{t('component_activeDeveloperCollaborationNetwork_description')}</p>
                 <ul style={{ margin: '0px 0 10px 15px' }}>
@@ -135,11 +137,9 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
                   <li>{t('component_activeDeveloperCollaborationNetwork_description_edge')}</li>
                 </ul>
               </div>
-            }
-            overlayStyle={{ width: '500px' }}
-          >
-            <InfoCircleOutlined style={{ marginLeft: '10px' }} />
-          </Popover>
+            </NativePopover>
+          )}
+          <InfoCircleOutlined style={{ marginLeft: '10px' }} />
           <div className="hypertrons-crx-title-extra">
             {t('global_period')}: {DEVELOPER_PERIOD} {t('global_day', { count: REPO_PERIOD })}
           </div>
