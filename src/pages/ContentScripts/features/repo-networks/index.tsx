@@ -4,45 +4,33 @@ import $ from 'jquery';
 
 import features from '../../../../feature-manager';
 import isPerceptor from '../../../../helpers/is-perceptor';
-import { getRepoName, isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
-import { getRepoNetwork, getDeveloperNetwork } from '../../../../api/repo';
+import { isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
 import View from './view';
-import DataNotFound from './DataNotFound';
+import elementReady from 'element-ready';
 
 const featureId = features.getFeatureID(import.meta.url);
-let repoName: string;
-let repoNetworks: any;
-let developerNetworks: any;
 
-const getData = async () => {
-  repoNetworks = await getRepoNetwork(repoName);
-  developerNetworks = await getDeveloperNetwork(repoName);
-};
+let repoID:any;
+
 
 const renderTo = (container: Container) => {
-  if (!repoNetworks || !developerNetworks) {
-    render(<DataNotFound />, container);
-    return;
-  }
-  render(<View currentRepo={repoName} repoNetwork={repoNetworks} developerNetwork={developerNetworks} />, container);
+  
+  render(<View repoID={repoID}/>, container);
 };
 
 const init = async (): Promise<void> => {
-  repoName = getRepoName();
-  await getData();
+
+  repoID=$('meta[name="octolytics-dimension-repository_network_root_id"]').attr('content');
+  const networksContainer ='#hypercrx-perceptor-slot-repo-networks'
+  await elementReady(networksContainer, { stopOnDomReady: false });
+
   const container = document.createElement('div');
   container.id = featureId;
   renderTo(container);
-  $('#hypercrx-perceptor-slot-repo-networks').append(container);
+  $(networksContainer).append(container);
 };
 
 const restore = async () => {
-  // Clicking another repo link in one repo will trigger a turbo:visit,
-  // so in a restoration visit we should be careful of the current repo.
-  if (repoName !== getRepoName()) {
-    repoName = getRepoName();
-    await getData();
-  }
   // rerender the chart or it will be empty
   renderTo($(`#${featureId}`)[0]);
 };

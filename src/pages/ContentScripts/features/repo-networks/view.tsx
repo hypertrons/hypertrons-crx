@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from 'react';
 
-import Graph from '../../../../components/Graph';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
-const DEVELOPER_PERIOD = 90;
-const REPO_PERIOD = 90;
-
+import OSGraph from '../../../../components/OSGraph';
 interface Props {
-  currentRepo: string;
-  repoNetwork: any;
-  developerNetwork: any;
+  repoID: any;
 }
-
-const graphStyle = {
+const OSGraphStyle = {
   width: '100%',
-  height: '380px',
+  height: '400px',
+  border: 'none',
+  marginTop: '60px'
 };
-
-const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Element => {
+const logoStyle = {
+  cssFloat: 'right',
+  marginRight: '50px',
+  marginTop: '5px' 
+};
+const logoHref='https://osgraph.com/'
+const osgraphLogo="https://mdn.alipayobjects.com/huamei_0bwegv/afts/img/A*8rYtR4GWwe0AAAAAAAAAAAAADu3UAQ/original"
+const View = ({repoID}: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
   const { t, i18n } = useTranslation();
   useEffect(() => {
@@ -32,48 +34,69 @@ const View = ({ currentRepo, repoNetwork, developerNetwork }: Props): JSX.Elemen
     <div>
       <div className="hypertrons-crx-border hypertrons-crx-container">
         <div className="hypertrons-crx-title">
-          <span>{t('component_projectCorrelationNetwork_title')}</span>
-          <div className="hypertrons-crx-title-extra">
-            {t('global_period')}: {REPO_PERIOD} {t('global_day', { count: REPO_PERIOD })}
+          <span>{t('component_projectContributionNetwork_title')}</span>
+          <div style={logoStyle}>
+            <a href={logoHref}>
+              <img  src={osgraphLogo}></img>
+            </a>
           </div>
         </div>
         <div className="d-flex flex-wrap flex-items-center">
           <div className="col-12 col-md-8">
             <div style={{ margin: '10px 0 20px 20px' }}>
-              <Graph data={repoNetwork} style={graphStyle} focusedNodeID={currentRepo} />
+            <OSGraph shareId={0} style={OSGraphStyle} paramId={repoID}/>
             </div>
           </div>
           <div className="col-12 col-md-4">
             <div className="color-text-secondary" style={{ marginLeft: '35px', marginRight: '35px' }}>
-              <p>{t('component_projectCorrelationNetwork_description')}</p>
-              <ul style={{ margin: '0px 0 10px 15px' }}>
-                <li>{t('component_projectCorrelationNetwork_description_node')}</li>
-                <li>{t('component_projectCorrelationNetwork_description_edge')}</li>
-              </ul>
+              <p>{t('component_projectContributionNetwork_description')}</p>
+            
             </div>
           </div>
         </div>
       </div>
       <div className="hypertrons-crx-border hypertrons-crx-container">
         <div className="hypertrons-crx-title">
-          <span>{t('component_activeDeveloperCollaborationNetwork_title')}</span>
-          <div className="hypertrons-crx-title-extra">
-            {t('global_period')}: {DEVELOPER_PERIOD} {t('global_day', { count: REPO_PERIOD })}
+          <span>{t('component_projectEcosystemNetwork_title')}</span>
+          <div style={logoStyle}>
+            <a href={logoHref}>
+              <img  src={osgraphLogo}></img>
+            </a>
           </div>
         </div>
         <div className="d-flex flex-wrap flex-items-center">
           <div className="col-12 col-md-8">
             <div style={{ margin: '10px 0 20px 20px' }}>
-              <Graph data={developerNetwork} style={graphStyle} />
+            <OSGraph shareId={1} style={OSGraphStyle} paramId={repoID}/>
             </div>
           </div>
           <div className="col-12 col-md-4">
             <div className="color-text-secondary" style={{ marginLeft: '35px', marginRight: '35px' }}>
-              <p>{t('component_activeDeveloperCollaborationNetwork_description')}</p>
-              <ul style={{ margin: '0px 0 10px 15px' }}>
-                <li>{t('component_activeDeveloperCollaborationNetwork_description_node')}</li>
-                <li>{t('component_activeDeveloperCollaborationNetwork_description_edge')}</li>
-              </ul>
+              <p>{t('component_projectEcosystemNetwork_description')}</p>
+          
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="hypertrons-crx-border hypertrons-crx-container">
+        <div className="hypertrons-crx-title">
+          <span>{t('component_projectCommunityNetwork_title')}</span>
+          <div style={logoStyle}>
+            <a href={logoHref}>
+              <img  src={osgraphLogo}></img>
+            </a>
+          </div>
+        </div>
+        <div className="d-flex flex-wrap flex-items-center">
+          <div className="col-12 col-md-8">
+            <div style={{ margin: '10px 0 20px 20px' }}>
+            <OSGraph shareId={2} style={OSGraphStyle} paramId={repoID}/>
+            </div>
+          </div>
+          <div className="col-12 col-md-4">
+            <div className="color-text-secondary" style={{ marginLeft: '35px', marginRight: '35px' }}>
+              <p>{t('component_projectCommunityNetwork_description')}</p>
+          
             </div>
           </div>
         </div>

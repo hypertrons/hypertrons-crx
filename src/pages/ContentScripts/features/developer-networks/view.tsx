@@ -1,27 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import ReactModal from 'react-modal';
-import Graph from '../../../../components/Graph';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
-import { iconDeveloperNetwork, iconRepoNetwork } from './icon-svg-path';
+import { iconDeveloperNetwork, iconRepoNetwork, iconInterestNetwork } from './icon-svg-path';
 import './react-modal.scss';
 import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
-const DEVELOPER_PERIOD = 90;
-const REPO_PERIOD = 90;
-const GRAPH_STYLE = {
-  height: '380px',
-};
-
+import OSGraph from '../../../../components/OSGraph';
 interface Props {
-  currentRepo: string;
-  developerNetwork: any;
-  repoNetwork: any;
+  userID: any;
 }
-
-const View = ({ currentRepo: currentDeveloper, developerNetwork, repoNetwork }: Props): JSX.Element => {
+const OSGraphStyle = {
+  width: '100%',
+  height: '400px',
+  border: 'none',
+  marginTop: '60px'
+};
+const logoStyle = {
+  cssFloat: 'right',
+  marginRight: '50px',
+  marginTop: '5px' 
+};
+const logoHref='https://osgraph.com/'
+const osgraphLogo="https://mdn.alipayobjects.com/huamei_0bwegv/afts/img/A*8rYtR4GWwe0AAAAAAAAAAAAADu3UAQ/original"
+const View = ({ userID}: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
-  const [showDeveloperNetwork, setShowDeveloperNetwork] = useState(false);
-  const [showRepoNetwork, setShowRepoNetwork] = useState(false);
+  const [showOpenSourcePartnersNetwork, setShowOpenSourcePartnersNetwork] = useState(false);
+  const [showDevelopmentActivityNetwork, setShowDevelopmentActivityNetwork] = useState(false);
+  const [showOpenSourceInterestsNetwork, setShowOpenSourceInterestsNetwork] = useState(false);
   const { t, i18n } = useTranslation();
   useEffect(() => {
     (async function () {
@@ -42,7 +47,7 @@ const View = ({ currentRepo: currentDeveloper, developerNetwork, repoNetwork }: 
             height="16"
             aria-hidden="true"
           >
-            <path d={iconDeveloperNetwork}></path>
+            <path d={iconRepoNetwork}></path>
           </svg>
           <button
             style={{
@@ -51,18 +56,18 @@ const View = ({ currentRepo: currentDeveloper, developerNetwork, repoNetwork }: 
               backgroundColor: 'transparent',
             }}
             onClick={() => {
-              setShowDeveloperNetwork(true);
+              setShowDevelopmentActivityNetwork(true);
             }}
           >
             <span
-              title={`${t('global_clickToshow')} ${t('component_developerCollaborationNetwork_title')}`}
+              title={`${t('global_clickToshow')} ${t('component_developmentActivityNetwork_title')}`}
               className="Label"
               style={{
                 color: 'var(--color-fg-default)',
                 fontWeight: 'var(--base-text-weight-normal, 400)',
               }}
             >
-              {t('component_developerCollaborationNetwork_title')}
+              {t('component_developmentActivityNetwork_title')}
             </span>
           </button>
         </li>
@@ -75,7 +80,7 @@ const View = ({ currentRepo: currentDeveloper, developerNetwork, repoNetwork }: 
             height="16"
             aria-hidden="true"
           >
-            <path d={iconRepoNetwork}></path>
+            <path d={iconDeveloperNetwork}></path>
           </svg>
           <button
             style={{
@@ -84,18 +89,51 @@ const View = ({ currentRepo: currentDeveloper, developerNetwork, repoNetwork }: 
               backgroundColor: 'transparent',
             }}
             onClick={() => {
-              setShowRepoNetwork(true);
+              setShowOpenSourcePartnersNetwork(true);
             }}
           >
             <span
-              title={`${t('global_clickToshow')} ${t('component_mostParticipatedProjects_title')}`}
+              title={`${t('global_clickToshow')} ${t('component_openSourcePartnersNetwork_title')}`}
               className="Label"
               style={{
                 color: 'var(--color-fg-default)',
                 fontWeight: 'var(--base-text-weight-normal, 400)',
               }}
             >
-              {t('component_mostParticipatedProjects_title')}
+              {t('component_openSourcePartnersNetwork_title')}
+            </span>
+          </button>
+        </li>
+        <li className="vcard-detail pt-1">
+          <svg
+            className="octicon octicon-clock"
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            width="16"
+            height="16"
+            aria-hidden="true"
+          >
+            <path d={iconInterestNetwork}></path>
+          </svg>
+          <button
+            style={{
+              border: 0,
+              padding: '1px 0',
+              backgroundColor: 'transparent',
+            }}
+            onClick={() => {
+              setShowOpenSourceInterestsNetwork(true);
+            }}
+          >
+            <span
+              title={`${t('global_clickToshow')} ${t('component_openSourceInterestsNetwork_title')}`}
+              className="Label"
+              style={{
+                color: 'var(--color-fg-default)',
+                fontWeight: 'var(--base-text-weight-normal, 400)',
+              }}
+            >
+              {t('component_openSourceInterestsNetwork_title')}
             </span>
           </button>
         </li>
@@ -104,32 +142,31 @@ const View = ({ currentRepo: currentDeveloper, developerNetwork, repoNetwork }: 
         className="ReactModal__Content_Custom"
         overlayClassName="ReactModal__Overlay_Custom"
         parentSelector={() => document.querySelector('main') ?? document.body}
-        isOpen={showDeveloperNetwork}
+        isOpen={showDevelopmentActivityNetwork}
         onRequestClose={() => {
-          setShowDeveloperNetwork(false);
+          setShowDevelopmentActivityNetwork(false);
         }}
         ariaHideApp={false}
       >
         <div>
           <div className="hypertrons-crx-title">
-            <span>{t('component_developerCollaborationNetwork_title')}</span>
-            <div className="hypertrons-crx-title-extra developer-tab">
-              {t('global_period')}: {REPO_PERIOD} {t('global_day', { count: REPO_PERIOD })}
-            </div>
+            <span>{t('component_developmentActivityNetwork_title')}</span>
+            <div style={logoStyle}>
+            <a href={logoHref}>
+              <img  src={osgraphLogo}></img>
+            </a>
           </div>
-          <div className="d-flex flex-wrap justify-content-lg-between align-items-center">
+          </div>
+          <div className="d-flex flex-wrap flex-items-center justify-content-lg-between align-items-center">
             <div className="col-8 graph-container">
               <div style={{ margin: '15px 0 20px 0px' }}>
-                <Graph data={developerNetwork} style={GRAPH_STYLE} focusedNodeID={currentDeveloper} />
+              <OSGraph shareId={3} style={OSGraphStyle} paramId={userID}/>
               </div>
             </div>
             <div className="col-4 description-container">
               <div className="color-text-secondary developer-tab">
-                <p>{t('component_developerCollaborationNetwork_description')}</p>
-                <ul style={{ margin: '0px 0 10px 15px' }}>
-                  <li>{t('component_developerCollaborationNetwork_description_node')}</li>
-                  <li>{t('component_developerCollaborationNetwork_description_edge')}</li>
-                </ul>
+                <p>{t('component_developmentActivityNetwork_description')}</p>
+               
               </div>
             </div>
           </div>
@@ -139,32 +176,65 @@ const View = ({ currentRepo: currentDeveloper, developerNetwork, repoNetwork }: 
         className="ReactModal__Content_Custom"
         overlayClassName="ReactModal__Overlay_Custom"
         parentSelector={() => document.querySelector('main') ?? document.body}
-        isOpen={showRepoNetwork}
+        isOpen={showOpenSourcePartnersNetwork}
         onRequestClose={() => {
-          setShowRepoNetwork(false);
+          setShowOpenSourcePartnersNetwork(false);
         }}
         ariaHideApp={false}
       >
         <div>
           <div className="hypertrons-crx-title">
-            <span>{t('component_mostParticipatedProjects_title')}</span>
-            <div className="hypertrons-crx-title-extra">
-              {t('global_period')}: {DEVELOPER_PERIOD} {t('global_day', { count: REPO_PERIOD })}
-            </div>
+            <span>{t('component_openSourcePartnersNetwork_title')}</span>
+            <div style={logoStyle}>
+            <a href={logoHref}>
+              <img  src={osgraphLogo}></img>
+            </a>
           </div>
-          <div className="d-flex flex-wrap justify-content-lg-between align-items-center">
+          </div>
+          <div className="d-flex flex-wrap flex-items-center justify-content-lg-between align-items-center">
             <div className="col-lg-8 col-12 graph-container">
               <div style={{ margin: '15px 0px 20px 0px' }}>
-                <Graph data={repoNetwork} style={GRAPH_STYLE} />
+              <OSGraph shareId={4} style={OSGraphStyle} paramId={userID}/>
               </div>
             </div>
             <div className="col-lg-4 col-12 description-container">
               <div className="color-text-secondary">
-                <p>{t('component_mostParticipatedProjects_description')}</p>
-                <ul style={{ margin: '0px 0 10px 15px' }}>
-                  <li>{t('component_mostParticipatedProjects_description_node')}</li>
-                  <li>{t('component_mostParticipatedProjects_description_edge')}</li>
-                </ul>
+                <p>{t('component_openSourcePartnersNetwork_description')}</p>
+               
+              </div>
+            </div>
+          </div>
+        </div>
+      </ReactModal>
+      <ReactModal
+        className="ReactModal__Content_Custom"
+        overlayClassName="ReactModal__Overlay_Custom"
+        parentSelector={() => document.querySelector('main') ?? document.body}
+        isOpen={showOpenSourceInterestsNetwork}
+        onRequestClose={() => {
+          setShowOpenSourceInterestsNetwork(false);
+        }}
+        ariaHideApp={false}
+      >
+        <div>
+          <div className="hypertrons-crx-title">
+            <span>{t('component_openSourceInterestsNetwork_title')}</span>
+            <div style={logoStyle}>
+            <a href={logoHref}>
+              <img  src={osgraphLogo}></img>
+            </a>
+          </div>
+          </div>
+          <div className="d-flex flex-wrap flex-items-center justify-content-lg-between align-items-center">
+            <div className="col-lg-8 col-12 graph-container">
+              <div style={{ margin: '15px 0px 20px 0px' }}>
+              <OSGraph shareId={5} style={OSGraphStyle} paramId={userID}/>
+              </div>
+            </div>
+            <div className="col-lg-4 col-12 description-container">
+              <div className="color-text-secondary">
+                <p>{t('component_openSourceInterestsNetwork_description')}</p>
+                
               </div>
             </div>
           </div>
