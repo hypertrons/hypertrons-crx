@@ -16,9 +16,7 @@
   transform: translate(-50%, -50%);
   padding: 24px;
   box-sizing: border-box;
-  box-shadow:
-    rgba(0, 0, 0, 0.22) 0px 25.6px 57.6px 0px,
-    rgba(0, 0, 0, 0.18) 0px 4.8px 14.4px 0px;
+  box-shadow: rgba(0, 0, 0, 0.22) 0px 25.6px 57.6px 0px, rgba(0, 0, 0, 0.18) 0px 4.8px 14.4px 0px;
   outline: transparent solid 3px;
   border-radius: 2px;
   background: var(--bgColor-default, var(--color-canvas-default));

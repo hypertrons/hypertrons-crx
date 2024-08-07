@@ -10,17 +10,14 @@ import View from './view';
 
 const featureId = features.getFeatureID(import.meta.url);
 
-let userID:any;
+let userID: any;
 
 const renderTo = (container: Container) => {
-  render(
-    <View userID={userID}/>,
-    container
-  );
+  render(<View userID={userID} />, container);
 };
 
 const init = async (): Promise<void> => {
-  userID=$('meta[name="octolytics-dimension-user_id"]').attr('content');
+  userID = $('meta[name="octolytics-dimension-user_id"]').attr('content');
   const container = document.createElement('div');
   container.id = featureId;
   renderTo(container);

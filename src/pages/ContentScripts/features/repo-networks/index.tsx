@@ -10,18 +10,15 @@ import elementReady from 'element-ready';
 
 const featureId = features.getFeatureID(import.meta.url);
 
-let repoID:any;
-
+let repoID: any;
 
 const renderTo = (container: Container) => {
-  
-  render(<View repoID={repoID}/>, container);
+  render(<View repoID={repoID} />, container);
 };
 
 const init = async (): Promise<void> => {
-
-  repoID=$('meta[name="octolytics-dimension-repository_network_root_id"]').attr('content');
-  const networksContainer ='#hypercrx-perceptor-slot-repo-networks'
+  repoID = $('meta[name="octolytics-dimension-repository_network_root_id"]').attr('content');
+  const networksContainer = '#hypercrx-perceptor-slot-repo-networks';
   await elementReady(networksContainer, { stopOnDomReady: false });
 
   const container = document.createElement('div');

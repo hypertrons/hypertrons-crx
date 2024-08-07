@@ -13,16 +13,16 @@ const OSGraphStyle = {
   width: '100%',
   height: '400px',
   border: 'none',
-  marginTop: '60px'
+  marginTop: '60px',
 };
 const logoStyle = {
   cssFloat: 'right',
   marginRight: '50px',
-  marginTop: '5px' 
+  marginTop: '5px',
 };
-const logoHref='https://osgraph.com/'
-const osgraphLogo="https://mdn.alipayobjects.com/huamei_0bwegv/afts/img/A*8rYtR4GWwe0AAAAAAAAAAAAADu3UAQ/original"
-const View = ({ userID}: Props): JSX.Element => {
+const logoHref = 'https://osgraph.com/';
+const osgraphLogo = 'https://mdn.alipayobjects.com/huamei_0bwegv/afts/img/A*8rYtR4GWwe0AAAAAAAAAAAAADu3UAQ/original';
+const View = ({ userID }: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
   const [showOpenSourcePartnersNetwork, setShowOpenSourcePartnersNetwork] = useState(false);
   const [showDevelopmentActivityNetwork, setShowDevelopmentActivityNetwork] = useState(false);
@@ -152,21 +152,20 @@ const View = ({ userID}: Props): JSX.Element => {
           <div className="hypertrons-crx-title">
             <span>{t('component_developmentActivityNetwork_title')}</span>
             <div style={logoStyle}>
-            <a href={logoHref}>
-              <img  src={osgraphLogo}></img>
-            </a>
-          </div>
+              <a href={logoHref}>
+                <img src={osgraphLogo}></img>
+              </a>
+            </div>
           </div>
           <div className="d-flex flex-wrap flex-items-center justify-content-lg-between align-items-center">
             <div className="col-8 graph-container">
               <div style={{ margin: '15px 0 20px 0px' }}>
-              <OSGraph shareId={3} style={OSGraphStyle} paramId={userID}/>
+                <OSGraph shareId={3} style={OSGraphStyle} paramId={userID} />
               </div>
             </div>
             <div className="col-4 description-container">
               <div className="color-text-secondary developer-tab">
                 <p>{t('component_developmentActivityNetwork_description')}</p>
-               
               </div>
             </div>
           </div>
@@ -186,21 +185,20 @@ const View = ({ userID}: Props): JSX.Element => {
           <div className="hypertrons-crx-title">
             <span>{t('component_openSourcePartnersNetwork_title')}</span>
             <div style={logoStyle}>
-            <a href={logoHref}>
-              <img  src={osgraphLogo}></img>
-            </a>
-          </div>
+              <a href={logoHref}>
+                <img src={osgraphLogo}></img>
+              </a>
+            </div>
           </div>
           <div className="d-flex flex-wrap flex-items-center justify-content-lg-between align-items-center">
             <div className="col-lg-8 col-12 graph-container">
               <div style={{ margin: '15px 0px 20px 0px' }}>
-              <OSGraph shareId={4} style={OSGraphStyle} paramId={userID}/>
+                <OSGraph shareId={4} style={OSGraphStyle} paramId={userID} />
               </div>
             </div>
             <div className="col-lg-4 col-12 description-container">
               <div className="color-text-secondary">
                 <p>{t('component_openSourcePartnersNetwork_description')}</p>
-               
               </div>
             </div>
           </div>
@@ -220,21 +218,20 @@ const View = ({ userID}: Props): JSX.Element => {
           <div className="hypertrons-crx-title">
             <span>{t('component_openSourceInterestsNetwork_title')}</span>
             <div style={logoStyle}>
-            <a href={logoHref}>
-              <img  src={osgraphLogo}></img>
-            </a>
-          </div>
+              <a href={logoHref}>
+                <img src={osgraphLogo}></img>
+              </a>
+            </div>
           </div>
           <div className="d-flex flex-wrap flex-items-center justify-content-lg-between align-items-center">
             <div className="col-lg-8 col-12 graph-container">
               <div style={{ margin: '15px 0px 20px 0px' }}>
-              <OSGraph shareId={5} style={OSGraphStyle} paramId={userID}/>
+                <OSGraph shareId={5} style={OSGraphStyle} paramId={userID} />
               </div>
             </div>
             <div className="col-lg-4 col-12 description-container">
               <div className="color-text-secondary">
                 <p>{t('component_openSourceInterestsNetwork_description')}</p>
-                
               </div>
             </div>
           </div>
