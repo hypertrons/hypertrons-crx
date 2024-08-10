@@ -69,7 +69,7 @@
   "github_token_step3": "3. 选择个人访问令牌，Tokens (classic)，然后生成个人访问令牌。",
   "github_token_step4": "4. 设置令牌详细信息：",
   "github_token_note": "注意",
-  "github_token_note_description": "描述性名称，例如“HyperCRX Token”。",
+  "github_token_note_description": "描述性名称，例如：“HyperCRX Token”。",
   "github_token_expiration": "过期时间",
   "github_token_expiration_description": "选择有效期。",
   "github_token_scopes": "权限范围",
