@@ -29,7 +29,6 @@ const OSGraph: React.FC<OSGraphProps> = ({ shareId, style = {}, paramId }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
-    console.log(shareId);
     // async
     if (shareId < 3) {
       setTimeout(() => {
