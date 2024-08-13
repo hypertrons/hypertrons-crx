@@ -29,29 +29,24 @@ const OSGraph: React.FC<OSGraphProps> = ({ shareId, style = {}, paramId }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
-    console.log(shareId)
-      // async
-      if(shareId<3){
-        setTimeout(() => {
-          if(iframeRef.current){
-            iframeRef.current.src = osGraphUrl;
-          }
-        }, shareId * 500); // Each iframe delays  500ms
-      }
-      else{
-        if(iframeRef.current){
+    console.log(shareId);
+    // async
+    if (shareId < 3) {
+      setTimeout(() => {
+        if (iframeRef.current) {
           iframeRef.current.src = osGraphUrl;
         }
+      }, shareId * 500); // Each iframe delays  500ms
+    } else {
+      if (iframeRef.current) {
+        iframeRef.current.src = osGraphUrl;
       }
+    }
   }, [iframeRef, osGraphUrl, shareId]);
 
   return (
     <div className="hypertrons-crx-border">
-      <iframe
-        ref={iframeRef}
-        src=""
-        style={style}
-      />
+      <iframe ref={iframeRef} src="" style={style} />
     </div>
   );
 };
