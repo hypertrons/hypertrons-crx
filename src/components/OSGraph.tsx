@@ -1,21 +1,21 @@
-import React, { CSSProperties } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 interface OSGraphProps {
   /**
    * shareId
    */
-  readonly shareId: any;
+  readonly shareId: number;
   /**
    * `style` for OSGraph container
    */
-  readonly style?: CSSProperties;
+  readonly style?: React.CSSProperties;
   /**
    * paramId
    */
-  readonly paramId: any;
+  readonly paramId: string;
 }
 
-const OSGraphUrl = [
+const OSGraphUrls = [
   'https://osgraph.com/result?shareId=1&shareParams={paramId},1405669423,1721288623,10&isShare=true',
   'https://osgraph.com/result?shareId=2&shareParams={paramId},10&isShare=true',
   'https://osgraph.com/result?shareId=3&shareParams={paramId},5,5,3&isShare=true',
@@ -23,11 +23,35 @@ const OSGraphUrl = [
   'https://osgraph.com/result?shareId=5&shareParams={paramId},10&isShare=true',
   'https://osgraph.com/result?shareId=6&shareParams={paramId},5,3&isShare=true',
 ];
+
 const OSGraph: React.FC<OSGraphProps> = ({ shareId, style = {}, paramId }) => {
-  const osGraphUrl = OSGraphUrl[shareId].replace('{paramId}', paramId);
+  const osGraphUrl = OSGraphUrls[shareId].replace('{paramId}', paramId);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  useEffect(() => {
+    console.log(shareId)
+      // async
+      if(shareId<3){
+        setTimeout(() => {
+          if(iframeRef.current){
+            iframeRef.current.src = osGraphUrl;
+          }
+        }, shareId * 500); // Each iframe delays  500ms
+      }
+      else{
+        if(iframeRef.current){
+          iframeRef.current.src = osGraphUrl;
+        }
+      }
+  }, [iframeRef, osGraphUrl, shareId]);
+
   return (
     <div className="hypertrons-crx-border">
-      <iframe src={osGraphUrl} style={style}></iframe>
+      <iframe
+        ref={iframeRef}
+        src=""
+        style={style}
+      />
     </div>
   );
 };
