@@ -61,6 +61,7 @@ const processElement = (element: Element) => {
     abortController.abort();
     abortController = new AbortController();
     const signal = abortController.signal;
+    await new Promise((resolve) => setTimeout(resolve, 600));
 
     const developerName = getDeveloperName(element as HTMLElement) as string;
 
