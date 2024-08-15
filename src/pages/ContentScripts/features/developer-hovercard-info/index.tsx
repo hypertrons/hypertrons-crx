@@ -11,10 +11,20 @@ let isInitialized = false;
 const getDeveloperLatestOpenrank = async (developerName: string): Promise<string | null> => {
   const data = await getOpenrank(developerName);
   if (data) {
-    const values = Object.values(data) as string[];
-    const latestValue = values[values.length - 1];
-    return latestValue;
+    // filter YYYY-MM
+    const monthKeys = Object.keys(data).filter((key) => /^\d{4}-\d{2}$/.test(key));
+
+    if (monthKeys.length === 0) {
+      return null;
+    }
+
+    monthKeys.sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+
+    const latestMonthKey = monthKeys[monthKeys.length - 1];
+
+    return data[latestMonthKey];
   }
+
   return null;
 };
 
