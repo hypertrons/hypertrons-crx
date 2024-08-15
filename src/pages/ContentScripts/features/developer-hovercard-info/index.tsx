@@ -38,62 +38,83 @@ const elementReadyWithTimeout = async (selector: string, options: { stopOnDomRea
   ]);
 };
 
-const init = async (): Promise<void> => {
+const processElement = (element: Element) => {
+  const hovercardUrl = element.getAttribute('data-hovercard-url');
+  if (!hovercardUrl || !hovercardUrl.startsWith('/users')) {
+    return;
+  }
+
   let abortController = new AbortController();
+
+  element.addEventListener('mouseover', async () => {
+    abortController.abort();
+    abortController = new AbortController();
+    const signal = abortController.signal;
+
+    const developerName = getDeveloperName(element as HTMLElement) as string;
+
+    // Create a unique identifier for the popover
+    const popoverId = `popover-${developerName}`;
+
+    // Get the floating card container
+    const $popoverContainer =
+      'body > div.logged-in.env-production.page-responsive > div.Popover.js-hovercard-content.position-absolute > div > div > div';
+    const popover = await elementReady($popoverContainer, { stopOnDomReady: false });
+
+    const openRankDiv = popover?.querySelector('.hypercrx-openrank-info');
+    const existingDeveloperName = openRankDiv?.getAttribute('data-developer-name');
+    if (existingDeveloperName === developerName) {
+      return;
+    }
+    openRankDiv?.remove();
+
+    // Set the popover's unique identifier
+    // make the current OpenRank information and person match
+    popover?.setAttribute('data-popover-id', popoverId);
+
+    const openrank = await getDeveloperLatestOpenrank(developerName);
+
+    if (!openrank) {
+      return;
+    }
+
+    if (!signal.aborted && popover && popover.getAttribute('data-popover-id') === popoverId) {
+      // Check if the popover is still associated with the correct developer
+      renderTo(popover, developerName, openrank);
+    }
+  });
+};
+
+const init = async (): Promise<void> => {
   const hovercardSelector = '[data-hovercard-url]';
 
   await elementReady(hovercardSelector, { stopOnDomReady: false });
-  // The loading time for the element with data-testid=github-avatar is 1500ms.
-  // If the timeout is not set, OpenRank will not be added normally.
-
   try {
     await elementReadyWithTimeout('[data-testid=github-avatar]', { stopOnDomReady: false }, 1500);
   } catch (error) {
     console.log('The current interface does not have data-testid=github-avatar information');
   }
 
-  document.querySelectorAll(hovercardSelector).forEach((element) => {
-    const hovercardUrl = element.getAttribute('data-hovercard-url');
-    if (!hovercardUrl || !hovercardUrl.startsWith('/users')) {
-      return;
+  // Initial processing of existing elements
+  document.querySelectorAll(hovercardSelector).forEach(processElement);
+
+  // Use MutationObserver to monitor dynamically added elements
+  const observer = new MutationObserver((mutationsList) => {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'childList') {
+        mutation.addedNodes.forEach((node) => {
+          if (node instanceof HTMLElement) {
+            const newElements = node.querySelectorAll(hovercardSelector);
+            newElements.forEach(processElement);
+          }
+        });
+      }
     }
-    element.addEventListener('mouseover', async () => {
-      abortController.abort();
-      abortController = new AbortController();
-      const signal = abortController.signal;
+  });
 
-      const developerName = getDeveloperName(element as HTMLElement) as string;
-
-      // Create a unique identifier for the popover
-      const popoverId = `popover-${developerName}`;
-
-      // Get the floating card container
-      const $popoverContainer =
-        'body > div.logged-in.env-production.page-responsive > div.Popover.js-hovercard-content.position-absolute > div > div > div';
-      const popover = await elementReady($popoverContainer, { stopOnDomReady: false });
-
-      const openRankDiv = popover?.querySelector('.hypercrx-openrank-info');
-      const existingDeveloperName = openRankDiv?.getAttribute('data-developer-name');
-      if (existingDeveloperName === developerName) {
-        return;
-      }
-      openRankDiv?.remove();
-
-      // Set the popover's unique identifier
-      // make the current OpenRank information and person match
-      popover?.setAttribute('data-popover-id', popoverId);
-
-      const openrank = await getDeveloperLatestOpenrank(developerName);
-
-      if (!openrank) {
-        return;
-      }
-
-      if (!signal.aborted && popover && popover.getAttribute('data-popover-id') === popoverId) {
-        // Check if the popover is still associated with the correct developer
-        renderTo(popover, developerName, openrank);
-      }
-    });
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
   });
 };
 
