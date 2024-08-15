@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import View from './view';
 
 const featureId = features.getFeatureID(import.meta.url);
+let isInitialized = false;
 
 const getDeveloperLatestOpenrank = async (developerName: string): Promise<string | null> => {
   const data = await getOpenrank(developerName);
@@ -86,6 +87,9 @@ const processElement = (element: Element) => {
 };
 
 const init = async (): Promise<void> => {
+  if (isInitialized) return;
+  isInitialized = true;
+
   const hovercardSelector = '[data-hovercard-url]';
 
   await elementReady(hovercardSelector, { stopOnDomReady: false });
@@ -114,7 +118,7 @@ const init = async (): Promise<void> => {
 
   observer.observe(document.body, {
     childList: true,
-    subtree: true
+    subtree: true,
   });
 };
 
