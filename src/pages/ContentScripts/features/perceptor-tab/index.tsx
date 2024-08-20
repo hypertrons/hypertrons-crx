@@ -53,12 +53,18 @@ const addPerceptorTab = async (): Promise<void | false> => {
   const insightsTabDataItem = $('li[data-menu-item$="insights-tab"]', repoNavigationDropdown);
   const perceptorTabDataItem = insightsTabDataItem.clone(true);
   perceptorTabDataItem.attr('data-menu-item', featureId);
-  perceptorTabDataItem.children('a').text('Perceptor').attr({
-    'data-selected-links': perceptorHref,
+  perceptorTabDataItem.children('a').attr({
     href: perceptorHref,
   });
+  const perceptorSvgElement = perceptorTabDataItem
+    .children('a')
+    .find('span.ActionListItem-visual.ActionListItem-visual--leading')
+    .find('svg');
+  perceptorSvgElement.attr('class', 'octicon octicon-perceptor');
+  perceptorSvgElement.html(iconSvgPath);
+  const perceptorTextElement = perceptorTabDataItem.children('a').find('span.ActionListItem-label');
+  perceptorTextElement.text('Perceptor');
   insightsTabDataItem.after(perceptorTabDataItem);
-
   // Trigger a reflow to push the right-most tab into the overflow dropdown
   window.dispatchEvent(new Event('resize'));
 };
