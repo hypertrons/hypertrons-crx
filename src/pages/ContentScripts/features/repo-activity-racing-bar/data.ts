@@ -154,11 +154,13 @@ export const getOption = async (
         },
         label: {
           show: true,
-          precision: 1,
           position: 'right',
           valueAnimation: true,
           fontFamily: 'monospace',
           color: theme === 'light' ? undefined : DARK_TEXT_COLOR,
+          formatter: function (params: any) {
+            return params.data.value[1].toFixed(2);
+          },
         },
       },
     ],
