@@ -24,7 +24,10 @@ const addPerceptorTab = async (): Promise<void | false> => {
   perceptorTab.href = perceptorHref;
   perceptorTab.id = featureId;
   perceptorTab.setAttribute('data-tab-item', featureId);
-
+  perceptorTab.setAttribute(
+    'data-analytics-event',
+    `{"category":"Underline navbar","action":"Click tab","label":"Perceptor","target":"UNDERLINE_NAV.TAB"}`
+  );
   const perceptorTitle = $('[data-content]', perceptorTab);
   perceptorTitle.text('Perceptor').attr('data-content', 'Perceptor');
 
@@ -75,6 +78,13 @@ const updatePerceptorTabHighlighting = async (): Promise<void> => {
   // no operation needed
   if (!isPerceptor()) return;
   // if perceptor tab
+  if (insightsTab.hasClass('selected')) {
+    insightsTab.removeClass('selected');
+    insightsTab.removeAttr('aria-current');
+    perceptorTab.attr('aria-current', 'page');
+    perceptorTab.addClass('selected');
+  }
+
   const insightsTabSeletedLinks = insightsTab.attr('data-selected-links');
   insightsTab.removeAttr('data-selected-links');
   perceptorTab.attr('data-selected-links', 'pulse');
