@@ -10,22 +10,12 @@ interface OSGraphProps {
    */
   readonly style?: React.CSSProperties;
   /**
-   * paramId
+   * OSGraphUrl
    */
-  readonly paramId: string;
+  readonly OSGraphUrl: string;
 }
 
-const OSGraphUrls = [
-  'https://osgraph.com/result?shareId=1&shareParams={paramId},1405669423,1721288623,10&isShare=true',
-  'https://osgraph.com/result?shareId=2&shareParams={paramId},10&isShare=true',
-  'https://osgraph.com/result?shareId=3&shareParams={paramId},5,5,3&isShare=true',
-  'https://osgraph.com/result?shareId=4&shareParams={paramId},10&isShare=true',
-  'https://osgraph.com/result?shareId=5&shareParams={paramId},10&isShare=true',
-  'https://osgraph.com/result?shareId=6&shareParams={paramId},5,3&isShare=true',
-];
-
-const OSGraph: React.FC<OSGraphProps> = ({ shareId, style = {}, paramId }) => {
-  const osGraphUrl = OSGraphUrls[shareId].replace('{paramId}', paramId);
+const OSGraph: React.FC<OSGraphProps> = ({ shareId, style = {}, OSGraphUrl }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
@@ -33,15 +23,15 @@ const OSGraph: React.FC<OSGraphProps> = ({ shareId, style = {}, paramId }) => {
     if (shareId < 3) {
       setTimeout(() => {
         if (iframeRef.current) {
-          iframeRef.current.src = osGraphUrl;
+          iframeRef.current.src = OSGraphUrl;
         }
       }, shareId * 500); // Each iframe delays  500ms
     } else {
       if (iframeRef.current) {
-        iframeRef.current.src = osGraphUrl;
+        iframeRef.current.src = OSGraphUrl;
       }
     }
-  }, [iframeRef, osGraphUrl, shareId]);
+  }, [iframeRef, OSGraphUrl, shareId]);
 
   return (
     <div className="hypertrons-crx-border">

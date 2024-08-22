@@ -18,11 +18,19 @@ const logoStyle = {
   marginRight: '50px',
   marginTop: '5px',
 };
-const logoHref = 'https://osgraph.com/';
+const baseOSGraphUrls = [
+  'https://osgraph.com/result?shareId=1&shareParams={paramId},1405669423,1721288623,10&isShare=true',
+  'https://osgraph.com/result?shareId=2&shareParams={paramId},10&isShare=true',
+  'https://osgraph.com/result?shareId=3&shareParams={paramId},5,5,3&isShare=true',
+];
 const osgraphLogo = 'https://mdn.alipayobjects.com/huamei_0bwegv/afts/img/A*8rYtR4GWwe0AAAAAAAAAAAAADu3UAQ/original';
 const View = ({ repoID }: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
   const { t, i18n } = useTranslation();
+  const OSGraphUrls = baseOSGraphUrls.map(function(item) {
+    return item.replace('{paramId}', repoID);
+  });
+
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
@@ -36,7 +44,7 @@ const View = ({ repoID }: Props): JSX.Element => {
         <div className="hypertrons-crx-title">
           <span>{t('component_projectContributionNetwork_title')}</span>
           <div style={logoStyle}>
-            <a href={logoHref}>
+            <a href={OSGraphUrls[0]}>
               <img src={osgraphLogo}></img>
             </a>
           </div>
@@ -44,7 +52,7 @@ const View = ({ repoID }: Props): JSX.Element => {
         <div className="d-flex flex-wrap flex-items-center">
           <div className="col-12 col-md-8">
             <div style={{ margin: '10px 0 20px 20px' }}>
-              <OSGraph shareId={0} style={OSGraphStyle} paramId={repoID} />
+              <OSGraph shareId={0} style={OSGraphStyle} OSGraphUrl={OSGraphUrls[0]} />
             </div>
           </div>
           <div className="col-12 col-md-4">
@@ -58,7 +66,7 @@ const View = ({ repoID }: Props): JSX.Element => {
         <div className="hypertrons-crx-title">
           <span>{t('component_projectEcosystemNetwork_title')}</span>
           <div style={logoStyle}>
-            <a href={logoHref}>
+            <a href={OSGraphUrls[1]}>
               <img src={osgraphLogo}></img>
             </a>
           </div>
@@ -66,7 +74,7 @@ const View = ({ repoID }: Props): JSX.Element => {
         <div className="d-flex flex-wrap flex-items-center">
           <div className="col-12 col-md-8">
             <div style={{ margin: '10px 0 20px 20px' }}>
-              <OSGraph shareId={1} style={OSGraphStyle} paramId={repoID} />
+              <OSGraph shareId={1} style={OSGraphStyle} OSGraphUrl={OSGraphUrls[1]} />
             </div>
           </div>
           <div className="col-12 col-md-4">
@@ -80,7 +88,7 @@ const View = ({ repoID }: Props): JSX.Element => {
         <div className="hypertrons-crx-title">
           <span>{t('component_projectCommunityNetwork_title')}</span>
           <div style={logoStyle}>
-            <a href={logoHref}>
+            <a href={OSGraphUrls[2]}>
               <img src={osgraphLogo}></img>
             </a>
           </div>
@@ -88,7 +96,7 @@ const View = ({ repoID }: Props): JSX.Element => {
         <div className="d-flex flex-wrap flex-items-center">
           <div className="col-12 col-md-8">
             <div style={{ margin: '10px 0 20px 20px' }}>
-              <OSGraph shareId={2} style={OSGraphStyle} paramId={repoID} />
+              <OSGraph shareId={2} style={OSGraphStyle} OSGraphUrl={OSGraphUrls[2]} />
             </div>
           </div>
           <div className="col-12 col-md-4">
