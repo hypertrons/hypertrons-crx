@@ -33,7 +33,7 @@ const View = ({ userID }: Props): JSX.Element => {
   const [showDevelopmentActivityNetwork, setShowDevelopmentActivityNetwork] = useState(false);
   const [showOpenSourceInterestsNetwork, setShowOpenSourceInterestsNetwork] = useState(false);
   const { t, i18n } = useTranslation();
-  const OSGraphUrls = baseOSGraphUrls.map(function(item) {
+  const OSGraphUrls = baseOSGraphUrls.map(function (item) {
     return item.replace('{paramId}', userID);
   });
   useEffect(() => {

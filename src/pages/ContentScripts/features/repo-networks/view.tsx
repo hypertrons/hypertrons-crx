@@ -27,7 +27,7 @@ const osgraphLogo = 'https://mdn.alipayobjects.com/huamei_0bwegv/afts/img/A*8rYt
 const View = ({ repoID }: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
   const { t, i18n } = useTranslation();
-  const OSGraphUrls = baseOSGraphUrls.map(function(item) {
+  const OSGraphUrls = baseOSGraphUrls.map(function (item) {
     return item.replace('{paramId}', repoID);
   });
 
