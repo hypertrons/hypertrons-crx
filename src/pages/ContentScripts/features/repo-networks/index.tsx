@@ -4,7 +4,6 @@ import $ from 'jquery';
 
 import features from '../../../../feature-manager';
 import isPerceptor from '../../../../helpers/is-perceptor';
-import { isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
 import View from './view';
 import elementReady from 'element-ready';
 

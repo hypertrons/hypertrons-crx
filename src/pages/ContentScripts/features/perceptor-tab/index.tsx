@@ -4,7 +4,7 @@ import elementReady from 'element-ready';
 import iconSvgPath from './icon-svg-path';
 import features from '../../../../feature-manager';
 import isPerceptor from '../../../../helpers/is-perceptor';
-import { isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
+import { isPublicRepo } from '../../../../helpers/get-repo-info';
 import sleep from '../../../../helpers/sleep';
 
 const featureId = features.getFeatureID(import.meta.url);
@@ -24,7 +24,10 @@ const addPerceptorTab = async (): Promise<void | false> => {
   perceptorTab.href = perceptorHref;
   perceptorTab.id = featureId;
   perceptorTab.setAttribute('data-tab-item', featureId);
-
+  perceptorTab.setAttribute(
+    'data-analytics-event',
+    `{"category":"Underline navbar","action":"Click tab","label":"Perceptor","target":"UNDERLINE_NAV.TAB"}`
+  );
   const perceptorTitle = $('[data-content]', perceptorTab);
   perceptorTitle.text('Perceptor').attr('data-content', 'Perceptor');
 
@@ -53,12 +56,18 @@ const addPerceptorTab = async (): Promise<void | false> => {
   const insightsTabDataItem = $('li[data-menu-item$="insights-tab"]', repoNavigationDropdown);
   const perceptorTabDataItem = insightsTabDataItem.clone(true);
   perceptorTabDataItem.attr('data-menu-item', featureId);
-  perceptorTabDataItem.children('a').text('Perceptor').attr({
-    'data-selected-links': perceptorHref,
+  perceptorTabDataItem.children('a').attr({
     href: perceptorHref,
   });
+  const perceptorSvgElement = perceptorTabDataItem
+    .children('a')
+    .find('span.ActionListItem-visual.ActionListItem-visual--leading')
+    .find('svg');
+  perceptorSvgElement.attr('class', 'octicon octicon-perceptor');
+  perceptorSvgElement.html(iconSvgPath);
+  const perceptorTextElement = perceptorTabDataItem.children('a').find('span.ActionListItem-label');
+  perceptorTextElement.text('Perceptor');
   insightsTabDataItem.after(perceptorTabDataItem);
-
   // Trigger a reflow to push the right-most tab into the overflow dropdown
   window.dispatchEvent(new Event('resize'));
 };
@@ -69,6 +78,13 @@ const updatePerceptorTabHighlighting = async (): Promise<void> => {
   // no operation needed
   if (!isPerceptor()) return;
   // if perceptor tab
+  if (insightsTab.hasClass('selected')) {
+    insightsTab.removeClass('selected');
+    insightsTab.removeAttr('aria-current');
+    perceptorTab.attr('aria-current', 'page');
+    perceptorTab.addClass('selected');
+  }
+
   const insightsTabSeletedLinks = insightsTab.attr('data-selected-links');
   insightsTab.removeAttr('data-selected-links');
   perceptorTab.attr('data-selected-links', 'pulse');
@@ -89,7 +105,7 @@ const init = async (): Promise<void> => {
 };
 
 features.add(featureId, {
-  asLongAs: [isPublicRepoWithMeta],
+  asLongAs: [isPublicRepo],
   awaitDomReady: false,
   init,
 });

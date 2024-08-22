@@ -13,7 +13,7 @@ const OSGraphStyle = {
   width: '100%',
   height: '400px',
   border: 'none',
-  marginTop: '60px',
+  marginTop: '70px',
 };
 const logoStyle = {
   cssFloat: 'right',
