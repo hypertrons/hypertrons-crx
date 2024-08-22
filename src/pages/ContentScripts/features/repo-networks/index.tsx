@@ -33,7 +33,7 @@ const restore = async () => {
 };
 
 features.add(featureId, {
-  asLongAs: [isPerceptor, isPublicRepoWithMeta],
+  asLongAs: [isPerceptor],
   awaitDomReady: false,
   init,
   restore,

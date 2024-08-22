@@ -5,7 +5,7 @@ import $ from 'jquery';
 import elementReady from 'element-ready';
 
 import features from '../../../../feature-manager';
-import { isDeveloperWithMeta } from '../../../../helpers/get-developer-info';
+import { isUserProfile } from '../../../../helpers/get-developer-info';
 import View from './view';
 
 const featureId = features.getFeatureID(import.meta.url);
@@ -34,7 +34,7 @@ const restore = async () => {
 };
 
 features.add(featureId, {
-  asLongAs: [isDeveloperWithMeta],
+  asLongAs: [isUserProfile],
   awaitDomReady: false,
   init,
   restore,
