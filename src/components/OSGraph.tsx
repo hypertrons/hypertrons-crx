@@ -19,19 +19,18 @@ const OSGraph: React.FC<OSGraphProps> = ({ shareId, style = {}, OSGraphUrl }) =>
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
-    // async
-    if (shareId < 3) {
-      setTimeout(() => {
-        if (iframeRef.current) {
-          iframeRef.current.src = OSGraphUrl;
-        }
-      }, shareId * 500); // Each iframe delays  500ms
-    } else {
+    const loadIframe = () => {
       if (iframeRef.current) {
         iframeRef.current.src = OSGraphUrl;
       }
+    };
+    // async
+    if (shareId < 3) {
+      setTimeout(loadIframe, shareId * 500); // Each iframe delays  500ms
+    } else {
+      loadIframe();
     }
-  }, [iframeRef, OSGraphUrl, shareId]);
+  }, [OSGraphUrl, shareId]);
 
   return (
     <div className="hypertrons-crx-border">

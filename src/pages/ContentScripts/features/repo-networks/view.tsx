@@ -11,8 +11,6 @@ const OSGraphStyle = {
   width: '100%',
   height: '400px',
   border: 'none',
-  objectFit: 'cover' as 'cover',
-  marginTop: '70px',
 };
 
 const logoStyle = {
