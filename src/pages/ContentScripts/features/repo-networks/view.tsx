@@ -45,7 +45,7 @@ const View = ({ repoID }: Props): JSX.Element => {
         <div className="hypertrons-crx-title">
           <span>{t('component_projectContributionNetwork_title')}</span>
           <div style={logoStyle}>
-            <a href={OSGraphUrls[0]}>
+            <a href={OSGraphUrls[0]} target="_blank">
               <img src={osgraphLogo}></img>
             </a>
           </div>
@@ -67,7 +67,7 @@ const View = ({ repoID }: Props): JSX.Element => {
         <div className="hypertrons-crx-title">
           <span>{t('component_projectEcosystemNetwork_title')}</span>
           <div style={logoStyle}>
-            <a href={OSGraphUrls[1]}>
+            <a href={OSGraphUrls[1]} target="_blank">
               <img src={osgraphLogo}></img>
             </a>
           </div>
@@ -89,7 +89,7 @@ const View = ({ repoID }: Props): JSX.Element => {
         <div className="hypertrons-crx-title">
           <span>{t('component_projectCommunityNetwork_title')}</span>
           <div style={logoStyle}>
-            <a href={OSGraphUrls[2]}>
+            <a href={OSGraphUrls[2]} target="_blank">
               <img src={osgraphLogo}></img>
             </a>
           </div>
