@@ -10,7 +10,9 @@ export function getDeveloperName() {
 export async function isDeveloperWithMeta() {
   return pageDetect.isUserProfile() && (await metaStore.has(getDeveloperName()));
 }
-
+export async function isUserProfile() {
+  return pageDetect.isUserProfile();
+}
 export function checkLogined() {
   return !!$('meta[name="user-login"]').attr('content');
 }
