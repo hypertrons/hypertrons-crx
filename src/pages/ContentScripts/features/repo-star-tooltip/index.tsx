@@ -32,20 +32,10 @@ const init = async (): Promise<void> => {
   // No matter the repo is starred or not, the two button are always there
   // So we need to filter the visible one
 
-  // 选择所有的star按钮，不再进行过滤
+  // Select all star buttons and no more filtering
   const $starButtons = $(starButtonSelector);
-  // console.log($starButtons);
-  // const $starButton = $(starButtonSelector).filter(function () {
-  //   if ($(this).parent().parent().css('display') !== 'none') {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // });
-  // console.log($starButton);
-  // 为每个按钮渲染 NativePopover
+  // Render NativePopover for each button
   $starButtons.each(function () {
-    console.log('Rendering popover for button:', $(this));
     const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
     render(
       <NativePopover anchor={$(this)} width={280} arrowPosition="top-middle">
