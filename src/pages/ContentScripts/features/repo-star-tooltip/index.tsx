@@ -30,21 +30,18 @@ const init = async (): Promise<void> => {
   // <div data-view-component="true" class="starred BtnGroup flex-1 ml-0">
   // <div data-view-component="true" class="unstarred BtnGroup ml-0 flex-1">
   // No matter the repo is starred or not, the two button are always there
-  // So we need to filter the visible one
-  const $starButton = $(starButtonSelector).filter(function () {
-    if ($(this).parent().parent().css('display') !== 'none') {
-      return true;
-    } else {
-      return false;
-    }
+  // Select all star buttons and no more filtering
+  const $starButtons = $(starButtonSelector);
+  // Render NativePopover for each button
+  $starButtons.each(function () {
+    const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
+    render(
+      <NativePopover anchor={$(this)} width={280} arrowPosition="top-middle">
+        <View stars={stars} meta={meta} />
+      </NativePopover>,
+      placeholderElement
+    );
   });
-  const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
-  render(
-    <NativePopover anchor={$starButton} width={280} arrowPosition="top-middle">
-      <View stars={stars} meta={meta} />
-    </NativePopover>,
-    placeholderElement
-  );
 };
 
 const restore = async () => {};
