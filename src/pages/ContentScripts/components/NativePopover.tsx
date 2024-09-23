@@ -44,7 +44,7 @@ export const NativePopover = ({ anchor, width, arrowPosition, children }: Native
       const hidePopover = () => {
         popoverTimer && clearTimeout(popoverTimer);
         $popoverContent.addClass('Popover-message--large');
-        if ($popoverContent.children().length > 0 && root) {
+        if (root) {
           root.unmount();
         }
         $popoverContainer.css('display', 'none');
