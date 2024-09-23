@@ -9,8 +9,8 @@ import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../..
 import { getActivity, getOpenrank, getParticipant, getContributor } from '../../../../api/repo';
 import { RepoMeta, metaStore } from '../../../../api/common';
 import React from 'react';
-import { render, Container } from 'react-dom';
 import $ from 'jquery';
+import { createRoot } from 'react-dom/client';
 
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
@@ -28,13 +28,23 @@ const getData = async () => {
   meta = (await metaStore.get(repoName)) as RepoMeta;
 };
 
-const renderTo = (container: Container) => {
-  render(
-    <View activity={activity} openrank={openrank} participant={participant} contributor={contributor} meta={meta} />,
-    container
+const renderTo = (container: any) => {
+  createRoot(container).render(
+    <View activity={activity} openrank={openrank} participant={participant} contributor={contributor} meta={meta} />
   );
 };
-
+const waitForElement = (selector: string) => {
+  return new Promise((resolve) => {
+    const observer = new MutationObserver(() => {
+      const element = document.querySelector(selector);
+      if (element) {
+        observer.disconnect();
+        resolve(element);
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  });
+};
 const init = async (): Promise<void> => {
   repoName = getRepoName();
   await getData();
@@ -44,13 +54,11 @@ const init = async (): Promise<void> => {
   renderTo(container);
   await elementReady('#repository-container-header');
   $('#repository-container-header').find('span.Label').after(container);
-
-  await elementReady('#activity-header-label');
-  await elementReady('#OpenRank-header-label');
-  await elementReady('#participant-header-label');
+  await waitForElement('#activity-header-label');
+  await waitForElement('#OpenRank-header-label');
+  await waitForElement('#participant-header-label');
   const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
-
-  render(
+  createRoot(placeholderElement).render(
     <>
       <NativePopover anchor={$('#activity-header-label')} width={280} arrowPosition="top-middle">
         <ActivityView activity={activity} meta={meta} />
@@ -61,8 +69,7 @@ const init = async (): Promise<void> => {
       <NativePopover anchor={$('#participant-header-label')} width={280} arrowPosition="top-middle">
         <ParticipantView participant={participant} contributor={contributor} meta={meta} />
       </NativePopover>
-    </>,
-    placeholderElement
+    </>
   );
 };
 

@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Hypercrx",
+  "name": "HyperCRX",
   "options_page": "options.html",
   "background": { "service_worker": "background.bundle.js" },
   "action": {
@@ -20,13 +20,13 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["main.png"],
+      "resources": ["main.png", "osgraphLogo.svg"],
       "matches": ["<all_urls>"]
     }
   ],
   "permissions": ["storage", "notifications", "alarms", "cookies"],
   "host_permissions": ["*://github.com/*"],
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'"
+    "extension_pages": "script-src 'self'; object-src 'self';"
   }
 }

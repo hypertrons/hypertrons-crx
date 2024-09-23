@@ -6,9 +6,8 @@ import elementReady from 'element-ready';
 import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
 import { getStars } from '../../../../api/repo';
 import { RepoMeta, metaStore } from '../../../../api/common';
-
+import { createRoot } from 'react-dom/client';
 import React from 'react';
-import { render } from 'react-dom';
 import $ from 'jquery';
 
 const featureId = features.getFeatureID(import.meta.url);
@@ -39,11 +38,10 @@ const init = async (): Promise<void> => {
     }
   });
   const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
-  render(
+  createRoot(placeholderElement).render(
     <NativePopover anchor={$starButton} width={280} arrowPosition="top-middle">
       <View stars={stars} meta={meta} />
-    </NativePopover>,
-    placeholderElement
+    </NativePopover>
   );
 };
 

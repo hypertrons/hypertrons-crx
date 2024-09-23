@@ -1,18 +1,17 @@
 import React from 'react';
-import { render, Container } from 'react-dom';
 import $ from 'jquery';
 
 import features from '../../../../feature-manager';
 import isPerceptor from '../../../../helpers/is-perceptor';
 import View from './view';
 import elementReady from 'element-ready';
-
+import { createRoot } from 'react-dom/client';
 const featureId = features.getFeatureID(import.meta.url);
 
 let repoID: any;
 
-const renderTo = (container: Container) => {
-  render(<View repoID={repoID} />, container);
+const renderTo = (container: any) => {
+  createRoot(container).render(<View repoID={repoID} />);
 };
 
 const init = async (): Promise<void> => {

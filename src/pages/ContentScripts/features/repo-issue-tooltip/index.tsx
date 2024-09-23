@@ -8,7 +8,7 @@ import { getIssuesOpened, getIssuesClosed, getIssueComments } from '../../../../
 import { RepoMeta, metaStore } from '../../../../api/common';
 
 import React from 'react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import $ from 'jquery';
 
 const featureId = features.getFeatureID(import.meta.url);
@@ -34,11 +34,10 @@ const init = async (): Promise<void> => {
   await elementReady('#issues-tab');
   const $issueTab = $('#issues-tab');
   const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
-  render(
+  createRoot(placeholderElement).render(
     <NativePopover anchor={$issueTab} width={310} arrowPosition="top-middle">
       <View currentRepo={repoName} issueDetail={issueDetail} meta={meta} />
-    </NativePopover>,
-    placeholderElement
+    </NativePopover>
   );
 };
 

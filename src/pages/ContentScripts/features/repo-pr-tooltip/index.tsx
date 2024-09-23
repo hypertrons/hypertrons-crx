@@ -3,6 +3,7 @@ import View, { PRDetail } from './view';
 import { NativePopover } from '../../components/NativePopover';
 import elementReady from 'element-ready';
 import { getRepoName, isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
+import { createRoot } from 'react-dom/client';
 import {
   getPROpened,
   getPRMerged,
@@ -43,11 +44,10 @@ const init = async (): Promise<void> => {
   await elementReady('#pull-requests-tab');
   const $prTab = $('#pull-requests-tab');
   const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
-  render(
+  createRoot(placeholderElement).render(
     <NativePopover anchor={$prTab} width={340} arrowPosition="top-middle">
       <View currentRepo={repoName} PRDetail={PRDetail} meta={meta} />
-    </NativePopover>,
-    placeholderElement
+    </NativePopover>
   );
 };
 
