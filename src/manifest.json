@@ -20,7 +20,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["main.png", "osgraphLogo.svg"],
+      "resources": ["main.png"],
       "matches": ["<all_urls>"]
     }
   ],
