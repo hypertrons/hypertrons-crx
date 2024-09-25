@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useEffect } from 'react';
-import { createRoot, Root } from 'react-dom/client';
+import { render, unmountComponentAtNode } from 'react-dom';
 import elementReady from 'element-ready';
 import $ from 'jquery';
 
@@ -19,7 +19,6 @@ export const NativePopover = ({ anchor, width, arrowPosition, children }: Native
       const $popoverContent = $('div.Popover-message');
       let popoverTimer: NodeJS.Timeout | null = null;
       let leaveTimer: NodeJS.Timeout | null = null;
-      let root: Root | null = null;
       const showPopover = () => {
         popoverTimer = setTimeout(() => {
           const anchorOffset = anchor.offset();
@@ -35,8 +34,7 @@ export const NativePopover = ({ anchor, width, arrowPosition, children }: Native
           $popoverContainer.css('top', `${top + anchorHeight + 10}px`);
           $popoverContainer.css('left', `${left - (width - anchorWidth) / 2}px`);
           $popoverContent.attr('class', `Popover-message Box color-shadow-large Popover-message--${arrowPosition}`);
-          root = createRoot($popoverContent[0]);
-          root.render(children);
+          render(children, $popoverContent[0]);
           $popoverContainer.css('display', 'block');
         }, 1000);
       };
@@ -44,8 +42,8 @@ export const NativePopover = ({ anchor, width, arrowPosition, children }: Native
       const hidePopover = () => {
         popoverTimer && clearTimeout(popoverTimer);
         $popoverContent.addClass('Popover-message--large');
-        if (root) {
-          root.unmount();
+        if ($popoverContent.children().length > 0) {
+          unmountComponentAtNode($popoverContent[0]);
         }
         $popoverContainer.css('display', 'none');
       };
