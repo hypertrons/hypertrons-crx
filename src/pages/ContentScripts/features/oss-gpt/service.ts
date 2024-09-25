@@ -1,31 +1,35 @@
-const DOCS_GPT_ENDPOINT = 'https://oss-gpt.frankzhao.cn/api';
+import { forEach } from 'lodash';
+import { ChatPromptTemplate, HumanMessagePromptTemplate } from '@langchain/core/prompts';
+export const handleStream = async (stream: any) => {
+  const encoder = new TextEncoder();
 
-export const getAnswer = async (activeDocs: string, question: string, history: [string, string]) => {
-  try {
-    const response = await fetch(`${DOCS_GPT_ENDPOINT}/answer`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        active_docs: activeDocs,
-        api_key: null,
-        embeddings_key: null,
-        history: JSON.stringify(history),
-        question,
-      }),
-      mode: 'cors',
-    });
-    if (!response.ok) {
-      return 'Oops, something went wrong.';
-    } else {
-      const data = await response.json();
-      const answer = data.answer;
-      return answer;
-    }
-  } catch (error) {
-    console.error('Error:', error);
-    return 'error';
-  }
+  const readableStream = new ReadableStream({
+    async start(controller) {
+      for await (const chunk of stream) {
+        try {
+          const chunkText = chunk.content;
+          controller.enqueue(encoder.encode(chunkText));
+        } catch (err) {
+          controller.error(err);
+        }
+      }
+      controller.close();
+    },
+  });
+  return new Response(readableStream);
+};
+export const convertChunkToJson = (rawData: string) => {
+  const messages: string[] = [];
+  forEach(rawData, (chunk) => {
+    messages.push(chunk);
+  });
+  // final message
+  return { message: messages.join('') };
+};
+export const getResponse = async (messages: any, model: any) => {
+  const prompt = ChatPromptTemplate.fromMessages([HumanMessagePromptTemplate.fromTemplate('{input}')].filter(Boolean));
+  const chain = prompt.pipe(model);
+  const basePrompt = '你是来自x-lab实验室的围绕GitHub平台的智能问答机器人';
+  const responseStream = await chain.stream({ input: basePrompt + messages });
+  return handleStream(responseStream);
 };
