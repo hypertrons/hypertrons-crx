@@ -7,7 +7,7 @@ import { getForks } from '../../../../api/repo';
 import { RepoMeta, metaStore } from '../../../../api/common';
 
 import React from 'react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import $ from 'jquery';
 
 const featureId = features.getFeatureID(import.meta.url);
@@ -28,11 +28,10 @@ const init = async (): Promise<void> => {
   await elementReady(forkButtonSelector);
   const $forkButton = $(forkButtonSelector);
   const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
-  render(
+  createRoot(placeholderElement).render(
     <NativePopover anchor={$forkButton} width={280} arrowPosition="top-middle">
       <View forks={forks} meta={meta} />
-    </NativePopover>,
-    placeholderElement
+    </NativePopover>
   );
 };
 

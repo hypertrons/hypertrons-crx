@@ -1,8 +1,8 @@
 import React, { PropsWithChildren, useEffect } from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
+import { createRoot, Root } from 'react-dom/client';
 import elementReady from 'element-ready';
 import $ from 'jquery';
-
+let root: Root | null = null;
 interface NativePopoverProps extends PropsWithChildren<any> {
   anchor: JQuery<HTMLElement>;
   width: number;
@@ -34,7 +34,11 @@ export const NativePopover = ({ anchor, width, arrowPosition, children }: Native
           $popoverContainer.css('top', `${top + anchorHeight + 10}px`);
           $popoverContainer.css('left', `${left - (width - anchorWidth) / 2}px`);
           $popoverContent.attr('class', `Popover-message Box color-shadow-large Popover-message--${arrowPosition}`);
-          render(children, $popoverContent[0]);
+          if (root == null) {
+            root = createRoot($popoverContent[0]);
+          }
+
+          root.render(children);
           $popoverContainer.css('display', 'block');
         }, 1000);
       };
@@ -42,8 +46,9 @@ export const NativePopover = ({ anchor, width, arrowPosition, children }: Native
       const hidePopover = () => {
         popoverTimer && clearTimeout(popoverTimer);
         $popoverContent.addClass('Popover-message--large');
-        if ($popoverContent.children().length > 0) {
-          unmountComponentAtNode($popoverContent[0]);
+        if (root) {
+          root.unmount();
+          root = null;
         }
         $popoverContainer.css('display', 'none');
       };

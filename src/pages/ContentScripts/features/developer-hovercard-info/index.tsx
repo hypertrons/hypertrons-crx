@@ -2,9 +2,8 @@ import features from '../../../../feature-manager';
 import { getOpenrank } from '../../../../api/developer';
 import elementReady from 'element-ready';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import View from './view';
-
+import { createRoot } from 'react-dom/client';
 const featureId = features.getFeatureID(import.meta.url);
 let isInitialized = false;
 
@@ -39,7 +38,7 @@ const getDeveloperName = (target: HTMLElement): string | null => {
 const renderTo = (container: HTMLElement, developerName: string, openrank: string) => {
   const openRankContainer = document.createElement('div');
   container.appendChild(openRankContainer);
-  ReactDOM.render(<View developerName={developerName} openrank={openrank} />, openRankContainer);
+  createRoot(openRankContainer).render(<View developerName={developerName} openrank={openrank} />);
 };
 
 const elementReadyWithTimeout = async (selector: string, options: { stopOnDomReady: boolean }, timeout: number) => {

@@ -1,16 +1,15 @@
 import React from 'react';
 import $ from 'jquery';
 import elementReady from 'element-ready';
-import { render, Container } from 'react-dom';
-
+import { createRoot } from 'react-dom/client';
 import features from '../../../../feature-manager';
 import isPerceptor from '../../../../helpers/is-perceptor';
 import View from './view';
 
 const featureId = features.getFeatureID(import.meta.url);
 
-const renderTo = (container: Container) => {
-  render(<View />, container);
+const renderTo = (container: any) => {
+  createRoot(container).render(<View />);
 };
 
 const init = async (): Promise<void> => {

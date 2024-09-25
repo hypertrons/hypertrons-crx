@@ -1,7 +1,5 @@
 import React from 'react';
-import { render, Container } from 'react-dom';
 import $ from 'jquery';
-
 import features from '../../../../feature-manager';
 import isPerceptor from '../../../../helpers/is-perceptor';
 import { getRepoName, isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
@@ -9,7 +7,7 @@ import { getActivityDetails } from '../../../../api/repo';
 import View from './view';
 import DataNotFound from '../repo-networks/DataNotFound';
 import { RepoActivityDetails } from './data';
-
+import { createRoot } from 'react-dom/client';
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
 let repoActivityDetails: RepoActivityDetails;
@@ -18,12 +16,13 @@ const getData = async () => {
   repoActivityDetails = await getActivityDetails(repoName);
 };
 
-const renderTo = (container: Container) => {
+const renderTo = (container: any) => {
+  const root = createRoot(container);
   if (!repoActivityDetails) {
-    render(<DataNotFound />, container);
+    root.render(<DataNotFound />);
     return;
   }
-  render(<View currentRepo={repoName} repoActivityDetails={repoActivityDetails} />, container);
+  root.render(<View currentRepo={repoName} repoActivityDetails={repoActivityDetails} />);
 };
 
 const init = async (): Promise<void> => {

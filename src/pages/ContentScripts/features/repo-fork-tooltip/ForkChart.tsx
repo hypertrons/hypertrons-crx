@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
 
 import { formatNum, numberWithCommas } from '../../../../helpers/formatter';
-import { min } from 'lodash-es';
 import { getInterval, judgeInterval } from '../../../../helpers/judge-interval';
 const LIGHT_THEME = {
   FG_COLOR: '#24292F',

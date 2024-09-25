@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, Container } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import $ from 'jquery';
 
 import features from '../../../../feature-manager';
@@ -42,14 +42,13 @@ const getCurrentDocsName = (repoName: string): string | null => {
   return result;
 };
 
-const renderTo = (container: Container) => {
-  render(
+const renderTo = (container: any) => {
+  createRoot(container).render(
     <View
       theme={getGithubTheme() as 'light' | 'dark'}
       currentRepo={repoName}
       currentDocsName={getCurrentDocsName(repoName)}
-    />,
-    container
+    />
   );
 };
 

@@ -1,7 +1,6 @@
 import React from 'react';
-import { render, Container } from 'react-dom';
 import $ from 'jquery';
-
+import { createRoot } from 'react-dom/client';
 import features from '../../../../feature-manager';
 import { getRepoName, isPublicRepoWithMeta, isRepoRoot } from '../../../../helpers/get-repo-info';
 import { getActivity, getOpenrank } from '../../../../api/repo';
@@ -20,8 +19,8 @@ const getData = async () => {
   meta = (await metaStore.get(repoName)) as RepoMeta;
 };
 
-const renderTo = (container: Container) => {
-  render(<View repoName={repoName} activity={activity} openrank={openrank} meta={meta} />, container);
+const renderTo = (container: any) => {
+  createRoot(container).render(<View repoName={repoName} activity={activity} openrank={openrank} meta={meta} />);
 };
 
 const init = async (): Promise<void> => {

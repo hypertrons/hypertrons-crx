@@ -7,10 +7,9 @@ import PRChart from './PRChart';
 import MergedLinesChart from './MergedLinesChart';
 import { RepoMeta } from '../../../../api/common';
 import TooltipTrigger from '../../../../components/TooltipTrigger';
-const githubTheme = getGithubTheme();
 import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
-
+const githubTheme = getGithubTheme();
 export interface PRDetail {
   PROpened: any;
   PRMerged: any;

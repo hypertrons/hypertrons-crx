@@ -1,7 +1,6 @@
 import React from 'react';
-import { render, Container } from 'react-dom';
 import $ from 'jquery';
-
+import { createRoot } from 'react-dom/client';
 import elementReady from 'element-ready';
 
 import features from '../../../../feature-manager';
@@ -12,8 +11,8 @@ const featureId = features.getFeatureID(import.meta.url);
 
 let userID: any;
 
-const renderTo = (container: Container) => {
-  render(<View userID={userID} />, container);
+const renderTo = (container: any) => {
+  createRoot(container).render(<View userID={userID} />);
 };
 
 const init = async (): Promise<void> => {
