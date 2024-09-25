@@ -30,19 +30,16 @@ const init = async (): Promise<void> => {
   // <div data-view-component="true" class="unstarred BtnGroup ml-0 flex-1">
   // No matter the repo is starred or not, the two button are always there
   // Select all star buttons and no more filtering
-  const $starButton = $(starButtonSelector).filter(function () {
-    if ($(this).parent().parent().css('display') !== 'none') {
-      return true;
-    } else {
-      return false;
-    }
+
+  const $starButtons = $(starButtonSelector);
+  $starButtons.each(function () {
+    const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
+    createRoot(placeholderElement).render(
+      <NativePopover anchor={$(this)} width={280} arrowPosition="top-middle">
+        <View stars={stars} meta={meta} />
+      </NativePopover>
+    );
   });
-  const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
-  createRoot(placeholderElement).render(
-    <NativePopover anchor={$starButton} width={280} arrowPosition="top-middle">
-      <View stars={stars} meta={meta} />
-    </NativePopover>
-  );
 };
 
 const restore = async () => {};
