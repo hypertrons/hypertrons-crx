@@ -1,4 +1,18 @@
-.chat_item_container {
+.OSSGPT_title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+}
+.float-btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 24px;
+}
+.loading .chat_item_container {
   position: relative;
   width: 100%;
   max-width: 100vw;
@@ -1247,8 +1261,8 @@ video:where(.petercat-lui, .petercat-lui *) {
 .leftMessageContent .ant-pro-chat-list-item-message-content {
   padding: 8px 16px 8px 16px;
   gap: 0px;
-  border-radius: 18px 18px 18px 0px;
-  background: #ebe9e9;
+  border-radius: 18px 18px 18px 4px;
+  /* background: #2e2e2e; */
   /* very important! DO NOT REMOVE */
   transform: translate(1px, 0);
 }
@@ -1278,7 +1292,7 @@ video:where(.petercat-lui, .petercat-lui *) {
   padding: 8px 16px 8px 16px;
   gap: 0px;
   border-radius: 18px 18px 4px 18px;
-  background: #ebe9e9;
+  /* background: #ebe9e9; */
 }
 
 .lui-input-area #question {

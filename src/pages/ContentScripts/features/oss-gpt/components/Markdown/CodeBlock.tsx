@@ -36,7 +36,6 @@ export const Code = memo((properties: any) => {
 
   const content = Array.isArray(children) ? (children[0] as string) : children;
   const lang = className?.replace('language-', '') || 'txt';
-  console.log(countLines(content));
   if (countLines(content) === 1 && content.length <= 60) {
     return (
       <Snippet

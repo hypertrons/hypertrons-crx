@@ -1,38 +1,49 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { ProChat, ProChatProvider, ProChatInstance, ChatItemProps } from '@ant-design/pro-chat';
-import { useTheme, ThemeProvider } from 'antd-style';
-import { Button, Card, Form, Input, theme } from 'antd';
+import { ProChat, ProChatProvider, ProChatInstance, ChatItemProps, ChatMessage } from '@ant-design/pro-chat';
+import { useTheme } from 'antd-style';
+import { Button, Card, Form, Input } from 'antd';
 import { getUsername } from '../../../../helpers/get-repo-info';
 import { getResponse, convertChunkToJson } from './service';
 import StarterList from './StarterList';
 import ChatItemRender from './ChatItemRender';
 import UserContent from './UserContent';
 import LoadingStart from './LoadingStart';
-import LoadingEnd from './LoadingEnd';
 import Markdown from './components/Markdown';
 import type { FormProps } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
 import { saveLLMInfo, getLLMInfo } from '../../../../helpers/LLM-info';
 import { ChatOpenAI } from '@langchain/openai';
-type FieldType = {
+import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
+import { useTranslation } from 'react-i18next';
+import type { RunnableConfig } from '@langchain/core/runnables';
+import { ChatMessageHistory } from 'langchain/stores/message/in_memory';
+import '../../../../helpers/i18n';
+interface FieldType {
   baseUrl: string;
   apiKey: string;
   modelName: string;
-};
-
-const Chat: React.FC = () => {
+}
+interface Props {
+  githubTheme: 'light' | 'dark';
+}
+const Chat: React.FC<Props> = ({ githubTheme }) => {
+  const [options, setOptions] = useState<HypercrxOptions>(defaults);
+  const { t, i18n } = useTranslation();
   const proChatRef = useRef<ProChatInstance>();
   const [complete, setComplete] = useState(false);
   const [chats, setChats] = useState<any[]>([]);
-  const [llmInstance, setLLMInstance] = useState<any>(null); // 保存 LLM 实例
+  const [llmInstance, setLLMInstance] = useState<any>(null);
   const [modelConfig, setModelConfig] = useState<any>(null);
   const theme = useTheme();
-  const username = getUsername();
   const avatar = 'https://avatars.githubusercontent.com/u/57651122?s=200&v=4';
+  const username = getUsername();
+  const userAvatar = `https://github.com/${username}.png`;
   const title = '';
-  const helloMessage = '';
-  // const starters:string[]=[]
-  const starters = ['你好', '介绍一下'];
+  const helloMessage = t('oss_gpt_hello_message');
+  const starters = [t('oss_gpt_starters_introduce')];
+  const sessionId = uuidv4();
+
+  let memory = new ChatMessageHistory();
   const botInfo = {
     assistantMeta: {
       avatar: avatar,
@@ -46,30 +57,27 @@ const Chat: React.FC = () => {
     const { baseUrl, apiKey, modelName } = config;
     const testLLM = new ChatOpenAI({
       apiKey,
-      configuration: { baseURL: baseUrl, fetch },
+      configuration: { baseURL: baseUrl },
       model: modelName,
       temperature: 0.95,
       maxRetries: 3,
     });
-
     try {
-      const response = await testLLM.invoke([{ role: 'user', content: '你好' }]);
-      return response; // 返回模型的回答
+      const response = await testLLM.invoke([{ role: 'user', content: '1+1' }]);
+      return response;
     } catch (error) {
       return null;
     }
   };
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     saveLLMInfo(values.baseUrl, values.apiKey, values.modelName);
-    setModelConfig(values);
     createLLMInstance(values);
-
     const testResponse = await testLLMInstance(values);
     if (testResponse == null) {
       setChats([
         ...chats,
         {
-          content: '配置信息有误，请再次确认，输入正确的信息',
+          content: t('oss_gpt_llm_info_error'),
           id: uuidv4(),
           role: 'assistant',
           avatar: avatar,
@@ -94,30 +102,30 @@ const Chat: React.FC = () => {
           }}
         >
           <Form.Item
-            label="模型名称"
+            label={t('oss_gpt_model_name')}
             name={'modelName'}
-            rules={[{ required: true, message: 'Please input your modelName!' }]}
+            rules={[{ required: true, message: t('oss_gpt_model_name_rule_message') }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
-            label="接口路径"
+            label={t('oss_gpt_base_url')}
             name={'baseUrl'}
-            rules={[{ required: true, message: 'Please input your baseUrl!' }]}
+            rules={[{ required: true, message: t('oss_gpt_base_url_rule_message') }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
-            label="密钥配置"
+            label={t('oss_gpt_api_key')}
             name={'apiKey'}
-            rules={[{ required: true, message: 'Please input your apiKey!' }]}
+            rules={[{ required: true, message: t('oss_gpt_api_key_rule_message') }]}
           >
-            <Input />
+            <Input.Password />
           </Form.Item>
 
           <Form.Item style={{ textAlign: 'center', marginBottom: '0' }}>
             <Button type="primary" htmlType="submit">
-              确认
+              {t('oss_gpt_llm_info_btn')}
             </Button>
           </Form.Item>
         </Form>
@@ -128,7 +136,7 @@ const Chat: React.FC = () => {
     const { baseUrl, apiKey, modelName } = config;
     const model = new ChatOpenAI({
       apiKey,
-      configuration: { baseURL: baseUrl, fetch },
+      configuration: { baseURL: baseUrl },
       model: modelName,
       temperature: 0.95,
       maxRetries: 3,
@@ -136,25 +144,36 @@ const Chat: React.FC = () => {
     setLLMInstance(model);
     setModelConfig(config);
   };
+
   useEffect(() => {
-    // 在组件加载时检查并创建 LLM 实例
     const info = getLLMInfo();
     if (info.baseUrl && info.apiKey && info.modelName) {
       createLLMInstance(info);
     }
   }, []);
+
+  useEffect(() => {
+    (async function () {
+      setOptions(await optionsStorage.getAll());
+      i18n.changeLanguage(options.locale);
+    })();
+  }, [options.locale]);
+
   return (
-    <div style={{ background: theme.colorBgLayout, width: 500, height: 550 }}>
+    <div style={{ background: theme.colorBgLayout, width: 540, height: 550 }}>
       <ProChat
-        locale="en-US"
+        locale={i18n.language == 'en' ? 'en-US' : 'zh-CN'}
         chatRef={proChatRef}
-        userMeta={{ avatar: `https://github.com/${username}.png` }}
+        userMeta={{ avatar: userAvatar }}
         assistantMeta={{ avatar: avatar }}
-        helloMessage=""
         chats={chats}
+        onChatsChange={(chat: ChatMessage[]) => {
+          if (chat.length == 0) {
+            memory = new ChatMessageHistory();
+          }
+        }}
         request={async (messages) => {
           if (!llmInstance) {
-            // 插入一条消息，提示用户先填写配置信息
             setChats([
               {
                 content: JSON.stringify({}),
@@ -169,7 +188,13 @@ const Chat: React.FC = () => {
             return;
           }
           try {
-            return await getResponse(messages.at(-1)?.content?.toString(), llmInstance);
+            const aiRunnableConfig: RunnableConfig = {
+              configurable: {
+                sessionId: sessionId,
+              },
+            };
+            console.log();
+            return await getResponse(messages.at(-1)?.content?.toString(), llmInstance, aiRunnableConfig, memory);
           } catch (error: any) {
             return error.message;
           }
@@ -180,7 +205,6 @@ const Chat: React.FC = () => {
               <a
                 key="user"
                 onClick={() => {
-                  console.log;
                   setChats([
                     {
                       content: JSON.stringify({}),
@@ -194,7 +218,7 @@ const Chat: React.FC = () => {
                   ]);
                 }}
               >
-                选择模型
+                {t('oss_gpt_llm_switch')}
               </a>,
               ...defaultDoms,
             ];
@@ -223,16 +247,17 @@ const Chat: React.FC = () => {
               return (
                 <ChatItemRender
                   direction={'start'}
-                  title={domsMap.title}
+                  title={title}
                   avatar={domsMap.avatar}
                   content={
                     <div className="leftMessageContent">
-                      <div className="ant-pro-chat-list-item-message-content">
+                      <div
+                        className="ant-pro-chat-list-item-message-content"
+                        style={{ background: githubTheme === 'light' ? '#ffffff' : '#2e2e2e' }}
+                      >
                         <div className="text-left text-[20px] font-[500] leading-[28px] font-sf">
-                          Hello！
-                          {botInfo.assistantMeta?.title}
+                          {botInfo.helloMessage}
                         </div>
-                        <div className="text-left text-[14px] font-[500] leading-[28px] font-sf">{props.message}</div>
                       </div>
                     </div>
                   }
@@ -286,7 +311,7 @@ const Chat: React.FC = () => {
                 <ChatItemRender
                   direction={'start'}
                   avatar={domsMap.avatar}
-                  title={domsMap.title}
+                  title={title}
                   content={defaultMessageContent}
                 />
               );
@@ -298,7 +323,7 @@ const Chat: React.FC = () => {
                 <ChatItemRender
                   direction={'start'}
                   avatar={domsMap.avatar}
-                  title={domsMap.title}
+                  title={title}
                   content={
                     <div className="leftMessageContent">
                       <LoadingStart loop={!complete} onComplete={() => setComplete(true)} />
@@ -311,17 +336,19 @@ const Chat: React.FC = () => {
               <ChatItemRender
                 direction={'start'}
                 avatar={domsMap.avatar}
-                title={domsMap.title}
+                title={title}
                 content={
                   <div className="leftMessageContent">
-                    <LoadingEnd>
-                      <Markdown
-                        className="ant-pro-chat-list-item-message-content"
-                        style={{ overflowX: 'hidden', overflowY: 'auto' }}
-                      >
-                        {answerStr}
-                      </Markdown>
-                    </LoadingEnd>
+                    <Markdown
+                      className="ant-pro-chat-list-item-message-content"
+                      style={{
+                        overflowX: 'hidden',
+                        overflowY: 'auto',
+                        background: githubTheme === 'light' ? '#ffffff' : '#2e2e2e',
+                      }}
+                    >
+                      {answerStr}
+                    </Markdown>
                   </div>
                 }
               />
@@ -332,9 +359,9 @@ const Chat: React.FC = () => {
     </div>
   );
 };
-const OssGpt: React.FC = () => (
+const OssGpt: React.FC<Props> = ({ githubTheme }) => (
   <ProChatProvider>
-    <Chat />
+    <Chat githubTheme={githubTheme} />
   </ProChatProvider>
 );
 export default OssGpt;

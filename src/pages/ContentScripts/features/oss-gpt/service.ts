@@ -1,5 +1,8 @@
 import { forEach } from 'lodash';
-import { ChatPromptTemplate, HumanMessagePromptTemplate } from '@langchain/core/prompts';
+import { ChatPromptTemplate, HumanMessagePromptTemplate, MessagesPlaceholder } from '@langchain/core/prompts';
+import type { RunnableConfig } from '@langchain/core/runnables';
+import { RunnableWithMessageHistory } from '@langchain/core/runnables';
+import { ChatMessageHistory } from 'langchain/stores/message/in_memory';
 export const handleStream = async (stream: any) => {
   const encoder = new TextEncoder();
 
@@ -26,10 +29,26 @@ export const convertChunkToJson = (rawData: string) => {
   // final message
   return { message: messages.join('') };
 };
-export const getResponse = async (messages: any, model: any) => {
-  const prompt = ChatPromptTemplate.fromMessages([HumanMessagePromptTemplate.fromTemplate('{input}')].filter(Boolean));
+export const getResponse = async (
+  messages: any,
+  model: any,
+  aiRunnableConfig: RunnableConfig,
+  memory: ChatMessageHistory
+) => {
+  const prompt = ChatPromptTemplate.fromMessages([
+    ['system', 'You are an intelligent question answering robot from x-lab laboratory on the GitHub platform. Your feature is GitHub related Q&A.'],
+    new MessagesPlaceholder('chat_history'),
+    HumanMessagePromptTemplate.fromTemplate('{input}'),
+  ]);
+
   const chain = prompt.pipe(model);
-  const basePrompt = '你是来自x-lab实验室的围绕GitHub平台的智能问答机器人';
-  const responseStream = await chain.stream({ input: basePrompt + messages });
+  const chainWithMessageHistory = new RunnableWithMessageHistory({
+    runnable: chain,
+    getMessageHistory: (_sessionId) => memory,
+    inputMessagesKey: 'input',
+    historyMessagesKey: 'chat_history',
+  });
+
+  const responseStream = await chainWithMessageHistory.stream({ input: messages }, aiRunnableConfig);
   return handleStream(responseStream);
 };

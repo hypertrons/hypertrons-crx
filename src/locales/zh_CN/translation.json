@@ -95,5 +95,16 @@
   "github_token_error_empty": "令牌不能为空",
   "github_token_success_save": "令牌保存成功",
   "github_token_success_valid": "令牌有效。用户名：{{username}}",
-  "github_token_error_invalid": "令牌无效或请求失败"
+  "github_token_error_invalid": "令牌无效或请求失败",
+  "oss_gpt_starters_introduce": "介绍一下自己",
+  "oss_gpt_hello_message": "你好 👋 ，我是来自X-lab的智能问答机器人，你可以向我进行提问。举例如下：",
+  "oss_gpt_llm_info_error": "配置信息有误，请再次确认，输入正确的配置信息。",
+  "oss_gpt_model_name": "模型名称",
+  "oss_gpt_model_name_rule_message": "请输入调用的模型名称！",
+  "oss_gpt_base_url": "接口路径",
+  "oss_gpt_base_url_rule_message": "请输入接口路径！",
+  "oss_gpt_api_key": "密钥配置",
+  "oss_gpt_api_key_rule_message": "请输入密钥配置！",
+  "oss_gpt_llm_info_btn": "确认",
+  "oss_gpt_llm_switch": "模型切换"
 }
