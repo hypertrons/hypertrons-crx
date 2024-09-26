@@ -36,7 +36,10 @@ export const getResponse = async (
   memory: ChatMessageHistory
 ) => {
   const prompt = ChatPromptTemplate.fromMessages([
-    ['system', 'You are an intelligent question answering robot from x-lab laboratory on the GitHub platform. Your feature is GitHub related Q&A.'],
+    [
+      'system',
+      'You are an intelligent question answering robot from x-lab laboratory on the GitHub platform. Your feature is GitHub related Q&A.',
+    ],
     new MessagesPlaceholder('chat_history'),
     HumanMessagePromptTemplate.fromTemplate('{input}'),
   ]);
