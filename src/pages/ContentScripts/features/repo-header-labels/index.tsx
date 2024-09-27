@@ -48,7 +48,6 @@ const waitForElement = (selector: string) => {
 const init = async (): Promise<void> => {
   repoName = getRepoName();
   await getData();
-
   const container = document.createElement('div');
   container.id = featureId;
   renderTo(container);

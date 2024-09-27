@@ -108,3 +108,23 @@
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
 }
+
+/* repo-sidebar-labels */
+
+.label-icon {
+  width: 30px;
+  height: auto;
+}
+
+.label-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.labels-text {
+  font-size: 20px;
+  margin-left: 10px;
+  position: relative;
+  top: 0px;
+}
