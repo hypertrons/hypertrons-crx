@@ -3,7 +3,7 @@ import request from '../helpers/request';
 
 export const getMetricByName = async (owner: string, metricNameMap: Map<string, string>, metric: string) => {
   try {
-    return await request(`${OSS_XLAB_ENDPOINT}/open_digger/github/${owner}/${metricNameMap.get(metric)}.json`);
+    return await request(`${OSS_XLAB_ENDPOINT}/github/${owner}/${metricNameMap.get(metric)}.json`);
   } catch (error) {
     // the catched error being "404" means the metric file is not available so return a null
     if (error === ErrorCode.NOT_FOUND) {
@@ -17,8 +17,8 @@ export const getMetricByName = async (owner: string, metricNameMap: Map<string, 
 
 /**
  * Common interface for both repo meta and user meta
- * e.g. https://oss.x-lab.info/open_digger/github/X-lab2017/open-digger/meta.json (repo meta file)
- * e.g. https://oss.x-lab.info/open_digger/github/tyn1998/meta.json (user meta file)
+ * e.g. https://oss.open-digger.cn/github/X-lab2017/open-digger/meta.json (repo meta file)
+ * e.g. https://oss.open-digger.cn/github/tyn1998/meta.json (user meta file)
  * @param name repo name or user name
  */
 export interface CommonMeta {
@@ -52,7 +52,7 @@ class MetaStore {
    * @param name repo name or user name
    */
   private fetchMeta(name: string) {
-    const url = `${OSS_XLAB_ENDPOINT}/open_digger/github/${name}/meta.json`;
+    const url = `${OSS_XLAB_ENDPOINT}/github/${name}/meta.json`;
     const promise = fetch(url);
     this.responseCache.set(name, promise);
   }

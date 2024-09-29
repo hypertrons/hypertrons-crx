@@ -14,7 +14,6 @@ import {
 import { RepoMeta, metaStore } from '../../../../api/common';
 
 import React from 'react';
-import { render } from 'react-dom';
 import $ from 'jquery';
 
 const featureId = features.getFeatureID(import.meta.url);
