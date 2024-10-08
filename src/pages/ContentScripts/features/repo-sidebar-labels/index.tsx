@@ -1,6 +1,10 @@
 import features from '../../../../feature-manager';
 import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
 import { CommonMeta, RepoMeta, metaStore } from '../../../../api/common';
+import { createRoot } from 'react-dom/client';
+import OpenDiggerLabel from './OpenDiggerLabel';
+
+import React from 'react';
 import $ from 'jquery';
 
 const featureId = features.getFeatureID(import.meta.url);
@@ -25,15 +29,8 @@ const renderTags = () => {
     if (document.getElementById(id)) {
       continue;
     }
-    const labelElement = $('<a>')
-      .attr({
-        id,
-        href: 'https://open-digger.cn',
-        class: 'topic-tag topic-tag-link',
-        target: '_blank',
-      })
-      .text(label.name);
-
+    const labelElement = document.createElement('span');
+    createRoot(labelElement).render(<OpenDiggerLabel label={label} />);
     githubTagContainer.append(labelElement);
   }
 };
