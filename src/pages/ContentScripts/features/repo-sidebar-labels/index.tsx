@@ -1,57 +1,51 @@
 import features from '../../../../feature-manager';
-import View from './view';
-import elementReady from 'element-ready';
 import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
-import { RepoMeta, metaStore } from '../../../../api/common';
-import React from 'react';
+import { CommonMeta, RepoMeta, metaStore } from '../../../../api/common';
 import $ from 'jquery';
-import { createRoot } from 'react-dom/client';
 
 const featureId = features.getFeatureID(import.meta.url);
-type Label = {
-  id: string;
-  name: string;
-  type: string;
-};
 
 let repoName: string;
 let meta: RepoMeta;
-let filteredLabels: Label[];
+let filteredLabels: CommonMeta['labels'];
 
 const getData = async () => {
   meta = (await metaStore.get(repoName)) as RepoMeta;
   // filtered all xxx-n and n is not 0
-  filteredLabels = (meta.labels as Label[]).filter((label: Label) => {
+  filteredLabels = meta.labels.filter((label) => {
     return !(label.type.includes('-') && parseInt(label.type.split('-')[1]) > 0);
   });
 };
 
-const renderTo = (container: any) => {
-  createRoot(container).render(<View labels={filteredLabels} />);
+const renderTags = () => {
+  const githubTagContainer = $('.topic-tag.topic-tag-link').parent();
+  for (const label of filteredLabels) {
+    const id = `opendigger-label-${label.id}`;
+    // if the tag already exists, skip
+    if (document.getElementById(id)) {
+      continue;
+    }
+    const labelElement = $('<a>')
+      .attr({
+        id,
+        href: 'https://open-digger.cn',
+        class: 'topic-tag topic-tag-link',
+        target: '_blank',
+      })
+      .text(label.name);
+
+    githubTagContainer.append(labelElement);
+  }
 };
 
 const init = async (): Promise<void> => {
   repoName = getRepoName();
   await getData();
-  const container = document.createElement('div');
-  container.id = featureId;
-  createRoot(container).render(<View labels={filteredLabels} />);
-
-  await elementReady('.Layout-sidebar');
-  $('.Layout-sidebar').find('p.f4.my-3').after(container);
-};
-
-const restore = async () => {
-  if (repoName !== getRepoName()) {
-    repoName = getRepoName();
-    await getData();
-  }
-  renderTo($(`#${featureId}`)[0]);
+  renderTags();
 };
 
 features.add(featureId, {
   asLongAs: [isPublicRepoWithMeta, hasRepoContainerHeader],
   awaitDomReady: false,
   init,
-  restore,
 });

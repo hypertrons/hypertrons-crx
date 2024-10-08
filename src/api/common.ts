@@ -24,7 +24,11 @@ export const getMetricByName = async (owner: string, metricNameMap: Map<string, 
 export interface CommonMeta {
   type: 'user' | 'repo';
   updatedAt: number; // time stamp
-  labels: unknown[]; // TODO: define the type
+  labels: Array<{
+    id: string;
+    name: string;
+    type: string;
+  }>;
 }
 
 export interface RepoMeta extends CommonMeta {}
