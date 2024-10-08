@@ -10,18 +10,21 @@ const OpenDiggerLabel: React.FC<OpenDiggerLabelProps> = ({ label }) => {
     <a
       id={`opendigger-label-${label.id}`}
       className="topic-tag topic-tag-link"
+      style={{
+        paddingLeft: '4px',
+      }}
       href="https://open-digger.cn"
       target="_blank"
     >
       <img
         style={{
-          verticalAlign: 'text-bottom',
+          verticalAlign: 'middle',
           marginRight: '4px',
           borderRadius: '50%',
-          transform: 'translateY(-0.5px)',
+          transform: 'translateY(-1px)',
         }}
         src="https://open-digger.cn/img/logo/logo-blue-round-corner.png"
-        width={14}
+        width={16}
       />
       <span>{label.name}</span>
     </a>
