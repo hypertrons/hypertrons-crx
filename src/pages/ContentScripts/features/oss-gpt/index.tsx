@@ -1,71 +1,28 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
 import $ from 'jquery';
-
 import features from '../../../../feature-manager';
 import getGithubTheme from '../../../../helpers/get-github-theme';
 import { getRepoName, isPublicRepo } from '../../../../helpers/get-repo-info';
 import View from './view';
-
-interface DocsMetaItem {
-  type: 'repo' | 'org';
-  name: string; // GitHub repo name or org name
-  key: string; // corresponding docs name
-}
-
-const DOCS_META_DATA_URL = 'https://oss.x-lab.info/hypercrx/docsgpt_active_docs.json';
+import { createRoot, Root } from 'react-dom/client';
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
-let docsMetaData: DocsMetaItem[];
-
-const getData = async () => {
-  const response = await fetch(DOCS_META_DATA_URL);
-  if (response.ok) {
-    docsMetaData = await response.json();
-  } else {
-    throw new Error('Failed to fetch docs meta data');
-  }
-};
-
-const getCurrentDocsName = (repoName: string): string | null => {
-  const orgName = repoName.split('/')[0];
-  let result = null;
-  for (const item of docsMetaData) {
-    if (item.type === 'repo' && item.name === repoName) {
-      result = item.key;
-      break;
-    } else if (item.type === 'org' && item.name === orgName) {
-      result = item.key;
-      break;
-    }
-  }
-  return result;
-};
-
+let root: Root | null = null;
 const renderTo = (container: any) => {
-  createRoot(container).render(
-    <View
-      theme={getGithubTheme() as 'light' | 'dark'}
-      currentRepo={repoName}
-      currentDocsName={getCurrentDocsName(repoName)}
-    />
-  );
+  root = createRoot(container);
+  root.render(<View githubTheme={getGithubTheme() as 'light' | 'dark'} />);
 };
 
 const init = async (): Promise<void> => {
-  repoName = getRepoName();
-  await getData();
-
   const container = document.createElement('div');
   container.id = featureId;
   container.dataset.repo = repoName; // mark current repo by data-repo
   renderTo(container);
-  $('body').append(container);
-
+  document.body.appendChild(container);
   // TODO need a mechanism to remove extra listeners like this one
   document.addEventListener('turbo:load', async () => {
     if (await isPublicRepo()) {
-      if (repoName !== getRepoName()) {
+      if (repoName !== getRepoName() && root == null) {
         repoName = getRepoName();
         renderTo($(`#${featureId}`)[0]);
       }
@@ -77,6 +34,6 @@ const init = async (): Promise<void> => {
 
 features.add(featureId, {
   include: [isPublicRepo],
-  awaitDomReady: false,
+  awaitDomReady: true,
   init,
 });
