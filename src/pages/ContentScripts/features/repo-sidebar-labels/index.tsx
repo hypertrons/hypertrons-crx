@@ -22,7 +22,15 @@ const getData = async () => {
 };
 
 const renderTags = () => {
-  const githubTagContainer = $('.topic-tag.topic-tag-link').parent();
+  let githubTagContainer = $('.topic-tag.topic-tag-link').parent();
+  // some repositories don't have tags, create a tag container for our tags
+  if (githubTagContainer.length === 0) {
+    githubTagContainer = $('<div class="f6"></div>');
+    const githubTagContainerWrap = $('<div class="my-3"></div>');
+    githubTagContainerWrap.append(githubTagContainer);
+    const anchor = $('h3.sr-only:contains("Resources")');
+    githubTagContainerWrap.insertBefore(anchor);
+  }
   for (const label of filteredLabels) {
     const id = `opendigger-label-${label.id}`;
     // if the tag already exists, skip
@@ -38,11 +46,13 @@ const renderTags = () => {
 const init = async (): Promise<void> => {
   repoName = getRepoName();
   await getData();
-  renderTags();
+  if (filteredLabels.length) {
+    renderTags();
+  }
 };
 
 features.add(featureId, {
   asLongAs: [isPublicRepoWithMeta, hasRepoContainerHeader],
-  awaitDomReady: false,
+  awaitDomReady: true,
   init,
 });
