@@ -23,7 +23,7 @@ const OpenDiggerLabel: React.FC<OpenDiggerLabelProps> = ({ label }) => {
           marginRight: '4px',
           borderRadius: '50%',
         }}
-        src="https://open-digger.cn/img/logo/logo-blue-round-corner.png"
+        src="https://open-digger.cn/img/logo/logo-blue-round-corner-36px.png"
         width={16}
         height={16}
       />
