@@ -1,8 +1,8 @@
 import React from 'react';
-import { CommonMeta } from '../../../../api/common';
+import { Label } from '../../../../api/common';
 
 interface OpenDiggerLabelProps {
-  label: CommonMeta['labels'][0];
+  label: Label;
 }
 
 const OpenDiggerLabel: React.FC<OpenDiggerLabelProps> = ({ label }) => {
