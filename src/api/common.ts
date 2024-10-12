@@ -15,6 +15,12 @@ export const getMetricByName = async (owner: string, metricNameMap: Map<string, 
   }
 };
 
+export interface Label {
+  id: string;
+  name: string;
+  type: string;
+}
+
 /**
  * Common interface for both repo meta and user meta
  * e.g. https://oss.open-digger.cn/github/X-lab2017/open-digger/meta.json (repo meta file)
@@ -24,7 +30,7 @@ export const getMetricByName = async (owner: string, metricNameMap: Map<string, 
 export interface CommonMeta {
   type: 'user' | 'repo';
   updatedAt: number; // time stamp
-  labels: unknown[]; // TODO: define the type
+  labels?: Label[];
 }
 
 export interface RepoMeta extends CommonMeta {}

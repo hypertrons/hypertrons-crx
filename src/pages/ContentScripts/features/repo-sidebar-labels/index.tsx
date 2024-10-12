@@ -1,57 +1,54 @@
 import features from '../../../../feature-manager';
-import View from './view';
-import elementReady from 'element-ready';
 import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
-import { RepoMeta, metaStore } from '../../../../api/common';
+import { Label, RepoMeta, metaStore } from '../../../../api/common';
+import { createRoot } from 'react-dom/client';
+import OpenDiggerLabel from './OpenDiggerLabel';
+
 import React from 'react';
 import $ from 'jquery';
-import { createRoot } from 'react-dom/client';
 
 const featureId = features.getFeatureID(import.meta.url);
-type Label = {
-  id: string;
-  name: string;
-  type: string;
-};
 
-let repoName: string;
-let meta: RepoMeta;
-let filteredLabels: Label[];
-
-const getData = async () => {
-  meta = (await metaStore.get(repoName)) as RepoMeta;
+const getLabels = async (repoName: string) => {
+  const meta = (await metaStore.get(repoName)) as RepoMeta;
   // filtered all xxx-n and n is not 0
-  filteredLabels = (meta.labels as Label[]).filter((label: Label) => {
+  return meta.labels?.filter((label) => {
     return !(label.type.includes('-') && parseInt(label.type.split('-')[1]) > 0);
   });
 };
 
-const renderTo = (container: any) => {
-  createRoot(container).render(<View labels={filteredLabels} />);
+const renderTags = (labels: Label[]) => {
+  let githubTagContainer = $('.topic-tag.topic-tag-link').parent();
+  // some repositories don't have tags, create a tag container for our tags
+  if (githubTagContainer.length === 0) {
+    githubTagContainer = $('<div class="f6"></div>');
+    const githubTagContainerWrap = $('<div class="my-3"></div>');
+    githubTagContainerWrap.append(githubTagContainer);
+    const anchor = $('h3.sr-only:contains("Resources")');
+    githubTagContainerWrap.insertBefore(anchor);
+  }
+  for (const label of labels) {
+    const id = `opendigger-label-${label.id}`;
+    // if the tag already exists, skip
+    if (document.getElementById(id)) {
+      continue;
+    }
+    const labelElement = document.createElement('span');
+    createRoot(labelElement).render(<OpenDiggerLabel label={label} />);
+    githubTagContainer.append(labelElement);
+  }
 };
 
 const init = async (): Promise<void> => {
-  repoName = getRepoName();
-  await getData();
-  const container = document.createElement('div');
-  container.id = featureId;
-  createRoot(container).render(<View labels={filteredLabels} />);
-
-  await elementReady('.Layout-sidebar');
-  $('.Layout-sidebar').find('p.f4.my-3').after(container);
-};
-
-const restore = async () => {
-  if (repoName !== getRepoName()) {
-    repoName = getRepoName();
-    await getData();
+  const repoName = getRepoName();
+  const labels = await getLabels(repoName);
+  if (labels && labels.length > 0) {
+    renderTags(labels);
   }
-  renderTo($(`#${featureId}`)[0]);
 };
 
 features.add(featureId, {
   asLongAs: [isPublicRepoWithMeta, hasRepoContainerHeader],
-  awaitDomReady: false,
+  awaitDomReady: true,
   init,
-  restore,
 });
