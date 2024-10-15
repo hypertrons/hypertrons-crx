@@ -96,5 +96,16 @@
   "github_token_error_empty": "Token cannot be empty",
   "github_token_success_save": "Token saved successfully",
   "github_token_success_valid": "Token is valid. Username: {{username}}",
-  "github_token_error_invalid": "Invalid token or request failed"
+  "github_token_error_invalid": "Invalid token or request failed",
+  "oss_gpt_starters_introduce": "Introduce yourself",
+  "oss_gpt_hello_message": "Hello 👋 , I am an intelligent Q&A robot from X-lab, you can ask me questions. For example:",
+  "oss_gpt_llm_info_error": "The configuration information is incorrect. Please confirm again and enter the correct configuration information.",
+  "oss_gpt_model_name": "Model Name",
+  "oss_gpt_model_name_rule_message": "Please enter Model Name!",
+  "oss_gpt_base_url": "Base Url",
+  "oss_gpt_base_url_rule_message": "Please enter Base Url!",
+  "oss_gpt_api_key": "API Key",
+  "oss_gpt_api_key_rule_message": "Please enter API key!",
+  "oss_gpt_llm_info_btn": "confirm",
+  "oss_gpt_llm_switch": "Switch Model"
 }
