@@ -4,6 +4,7 @@ import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-s
 import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
 import OSGraph from '../../../../components/OSGraph';
+import { osgraphLogo } from './base64';
 interface Props {
   repoID: any;
 }
@@ -24,7 +25,6 @@ const baseOSGraphUrls = [
   'https://osgraph.com/result?shareId=2&shareParams={paramId},10&isShare=true',
   'https://osgraph.com/result?shareId=3&shareParams={paramId},5,5,3&isShare=true',
 ];
-const osgraphLogo = 'https://mdn.alipayobjects.com/huamei_0bwegv/afts/img/A*8rYtR4GWwe0AAAAAAAAAAAAADu3UAQ/original';
 const View = ({ repoID }: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
   const { t, i18n } = useTranslation();
@@ -46,7 +46,7 @@ const View = ({ repoID }: Props): JSX.Element => {
           <span>{t('component_projectContributionNetwork_title')}</span>
           <div style={logoStyle}>
             <a href={OSGraphUrls[0]} target="_blank">
-              <img src={osgraphLogo}></img>
+              <img src={osgraphLogo} width={30} height={30}></img>
             </a>
           </div>
         </div>
@@ -68,7 +68,7 @@ const View = ({ repoID }: Props): JSX.Element => {
           <span>{t('component_projectEcosystemNetwork_title')}</span>
           <div style={logoStyle}>
             <a href={OSGraphUrls[1]} target="_blank">
-              <img src={osgraphLogo}></img>
+              <img src={osgraphLogo} width={30} height={30}></img>
             </a>
           </div>
         </div>
@@ -90,7 +90,7 @@ const View = ({ repoID }: Props): JSX.Element => {
           <span>{t('component_projectCommunityNetwork_title')}</span>
           <div style={logoStyle}>
             <a href={OSGraphUrls[2]} target="_blank">
-              <img src={osgraphLogo}></img>
+              <img src={osgraphLogo} width={30} height={30}></img>
             </a>
           </div>
         </div>
