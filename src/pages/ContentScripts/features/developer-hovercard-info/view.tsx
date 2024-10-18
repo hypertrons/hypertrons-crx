@@ -1,7 +1,7 @@
 import React from 'react';
 import getGithubTheme from '../../../../helpers/get-github-theme';
 import '../../../../helpers/i18n';
-import { rocketLight, rocketDark } from './base64';
+import { rocketDarkLogo, rocketLightLogo } from '../../../../helpers/base64';
 
 interface OpenRankProps {
   developerName: string;
@@ -21,7 +21,7 @@ const View: React.FC<OpenRankProps> = ({ developerName, openrank }) => {
           width={20}
           height={20}
           style={{ display: 'inline-block', verticalAlign: 'middle', position: 'relative', left: '-2.5px' }}
-          src={theme === 'light' ? rocketLight : rocketDark}
+          src={theme === 'light' ? rocketLightLogo : rocketDarkLogo}
           alt=""
         />
         <span

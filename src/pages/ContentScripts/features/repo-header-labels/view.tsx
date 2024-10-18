@@ -2,14 +2,12 @@ import getGithubTheme from '../../../../helpers/get-github-theme';
 import { isNull } from '../../../../helpers/is-null';
 import { numberWithCommas } from '../../../../helpers/formatter';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
-import { rocketLight, rocketDark } from './base64';
 import generateDataByMonth from '../../../../helpers/generate-data-by-month';
 import { RepoMeta } from '../../../../api/common';
-
 import React, { useState, useEffect } from 'react';
-
 import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
+import { rocketDarkLogo, rocketLightLogo } from '../../../../helpers/base64';
 const githubTheme = getGithubTheme();
 
 interface Props {
@@ -88,7 +86,7 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
           width={16}
           height={16}
           style={{ float: 'left' }}
-          src={githubTheme === 'light' ? rocketLight : rocketDark}
+          src={githubTheme === 'light' ? rocketLightLogo : rocketDarkLogo}
           alt=""
         />
         {numberWithCommas(Math.round(openrankData[openrankData.length - 1][1]))}

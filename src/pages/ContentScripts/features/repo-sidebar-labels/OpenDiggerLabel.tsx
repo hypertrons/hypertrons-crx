@@ -1,6 +1,6 @@
 import React from 'react';
 import { Label } from '../../../../api/common';
-import { openDiggerLogo } from './base64';
+import { openDiggerLogo } from '../../../../helpers/base64';
 
 interface OpenDiggerLabelProps {
   label: Label;

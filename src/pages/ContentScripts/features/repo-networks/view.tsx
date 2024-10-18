@@ -4,7 +4,8 @@ import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-s
 import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
 import OSGraph from '../../../../components/OSGraph';
-import { osGraphLogo } from './base64';
+import { osGraphLogo } from '../../../../helpers/base64';
+
 interface Props {
   repoID: any;
 }
