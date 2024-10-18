@@ -1,6 +1,5 @@
 import React from 'react';
 import { Label } from '../../../../api/common';
-import { openDiggerLogo } from '../../../../helpers/base64';
 
 interface OpenDiggerLabelProps {
   label: Label;
@@ -24,7 +23,7 @@ const OpenDiggerLabel: React.FC<OpenDiggerLabelProps> = ({ label }) => {
           marginRight: '4px',
           borderRadius: '50%',
         }}
-        src={openDiggerLogo}
+        src={chrome.runtime.getURL('openDiggerLogo.png')}
         width={16}
         height={16}
       />

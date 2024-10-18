@@ -7,7 +7,6 @@ import { RepoMeta } from '../../../../api/common';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
-import { rocketDarkLogo, rocketLightLogo } from '../../../../helpers/base64';
 const githubTheme = getGithubTheme();
 
 interface Props {
@@ -34,6 +33,8 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
   const openrankData = generateDataByMonth(openrank, meta.updatedAt);
   const participantData = generateDataByMonth(participant, meta.updatedAt);
   const contributorData = generateDataByMonth(contributor, meta.updatedAt);
+  const rocketLightLogo = chrome.runtime.getURL('rocketLightLogo.png');
+  const rocketDarkLogo = chrome.runtime.getURL('rocketDarkLogo.png');
 
   return (
     <div className="d-flex">

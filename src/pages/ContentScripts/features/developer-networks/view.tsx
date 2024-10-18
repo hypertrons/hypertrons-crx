@@ -6,7 +6,6 @@ import './react-modal.scss';
 import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
 import OSGraph from '../../../../components/OSGraph';
-import { osGraphLogo } from '../../../../helpers/base64';
 interface Props {
   userID: any;
 }
@@ -161,7 +160,7 @@ const View = ({ userID }: Props): JSX.Element => {
             <span>{t('component_developmentActivityNetwork_title')}</span>
             <div style={logoStyle}>
               <a href={OSGraphUrls[0]} target="_blank">
-                <img src={osGraphLogo} width={28} height={28}></img>
+                <img src={chrome.runtime.getURL('osGraphLogo.png')} width={28} height={28}></img>
               </a>
             </div>
           </div>
@@ -194,7 +193,7 @@ const View = ({ userID }: Props): JSX.Element => {
             <span>{t('component_openSourcePartnersNetwork_title')}</span>
             <div style={logoStyle}>
               <a href={OSGraphUrls[1]} target="_blank">
-                <img src={osGraphLogo} width={28} height={28}></img>
+                <img src={chrome.runtime.getURL('osGraphLogo.png')} width={28} height={28}></img>
               </a>
             </div>
           </div>
@@ -227,7 +226,7 @@ const View = ({ userID }: Props): JSX.Element => {
             <span>{t('component_openSourceInterestsNetwork_title')}</span>
             <div style={logoStyle}>
               <a href={OSGraphUrls[2]} target="_blank">
-                <img src={osGraphLogo} width={28} height={28}></img>
+                <img src={chrome.runtime.getURL('osGraphLogo.png')} width={28} height={28}></img>
               </a>
             </div>
           </div>
