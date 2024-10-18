@@ -139,7 +139,7 @@ let options = {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: 'src/assets/img/main.png',
+          from: path.resolve(__dirname, 'src/assets/img'),
           to: path.join(__dirname, 'build'),
           force: true,
         },

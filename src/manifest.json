@@ -20,7 +20,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["main.png"],
+      "resources": ["main.png", "osGraphLogo.png", "openDiggerLogo.png", "rocketDarkLogo.png", "rocketLightLogo.png"],
       "matches": ["<all_urls>"]
     }
   ],
