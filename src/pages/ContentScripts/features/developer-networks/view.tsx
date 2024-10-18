@@ -6,6 +6,7 @@ import './react-modal.scss';
 import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
 import OSGraph from '../../../../components/OSGraph';
+import { osGraphLogo } from '../../../../helpers/base64';
 interface Props {
   userID: any;
 }
@@ -26,7 +27,6 @@ const baseOSGraphUrls = [
   'https://osgraph.com/result?shareId=6&shareParams={paramId},5,3&isShare=true',
 ];
 
-const osgraphLogo = 'https://mdn.alipayobjects.com/huamei_0bwegv/afts/img/A*8rYtR4GWwe0AAAAAAAAAAAAADu3UAQ/original';
 const View = ({ userID }: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
   const [showOpenSourcePartnersNetwork, setShowOpenSourcePartnersNetwork] = useState(false);
@@ -161,7 +161,7 @@ const View = ({ userID }: Props): JSX.Element => {
             <span>{t('component_developmentActivityNetwork_title')}</span>
             <div style={logoStyle}>
               <a href={OSGraphUrls[0]} target="_blank">
-                <img src={osgraphLogo}></img>
+                <img src={osGraphLogo} width={28} height={28}></img>
               </a>
             </div>
           </div>
@@ -194,7 +194,7 @@ const View = ({ userID }: Props): JSX.Element => {
             <span>{t('component_openSourcePartnersNetwork_title')}</span>
             <div style={logoStyle}>
               <a href={OSGraphUrls[1]} target="_blank">
-                <img src={osgraphLogo}></img>
+                <img src={osGraphLogo} width={28} height={28}></img>
               </a>
             </div>
           </div>
@@ -227,7 +227,7 @@ const View = ({ userID }: Props): JSX.Element => {
             <span>{t('component_openSourceInterestsNetwork_title')}</span>
             <div style={logoStyle}>
               <a href={OSGraphUrls[2]} target="_blank">
-                <img src={osgraphLogo}></img>
+                <img src={osGraphLogo} width={28} height={28}></img>
               </a>
             </div>
           </div>
