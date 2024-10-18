@@ -32,6 +32,7 @@ const View = ({ userID }: Props): JSX.Element => {
   const [showDevelopmentActivityNetwork, setShowDevelopmentActivityNetwork] = useState(false);
   const [showOpenSourceInterestsNetwork, setShowOpenSourceInterestsNetwork] = useState(false);
   const { t, i18n } = useTranslation();
+  const osGraphLogo = chrome.runtime.getURL('osGraphLogo.png');
   const OSGraphUrls = baseOSGraphUrls.map(function (item) {
     return item.replace('{paramId}', userID);
   });
@@ -160,7 +161,7 @@ const View = ({ userID }: Props): JSX.Element => {
             <span>{t('component_developmentActivityNetwork_title')}</span>
             <div style={logoStyle}>
               <a href={OSGraphUrls[0]} target="_blank">
-                <img src={chrome.runtime.getURL('osGraphLogo.png')} width={28} height={28}></img>
+                <img src={osGraphLogo} width={28} height={28}></img>
               </a>
             </div>
           </div>
@@ -193,7 +194,7 @@ const View = ({ userID }: Props): JSX.Element => {
             <span>{t('component_openSourcePartnersNetwork_title')}</span>
             <div style={logoStyle}>
               <a href={OSGraphUrls[1]} target="_blank">
-                <img src={chrome.runtime.getURL('osGraphLogo.png')} width={28} height={28}></img>
+                <img src={osGraphLogo} width={28} height={28}></img>
               </a>
             </div>
           </div>
@@ -226,7 +227,7 @@ const View = ({ userID }: Props): JSX.Element => {
             <span>{t('component_openSourceInterestsNetwork_title')}</span>
             <div style={logoStyle}>
               <a href={OSGraphUrls[2]} target="_blank">
-                <img src={chrome.runtime.getURL('osGraphLogo.png')} width={28} height={28}></img>
+                <img src={osGraphLogo} width={28} height={28}></img>
               </a>
             </div>
           </div>

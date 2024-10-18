@@ -31,7 +31,7 @@ const View = ({ repoID }: Props): JSX.Element => {
   const OSGraphUrls = baseOSGraphUrls.map(function (item) {
     return item.replace('{paramId}', repoID);
   });
-
+  const osGraphLogo = chrome.runtime.getURL('osGraphLogo.png');
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
@@ -46,7 +46,7 @@ const View = ({ repoID }: Props): JSX.Element => {
           <span>{t('component_projectContributionNetwork_title')}</span>
           <div style={logoStyle}>
             <a href={OSGraphUrls[0]} target="_blank">
-              <img src={chrome.runtime.getURL('osGraphLogo.png')} width={28} height={28}></img>
+              <img src={osGraphLogo} width={28} height={28}></img>
             </a>
           </div>
         </div>
@@ -68,7 +68,7 @@ const View = ({ repoID }: Props): JSX.Element => {
           <span>{t('component_projectEcosystemNetwork_title')}</span>
           <div style={logoStyle}>
             <a href={OSGraphUrls[1]} target="_blank">
-              <img src={chrome.runtime.getURL('osGraphLogo.png')} width={28} height={28}></img>
+              <img src={osGraphLogo} width={28} height={28}></img>
             </a>
           </div>
         </div>
@@ -90,7 +90,7 @@ const View = ({ repoID }: Props): JSX.Element => {
           <span>{t('component_projectCommunityNetwork_title')}</span>
           <div style={logoStyle}>
             <a href={OSGraphUrls[2]} target="_blank">
-              <img src={chrome.runtime.getURL('osGraphLogo.png')} width={28} height={28}></img>
+              <img src={osGraphLogo} width={28} height={28}></img>
             </a>
           </div>
         </div>
