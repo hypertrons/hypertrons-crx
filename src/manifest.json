@@ -15,7 +15,7 @@
       "matches": ["*://github.com/*"],
       "js": ["contentScript.bundle.js"],
       "css": ["contentScript.css"],
-      "run_at": "document_start"
+      "run_at": "document_idle"
     }
   ],
   "web_accessible_resources": [

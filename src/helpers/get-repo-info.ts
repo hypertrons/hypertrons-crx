@@ -31,3 +31,6 @@ export async function isPublicRepo() {
 export async function isPublicRepoWithMeta() {
   return (await isPublicRepo()) && (await metaStore.has(getRepoName()));
 }
+export function getUsername() {
+  return pageDetect.utils.getUsername();
+}
