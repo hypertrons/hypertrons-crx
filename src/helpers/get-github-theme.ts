@@ -1,6 +1,9 @@
 import $ from 'jquery';
-
+import isGithub from './is-github';
 export default function getGithubTheme() {
+  if (!isGithub()) {
+    return;
+  }
   // following 3 variables are extracted from GitHub page's html tag properties
   // colorMode has 3 values: "auto", "light" and "dark"
   // lightTheme and darkTheme means "theme in day time" and "theme in night time" respectively

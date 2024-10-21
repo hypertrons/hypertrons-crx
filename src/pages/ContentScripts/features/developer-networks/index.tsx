@@ -6,6 +6,7 @@ import elementReady from 'element-ready';
 import features from '../../../../feature-manager';
 import { isUserProfile } from '../../../../helpers/get-developer-info';
 import View from './view';
+import isGithub from '../../../../helpers/is-github';
 
 const featureId = features.getFeatureID(import.meta.url);
 
@@ -33,7 +34,7 @@ const restore = async () => {
 };
 
 features.add(featureId, {
-  asLongAs: [isUserProfile],
+  asLongAs: [isGithub, isUserProfile],
   awaitDomReady: false,
   init,
   restore,
