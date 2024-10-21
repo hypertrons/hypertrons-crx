@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
 import OSGraph from '../../../../components/OSGraph';
 interface Props {
-  userID: any;
+  userName: string;
 }
 const OSGraphStyle = {
   width: '100%',
@@ -20,22 +20,22 @@ const logoStyle = {
   marginRight: '50px',
   marginTop: '5px',
 };
-const baseOSGraphUrls = [
-  'https://osgraph.com/result?shareId=4&shareParams={paramId},10&isShare=true',
-  'https://osgraph.com/result?shareId=5&shareParams={paramId},10&isShare=true',
-  'https://osgraph.com/result?shareId=6&shareParams={paramId},5,3&isShare=true',
-];
 
-const View = ({ userID }: Props): JSX.Element => {
+const baseOSGraphUrls = {
+  developmentActivityNetwork: 'https://osgraph.com/graphs/dev-activity/github/{userName}?repo-limit=10',
+  openSourcePartnersNetwork: 'https://osgraph.com/graphs/dev-partner/github/{userName}?partner-limit=10',
+  openSourceInterestsNetwork: 'https://osgraph.com/graphs/dev-interest/github/{userName}?repo-limit=3&topic-limit=5',
+};
+const View = ({ userName }: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
   const [showOpenSourcePartnersNetwork, setShowOpenSourcePartnersNetwork] = useState(false);
   const [showDevelopmentActivityNetwork, setShowDevelopmentActivityNetwork] = useState(false);
   const [showOpenSourceInterestsNetwork, setShowOpenSourceInterestsNetwork] = useState(false);
   const { t, i18n } = useTranslation();
   const osGraphLogo = chrome.runtime.getURL('osGraphLogo.png');
-  const OSGraphUrls = baseOSGraphUrls.map(function (item) {
-    return item.replace('{paramId}', userID);
-  });
+  const OSGraphUrls = Object.fromEntries(
+    Object.entries(baseOSGraphUrls).map(([key, url]) => [key, url.replace('{userName}', userName)])
+  );
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
@@ -160,7 +160,7 @@ const View = ({ userID }: Props): JSX.Element => {
           <div className="hypertrons-crx-title">
             <span>{t('component_developmentActivityNetwork_title')}</span>
             <div style={logoStyle}>
-              <a href={OSGraphUrls[0]} target="_blank">
+              <a href={OSGraphUrls.developmentActivityNetwork} target="_blank">
                 <img src={osGraphLogo} width={28} height={28}></img>
               </a>
             </div>
@@ -168,7 +168,7 @@ const View = ({ userID }: Props): JSX.Element => {
           <div className="d-flex flex-wrap flex-items-center justify-content-lg-between align-items-center">
             <div className="col-8 graph-container">
               <div style={{ margin: '15px 0 20px 0px' }}>
-                <OSGraph shareId={3} style={OSGraphStyle} OSGraphUrl={OSGraphUrls[0]} />
+                <OSGraph shareId={3} style={OSGraphStyle} OSGraphUrl={OSGraphUrls.developmentActivityNetwork} />
               </div>
             </div>
             <div className="col-4 description-container">
@@ -193,7 +193,7 @@ const View = ({ userID }: Props): JSX.Element => {
           <div className="hypertrons-crx-title">
             <span>{t('component_openSourcePartnersNetwork_title')}</span>
             <div style={logoStyle}>
-              <a href={OSGraphUrls[1]} target="_blank">
+              <a href={OSGraphUrls.openSourcePartnersNetwork} target="_blank">
                 <img src={osGraphLogo} width={28} height={28}></img>
               </a>
             </div>
@@ -201,7 +201,7 @@ const View = ({ userID }: Props): JSX.Element => {
           <div className="d-flex flex-wrap flex-items-center justify-content-lg-between align-items-center">
             <div className="col-lg-8 col-12 graph-container">
               <div style={{ margin: '15px 0px 20px 0px' }}>
-                <OSGraph shareId={4} style={OSGraphStyle} OSGraphUrl={OSGraphUrls[1]} />
+                <OSGraph shareId={4} style={OSGraphStyle} OSGraphUrl={OSGraphUrls.openSourcePartnersNetwork} />
               </div>
             </div>
             <div className="col-lg-4 col-12 description-container">
@@ -226,7 +226,7 @@ const View = ({ userID }: Props): JSX.Element => {
           <div className="hypertrons-crx-title">
             <span>{t('component_openSourceInterestsNetwork_title')}</span>
             <div style={logoStyle}>
-              <a href={OSGraphUrls[2]} target="_blank">
+              <a href={OSGraphUrls.openSourceInterestsNetwork} target="_blank">
                 <img src={osGraphLogo} width={28} height={28}></img>
               </a>
             </div>
@@ -234,7 +234,7 @@ const View = ({ userID }: Props): JSX.Element => {
           <div className="d-flex flex-wrap flex-items-center justify-content-lg-between align-items-center">
             <div className="col-lg-8 col-12 graph-container">
               <div style={{ margin: '15px 0px 20px 0px' }}>
-                <OSGraph shareId={5} style={OSGraphStyle} OSGraphUrl={OSGraphUrls[2]} />
+                <OSGraph shareId={5} style={OSGraphStyle} OSGraphUrl={OSGraphUrls.openSourceInterestsNetwork} />
               </div>
             </div>
             <div className="col-lg-4 col-12 description-container">
