@@ -6,6 +6,7 @@ import OpenDiggerLabel from './OpenDiggerLabel';
 
 import React from 'react';
 import $ from 'jquery';
+import isGithub from '../../../../helpers/is-github';
 
 const featureId = features.getFeatureID(import.meta.url);
 
@@ -48,7 +49,7 @@ const init = async (): Promise<void> => {
 };
 
 features.add(featureId, {
-  asLongAs: [isPublicRepoWithMeta, hasRepoContainerHeader],
+  asLongAs: [isGithub, isPublicRepoWithMeta, hasRepoContainerHeader],
   awaitDomReady: true,
   init,
 });

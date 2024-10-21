@@ -12,7 +12,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://github.com/*"],
+      "matches": ["<all_urls>"],
       "js": ["contentScript.bundle.js"],
       "css": ["contentScript.css"],
       "run_at": "document_start"
@@ -25,7 +25,7 @@
     }
   ],
   "permissions": ["storage", "notifications", "alarms", "cookies"],
-  "host_permissions": ["*://github.com/*"],
+  "host_permissions": ["<all_urls>"],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self';"
   }

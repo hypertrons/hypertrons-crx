@@ -6,6 +6,7 @@ import features from '../../../../feature-manager';
 import isPerceptor from '../../../../helpers/is-perceptor';
 import { isPublicRepo } from '../../../../helpers/get-repo-info';
 import sleep from '../../../../helpers/sleep';
+import isGithub from '../../../../helpers/is-github';
 
 const featureId = features.getFeatureID(import.meta.url);
 
@@ -105,7 +106,7 @@ const init = async (): Promise<void> => {
 };
 
 features.add(featureId, {
-  asLongAs: [isPublicRepo],
+  asLongAs: [isGithub, isPublicRepo],
   awaitDomReady: false,
   init,
 });

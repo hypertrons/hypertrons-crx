@@ -8,6 +8,7 @@ import View from './view';
 import DataNotFound from '../repo-networks/DataNotFound';
 import { RepoActivityDetails } from './data';
 import { createRoot } from 'react-dom/client';
+import isGithub from '../../../../helpers/is-github';
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
 let repoActivityDetails: RepoActivityDetails;
@@ -46,7 +47,7 @@ const restore = async () => {
 };
 
 features.add(featureId, {
-  asLongAs: [isPerceptor, isPublicRepoWithMeta],
+  asLongAs: [isGithub, isPerceptor, isPublicRepoWithMeta],
   awaitDomReady: false,
   init,
   restore,

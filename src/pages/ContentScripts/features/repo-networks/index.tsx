@@ -7,6 +7,8 @@ import View from './view';
 import elementReady from 'element-ready';
 import { createRoot } from 'react-dom/client';
 import { getRepoName } from '../../../../helpers/get-repo-info';
+import isGithub from '../../../../helpers/is-github';
+
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
 const renderTo = (container: any) => {
@@ -29,7 +31,7 @@ const restore = async () => {
 };
 
 features.add(featureId, {
-  asLongAs: [isPerceptor],
+  asLongAs: [isGithub, isPerceptor],
   awaitDomReady: false,
   init,
   restore,

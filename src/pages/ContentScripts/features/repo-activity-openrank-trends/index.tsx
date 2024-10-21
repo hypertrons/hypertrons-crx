@@ -6,6 +6,7 @@ import { getRepoName, isPublicRepoWithMeta, isRepoRoot } from '../../../../helpe
 import { getActivity, getOpenrank } from '../../../../api/repo';
 import { RepoMeta, metaStore } from '../../../../api/common';
 import View from './view';
+import isGithub from '../../../../helpers/is-github';
 
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
@@ -53,7 +54,7 @@ const restore = async () => {
 };
 
 features.add(featureId, {
-  asLongAs: [isPublicRepoWithMeta, isRepoRoot],
+  asLongAs: [isGithub, isPublicRepoWithMeta, isRepoRoot],
   awaitDomReady: true,
   init,
   restore,
