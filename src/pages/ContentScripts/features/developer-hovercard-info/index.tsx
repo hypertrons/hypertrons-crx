@@ -4,6 +4,7 @@ import elementReady from 'element-ready';
 import React from 'react';
 import View from './view';
 import { createRoot } from 'react-dom/client';
+import isGithub from '../../../../helpers/is-github';
 const featureId = features.getFeatureID(import.meta.url);
 let isInitialized = false;
 
@@ -133,6 +134,7 @@ const init = async (): Promise<void> => {
 };
 
 features.add(featureId, {
+  asLongAs: [isGithub],
   awaitDomReady: false,
   init,
 });

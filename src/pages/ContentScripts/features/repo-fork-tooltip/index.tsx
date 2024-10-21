@@ -9,6 +9,7 @@ import { RepoMeta, metaStore } from '../../../../api/common';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import $ from 'jquery';
+import isGithub from '../../../../helpers/is-github';
 
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
@@ -38,7 +39,7 @@ const init = async (): Promise<void> => {
 const restore = async () => {};
 
 features.add(featureId, {
-  asLongAs: [isPublicRepoWithMeta, hasRepoContainerHeader],
+  asLongAs: [isGithub, isPublicRepoWithMeta, hasRepoContainerHeader],
   awaitDomReady: false,
   init,
   restore,

@@ -7,6 +7,7 @@ import { getActivity, getOpenrank } from '../../../../api/developer';
 import { UserMeta, metaStore } from '../../../../api/common';
 import View from './view';
 import { createRoot } from 'react-dom/client';
+import isGithub from '../../../../helpers/is-github';
 const featureId = features.getFeatureID(import.meta.url);
 let developerName: string;
 let activity: any;
@@ -47,7 +48,7 @@ const restore = async () => {
   renderTo($(`#${featureId}`)[0]);
 };
 features.add(featureId, {
-  asLongAs: [isDeveloperWithMeta],
+  asLongAs: [isGithub, isDeveloperWithMeta],
   awaitDomReady: false,
   init,
   restore,
