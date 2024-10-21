@@ -6,20 +6,19 @@ import isPerceptor from '../../../../helpers/is-perceptor';
 import View from './view';
 import elementReady from 'element-ready';
 import { createRoot } from 'react-dom/client';
+import { getRepoName } from '../../../../helpers/get-repo-info';
 import isGithub from '../../../../helpers/is-github';
+
 const featureId = features.getFeatureID(import.meta.url);
-
-let repoID: any;
-
+let repoName: string;
 const renderTo = (container: any) => {
-  createRoot(container).render(<View repoID={repoID} />);
+  createRoot(container).render(<View repoName={repoName} />);
 };
 
 const init = async (): Promise<void> => {
-  repoID = $('meta[name="octolytics-dimension-repository_network_root_id"]').attr('content');
+  repoName = getRepoName();
   const networksContainer = '#hypercrx-perceptor-slot-repo-networks';
   await elementReady(networksContainer, { stopOnDomReady: false });
-
   const container = document.createElement('div');
   container.id = featureId;
   renderTo(container);
