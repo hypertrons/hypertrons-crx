@@ -33,7 +33,7 @@ const deployToChrome = async () => {
   const uploadRes = await chromeStore.uploadExisting(zipFile, token);
   console.log('uploadRes: ', JSON.stringify(uploadRes, null, 2));
 
-  if (uploadRes.uploadState) {
+  if (uploadRes.uploadState !== 'FAILURE') {
     const publishRes = await chromeStore.publish('default', token);
     console.log('publishRes: ', { publishRes });
   }
