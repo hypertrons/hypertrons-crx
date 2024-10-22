@@ -1,5 +1,5 @@
 const isGithub = (): boolean => {
-  return window.location.href.includes('https://github.com/');
+  return window.location.href.startsWith('https://github.com/');
 };
 
 export default isGithub;
