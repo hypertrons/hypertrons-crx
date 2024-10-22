@@ -14,8 +14,8 @@ function compare({ oldVersion, newVersion }) {
   // return -1 if oldVersion is greater;
   //         0 if two versions are equal;
   //         1 if newVersion is greater
-  let [oldMajor, oldMinor, oldPatch] = oldVersion.split('.');
-  let [newMajor, newMinor, newPatch] = newVersion.split('.');
+  let [oldMajor, oldMinor, oldPatch] = oldVersion.split('.').map(Number);
+  let [newMajor, newMinor, newPatch] = newVersion.split('.').map(Number);
   if (oldMajor !== newMajor) {
     return oldMajor > newMajor ? -1 : 1;
   }
