@@ -30,13 +30,12 @@ const deployToChrome = async () => {
   const zipFile = fs.createReadStream(ZIP_PATH);
 
   const token = await chromeStore.fetchToken();
-
   const uploadRes = await chromeStore.uploadExisting(zipFile, token);
-  console.log({ uploadRes });
+  console.log('uploadRes: ', JSON.stringify(uploadRes, null, 2));
 
-  if (uploadRes.uploadState !== 'FAILURE') {
+  if (uploadRes.uploadState) {
     const publishRes = await chromeStore.publish('default', token);
-    console.log({ publishRes });
+    console.log('publishRes: ', { publishRes });
   }
 };
 
@@ -47,13 +46,16 @@ const deployToEdge = async () => {
     clientSecret: EDGE_CLIENT_SECRET,
     accessTokenUrl: EDGE_ACCESS_TOKEN_URL,
   });
-
-  const publishResp = await edgeStore.submit({
-    filePath: ZIP_PATH,
-    notes: 'Updating extension.',
-  });
-
-  console.log('publishResp: ', publishResp);
+  try {
+    const publishResp = await edgeStore.submit({
+      filePath: ZIP_PATH,
+      notes: 'Updating extension.',
+    });
+    console.log('Edge publishResp:', publishResp);
+  } catch (error) {
+    console.error('Edge Deployment failed:', error);
+    throw error;
+  }
 };
 
 (async () => {
