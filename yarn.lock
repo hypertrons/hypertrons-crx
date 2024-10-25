@@ -8243,6 +8243,11 @@ sshpk@^1.7.0:
     safer-buffer "^2.0.2"
     tweetnacl "~0.14.0"
 
+stackedit-js@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/stackedit-js/-/stackedit-js-1.0.7.tgz#2ee22dd3aa78140fbb81926f01a4308e8e967bf0"
+  integrity sha512-FG2MNncXlSEscwBa3Ih6Xl1zrbeJ8/vgbrbzwwLvkdgFIMCRZQzpFpqxSW2o/1AvxguhXrt2dml/Z/I1m5eoLg==
+
 statuses@2.0.1:
   version "2.0.1"
   resolved "https://registry.npmjs.org/statuses/-/statuses-2.0.1.tgz#55cb000ccf1d48728bd23c685a063998cf1a1b63"

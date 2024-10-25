@@ -15,3 +15,4 @@ import './features/oss-gpt';
 import './features/repo-activity-racing-bar';
 import './features/developer-hovercard-info';
 import './features/repo-sidebar-labels';
+import './features/fast-pr';
