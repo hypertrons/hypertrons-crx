@@ -7,7 +7,7 @@ import View from './view';
 const featureId = features.getFeatureID(import.meta.url);
 
 const renderTo = (container: any, filePath: string, repoName: string, branch: string) => {
-  createRoot(container).render(<View filePath={filePath} repoName={repoName} branch={branch} />);
+  createRoot(container).render(<View filePath={filePath} originalRepo={repoName} branch={branch} />);
 };
 
 const init = async () => {

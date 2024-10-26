@@ -1,4 +1,6 @@
+import { digitalTextbooksUrlParser } from './digitalTextbooks-url-parser';
 import { openDiggerUrlParser } from './openDigger-url-parser';
+import { OSS101TextbooksUrlParser } from './OSS101Textbooks-url-parser';
 
 type UrlRule = {
   domains: string[];
@@ -9,17 +11,14 @@ const urlRules: UrlRule[] = [
     domains: ['open-digger.cn', 'open-digger'],
     ruleFunction: openDiggerUrlParser,
   },
-  // {
-  //     domains: ['digital-textbooks', 'X-lab2017/digital-textbooks'],
-  //     ruleFunction: (url: string) => {
-  //         return {
-  //             filePath: 'https://github.com/xlab/open-digger',
-  //           repoName: 'open-digger',
-  //           branch: 'main'
-  //         };
-
-  //     }
-  //   },
+  {
+    domains: ['digital-textbooks', 'x-lab.info/digital-textbooks'],
+    ruleFunction: digitalTextbooksUrlParser,
+  },
+  {
+    domains: ['x-lab.info/oss101-bok'],
+    ruleFunction: OSS101TextbooksUrlParser,
+  },
 ];
 export function matchFastPrUrl(url: string) {
   for (const rule of urlRules) {

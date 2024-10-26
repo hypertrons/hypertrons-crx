@@ -1,14 +1,15 @@
-const baseUrl = 'https://open-digger.cn/docs/'; // Document URL prefix
-const repoName = 'X-lab2017/open-digger-website'; // repository name
+const baseUrl = 'https://www.x-lab.info/oss101-bok/textbook/'; //  Document URL prefix
+const repoName = 'X-lab2017/oss101-bok'; // repository name
 const branch = 'master'; // repository branch
-export function openDiggerUrlParser(url: string) {
+export function OSS101TextbooksUrlParser(url: string) {
   // Determine if the URL starts with the specified open finger path
+  console.log(url.startsWith(baseUrl));
   if (url.startsWith(baseUrl)) {
     // Extract the remaining path
     const docPath = url.replace(baseUrl, '').split('#')[0];
 
     // Splicing together the corresponding file path for repository
-    const filePath = `docs/${docPath}.md`;
+    const filePath = `docs/textbook/${docPath.slice(0, -1)}.md`;
 
     return {
       filePath: filePath,
