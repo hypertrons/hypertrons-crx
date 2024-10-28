@@ -129,6 +129,17 @@ const Options = (): JSX.Element => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              margin: stacksStyleOptions.tokenStack.margin,
+            }}
+          >
+            <GitHubToken /> {/* Add GitHubToken component */}
+          </Col>
+          <Col
+            span={24}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
             <div className="Box">
@@ -146,17 +157,6 @@ const Options = (): JSX.Element => {
                 </p>
               </div>
             </div>
-          </Col>
-          <Col
-            span={24}
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              margin: stacksStyleOptions.tokenStack.margin,
-            }}
-          >
-            <GitHubToken /> {/* Add GitHubToken component */}
           </Col>
         </Row>
       </Space>
