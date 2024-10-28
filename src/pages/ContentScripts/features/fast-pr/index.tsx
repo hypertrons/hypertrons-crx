@@ -6,14 +6,14 @@ import View from './view';
 
 const featureId = features.getFeatureID(import.meta.url);
 
-const renderTo = (container: any, filePath: string, repoName: string, branch: string) => {
-  createRoot(container).render(<View filePath={filePath} originalRepo={repoName} branch={branch} />);
+const renderTo = (container: any, filePath: string, repoName: string, branch: string, platform: string) => {
+  createRoot(container).render(
+    <View filePath={filePath} originalRepo={repoName} branch={branch} platform={platform} />
+  );
 };
 
 const init = async () => {
   const currentUrl = window.location.href; // Get the current page URL
-  console.log('Current URL:', currentUrl);
-  console.log(matchFastPrUrl(currentUrl));
   const matchedUrl = matchFastPrUrl(currentUrl);
   //Find and delete previous View components here
   const existingContainer = document.getElementById(featureId);
@@ -23,7 +23,7 @@ const init = async () => {
   if (matchedUrl) {
     const container = document.createElement('div');
     container.id = featureId;
-    renderTo(container, matchedUrl.filePath, matchedUrl.repoName, matchedUrl.branch);
+    renderTo(container, matchedUrl.filePath, matchedUrl.repoName, matchedUrl.branch, matchedUrl.platform);
     document.body.appendChild(container);
   } else {
     return;

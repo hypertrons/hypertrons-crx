@@ -1,6 +1,7 @@
 const baseUrl = 'https://www.x-lab.info/digital-textbooks/textbooks/'; //  Document URL prefix
 const repoName = 'X-lab2017/digital-textbooks'; // repository name
 const branch = 'main'; // repository branch
+const platform = 'Github'; // repository platform
 export function digitalTextbooksUrlParser(url: string) {
   // Determine if the URL starts with the specified open finger path
   if (url.startsWith(baseUrl)) {
@@ -14,6 +15,7 @@ export function digitalTextbooksUrlParser(url: string) {
       filePath: filePath,
       repoName: repoName,
       branch: branch,
+      platform: platform,
     };
   }
   //If there is no match, return null

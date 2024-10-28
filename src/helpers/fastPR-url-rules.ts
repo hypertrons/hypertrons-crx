@@ -4,7 +4,7 @@ import { OSS101TextbooksUrlParser } from './OSS101Textbooks-url-parser';
 
 type UrlRule = {
   domains: string[];
-  ruleFunction: (url: string) => { filePath: string; repoName: string; branch: string } | null;
+  ruleFunction: (url: string) => { filePath: string; repoName: string; branch: string; platform: string } | null;
 };
 const urlRules: UrlRule[] = [
   {

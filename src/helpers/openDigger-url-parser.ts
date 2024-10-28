@@ -1,6 +1,7 @@
 const baseUrl = 'https://open-digger.cn/docs/'; // Document URL prefix
 const repoName = 'X-lab2017/open-digger-website'; // repository name
 const branch = 'master'; // repository branch
+const platform = 'github'; // repository platform
 export function openDiggerUrlParser(url: string) {
   // Determine if the URL starts with the specified open finger path
   if (url.startsWith(baseUrl)) {
@@ -14,6 +15,7 @@ export function openDiggerUrlParser(url: string) {
       filePath: filePath,
       repoName: repoName,
       branch: branch,
+      platform: platform,
     };
   }
   //If there is no match, return null
