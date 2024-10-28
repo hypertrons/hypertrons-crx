@@ -1,10 +1,9 @@
 import * as url from './githubUrl';
 import { handleMessage } from './handleMessage';
 import type { FormInstance } from 'antd/lib/form';
-import { getToken } from '../../../../helpers/github-token';
+import { getGithubToken } from '../../../../helpers/github-token';
 export const PR_TITLE = (file: string) => `docs: Update ${file}`;
 export const PR_CONTENT = (file: string) => `Update ${file} by [FastPR](https://github.com/hypertrons/hypertrons-crx).`;
-
 const generateBranchName = () => `fastPR-${new Date().toISOString().replace(/:/g, '-').replace(/\..+/, '')}`;
 const COMMIT_MESSAGE = (branch: string) => `docs: ${branch}`;
 // Check if the repo has been forked
@@ -38,52 +37,26 @@ const checkRepositoryPermission = async (repoName: string, githubToken: string) 
     };
   }
 };
-
-// Create a new fork
 const getOrCreateFork = async (repoName: string, githubToken: string) => {
-  const headers = {
-    Authorization: `Bearer ${githubToken}`,
-    Accept: 'application/vnd.github.v3+json',
-  };
-
-  // Step 1: Obtain information about the current user
-  const userResponse = await fetch(url.GET_USER_INFO, { headers });
-  if (!userResponse.ok) {
-    return {
-      success: false,
-      message: `Failed to fetch user info: ${userResponse.status}`,
-    };
-  }
-  const userData = await userResponse.json();
-  const currentUser = userData.login;
-
-  // Step 2: Check if the fork already exists
-  const forksResponse = await fetch(url.CREATE_FORK_URL(repoName), { headers });
-  if (!forksResponse.ok) {
-    return {
-      success: false,
-      message: `Failed to fetch fork info: ${forksResponse.status}`,
-    };
-  }
-  const forks = await forksResponse.json();
-
-  const existingFork = forks.find((fork: any) => fork.owner.login === currentUser);
-  if (existingFork) {
-    return {
-      success: true,
-      forkName: existingFork.full_name, // Return the complete name of an existing fork
-    };
-  }
-
-  //Step 3: If there is no fork, create a new fork
+  const fastprRepo = `fastpr-${repoName.split('/')[0]}-${repoName.split('/')[1]}`;
+  const newRepoName = `${fastprRepo}`;
+  // Get or create a new fork
   const forkResponse = await fetch(url.CREATE_FORK_URL(repoName), {
     method: 'POST',
-    headers,
+    headers: {
+      Authorization: `Bearer ${githubToken}`,
+      Accept: 'application/vnd.github+json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      name: newRepoName,
+      default_branch_only: true,
+    }),
   });
   if (!forkResponse.ok) {
     return {
       success: false,
-      message: `Failed to create fork: ${forkResponse.status}`,
+      message: `Failed to get or create fork: ${forkResponse.status}`,
     };
   }
   const forkData = await forkResponse.json();
@@ -227,7 +200,7 @@ export const submitGithubPR = async (
   const key = 'FastPR';
   const values = await form.validateFields();
   handleMessage('loading', 'Get github token...', key);
-  const githubToken = await getToken();
+  const githubToken = await getGithubToken();
   if (!githubToken) {
     handleMessage('error', 'Failed to get github token.', key);
     return;
@@ -242,7 +215,7 @@ export const submitGithubPR = async (
   let prRepo = originalRepo;
   let forkOwner: string | null = null;
   if (!permissionResult.permission) {
-    handleMessage('loading', `get or create fork...`, key);
+    handleMessage('loading', `Get or create fork...`, key);
     const prRepoResult = await getOrCreateFork(originalRepo, githubToken);
     if (!prRepoResult.success && prRepoResult.message) {
       handleMessage('error', prRepoResult.message, key);
@@ -275,7 +248,7 @@ export const submitGithubPR = async (
   }
   const fileSha = fileShaResult.fileSha;
   //Create or update file content
-  handleMessage('loading', `Creating or Updating file content...`, key);
+  handleMessage('loading', `Creating or updating file content...`, key);
   const fileUpdatedResult = await createOrUpdateFileContent(
     filePath,
     fileContent,

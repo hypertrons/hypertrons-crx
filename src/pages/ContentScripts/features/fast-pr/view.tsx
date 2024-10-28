@@ -3,6 +3,9 @@ import { FormOutlined } from '@ant-design/icons';
 import { FloatButton, Modal, Form, Input, Button } from 'antd';
 import * as githubService from './githubService';
 import { FILE_URL as GITHUB_FILE_URL } from './githubUrl';
+import { handleMessage } from './handleMessage';
+import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
+import { useTranslation } from 'react-i18next';
 interface Props {
   filePath: string;
   originalRepo: string;
@@ -11,7 +14,8 @@ interface Props {
 }
 const View = ({ filePath, originalRepo, branch, platform }: Props) => {
   const fileUrl = GITHUB_FILE_URL(filePath, originalRepo, branch);
-  console.log(fileUrl);
+  const [options, setOptions] = useState<HypercrxOptions>(defaults);
+  const { t, i18n } = useTranslation();
   const [isDragging, setIsDragging] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 }); // Initial button position
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 }); // Starting position when mouse is pressed
@@ -29,11 +33,12 @@ const View = ({ filePath, originalRepo, branch, platform }: Props) => {
     const stackedit = new Stackedit();
     let originalContent = '';
     let content = '';
+    const key = 'stackedit';
 
     fetch(fileUrl)
       .then((response) => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          handleMessage('error', `Network was not able to load the file: ${response.status}`, key);
         }
         return response.text();
       })
@@ -44,6 +49,7 @@ const View = ({ filePath, originalRepo, branch, platform }: Props) => {
       })
       .catch((error) => {
         alert(`Fetch error: ${error.message}`);
+        handleMessage('error', `Failed to fetch file: ${error.message}`, key);
       });
 
     stackedit.on('fileChange', (file: any) => {
@@ -134,7 +140,11 @@ const View = ({ filePath, originalRepo, branch, platform }: Props) => {
       document.removeEventListener('mousemove', handleMouseMove);
     };
   }, [isDragging, startPosition, offset, dragged]);
-
+  useEffect(() => {
+    (async function () {
+      setOptions(await optionsStorage.getAll());
+    })();
+  }, [options.locale]);
   return (
     <>
       <FloatButton

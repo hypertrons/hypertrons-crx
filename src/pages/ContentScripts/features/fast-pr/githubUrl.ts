@@ -3,7 +3,6 @@ export const FILE_URL = (filePath: string, originalRepo: string, branch: string)
 // GitHub API URLs
 export const BASE_URL = 'https://api.github.com/repos';
 export const GET_REPO_INFO = (repoName: string) => `${BASE_URL}/${repoName}`;
-export const GET_USER_INFO = 'https://api.github.com/user';
 export const CREATE_FORK_URL = (repoName: string) => `${BASE_URL}/${repoName}/forks`;
 export const GET_BRANCH_SHA_URL = (branch: string, repoName: string) =>
   `${BASE_URL}/${repoName}/git/ref/heads/${branch}`;
