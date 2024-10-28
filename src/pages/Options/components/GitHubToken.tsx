@@ -10,12 +10,14 @@ const GitHubToken = () => {
   const [isEditing, setIsEditing] = useState(false);
   const { t } = useTranslation();
   const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    const storedToken = getToken();
+  const fetchToken = async () => {
+    const storedToken = await getToken();
     if (storedToken) {
       setToken(storedToken);
     }
+  };
+  useEffect(() => {
+    fetchToken();
   }, []);
 
   const handleSave = () => {

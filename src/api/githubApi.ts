@@ -1,7 +1,7 @@
 import { getToken, saveToken } from '../helpers/github-token';
 
 export const githubRequest = async (endpoint: string, options: RequestInit = {}): Promise<any | null> => {
-  const token = getToken();
+  const token = await getToken();
   if (!token) {
     return null;
   }
