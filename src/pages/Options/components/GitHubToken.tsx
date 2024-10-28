@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import TooltipTrigger from '../../../components/TooltipTrigger';
-import { saveToken, getToken, githubRequest } from '../../../api/githubApi';
+import { saveGithubToken, getGithubToken, githubRequest } from '../../../api/githubApi';
 import { message } from 'antd';
 import { useTranslation } from 'react-i18next';
 
@@ -11,7 +11,7 @@ const GitHubToken = () => {
   const { t } = useTranslation();
   const inputRef = useRef<HTMLInputElement>(null);
   const fetchToken = async () => {
-    const storedToken = await getToken();
+    const storedToken = await getGithubToken();
     if (storedToken) {
       setToken(storedToken);
     }
@@ -25,7 +25,7 @@ const GitHubToken = () => {
       showMessage(t('github_token_error_empty'), 'error');
       return;
     }
-    saveToken(token);
+    saveGithubToken(token);
     showMessage(t('github_token_success_save'), 'success');
     setIsEditing(false);
   };
