@@ -2,7 +2,6 @@ import { getGiteeToken, saveGiteeToken } from '../helpers/gitee-token';
 
 export const giteeRequest = async (endpoint: string, options: RequestInit = {}): Promise<any | null> => {
   const token = await getGiteeToken();
-  console.log(token, endpoint, options);
   if (!token) {
     return null;
   }
