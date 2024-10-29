@@ -2,8 +2,10 @@ import * as url from './githubUrl';
 import { handleMessage } from './handleMessage';
 import type { FormInstance } from 'antd/lib/form';
 import { getGithubToken } from '../../../../helpers/github-token';
+import i18n from '../../../../helpers/i18n';
 export const PR_TITLE = (file: string) => `docs: Update ${file}`;
 export const PR_CONTENT = (file: string) => `Update ${file} by [FastPR](https://github.com/hypertrons/hypertrons-crx).`;
+const t = i18n.t;
 const generateBranchName = () => `fastPR-${new Date().toISOString().replace(/:/g, '-').replace(/\..+/, '')}`;
 const COMMIT_MESSAGE = (branch: string) => `docs: ${branch}`;
 // Check if the repo has been forked
@@ -18,7 +20,7 @@ const checkRepositoryPermission = async (repoName: string, githubToken: string) 
   if (!repoResponse.ok) {
     return {
       success: false,
-      message: `Failed to fetch repository info: ${repoResponse.status}`,
+      message: t('error_fetch_repo_info', { status: repoResponse.status }),
     };
   }
 
@@ -56,7 +58,7 @@ const getOrCreateFork = async (repoName: string, githubToken: string) => {
   if (!forkResponse.ok) {
     return {
       success: false,
-      message: `Failed to get or create fork: ${forkResponse.status}`,
+      message: t('error_get_or_create_fork', { status: forkResponse.status }),
     };
   }
   const forkData = await forkResponse.json();
@@ -78,7 +80,7 @@ const getBranchLatestCommitSha = async (prRepo: string, branch: string, githubTo
   if (!response.ok) {
     return {
       success: false,
-      message: `Failed to get the latest SHA submissio: ${response.status}`,
+      message: t('error_get_latest_sha', { status: response.status }),
     };
   }
   const data = await response.json();
@@ -104,7 +106,7 @@ const createBranch = async (newBranch: string, baseBranchSha: string, prRepo: st
   if (!response.ok) {
     return {
       success: false,
-      message: `Failed to create a new branch: ${response.status}`,
+      message: t('error_create_branch', { status: response.status }),
     };
   }
   return {
@@ -119,7 +121,7 @@ const getFileSha = async (filePath: string, newBranch: string, prRepo: string, g
   if (!response.ok) {
     return {
       success: false,
-      message: `Failed to get the SHA value of the file: ${response.status}`,
+      message: t('error_get_file_sha', { status: response.status }),
     };
   }
   const data = await response.json();
@@ -150,7 +152,7 @@ const createOrUpdateFileContent = async (
   if (!response.ok) {
     return {
       success: false,
-      message: `Failed to create or update file content: ${response.status}`,
+      message: t('error_update_file_content', { status: response.status }),
     };
   }
   return {
@@ -181,7 +183,7 @@ const createPullRequest = async (
   if (!response.ok) {
     return {
       success: false,
-      message: `Failed to create a new PR: ${response.status}`,
+      message: t('error_create_pr', { status: response.status }),
     };
   }
   const data = await response.json();
@@ -199,14 +201,14 @@ export const submitGithubPR = async (
 ) => {
   const key = 'FastPR';
   const values = await form.validateFields();
-  handleMessage('loading', 'Get github token...', key);
+  handleMessage('loading', t('status_get_github_token'), key);
   const githubToken = await getGithubToken();
   if (!githubToken) {
-    handleMessage('error', 'Failed to get github token.', key);
+    handleMessage('error', t('error_get_github_token'), key);
     return;
   }
   const newBranch = generateBranchName();
-  handleMessage('loading', `Checking repository permission...`, key);
+  handleMessage('loading', t('status_check_repo_permission'), key);
   const permissionResult = await checkRepositoryPermission(originalRepo, githubToken);
   if (!permissionResult.success && permissionResult.message) {
     handleMessage('error', permissionResult.message, key);
@@ -215,7 +217,7 @@ export const submitGithubPR = async (
   let prRepo = originalRepo;
   let forkOwner: string | null = null;
   if (!permissionResult.permission) {
-    handleMessage('loading', `Get or create fork...`, key);
+    handleMessage('loading', t('status_get_or_create_fork'), key);
     const prRepoResult = await getOrCreateFork(originalRepo, githubToken);
     if (!prRepoResult.success && prRepoResult.message) {
       handleMessage('error', prRepoResult.message, key);
@@ -225,7 +227,7 @@ export const submitGithubPR = async (
     forkOwner = prRepo.split('/')[0];
   }
   //Get the latest SHA submission for the default branch
-  handleMessage('loading', `Get latest commit sha of the base branch...`, key);
+  handleMessage('loading', t('status_get_latest_commit_sha'), key);
   const baseBranchShaResult = await getBranchLatestCommitSha(originalRepo, branch, githubToken);
   if (!baseBranchShaResult.success && baseBranchShaResult.message) {
     handleMessage('error', baseBranchShaResult.message, key);
@@ -233,14 +235,14 @@ export const submitGithubPR = async (
   }
   const baseBranchSha = baseBranchShaResult.baseBranchSha;
   //Create a new branch
-  handleMessage('loading', `Creating new branch...`, key);
+  handleMessage('loading', t('status_create_branch'), key);
   const branchCreated = await createBranch(newBranch, baseBranchSha, prRepo, githubToken);
   if (!branchCreated.success && branchCreated.message) {
     handleMessage('error', branchCreated.message, key);
     return;
   }
   //Retrieve the SHA value of the file
-  handleMessage('loading', `Get file sha...`, key);
+  handleMessage('loading', t('status_get_file_sha'), key);
   const fileShaResult = await getFileSha(filePath, newBranch, prRepo, githubToken);
   if (!fileShaResult.success && fileShaResult.message) {
     handleMessage('error', fileShaResult.message, key);
@@ -248,7 +250,7 @@ export const submitGithubPR = async (
   }
   const fileSha = fileShaResult.fileSha;
   //Create or update file content
-  handleMessage('loading', `Creating or updating file content...`, key);
+  handleMessage('loading', t('status_update_file_content'), key);
   const fileUpdatedResult = await createOrUpdateFileContent(
     filePath,
     fileContent,
@@ -262,7 +264,7 @@ export const submitGithubPR = async (
     return;
   }
   //Create a new PR
-  handleMessage('loading', `Creating PR...`, key);
+  handleMessage('loading', t('status_create_pr'), key);
   const prUrlResult = await createPullRequest(
     values.title,
     values.content,
@@ -276,5 +278,5 @@ export const submitGithubPR = async (
     handleMessage('error', prUrlResult.message, key);
     return;
   }
-  handleMessage('success', 'PR created successfully.', key);
+  handleMessage('success', t('success_create_pr'), key);
 };

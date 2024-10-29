@@ -38,7 +38,7 @@ const View = ({ filePath, originalRepo, branch, platform }: Props) => {
     fetch(fileUrl)
       .then((response) => {
         if (!response.ok) {
-          handleMessage('error', `Network was not able to load the file: ${response.status}`, key);
+          handleMessage('error', t('network_error_load_file', { status: response.status }), key);
         }
         return response.text();
       })
@@ -48,8 +48,7 @@ const View = ({ filePath, originalRepo, branch, platform }: Props) => {
         stackedit.openFile({ content: { text: originalContent } });
       })
       .catch((error) => {
-        alert(`Fetch error: ${error.message}`);
-        handleMessage('error', `Failed to fetch file: ${error.message}`, key);
+        handleMessage('error', t('fetch_error_file', { error: error.message }), key);
       });
 
     stackedit.on('fileChange', (file: any) => {
@@ -143,6 +142,7 @@ const View = ({ filePath, originalRepo, branch, platform }: Props) => {
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
+      i18n.changeLanguage(options.locale);
     })();
   }, [options.locale]);
   return (
@@ -162,7 +162,12 @@ const View = ({ filePath, originalRepo, branch, platform }: Props) => {
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
       />
-      <Modal title="Content Modified" open={isModalOpen} footer={null} closable={false}>
+      <Modal
+        title={<div style={{ textAlign: 'center', width: '100%' }}>{t('fast_pr')}</div>}
+        open={isModalOpen}
+        footer={null}
+        closable={false}
+      >
         <Form
           form={form}
           layout="vertical"
@@ -172,23 +177,23 @@ const View = ({ filePath, originalRepo, branch, platform }: Props) => {
             content: githubService.PR_CONTENT(filePath),
           }}
         >
-          <Form.Item name="title" label="PR Title" rules={[{ required: true, message: 'Please enter the PR title' }]}>
-            <Input placeholder="Enter PR title" />
+          <Form.Item name="title" label={t('pr_title_label')} rules={[{ required: true, message: t('pr_title_rule') }]}>
+            <Input placeholder={t('pr_title_placeholder')} />
           </Form.Item>
           <Form.Item
             name="content"
-            label="PR Content"
-            rules={[{ required: true, message: 'Please enter the PR content' }]}
+            label={t('pr_content_label')}
+            rules={[{ required: true, message: t('pr_content_rule') }]}
           >
-            <Input.TextArea placeholder="Enter PR content" rows={4} />
+            <Input.TextArea placeholder={t('pr_content_placeholder')} rows={4} />
           </Form.Item>
         </Form>
         <div style={{ textAlign: 'center', marginTop: '20px' }}>
           <Button onClick={handleCancel} style={{ marginRight: '8px' }}>
-            Cancel
+            {t('pr_cancel')}
           </Button>
           <Button type="primary" onClick={handlePRSubmission}>
-            Submit PR
+            {t('pr_submit')}
           </Button>
         </div>
       </Modal>
