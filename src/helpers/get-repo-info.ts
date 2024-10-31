@@ -5,6 +5,24 @@ import * as pageDetect from 'github-url-detection';
 import elementReady from 'element-ready';
 
 export function getRepoName() {
+  const repoNameByUrl = getRepoNameByUrl();
+  const repoNameByPage = getRepoNameByPage();
+  if (repoNameByUrl.toLowerCase() === repoNameByPage.toLowerCase()) {
+    return repoNameByPage;
+  }
+  return repoNameByUrl;
+}
+
+export function getRepoNameByPage() {
+  let repoName: string[] = [];
+  $('header span.AppHeader-context-item-label').map(function () {
+    repoName.push($(this).text().trim());
+  });
+  let repoFullName = repoName[0] + '/' + repoName[1];
+  return repoFullName;
+}
+
+export function getRepoNameByUrl() {
   return pageDetect.utils.getRepositoryInfo(window.location)!.nameWithOwner;
 }
 
@@ -29,5 +47,5 @@ export async function isPublicRepo() {
 }
 
 export async function isPublicRepoWithMeta() {
-  return (await isPublicRepo()) && (await metaStore.has(getRepoName()));
+  return (await isPublicRepo()) && ((await metaStore.has(getRepoName())) || (await metaStore.has(getRepoNameByPage())));
 }
