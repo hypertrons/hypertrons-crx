@@ -59,7 +59,7 @@ a {
   color: blue;
 }
 
-.github-token-options {
+.token-options {
   width: 75vw;
   min-width: 350px;
   max-width: 600px;
@@ -69,7 +69,7 @@ a {
   margin-top: -10px;
 }
 
-.github-token-options .Box-header {
+.token-options .Box-header {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -83,17 +83,17 @@ a {
   border-top-right-radius: 6px;
 }
 
-.github-token-options .Box-title {
+.token-options .Box-title {
   font-size: 18px;
   font-weight: 600;
   margin-right: 8px;
 }
 
-.github-token-options p {
+.token-options p {
   padding: 0 25px;
 }
 
-.github-token-options input {
+.token-options input {
   width: calc(100% - 50px);
   padding: 8px;
   margin: 10px 25px;
@@ -101,7 +101,7 @@ a {
   border-radius: 4px;
 }
 
-.github-token-options button {
+.token-options button {
   padding: 8px 16px;
   margin: 0 25px 20px;
   background-color: #007bff;
@@ -111,6 +111,6 @@ a {
   cursor: pointer;
 }
 
-.github-token-options button:hover {
+.token-options button:hover {
   background-color: #0056b3;
 }

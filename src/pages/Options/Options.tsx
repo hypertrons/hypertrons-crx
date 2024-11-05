@@ -8,6 +8,7 @@ import './Options.css';
 import { useTranslation } from 'react-i18next';
 import '../../helpers/i18n';
 import GitHubToken from './components/GitHubToken';
+import GiteeToken from './components/GiteeToken';
 
 const stacksStyleOptions = {
   headerStack: {
@@ -133,6 +134,17 @@ const Options = (): JSX.Element => {
             }}
           >
             <GitHubToken /> {/* Add GitHubToken component */}
+          </Col>
+          <Col
+            span={24}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              margin: stacksStyleOptions.tokenStack.margin,
+            }}
+          >
+            <GiteeToken /> {/* Add GiteeToken component */}
           </Col>
           <Col
             span={24}
