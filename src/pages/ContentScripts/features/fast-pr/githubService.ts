@@ -1,134 +1,118 @@
-import * as url from './githubUrl';
 import { handleMessage } from './handleMessage';
 import type { FormInstance } from 'antd/lib/form';
 import { getGithubToken } from '../../../../helpers/github-token';
 import i18n from '../../../../helpers/i18n';
+import { Octokit } from '@octokit/rest';
 export const PR_TITLE = (file: string) => `docs: Update ${file}`;
 export const PR_CONTENT = (file: string) => `Update ${file} by [FastPR](https://github.com/hypertrons/hypertrons-crx).`;
 const t = i18n.t;
 const generateBranchName = () => `fastPR-${new Date().toISOString().replace(/:/g, '-').replace(/\..+/, '')}`;
 const COMMIT_MESSAGE = (branch: string) => `docs: ${branch}`;
-// Check if the repo has been forked
-const checkRepositoryPermission = async (repoName: string, githubToken: string) => {
-  const headers = {
-    Authorization: `Bearer ${githubToken}`,
-    Accept: 'application/vnd.github.v3+json',
-  };
-
-  // Step 1: Obtain repo information and check permissions
-  const repoResponse = await fetch(url.GET_REPO_INFO(repoName), { headers });
-  if (!repoResponse.ok) {
-    return {
-      success: false,
-      message: t('error_fetch_repo_info', { status: repoResponse.status }),
-    };
-  }
-
-  const repoData = await repoResponse.json();
-
-  // Check if the user has write permission
-  if (repoData.permissions && repoData.permissions.push) {
-    return {
-      success: true,
-      permission: true,
-    };
-  } else {
-    return {
-      success: true,
-      permission: false,
-    };
-  }
-};
-const getOrCreateFork = async (repoName: string, githubToken: string) => {
-  const fastprRepo = `fastpr-${repoName.split('/')[0]}-${repoName.split('/')[1]}`;
+const getOrCreateFork = async (owner: string, repo: string, octokit: Octokit) => {
+  const fastprRepo = `fastpr-${owner}-${repo}`;
   const newRepoName = `${fastprRepo}`;
-  // Get or create a new fork
-  const forkResponse = await fetch(url.CREATE_FORK_URL(repoName), {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${githubToken}`,
-      Accept: 'application/vnd.github+json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
+  try {
+    const forkResponse = await octokit.repos.createFork({
+      owner: owner,
+      repo: repo,
       name: newRepoName,
       default_branch_only: true,
-    }),
-  });
-  if (!forkResponse.ok) {
+    });
+
+    return {
+      success: true,
+      forkName: forkResponse.data.full_name,
+    };
+  } catch (error: any) {
     return {
       success: false,
-      message: t('error_get_or_create_fork', { status: forkResponse.status }),
+      forkName: '',
+      message: t('error_get_or_create_fork', { status: error.message }),
     };
   }
-  const forkData = await forkResponse.json();
-  return {
-    success: true,
-    forkName: forkData.full_name, // Return the complete name of an existing fork
-  };
 };
 //Get the latest SHA submission for the default branch
-const getBranchLatestCommitSha = async (prRepo: string, branch: string, githubToken: string) => {
-  const headers = {
-    Authorization: `Bearer ${githubToken}`,
-    Accept: 'application/vnd.github.v3+json',
-  };
-  const response = await fetch(url.GET_BRANCH_SHA_URL(branch, prRepo), {
-    method: 'GET',
-    headers,
-  });
-  if (!response.ok) {
+const getBranchLatestCommitSha = async (owner: string, repo: string, branch: string, octokit: Octokit) => {
+  try {
+    const response = await octokit.git.getRef({
+      owner: owner,
+      repo: repo,
+      ref: `heads/${branch}`,
+    });
+
+    return {
+      success: true,
+
+      baseBranchSha: response.data.object.sha,
+    };
+  } catch (error: any) {
     return {
       success: false,
-      message: t('error_get_latest_sha', { status: response.status }),
+      baseBranchSha: '',
+      message: t('error_get_latest_sha', { status: error.message }),
     };
   }
-  const data = await response.json();
-  return {
-    success: true,
-    baseBranchSha: data.object.sha,
-  };
 };
 //Create a new branch
-const createBranch = async (newBranch: string, baseBranchSha: string, prRepo: string, githubToken: string) => {
-  const headers = {
-    Authorization: `Bearer ${githubToken}`,
-    Accept: 'application/vnd.github.v3+json',
-  };
-  const response = await fetch(url.CREATE_BRANCH_URL(prRepo), {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({
+const createBranch = async (
+  newBranch: string,
+  baseBranchSha: string,
+  owner: string,
+  repo: string,
+  octokit: Octokit
+) => {
+  try {
+    await octokit.git.createRef({
+      owner: owner,
+      repo: repo,
       ref: `refs/heads/${newBranch}`,
       sha: baseBranchSha,
-    }),
-  });
-  if (!response.ok) {
+    });
+
+    return {
+      success: true,
+    };
+  } catch (error: any) {
     return {
       success: false,
-      message: t('error_create_branch', { status: response.status }),
+      message: t('error_create_branch', { status: error.message }),
     };
   }
-  return {
-    success: true,
-  };
 };
 //Retrieve the SHA value of the file
-const getFileSha = async (filePath: string, newBranch: string, prRepo: string, githubToken: string) => {
-  const response = await fetch(url.GET_FILE_SHA_URL(filePath, newBranch, prRepo), {
-    headers: { Authorization: `Bearer ${githubToken}` },
-  });
-  if (!response.ok) {
+const getFileSha = async (
+  filePath: string,
+  newBranch: string,
+  forkOwner: string,
+  forkRepo: string,
+  octokit: Octokit
+) => {
+  try {
+    const response = await octokit.repos.getContent({
+      owner: forkOwner,
+      repo: forkRepo,
+      path: filePath,
+      ref: newBranch,
+    });
+    if (Array.isArray(response.data)) {
+      return {
+        success: false,
+        fileSha: '',
+        message: t('error_get_file'),
+      };
+    }
+
+    return {
+      success: true,
+      fileSha: response.data.sha || null,
+    };
+  } catch (error: any) {
     return {
       success: false,
-      message: t('error_get_file_sha', { status: response.status }),
+      fileSha: '',
+      message: t('error_get_file_sha', { status: error.message }),
     };
   }
-  const data = await response.json();
-  return {
-    success: true,
-    fileSha: data.sha || null,
-  };
 };
 //Create or update file content
 const createOrUpdateFileContent = async (
@@ -136,28 +120,30 @@ const createOrUpdateFileContent = async (
   content: string,
   newBranch: string,
   fileSha: string | null,
-  prRepo: string,
-  githubToken: string
+  forkOwner: string,
+  forkRepo: string,
+  octokit: Octokit
 ) => {
-  const response = await fetch(url.CREATE_OR_UPDATE_FILE_URL(filePath, prRepo), {
-    method: 'PUT',
-    headers: { Authorization: `Bearer ${githubToken}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
+  try {
+    await octokit.repos.createOrUpdateFileContents({
+      owner: forkOwner,
+      repo: forkRepo,
+      path: filePath,
       message: COMMIT_MESSAGE(newBranch),
       content: Buffer.from(content).toString('base64'),
       branch: newBranch,
-      sha: fileSha,
-    }),
-  });
-  if (!response.ok) {
+      sha: fileSha || undefined,
+    });
+
+    return {
+      success: true,
+    };
+  } catch (error: any) {
     return {
       success: false,
-      message: t('error_update_file_content', { status: response.status }),
+      message: t('error_update_file_content', { status: error.message }),
     };
   }
-  return {
-    success: true,
-  };
 };
 //Create a new PR
 const createPullRequest = async (
@@ -165,32 +151,31 @@ const createPullRequest = async (
   prContent: string,
   newBranch: string,
   branch: string,
-  forkOwner: string | null,
+  forkOwner: string,
   originalRepo: string,
-  githubToken: string
+  octokit: Octokit
 ) => {
-  const head = forkOwner ? `${forkOwner}:${newBranch}` : newBranch;
-  const response = await fetch(url.CREATE_PULL_REQUEST_URL(originalRepo), {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${githubToken}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
+  try {
+    const head = `${forkOwner}:${newBranch}`;
+    const response = await octokit.pulls.create({
+      owner: originalRepo.split('/')[0],
+      repo: originalRepo.split('/')[1],
       title: prTitle,
       body: prContent,
       head: head,
       base: branch,
-    }),
-  });
-  if (!response.ok) {
+    });
+
+    return {
+      success: true,
+      html_url: response.data.html_url,
+    };
+  } catch (error: any) {
     return {
       success: false,
-      message: t('error_create_pr', { status: response.status }),
+      message: t('error_create_pr', { status: error.message }),
     };
   }
-  const data = await response.json();
-  return {
-    success: true,
-    html_url: data.html_url,
-  };
 };
 export const submitGithubPR = async (
   form: FormInstance<any>,
@@ -207,28 +192,22 @@ export const submitGithubPR = async (
     handleMessage('error', t('error_get_github_token'), key);
     return;
   }
+  const originalOwner = originalRepo.split('/')[0];
+  const repo = originalRepo.split('/')[1];
+  const octokit = new Octokit({ auth: githubToken });
   const newBranch = generateBranchName();
-  handleMessage('loading', t('status_check_repo_permission'), key);
-  const permissionResult = await checkRepositoryPermission(originalRepo, githubToken);
-  if (!permissionResult.success && permissionResult.message) {
-    handleMessage('error', permissionResult.message, key);
+  handleMessage('loading', t('status_get_or_create_fork'), key);
+  const prRepoResult = await getOrCreateFork(originalOwner, repo, octokit);
+  if (!prRepoResult.success && prRepoResult.message) {
+    handleMessage('error', prRepoResult.message, key);
     return;
   }
-  let prRepo = originalRepo;
-  let forkOwner: string | null = null;
-  if (!permissionResult.permission) {
-    handleMessage('loading', t('status_get_or_create_fork'), key);
-    const prRepoResult = await getOrCreateFork(originalRepo, githubToken);
-    if (!prRepoResult.success && prRepoResult.message) {
-      handleMessage('error', prRepoResult.message, key);
-      return;
-    }
-    prRepo = prRepoResult.forkName;
-    forkOwner = prRepo.split('/')[0];
-  }
+  const prRepo = prRepoResult.forkName;
+  const forkOwner = prRepo.split('/')[0];
+  const forkRepo = prRepo.split('/')[1];
   //Get the latest SHA submission for the default branch
   handleMessage('loading', t('status_get_latest_commit_sha'), key);
-  const baseBranchShaResult = await getBranchLatestCommitSha(originalRepo, branch, githubToken);
+  const baseBranchShaResult = await getBranchLatestCommitSha(originalOwner, repo, branch, octokit);
   if (!baseBranchShaResult.success && baseBranchShaResult.message) {
     handleMessage('error', baseBranchShaResult.message, key);
     return;
@@ -236,14 +215,14 @@ export const submitGithubPR = async (
   const baseBranchSha = baseBranchShaResult.baseBranchSha;
   //Create a new branch
   handleMessage('loading', t('status_create_branch'), key);
-  const branchCreated = await createBranch(newBranch, baseBranchSha, prRepo, githubToken);
+  const branchCreated = await createBranch(newBranch, baseBranchSha, forkOwner, forkRepo, octokit);
   if (!branchCreated.success && branchCreated.message) {
     handleMessage('error', branchCreated.message, key);
     return;
   }
   //Retrieve the SHA value of the file
   handleMessage('loading', t('status_get_file_sha'), key);
-  const fileShaResult = await getFileSha(filePath, newBranch, prRepo, githubToken);
+  const fileShaResult = await getFileSha(filePath, newBranch, forkOwner, forkRepo, octokit);
   if (!fileShaResult.success && fileShaResult.message) {
     handleMessage('error', fileShaResult.message, key);
     return;
@@ -256,8 +235,9 @@ export const submitGithubPR = async (
     fileContent,
     newBranch,
     fileSha,
-    prRepo,
-    githubToken
+    forkOwner,
+    forkRepo,
+    octokit
   );
   if (!fileUpdatedResult.success && fileUpdatedResult.message) {
     handleMessage('error', fileUpdatedResult.message, key);
@@ -272,11 +252,11 @@ export const submitGithubPR = async (
     branch,
     forkOwner,
     originalRepo,
-    githubToken
+    octokit
   );
   if (!prUrlResult.success && prUrlResult.message) {
     handleMessage('error', prUrlResult.message, key);
     return;
   }
-  handleMessage('success', t('success_create_pr'), key);
+  handleMessage('success', t('success_create_pr', { url: prUrlResult.html_url }), key);
 };

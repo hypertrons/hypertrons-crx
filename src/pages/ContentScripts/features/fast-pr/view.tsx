@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { FormOutlined } from '@ant-design/icons';
 import { FloatButton, Modal, Form, Input, Button } from 'antd';
 import * as githubService from './githubService';
-import { FILE_URL as GITHUB_FILE_URL } from './githubUrl';
+import * as giteeService from './giteeService';
+import { GET_FILE_URL as GITEE_FILE_URL } from './giteeUrl';
 import { handleMessage } from './handleMessage';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import { useTranslation } from 'react-i18next';
+import { getGiteeToken } from '../../../../helpers/gitee-token';
 interface Props {
   filePath: string;
   originalRepo: string;
@@ -13,7 +15,7 @@ interface Props {
   platform: string;
 }
 const View = ({ filePath, originalRepo, branch, platform }: Props) => {
-  const fileUrl = GITHUB_FILE_URL(filePath, originalRepo, branch);
+  const [giteeToken, setGiteeToken] = useState('');
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
   const { t, i18n } = useTranslation();
   const [isDragging, setIsDragging] = useState(false);
@@ -27,6 +29,8 @@ const View = ({ filePath, originalRepo, branch, platform }: Props) => {
   const buttonSize = 50; // Button size
   const padding = 24; // Padding from the screen edges
   const dragThreshold = 5; // Threshold to distinguish dragging from clicking
+  const GITHUB_FILE_URL = (filePath: string, originalRepo: string, branch: string) =>
+    `https://raw.githubusercontent.com/${originalRepo}/${branch}/${filePath}`;
   // Click the icon
   const clickIcon = () => {
     const Stackedit = require('stackedit-js');
@@ -34,22 +38,56 @@ const View = ({ filePath, originalRepo, branch, platform }: Props) => {
     let originalContent = '';
     let content = '';
     const key = 'stackedit';
-
-    fetch(fileUrl)
-      .then((response) => {
-        if (!response.ok) {
-          handleMessage('error', t('network_error_load_file', { status: response.status }), key);
-        }
-        return response.text();
+    if (platform === 'Github') {
+      fetch(GITHUB_FILE_URL(filePath, originalRepo, branch))
+        .then((response) => {
+          if (!response.ok) {
+            handleMessage('error', t('network_error_load_file', { status: response.status }), key);
+          }
+          return response.text();
+        })
+        .then((data) => {
+          document.body.style.overflow = 'hidden';
+          originalContent = data;
+          stackedit.openFile({ content: { text: originalContent } });
+        })
+        .catch((error) => {
+          handleMessage('error', t('fetch_error_file', { error: error.message }), key);
+        });
+    } else {
+      fetch(GITEE_FILE_URL(filePath, originalRepo), {
+        method: 'GET',
+        headers: {
+          Authorization: `token ${giteeToken}`,
+          Accept: 'application/json',
+        },
       })
-      .then((data) => {
-        document.body.style.overflow = 'hidden';
-        originalContent = data;
-        stackedit.openFile({ content: { text: originalContent } });
-      })
-      .catch((error) => {
-        handleMessage('error', t('fetch_error_file', { error: error.message }), key);
-      });
+        .then((response) => {
+          if (!response.ok) {
+            handleMessage('error', t('network_error_load_file', { status: response.status }), key);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Decoding base64 content
+          const base64Content = data.content;
+          const binaryString = atob(base64Content);
+          const len = binaryString.length;
+          const bytes = new Uint8Array(len);
+          for (let i = 0; i < len; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
+          }
+          // Using TextDecoder to process UTF-8 encoding
+          const decoder = new TextDecoder('utf-8');
+          const decodedContent = decoder.decode(bytes);
+          document.body.style.overflow = 'hidden';
+          originalContent = decodedContent;
+          stackedit.openFile({ content: { text: decodedContent } });
+        })
+        .catch((error) => {
+          handleMessage('error', t('fetch_error_file', { error: error.message }), key);
+        });
+    }
 
     stackedit.on('fileChange', (file: any) => {
       content = file.content.text;
@@ -115,10 +153,20 @@ const View = ({ filePath, originalRepo, branch, platform }: Props) => {
       }
     }
   };
+  const fetchToken = async () => {
+    const storedToken = await getGiteeToken();
+    if (storedToken) {
+      setGiteeToken(storedToken);
+    }
+  };
+  useEffect(() => {
+    fetchToken();
+  }, []);
   const handlePRSubmission = () => {
     setIsModalOpen(false); // Close modal after submission
     form.resetFields();
     if (platform === 'Github') githubService.submitGithubPR(form, originalRepo, branch, filePath, fileContent);
+    else giteeService.submitGiteePR(form, originalRepo, branch, filePath, fileContent);
   };
   // When the mouse is released, stop dragging, and determine if it's a click or drag
   const handleMouseUp = () => {

@@ -1,9 +1,8 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import features from '../../../../feature-manager';
-import { matchFastPrUrl } from '../../../../helpers/fastPR-url-rules';
+import { matchFastPrUrl } from './rule/fastPR-url-rules';
 import View from './view';
-
 const featureId = features.getFeatureID(import.meta.url);
 
 const renderTo = (container: any, filePath: string, repoName: string, branch: string, platform: string) => {
@@ -11,7 +10,6 @@ const renderTo = (container: any, filePath: string, repoName: string, branch: st
     <View filePath={filePath} originalRepo={repoName} branch={branch} platform={platform} />
   );
 };
-
 const init = async () => {
   const currentUrl = window.location.href; // Get the current page URL
   const matchedUrl = matchFastPrUrl(currentUrl);
