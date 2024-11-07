@@ -92,9 +92,6 @@ const View = ({ filePath, originalRepo, branch, platform }: Props) => {
 
     stackedit.on('fileChange', (file: any) => {
       content = file.content.text;
-      if (originalContent.charCodeAt(originalContent.length - 1) === 10) {
-        content += String.fromCharCode(10);
-      }
       setFileContent(content);
     });
 
@@ -102,6 +99,7 @@ const View = ({ filePath, originalRepo, branch, platform }: Props) => {
       document.body.style.overflow = '';
       if (originalContent.charCodeAt(originalContent.length - 1) === 10) {
         content += String.fromCharCode(10);
+        setFileContent(content);
       }
       if (originalContent != content) {
         // If content has changed, handle PR creation
