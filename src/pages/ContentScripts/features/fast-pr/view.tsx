@@ -8,6 +8,7 @@ import { handleMessage } from './handleMessage';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import { useTranslation } from 'react-i18next';
 import { getGiteeToken } from '../../../../helpers/gitee-token';
+import { PR_TITLE, PR_CONTENT } from './baseContent';
 interface Props {
   filePath: string;
   originalRepo: string;
@@ -91,6 +92,9 @@ const View = ({ filePath, originalRepo, branch, platform }: Props) => {
 
     stackedit.on('fileChange', (file: any) => {
       content = file.content.text;
+      if (originalContent.charCodeAt(originalContent.length - 1) === 10) {
+        content += String.fromCharCode(10);
+      }
       setFileContent(content);
     });
 
@@ -221,8 +225,8 @@ const View = ({ filePath, originalRepo, branch, platform }: Props) => {
           layout="vertical"
           name="pr_form"
           initialValues={{
-            title: githubService.PR_TITLE(filePath),
-            content: githubService.PR_CONTENT(filePath),
+            title: PR_TITLE(filePath),
+            content: PR_CONTENT(filePath),
           }}
         >
           <Form.Item name="title" label={t('pr_title_label')} rules={[{ required: true, message: t('pr_title_rule') }]}>

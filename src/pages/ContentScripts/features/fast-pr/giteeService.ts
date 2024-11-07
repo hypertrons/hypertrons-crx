@@ -3,11 +3,9 @@ import { handleMessage } from './handleMessage';
 import type { FormInstance } from 'antd/lib/form';
 import i18n from '../../../../helpers/i18n';
 import { getGiteeToken } from '../../../../helpers/gitee-token';
-export const PR_TITLE = (file: string) => `docs: Update ${file}`;
-export const PR_CONTENT = (file: string) => `Update ${file} by [FastPR](https://github.com/hypertrons/hypertrons-crx).`;
+import { generateBranchName, COMMIT_MESSAGE } from './baseContent';
 const t = i18n.t;
-const generateBranchName = () => `fastPR-${new Date().toISOString().replace(/:/g, '-').replace(/\..+/, '')}`;
-const COMMIT_MESSAGE = (branch: string) => `docs: ${branch}`;
+
 const getOrCreateFork = async (repoName: string, giteeToken: string) => {
   const userResponse = await fetch(url.GET_USER_INFO, {
     method: 'GET',

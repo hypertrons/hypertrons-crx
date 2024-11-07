@@ -3,11 +3,10 @@ import type { FormInstance } from 'antd/lib/form';
 import { getGithubToken } from '../../../../helpers/github-token';
 import i18n from '../../../../helpers/i18n';
 import { Octokit } from '@octokit/rest';
-export const PR_TITLE = (file: string) => `docs: Update ${file}`;
-export const PR_CONTENT = (file: string) => `Update ${file} by [FastPR](https://github.com/hypertrons/hypertrons-crx).`;
+import { generateBranchName, COMMIT_MESSAGE } from './baseContent';
+
 const t = i18n.t;
-const generateBranchName = () => `fastPR-${new Date().toISOString().replace(/:/g, '-').replace(/\..+/, '')}`;
-const COMMIT_MESSAGE = (branch: string) => `docs: ${branch}`;
+
 const getOrCreateFork = async (owner: string, repo: string, octokit: Octokit) => {
   const fastprRepo = `fastpr-${owner}-${repo}`;
   const newRepoName = `${fastprRepo}`;
