@@ -148,5 +148,6 @@
   "status_create_pr": "Creating PR...",
   "success_create_pr": "PR created successfully.\nPR URL: {{url}}",
   "error_get_user_info": "Failed to get user info: {{status}}",
-  "error_get_file": "The path is a directory, not a file."
+  "error_get_file": "The path is a directory, not a file.",
+  "error_match_FastPr_Url": "Error executing URL matching function: {{status}}."
 }

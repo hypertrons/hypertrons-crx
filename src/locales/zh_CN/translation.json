@@ -147,5 +147,6 @@
   "status_create_pr": "创建PR...",
   "success_create_pr": "PR创建成功。\nPR地址为： {{url}}",
   "error_get_user_info": "获取用户信息失败：{{status}}",
-  "error_get_file": "该路径是一个目录，而不是文件"
+  "error_get_file": "该路径是一个目录，而不是文件",
+  "error_match_FastPr_Url": "执行URL匹配函数出错"
 }
