@@ -30,12 +30,12 @@ export const handleMessage = (status: string, content: string, key: string) => {
   );
 
   if (status === 'loading') {
-    message.loading({ content: contentWithLink, key, style: messageStyle });
+    message.loading({ content, key, style: messageStyle });
     return;
   }
   if (status === 'success') {
-    message.success({ content: contentWithLink, key, duration: 10, style: messageStyle });
+    message.success({ content: contentWithLink, key, duration: 8, style: messageStyle });
   } else if (status === 'error') {
-    message.error({ content: contentWithLink, key, duration: 3, style: messageStyle });
+    message.error({ content, key, duration: 3, style: messageStyle });
   }
 };
