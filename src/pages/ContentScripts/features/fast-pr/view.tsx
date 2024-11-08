@@ -8,6 +8,7 @@ import { handleMessage } from './handleMessage';
 import optionsStorage, { HypercrxOptions, defaults } from '../../../../options-storage';
 import { useTranslation } from 'react-i18next';
 import { getGiteeToken } from '../../../../helpers/gitee-token';
+import { getGithubToken } from '../../../../helpers/github-token';
 import { PR_TITLE, PR_CONTENT } from './baseContent';
 interface Props {
   filePath: string;
@@ -17,6 +18,7 @@ interface Props {
 }
 const View = ({ filePath, originalRepo, branch, platform }: Props) => {
   const [giteeToken, setGiteeToken] = useState('');
+  const [githubToken, setGithubToken] = useState('');
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
   const { t, i18n } = useTranslation();
   const [isDragging, setIsDragging] = useState(false);
@@ -34,11 +36,23 @@ const View = ({ filePath, originalRepo, branch, platform }: Props) => {
     `https://raw.githubusercontent.com/${originalRepo}/${branch}/${filePath}`;
   // Click the icon
   const clickIcon = () => {
+    console.log('click');
+    const key = 'stackedit';
+    if (platform === 'Github') {
+      if (githubToken === '') {
+        handleMessage('error', t('github_token_not_found'), key);
+        return;
+      }
+    } else {
+      if (giteeToken === '') {
+        handleMessage('error', t('gitee_token_not_found'), key);
+        return;
+      }
+    }
     const Stackedit = require('stackedit-js');
     const stackedit = new Stackedit();
     let originalContent = '';
     let content = '';
-    const key = 'stackedit';
     if (platform === 'Github') {
       fetch(GITHUB_FILE_URL(filePath, originalRepo, branch))
         .then((response) => {
@@ -155,15 +169,26 @@ const View = ({ filePath, originalRepo, branch, platform }: Props) => {
       }
     }
   };
-  const fetchToken = async () => {
+  const fetchGiteeToken = async () => {
     const storedToken = await getGiteeToken();
     if (storedToken) {
       setGiteeToken(storedToken);
     }
   };
+  const fetchGithubToken = async () => {
+    const storedToken = await getGithubToken();
+    if (storedToken) {
+      setGithubToken(storedToken);
+    }
+  };
   useEffect(() => {
-    fetchToken();
+    if (platform === 'Gitee') {
+      fetchGiteeToken();
+    } else {
+      fetchGithubToken();
+    }
   }, []);
+
   const handlePRSubmission = () => {
     setIsModalOpen(false); // Close modal after submission
     form.resetFields();

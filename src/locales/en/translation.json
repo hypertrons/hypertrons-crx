@@ -138,7 +138,9 @@
   "error_update_file_content": "Failed to update file content: {{status}}",
   "error_create_pr": "Failed to create a new PR: {{status}}",
   "status_get_github_token": "Get GitHub token...",
+  "status_get_gitee_token": "Get Gitee token...",
   "error_get_github_token": "Failed to get GitHub token.",
+  "error_get_gitee_token": "Failed to get Giteeb token.",
   "status_check_repo_permission": "Checking repository permission...",
   "status_get_or_create_fork": "Get or create fork...",
   "status_get_latest_commit_sha": "Get latest commit SHA of the base branch...",
@@ -149,5 +151,7 @@
   "success_create_pr": "PR created successfully.\nPR URL: {{url}}",
   "error_get_user_info": "Failed to get user info: {{status}}",
   "error_get_file": "The path is a directory, not a file.",
-  "error_match_FastPr_Url": "Error executing URL matching function: {{status}}."
+  "error_match_FastPr_Url": "Error executing URL matching function: {{status}}.",
+  "github_token_not_found": "GitHub token not found.\nPlease enter the token in the Settings page of the extension.",
+  "gitee_token_not_found": "Gitee token not found.\nPlease enter the token in the Settings page of the extension."
 }

@@ -3,7 +3,7 @@ import type { FormInstance } from 'antd/lib/form';
 import { getGithubToken } from '../../../../helpers/github-token';
 import i18n from '../../../../helpers/i18n';
 import { Octokit } from '@octokit/rest';
-import { generateBranchName, COMMIT_MESSAGE } from './baseContent';
+import { generateBranchName, COMMIT_MESSAGE, COMMIT_MESSAGE_DOC } from './baseContent';
 
 const t = i18n.t;
 
@@ -124,11 +124,14 @@ const createOrUpdateFileContent = async (
   octokit: Octokit
 ) => {
   try {
+    const user = await octokit.users.getAuthenticated();
+    const userName = user.data.name;
+    const userEmail = user.data.email;
     await octokit.repos.createOrUpdateFileContents({
       owner: forkOwner,
       repo: forkRepo,
       path: filePath,
-      message: COMMIT_MESSAGE(newBranch),
+      message: userName && userEmail ? COMMIT_MESSAGE_DOC(newBranch, userName, userEmail) : COMMIT_MESSAGE(newBranch),
       content: Buffer.from(content).toString('base64'),
       branch: newBranch,
       sha: fileSha || undefined,

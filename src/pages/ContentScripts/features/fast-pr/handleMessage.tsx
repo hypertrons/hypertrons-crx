@@ -3,7 +3,7 @@ import { message } from 'antd';
 
 const messageStyle = {
   fontSize: '16px',
-  padding: '20px 24px',
+  padding: '24px 24px',
   width: '600px',
   margin: '0 auto',
 };
@@ -34,8 +34,8 @@ export const handleMessage = (status: string, content: string, key: string) => {
     return;
   }
   if (status === 'success') {
-    message.success({ content: contentWithLink, key, duration: 8, style: messageStyle });
+    message.success({ content: contentWithLink, key, duration: 6, style: messageStyle });
   } else if (status === 'error') {
-    message.error({ content, key, duration: 3, style: messageStyle });
+    message.error({ content: contentWithLink, key, duration: 3, style: messageStyle });
   }
 };

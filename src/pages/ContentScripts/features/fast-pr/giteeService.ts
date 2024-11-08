@@ -3,9 +3,11 @@ import { handleMessage } from './handleMessage';
 import type { FormInstance } from 'antd/lib/form';
 import i18n from '../../../../helpers/i18n';
 import { getGiteeToken } from '../../../../helpers/gitee-token';
-import { generateBranchName, COMMIT_MESSAGE } from './baseContent';
+import { generateBranchName, COMMIT_MESSAGE, COMMIT_MESSAGE_DOC } from './baseContent';
 const t = i18n.t;
-
+let userName: string | null;
+let userEmail: string | null;
+//Get the forked repository
 const getOrCreateFork = async (repoName: string, giteeToken: string) => {
   const userResponse = await fetch(url.GET_USER_INFO, {
     method: 'GET',
@@ -24,6 +26,8 @@ const getOrCreateFork = async (repoName: string, giteeToken: string) => {
 
   const userData = await userResponse.json();
   const owner = userData.login;
+  userName = userData.name;
+  userEmail = userData.email;
   const fastprRepo = `fastpr-${repoName.split('/')[0]}-${repoName.split('/')[1]}`;
   const newRepoName = `${fastprRepo}`;
   const repourl = `https://gitee.com/api/v5/repos/${owner}/${newRepoName}`;
@@ -127,7 +131,7 @@ const createOrUpdateFileContent = async (
       Accept: 'application/json',
     },
     body: JSON.stringify({
-      message: COMMIT_MESSAGE(newBranch),
+      message: userName && userEmail ? COMMIT_MESSAGE_DOC(newBranch, userName, userEmail) : COMMIT_MESSAGE(newBranch),
       content: Buffer.from(content).toString('base64'),
       branch: newBranch,
       sha: fileSha,
@@ -191,10 +195,10 @@ export const submitGiteePR = async (
 ) => {
   const key = 'FastPR';
   const values = await form.validateFields();
-  handleMessage('loading', t('status_get_github_token'), key);
+  handleMessage('loading', t('status_get_gitee_token'), key);
   const giteeToken = await getGiteeToken();
   if (!giteeToken) {
-    handleMessage('error', t('error_get_github_token'), key);
+    handleMessage('error', t('error_get_gitee_token'), key);
     return;
   }
   const newBranch = generateBranchName();
