@@ -6,7 +6,12 @@ export const defaults = Object.assign(
   {
     locale: 'en',
   },
-  Object.fromEntries(importedFeatures.map((name) => [`hypercrx-${name}` as FeatureId, true]))
+  Object.fromEntries(
+    importedFeatures.map((name) => [
+      `hypercrx-${name}` as FeatureId,
+      name === 'oss-gpt' ? false : true, // Set oss gpt to not be enabled by default
+    ])
+  )
 );
 
 class OptionsStorage {
