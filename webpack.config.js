@@ -34,6 +34,7 @@ let options = {
     popup: path.join(__dirname, 'src', 'pages', 'Popup', 'index.jsx'),
     background: path.join(__dirname, 'src', 'pages', 'Background', 'index.ts'),
     contentScript: path.join(__dirname, 'src', 'pages', 'ContentScripts', 'index.ts'),
+    sandbox: path.join(__dirname, 'src', 'pages', 'Sandbox', 'index.jsx'),
   },
   // "custom" is not a standard key of webpack options
   // it will be consumed by utils/server.js and must be deleted before webpack(config)
@@ -155,6 +156,12 @@ let options = {
       template: path.join(__dirname, 'src', 'pages', 'Popup', 'index.html'),
       filename: 'popup.html',
       chunks: ['popup'],
+      cache: false,
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'src', 'pages', 'Sandbox', 'index.html'),
+      filename: 'sandbox.html',
+      chunks: ['sandbox'],
       cache: false,
     }),
     // Work around for Buffer is undefined:
