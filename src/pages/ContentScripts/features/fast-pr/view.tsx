@@ -36,7 +36,6 @@ const View = ({ filePath, originalRepo, branch, platform }: Props) => {
     `https://raw.githubusercontent.com/${originalRepo}/${branch}/${filePath}`;
   // Click the icon
   const clickIcon = () => {
-    console.log('click');
     const key = 'stackedit';
     if (platform === 'Github') {
       if (githubToken === '') {

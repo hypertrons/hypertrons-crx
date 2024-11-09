@@ -60,7 +60,7 @@ window.addEventListener('message', (event: MessageEvent) => {
     init(event.data.matchedUrl);
   } else if (event.data && event.data.error) {
     const key = 'FastPR';
-    handleMessage('error', t('error_create_branch', { status: event.data.error }), key);
+    handleMessage('error', t('error_match_FastPr_Url', { status: event.data.error }), key);
   }
 });
 
