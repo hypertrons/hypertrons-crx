@@ -28,7 +28,6 @@ const stacksStyleOptions = {
 const Options = (): JSX.Element => {
   const [version, setVersion] = useState<string>();
   const [options, setOptions] = useState<HypercrxOptions>();
-
   const { t, i18n } = useTranslation();
   useEffect(() => {
     (async function () {
@@ -36,7 +35,6 @@ const Options = (): JSX.Element => {
       setOptions(await optionsStorage.getAll());
     })();
   }, []);
-
   if (!version || !options) {
     return <div />;
   }
