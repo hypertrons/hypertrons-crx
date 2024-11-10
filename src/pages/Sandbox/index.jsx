@@ -30,12 +30,8 @@ const SandboxApp = () => {
     const handleMessage = (event) => {
       const { command, url } = event.data;
       if (command === 'matchUrl') {
-        try {
-          const matchedUrl = window.matchFastPrUrl(url);
-          event.source.postMessage({ matchedUrl }, event.origin);
-        } catch (error) {
-          event.source.postMessage({ error: error.message }, event.origin);
-        }
+        const matchedUrl = window.matchFastPrUrl(url);
+        event.source.postMessage({ matchedUrl }, event.origin);
       }
     };
 

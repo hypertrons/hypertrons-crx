@@ -150,7 +150,6 @@
   "success_create_pr": "PR创建成功。\nPR 地址为： {{url}}",
   "error_get_user_info": "获取用户信息失败：{{status}}",
   "error_get_file": "该路径是一个目录，而不是文件",
-  "error_match_FastPr_Url": "执行URL匹配函数出错",
   "github_token_not_found": "GitHub 的 token 没有找到。\n请记得在扩展程序的设置页面输入 GitHub token。",
   "gitee_token_not_found": "Gitee 的 token 没有找到。\n请记得在扩展程序的设置页面输入 Gitee token。"
 }

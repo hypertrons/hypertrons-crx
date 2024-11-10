@@ -58,9 +58,6 @@ const observeUrlChanges = () => {
 window.addEventListener('message', (event: MessageEvent) => {
   if (event.data && event.data.matchedUrl) {
     init(event.data.matchedUrl);
-  } else if (event.data && event.data.error) {
-    const key = 'FastPR';
-    handleMessage('error', t('error_match_FastPr_Url', { status: event.data.error }), key);
   }
 });
 
