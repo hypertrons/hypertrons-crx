@@ -1,5 +1,4 @@
-// remote-code.js
-export const urlRules = [
+const urlRules = [
   {
     domains: ['open-digger.cn', 'open-digger'],
     ruleFunction: (url) => {
@@ -159,4 +158,6 @@ function matchFastPrUrl(url) {
 // Make the function globally available if needed
 if (typeof window !== 'undefined' && typeof window.document !== 'undefined') {
   window.matchFastPrUrl = matchFastPrUrl;
+} else {
+  module.exports = { urlRules };
 }
