@@ -6,6 +6,8 @@ const urlRules = [
       const repoName = 'X-lab2017/open-digger-website';
       const branch = 'master';
       const platform = 'Github';
+      const horizontalRatio=0.95;
+      const verticalRatio=0.5;
       let filePath = '';
       if (!url.startsWith(baseUrl)) return null;
       let i18n = null;
@@ -23,7 +25,7 @@ const urlRules = [
       } else if (docPath.startsWith('blog/')) {
         filePath = `${i18n != null ? `i18n/${i18n}docusaurus-plugin-content-` : ''}${docPath}/index.mdx`;
       }
-      return { filePath, repoName, branch, platform };
+      return { filePath, repoName, branch, platform,horizontalRatio,verticalRatio };
     },
     tests: [
       [
@@ -60,10 +62,12 @@ const urlRules = [
       const repoName = 'X-lab2017/oss101-bok';
       const branch = 'master';
       const platform = 'Github';
+      const horizontalRatio=0.95;
+      const verticalRatio=0.5;
       if (!url.startsWith(baseUrl)) return null;
       const docPath = url.replace(baseUrl, '').split('#')[0];
       const filePath = `docs/textbook/${docPath.slice(0, -1)}.md`;
-      return { filePath, repoName, branch, platform };
+      return { filePath, repoName, branch, platform,horizontalRatio,verticalRatio };
     },
   },
   {
@@ -73,10 +77,12 @@ const urlRules = [
       const repoName = 'wangyantong2000/docwebsite';
       const branch = 'main';
       const platform = 'Gitee';
+      const horizontalRatio=0.95;
+      const verticalRatio=0.5;
       if (!url.startsWith(baseUrl)) return null;
       const docPath = url.replace(baseUrl, '').split('#')[0];
       const filePath = `docs/textbooks/${docPath}index.md`;
-      return { filePath, repoName, branch, platform };
+      return { filePath, repoName, branch, platform,horizontalRatio,verticalRatio };
     },
   },
   {
@@ -86,12 +92,14 @@ const urlRules = [
       const repoName = 'kaiyuanshe/oss-book';
       const branch = 'main';
       const platform = 'Github';
+      const horizontalRatio=0.95;
+      const verticalRatio=0.95;
       if (!url.startsWith(baseUrl)) return null;
       let docPath = url.replace(baseUrl, '').split('#')[0];
       if (docPath.startsWith('slide')) return null;
       docPath = docPath.replace('.html', '');
       const filePath = `src/${docPath}.md`;
-      return { filePath, repoName, branch, platform };
+      return { filePath, repoName, branch, platform,horizontalRatio,verticalRatio };
     },
     tests: [
       ['https://kaiyuanshe.github.io/oss-book/Enterprise-and-Open-Source.html', 'src/Enterprise-and-Open-Source.md'],
@@ -110,6 +118,8 @@ const urlRules = [
       const repoName = 'kwdb/docs';
       let branch = 'master';
       const platform = 'Gitee';
+      const horizontalRatio=0.95;
+      const verticalRatio=0.95;
       if (!url.startsWith(baseUrl)) return null;
       let docPath = url.replace(baseUrl, '').split('#')[0].replace('.html', '');
       function extractVersion(str) {
@@ -132,7 +142,7 @@ const urlRules = [
         }
       }
       const filePath = `${docPath}.md`;
-      return { filePath, repoName, branch, platform };
+      return { filePath, repoName, branch, platform,horizontalRatio,verticalRatio };
     },
     tests: [
       [

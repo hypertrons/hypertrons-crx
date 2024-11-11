@@ -11,11 +11,28 @@ interface MatchedUrl {
   repoName: string;
   branch: string;
   platform: string;
+  horizontalRatio: number;
+  verticalRatio: number;
 }
 
-const renderTo = (container: HTMLElement, filePath: string, repoName: string, branch: string, platform: string) => {
+const renderTo = (
+  container: HTMLElement,
+  filePath: string,
+  repoName: string,
+  branch: string,
+  platform: string,
+  horizontalRatio: number,
+  verticalRatio: number
+) => {
   createRoot(container).render(
-    <View filePath={filePath} originalRepo={repoName} branch={branch} platform={platform} />
+    <View
+      filePath={filePath}
+      originalRepo={repoName}
+      branch={branch}
+      platform={platform}
+      horizontalRatio={horizontalRatio}
+      verticalRatio={verticalRatio}
+    />
   );
 };
 
@@ -27,7 +44,15 @@ const init = async (matchedUrl: MatchedUrl | null) => {
   if (matchedUrl) {
     const container = document.createElement('div');
     container.id = featureId;
-    renderTo(container, matchedUrl.filePath, matchedUrl.repoName, matchedUrl.branch, matchedUrl.platform);
+    renderTo(
+      container,
+      matchedUrl.filePath,
+      matchedUrl.repoName,
+      matchedUrl.branch,
+      matchedUrl.platform,
+      matchedUrl.horizontalRatio,
+      matchedUrl.verticalRatio
+    );
     document.body.appendChild(container);
   }
 };

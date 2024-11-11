@@ -15,8 +15,10 @@ interface Props {
   originalRepo: string;
   branch: string;
   platform: string;
+  horizontalRatio: number;
+  verticalRatio: number;
 }
-const View = ({ filePath, originalRepo, branch, platform }: Props) => {
+const View = ({ filePath, originalRepo, branch, platform, horizontalRatio, verticalRatio }: Props) => {
   const [giteeToken, setGiteeToken] = useState('');
   const [githubToken, setGithubToken] = useState('');
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
@@ -128,8 +130,8 @@ const View = ({ filePath, originalRepo, branch, platform }: Props) => {
 
   // Set the initial position to the middle-right of the screen when the component loads
   useEffect(() => {
-    const initialX = window.innerWidth - buttonSize - padding; // 24px from the right of the screen
-    const initialY = window.innerHeight / 2 - buttonSize / 2; // Center vertically
+    const initialX = (window.innerWidth - buttonSize) * horizontalRatio;
+    const initialY = (window.innerHeight - buttonSize) * verticalRatio;
     setPosition({ x: initialX, y: initialY });
   }, []);
   // Record the starting position when the mouse is pressed
