@@ -2,7 +2,6 @@
 export const urlRules = [
   {
     domains: ['open-digger.cn', 'open-digger'],
-    expired: () => new Date().getTime() >= new Date('2024-12-01 00:00:00').getTime(),
     ruleFunction: (url) => {
       const baseUrl = 'https://open-digger.cn/';
       const repoName = 'X-lab2017/open-digger-website';
@@ -101,6 +100,47 @@ export const urlRules = [
       [
         'https://kaiyuanshe.github.io/oss-book/Software-Lifecycle-Management.html',
         'src/Software-Lifecycle-Management.md',
+      ],
+    ],
+  },
+  {
+    domains: ['https://www.kaiwudb.com/'],
+    expired: () => new Date().getTime() > new Date('2025-01-01 00:00:00').getTime(),
+    ruleFunction: (url) => {
+      const baseUrl = 'https://www.kaiwudb.com/kaiwudb_docs/#/';
+      const repoName = 'kwdb/docs';
+      let branch = 'master';
+      const platform = 'Gitee';
+      if (!url.startsWith(baseUrl)) return null;
+      let docPath = url.replace(baseUrl, '').split('#')[0].replace('.html', '');
+      function extractVersion(str) {
+        const pattern = /^v(\d+(\.\d+)*)\/.*$/;
+        const match = str.match(pattern);
+        if (match && match[1]) {
+          return match[1];
+        }
+        return null;
+      }
+      const version = extractVersion(docPath);
+      if (version !== null) {
+        branch = version;
+        docPath = docPath.slice(version.length + 2);
+      }
+      const filePath = `${docPath}.md`;
+      return { filePath, repoName, branch, platform };
+    },
+    tests: [
+      [
+        'https://www.kaiwudb.com/kaiwudb_docs/#/v2.0/sql-reference/data-type/data-type-ts-db.html',
+        'sql-reference/data-type/data-type-ts-db.md',
+      ],
+      [
+        'https://www.kaiwudb.com/kaiwudb_docs/#/v2.0.4.1/deployment/bare-metal/bare-metal-deployment.html',
+        'deployment/bare-metal/bare-metal-deployment.md',
+      ],
+      [
+        'https://www.kaiwudb.com/kaiwudb_docs/#/db-operation/error-code/error-code-postgresql.html',
+        'db-operation/error-code/error-code-postgresql.md',
       ],
     ],
   },
