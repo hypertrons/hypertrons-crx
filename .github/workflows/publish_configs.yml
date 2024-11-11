@@ -1,0 +1,34 @@
+# publish public configs to OSS
+name: publish_configs
+
+on:
+  push:
+    branches:
+      - "master"
+  pull_request:
+    branches:
+      - "master"
+
+jobs:
+  build:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Check out repository code
+          uses: actions/checkout@v2
+
+        - name: Setup Node.js
+          uses: actions/setup-node@v3
+
+        - name: Build
+          run: node scripts/test_configs.js
+
+        - name: Publish to OSS
+          if: ${{ github.event_name == 'push' }}
+          uses: tvrcgo/oss-action@master
+          with:
+            key-id: ${{ secrets.OSS_ACCESS_KEY_ID }}
+            key-secret: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+            region: ${{ secrets.OSS_REGION }}
+            bucket: ${{ secrets.OSS_BUCKET }}
+            assets: |
+              ./public_configs/**:${{ secrets.OSS_TARGET_PATH }}
