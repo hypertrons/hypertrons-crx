@@ -1,5 +1,5 @@
 (async () => {
-  const { urlRules } = await import('../public_configs/fast-pr-url-rules.js');
+  const { urlRules } = await import('../public_configs/fast-pr-url-rules.cjs');
   let hasError = false;
   for (const rule of urlRules) {
     const tests = rule.tests;
