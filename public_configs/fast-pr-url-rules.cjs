@@ -113,32 +113,38 @@ const urlRules = [
       if (!url.startsWith(baseUrl)) return null;
       let docPath = url.replace(baseUrl, '').split('#')[0].replace('.html', '');
       function extractVersion(str) {
-        const pattern = /^v(\d+(\.\d+)*)\/.*$/;
+        const pattern = /^oss_v(\d+(\.\d+)*)\/.*$/;
         const match = str.match(pattern);
         if (match && match[1]) {
           return match[1];
         }
         return null;
       }
-      const version = extractVersion(docPath);
-      if (version !== null) {
-        branch = version;
-        docPath = docPath.slice(version.length + 2);
+      if (docPath.startsWith('oss_dev/')) {
+        // master branch
+        docPath = docPath.substring('oss_dev/'.length);
+      } else {
+        // version branch
+        const version = extractVersion(docPath);
+        if (version !== null) {
+          branch = version;
+          docPath = docPath.slice(version.length + 6);
+        }
       }
       const filePath = `${docPath}.md`;
       return { filePath, repoName, branch, platform };
     },
     tests: [
       [
-        'https://www.kaiwudb.com/kaiwudb_docs/#/v2.0/sql-reference/data-type/data-type-ts-db.html',
+        'https://www.kaiwudb.com/kaiwudb_docs/#/oss_v2.0/sql-reference/data-type/data-type-ts-db.html',
         'sql-reference/data-type/data-type-ts-db.md',
       ],
       [
-        'https://www.kaiwudb.com/kaiwudb_docs/#/v2.0.4.1/deployment/bare-metal/bare-metal-deployment.html',
+        'https://www.kaiwudb.com/kaiwudb_docs/#/oss_v2.0.4/deployment/bare-metal/bare-metal-deployment.html',
         'deployment/bare-metal/bare-metal-deployment.md',
       ],
       [
-        'https://www.kaiwudb.com/kaiwudb_docs/#/db-operation/error-code/error-code-postgresql.html',
+        'https://www.kaiwudb.com/kaiwudb_docs/#/oss_dev/db-operation/error-code/error-code-postgresql.html',
         'db-operation/error-code/error-code-postgresql.md',
       ],
     ],
