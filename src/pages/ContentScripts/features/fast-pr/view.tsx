@@ -197,7 +197,6 @@ const View = ({ filePath, originalRepo, branch, platform, horizontalRatio, verti
     if (platform === 'Github') githubService.submitGithubPR(form, originalRepo, branch, filePath, fileContent);
     else giteeService.submitGiteePR(form, originalRepo, branch, filePath, fileContent);
   };
-  //Check if there is selected text
   const moveButtonToMouseUpPosition = (event: MouseEvent) => {
     const selection = window.getSelection();
     if (selection && selection.rangeCount > 0 && selection.toString().trim() !== '') {
@@ -209,7 +208,7 @@ const View = ({ filePath, originalRepo, branch, platform, horizontalRatio, verti
       });
     }
   };
-
+  //Check if there is selected text
   const checkTextSelection = () => {
     const selection = window.getSelection();
     return selection && selection.rangeCount > 0 && selection.toString().trim() !== '';
