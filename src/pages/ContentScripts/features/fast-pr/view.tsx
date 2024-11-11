@@ -33,6 +33,7 @@ const View = ({ filePath, originalRepo, branch, platform, horizontalRatio, verti
   const [fileContent, setFileContent] = useState('');
   const buttonSize = 50; // Button size
   const padding = 24; // Padding from the screen edges
+  let textSelected = false;
   const dragThreshold = 5; // Threshold to distinguish dragging from clicking
   const GITHUB_FILE_URL = (filePath: string, originalRepo: string, branch: string) =>
     `https://raw.githubusercontent.com/${originalRepo}/${branch}/${filePath}`;
@@ -209,25 +210,38 @@ const View = ({ filePath, originalRepo, branch, platform, horizontalRatio, verti
     }
   };
 
+  const checkTextSelection = () => {
+    const selection = window.getSelection();
+    return selection && selection.rangeCount > 0 && selection.toString().trim() !== '';
+  };
+
+  //Check if the text is selected when the mouse is raised
   useEffect(() => {
     const handleGlobalMouseUp = (event: MouseEvent) => {
-      //Check if there is selected text
-      moveButtonToMouseUpPosition(event);
+      if (checkTextSelection()) {
+        textSelected = true;
+        moveButtonToMouseUpPosition(event);
+      } else {
+        textSelected = false;
+      }
     };
     document.addEventListener('mouseup', handleGlobalMouseUp);
     return () => {
       document.removeEventListener('mouseup', handleGlobalMouseUp);
     };
   }, []);
+
+  //Return to the initial position when scrolling, only after selecting text
   useEffect(() => {
     const handleScroll = () => {
-      const initialX = (window.innerWidth - buttonSize) * horizontalRatio;
-      const initialY = (window.innerHeight - buttonSize) * verticalRatio;
-      setPosition({ x: initialX, y: initialY });
+      if (textSelected) {
+        const initialX = (window.innerWidth - buttonSize) * horizontalRatio;
+        const initialY = (window.innerHeight - buttonSize) * verticalRatio;
+        setPosition({ x: initialX, y: initialY });
+        textSelected = false;
+      }
     };
-
     document.addEventListener('scroll', handleScroll);
-
     return () => {
       document.removeEventListener('scroll', handleScroll);
     };
