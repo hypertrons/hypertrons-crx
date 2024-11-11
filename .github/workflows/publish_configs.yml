@@ -20,7 +20,7 @@ jobs:
           uses: actions/setup-node@v3
 
         - name: Build
-          run: node scripts/test_configs.js
+          run: node scripts/test_configs.cjs
 
         - name: Publish to OSS
           if: ${{ github.event_name == 'push' }}
