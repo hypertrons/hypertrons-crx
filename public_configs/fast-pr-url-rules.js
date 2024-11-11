@@ -1,4 +1,3 @@
-// remote-code.js
 const urlRules = [
   {
     domains: ['open-digger.cn', 'open-digger'],
