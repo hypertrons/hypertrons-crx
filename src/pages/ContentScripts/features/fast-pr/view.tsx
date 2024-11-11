@@ -196,6 +196,42 @@ const View = ({ filePath, originalRepo, branch, platform, horizontalRatio, verti
     if (platform === 'Github') githubService.submitGithubPR(form, originalRepo, branch, filePath, fileContent);
     else giteeService.submitGiteePR(form, originalRepo, branch, filePath, fileContent);
   };
+  //Check if there is selected text
+  const moveButtonToMouseUpPosition = (event: MouseEvent) => {
+    const selection = window.getSelection();
+    if (selection && selection.rangeCount > 0 && selection.toString().trim() !== '') {
+      const newX = event.clientX; //Horizontal position of mouse lift
+      const newY = event.clientY; //Vertical position of mouse lift
+      setPosition({
+        x: Math.min(newX, window.innerWidth - buttonSize - padding),
+        y: Math.min(newY, window.innerHeight - buttonSize - padding),
+      });
+    }
+  };
+
+  useEffect(() => {
+    const handleGlobalMouseUp = (event: MouseEvent) => {
+      //Check if there is selected text
+      moveButtonToMouseUpPosition(event);
+    };
+    document.addEventListener('mouseup', handleGlobalMouseUp);
+    return () => {
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+    };
+  }, []);
+  useEffect(() => {
+    const handleScroll = () => {
+      const initialX = (window.innerWidth - buttonSize) * horizontalRatio;
+      const initialY = (window.innerHeight - buttonSize) * verticalRatio;
+      setPosition({ x: initialX, y: initialY });
+    };
+
+    document.addEventListener('scroll', handleScroll);
+
+    return () => {
+      document.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   // When the mouse is released, stop dragging, and determine if it's a click or drag
   const handleMouseUp = () => {
     if (!dragged) {
