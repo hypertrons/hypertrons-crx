@@ -1,5 +1,5 @@
 // remote-code.js
-export const urlRules = [
+const urlRules = [
   {
     domains: ['open-digger.cn', 'open-digger'],
     ruleFunction: (url) => {
