@@ -2,6 +2,7 @@
 export const urlRules = [
   {
     domains: ['open-digger.cn', 'open-digger'],
+    expired: () => new Date().getTime() >= new Date('2024-12-01 00:00:00').getTime(),
     ruleFunction: (url) => {
       const baseUrl = 'https://open-digger.cn/';
       const repoName = 'X-lab2017/open-digger-website';
@@ -108,10 +109,9 @@ export const urlRules = [
 function matchFastPrUrl(url) {
   for (const rule of urlRules) {
     const isMatch = rule.domains.some((domain) => url.includes(domain));
-    if (isMatch) {
-      const result = rule.ruleFunction(url);
-      return result;
-    }
+    if (!isMatch) continue;
+    if (rule.expired && rule.expired()) return null;
+    return rule.ruleFunction(url);
   }
   return null;
 }
