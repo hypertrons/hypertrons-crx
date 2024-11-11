@@ -2,7 +2,6 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import features from '../../../../feature-manager';
 import View from './view';
-import { handleMessage } from './handleMessage';
 import i18n from '../../../../helpers/i18n';
 const featureId = features.getFeatureID(import.meta.url);
 const t = i18n.t;
@@ -58,7 +57,7 @@ const init = async (matchedUrl: MatchedUrl | null) => {
 };
 const observeUrlChanges = () => {
   let lastUrl = window.location.href;
-  const observer = new MutationObserver(() => {
+  const checkUrlChange = () => {
     const currentUrl = window.location.href;
     if (currentUrl !== lastUrl) {
       lastUrl = currentUrl;
@@ -71,13 +70,13 @@ const observeUrlChanges = () => {
         iframe.contentWindow.postMessage({ command: 'matchUrl', url: currentUrl }, '*');
       }
     }
-  });
-
-  //Observe changes in the main body of the document
+  };
+  const observer = new MutationObserver(checkUrlChange);
   observer.observe(document.body, {
     childList: true,
     subtree: true,
   });
+  setInterval(checkUrlChange, 1000);
 };
 
 window.addEventListener('message', (event: MessageEvent) => {
