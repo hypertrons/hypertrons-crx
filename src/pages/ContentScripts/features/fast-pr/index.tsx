@@ -55,30 +55,21 @@ const init = async (matchedUrl: MatchedUrl | null) => {
     document.body.appendChild(container);
   }
 };
-const observeUrlChanges = () => {
-  let lastUrl = window.location.href;
-  const checkUrlChange = () => {
-    const currentUrl = window.location.href;
-    if (currentUrl !== lastUrl) {
-      lastUrl = currentUrl;
-      const existingContainer = document.getElementById(featureId);
-      if (existingContainer) {
-        existingContainer.remove();
-      }
-      const iframe = document.getElementById('sandboxFrame') as HTMLIFrameElement;
-      if (iframe && iframe.contentWindow) {
-        iframe.contentWindow.postMessage({ command: 'matchUrl', url: currentUrl }, '*');
-      }
-    }
-  };
-  const observer = new MutationObserver(checkUrlChange);
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true,
-  });
-  setInterval(checkUrlChange, 1000);
-};
-
+chrome.runtime.onMessage.addListener((message) => {
+  if (message.type === 'urlChanged') {
+    handleUrlChange(message.url);
+  }
+});
+function handleUrlChange(url: string) {
+  const existingContainer = document.getElementById(featureId);
+  if (existingContainer) {
+    existingContainer.remove();
+  }
+  const iframe = document.getElementById('sandboxFrame') as HTMLIFrameElement;
+  if (iframe && iframe.contentWindow) {
+    iframe.contentWindow.postMessage({ command: 'matchUrl', url: url }, '*');
+  }
+}
 window.addEventListener('message', (event: MessageEvent) => {
   if (event.data && event.data.matchedUrl) {
     init(event.data.matchedUrl);
@@ -102,6 +93,5 @@ features.add(featureId, {
         }
       }, 500);
     };
-    observeUrlChanges();
   },
 });

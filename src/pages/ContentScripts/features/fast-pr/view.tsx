@@ -33,6 +33,7 @@ const View = ({ filePath, originalRepo, branch, platform, horizontalRatio, verti
   const [fileContent, setFileContent] = useState('');
   const buttonSize = 50; // Button size
   const padding = 24; // Padding from the screen edges
+  let textSelected = false;
   const dragThreshold = 5; // Threshold to distinguish dragging from clicking
   const GITHUB_FILE_URL = (filePath: string, originalRepo: string, branch: string) =>
     `https://raw.githubusercontent.com/${originalRepo}/${branch}/${filePath}`;
@@ -196,6 +197,54 @@ const View = ({ filePath, originalRepo, branch, platform, horizontalRatio, verti
     if (platform === 'Github') githubService.submitGithubPR(form, originalRepo, branch, filePath, fileContent);
     else giteeService.submitGiteePR(form, originalRepo, branch, filePath, fileContent);
   };
+  const moveButtonToMouseUpPosition = (event: MouseEvent) => {
+    const selection = window.getSelection();
+    if (selection && selection.rangeCount > 0 && selection.toString().trim() !== '') {
+      const newX = event.clientX; //Horizontal position of mouse lift
+      const newY = event.clientY; //Vertical position of mouse lift
+      setPosition({
+        x: Math.min(newX, window.innerWidth - buttonSize - padding),
+        y: Math.min(newY, window.innerHeight - buttonSize - padding),
+      });
+    }
+  };
+  //Check if there is selected text
+  const checkTextSelection = () => {
+    const selection = window.getSelection();
+    return selection && selection.rangeCount > 0 && selection.toString().trim() !== '';
+  };
+
+  //Check if the text is selected when the mouse is raised
+  useEffect(() => {
+    const handleGlobalMouseUp = (event: MouseEvent) => {
+      if (checkTextSelection()) {
+        textSelected = true;
+        moveButtonToMouseUpPosition(event);
+      } else {
+        textSelected = false;
+      }
+    };
+    document.addEventListener('mouseup', handleGlobalMouseUp);
+    return () => {
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+    };
+  }, []);
+
+  //Return to the initial position when scrolling, only after selecting text
+  useEffect(() => {
+    const handleScroll = () => {
+      if (textSelected) {
+        const initialX = (window.innerWidth - buttonSize) * horizontalRatio;
+        const initialY = (window.innerHeight - buttonSize) * verticalRatio;
+        setPosition({ x: initialX, y: initialY });
+        textSelected = false;
+      }
+    };
+    document.addEventListener('scroll', handleScroll);
+    return () => {
+      document.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   // When the mouse is released, stop dragging, and determine if it's a click or drag
   const handleMouseUp = () => {
     if (!dragged) {
