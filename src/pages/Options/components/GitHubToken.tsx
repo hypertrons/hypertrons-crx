@@ -22,9 +22,10 @@ const GitHubToken = () => {
 
   const handleOAuthToken = async () => {
     const clientId = 'Ov23liyofMsuQYwtfGLb';
-    const redirectUri = chrome.identity.getRedirectURL();
+    const redirectUri = 'http://8.147.129.123/github';
+    const callback = chrome.identity.getRedirectURL();
     const scope = encodeURIComponent('read:user');
-    const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=token`;
+    const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=token&state=${callback}`;
 
     console.log('[FastPR]: Start authorization...');
     chrome.identity.launchWebAuthFlow(
@@ -32,38 +33,27 @@ const GitHubToken = () => {
         url: authUrl,
         interactive: true,
       },
-      function (redirectUrl) {
+      async (redirectUrl) => {
         if (chrome.runtime.lastError || !redirectUrl) {
           console.error(chrome.runtime.lastError ? chrome.runtime.lastError.message : 'Authorization failed.');
           return;
         }
-        const code = new URL(redirectUrl).searchParams.get('code');
-        console.log('[FastPR]: Get session code:', code?.slice(0, 2).padEnd(code.length - 2, '*'));
-        fetch('http://8.147.129.123/github', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify({ code }),
-        }).then(async (response) => {
-          if (!response.ok) {
-            console.error(`HTTP error! status: ${response.status}`);
-          }
-          const respData = await response.json();
-          const token = respData.access_token;
-
-          const userDataReq = await fetch(`https://api.github.com/user`, {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-
-          const userData = await userDataReq.json();
-          if (userData === null || userData.message) {
-            showMessage(t('github_token_error_invalid'), 'error');
-          } else {
-            console.log(`[FastPR]: Welcome: ${userData.login}`);
-          }
+        const ret = new URL(redirectUrl).searchParams.get('ret');
+        if (!ret) {
+          console.error('Ret not returned in callback URL, check the server config');
+          return;
+        }
+        const retData = JSON.parse(decodeURIComponent(ret));
+        const userDataReq = await fetch(`https://api.github.com/user`, {
+          headers: { Authorization: `Bearer ${retData.access_token}` },
         });
+
+        const userData = await userDataReq.json();
+        if (userData === null || userData.message) {
+          showMessage(t('github_token_error_invalid'), 'error');
+        } else {
+          console.log(`[FastPR]: Welcome: ${userData.login}`);
+        }
       }
     );
   };

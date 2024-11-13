@@ -22,9 +22,10 @@ const GiteeToken = () => {
 
   const handleOAuthToken = async () => {
     const clientId = 'e76727820aa539f3a59399d0bc48156df2057e81774617e433eeb49d1dad97b3';
-    const redirectUri = chrome.identity.getRedirectURL();
+    const redirectUri = 'http://8.147.129.123/gitee';
     const scope = encodeURIComponent('user_info');
-    const authUrl = `https://gitee.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code`;
+    const callback = chrome.identity.getRedirectURL();
+    const authUrl = `https://gitee.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code&state=${callback}`;
 
     console.log('[FastPR]: Start authorization...');
     chrome.identity.launchWebAuthFlow(
@@ -32,40 +33,28 @@ const GiteeToken = () => {
         url: authUrl,
         interactive: true,
       },
-      function (redirectUrl) {
+      async function (redirectUrl) {
         if (chrome.runtime.lastError || !redirectUrl) {
           console.error(chrome.runtime.lastError ? chrome.runtime.lastError.message : 'Authorization failed.');
           return;
         }
-        const code = new URL(redirectUrl).searchParams.get('code');
-        console.log('[FastPR]: Get session code:', code?.slice(0, 2).padEnd(code.length - 2, '*'));
-        fetch('http://8.147.129.123/gitee', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify({ code }),
-        }).then(async (response) => {
-          if (!response.ok) {
-            console.error(`HTTP error! status: ${response.status}`);
-          }
-          const respData = await response.json();
-          console.log(respData);
-          const token = respData.access_token;
-
-          const userDataReq = await fetch(`https://gitee.com/api/v5/user`, {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-
-          const userData = await userDataReq.json();
-
-          if (userData === null || userData.message) {
-            showMessage(t('gitee_token_error_invalid'), 'error');
-          } else {
-            console.log(`[FastPR]: Welcome: ${userData.login}`);
-          }
+        const ret = new URL(redirectUrl).searchParams.get('ret');
+        if (!ret) {
+          console.error('Ret not returned in callback URL, check the server config');
+          return;
+        }
+        const retData = JSON.parse(decodeURIComponent(ret));
+        const userDataReq = await fetch(`https://gitee.com/api/v5/user`, {
+          headers: { Authorization: `Bearer ${retData.access_token}` },
         });
+
+        const userData = await userDataReq.json();
+
+        if (userData === null || userData.message) {
+          showMessage(t('gitee_token_error_invalid'), 'error');
+        } else {
+          console.log(`[FastPR]: Welcome: ${userData.login}`);
+        }
       }
     );
   };
