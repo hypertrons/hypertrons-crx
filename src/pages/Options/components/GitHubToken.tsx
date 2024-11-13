@@ -34,7 +34,7 @@ const GitHubToken = () => {
         interactive: true,
       },
       async (redirectUrl) => {
-        if (chrome.runtime.lastError || !redirectUrl) {
+        if (!redirectUrl) {
           console.error(chrome.runtime.lastError ? chrome.runtime.lastError.message : 'Authorization failed.');
           return;
         }

@@ -34,7 +34,7 @@ const GiteeToken = () => {
         interactive: true,
       },
       async function (redirectUrl) {
-        if (chrome.runtime.lastError || !redirectUrl) {
+        if (!redirectUrl) {
           console.error(chrome.runtime.lastError ? chrome.runtime.lastError.message : 'Authorization failed.');
           return;
         }
