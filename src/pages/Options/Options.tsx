@@ -4,7 +4,6 @@ import { importedFeatures } from '../../../README.md';
 import optionsStorage, { HypercrxOptions } from '../../options-storage';
 import { HYPERCRX_GITHUB } from '../../constant';
 import TooltipTrigger from '../../components/TooltipTrigger';
-import './Options.css';
 import { useTranslation } from 'react-i18next';
 import '../../helpers/i18n';
 import GitHubToken from './components/GitHubToken';
@@ -63,7 +62,7 @@ const Options = (): JSX.Element => {
       <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
         <Row justify="center">
           <Space direction="vertical" style={{ textAlign: 'center' }}>
-            <h1>Hypercrx</h1>
+            <h1>HyperCRX</h1>
             <sub>{`version ${version}`}</sub>
           </Space>
         </Row>

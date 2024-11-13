@@ -13,8 +13,8 @@ interface ITooltipTriggerProps {
 const TooltipTrigger: React.FC<ITooltipTriggerProps> = ({
   size = 20,
   iconColor = '#FFFFFF',
-  tooltipBackground = '#FFFFFF',
-  tooltipFontColor = '#242A2E',
+  tooltipBackground = '#333333',
+  tooltipFontColor = '#FFFFFF',
   content,
 }) => (
   <Tooltip placement="top" title={<span style={{ color: tooltipFontColor }}>{content}</span>} color={tooltipBackground}>
