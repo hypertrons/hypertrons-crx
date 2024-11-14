@@ -158,3 +158,11 @@ a {
 .ant-checkbox:hover .ant-checkbox-inner {
   border-color: #606060;
 }
+.custom-tooltip-option .ant-tooltip-inner {
+  background-color: #333333 !important;
+  color: #ffffff !important;
+}
+
+.custom-tooltip-option .ant-tooltip-arrow::before {
+  background-color: #333333 !important;
+}

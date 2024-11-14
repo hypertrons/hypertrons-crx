@@ -67,7 +67,7 @@ const GitHubToken = () => {
     <div className="token-options Box">
       <div className="Box-header">
         <h2 className="Box-title">{t('github_token_configuration')}</h2>
-        <TooltipTrigger content={t('github_token_tooltip')} />
+        <TooltipTrigger overlayClassName="custom-tooltip-option" content={t('github_token_tooltip')} />
       </div>
       <p>{t('github_token_description')}</p>
       <div className="collapsible-section">

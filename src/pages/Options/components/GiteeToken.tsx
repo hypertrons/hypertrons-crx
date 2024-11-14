@@ -67,7 +67,7 @@ const GiteeToken = () => {
     <div className="token-options Box">
       <div className="Box-header">
         <h2 className="Box-title">{t('gitee_token_configuration')}</h2>
-        <TooltipTrigger content={t('gitee_token_tooltip')} />
+        <TooltipTrigger overlayClassName="custom-tooltip-option" content={t('gitee_token_tooltip')} />
       </div>
       <p>{t('gitee_token_description')}</p>
       <div className="collapsible-section">

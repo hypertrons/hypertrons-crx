@@ -128,3 +128,11 @@
   position: relative;
   top: 0px;
 }
+.custom-tooltip .ant-tooltip-inner {
+  background-color: #ffffff !important;
+  color: #242a2e !important;
+}
+
+.custom-tooltip .ant-tooltip-arrow::before {
+  background-color: #ffffff !important;
+}

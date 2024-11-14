@@ -79,7 +79,7 @@ const Options = (): JSX.Element => {
             <div className="Box">
               <div className="Box-header">
                 <h2 className="Box-title">{t('options_locale_title')}</h2>
-                <TooltipTrigger content={t('options_locale_toolTip')} />
+                <TooltipTrigger overlayClassName="custom-tooltip-option" content={t('options_locale_toolTip')} />
               </div>
               <div style={stacksStyleOptions.settingStack}>
                 <p>{t('options_locale_toolTip')} :</p>
@@ -110,7 +110,7 @@ const Options = (): JSX.Element => {
             <div className="Box">
               <div className="Box-header">
                 <h2 className="Box-title">{t('options_components_title')}</h2>
-                <TooltipTrigger content={t('options_components_toolTip')} />
+                <TooltipTrigger overlayClassName="custom-tooltip-option" content={t('options_components_toolTip')} />
               </div>
               <Row style={stacksStyleOptions.settingStack} gutter={[16, 10]}>
                 <p>{t('options_components_toolTip')} :</p>
@@ -154,7 +154,7 @@ const Options = (): JSX.Element => {
             <div className="Box">
               <div className="Box-header">
                 <h2 className="Box-title">{t('options_about_title')}</h2>
-                <TooltipTrigger content={t('options_about_toolTip')} />
+                <TooltipTrigger overlayClassName="custom-tooltip-option" content={t('options_about_toolTip')} />
               </div>
               <div style={stacksStyleOptions.settingStack}>
                 <p>{t('options_about_description')}</p>
