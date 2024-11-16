@@ -33,7 +33,7 @@ const urlRules = [
         // not blog and docs
         return null;
       }
-      return { filePath, repoName, branch, platform,horizontalRatio,verticalRatio };
+      return { filePath, repoName, branch, platform, horizontalRatio, verticalRatio };
     },
     tests: [
       [
@@ -80,7 +80,7 @@ const urlRules = [
       if (!url.startsWith(baseUrl)) return null;
       const docPath = url.replace(baseUrl, '').split('#')[0];
       const filePath = `docs/textbook/${docPath.slice(0, -1)}.md`;
-      return { filePath, repoName, branch, platform,horizontalRatio,verticalRatio };
+      return { filePath, repoName, branch, platform, horizontalRatio, verticalRatio };
     },
   },
   {
@@ -95,7 +95,7 @@ const urlRules = [
       if (!url.startsWith(baseUrl)) return null;
       const docPath = url.replace(baseUrl, '').split('#')[0];
       const filePath = `docs/textbooks/${docPath}index.md`;
-      return { filePath, repoName, branch, platform,horizontalRatio,verticalRatio };
+      return { filePath, repoName, branch, platform, horizontalRatio, verticalRatio };
     },
   },
   {
@@ -112,7 +112,7 @@ const urlRules = [
       if (docPath.startsWith('slide')) return null;
       docPath = docPath.replace('.html', '');
       const filePath = `src/${docPath}.md`;
-      return { filePath, repoName, branch, platform,horizontalRatio,verticalRatio };
+      return { filePath, repoName, branch, platform, horizontalRatio, verticalRatio };
     },
     tests: [
       ['https://kaiyuanshe.github.io/oss-book/Enterprise-and-Open-Source.html', 'src/Enterprise-and-Open-Source.md'],
