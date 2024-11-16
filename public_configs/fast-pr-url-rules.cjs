@@ -3,15 +3,16 @@ const urlRules = [
     domains: ['open-digger.cn', 'open-digger'],
     ruleFunction: (url) => {
       const baseUrl = 'https://open-digger.cn/';
+      if (!url.startsWith(baseUrl)) return null;
       const repoName = 'X-lab2017/open-digger-website';
       const branch = 'master';
       const platform = 'Github';
       const horizontalRatio=0.95;
       const verticalRatio=0.5;
+      const urlObj = new URL(url);
+      let docPath = urlObj.pathname.slice(1);
       let filePath = '';
-      if (!url.startsWith(baseUrl)) return null;
       let i18n = null;
-      let docPath = url.replace(baseUrl, '').split('#')[0];
       for (const l of ['en/', 'fr/']) {
         if (docPath.startsWith(l)) {
           i18n = l;
@@ -21,13 +22,25 @@ const urlRules = [
       }
       if (docPath.startsWith('docs/')) {
         docPath = docPath.substring('docs/'.length);
+         if (docPath.endsWith('metrics/playground')) {
+          // playground can not be edited
+          return null;
+        }
         filePath = `${i18n != null ? `i18n/${i18n}docusaurus-plugin-content-docs/current/` : 'docs/'}${docPath}.md`;
       } else if (docPath.startsWith('blog/')) {
         filePath = `${i18n != null ? `i18n/${i18n}docusaurus-plugin-content-` : ''}${docPath}/index.mdx`;
+      } else {
+        // not blog and docs
+        return null;
       }
       return { filePath, repoName, branch, platform,horizontalRatio,verticalRatio };
     },
     tests: [
+      [
+        // front page
+        'https://open-digger.cn/',
+        undefined,
+      ],
       [
         // docs
         'https://open-digger.cn/docs/user_docs/label_data',
@@ -115,12 +128,12 @@ const urlRules = [
     expired: () => new Date().getTime() > new Date('2025-01-01 00:00:00').getTime(),
     ruleFunction: (url) => {
       const baseUrl = 'https://www.kaiwudb.com/kaiwudb_docs/#/';
+      if (!url.startsWith(baseUrl)) return null;
       const repoName = 'kwdb/docs';
       let branch = 'master';
       const platform = 'Gitee';
       const horizontalRatio=0.95;
       const verticalRatio=0.95;
-      if (!url.startsWith(baseUrl)) return null;
       let docPath = url.replace(baseUrl, '').split('#')[0].replace('.html', '');
       function extractVersion(str) {
         const pattern = /^oss_v(\d+(\.\d+)*)\/.*$/;
@@ -139,10 +152,12 @@ const urlRules = [
         if (version !== null) {
           branch = version;
           docPath = docPath.slice(version.length + 6);
+        } else {
+          return null;
         }
       }
       const filePath = `${docPath}.md`;
-      return { filePath, repoName, branch, platform,horizontalRatio,verticalRatio };
+      return { filePath, repoName, branch, platform, horizontalRatio, verticalRatio };
     },
     tests: [
       [
