@@ -19,8 +19,8 @@ export function getDeveloperNameByUrl() {
   return pageDetect.utils.getUsername()!;
 }
 
-export async function isDeveloperWithMeta() {
-  return pageDetect.isUserProfile() && (await metaStore.has(getDeveloperName()));
+export async function isDeveloperWithMeta(platform: string) {
+  return pageDetect.isUserProfile() && (await metaStore.has(platform, getDeveloperName()));
 }
 export async function isUserProfile() {
   return pageDetect.isUserProfile();
