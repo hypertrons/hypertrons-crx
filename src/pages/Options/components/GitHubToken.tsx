@@ -33,7 +33,7 @@ const GitHubToken = () => {
 
   const handleBindAccount = async () => {
     const clientId = 'Ov23liyofMsuQYwtfGLb';
-    const redirectUri = 'http://8.147.129.123/github';
+    const redirectUri = 'https://oauth.hypercrx.cn/github';
     const callback = chrome.identity.getRedirectURL();
     const scope = encodeURIComponent('read:user, public_repo');
     const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=token&state=${callback}`;

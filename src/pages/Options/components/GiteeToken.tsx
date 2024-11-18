@@ -34,7 +34,7 @@ const GiteeToken = () => {
 
   const handleBindAccount = async () => {
     const clientId = 'e76727820aa539f3a59399d0bc48156df2057e81774617e433eeb49d1dad97b3';
-    const redirectUri = 'http://8.147.129.123/gitee';
+    const redirectUri = 'https://oauth.hypercrx.cn/gitee';
     const scope = encodeURIComponent('user_info projects pull_requests issues notes');
     const callback = chrome.identity.getRedirectURL();
     const authUrl = `https://gitee.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code&state=${callback}`;
