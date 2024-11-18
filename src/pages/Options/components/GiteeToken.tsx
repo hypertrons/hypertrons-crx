@@ -102,10 +102,8 @@ const GiteeToken = () => {
           style={{ marginRight: '10px', flex: 1 }}
           disabled={true}
         />
-        <button onClick={handleBindAccount} style={{ marginTop: '17px' }}>
-          {t('gitee_account_bind')}
-        </button>
-        <button onClick={handleUnbindAccount} style={{ marginTop: '17px' }}>
+        <button onClick={handleBindAccount}>{t('gitee_account_bind')}</button>
+        <button onClick={handleUnbindAccount} style={{ marginLeft: '10px' }}>
           {t('gitee_account_unbind')}
         </button>
       </div>

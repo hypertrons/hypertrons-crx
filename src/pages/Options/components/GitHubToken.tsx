@@ -99,10 +99,8 @@ const GitHubToken = () => {
           style={{ marginRight: '10px', flex: 1 }}
           disabled={true}
         />
-        <button onClick={handleBindAccount} style={{ marginTop: '17px' }}>
-          {t('github_account_bind')}
-        </button>
-        <button onClick={handleUnbindAccount} style={{ marginTop: '17px' }}>
+        <button onClick={handleBindAccount}>{t('github_account_bind')}</button>
+        <button onClick={handleUnbindAccount} style={{ marginLeft: '10px' }}>
           {t('github_account_unbind')}
         </button>
       </div>
