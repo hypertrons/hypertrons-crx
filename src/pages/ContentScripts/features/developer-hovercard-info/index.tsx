@@ -37,6 +37,11 @@ const getDeveloperName = (target: HTMLElement): string | null => {
 };
 
 const renderTo = (container: HTMLElement, developerName: string, openrank: string) => {
+  const parentElement = container.parentNode?.parentElement?.parentElement;
+  const hovercardUrl = parentElement?.getAttribute('data-hovercard-target-url');
+  if (!hovercardUrl || !hovercardUrl.startsWith('/users')) {
+    return;
+  }
   const openRankContainer = document.createElement('div');
   container.appendChild(openRankContainer);
   createRoot(openRankContainer).render(<View developerName={developerName} openrank={openrank} />);
