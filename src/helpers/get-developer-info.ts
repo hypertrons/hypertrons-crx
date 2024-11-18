@@ -16,7 +16,11 @@ export function getDeveloperNameByPage() {
   return $('.p-nickname.vcard-username.d-block').text().trim().split(' ')[0];
 }
 export function getDeveloperNameByUrl() {
-  return pageDetect.utils.getUsername()!;
+  const currentUrl = window.location.href;
+  const parsedUrl = new URL(currentUrl);
+  const pathParts = parsedUrl.pathname.split('/');
+  const developerName = pathParts[pathParts.length - 1];
+  return developerName;
 }
 
 export async function isDeveloperWithMeta() {
