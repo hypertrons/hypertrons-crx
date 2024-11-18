@@ -10,6 +10,7 @@ import isRestorationVisit from './helpers/is-restoration-visit';
 import shouldFeatureRun, { ShouldRunConditions } from './helpers/should-feature-run';
 import optionsStorage from './options-storage';
 import { throttle } from 'lodash-es';
+import { getPlatform } from './helpers/platform-detection';
 
 type FeatureInit = () => Promisable<void>;
 type FeatureRestore = Function;
@@ -82,8 +83,11 @@ const globalReady = new Promise<object>(async (resolve) => {
   document.documentElement.classList.add('hypercrx');
 
   const options = await optionsStorage.getAll();
+  const updatedOptions = Object.fromEntries(
+    Object.entries(options).map(([key, value]) => [key.replace(/\//g, '-'), value])
+  );
 
-  resolve(options);
+  resolve(updatedOptions);
 });
 
 const setupPageLoad = async (id: FeatureId, config: InternalRunConfig): Promise<void> => {
@@ -113,6 +117,7 @@ const getFeatureID = (url: string): FeatureId => {
   let name = pathComponents.pop()!.split('.')[0];
   if (name === 'index') {
     name = pathComponents.pop()!;
+    name = pathComponents.pop()! + '-' + name;
   }
   return `${prefix}${name}` as FeatureId;
 };
@@ -124,7 +129,6 @@ const add = async (
 ): Promise<void> => {
   /* Feature filtering and running */
   const options = await globalReady;
-
   // If the feature is disabled, skip it
   if (!options[id as keyof typeof options]) {
     log.info('↩️', 'Skipping', id);
