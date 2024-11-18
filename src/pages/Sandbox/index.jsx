@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import { OSS_URL } from '../../constant';
+import { FAST_PR_CONFIG_URL } from '../../constant';
 import { createRoot } from 'react-dom/client';
 
 const SandboxApp = () => {
   useEffect(() => {
     const fetchAndExecuteScript = () => {
-      fetch(OSS_URL)
+      fetch(FAST_PR_CONFIG_URL)
         .then((response) => response.text())
         .then((scriptContent) => {
           const func = new Function(scriptContent);
