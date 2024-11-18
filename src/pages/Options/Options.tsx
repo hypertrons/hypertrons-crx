@@ -4,7 +4,6 @@ import { importedFeatures } from '../../../README.md';
 import optionsStorage, { HypercrxOptions } from '../../options-storage';
 import { HYPERCRX_GITHUB } from '../../constant';
 import TooltipTrigger from '../../components/TooltipTrigger';
-import './Options.css';
 import { useTranslation } from 'react-i18next';
 import '../../helpers/i18n';
 import GitHubToken from './components/GitHubToken';
@@ -63,7 +62,7 @@ const Options = (): JSX.Element => {
       <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
         <Row justify="center">
           <Space direction="vertical" style={{ textAlign: 'center' }}>
-            <h1>Hypercrx</h1>
+            <h1>HyperCRX</h1>
             <sub>{`version ${version}`}</sub>
           </Space>
         </Row>
@@ -80,7 +79,7 @@ const Options = (): JSX.Element => {
             <div className="Box">
               <div className="Box-header">
                 <h2 className="Box-title">{t('options_locale_title')}</h2>
-                <TooltipTrigger content={t('options_locale_toolTip')} />
+                <TooltipTrigger overlayClassName="custom-tooltip-option" content={t('options_locale_toolTip')} />
               </div>
               <div style={stacksStyleOptions.settingStack}>
                 <p>{t('options_locale_toolTip')} :</p>
@@ -111,7 +110,7 @@ const Options = (): JSX.Element => {
             <div className="Box">
               <div className="Box-header">
                 <h2 className="Box-title">{t('options_components_title')}</h2>
-                <TooltipTrigger content={t('options_components_toolTip')} />
+                <TooltipTrigger overlayClassName="custom-tooltip-option" content={t('options_components_toolTip')} />
               </div>
               <Row style={stacksStyleOptions.settingStack} gutter={[16, 10]}>
                 <p>{t('options_components_toolTip')} :</p>
@@ -155,7 +154,7 @@ const Options = (): JSX.Element => {
             <div className="Box">
               <div className="Box-header">
                 <h2 className="Box-title">{t('options_about_title')}</h2>
-                <TooltipTrigger content={t('options_about_toolTip')} />
+                <TooltipTrigger overlayClassName="custom-tooltip-option" content={t('options_about_toolTip')} />
               </div>
               <div style={stacksStyleOptions.settingStack}>
                 <p>{t('options_about_description')}</p>

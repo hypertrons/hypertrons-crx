@@ -89,7 +89,7 @@ const GiteeToken = () => {
     <div className="token-options Box">
       <div className="Box-header">
         <h2 className="Box-title">{t('gitee_account_configuration')}</h2>
-        <TooltipTrigger content={t('gitee_account_tooltip')} />
+        <TooltipTrigger overlayClassName="custom-tooltip-option" content={t('gitee_account_tooltip')} />
       </div>
       <p>{t('gitee_account_description')}</p>
       <div style={{ marginBottom: '10px' }} id="message-container"></div>
@@ -102,10 +102,8 @@ const GiteeToken = () => {
           style={{ marginRight: '10px', flex: 1 }}
           disabled={true}
         />
-        <button onClick={handleBindAccount} style={{ marginTop: '17px' }}>
-          {t('gitee_account_bind')}
-        </button>
-        <button onClick={handleUnbindAccount} style={{ marginTop: '17px' }}>
+        <button onClick={handleBindAccount}>{t('gitee_account_bind')}</button>
+        <button onClick={handleUnbindAccount} style={{ marginLeft: '10px' }}>
           {t('gitee_account_unbind')}
         </button>
       </div>

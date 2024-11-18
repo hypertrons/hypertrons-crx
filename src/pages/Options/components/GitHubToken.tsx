@@ -86,7 +86,7 @@ const GitHubToken = () => {
     <div className="token-options Box">
       <div className="Box-header">
         <h2 className="Box-title">{t('github_account_configuration')}</h2>
-        <TooltipTrigger content={t('github_account_tooltip')} />
+        <TooltipTrigger overlayClassName="custom-tooltip-option" content={t('github_account_tooltip')} />
       </div>
       <p>{t('github_account_description')}</p>
       <div style={{ marginBottom: '10px' }} id="message-container"></div>
@@ -99,10 +99,8 @@ const GitHubToken = () => {
           style={{ marginRight: '10px', flex: 1 }}
           disabled={true}
         />
-        <button onClick={handleBindAccount} style={{ marginTop: '17px' }}>
-          {t('github_account_bind')}
-        </button>
-        <button onClick={handleUnbindAccount} style={{ marginTop: '17px' }}>
+        <button onClick={handleBindAccount}>{t('github_account_bind')}</button>
+        <button onClick={handleUnbindAccount} style={{ marginLeft: '10px' }}>
           {t('github_account_unbind')}
         </button>
       </div>

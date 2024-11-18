@@ -5,19 +5,17 @@ import { iconTooltipTrigger } from './icon-svg-path';
 interface ITooltipTriggerProps {
   size?: number;
   iconColor?: string;
-  tooltipBackground?: string;
-  tooltipFontColor?: string;
   content?: string;
+  overlayClassName?: string;
 }
 
 const TooltipTrigger: React.FC<ITooltipTriggerProps> = ({
   size = 20,
   iconColor = '#FFFFFF',
-  tooltipBackground = '#FFFFFF',
-  tooltipFontColor = '#242A2E',
   content,
+  overlayClassName = 'custom-tooltip',
 }) => (
-  <Tooltip placement="top" title={<span style={{ color: tooltipFontColor }}>{content}</span>} color={tooltipBackground}>
+  <Tooltip placement="top" title={<span>{content}</span>} overlayClassName={overlayClassName}>
     <svg className="tooltip-icon" width={`${size}px`} height={`${size}px`} viewBox="0 0 48 48" version="1.1">
       <path fill={iconColor} d={iconTooltipTrigger}></path>
     </svg>
