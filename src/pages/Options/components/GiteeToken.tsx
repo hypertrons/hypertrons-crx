@@ -3,52 +3,74 @@ import TooltipTrigger from '../../../components/TooltipTrigger';
 import { saveGiteeToken, getGiteeToken, giteeRequest } from '../../../api/giteeApi';
 import { message } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { removeGiteeToken } from '../../../helpers/gitee-token';
 
 const GiteeToken = () => {
-  const [token, setToken] = useState('');
-  const [isCollapsed, setIsCollapsed] = useState(true);
-  const [isEditing, setIsEditing] = useState(false);
-  const { t } = useTranslation();
+  const [inputValue, setInputValue] = useState('');
+  const { t, i18n } = useTranslation();
   const inputRef = useRef<HTMLInputElement>(null);
+
   const fetchToken = async () => {
     const storedToken = await getGiteeToken();
     if (storedToken) {
-      setToken(storedToken);
+      updateInputValue();
     }
   };
+
+  const updateInputValue = async () => {
+    const userData = await giteeRequest('user');
+    if (userData && userData.login) {
+      setInputValue(t('gitee_account_binded', { username: userData.login }));
+    }
+  };
+
   useEffect(() => {
     fetchToken();
   }, []);
 
-  const handleSave = () => {
-    if (!token.trim()) {
-      showMessage(t('gitee_token_error_empty'), 'error');
-      return;
-    }
-    saveGiteeToken(token);
-    showMessage(t('gitee_token_success_save'), 'success');
-    setIsEditing(false);
+  useEffect(() => {
+    fetchToken();
+  }, [i18n.language]);
+
+  const handleBindAccount = async () => {
+    const clientId = 'e76727820aa539f3a59399d0bc48156df2057e81774617e433eeb49d1dad97b3';
+    const redirectUri = 'https://oauth.hypercrx.cn/gitee';
+    const scope = encodeURIComponent('user_info projects pull_requests issues notes');
+    const callback = chrome.identity.getRedirectURL();
+    const authUrl = `https://gitee.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code&state=${callback}`;
+
+    chrome.identity.launchWebAuthFlow(
+      {
+        url: authUrl,
+        interactive: true,
+      },
+      async function (redirectUrl) {
+        if (!redirectUrl) {
+          console.error(chrome.runtime.lastError ? chrome.runtime.lastError.message : 'Authorization failed.');
+          return;
+        }
+        const ret = new URL(redirectUrl).searchParams.get('ret');
+        if (!ret) {
+          console.error('Ret not returned in callback URL, check the server config');
+          showMessage(t('gitee_account_bind_fail'), 'error');
+          return;
+        }
+        const retData = JSON.parse(decodeURIComponent(ret));
+        if (!retData.access_token || !retData.refresh_token || !retData.expires_in) {
+          console.error('Invalid token data returned, check the server config');
+          showMessage(t('gitee_account_bind_fail'), 'error');
+          return;
+        }
+        const expireAt = Date.now() + (retData.expires_in - 120) * 1000;
+        await saveGiteeToken(retData.access_token, expireAt, retData.refresh_token);
+        updateInputValue();
+      }
+    );
   };
 
-  const handleEdit = () => {
-    setIsEditing(true);
-  };
-
-  const handleTestToken = async () => {
-    const userData = await giteeRequest('/user', {
-      headers: { access_token: `Bearer ${token}` },
-    });
-
-    if (userData === null || userData.message) {
-      showMessage(t('gitee_token_error_invalid'), 'error');
-    } else {
-      showMessage(t('gitee_token_success_valid', { username: userData.login }), 'success');
-    }
-  };
-
-  const obfuscateToken = (token: string): string => {
-    if (token.length <= 4) return token;
-    return `${token[0]}${'*'.repeat(token.length - 2)}${token[token.length - 1]}`;
+  const handleUnbindAccount = async () => {
+    await removeGiteeToken();
+    setInputValue('');
   };
 
   const showMessage = (content: string, type: 'success' | 'error') => {
@@ -66,64 +88,25 @@ const GiteeToken = () => {
   return (
     <div className="token-options Box">
       <div className="Box-header">
-        <h2 className="Box-title">{t('gitee_token_configuration')}</h2>
-        <TooltipTrigger content={t('gitee_token_tooltip')} />
+        <h2 className="Box-title">{t('gitee_account_configuration')}</h2>
+        <TooltipTrigger content={t('gitee_account_tooltip')} />
       </div>
-      <p>{t('gitee_token_description')}</p>
-      <div className="collapsible-section">
-        <div
-          className="collapsible-header"
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
-        >
-          <p>{t('gitee_token_how_to_generate')}</p>
-          <span style={{ marginLeft: '5px' }}>{isCollapsed ? '▶' : '▼'}</span>
-        </div>
-        {!isCollapsed && (
-          <div className="instructions Box-body">
-            <ol>
-              <li>{t('gitee_token_step1')}</li>
-              <li>{t('gitee_token_step2')}</li>
-              <li>{t('gitee_token_step3')}</li>
-              <li>
-                {t('gitee_token_step4')}
-                <ul>
-                  <li>
-                    <strong>{t('gitee_token_note')}</strong>: {t('gitee_token_note_description')}
-                  </li>
-                  <li>
-                    <strong>{t('gitee_token_scopes')}</strong>: {t('gitee_token_scopes_description')}
-                  </li>
-                </ul>
-              </li>
-              <li>{t('gitee_token_step5')}</li>
-              <li>{t('gitee_token_step6')}</li>
-            </ol>
-          </div>
-        )}
-      </div>
+      <p>{t('gitee_account_description')}</p>
       <div style={{ marginBottom: '10px' }} id="message-container"></div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <input
           type="text"
           ref={inputRef}
-          value={isEditing ? token : obfuscateToken(token)}
-          onChange={(e) => setToken(e.target.value)}
-          placeholder={t('gitee_token_placeholder')}
+          value={inputValue}
+          placeholder={t('gitee_account_no_bind')}
           style={{ marginRight: '10px', flex: 1 }}
-          disabled={!isEditing}
+          disabled={true}
         />
-        {isEditing ? (
-          <button onClick={handleSave} style={{ marginRight: '10px', marginTop: '17px' }}>
-            {t('gitee_token_save')}
-          </button>
-        ) : (
-          <button onClick={handleEdit} style={{ marginRight: '10px', marginTop: '17px' }}>
-            {t('gitee_token_edit')}
-          </button>
-        )}
-        <button onClick={handleTestToken} style={{ marginTop: '17px' }}>
-          {t('gitee_token_test')}
+        <button onClick={handleBindAccount} style={{ marginTop: '17px' }}>
+          {t('gitee_account_bind')}
+        </button>
+        <button onClick={handleUnbindAccount} style={{ marginTop: '17px' }}>
+          {t('gitee_account_unbind')}
         </button>
       </div>
     </div>
