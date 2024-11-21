@@ -120,6 +120,7 @@ const View = ({ filePath, originalRepo, branch, platform, horizontalRatio, verti
       if (originalContent != content) {
         // If content has changed, handle PR creation
         setIsModalOpen(true);
+        form.resetFields();
       }
     });
   };
@@ -193,7 +194,6 @@ const View = ({ filePath, originalRepo, branch, platform, horizontalRatio, verti
 
   const handlePRSubmission = () => {
     setIsModalOpen(false); // Close modal after submission
-    form.resetFields();
     if (platform === 'Github') githubService.submitGithubPR(form, originalRepo, branch, filePath, fileContent);
     else giteeService.submitGiteePR(form, originalRepo, branch, filePath, fileContent);
   };
