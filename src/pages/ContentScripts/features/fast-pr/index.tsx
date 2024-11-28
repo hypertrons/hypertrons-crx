@@ -60,26 +60,25 @@ const init = async (matchedUrl: MatchedUrl | null) => {
     document.body.appendChild(container);
   }
 };
-
+const iframePostMessage = (command: string, matchedFun: string | null, url: string) => {
+  const iframeElement = document.getElementById('sandboxFrame') as HTMLIFrameElement;
+  if (iframeElement && iframeElement.contentWindow) {
+    iframeElement.contentWindow.postMessage({ command: command, matchedFun: matchedFun, url: url }, '*');
+  }
+};
 const checkCacheAndInit = (url: string) => {
   const cachedData = localStorage.getItem(CACHE_KEY);
   const currentTime = Date.now();
-
   if (cachedData) {
     const { matchedFun, timestamp } = JSON.parse(cachedData);
     if (currentTime - timestamp < CACHE_EXPIRY) {
-      const iframeElement = document.getElementById('sandboxFrame') as HTMLIFrameElement;
-      if (iframeElement && iframeElement.contentWindow) {
-        iframeElement.contentWindow.postMessage({ command: 'useCachedData', matchedFun: matchedFun, url: url }, '*');
-      }
+      iframePostMessage('useCachedData', matchedFun, url);
+    } else {
+      iframePostMessage('requestMatchedUrl', null, url);
     }
     return;
   }
-
-  const iframeElement = document.getElementById('sandboxFrame') as HTMLIFrameElement;
-  if (iframeElement && iframeElement.contentWindow) {
-    iframeElement.contentWindow.postMessage({ command: 'requestMatchedUrl', matchedFun: null, url: url }, '*');
-  }
+  iframePostMessage('requestMatchedUrl', null, url);
 };
 
 chrome.runtime.onMessage.addListener((message) => {
@@ -97,7 +96,7 @@ function handleUrlChange(url: string) {
 }
 
 window.addEventListener('message', (event: MessageEvent) => {
-  if (event.data && event.data.matchedFun) {
+  if (event.data && event.data.matchedFun && event.data.isUpdated) {
     const matchedFun = event.data.matchedFun;
     const currentTime = Date.now();
     localStorage.setItem(CACHE_KEY, JSON.stringify({ matchedFun, timestamp: currentTime }));

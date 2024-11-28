@@ -17,14 +17,14 @@ const SandboxApp = () => {
             const func = new Function(matchedFun);
             func();
             const matchedUrl = window.matchFastPrUrl(url);
-            event.source.postMessage({ matchedUrl, matchedFun: matchedFun }, event.origin);
+            event.source.postMessage({ matchedUrl, matchedFun: matchedFun, isUpdated: true }, event.origin);
           });
       } else {
         if (matchedFun) {
           const func = new Function(matchedFun);
           func();
           const matchedUrl = window.matchFastPrUrl(url);
-          event.source.postMessage({ matchedUrl, matchedFun: matchedFun }, event.origin);
+          event.source.postMessage({ matchedUrl, matchedFun: matchedFun, isUpdated: false }, event.origin);
         }
       }
     };
