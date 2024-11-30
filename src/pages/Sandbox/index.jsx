@@ -4,34 +4,28 @@ import { createRoot } from 'react-dom/client';
 
 const SandboxApp = () => {
   useEffect(() => {
-    const fetchAndExecuteScript = () => {
-      fetch(FAST_PR_CONFIG_URL)
-        .then((response) => response.text())
-        .then((scriptContent) => {
-          const func = new Function(scriptContent);
-          func();
-        });
-    };
-
-    fetchAndExecuteScript();
-
-    // Set a timer to run once per hour
-    const intervalId = setInterval(
-      () => {
-        fetchAndExecuteScript();
-      },
-      60 * 60 * 1000
-    );
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-  useEffect(() => {
     const handleMessage = (event) => {
-      const { command, url } = event.data;
-      if (command === 'matchUrl') {
-        const matchedUrl = window.matchFastPrUrl(url);
-        event.source.postMessage({ matchedUrl }, event.origin);
+      const data = event.data;
+      const command = data.command;
+      const url = data.url;
+      let matchedFun = data.matchedFun;
+      if (command === 'requestMatchedUrl') {
+        fetch(FAST_PR_CONFIG_URL)
+          .then((response) => response.text())
+          .then((scriptContent) => {
+            matchedFun = scriptContent;
+            const func = new Function(matchedFun);
+            func();
+            const matchedUrl = window.matchFastPrUrl(url);
+            event.source.postMessage({ matchedUrl, matchedFun: matchedFun, isUpdated: true }, event.origin);
+          });
+      } else {
+        if (matchedFun) {
+          const func = new Function(matchedFun);
+          func();
+          const matchedUrl = window.matchFastPrUrl(url);
+          event.source.postMessage({ matchedUrl, matchedFun: matchedFun, isUpdated: false }, event.origin);
+        }
       }
     };
 

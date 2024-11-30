@@ -3,7 +3,7 @@
   "version": "1.9.15",
   "type": "module",
   "private": true,
-  "description": "Hypertrons Chromium Extension for GitHub",
+  "description": "Hypertrons Chromium Extension for GitHub and other document websites",
   "license": "Apache",
   "engines": {
     "node": ">=16.14"
