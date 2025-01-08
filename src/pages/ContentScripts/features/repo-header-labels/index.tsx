@@ -12,7 +12,7 @@ import React from 'react';
 import $ from 'jquery';
 import { createRoot } from 'react-dom/client';
 import isGithub from '../../../../helpers/is-github';
-
+import { getPlatform } from '../../../../helpers/get-platform';
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
 let activity: any;
@@ -20,13 +20,14 @@ let openrank: any;
 let participant: any;
 let contributor: any;
 let meta: RepoMeta;
+let platform: string;
 
 const getData = async () => {
-  activity = await getActivity(repoName);
-  openrank = await getOpenrank(repoName);
-  participant = await getParticipant(repoName);
-  contributor = await getContributor(repoName);
-  meta = (await metaStore.get(repoName)) as RepoMeta;
+  activity = await getActivity(platform, repoName);
+  openrank = await getOpenrank(platform, repoName);
+  participant = await getParticipant(platform, repoName);
+  contributor = await getContributor(platform, repoName);
+  meta = (await metaStore.get(platform, repoName)) as RepoMeta;
 };
 
 const renderTo = (container: any) => {
@@ -47,6 +48,7 @@ const waitForElement = (selector: string) => {
   });
 };
 const init = async (): Promise<void> => {
+  platform = getPlatform();
   repoName = getRepoName();
   await getData();
   const container = document.createElement('div');

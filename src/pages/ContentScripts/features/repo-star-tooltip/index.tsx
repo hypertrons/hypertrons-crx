@@ -10,18 +10,19 @@ import { createRoot } from 'react-dom/client';
 import React from 'react';
 import $ from 'jquery';
 import isGithub from '../../../../helpers/is-github';
-
+import { getPlatform } from '../../../../helpers/get-platform';
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
 let stars: any;
 let meta: RepoMeta;
-
+let platform: string;
 const getData = async () => {
-  stars = await getStars(repoName);
-  meta = (await metaStore.get(repoName)) as RepoMeta;
+  stars = await getStars(platform, repoName);
+  meta = (await metaStore.get(platform, repoName)) as RepoMeta;
 };
 
 const init = async (): Promise<void> => {
+  platform = getPlatform();
   repoName = getRepoName();
   await getData();
   const isLogined = checkLogined();

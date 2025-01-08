@@ -1,9 +1,14 @@
 import { OSS_XLAB_ENDPOINT, ErrorCode } from '../constant';
 import request from '../helpers/request';
 
-export const getMetricByName = async (owner: string, metricNameMap: Map<string, string>, metric: string) => {
+export const getMetricByName = async (
+  platform: string,
+  owner: string,
+  metricNameMap: Map<string, string>,
+  metric: string
+) => {
   try {
-    return await request(`${OSS_XLAB_ENDPOINT}/github/${owner}/${metricNameMap.get(metric)}.json`);
+    return await request(`${OSS_XLAB_ENDPOINT}/${platform}/${owner}/${metricNameMap.get(metric)}.json`);
   } catch (error) {
     // the catched error being "404" means the metric file is not available so return a null
     if (error === ErrorCode.NOT_FOUND) {
@@ -57,8 +62,8 @@ class MetaStore {
    * Fetch the meta file and cache the response
    * @param name repo name or user name
    */
-  private fetchMeta(name: string) {
-    const url = `${OSS_XLAB_ENDPOINT}/github/${name}/meta.json`;
+  private fetchMeta(platform: string, name: string) {
+    const url = `${OSS_XLAB_ENDPOINT}/${platform}/${name}/meta.json`;
     const promise = fetch(url);
     this.responseCache.set(name, promise);
   }
@@ -68,9 +73,9 @@ class MetaStore {
    * @param name repo name or user name
    * @returns true if the meta file exists, false otherwise
    */
-  public async has(name: string) {
+  public async has(platform: string, name: string) {
     if (!this.responseCache.has(name)) {
-      this.fetchMeta(name);
+      this.fetchMeta(platform, name);
     }
     const response = await this.responseCache.get(name)!;
     if (!response.ok) {
@@ -85,8 +90,8 @@ class MetaStore {
    * @param name repo name or user name
    * @returns the parsed meta file if it exists, undefined otherwise
    */
-  public async get(name: string): Promise<CommonMeta | undefined> {
-    if (await this.has(name)) {
+  public async get(platform: string, name: string): Promise<CommonMeta | undefined> {
+    if (await this.has(platform, name)) {
       const meta: CommonMeta = await this.responseCache
         .get(name)!
         // clone the response to avoid the response being used up
