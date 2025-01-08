@@ -52,10 +52,10 @@ export async function isPublicRepo() {
     return true;
   }
 }
-  export async function isPublicRepoWithMeta() {
-    const platform = getPlatform();
-    return (
-      (await isPublicRepo()) &&
-      ((await metaStore.has(platform, getRepoNameByUrl())) || (await metaStore.has(platform, getRepoNameByPage())))
-    );
-  }
+export async function isPublicRepoWithMeta() {
+  const platform = getPlatform();
+  return (
+    (await isPublicRepo()) &&
+    ((await metaStore.has(platform, getRepoNameByUrl())) || (await metaStore.has(platform, getRepoNameByPage())))
+  );
+}
