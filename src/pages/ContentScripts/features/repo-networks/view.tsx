@@ -20,17 +20,22 @@ const logoStyle = {
   marginRight: '50px',
   marginTop: '5px',
 };
+
 const baseOSGraphUrls = {
-  projectContributionNetwork: 'https://osgraph.com/graphs/repo-contrib/github/{repoName}?contrib-limit=10',
-  projectEcosystemNetwork: 'https://osgraph.com/graphs/repo-eco/github/{repoName}?repo-limit=10',
+  projectContributionNetwork:
+    'https://osgraph.com/graphs/project-contribution/github/{repoName}?lang={lang}&repo-limit=10',
+  projectEcosystemNetwork: 'https://osgraph.com/graphs/project-ecosystem/github/{repoName}?lang={lang}&repo-limit=10',
   projectCommunityNetwork:
-    'https://osgraph.com/graphs/repo-community/github/{repoName}?country-limit=5&org-limit=5&contrib-limit=3',
+    'https://osgraph.com/graphs/project-community/github/{repoName}?lang={lang}&country-limit=5&company-limit=5&user-limit=3',
 };
 const View = ({ repoName }: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
   const { t, i18n } = useTranslation();
   const OSGraphUrls = Object.fromEntries(
-    Object.entries(baseOSGraphUrls).map(([key, url]) => [key, url.replace('{repoName}', repoName)])
+    Object.entries(baseOSGraphUrls).map(([key, url]) => [
+      key,
+      url.replace('{repoName}', repoName).replace('{lang}', i18n.language == 'en' ? 'en-US' : 'zh-CN'),
+    ])
   );
   const osGraphLogo = chrome.runtime.getURL('osGraphLogo.png');
   useEffect(() => {
