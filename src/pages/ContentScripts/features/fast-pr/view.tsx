@@ -33,7 +33,9 @@ const View = ({ filePath, originalRepo, branch, platform, horizontalRatio, verti
   const [fileContent, setFileContent] = useState('');
   const buttonSize = 50; // Button size
   const padding = 24; // Padding from the screen edges
-  let textSelected = false;
+
+  const [isTextSelected, setIsTextSelected] = useState(false);
+
   const dragThreshold = 5; // Threshold to distinguish dragging from clicking
   const GITHUB_FILE_URL = (filePath: string, originalRepo: string, branch: string) =>
     `https://raw.githubusercontent.com/${originalRepo}/${branch}/${filePath}`;
@@ -211,17 +213,19 @@ const View = ({ filePath, originalRepo, branch, platform, horizontalRatio, verti
   //Check if there is selected text
   const checkTextSelection = () => {
     const selection = window.getSelection();
-    return selection && selection.rangeCount > 0 && selection.toString().trim() !== '';
+    const hasSelection = Boolean(selection && selection.rangeCount > 0 && selection.toString().trim() !== '');
+    setIsTextSelected(hasSelection);
+    return hasSelection;
   };
 
   //Check if the text is selected when the mouse is raised
   useEffect(() => {
     const handleGlobalMouseUp = (event: MouseEvent) => {
       if (checkTextSelection()) {
-        textSelected = true;
+        setIsTextSelected(true);
         moveButtonToMouseUpPosition(event);
       } else {
-        textSelected = false;
+        setIsTextSelected(false);
       }
     };
     document.addEventListener('mouseup', handleGlobalMouseUp);
@@ -230,21 +234,63 @@ const View = ({ filePath, originalRepo, branch, platform, horizontalRatio, verti
     };
   }, []);
 
-  //Return to the initial position when scrolling, only after selecting text
+  // Add state to track the currently selected text range
+  const [selectedRange, setSelectedRange] = useState<Range | null>(null);
+
   useEffect(() => {
-    const handleScroll = () => {
-      if (textSelected) {
-        const initialX = (window.innerWidth - buttonSize) * horizontalRatio;
-        const initialY = (window.innerHeight - buttonSize) * verticalRatio;
-        setPosition({ x: initialX, y: initialY });
-        textSelected = false;
+    const handleSelectionChange = () => {
+      const selection = window.getSelection();
+      if (selection && selection.rangeCount > 0 && selection.toString().trim()) {
+        const range = selection.getRangeAt(0);
+        setSelectedRange(range);
+        setIsTextSelected(true);
+
+        // Get the position of selected text
+        const rect = range.getBoundingClientRect();
+        const x = Math.min(rect.right + 10, (window.innerWidth - buttonSize) * horizontalRatio);
+        const y = rect.top + window.scrollY;
+        setPosition({ x, y });
+      } else {
+        setSelectedRange(null);
+        if (isTextSelected) {
+          // If text was previously selected and now deselected, return to initial position
+          const initialX = (window.innerWidth - buttonSize) * horizontalRatio;
+          const initialY = (window.innerHeight - buttonSize) * verticalRatio;
+          setPosition({ x: initialX, y: initialY });
+          setIsTextSelected(false);
+        }
       }
     };
+
+    const handleScroll = () => {
+      if (selectedRange && isTextSelected) {
+        // If text is selected, update button position to follow the text
+        const rect = selectedRange.getBoundingClientRect();
+
+        // Check if selected text is within viewport
+        if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+          // Position button at the end of selected text, relative to viewport
+          const x = Math.min(rect.right + 10, window.innerWidth - buttonSize - padding);
+          const y = rect.top + rect.height / 2 - buttonSize / 2;
+          setPosition({ x, y });
+        } else {
+          // If text is out of viewport, return to initial position
+          const initialX = (window.innerWidth - buttonSize) * horizontalRatio;
+          const initialY = (window.innerHeight - buttonSize) * verticalRatio;
+          setPosition({ x: initialX, y: initialY });
+        }
+      }
+    };
+
+    document.addEventListener('selectionchange', handleSelectionChange);
     document.addEventListener('scroll', handleScroll);
+
     return () => {
+      document.removeEventListener('selectionchange', handleSelectionChange);
       document.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [selectedRange, isTextSelected, horizontalRatio, verticalRatio]);
+
   // When the mouse is released, stop dragging, and determine if it's a click or drag
   const handleMouseUp = () => {
     if (!dragged) {
