@@ -22,9 +22,11 @@ const logoStyle = {
 };
 
 const baseOSGraphUrls = {
-  developmentActivityNetwork: 'https://osgraph.com/graphs/dev-activity/github/{userName}?repo-limit=10',
-  openSourcePartnersNetwork: 'https://osgraph.com/graphs/dev-partner/github/{userName}?partner-limit=10',
-  openSourceInterestsNetwork: 'https://osgraph.com/graphs/dev-interest/github/{userName}?repo-limit=3&topic-limit=5',
+  developmentActivityNetwork:
+    'https://osgraph.com/graphs/developer-activity/github/{userName}?lang={lang}&user-limit=10',
+  openSourcePartnersNetwork: 'https://osgraph.com/graphs/os-partner/github/{userName}?lang={lang}&user-limit=10',
+  openSourceInterestsNetwork:
+    'https://osgraph.com/graphs/os-interest/github/{userName}?lang={lang}&repo-limit=3&topic-limit=5',
 };
 const View = ({ userName }: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
@@ -34,14 +36,17 @@ const View = ({ userName }: Props): JSX.Element => {
   const { t, i18n } = useTranslation();
   const osGraphLogo = chrome.runtime.getURL('osGraphLogo.png');
   const OSGraphUrls = Object.fromEntries(
-    Object.entries(baseOSGraphUrls).map(([key, url]) => [key, url.replace('{userName}', userName)])
+    Object.entries(baseOSGraphUrls).map(([key, url]) => [
+      key,
+      url.replace('{userName}', userName).replace('{lang}', i18n.language == 'en' ? 'en-US' : 'zh-CN'),
+    ])
   );
   useEffect(() => {
     (async function () {
       setOptions(await optionsStorage.getAll());
+      i18n.changeLanguage(options.locale);
     })();
   }, [options.locale]);
-
   return (
     <div className="border-top color-border-secondary pt-3 mt-3">
       <h2 className="h4 mb-2">Perceptor</h2>
