@@ -2,7 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 import { createRoot } from 'react-dom/client';
 import features from '../../../../feature-manager';
-import { getRepoName, isPublicRepoWithMeta, isRepoRoot } from '../../../../helpers/get-repo-info';
+import { getRepoName, isPublicRepoWithMeta, isRepoRoot } from '../../../../helpers/get-github-repo-info';
 import { getActivity, getOpenrank } from '../../../../api/repo';
 import { RepoMeta, metaStore } from '../../../../api/common';
 import View from './view';

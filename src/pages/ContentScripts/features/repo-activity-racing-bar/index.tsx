@@ -2,7 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 import features from '../../../../feature-manager';
 import isPerceptor from '../../../../helpers/is-perceptor';
-import { getRepoName, isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
+import { getRepoName, isPublicRepoWithMeta } from '../../../../helpers/get-github-repo-info';
 import { getActivityDetails } from '../../../../api/repo';
 import View from './view';
 import DataNotFound from '../repo-networks/DataNotFound';

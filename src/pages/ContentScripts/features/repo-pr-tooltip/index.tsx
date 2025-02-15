@@ -2,7 +2,7 @@ import features from '../../../../feature-manager';
 import View, { PRDetail } from './view';
 import { NativePopover } from '../../components/NativePopover';
 import elementReady from 'element-ready';
-import { getRepoName, isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
+import { getRepoName, isPublicRepoWithMeta } from '../../../../helpers/get-github-repo-info';
 import { createRoot } from 'react-dom/client';
 import {
   getPROpened,

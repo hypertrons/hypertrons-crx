@@ -111,7 +111,7 @@ const getFeatureID = (url: string): FeatureId => {
   const prefix = 'hypercrx-';
   const pathComponents = url.split('/');
   let name = pathComponents.pop()!.split('.')[0];
-  if (name === 'index') {
+  if (name === 'index'||name==='gitee-index') {
     name = pathComponents.pop()!;
   }
   return `${prefix}${name}` as FeatureId;

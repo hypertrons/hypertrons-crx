@@ -6,7 +6,7 @@ import isPerceptor from '../../../../helpers/is-perceptor';
 import View from './view';
 import elementReady from 'element-ready';
 import { createRoot } from 'react-dom/client';
-import { getRepoName } from '../../../../helpers/get-repo-info';
+import { getRepoName } from '../../../../helpers/get-github-repo-info';
 import isGithub from '../../../../helpers/is-github';
 
 const featureId = features.getFeatureID(import.meta.url);

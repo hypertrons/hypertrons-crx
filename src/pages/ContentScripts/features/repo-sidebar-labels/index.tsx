@@ -1,5 +1,5 @@
 import features from '../../../../feature-manager';
-import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
+import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../../../../helpers/get-github-repo-info';
 import { Label, RepoMeta, metaStore } from '../../../../api/common';
 import { createRoot } from 'react-dom/client';
 import OpenDiggerLabel from './OpenDiggerLabel';

@@ -2,7 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 
 import features from '../../../../feature-manager';
-import { getDeveloperName, isDeveloperWithMeta } from '../../../../helpers/get-developer-info';
+import { getDeveloperName, isDeveloperWithMeta } from '../../../../helpers/get-github-developer-info';
 import { getActivity, getOpenrank } from '../../../../api/developer';
 import { UserMeta, metaStore } from '../../../../api/common';
 import View from './view';

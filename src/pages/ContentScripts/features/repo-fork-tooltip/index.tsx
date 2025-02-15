@@ -2,7 +2,7 @@ import features from '../../../../feature-manager';
 import View from './view';
 import { NativePopover } from '../../components/NativePopover';
 import elementReady from 'element-ready';
-import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
+import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../../../../helpers/get-github-repo-info';
 import { getForks } from '../../../../api/repo';
 import { RepoMeta, metaStore } from '../../../../api/common';
 

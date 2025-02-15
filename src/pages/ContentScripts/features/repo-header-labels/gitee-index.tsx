@@ -5,14 +5,14 @@ import OpenrankView from './openrankView';
 import ParticipantView from './participantView';
 import { NativePopover } from '../../components/NativePopover';
 import elementReady from 'element-ready';
-import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../../../../helpers/get-github-repo-info';
+import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../../../../helpers/get-gitee-repo-info';
 import { getActivity, getOpenrank, getParticipant, getContributor } from '../../../../api/repo';
 import { RepoMeta, metaStore } from '../../../../api/common';
 import React from 'react';
 import $ from 'jquery';
 import { createRoot } from 'react-dom/client';
-import isGithub from '../../../../helpers/is-github';
 import { getPlatform } from '../../../../helpers/get-platform';
+import isGitee from '../../../../helpers/is-gitee';
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
 let activity: any;
@@ -89,7 +89,7 @@ const restore = async () => {
 };
 
 features.add(featureId, {
-  asLongAs: [isGithub, isPublicRepoWithMeta, hasRepoContainerHeader],
+  asLongAs: [isGitee, isPublicRepoWithMeta, hasRepoContainerHeader],
   awaitDomReady: false,
   init,
   restore,

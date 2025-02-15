@@ -23,7 +23,6 @@ export function getDeveloperNameByUrl() {
   const developerName = pathParts[pathParts.length - 1];
   return developerName;
 }
-//TODO
 export async function isDeveloperWithMeta() {
   const platform = getPlatform();
   return pageDetect.isUserProfile() && (await metaStore.has(platform, getDeveloperName()));
