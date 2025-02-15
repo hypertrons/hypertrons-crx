@@ -35,7 +35,7 @@
     "copy-to-clipboard": "^3.3.3",
     "delay": "^5.0.0",
     "dom-loaded": "^3.0.0",
-    "dompurify": "^3.1.6",
+    "dompurify": "^3.2.4",
     "echarts": "^5.3.0",
     "element-ready": "^6.2.1",
     "github-url-detection": "^8.1.0",
