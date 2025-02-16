@@ -13,8 +13,7 @@ import $ from 'jquery';
 import { createRoot } from 'react-dom/client';
 import { getPlatform } from '../../../../helpers/get-platform';
 import isGitee from '../../../../helpers/is-gitee';
-import sleep from '../../../../helpers/sleep';
-import { GiteeNativePopover } from '../../components/GiteeNativePopover';
+
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
 let activity: any;
@@ -52,28 +51,29 @@ const waitForElement = (selector: string) => {
 const init = async (): Promise<void> => {
   platform = getPlatform();
   repoName = getRepoName();
+  console.log('repoName', repoName);
+
   await getData();
   const container = document.createElement('div');
   container.id = featureId;
-  container.className = 'inline-label-container';
   renderTo(container);
-  await elementReady('.git-project-header-container');
-  $('.git-project-header-container').find('span.project-title').after(container);
+  await elementReady('#repository-container-header');
+  $('#repository-container-header').find('span.Label').after(container);
   await waitForElement('#activity-header-label');
   await waitForElement('#OpenRank-header-label');
   await waitForElement('#participant-header-label');
   const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
   createRoot(placeholderElement).render(
     <>
-      <GiteeNativePopover anchor={$('#activity-header-label')} width={280} arrowPosition="bottom">
+      <NativePopover anchor={$('#activity-header-label')} width={280} arrowPosition="top-middle">
         <ActivityView activity={activity} meta={meta} />
-      </GiteeNativePopover>
-      <GiteeNativePopover anchor={$('#OpenRank-header-label')} width={280} arrowPosition="bottom">
+      </NativePopover>
+      <NativePopover anchor={$('#OpenRank-header-label')} width={280} arrowPosition="top-middle">
         <OpenrankView openrank={openrank} meta={meta} />
-      </GiteeNativePopover>
-      <GiteeNativePopover anchor={$('#participant-header-label')} width={280} arrowPosition="bottom">
+      </NativePopover>
+      <NativePopover anchor={$('#participant-header-label')} width={280} arrowPosition="top-middle">
         <ParticipantView participant={participant} contributor={contributor} meta={meta} />
-      </GiteeNativePopover>
+      </NativePopover>
     </>
   );
 };
@@ -91,7 +91,7 @@ const restore = async () => {
   renderTo($(`#${featureId}`)[0]);
 };
 features.add(featureId, {
-  asLongAs: [isGitee, isPublicRepoWithMeta, hasRepoContainerHeader],
+  asLongAs: [isGitee],
   awaitDomReady: false,
   init,
   restore,

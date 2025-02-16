@@ -9,8 +9,8 @@ import TooltipTrigger from '../../../../components/TooltipTrigger';
 
 import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
-const githubTheme = getGithubTheme();
-
+import isGithub from '../../../../helpers/is-github';
+const theme = isGithub() ? getGithubTheme() : 'light';
 interface Props {
   activity: any;
   meta: RepoMeta;
@@ -42,7 +42,7 @@ const ActivityView = ({ activity, meta }: Props): JSX.Element | null => {
         <div style={{ marginRight: '5px' }}>{t('header_label_activity')}</div>
         <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', { icon_content: '$t(activity_icon)' })} />
       </div>
-      <ActivityChart theme={githubTheme as 'light' | 'dark'} width={270} height={130} data={activityData} />
+      <ActivityChart theme={theme as 'light' | 'dark'} width={270} height={130} data={activityData} />
     </>
   );
 };
