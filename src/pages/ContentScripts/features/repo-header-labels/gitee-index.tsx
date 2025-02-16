@@ -13,7 +13,6 @@ import $ from 'jquery';
 import { createRoot } from 'react-dom/client';
 import { getPlatform } from '../../../../helpers/get-platform';
 import isGitee from '../../../../helpers/is-gitee';
-import sleep from '../../../../helpers/sleep';
 import { GiteeNativePopover } from '../../components/GiteeNativePopover';
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
