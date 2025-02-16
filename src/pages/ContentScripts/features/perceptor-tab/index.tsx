@@ -4,7 +4,7 @@ import elementReady from 'element-ready';
 import iconSvgPath from './icon-svg-path';
 import features from '../../../../feature-manager';
 import isPerceptor from '../../../../helpers/is-perceptor';
-import { isPublicRepo } from '../../../../helpers/get-repo-info';
+import { isPublicRepo } from '../../../../helpers/get-github-repo-info';
 import sleep from '../../../../helpers/sleep';
 import isGithub from '../../../../helpers/is-github';
 

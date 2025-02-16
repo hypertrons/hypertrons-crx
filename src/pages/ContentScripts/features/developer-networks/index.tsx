@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client';
 import elementReady from 'element-ready';
 
 import features from '../../../../feature-manager';
-import { getDeveloperName, isUserProfile } from '../../../../helpers/get-developer-info';
+import { getDeveloperName, isUserProfile } from '../../../../helpers/get-github-developer-info';
 import View from './view';
 import isGithub from '../../../../helpers/is-github';
 

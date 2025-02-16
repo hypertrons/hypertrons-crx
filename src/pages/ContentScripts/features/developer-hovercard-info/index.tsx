@@ -5,11 +5,12 @@ import React from 'react';
 import View from './view';
 import { createRoot } from 'react-dom/client';
 import isGithub from '../../../../helpers/is-github';
+import { getPlatform } from '../../../../helpers/get-platform';
 const featureId = features.getFeatureID(import.meta.url);
 let isInitialized = false;
-
+let platform: string;
 const getDeveloperLatestOpenrank = async (developerName: string): Promise<string | null> => {
-  const data = await getOpenrank(developerName);
+  const data = await getOpenrank(platform, developerName);
   if (data) {
     // filter YYYY-MM
     const monthKeys = Object.keys(data).filter((key) => /^\d{4}-\d{2}$/.test(key));
@@ -103,6 +104,7 @@ const processElement = (element: Element) => {
 };
 
 const init = async (): Promise<void> => {
+  platform = getPlatform();
   if (isInitialized) return;
   isInitialized = true;
 

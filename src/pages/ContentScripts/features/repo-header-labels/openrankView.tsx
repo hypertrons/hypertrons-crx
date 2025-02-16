@@ -9,7 +9,8 @@ import TooltipTrigger from '../../../../components/TooltipTrigger';
 
 import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
-const githubTheme = getGithubTheme();
+import isGithub from '../../../../helpers/is-github';
+const theme = isGithub() ? getGithubTheme() : 'light';
 
 interface Props {
   openrank: any;
@@ -42,7 +43,7 @@ const OpenrankView = ({ openrank, meta }: Props): JSX.Element | null => {
         <div style={{ marginRight: '5px' }}>{t('header_label_OpenRank')}</div>
         <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', { icon_content: '$t(openrank_icon)' })} />
       </div>
-      <OpenRankChart theme={githubTheme as 'light' | 'dark'} width={270} height={130} data={openrankData} />
+      <OpenRankChart theme={theme as 'light' | 'dark'} width={270} height={130} data={openrankData} />
     </>
   );
 };
