@@ -25,7 +25,7 @@ export function getMonthlyData(data: RepoActivityDetails) {
   for (const key in data) {
     // Check if the key matches the yyyy-mm format (e.g., "2020-05")
     if (/^\d{4}-\d{2}$/.test(key)) {
-      monthlyData[key] = data[key];
+      monthlyData[key] = data[key].sort((a, b) => b[1] - a[1]).slice(0, 15);
     }
   }
   return monthlyData;

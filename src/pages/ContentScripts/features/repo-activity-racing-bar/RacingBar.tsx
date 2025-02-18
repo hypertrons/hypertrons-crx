@@ -33,8 +33,9 @@ const RacingBar = forwardRef(
     const monthIndexRef = useRef<number>(months.length - 1);
 
     const [longTermContributorsCount, contributors] = countLongTermContributors(data);
-    const maxBars = longTermContributorsCount >= 20 ? 20 : 10;
-    const height = longTermContributorsCount >= 20 ? 600 : 300;
+
+    const maxBars = longTermContributorsCount >= 15 ? 15 : 10;
+    const height = longTermContributorsCount >= 15 ? 450 : 300;
     const [loadedAvatars, loadAvatars] = useLoadedAvatars(contributors);
 
     const updateMonth = async (instance: EChartsType, month: string, enableAnimation: boolean) => {
