@@ -3,7 +3,6 @@ import View from './view';
 import ActivityView from './activityView';
 import OpenrankView from './openrankView';
 import ParticipantView from './participantView';
-import { NativePopover } from '../../components/NativePopover';
 import elementReady from 'element-ready';
 import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../../../../helpers/get-gitee-repo-info';
 import { getActivity, getOpenrank, getParticipant, getContributor } from '../../../../api/repo';

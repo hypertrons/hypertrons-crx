@@ -6,7 +6,6 @@ import ActivityChart from './ActivityChart';
 import { RepoMeta } from '../../../../api/common';
 import React, { useState, useEffect } from 'react';
 import TooltipTrigger from '../../../../components/TooltipTrigger';
-
 import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
 import isGithub from '../../../../helpers/is-github';
