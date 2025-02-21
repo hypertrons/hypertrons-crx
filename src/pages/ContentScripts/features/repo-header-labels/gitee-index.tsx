@@ -3,16 +3,16 @@ import View from './view';
 import ActivityView from './activityView';
 import OpenrankView from './openrankView';
 import ParticipantView from './participantView';
-import { NativePopover } from '../../components/NativePopover';
 import elementReady from 'element-ready';
-import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../../../../helpers/get-github-repo-info';
+import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../../../../helpers/get-gitee-repo-info';
 import { getActivity, getOpenrank, getParticipant, getContributor } from '../../../../api/repo';
 import { RepoMeta, metaStore } from '../../../../api/common';
 import React from 'react';
 import $ from 'jquery';
 import { createRoot } from 'react-dom/client';
-import isGithub from '../../../../helpers/is-github';
 import { getPlatform } from '../../../../helpers/get-platform';
+import isGitee from '../../../../helpers/is-gitee';
+import { GiteeNativePopover } from '../../components/GiteeNativePopover';
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
 let activity: any;
@@ -53,24 +53,25 @@ const init = async (): Promise<void> => {
   await getData();
   const container = document.createElement('div');
   container.id = featureId;
+  container.className = 'inline-label-container';
   renderTo(container);
-  await elementReady('#repository-container-header');
-  $('#repository-container-header').find('span.Label').after(container);
+  await elementReady('.git-project-header-container');
+  $('.git-project-header-container').find('span.project-title').after(container);
   await waitForElement('#activity-header-label');
   await waitForElement('#OpenRank-header-label');
   await waitForElement('#participant-header-label');
   const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
   createRoot(placeholderElement).render(
     <>
-      <NativePopover anchor={$('#activity-header-label')} width={280} arrowPosition="top-middle">
+      <GiteeNativePopover anchor={$('#activity-header-label')} width={280} arrowPosition="bottom">
         <ActivityView activity={activity} meta={meta} />
-      </NativePopover>
-      <NativePopover anchor={$('#OpenRank-header-label')} width={280} arrowPosition="top-middle">
+      </GiteeNativePopover>
+      <GiteeNativePopover anchor={$('#OpenRank-header-label')} width={280} arrowPosition="bottom">
         <OpenrankView openrank={openrank} meta={meta} />
-      </NativePopover>
-      <NativePopover anchor={$('#participant-header-label')} width={280} arrowPosition="top-middle">
+      </GiteeNativePopover>
+      <GiteeNativePopover anchor={$('#participant-header-label')} width={280} arrowPosition="bottom">
         <ParticipantView participant={participant} contributor={contributor} meta={meta} />
-      </NativePopover>
+      </GiteeNativePopover>
     </>
   );
 };
@@ -87,9 +88,8 @@ const restore = async () => {
   // way to solve this is to rerender the view to the container. At least this way works.
   renderTo($(`#${featureId}`)[0]);
 };
-
 features.add(featureId, {
-  asLongAs: [isGithub, isPublicRepoWithMeta, hasRepoContainerHeader],
+  asLongAs: [isGitee, isPublicRepoWithMeta, hasRepoContainerHeader],
   awaitDomReady: false,
   init,
   restore,

@@ -22,74 +22,74 @@ const metricNameMap = new Map([
   ['activity_details', 'activity_details'],
 ]);
 
-export const getActivity = async (repo: string) => {
-  return getMetricByName(repo, metricNameMap, 'activity');
+export const getActivity = async (platform: string, repo: string) => {
+  return getMetricByName(platform, repo, metricNameMap, 'activity');
 };
 
-export const getOpenrank = async (repo: string) => {
-  return getMetricByName(repo, metricNameMap, 'openrank');
+export const getOpenrank = async (platform: string, repo: string) => {
+  return getMetricByName(platform, repo, metricNameMap, 'openrank');
 };
 
-export const getParticipant = async (repo: string) => {
-  return getMetricByName(repo, metricNameMap, 'participant');
+export const getParticipant = async (platform: string, repo: string) => {
+  return getMetricByName(platform, repo, metricNameMap, 'participant');
 };
 
-export const getContributor = async (repo: string) => {
-  return getMetricByName(repo, metricNameMap, 'contributor');
+export const getContributor = async (platform: string, repo: string) => {
+  return getMetricByName(platform, repo, metricNameMap, 'contributor');
 };
 
-export const getForks = async (repo: string) => {
-  return getMetricByName(repo, metricNameMap, 'forks');
+export const getForks = async (platform: string, repo: string) => {
+  return getMetricByName(platform, repo, metricNameMap, 'forks');
 };
 
-export const getStars = async (repo: string) => {
-  return getMetricByName(repo, metricNameMap, 'stars');
+export const getStars = async (platform: string, repo: string) => {
+  return getMetricByName(platform, repo, metricNameMap, 'stars');
 };
 
-export const getIssuesOpened = async (repo: string) => {
-  return getMetricByName(repo, metricNameMap, 'issues_opened');
+export const getIssuesOpened = async (platform: string, repo: string) => {
+  return getMetricByName(platform, repo, metricNameMap, 'issues_opened');
 };
 
-export const getIssuesClosed = async (repo: string) => {
-  return getMetricByName(repo, metricNameMap, 'issues_closed');
+export const getIssuesClosed = async (platform: string, repo: string) => {
+  return getMetricByName(platform, repo, metricNameMap, 'issues_closed');
 };
 
-export const getIssueComments = async (repo: string) => {
-  return getMetricByName(repo, metricNameMap, 'issue_comments');
+export const getIssueComments = async (platform: string, repo: string) => {
+  return getMetricByName(platform, repo, metricNameMap, 'issue_comments');
 };
 
-export const getPROpened = async (repo: string) => {
-  return getMetricByName(repo, metricNameMap, 'PR_opened');
+export const getPROpened = async (platform: string, repo: string) => {
+  return getMetricByName(platform, repo, metricNameMap, 'PR_opened');
 };
 
-export const getPRMerged = async (repo: string) => {
-  return getMetricByName(repo, metricNameMap, 'PR_merged');
+export const getPRMerged = async (platform: string, repo: string) => {
+  return getMetricByName(platform, repo, metricNameMap, 'PR_merged');
 };
 
-export const getPRReviews = async (repo: string) => {
-  return getMetricByName(repo, metricNameMap, 'PR_reviews');
+export const getPRReviews = async (platform: string, repo: string) => {
+  return getMetricByName(platform, repo, metricNameMap, 'PR_reviews');
 };
 
-export const getMergedCodeAddition = async (repo: string) => {
-  return getMetricByName(repo, metricNameMap, 'merged_code_addition');
+export const getMergedCodeAddition = async (platform: string, repo: string) => {
+  return getMetricByName(platform, repo, metricNameMap, 'merged_code_addition');
 };
 
-export const getMergedCodeDeletion = async (repo: string) => {
-  return getMetricByName(repo, metricNameMap, 'merged_code_deletion');
+export const getMergedCodeDeletion = async (platform: string, repo: string) => {
+  return getMetricByName(platform, repo, metricNameMap, 'merged_code_deletion');
 };
 
-export const getMergedCodeSum = async (repo: string) => {
-  return getMetricByName(repo, metricNameMap, 'merged_code_sum');
+export const getMergedCodeSum = async (platform: string, repo: string) => {
+  return getMetricByName(platform, repo, metricNameMap, 'merged_code_sum');
 };
 
-export const getDeveloperNetwork = async (repo: string) => {
-  return getMetricByName(repo, metricNameMap, 'developer_network');
+export const getDeveloperNetwork = async (platform: string, repo: string) => {
+  return getMetricByName(platform, repo, metricNameMap, 'developer_network');
 };
 
-export const getRepoNetwork = async (repo: string) => {
-  return getMetricByName(repo, metricNameMap, 'repo_network');
+export const getRepoNetwork = async (platform: string, repo: string) => {
+  return getMetricByName(platform, repo, metricNameMap, 'repo_network');
 };
 
-export const getActivityDetails = async (repo: string) => {
-  return getMetricByName(repo, metricNameMap, 'activity_details');
+export const getActivityDetails = async (platform: string, repo: string) => {
+  return getMetricByName(platform, repo, metricNameMap, 'activity_details');
 };

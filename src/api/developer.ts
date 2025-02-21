@@ -8,18 +8,18 @@ const metricNameMap = new Map([
   ['repo_network', 'repo_network'],
 ]);
 
-export const getActivity = async (user: string) => {
-  return getMetricByName(user, metricNameMap, 'activity');
+export const getActivity = async (platform: string, user: string) => {
+  return getMetricByName(platform, user, metricNameMap, 'activity');
 };
 
-export const getOpenrank = async (user: string) => {
-  return getMetricByName(user, metricNameMap, 'openrank');
+export const getOpenrank = async (platform: string, user: string) => {
+  return getMetricByName(platform, user, metricNameMap, 'openrank');
 };
 
-export const getDeveloperNetwork = async (user: string) => {
-  return getMetricByName(user, metricNameMap, 'developer_network');
+export const getDeveloperNetwork = async (platform: string, user: string) => {
+  return getMetricByName(platform, user, metricNameMap, 'developer_network');
 };
 
-export const getRepoNetwork = async (user: string) => {
-  return getMetricByName(user, metricNameMap, 'repo_network');
+export const getRepoNetwork = async (platform: string, user: string) => {
+  return getMetricByName(platform, user, metricNameMap, 'repo_network');
 };

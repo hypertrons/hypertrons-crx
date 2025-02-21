@@ -3,6 +3,7 @@ import { metaStore } from '../api/common';
 import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
 import elementReady from 'element-ready';
+import { getPlatform } from './get-platform';
 
 export function getRepoName() {
   const repoNameByUrl = getRepoNameByUrl();
@@ -39,13 +40,22 @@ export async function isRepoRoot() {
  * check if the repository is public
  */
 export async function isPublicRepo() {
-  const selector = 'meta[name="octolytics-dimension-repository_public"]';
-  await elementReady(selector);
-  // <meta name="octolytics-dimension-repository_public" content="true/false">
-  const isPublic = $(selector).attr('content') === 'true';
-  return pageDetect.isRepo() && isPublic;
+  const platform = getPlatform();
+  if (platform === 'github') {
+    const selector = 'meta[name="octolytics-dimension-repository_public"]';
+    await elementReady(selector);
+    // <meta name="octolytics-dimension-repository_public" content="true/false">
+    const isPublic = $(selector).attr('content') === 'true';
+    return pageDetect.isRepo() && isPublic;
+  } else {
+    // TODO
+    return true;
+  }
 }
-
 export async function isPublicRepoWithMeta() {
-  return (await isPublicRepo()) && ((await metaStore.has(getRepoName())) || (await metaStore.has(getRepoNameByPage())));
+  const platform = getPlatform();
+  return (
+    (await isPublicRepo()) &&
+    ((await metaStore.has(platform, getRepoNameByUrl())) || (await metaStore.has(platform, getRepoNameByPage())))
+  );
 }

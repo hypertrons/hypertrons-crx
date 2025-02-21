@@ -1,5 +1,5 @@
 import features from '../../../../feature-manager';
-import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
+import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../../../../helpers/get-github-repo-info';
 import { Label, RepoMeta, metaStore } from '../../../../api/common';
 import { createRoot } from 'react-dom/client';
 import OpenDiggerLabel from './OpenDiggerLabel';
@@ -7,11 +7,11 @@ import OpenDiggerLabel from './OpenDiggerLabel';
 import React from 'react';
 import $ from 'jquery';
 import isGithub from '../../../../helpers/is-github';
-
+import { getPlatform } from '../../../../helpers/get-platform';
 const featureId = features.getFeatureID(import.meta.url);
-
+let platform: string;
 const getLabels = async (repoName: string) => {
-  const meta = (await metaStore.get(repoName)) as RepoMeta;
+  const meta = (await metaStore.get(platform, repoName)) as RepoMeta;
   // filtered all xxx-n and n is not 0
   return meta.labels?.filter((label) => {
     return !(label.type.includes('-') && parseInt(label.type.split('-')[1]) > 0);
@@ -41,6 +41,7 @@ const renderTags = (labels: Label[]) => {
 };
 
 const init = async (): Promise<void> => {
+  platform = getPlatform();
   const repoName = getRepoName();
   const labels = await getLabels(repoName);
   if (labels && labels.length > 0) {

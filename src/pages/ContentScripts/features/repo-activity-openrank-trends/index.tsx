@@ -2,22 +2,22 @@ import React from 'react';
 import $ from 'jquery';
 import { createRoot } from 'react-dom/client';
 import features from '../../../../feature-manager';
-import { getRepoName, isPublicRepoWithMeta, isRepoRoot } from '../../../../helpers/get-repo-info';
+import { getRepoName, isPublicRepoWithMeta, isRepoRoot } from '../../../../helpers/get-github-repo-info';
 import { getActivity, getOpenrank } from '../../../../api/repo';
 import { RepoMeta, metaStore } from '../../../../api/common';
 import View from './view';
 import isGithub from '../../../../helpers/is-github';
-
+import { getPlatform } from '../../../../helpers/get-platform';
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
 let activity: any;
 let openrank: any;
 let meta: RepoMeta;
-
+let platform: string;
 const getData = async () => {
-  activity = await getActivity(repoName);
-  openrank = await getOpenrank(repoName);
-  meta = (await metaStore.get(repoName)) as RepoMeta;
+  activity = await getActivity(platform, repoName);
+  openrank = await getOpenrank(platform, repoName);
+  meta = (await metaStore.get(platform, repoName)) as RepoMeta;
 };
 
 const renderTo = (container: any) => {
@@ -25,6 +25,7 @@ const renderTo = (container: any) => {
 };
 
 const init = async (): Promise<void> => {
+  platform = getPlatform();
   repoName = getRepoName();
   await getData();
 

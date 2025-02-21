@@ -2,6 +2,7 @@ import { metaStore } from '../api/common';
 
 import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
+import { getPlatform } from './get-platform';
 
 export function getDeveloperName() {
   const developerNameByUrl = getDeveloperNameByUrl();
@@ -22,9 +23,9 @@ export function getDeveloperNameByUrl() {
   const developerName = pathParts[pathParts.length - 1];
   return developerName;
 }
-
 export async function isDeveloperWithMeta() {
-  return pageDetect.isUserProfile() && (await metaStore.has(getDeveloperName()));
+  const platform = getPlatform();
+  return pageDetect.isUserProfile() && (await metaStore.has(platform, getDeveloperName()));
 }
 export async function isUserProfile() {
   return pageDetect.isUserProfile();

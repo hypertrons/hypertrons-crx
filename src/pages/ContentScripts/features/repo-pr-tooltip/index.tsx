@@ -2,7 +2,7 @@ import features from '../../../../feature-manager';
 import View, { PRDetail } from './view';
 import { NativePopover } from '../../components/NativePopover';
 import elementReady from 'element-ready';
-import { getRepoName, isPublicRepoWithMeta } from '../../../../helpers/get-repo-info';
+import { getRepoName, isPublicRepoWithMeta } from '../../../../helpers/get-github-repo-info';
 import { createRoot } from 'react-dom/client';
 import {
   getPROpened,
@@ -16,6 +16,7 @@ import { RepoMeta, metaStore } from '../../../../api/common';
 import React from 'react';
 import $ from 'jquery';
 import isGithub from '../../../../helpers/is-github';
+import { getPlatform } from '../../../../helpers/get-platform';
 
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
@@ -27,17 +28,18 @@ let PRDetail: PRDetail = {
   mergedCodeDeletion: null,
 };
 let meta: RepoMeta;
-
+let platform: string;
 const getData = async () => {
-  PRDetail.PROpened = await getPROpened(repoName);
-  PRDetail.PRMerged = await getPRMerged(repoName);
-  PRDetail.PRReviews = await getPRReviews(repoName);
-  PRDetail.mergedCodeAddition = await getMergedCodeAddition(repoName);
-  PRDetail.mergedCodeDeletion = await getMergedCodeDeletion(repoName);
-  meta = (await metaStore.get(repoName)) as RepoMeta;
+  PRDetail.PROpened = await getPROpened(platform, repoName);
+  PRDetail.PRMerged = await getPRMerged(platform, repoName);
+  PRDetail.PRReviews = await getPRReviews(platform, repoName);
+  PRDetail.mergedCodeAddition = await getMergedCodeAddition(platform, repoName);
+  PRDetail.mergedCodeDeletion = await getMergedCodeDeletion(platform, repoName);
+  meta = (await metaStore.get(platform, repoName)) as RepoMeta;
 };
 
 const init = async (): Promise<void> => {
+  platform = getPlatform();
   repoName = getRepoName();
   await getData();
 
