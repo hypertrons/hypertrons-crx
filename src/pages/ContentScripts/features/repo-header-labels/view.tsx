@@ -36,18 +36,18 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
   const contributorData = generateDataByMonth(contributor, meta.updatedAt);
   const rocketLightLogo = chrome.runtime.getURL('rocketLightLogo.png');
   const rocketDarkLogo = chrome.runtime.getURL('rocketDarkLogo.png');
-
+  const textColor = isGithub() ? (theme === 'light' ? '#24292F' : '#C9D1D9') : '#40485B';
   return (
     <div className="d-flex">
       <span
         id="activity-header-label"
         className="Label Label--secondary v-align-middle mr-1 unselectable"
-        style={{ color: theme === 'light' ? '#24292f' : '#c9d1d9' }}
+        style={{ color: textColor }}
         data-tip=""
         data-for="activity-tooltip"
         data-class={`floating-window ${theme}`}
         data-place="bottom"
-        data-text-color={theme === 'light' ? '#24292F' : '#C9D1D9'}
+        data-text-color={textColor}
         data-background-color={theme === 'light' ? 'white' : '#161B22'}
         data-effect="solid"
         data-delay-hide={500}
@@ -73,12 +73,12 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
       <span
         id="OpenRank-header-label"
         className="Label Label--secondary v-align-middle mr-1 unselectable"
-        style={{ color: theme === 'light' ? '#24292f' : '#c9d1d9' }}
+        style={{ color: textColor }}
         data-tip=""
         data-for="openrank-tooltip"
         data-class={`floating-window ${theme}`}
         data-place="bottom"
-        data-text-color={theme === 'light' ? '#24292F' : '#C9D1D9'}
+        data-text-color={textColor}
         data-background-color={theme === 'light' ? 'white' : '#161B22'}
         data-effect="solid"
         data-delay-hide={500}
@@ -97,12 +97,12 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
       <span
         id="participant-header-label"
         className="Label Label--secondary v-align-middle mr-1 unselectable"
-        style={{ color: theme === 'light' ? '#24292f' : '#c9d1d9' }}
+        style={{ color: textColor }}
         data-tip=""
         data-for="participant-tooltip"
         data-class={`floating-window ${theme}`}
         data-place="bottom"
-        data-text-color={theme === 'light' ? '#24292F' : '#C9D1D9'}
+        data-text-color={textColor}
         data-background-color={theme === 'light' ? 'white' : '#161B22 '}
         data-effect="solid"
         data-delay-hide={500}
