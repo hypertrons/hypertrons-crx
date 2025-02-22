@@ -1,10 +1,9 @@
 import { avatarColorStore } from './AvatarColorStore';
 import getGithubTheme from '../../../../helpers/get-github-theme';
-
 import type { BarSeriesOption, EChartsOption } from 'echarts';
 import { orderBy, take } from 'lodash-es';
-
-const theme = getGithubTheme();
+import isGithub from '../../../../helpers/is-github';
+const theme = isGithub() ? getGithubTheme() : 'light';
 const DARK_TEXT_COLOR = 'rgba(230, 237, 243, 0.9)';
 
 export interface RepoActivityDetails {
