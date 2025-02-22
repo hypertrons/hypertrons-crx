@@ -1,7 +1,7 @@
 import features from '../../../../feature-manager';
 import View from './view';
 import elementReady from 'element-ready';
-import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../../../../helpers/get-github-repo-info';
+import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../../../../helpers/get-gitee-repo-info';
 import { getStars } from '../../../../api/repo';
 import { RepoMeta, metaStore } from '../../../../api/common';
 import { createRoot } from 'react-dom/client';
