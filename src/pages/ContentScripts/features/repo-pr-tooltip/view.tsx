@@ -9,7 +9,8 @@ import { RepoMeta } from '../../../../api/common';
 import TooltipTrigger from '../../../../components/TooltipTrigger';
 import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
-const githubTheme = getGithubTheme();
+import isGithub from '../../../../helpers/is-github';
+const theme = isGithub() ? getGithubTheme() : 'light';
 export interface PRDetail {
   PROpened: any;
   PRMerged: any;
@@ -56,6 +57,7 @@ const View = ({ currentRepo, PRDetail, meta }: Props): JSX.Element | null => {
   if (isNull(PRDetail) || isAllNull(PRDetail)) return null;
 
   const onClick = (curMonth: string, params: any) => {
+    if (!isGithub()) return;
     const seriesIndex = params.seriesIndex;
     let type;
     if (seriesIndex === 0) {
@@ -87,31 +89,39 @@ const View = ({ currentRepo, PRDetail, meta }: Props): JSX.Element | null => {
       </div>
 
       <PRChart
-        theme={githubTheme as 'light' | 'dark'}
+        theme={theme as 'light' | 'dark'}
         width={330}
         height={200}
         data={generatePRChartData(PRDetail, meta.updatedAt)}
         onClick={onClick}
       />
 
-      <div
-        className="chart-title"
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <div style={{ marginRight: '5px' }}>{t('merged_lines_popup_title')}</div>
-        <TooltipTrigger iconColor="grey" size={13} content={t('icon_tip', { icon_content: '$t(merged_lines_icon)' })} />
-      </div>
+      {PRDetail.mergedCodeAddition && PRDetail.mergedCodeDeletion && (
+        <>
+          <div
+            className="chart-title"
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <div style={{ marginRight: '5px' }}>{t('merged_lines_popup_title')}</div>
+            <TooltipTrigger
+              iconColor="grey"
+              size={13}
+              content={t('icon_tip', { icon_content: '$t(merged_lines_icon)' })}
+            />
+          </div>
 
-      <MergedLinesChart
-        theme={githubTheme as 'light' | 'dark'}
-        width={330}
-        height={200}
-        data={generateMergedLinesChartData(PRDetail, meta.updatedAt)}
-      />
+          <MergedLinesChart
+            theme={theme as 'light' | 'dark'}
+            width={330}
+            height={200}
+            data={generateMergedLinesChartData(PRDetail, meta.updatedAt)}
+          />
+        </>
+      )}
     </>
   );
 };
