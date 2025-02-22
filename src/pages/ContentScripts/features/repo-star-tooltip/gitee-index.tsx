@@ -27,7 +27,6 @@ const init = async (): Promise<void> => {
 
   await elementReady('.star-container .button');
   const $starButtons = $('.star-container');
-  console.log($starButtons);
   const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
   createRoot(placeholderElement).render(
     <GiteeNativePopover anchor={$starButtons} width={280} arrowPosition="bottom">
