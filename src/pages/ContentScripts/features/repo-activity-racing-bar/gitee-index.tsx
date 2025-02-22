@@ -32,7 +32,6 @@ const init = async (): Promise<void> => {
   platform = getPlatform();
   repoName = getRepoName();
   await getData();
-  console.log(repoActivityDetails);
   const container = document.createElement('div');
   container.id = featureId;
   // append before render so that the container has computed width
