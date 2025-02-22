@@ -1,6 +1,7 @@
 import './index.scss';
 
 import './features/repo-activity-openrank-trends';
+import './features/repo-activity-openrank-trends/gitee-index.tsx';
 import './features/developer-activity-openrank-trends';
 import './features/repo-header-labels';
 import './features/repo-header-labels/gitee-index.tsx';
