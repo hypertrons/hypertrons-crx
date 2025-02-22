@@ -1,7 +1,7 @@
 import features from '../../../../feature-manager';
 import View, { IssueDetail } from './view';
 import elementReady from 'element-ready';
-import { getRepoName, isPublicRepoWithMeta } from '../../../../helpers/get-github-repo-info';
+import { getRepoName, isPublicRepoWithMeta } from '../../../../helpers/get-gitee-repo-info';
 import { getIssuesOpened, getIssuesClosed, getIssueComments } from '../../../../api/repo';
 
 import { RepoMeta, metaStore } from '../../../../api/common';
