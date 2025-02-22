@@ -1,6 +1,5 @@
 import features from '../../../../feature-manager';
 import View from './view';
-import { checkLogined } from '../../../../helpers/get-github-developer-info';
 import elementReady from 'element-ready';
 import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../../../../helpers/get-github-repo-info';
 import { getStars } from '../../../../api/repo';
@@ -25,25 +24,17 @@ const init = async (): Promise<void> => {
   platform = getPlatform();
   repoName = getRepoName();
   await getData();
-  const isLogined = checkLogined();
-  const starButtonSelector = isLogined ? 'button[data-ga-click*="star button"]' : 'a[data-hydro-click*="star button"]';
-  await elementReady(starButtonSelector);
-  // <div data-view-component="true" class="starred BtnGroup flex-1 ml-0">
-  // <div data-view-component="true" class="unstarred BtnGroup ml-0 flex-1">
-  // No matter the repo is starred or not, the two button are always there
-  // Select all star buttons and no more filtering
 
-  const $starButtons = $(starButtonSelector);
-  $starButtons.each(function () {
-    const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
-    createRoot(placeholderElement).render(
-      <GiteeNativePopover anchor={$(this)} width={280} arrowPosition="bottom">
-        <View stars={stars} meta={meta} />
-      </GiteeNativePopover>
-    );
-  });
+  await elementReady('.star-container .button');
+  const $starButtons = $('.star-container');
+  console.log($starButtons);
+  const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
+  createRoot(placeholderElement).render(
+    <GiteeNativePopover anchor={$starButtons} width={280} arrowPosition="bottom">
+      <View stars={stars} meta={meta} />
+    </GiteeNativePopover>
+  );
 };
-
 const restore = async () => {};
 
 features.add(featureId, {

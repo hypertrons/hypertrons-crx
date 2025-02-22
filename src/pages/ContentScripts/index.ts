@@ -6,6 +6,7 @@ import './features/repo-header-labels';
 import './features/repo-header-labels/gitee-index.tsx';
 import './features/repo-fork-tooltip';
 import './features/repo-star-tooltip';
+import './features/repo-star-tooltip/gitee-index.tsx';
 import './features/repo-pr-tooltip';
 import './features/repo-issue-tooltip';
 import './features/perceptor-tab';
