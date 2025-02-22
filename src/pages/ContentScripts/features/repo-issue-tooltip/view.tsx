@@ -9,7 +9,8 @@ import { RepoMeta } from '../../../../api/common';
 import TooltipTrigger from '../../../../components/TooltipTrigger';
 import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
-const githubTheme = getGithubTheme();
+import isGithub from '../../../../helpers/is-github';
+const theme = isGithub() ? getGithubTheme() : 'light';
 
 export interface IssueDetail {
   issuesOpened: any;
@@ -44,6 +45,7 @@ const View = ({ currentRepo, issueDetail, meta }: Props): JSX.Element | null => 
   if (isNull(issueDetail) || isAllNull(issueDetail)) return null;
 
   const onClick = (curMonth: string, params: any) => {
+    if (!isGithub()) return;
     const seriesIndex = params.seriesIndex;
     let type;
     if (seriesIndex === 0) {
@@ -76,7 +78,7 @@ const View = ({ currentRepo, issueDetail, meta }: Props): JSX.Element | null => 
       </div>
 
       <IssueChart
-        theme={githubTheme as 'light' | 'dark'}
+        theme={theme as 'light' | 'dark'}
         width={300}
         height={200}
         data={generateData(issueDetail, meta.updatedAt)}
