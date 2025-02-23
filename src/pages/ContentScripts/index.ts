@@ -2,6 +2,7 @@ import './index.scss';
 
 import './features/repo-activity-openrank-trends';
 import './features/developer-activity-openrank-trends';
+import './features/developer-activity-openrank-trends/gitee-index';
 import './features/repo-header-labels';
 import './features/repo-header-labels/gitee-index';
 import './features/repo-fork-tooltip';
