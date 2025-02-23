@@ -24,7 +24,11 @@ export function getRepoNameByPage() {
 }
 
 export function getRepoNameByUrl() {
-  return pageDetect.utils.getRepositoryInfo(window.location)!.nameWithOwner;
+  const repoInfo = pageDetect.utils.getRepositoryInfo(window.location);
+  if (!repoInfo) {
+    return '';
+  }
+  return repoInfo.nameWithOwner;
 }
 
 export function hasRepoContainerHeader() {
