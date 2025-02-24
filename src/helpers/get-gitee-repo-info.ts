@@ -12,7 +12,9 @@ export function getRepoName() {
 export function getRepoNameByUrl() {
   return pageDetect.utils.getRepositoryInfo(window.location)!.nameWithOwner;
 }
-
+export async function isRepoRoot() {
+  return pageDetect.isRepoRoot();
+}
 export function hasRepoContainerHeader() {
   const headerElement = $('#git-project-header-details');
   return headerElement && !headerElement.attr('hidden');
