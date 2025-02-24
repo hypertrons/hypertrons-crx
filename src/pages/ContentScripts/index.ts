@@ -9,6 +9,7 @@ import './features/repo-fork-tooltip';
 import './features/repo-star-tooltip';
 import './features/repo-star-tooltip/gitee-index';
 import './features/repo-pr-tooltip';
+import './features/repo-pr-tooltip/gitee-index.tsx';
 import './features/repo-issue-tooltip';
 import './features/perceptor-tab';
 import './features/perceptor-layout';
