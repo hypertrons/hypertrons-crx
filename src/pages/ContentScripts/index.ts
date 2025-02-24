@@ -11,6 +11,7 @@ import './features/repo-star-tooltip/gitee-index';
 import './features/repo-pr-tooltip';
 import './features/repo-pr-tooltip/gitee-index.tsx';
 import './features/repo-issue-tooltip';
+import './features/repo-issue-tooltip/gitee-index.tsx';
 import './features/perceptor-tab';
 import './features/perceptor-layout';
 import './features/repo-networks';
