@@ -44,7 +44,7 @@ export const GiteeNativePopover = ({
           $popoverContent.css('padding', '10px 5px');
           $popoverContent.css('width', width);
           $popoverContainer.css({
-            top: `${top + anchorHeight + 10}px`,
+            top: `${top + anchorHeight}px`,
             left: `${left - (width - anchorWidth) / 2}px`,
             display: 'block',
             transform: `translate3d(0, 0, 0)`,
