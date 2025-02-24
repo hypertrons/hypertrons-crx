@@ -1,8 +1,7 @@
 import features from '../../../../feature-manager';
 import View, { PRDetail } from './view';
-import { NativePopover } from '../../components/NativePopover';
 import elementReady from 'element-ready';
-import { getRepoName, isPublicRepoWithMeta } from '../../../../helpers/get-github-repo-info';
+import { getRepoName, isPublicRepoWithMeta } from '../../../../helpers/get-gitee-repo-info';
 import { createRoot } from 'react-dom/client';
 import {
   getPROpened,
@@ -15,8 +14,9 @@ import { RepoMeta, metaStore } from '../../../../api/common';
 
 import React from 'react';
 import $ from 'jquery';
-import isGithub from '../../../../helpers/is-github';
 import { getPlatform } from '../../../../helpers/get-platform';
+import isGitee from '../../../../helpers/is-gitee';
+import { GiteeNativePopover } from '../../components/GiteeNativePopover';
 
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
@@ -42,20 +42,28 @@ const init = async (): Promise<void> => {
   platform = getPlatform();
   repoName = getRepoName();
   await getData();
-  await elementReady('#pull-requests-tab');
-  const $prTab = $('#pull-requests-tab');
+
+  if (Object.keys(PRDetail.mergedCodeAddition || {}).length === 0) {
+    PRDetail.mergedCodeAddition = null;
+  }
+  if (Object.keys(PRDetail.mergedCodeDeletion || {}).length === 0) {
+    PRDetail.mergedCodeDeletion = null;
+  }
+
+  await elementReady('a.item[href*="/pulls"]');
+  const $prTab = $('a.item[href*="/pulls"]');
   const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
   createRoot(placeholderElement).render(
-    <NativePopover anchor={$prTab} width={340} arrowPosition="top-middle">
+    <GiteeNativePopover anchor={$prTab} width={340} arrowPosition="bottom">
       <View currentRepo={repoName} PRDetail={PRDetail} meta={meta} />
-    </NativePopover>
+    </GiteeNativePopover>
   );
 };
 
 const restore = async () => {};
 
 features.add(featureId, {
-  asLongAs: [isGithub, isPublicRepoWithMeta],
+  asLongAs: [isGitee, isPublicRepoWithMeta],
   awaitDomReady: false,
   init,
   restore,
