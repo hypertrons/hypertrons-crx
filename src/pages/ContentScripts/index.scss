@@ -1,3 +1,9 @@
+:root {
+  --borderColor-default: #d1d9e0;
+  --bgColor-inset: var(--bgColor-muted);
+  --bgColor-muted: #f6f8fa;
+  --fgColor-default: #1f2328;
+}
 .hypertrons-crx-container {
   margin-top: 24px !important;
   overflow: auto;
@@ -164,4 +170,22 @@
 .inline-label-container {
   display: inline-block;
   margin-left: 4px;
+}
+
+.flex-items-center {
+  align-items: center !important;
+}
+
+@media (min-width: 768px) {
+  .col-md-8 {
+    width: 66.66666664% !important;
+  }
+}
+.col-12 {
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .col-md-4 {
+    width: 33.33333332% !important;
+  }
 }

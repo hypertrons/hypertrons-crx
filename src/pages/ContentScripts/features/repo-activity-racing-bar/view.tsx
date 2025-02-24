@@ -11,10 +11,11 @@ import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
 interface Props {
   currentRepo: string;
+  width: string;
   repoActivityDetails: RepoActivityDetails;
 }
 
-const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
+const View = ({ currentRepo, width, repoActivityDetails }: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
   const [speed, setSpeed] = useState<number>(1);
   const [playing, setPlaying] = useState<boolean>(false);
@@ -28,8 +29,8 @@ const View = ({ currentRepo, repoActivityDetails }: Props): JSX.Element => {
   }, [options.locale]);
 
   return (
-    <div>
-      <div className="hypertrons-crx-border hypertrons-crx-container">
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div className="hypertrons-crx-border hypertrons-crx-container" style={{ width: width }}>
         <div className="hypertrons-crx-title">
           <span>{t('component_projectRacingBar_title')}</span>
           <div className="hypertrons-crx-title-extra developer-tab">
