@@ -7,8 +7,8 @@ import { RepoMeta } from '../../../../api/common';
 import TooltipTrigger from '../../../../components/TooltipTrigger';
 import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
-
-const githubTheme = getGithubTheme();
+import isGithub from '../../../../helpers/is-github';
+const theme = isGithub() ? getGithubTheme() : 'light';
 
 interface Props {
   forks: any;
@@ -43,7 +43,7 @@ const View = ({ forks, meta }: Props): JSX.Element | null => {
       </div>
 
       <ForkChart
-        theme={githubTheme as 'light' | 'dark'}
+        theme={theme as 'light' | 'dark'}
         width={270}
         height={130}
         data={generateDataByMonth(forks, meta.updatedAt)}
