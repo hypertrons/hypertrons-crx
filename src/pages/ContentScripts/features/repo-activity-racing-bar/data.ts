@@ -24,7 +24,7 @@ export function getMonthlyData(data: RepoActivityDetails) {
   for (const key in data) {
     // Check if the key matches the yyyy-mm format (e.g., "2020-05")
     if (/^\d{4}-\d{2}$/.test(key)) {
-      monthlyData[key] = data[key];
+      monthlyData[key] = data[key].sort((a, b) => b[1] - a[1]).slice(0, 15);
     }
   }
   return monthlyData;
@@ -73,14 +73,13 @@ export const getOption = async (
   const topData = take(sortedData, maxBars);
   const barData: BarSeriesOption['data'] = await Promise.all(
     topData.map(async (item) => {
-      // rich name cannot contain special characters such as '-'
       rich[`avatar${item[0].replaceAll('-', '')}`] = {
         backgroundColor: {
           image: `https://avatars.githubusercontent.com/${item[0]}?s=48&v=4`,
         },
         height: 20,
       };
-      const avatarColors = await avatarColorStore.getColors(item[0]);
+      const avatarColors = await avatarColorStore.getColors(month, item[0]);
       return {
         value: item,
         itemStyle: {
