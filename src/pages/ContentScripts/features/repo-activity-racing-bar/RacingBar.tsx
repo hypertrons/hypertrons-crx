@@ -6,6 +6,7 @@ import React, { useEffect, useState, useRef, forwardRef, useImperativeHandle, Fo
 import { Spin } from 'antd';
 import * as echarts from 'echarts';
 import type { EChartsType } from 'echarts';
+import { avatarColorStore } from './AvatarColorStore';
 
 export interface MediaControlers {
   play: () => void;
@@ -31,12 +32,38 @@ const RacingBar = forwardRef(
 
     const months = Object.keys(data);
     const monthIndexRef = useRef<number>(months.length - 1);
+    const [longTermContributorsCount] = countLongTermContributors(data);
 
-    const [longTermContributorsCount, contributors] = countLongTermContributors(data);
+    const maxBars = longTermContributorsCount >= 10 ? 15 : 10;
+    const height = longTermContributorsCount >= 10 ? 450 : 300;
 
-    const maxBars = longTermContributorsCount >= 15 ? 15 : 10;
-    const height = longTermContributorsCount >= 15 ? 450 : 300;
-    const [loadedAvatars, loadAvatars] = useLoadedAvatars(contributors);
+    const [currentMonth, setCurrentMonth] = useState(months[months.length - 1]);
+    const currentContributors = data[currentMonth]?.map((item) => item[0]) || [];
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [loadedAvatars, totalAvatars, loadAvatars] = useLoadedAvatars(currentContributors, currentMonth);
+
+    useEffect(() => {
+      const preloadAdjacentMonths = async () => {
+        const [year, month] = currentMonth.split('-').map(Number);
+        const prevMonth = new Date(year, month - 2, 1);
+        const nextMonth = new Date(year, month, 1);
+        const prevMonthKey = formatDateToMonthKey(prevMonth);
+        const nextMonthKey = formatDateToMonthKey(nextMonth);
+
+        Promise.allSettled([
+          avatarColorStore.preloadMonth(
+            prevMonthKey,
+            data[prevMonthKey]?.map((item) => item[0])
+          ),
+          avatarColorStore.preloadMonth(
+            nextMonthKey,
+            data[nextMonthKey]?.map((item) => item[0])
+          ),
+        ]);
+      };
+      preloadAdjacentMonths();
+    }, [currentMonth]);
 
     const updateMonth = async (instance: EChartsType, month: string, enableAnimation: boolean) => {
       const option = await getOption(data, month, speedRef.current, maxBars, enableAnimation);
@@ -74,21 +101,29 @@ const RacingBar = forwardRef(
       }
     };
 
-    const next = () => {
+    const next = async () => {
       pause();
       if (monthIndexRef.current < months.length - 1) {
+        setIsLoading(true);
         const instance = echarts.getInstanceByDom(divEL.current!)!;
         monthIndexRef.current++;
+        setCurrentMonth(months[monthIndexRef.current]);
+        await loadAvatars();
         updateMonth(instance, months[monthIndexRef.current], false);
+        setIsLoading(false);
       }
     };
 
-    const previous = () => {
+    const previous = async () => {
       pause();
       if (monthIndexRef.current > 0) {
+        setIsLoading(true);
         const instance = echarts.getInstanceByDom(divEL.current!)!;
+        setCurrentMonth(months[monthIndexRef.current]);
+        await loadAvatars();
         monthIndexRef.current--;
         updateMonth(instance, months[monthIndexRef.current], false);
+        setIsLoading(false);
       }
     };
 
@@ -136,9 +171,9 @@ const RacingBar = forwardRef(
     return (
       <div className="hypertrons-crx-border">
         <Spin
-          spinning={loadedAvatars < contributors.length}
-          tip={`Loading avatars ${loadedAvatars}/${contributors.length}`}
-          style={{ maxHeight: 'none' }} // disable maxHeight to make the loading tip be placed in the center
+          spinning={isLoading || loadedAvatars < totalAvatars}
+          tip={`Loading ${currentMonth} avatars (${loadedAvatars}/${totalAvatars})`}
+          style={{ maxHeight: 'none' }}
         >
           <div ref={divEL} style={{ width: '100%', height }} />
         </Spin>
@@ -146,5 +181,11 @@ const RacingBar = forwardRef(
     );
   }
 );
+
+function formatDateToMonthKey(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  return `${year}-${month}`;
+}
 
 export default RacingBar;

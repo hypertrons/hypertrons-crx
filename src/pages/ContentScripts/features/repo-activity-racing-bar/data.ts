@@ -74,14 +74,13 @@ export const getOption = async (
   const topData = take(sortedData, maxBars);
   const barData: BarSeriesOption['data'] = await Promise.all(
     topData.map(async (item) => {
-      // rich name cannot contain special characters such as '-'
       rich[`avatar${item[0].replaceAll('-', '')}`] = {
         backgroundColor: {
           image: `https://avatars.githubusercontent.com/${item[0]}?s=48&v=4`,
         },
         height: 20,
       };
-      const avatarColors = await avatarColorStore.getColors(item[0]);
+      const avatarColors = await avatarColorStore.getColors(month, item[0]);
       return {
         value: item,
         itemStyle: {
