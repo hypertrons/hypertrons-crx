@@ -15,7 +15,6 @@ export const getMetricByName = async (
       return null;
     } else {
       // other errors should be throwed
-      console.log('error', error);
       throw error;
     }
   }
