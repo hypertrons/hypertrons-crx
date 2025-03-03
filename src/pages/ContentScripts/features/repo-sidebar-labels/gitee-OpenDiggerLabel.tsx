@@ -29,8 +29,8 @@ const OpenDiggerLabel: React.FC<OpenDiggerLabelProps> = ({ label }) => {
             transform: 'translateY(-1px)',
           }}
           src={chrome.runtime.getURL('openDiggerLogo.png')}
-          width={16}
-          height={16}
+          width={14}
+          height={14}
         />
         {label.name}
       </div>

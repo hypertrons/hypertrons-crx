@@ -31,7 +31,7 @@ const renderTags = (labels: Label[]) => {
     if (document.getElementById(id)) {
       continue;
     }
-    const labelElement = document.createElement('a');
+    const labelElement = document.createElement('span');
     createRoot(labelElement).render(<OpenDiggerLabel label={label} />);
     giteeTagContainer.append(labelElement);
   }
