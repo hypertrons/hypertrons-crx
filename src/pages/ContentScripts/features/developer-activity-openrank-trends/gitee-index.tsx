@@ -1,14 +1,13 @@
 import React from 'react';
 import $ from 'jquery';
-
 import features from '../../../../feature-manager';
-import { getDeveloperName, isDeveloperWithMeta } from '../../../../helpers/get-github-developer-info';
+import { getDeveloperName, isDeveloperWithMeta } from '../../../../helpers/get-gitee-developer-info';
 import { getActivity, getOpenrank } from '../../../../api/developer';
 import { UserMeta, metaStore } from '../../../../api/common';
 import View from './view';
 import { createRoot } from 'react-dom/client';
-import isGithub from '../../../../helpers/is-github';
 import { getPlatform } from '../../../../helpers/get-platform';
+import isGitee from '../../../../helpers/is-gitee';
 const featureId = features.getFeatureID(import.meta.url);
 let developerName: string;
 let activity: any;
@@ -29,14 +28,18 @@ const init = async (): Promise<void> => {
   platform = getPlatform();
   developerName = getDeveloperName();
   await getData();
-
   // create container
   const newContainer = document.createElement('div');
   newContainer.id = featureId;
 
   renderTo(newContainer);
 
-  const profileArea = $('.js-profile-editable-area').parent();
+  const profileArea = $('.users__personal-container');
+  const constusersReport = $('.users__report.mt-3');
+  if (constusersReport.length > 0) {
+    // 使用原生 JavaScript 设置样式
+    constusersReport[0].style.setProperty('margin-top', '0', 'important');
+  }
   profileArea.after(newContainer);
 };
 
@@ -50,7 +53,7 @@ const restore = async () => {
   renderTo($(`#${featureId}`)[0]);
 };
 features.add(featureId, {
-  asLongAs: [isGithub, isDeveloperWithMeta],
+  asLongAs: [isGitee, isDeveloperWithMeta],
   awaitDomReady: false,
   init,
   restore,

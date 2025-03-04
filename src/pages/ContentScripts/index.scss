@@ -1,3 +1,9 @@
+:root {
+  --borderColor-default: #d1d9e0;
+  --bgColor-inset: var(--bgColor-muted);
+  --bgColor-muted: #f6f8fa;
+  --fgColor-default: #1f2328;
+}
 .hypertrons-crx-container {
   margin-top: 24px !important;
   overflow: auto;
@@ -135,4 +141,51 @@
 
 .custom-tooltip .ant-tooltip-arrow::before {
   background-color: #ffffff !important;
+}
+.Label,
+.label {
+  border: 0.0625rem solid #d1d9e0;
+  border-radius: 624.9375rem;
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 18px;
+  padding: 0 0.375rem;
+  white-space: nowrap;
+}
+.Label--secondary {
+  border-color: #3a3e41;
+  color: #393b3d;
+}
+.mr-1 {
+  margin-right: (0.25rem, 4px) !important;
+}
+
+.v-align-middle {
+  vertical-align: middle !important;
+}
+.unselectable {
+  user-select: none;
+}
+.inline-label-container {
+  display: inline-block;
+  margin-left: 4px;
+}
+
+.flex-items-center {
+  align-items: center !important;
+}
+
+@media (min-width: 768px) {
+  .col-md-8 {
+    width: 66.66666664% !important;
+  }
+}
+.col-12 {
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .col-md-4 {
+    width: 33.33333332% !important;
+  }
 }

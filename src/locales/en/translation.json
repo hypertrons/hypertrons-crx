@@ -64,7 +64,7 @@
   "OSS_GPT_welcome": "Hi, I'm an assistant powered by [DocsGPT](https://github.com/arc53/docsgpt) and [X-lab](https://github.com/X-lab2017). Ask me anything about {{repoName}}!",
   "OSS_GPT_notAvailable": "OSS-GPT currently is **NOT AVAILABLE** for {{repoName}}. If you want docs support for the repository, please check [this issue](https://github.com/hypertrons/hypertrons-crx/issues/609) and make a request there :)\n\nSee [all available docs](https://oss.x-lab.info/hypercrx/docsgpt_active_docs.json)\n\nThis chat widget can also be enabled/disabled in the extension options page whenever you want.",
   "OSS_GPT_errorMessage": "Sorry, due to cost reasons, the OSS-GPT function is currently not available. Please follow [HyperCRX](https://github.com/hypertrons/hypertrons-crx) for the latest news.",
-  "icon_tip": "GitHub repository {{icon_content}} count over time. And you can zoom in/out on the axes using the mouse scroll wheel.",
+  "icon_tip": "Repository {{icon_content}} count over time. And you can zoom in/out on the axes using the mouse scroll wheel.",
   "issue_icon": "issue",
   "pr_icon": "pr",
   "fork_icon": "fork",

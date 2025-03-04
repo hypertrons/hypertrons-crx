@@ -2,12 +2,12 @@ import React from 'react';
 import $ from 'jquery';
 import { createRoot } from 'react-dom/client';
 import features from '../../../../feature-manager';
-import { getRepoName, isPublicRepoWithMeta, isRepoRoot } from '../../../../helpers/get-github-repo-info';
+import { getRepoName, isPublicRepoWithMeta, isRepoRoot } from '../../../../helpers/get-gitee-repo-info';
 import { getActivity, getOpenrank } from '../../../../api/repo';
 import { RepoMeta, metaStore } from '../../../../api/common';
 import View from './view';
-import isGithub from '../../../../helpers/is-github';
 import { getPlatform } from '../../../../helpers/get-platform';
+import isGitee from '../../../../helpers/is-gitee';
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
 let activity: any;
@@ -32,15 +32,13 @@ const init = async (): Promise<void> => {
   // create container
   const newBorderGridRow = document.createElement('div');
   newBorderGridRow.id = featureId;
-  newBorderGridRow.className = 'BorderGrid-row';
-  const newBorderGridCell = document.createElement('div');
-  newBorderGridCell.className = 'BorderGrid-cell';
-  newBorderGridRow.appendChild(newBorderGridCell);
-
-  renderTo(newBorderGridCell);
-
-  const borderGridRows = $('div.Layout-sidebar').children('.BorderGrid');
-  borderGridRows.append(newBorderGridRow);
+  newBorderGridRow.className = 'side-item trend';
+  newBorderGridRow.style.marginBottom = '0';
+  newBorderGridRow.style.fontWeight = '600';
+  newBorderGridRow.style.fontSize = '16px';
+  renderTo(newBorderGridRow);
+  const borderGridRows = $('div.side-item.contrib');
+  borderGridRows.after(newBorderGridRow);
 };
 
 const restore = async () => {
@@ -55,7 +53,7 @@ const restore = async () => {
 };
 
 features.add(featureId, {
-  asLongAs: [isGithub, isPublicRepoWithMeta, isRepoRoot],
+  asLongAs: [isGitee, isPublicRepoWithMeta, isRepoRoot],
   awaitDomReady: true,
   init,
   restore,

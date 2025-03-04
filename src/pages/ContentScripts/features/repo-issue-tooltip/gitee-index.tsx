@@ -1,8 +1,7 @@
 import features from '../../../../feature-manager';
 import View, { IssueDetail } from './view';
-import { NativePopover } from '../../components/NativePopover';
 import elementReady from 'element-ready';
-import { getRepoName, isPublicRepoWithMeta } from '../../../../helpers/get-github-repo-info';
+import { getRepoName, isPublicRepoWithMeta } from '../../../../helpers/get-gitee-repo-info';
 import { getIssuesOpened, getIssuesClosed, getIssueComments } from '../../../../api/repo';
 
 import { RepoMeta, metaStore } from '../../../../api/common';
@@ -10,8 +9,9 @@ import { RepoMeta, metaStore } from '../../../../api/common';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import $ from 'jquery';
-import isGithub from '../../../../helpers/is-github';
+import isGitee from '../../../../helpers/is-gitee';
 import { getPlatform } from '../../../../helpers/get-platform';
+import { GiteeNativePopover } from '../../components/GiteeNativePopover';
 
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
@@ -34,20 +34,20 @@ const init = async (): Promise<void> => {
   platform = getPlatform();
   await getData();
 
-  await elementReady('#issues-tab');
-  const $issueTab = $('#issues-tab');
+  await elementReady('a.item[href*="/issues"]');
+  const $issueTab = $('a.item[href*="/issues"]');
   const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
   createRoot(placeholderElement).render(
-    <NativePopover anchor={$issueTab} width={310} arrowPosition="top-middle">
+    <GiteeNativePopover anchor={$issueTab} width={310} arrowPosition="bottom">
       <View currentRepo={repoName} issueDetail={issueDetail} meta={meta} />
-    </NativePopover>
+    </GiteeNativePopover>
   );
 };
 
 const restore = async () => {};
 
 features.add(featureId, {
-  asLongAs: [isGithub, isPublicRepoWithMeta],
+  asLongAs: [isGitee, isPublicRepoWithMeta],
   awaitDomReady: false,
   init,
   restore,

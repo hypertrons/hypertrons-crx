@@ -10,7 +10,8 @@ import TooltipTrigger from '../../../../components/TooltipTrigger';
 
 import { useTranslation } from 'react-i18next';
 import '../../../../helpers/i18n';
-const githubTheme = getGithubTheme();
+import isGithub from '../../../../helpers/is-github';
+const theme = isGithub() ? getGithubTheme() : 'light';
 
 interface Props {
   participant: any;
@@ -50,7 +51,7 @@ const ParticipantView = ({ participant, contributor, meta }: Props): JSX.Element
           content={t('icon_tip', { icon_content: '$t(contributors_participants_icon)' })}
         />
       </div>
-      <ContributorChart theme={githubTheme as 'light' | 'dark'} width={270} height={130} data={contributorData} />
+      <ContributorChart theme={theme as 'light' | 'dark'} width={270} height={130} data={contributorData} />
       <div
         className="chart-title"
         style={{
@@ -66,7 +67,7 @@ const ParticipantView = ({ participant, contributor, meta }: Props): JSX.Element
           content={t('icon_tip', { icon_content: '$t(contributors_participants_icon)' })}
         />
       </div>
-      <ParticipantChart theme={githubTheme as 'light' | 'dark'} width={270} height={130} data={participantData} />
+      <ParticipantChart theme={theme as 'light' | 'dark'} width={270} height={130} data={participantData} />
     </>
   );
 };

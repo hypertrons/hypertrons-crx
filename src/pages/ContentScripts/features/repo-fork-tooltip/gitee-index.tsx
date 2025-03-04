@@ -1,16 +1,16 @@
 import features from '../../../../feature-manager';
 import View from './view';
-import { NativePopover } from '../../components/NativePopover';
 import elementReady from 'element-ready';
-import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../../../../helpers/get-github-repo-info';
+import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../../../../helpers/get-gitee-repo-info';
 import { getForks } from '../../../../api/repo';
 import { RepoMeta, metaStore } from '../../../../api/common';
 
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import $ from 'jquery';
-import isGithub from '../../../../helpers/is-github';
+import isGitee from '../../../../helpers/is-gitee';
 import { getPlatform } from '../../../../helpers/get-platform';
+import { GiteeNativePopover } from '../../components/GiteeNativePopover';
 const featureId = features.getFeatureID(import.meta.url);
 let repoName: string;
 let forks: any;
@@ -26,21 +26,21 @@ const init = async (): Promise<void> => {
   repoName = getRepoName();
   await getData();
 
-  const forkButtonSelector = '#fork-button';
+  const forkButtonSelector = '.fork-container';
   await elementReady(forkButtonSelector);
   const $forkButton = $(forkButtonSelector);
   const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
   createRoot(placeholderElement).render(
-    <NativePopover anchor={$forkButton} width={280} arrowPosition="top-middle">
+    <GiteeNativePopover anchor={$forkButton} width={280} arrowPosition="bottom">
       <View forks={forks} meta={meta} />
-    </NativePopover>
+    </GiteeNativePopover>
   );
 };
 
 const restore = async () => {};
 
 features.add(featureId, {
-  asLongAs: [isGithub, isPublicRepoWithMeta, hasRepoContainerHeader],
+  asLongAs: [isGitee, isPublicRepoWithMeta, hasRepoContainerHeader],
   awaitDomReady: false,
   init,
   restore,
