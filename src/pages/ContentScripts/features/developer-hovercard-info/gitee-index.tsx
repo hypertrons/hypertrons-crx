@@ -23,39 +23,25 @@ const getDeveloperLatestOpenrank = async (developerName: string): Promise<string
   return null;
 };
 
-const waitForValidPopover = async (signal: AbortSignal): Promise<HTMLElement | null> => {
+const waitForValidPopover = async (): Promise<HTMLElement | null> => {
   return new Promise((resolve) => {
     const observer = new MutationObserver((mutations) => {
-      try {
-        for (const mutation of mutations) {
-          if (mutation.attributeName === 'class') {
-            const target = mutation.target as HTMLElement;
-
-            if (
-              target.classList.contains('popper-profile-card') &&
-              !target.classList.contains('hidden') &&
-              target.querySelector('.popper-profile-card__footer')
-            ) {
-              observer.disconnect();
-              resolve(target);
-              return;
-            }
+      for (const mutation of mutations) {
+        if (mutation.attributeName === 'class') {
+          const target = mutation.target as HTMLElement;
+          if (target.classList.contains('popper-profile-card') && !target.classList.contains('hidden')) {
+            observer.disconnect();
+            resolve(target);
+            return;
           }
         }
-      } catch (error) {
-        observer.disconnect();
       }
     });
 
-    const initialCheck = document.querySelector('.popper-profile-card:not(.hidden)');
-    if (initialCheck?.querySelector('.popper-profile-card__footer')) {
-      resolve(initialCheck as HTMLElement);
-      return;
-    }
     observer.observe(document.body, {
       attributeFilter: ['class'],
       subtree: true,
-      childList: false,
+      childList: true,
     });
   });
 };
@@ -69,32 +55,26 @@ const processElement = async (element: Element) => {
   element.addEventListener('mouseover', async () => {
     abortController.abort();
     abortController = new AbortController();
-    const signal = abortController.signal;
 
-    const popover = (await Promise.race([
-      waitForValidPopover(signal),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 1500)),
-    ])) as HTMLElement;
+    const popover = (await Promise.race([waitForValidPopover()])) as HTMLElement;
 
     const cardUsername = popover.querySelector('.username')?.textContent?.replace('@', '');
     if (cardUsername !== developername) return;
     const existing = popover.querySelector(`[data-username="${developername}"]`);
     if (existing) return;
 
+    const existingOpenRank = popover.querySelector('.hypercrx-openrank-info');
+    if (existingOpenRank) return;
+
     const openrank = await getDeveloperLatestOpenrank(developername);
     if (!openrank) {
       return;
     }
-    const existingOpenRank = popover.querySelector('.hypercrx-openrank-info');
-    if (existingOpenRank) return;
-
     const footer = popover.querySelector('.popper-profile-card__content') as HTMLElement;
-    if (footer) {
+    if (footer && !footer.querySelector(`[data-username="${developername}"]`)) {
       const openrankContainer = document.createElement('div');
       openrankContainer.dataset.username = developername;
-      if (footer && footer.parentNode) {
-        footer.appendChild(openrankContainer);
-      }
+      footer.appendChild(openrankContainer);
       createRoot(openrankContainer).render(<View {...{ developerName: developername, openrank }} />);
     }
   });
