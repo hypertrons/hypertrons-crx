@@ -124,5 +124,6 @@
   "error_get_user_info": "获取用户信息失败：{{status}}",
   "error_get_file": "该路径是一个目录，而不是文件",
   "github_token_not_found": "GitHub 的 token 没有找到。\n请记得在扩展程序的设置页面中绑定您的账号。",
-  "gitee_token_not_found": "Gitee 的 token 没有找到。\n请记得在扩展程序的设置页面中绑定您的账号。"
+  "gitee_token_not_found": "Gitee 的 token 没有找到。\n请记得在扩展程序的设置页面中绑定您的账号。",
+  "tips_loading_avatars": "加载 {{currentMonth}} 的头像 {{loadedAvatars}}/{{totalAvatars}} "
 }

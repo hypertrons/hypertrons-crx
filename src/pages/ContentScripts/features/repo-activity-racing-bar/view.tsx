@@ -15,7 +15,7 @@ interface Props {
   repoActivityDetails: RepoActivityDetails;
 }
 
-const View = ({ currentRepo, width, repoActivityDetails }: Props): JSX.Element => {
+const View = ({ width, repoActivityDetails }: Props): JSX.Element => {
   const [options, setOptions] = useState<HypercrxOptions>(defaults);
   const [speed, setSpeed] = useState<number>(1);
   const [playing, setPlaying] = useState<boolean>(false);
