@@ -125,5 +125,6 @@
   "error_get_user_info": "Failed to get user info: {{status}}",
   "error_get_file": "The path is a directory, not a file.",
   "github_token_not_found": "GitHub token not found.\nPlease bind your account in the Settings page of the extension.",
-  "gitee_token_not_found": "Gitee token not found.\nPlease bind your account in the Settings page of the extension."
+  "gitee_token_not_found": "Gitee token not found.\nPlease bind your account in the Settings page of the extension.",
+  "tips_loading_avatars": "Loading {{currentMonth}} avatars {{loadedAvatars}}/{{totalAvatars}} "
 }

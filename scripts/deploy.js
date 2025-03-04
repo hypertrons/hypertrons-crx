@@ -16,9 +16,7 @@ const CHROME_CLIENT_SECRET = process.env.CHROME_CLIENT_SECRET;
 const CHROME_REFRESH_TOKEN = process.env.CHROME_REFRESH_TOKEN;
 const EDGE_PRODUCT_ID = process.env.EDGE_PRODUCT_ID;
 const EDGE_CLIENT_ID = process.env.EDGE_CLIENT_ID;
-const EDGE_CLIENT_SECRET = process.env.EDGE_CLIENT_SECRET;
-const EDGE_ACCESS_TOKEN_URL = process.env.EDGE_ACCESS_TOKEN_URL;
-
+const EDGE_API_KEY = process.env.EDGE_API_KEY;
 const deployToChrome = async () => {
   const chromeStore = chromeWebstoreUpload({
     extensionId: CHROME_EXTENSION_ID,
@@ -45,15 +43,18 @@ const deployToEdge = async () => {
   const edgeStore = new EdgeAddonsAPI({
     productId: EDGE_PRODUCT_ID,
     clientId: EDGE_CLIENT_ID,
-    clientSecret: EDGE_CLIENT_SECRET,
-    accessTokenUrl: EDGE_ACCESS_TOKEN_URL,
+    apiKey: EDGE_API_KEY,
   });
+
   try {
     const publishResp = await edgeStore.submit({
       filePath: ZIP_PATH,
       notes: 'Updating extension.',
     });
     console.log('edge publishResp:', publishResp);
+    const operationId = publishResp.split('/').pop();
+    const status = await edgeStore.getPublishStatus(operationId);
+    console.log('Publish status:', status);
   } catch (error) {
     console.error('edge deployment failed:', error.message);
     process.exit(-1);
