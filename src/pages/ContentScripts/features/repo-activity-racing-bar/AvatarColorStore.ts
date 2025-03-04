@@ -1,7 +1,6 @@
 // @ts-ignore - TS7016: Could not find a declaration file for module 'colorthief'.
 import ColorThief from 'colorthief';
 
-type LoginId = string;
 type Color = string;
 type RGB = [number, number, number];
 interface ColorCache {

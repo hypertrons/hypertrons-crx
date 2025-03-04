@@ -7,6 +7,8 @@ import { Spin } from 'antd';
 import * as echarts from 'echarts';
 import type { EChartsType } from 'echarts';
 import { avatarColorStore } from './AvatarColorStore';
+import i18n from '../../../../helpers/i18n';
+const t = i18n.t;
 
 export interface MediaControlers {
   play: () => void;
@@ -172,7 +174,8 @@ const RacingBar = forwardRef(
       <div className="hypertrons-crx-border">
         <Spin
           spinning={isLoading || loadedAvatars < totalAvatars}
-          tip={`Loading ${currentMonth} avatars (${loadedAvatars}/${totalAvatars})`}
+          tip={t('tips_loading_avatars', { currentMonth, loadedAvatars, totalAvatars })}
+          // tip={`Loading ${currentMonth} avatars (${loadedAvatars}/${totalAvatars})`}
           style={{ maxHeight: 'none' }}
         >
           <div ref={divEL} style={{ width: '100%', height }} />
