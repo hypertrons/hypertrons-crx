@@ -14,13 +14,18 @@ const renderTo = (container: any) => {
 
 const init = async (): Promise<void> => {
   const uiContainer = $('.site-content > .ui.container');
-  uiContainer.empty();
+  uiContainer.remove();
+
+  const newUiContainer = document.createElement('div');
+  newUiContainer.className = 'ui container git-project-content';
 
   // create the new one: the percepter container
   const percepterContainer = document.createElement('div');
   percepterContainer.id = featureId;
 
-  uiContainer.append(percepterContainer);
+  newUiContainer.append(percepterContainer);
+
+  $('.site-content').append(newUiContainer);
 
   renderTo(percepterContainer);
 };
