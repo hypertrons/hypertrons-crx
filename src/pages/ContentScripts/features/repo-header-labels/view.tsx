@@ -38,7 +38,7 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
   const rocketDarkLogo = chrome.runtime.getURL('rocketDarkLogo.png');
   const textColor = isGithub() ? (theme === 'light' ? '#24292F' : '#C9D1D9') : '#40485B';
   return (
-    <div className="d-flex">
+    <div className={isGithub() ? 'd-flex' : ''}>
       <span
         id="activity-header-label"
         className="Label Label--secondary v-align-middle mr-1 unselectable"

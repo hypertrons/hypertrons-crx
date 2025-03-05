@@ -56,7 +56,7 @@ const init = async (): Promise<void> => {
   container.className = 'inline-label-container';
   renderTo(container);
   await elementReady('.git-project-header-container');
-  $('.git-project-header-container').find('span.project-title').after(container);
+  $('.git-project-header-container .repository').after(container);
   await waitForElement('#activity-header-label');
   await waitForElement('#OpenRank-header-label');
   await waitForElement('#participant-header-label');
