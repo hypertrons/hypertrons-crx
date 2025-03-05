@@ -1,8 +1,8 @@
 import isGitee from './is-gitee';
 import isGithub from './is-github';
 
-export const getPlatform = (): 'github' | 'gitee' => {
+export const getPlatform = (): 'github' | 'gitee' | 'unknown' => {
   if (isGithub()) return 'github';
   if (isGitee()) return 'gitee';
-  throw new Error('Unsupported platform');
+  return 'unknown';
 };
