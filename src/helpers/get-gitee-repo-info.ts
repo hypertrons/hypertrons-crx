@@ -29,5 +29,8 @@ export async function isPublicRepo() {
 }
 export async function isPublicRepoWithMeta() {
   const platform = getPlatform();
+  if (platform === 'unknown') {
+    return false;
+  }
   return (await isPublicRepo()) && (await metaStore.has(platform, getRepoNameByUrl()));
 }
