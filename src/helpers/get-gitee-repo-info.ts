@@ -4,7 +4,6 @@ import $ from 'jquery';
 import * as pageDetect from 'github-url-detection';
 import { getPlatform } from './get-platform';
 import elementReady from 'element-ready';
-import sleep from './sleep';
 
 export function getRepoName() {
   const repoNameByUrl = getRepoNameByUrl();
