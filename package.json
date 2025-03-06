@@ -1,6 +1,6 @@
 {
   "name": "HyperCRX",
-  "version": "1.9.19",
+  "version": "1.9.20",
   "type": "module",
   "private": true,
   "description": "Hypertrons Chromium Extension for GitHub and other document websites",
