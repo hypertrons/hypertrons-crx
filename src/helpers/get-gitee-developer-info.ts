@@ -27,6 +27,9 @@ export function getDeveloperNameByUrl() {
 
 export async function isDeveloperWithMeta() {
   const platform = getPlatform();
+  if (platform === 'unknown') {
+    return false;
+  }
   return pageDetect.isUserProfile() && (await metaStore.has(platform, getDeveloperName()));
 }
 

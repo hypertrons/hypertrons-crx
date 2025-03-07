@@ -42,7 +42,6 @@ const init = async (): Promise<void> => {
   platform = getPlatform();
   repoName = getRepoName();
   await getData();
-
   if (Object.keys(PRDetail.mergedCodeAddition || {}).length === 0) {
     PRDetail.mergedCodeAddition = null;
   }
