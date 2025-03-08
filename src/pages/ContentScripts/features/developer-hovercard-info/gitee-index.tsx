@@ -18,7 +18,9 @@ const openrankCache = new Map<string, OpenrankCacheEntry>();
 
 const getDeveloperLatestOpenrank = async (developerName: string): Promise<string | null> => {
   const cached = openrankCache.get(developerName);
-  if (cached && Date.now() - cached.timestamp < OPENRANK_CACHE_EXPIRY) {
+  if (cached && Date.now() - cached.timestamp > OPENRANK_CACHE_EXPIRY) {
+    openrankCache.delete(developerName);
+  } else if (cached) {
     return cached.data;
   }
 
@@ -43,6 +45,12 @@ const getDeveloperLatestOpenrank = async (developerName: string): Promise<string
 };
 const waitForValidPopover = async (): Promise<HTMLElement | null> => {
   return new Promise((resolve) => {
+    // const existingPopover = document.querySelector('.popper-profile-card:not(.hidden)');
+    // if (existingPopover) {
+    //   resolve(existingPopover as HTMLElement);
+    //   return;
+    // }
+
     const observer = new MutationObserver((mutations) => {
       for (const mutation of mutations) {
         if (mutation.attributeName === 'class') {
@@ -65,40 +73,65 @@ const waitForValidPopover = async (): Promise<HTMLElement | null> => {
 };
 
 const processElement = async (element: Element) => {
-  let abortController = new AbortController();
+  let abortController: AbortController | null = null;
+  element.addEventListener(
+    'mouseover',
+    async () => {
+      abortController?.abort();
+      abortController = new AbortController();
 
-  element.addEventListener('mouseover', async () => {
-    abortController.abort();
-    abortController = new AbortController();
+      function waitForProfileLink(popover: HTMLElement, waitfor: string): Promise<HTMLAnchorElement> {
+        return new Promise((resolve) => {
+          let profileLink = popover.querySelector(waitfor) as HTMLAnchorElement;
+          if (profileLink) return resolve(profileLink);
 
-    const popover = (await Promise.race([waitForValidPopover()])) as HTMLElement;
-    const cardUsername = popover.querySelector('.username')?.textContent?.replace('@', '');
-    if (!cardUsername) return;
+          const observer = new MutationObserver(() => {
+            profileLink = popover.querySelector(waitfor) as HTMLAnchorElement;
+            if (profileLink) {
+              observer.disconnect();
+              resolve(profileLink);
+            }
+          });
 
-    const existing = popover.querySelector(`[data-username="${cardUsername}"]`);
-    if (existing) return;
+          observer.observe(popover, { childList: true, subtree: true });
+        });
+      }
 
-    const existingOpenRank = popover.querySelector('.hypercrx-openrank-info');
-    if (existingOpenRank) return;
+      const popover = (await Promise.race([waitForValidPopover()])) as HTMLElement;
+      const profileLink = await waitForProfileLink(popover, '.popper-profile-card__body a');
+      const rawHref = profileLink.getAttribute('href');
+      if (!rawHref) return;
+      const url = new URL(rawHref, window.location.origin);
+      const cardUsername = url.pathname.replace('/', '');
 
-    const openrank = await getDeveloperLatestOpenrank(cardUsername);
-    if (!openrank) {
-      return;
-    }
-    const footer = popover.querySelector('.popper-profile-card__content') as HTMLElement;
-    if (footer && !footer.querySelector(`[data-username="${cardUsername}"]`)) {
-      const openrankContainer = document.createElement('div');
-      openrankContainer.dataset.username = cardUsername;
-      footer.appendChild(openrankContainer);
-      createRoot(openrankContainer).render(<View {...{ developerName: cardUsername, openrank }} />);
-    }
-  });
+      if (!cardUsername) return;
+
+      const existing = popover.querySelector(`[data-username="${cardUsername}"]`);
+      if (existing) return;
+
+      const existingOpenRank = popover.querySelector('.hypercrx-openrank-info');
+      if (existingOpenRank) return;
+      const openrank = await getDeveloperLatestOpenrank(cardUsername);
+      if (!openrank) {
+        return;
+      }
+      const footer = popover.querySelector('.popper-profile-card__content') as HTMLElement;
+      if (footer && !footer.querySelector(`[data-username="${cardUsername}"]`)) {
+        const openrankContainer = document.createElement('div');
+        openrankContainer.dataset.username = cardUsername;
+        footer.appendChild(openrankContainer);
+        createRoot(openrankContainer).render(<View {...{ developerName: cardUsername, openrank }} />);
+      }
+    },
+    { once: true }
+  );
 };
 
 const init = async (): Promise<void> => {
   platform = getPlatform();
   if (isInitialized) return;
   isInitialized = true;
+
   const hovercardSelectors = [
     'a.js-popover-card',
     'div.d-flex',
@@ -107,12 +140,14 @@ const init = async (): Promise<void> => {
     'span.js-popover-card',
     'img.js-popover-card',
   ];
+
   const processExisting = () => {
     hovercardSelectors.forEach((selector) => {
       document.querySelectorAll(selector).forEach((element) => {
         if (!element.hasAttribute('data-hypercrx-processed')) {
           element.setAttribute('data-hypercrx-processed', 'true');
           processElement(element);
+          // console.log(element);
         }
       });
     });
