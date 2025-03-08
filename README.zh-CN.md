@@ -152,7 +152,7 @@ OSS-GPT 是集成了[DocsGPT](https://github.com/arc53/docsgpt)能力的开源�
 
 ### 环境需求
 
-1. node >= 16.14
+1. node >= 20
 
 2. yarn
 
