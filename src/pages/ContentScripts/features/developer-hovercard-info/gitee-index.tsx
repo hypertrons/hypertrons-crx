@@ -45,12 +45,6 @@ const getDeveloperLatestOpenrank = async (developerName: string): Promise<string
 };
 const waitForValidPopover = async (): Promise<HTMLElement | null> => {
   return new Promise((resolve) => {
-    // const existingPopover = document.querySelector('.popper-profile-card:not(.hidden)');
-    // if (existingPopover) {
-    //   resolve(existingPopover as HTMLElement);
-    //   return;
-    // }
-
     const observer = new MutationObserver((mutations) => {
       for (const mutation of mutations) {
         if (mutation.attributeName === 'class') {
@@ -147,7 +141,6 @@ const init = async (): Promise<void> => {
         if (!element.hasAttribute('data-hypercrx-processed')) {
           element.setAttribute('data-hypercrx-processed', 'true');
           processElement(element);
-          // console.log(element);
         }
       });
     });
