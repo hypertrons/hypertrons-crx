@@ -149,7 +149,7 @@ Please read [CONTRIBUTING](./CONTRIBUTING.md) if you are new here or not familia
 
 ### Requirements
 
-1. node >= 18
+1. node >= 20
 
 2. yarn
 
