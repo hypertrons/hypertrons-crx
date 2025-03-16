@@ -44,17 +44,11 @@ export async function isRepoRoot() {
  * check if the repository is public
  */
 export async function isPublicRepo() {
-  const platform = getPlatform();
-  if (platform === 'github') {
-    const selector = 'meta[name="octolytics-dimension-repository_public"]';
-    await elementReady(selector);
-    // <meta name="octolytics-dimension-repository_public" content="true/false">
-    const isPublic = $(selector).attr('content') === 'true';
-    return pageDetect.isRepo() && isPublic;
-  } else {
-    // TODO
-    return true;
-  }
+  const selector = 'meta[name="octolytics-dimension-repository_public"]';
+  await elementReady(selector);
+  // <meta name="octolytics-dimension-repository_public" content="true/false">
+  const isPublic = $(selector).attr('content') === 'true';
+  return pageDetect.isRepo() && isPublic;
 }
 export async function isPublicRepoWithMeta() {
   const platform = getPlatform();
