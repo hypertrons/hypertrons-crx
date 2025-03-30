@@ -2,7 +2,7 @@ import elementReady from 'element-ready';
 import iconSvgPath from './icon-svg-path';
 import features from '../../../../feature-manager';
 import isPerceptor from '../../../../helpers/is-perceptor';
-import { isPublicRepo } from '../../../../helpers/get-gitee-repo-info';
+import { isPublicRepoWithMeta } from '../../../../helpers/get-gitee-repo-info';
 import isGitee from '../../../../helpers/is-gitee';
 
 const featureId = features.getFeatureID(import.meta.url);
@@ -70,7 +70,7 @@ const init = async (): Promise<void> => {
 };
 
 features.add(featureId, {
-  asLongAs: [isGitee, isPublicRepo],
+  asLongAs: [isGitee, isPublicRepoWithMeta],
   awaitDomReady: false,
   init,
 });
