@@ -16,6 +16,7 @@ Related issues ([all available keywords](https://docs.github.com/en/issues/track
 - keyword #xxx
 
 ## Details
+
 <!-- What did you do in this PR?  -->
 
 ## Checklist
@@ -24,5 +25,6 @@ Related issues ([all available keywords](https://docs.github.com/en/issues/track
 - [ ] I have signed the [CLA](https://cla-assistant.io/hypertrons/hypertrons-crx)
 
 ## Others
+
 <!-- Other information you want to share.  -->
 <!-- If none to share, leave an "N.A."  -->

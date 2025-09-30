@@ -34,9 +34,7 @@ async function bump({ version, deploy }) {
   const pkgPath = 'package.json';
   const pkg = await readJson(pkgPath);
   if (compare({ oldVersion: pkg.version, newVersion: version }) <= 0) {
-    throw new Error(
-      'Input version number is not greater than the current version number!'
-    );
+    throw new Error('Input version number is not greater than the current version number!');
   }
   pkg.version = version;
   writeJson(pkgPath, pkg);
@@ -55,9 +53,7 @@ async function bump({ version, deploy }) {
       newVersion: version,
     }) <= 0
   ) {
-    throw new Error(
-      'Input version number is not greater than the current version number!'
-    );
+    throw new Error('Input version number is not greater than the current version number!');
   }
   update_info.develop.latest_version = version;
   writeJson(infoPath, update_info);

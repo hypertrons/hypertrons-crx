@@ -189,3 +189,21 @@
     width: 33.33333332% !important;
   }
 }
+.watch-label {
+  display: inline-flex;
+  align-items: center;
+}
+
+.watch-counter {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #ddd;
+  color: white;
+  margin-left: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  font-size: 12px;
+}
