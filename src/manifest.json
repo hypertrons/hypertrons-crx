@@ -26,6 +26,7 @@
         "openDiggerLogo.png",
         "rocketDarkLogo.png",
         "rocketLightLogo.png",
+        "star.svg",
         "sandbox.html"
       ],
       "matches": ["<all_urls>"]

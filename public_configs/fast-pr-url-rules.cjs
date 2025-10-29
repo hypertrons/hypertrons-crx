@@ -7,8 +7,8 @@ const urlRules = [
       const repoName = 'X-lab2017/open-digger-website';
       const branch = 'master';
       const platform = 'Github';
-      const horizontalRatio=0.95;
-      const verticalRatio=0.5;
+      const horizontalRatio = 0.95;
+      const verticalRatio = 0.5;
       const urlObj = new URL(url);
       let docPath = urlObj.pathname.slice(1);
       let filePath = '';
@@ -22,7 +22,7 @@ const urlRules = [
       }
       if (docPath.startsWith('docs/')) {
         docPath = docPath.substring('docs/'.length);
-         if (docPath.endsWith('metrics/playground')) {
+        if (docPath.endsWith('metrics/playground')) {
           // playground can not be edited
           return null;
         }
@@ -75,8 +75,8 @@ const urlRules = [
       const repoName = 'X-lab2017/oss101-bok';
       const branch = 'master';
       const platform = 'Github';
-      const horizontalRatio=0.95;
-      const verticalRatio=0.5;
+      const horizontalRatio = 0.95;
+      const verticalRatio = 0.5;
       if (!url.startsWith(baseUrl)) return null;
       const docPath = url.replace(baseUrl, '').split('#')[0];
       const filePath = `docs/textbook/${docPath.slice(0, -1)}.md`;
@@ -90,8 +90,8 @@ const urlRules = [
       const repoName = 'wangyantong2000/docwebsite';
       const branch = 'main';
       const platform = 'Gitee';
-      const horizontalRatio=0.95;
-      const verticalRatio=0.5;
+      const horizontalRatio = 0.95;
+      const verticalRatio = 0.5;
       if (!url.startsWith(baseUrl)) return null;
       const docPath = url.replace(baseUrl, '').split('#')[0];
       const filePath = `docs/textbooks/${docPath}index.md`;
@@ -105,8 +105,8 @@ const urlRules = [
       const repoName = 'kaiyuanshe/oss-book';
       const branch = 'main';
       const platform = 'Github';
-      const horizontalRatio=0.95;
-      const verticalRatio=0.95;
+      const horizontalRatio = 0.95;
+      const verticalRatio = 0.95;
       if (!url.startsWith(baseUrl)) return null;
       let docPath = url.replace(baseUrl, '').split('#')[0];
       if (docPath.startsWith('slide')) return null;
@@ -132,8 +132,8 @@ const urlRules = [
       const repoName = 'kwdb/docs';
       let branch = 'master';
       const platform = 'Gitee';
-      const horizontalRatio=0.95;
-      const verticalRatio=0.95;
+      const horizontalRatio = 0.95;
+      const verticalRatio = 0.95;
       let docPath = url.replace(baseUrl, '').split('#')[0].replace('.html', '');
       function extractVersion(str) {
         const pattern = /^oss_v(\d+(\.\d+)*)\/.*$/;

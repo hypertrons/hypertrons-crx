@@ -1,12 +1,12 @@
 name: Other Issues
 description: For questions, suggestions, improvements and others.
-title: "[xxx] "
+title: '[xxx] '
 body:
-- type: textarea
-  attributes:
-    label: Description
-    description: |
-      Please describe the issue.
+  - type: textarea
+    attributes:
+      label: Description
+      description: |
+        Please describe the issue.
 
-  validations:
-    required: true
+    validations:
+      required: true

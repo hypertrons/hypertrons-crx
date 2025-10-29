@@ -104,6 +104,7 @@ export const getAttention = async (platform: string, repo: string) => {
 export const getIssueResponseTime = async (platform: string, repo: string) => {
   return getMetricByName(platform, repo, metricNameMap, 'issue_reponse_time');
 };
+
 export const getIssueResolutionDuration = async (platform: string, repo: string) => {
   return getMetricByName(platform, repo, metricNameMap, 'issue_resolution_duration');
 };
