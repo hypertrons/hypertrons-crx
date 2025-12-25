@@ -44,7 +44,7 @@
     "i18next-browser-languagedetector": "^8.0.0",
     "i18next-http-backend": "^2.5.2",
     "jquery": "^3.6.0",
-    "langchain": "^0.2.12",
+    "langchain": "^0.3.37",
     "lodash-es": "^4.17.21",
     "lottie-react": "^2.4.0",
     "moment": "^2.30.1",
