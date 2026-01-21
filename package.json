@@ -45,7 +45,7 @@
     "i18next-http-backend": "^2.5.2",
     "jquery": "^3.6.0",
     "langchain": "^0.3.37",
-    "lodash-es": "^4.17.21",
+    "lodash-es": "^4.17.23",
     "lottie-react": "^2.4.0",
     "moment": "^2.30.1",
     "openai": "^4.60.1",
