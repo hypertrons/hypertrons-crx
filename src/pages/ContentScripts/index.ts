@@ -1,5 +1,5 @@
 import './index.scss';
-
+import './features/contributor_button';
 import './features/repo-activity-openrank-trends';
 import './features/repo-activity-openrank-trends/gitee-index';
 import './features/developer-activity-openrank-trends';
