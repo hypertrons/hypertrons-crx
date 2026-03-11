@@ -53,7 +53,7 @@ const init = async (): Promise<void> => {
   await getData();
   const container = document.createElement('div');
   container.id = featureId;
-  container.className = 'inline-label-container';
+  container.className = 'hypercrx-inline-label-container';
   renderTo(container);
   await elementReady('.git-project-header-container');
   $('.git-project-header-container .repository').after(container);

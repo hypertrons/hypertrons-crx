@@ -5,7 +5,7 @@ import OpenrankView from './openrankView';
 import ParticipantView from './participantView';
 import { NativePopover } from '../../components/NativePopover';
 import elementReady from 'element-ready';
-import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../../../../helpers/get-github-repo-info';
+import { getRepoName, isPublicRepoWithMeta } from '../../../../helpers/get-github-repo-info';
 import { getActivity, getOpenrank, getParticipant, getContributor } from '../../../../api/repo';
 import { RepoMeta, metaStore } from '../../../../api/common';
 import React from 'react';
@@ -21,6 +21,9 @@ let participant: any;
 let contributor: any;
 let meta: RepoMeta;
 let platform: string;
+const repoTitleSelector = '#repo-title-component';
+const repoTitleFallbackSelector = '#repository-container-header .flex-auto.min-width-0.width-fit';
+const repoTitleContainerSelector = `${repoTitleSelector}, ${repoTitleFallbackSelector}`;
 
 const getData = async () => {
   activity = await getActivity(platform, repoName);
@@ -34,6 +37,37 @@ const renderTo = (container: any) => {
   createRoot(container).render(
     <View activity={activity} openrank={openrank} participant={participant} contributor={contributor} meta={meta} />
   );
+};
+const getRepoTitleContainer = () => {
+  const pickFirst = (selector: string) => {
+    const $elements = $(selector).filter((_, element) => !element.closest('template'));
+    const $visibleElements = $elements.filter(':visible');
+
+    return ($visibleElements.length > 0 ? $visibleElements : $elements).first();
+  };
+
+  const $repoTitle = pickFirst(repoTitleSelector);
+  if ($repoTitle.length > 0) {
+    return $repoTitle;
+  }
+
+  return pickFirst(repoTitleFallbackSelector);
+};
+const mountHeaderLabels = (container: HTMLElement) => {
+  const $repoTitleContainer = getRepoTitleContainer();
+
+  if ($repoTitleContainer.length === 0) {
+    return;
+  }
+
+  const $visibilityLabel = $repoTitleContainer.children('span.Label, .Label, [class*="Label--"]').last();
+
+  if ($visibilityLabel.length > 0) {
+    $visibilityLabel.after(container);
+    return;
+  }
+
+  $repoTitleContainer.append(container);
 };
 const waitForElement = (selector: string) => {
   return new Promise((resolve) => {
@@ -53,9 +87,10 @@ const init = async (): Promise<void> => {
   await getData();
   const container = document.createElement('div');
   container.id = featureId;
+  container.className = 'hypercrx-inline-label-container';
   renderTo(container);
-  await elementReady('#repository-container-header');
-  $('#repository-container-header').find('span.Label').after(container);
+  await elementReady(repoTitleContainerSelector);
+  mountHeaderLabels(container);
   await waitForElement('#activity-header-label');
   await waitForElement('#OpenRank-header-label');
   await waitForElement('#participant-header-label');
@@ -85,11 +120,18 @@ const restore = async () => {
   // Ideally, we should do nothing if the container already exists. But after a tubor
   // restoration visit, tooltip cannot be triggered though it exists in DOM tree. One
   // way to solve this is to rerender the view to the container. At least this way works.
-  renderTo($(`#${featureId}`)[0]);
+  const container = $(`#${featureId}`)[0];
+  if (!container) {
+    return;
+  }
+
+  await elementReady(repoTitleContainerSelector);
+  mountHeaderLabels(container);
+  renderTo(container);
 };
 
 features.add(featureId, {
-  asLongAs: [isGithub, isPublicRepoWithMeta, hasRepoContainerHeader],
+  asLongAs: [isGithub, isPublicRepoWithMeta],
   awaitDomReady: false,
   init,
   restore,

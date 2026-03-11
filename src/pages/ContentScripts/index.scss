@@ -142,34 +142,46 @@
 .custom-tooltip .ant-tooltip-arrow::before {
   background-color: #ffffff !important;
 }
-.Label,
-.label {
+.hypercrx-label {
   border: 0.0625rem solid #d1d9e0;
   border-radius: 624.9375rem;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 18px;
   padding: 0 0.375rem;
   white-space: nowrap;
 }
-.Label--secondary {
-  border-color: #3a3e41;
-  color: #393b3d;
-}
-.mr-1 {
-  margin-right: (0.25rem, 4px) !important;
-}
-
-.v-align-middle {
-  vertical-align: middle !important;
+.hypercrx-label--secondary {
+  background-color: var(--bgColor-muted, var(--color-canvas-subtle));
+  border-color: var(--borderColor-default, var(--color-border-default));
+  color: var(--fgColor-muted, var(--color-fg-muted));
 }
 .unselectable {
   user-select: none;
 }
-.inline-label-container {
+.hypercrx-inline-label-container {
   display: inline-block;
   margin-left: 4px;
+  vertical-align: middle;
+}
+
+.hypercrx-repo-header-labels {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+}
+
+.hypercrx-repo-header-label {
+  cursor: default;
+}
+
+.hypercrx-repo-header-label-icon {
+  display: block;
+  flex-shrink: 0;
 }
 
 .flex-items-center {

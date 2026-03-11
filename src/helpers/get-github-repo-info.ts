@@ -5,6 +5,28 @@ import * as pageDetect from 'github-url-detection';
 import elementReady from 'element-ready';
 import { getPlatform } from './get-platform';
 
+const repoSidebarSectionSelectors = [
+  '.Layout-sidebar .BorderGrid-cell > .hide-sm.hide-md',
+  '.Layout-sidebar .BorderGrid-cell .hide-sm.hide-md',
+  '.BorderGrid-cell > .hide-sm.hide-md',
+  '.BorderGrid-cell .hide-sm.hide-md',
+];
+
+const repoSidebarMarkerSelector = [
+  'a[href$="/stargazers"]',
+  'a[href$="/watchers"]',
+  'a[href$="/forks"]',
+  'a[href$="/activity"]',
+  'a[href*="/custom-properties"]',
+  'a[href="#readme-ov-file"]',
+  '.topic-tag.topic-tag-link',
+].join(', ');
+
+const pickFirstVisible = <T extends HTMLElement>(elements: JQuery<T>) => {
+  const $visibleElements = elements.filter(':visible');
+  return ($visibleElements.length > 0 ? $visibleElements : elements).first();
+};
+
 export function getRepoName() {
   const repoNameByUrl = getRepoNameByUrl();
   const repoNameByPage = getRepoNameByPage();
@@ -34,6 +56,27 @@ export function getRepoNameByUrl() {
 export function hasRepoContainerHeader() {
   const headerElement = $('#repository-container-header');
   return headerElement && !headerElement.attr('hidden');
+}
+
+export function getRepoSidebarSection() {
+  const $sections = $(repoSidebarSectionSelectors.join(','))
+    .filter((_, element) => !element.closest('details-dialog, template'))
+    .filter((_, element) => $(element).find(repoSidebarMarkerSelector).length > 0);
+
+  return pickFirstVisible($sections);
+}
+
+export function getRepoSidebarBorderGrid() {
+  const $sidebarSection = getRepoSidebarSection();
+  if ($sidebarSection.length > 0) {
+    return $sidebarSection.closest('.BorderGrid').first();
+  }
+
+  const $borderGrids = $('.Layout-sidebar .BorderGrid, .BorderGrid')
+    .filter((_, element) => !element.closest('details-dialog, template'))
+    .filter((_, element) => $(element).find(repoSidebarMarkerSelector).length > 0);
+
+  return pickFirstVisible($borderGrids);
 }
 
 export async function isRepoRoot() {
