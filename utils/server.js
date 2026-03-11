@@ -39,7 +39,6 @@ const compiler = webpack(config);
 
 const server = new WebpackDevServer(
   {
-    https: false,
     hot: false,
     client: false,
     compress: false, // if set true, server-sent events will not work!

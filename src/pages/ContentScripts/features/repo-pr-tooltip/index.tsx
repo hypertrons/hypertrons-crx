@@ -29,6 +29,13 @@ let PRDetail: PRDetail = {
 };
 let meta: RepoMeta;
 let platform: string;
+const pullRequestTabSelectors = [
+  'a[data-tab-item="pull-requests"]',
+  '#pull-requests-tab',
+  'a[href$="/pulls"][data-selected-links*="repo_pulls"]',
+  'a[href$="/pulls"]',
+];
+
 const getData = async () => {
   PRDetail.PROpened = await getPROpened(platform, repoName);
   PRDetail.PRMerged = await getPRMerged(platform, repoName);
@@ -37,13 +44,19 @@ const getData = async () => {
   PRDetail.mergedCodeDeletion = await getMergedCodeDeletion(platform, repoName);
   meta = (await metaStore.get(platform, repoName)) as RepoMeta;
 };
+const getPullRequestTab = () => {
+  const $tabs = $(pullRequestTabSelectors.join(',')).filter((_, element) => !element.closest('template'));
+  const $visibleTabs = $tabs.filter(':visible');
+
+  return ($visibleTabs.length > 0 ? $visibleTabs : $tabs).first();
+};
 
 const init = async (): Promise<void> => {
   platform = getPlatform();
   repoName = getRepoName();
   await getData();
-  await elementReady('#pull-requests-tab');
-  const $prTab = $('#pull-requests-tab');
+  await elementReady(pullRequestTabSelectors.join(','));
+  const $prTab = getPullRequestTab();
   const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
   createRoot(placeholderElement).render(
     <NativePopover anchor={$prTab} width={340} arrowPosition="top-middle">

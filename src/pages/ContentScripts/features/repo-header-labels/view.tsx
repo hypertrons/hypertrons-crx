@@ -38,10 +38,10 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
   const rocketDarkLogo = chrome.runtime.getURL('rocketDarkLogo.png');
   const textColor = isGithub() ? (theme === 'light' ? '#24292F' : '#C9D1D9') : '#40485B';
   return (
-    <div className={isGithub() ? 'd-flex' : ''}>
+    <div className="hypercrx-repo-header-labels">
       <span
         id="activity-header-label"
-        className="Label Label--secondary v-align-middle mr-1 unselectable"
+        className="hypercrx-label hypercrx-label--secondary hypercrx-repo-header-label unselectable"
         style={{ color: textColor }}
         data-tip=""
         data-for="activity-tooltip"
@@ -54,8 +54,7 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
         data-delay-show={500}
       >
         <svg
-          className="icon"
-          style={{ float: 'left' }}
+          className="hypercrx-repo-header-label-icon"
           width="16"
           height="16"
           viewBox="0 0 1024 1024"
@@ -72,7 +71,7 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
 
       <span
         id="OpenRank-header-label"
-        className="Label Label--secondary v-align-middle mr-1 unselectable"
+        className="hypercrx-label hypercrx-label--secondary hypercrx-repo-header-label unselectable"
         style={{ color: textColor }}
         data-tip=""
         data-for="openrank-tooltip"
@@ -85,9 +84,9 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
         data-delay-show={500}
       >
         <img
+          className="hypercrx-repo-header-label-icon"
           width={16}
           height={16}
-          style={{ float: 'left' }}
           src={theme === 'light' ? rocketLightLogo : rocketDarkLogo}
           alt=""
         />
@@ -96,7 +95,7 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
 
       <span
         id="participant-header-label"
-        className="Label Label--secondary v-align-middle mr-1 unselectable"
+        className="hypercrx-label hypercrx-label--secondary hypercrx-repo-header-label unselectable"
         style={{ color: textColor }}
         data-tip=""
         data-for="participant-tooltip"
@@ -109,8 +108,7 @@ const View = ({ activity, openrank, participant, contributor, meta }: Props): JS
         data-delay-show={500}
       >
         <svg
-          className="icon"
-          style={{ float: 'left' }}
+          className="hypercrx-repo-header-label-icon"
           width="16"
           height="16"
           viewBox="0 0 1024 1024"

@@ -1,5 +1,6 @@
 import features from '../../../../feature-manager';
-import { getRepoName, hasRepoContainerHeader, isPublicRepoWithMeta } from '../../../../helpers/get-github-repo-info';
+import elementReady from 'element-ready';
+import { getRepoName, getRepoSidebarSection, isPublicRepoWithMeta } from '../../../../helpers/get-github-repo-info';
 import { Label, RepoMeta, metaStore } from '../../../../api/common';
 import { createRoot } from 'react-dom/client';
 import OpenDiggerLabel from './OpenDiggerLabel';
@@ -19,14 +20,34 @@ const getLabels = async (repoName: string) => {
 };
 
 const renderTags = (labels: Label[]) => {
-  let githubTagContainer = $('.topic-tag.topic-tag-link').parent();
+  const $sidebarSection = getRepoSidebarSection();
+  if ($sidebarSection.length === 0) {
+    return;
+  }
+
+  let githubTagContainer = $sidebarSection.find('.topic-tag.topic-tag-link').parent().first();
   // some repositories don't have tags, create a tag container for our tags
   if (githubTagContainer.length === 0) {
     githubTagContainer = $('<div class="f6"></div>');
-    const githubTagContainerWrap = $('<div class="my-3"></div>');
+    const githubTagContainerWrap = $('<div class="tmp-my-3"></div>');
     githubTagContainerWrap.append(githubTagContainer);
-    const anchor = $('h3.sr-only:contains("Resources")');
-    githubTagContainerWrap.insertBefore(anchor);
+    const resourcesHeading = $sidebarSection
+      .find('h3.sr-only')
+      .filter((_, element) => $(element).text().trim().toLowerCase() === 'resources')
+      .first();
+    const readmeResourceRow = $sidebarSection
+      .find('a[href="#readme-ov-file"], a[data-analytics-event*="file:readme"]')
+      .first()
+      .closest('div');
+    const insertionAnchor = resourcesHeading.length > 0 ? resourcesHeading : readmeResourceRow;
+
+    if (insertionAnchor.length > 0) {
+      $('<h3 class="sr-only">Topics</h3>').insertBefore(insertionAnchor);
+      githubTagContainerWrap.insertBefore(insertionAnchor);
+    } else {
+      $sidebarSection.append('<h3 class="sr-only">Topics</h3>');
+      $sidebarSection.append(githubTagContainerWrap);
+    }
   }
   for (const label of labels) {
     const id = `opendigger-label-${label.id}`;
@@ -43,6 +64,7 @@ const renderTags = (labels: Label[]) => {
 const init = async (): Promise<void> => {
   platform = getPlatform();
   const repoName = getRepoName();
+  await elementReady('.BorderGrid-cell, .Layout-sidebar');
   const labels = await getLabels(repoName);
   if (labels && labels.length > 0) {
     renderTags(labels);
@@ -50,7 +72,7 @@ const init = async (): Promise<void> => {
 };
 
 features.add(featureId, {
-  asLongAs: [isGithub, isPublicRepoWithMeta, hasRepoContainerHeader],
+  asLongAs: [isGithub, isPublicRepoWithMeta],
   awaitDomReady: true,
   init,
 });

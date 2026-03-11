@@ -2,7 +2,13 @@ import React from 'react';
 import $ from 'jquery';
 import { createRoot } from 'react-dom/client';
 import features from '../../../../feature-manager';
-import { getRepoName, isPublicRepoWithMeta, isRepoRoot } from '../../../../helpers/get-github-repo-info';
+import elementReady from 'element-ready';
+import {
+  getRepoName,
+  getRepoSidebarBorderGrid,
+  isPublicRepoWithMeta,
+  isRepoRoot,
+} from '../../../../helpers/get-github-repo-info';
 import { getActivity, getOpenrank } from '../../../../api/repo';
 import { RepoMeta, metaStore } from '../../../../api/common';
 import View from './view';
@@ -24,12 +30,10 @@ const renderTo = (container: any) => {
   createRoot(container).render(<View repoName={repoName} activity={activity} openrank={openrank} meta={meta} />);
 };
 
-const init = async (): Promise<void> => {
-  platform = getPlatform();
-  repoName = getRepoName();
-  await getData();
+const createTrendRow = () => {
+  const existingRow = document.getElementById(featureId);
+  existingRow?.remove();
 
-  // create container
   const newBorderGridRow = document.createElement('div');
   newBorderGridRow.id = featureId;
   newBorderGridRow.className = 'BorderGrid-row';
@@ -37,10 +41,28 @@ const init = async (): Promise<void> => {
   newBorderGridCell.className = 'BorderGrid-cell';
   newBorderGridRow.appendChild(newBorderGridCell);
 
-  renderTo(newBorderGridCell);
+  return { row: newBorderGridRow, cell: newBorderGridCell };
+};
 
-  const borderGridRows = $('div.Layout-sidebar').children('.BorderGrid');
-  borderGridRows.append(newBorderGridRow);
+const mountTrendRow = (row: HTMLElement) => {
+  const $borderGrid = getRepoSidebarBorderGrid();
+  if ($borderGrid.length === 0) {
+    return false;
+  }
+
+  $borderGrid.append(row);
+  return true;
+};
+
+const init = async (): Promise<void> => {
+  platform = getPlatform();
+  repoName = getRepoName();
+  await getData();
+  await elementReady('.BorderGrid, .BorderGrid-cell, .Layout-sidebar');
+
+  const { row, cell } = createTrendRow();
+  renderTo(cell);
+  mountTrendRow(row);
 };
 
 const restore = async () => {
@@ -51,7 +73,18 @@ const restore = async () => {
     await getData();
   }
   // rerender the chart or it will be empty
-  renderTo($(`#${featureId}`).children('.BorderGrid-cell')[0]);
+  await elementReady('.BorderGrid, .BorderGrid-cell, .Layout-sidebar');
+  let container = $(`#${featureId}`).children('.BorderGrid-cell')[0];
+
+  if (!container) {
+    const { row, cell } = createTrendRow();
+    if (!mountTrendRow(row)) {
+      return;
+    }
+    container = cell;
+  }
+
+  renderTo(container);
 };
 
 features.add(featureId, {

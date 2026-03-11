@@ -34,8 +34,9 @@ const init = async (): Promise<void> => {
   platform = getPlatform();
   await getData();
 
-  await elementReady('#issues-tab');
-  const $issueTab = $('#issues-tab');
+  // GitHub 新版仓库导航：使用 data-tab-item="issues" 的导航链接
+  await elementReady('a[data-tab-item="issues"]');
+  const $issueTab = $('a[data-tab-item="issues"]');
   const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
   createRoot(placeholderElement).render(
     <NativePopover anchor={$issueTab} width={310} arrowPosition="top-middle">

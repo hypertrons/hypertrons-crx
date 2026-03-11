@@ -74,7 +74,7 @@ const View = ({ userName }: Props): JSX.Element => {
           >
             <span
               title={`${t('global_clickToshow')} ${t('component_developmentActivityNetwork_title')}`}
-              className="Label"
+              className="hypercrx-label"
               style={{
                 color: 'var(--color-fg-default)',
                 fontWeight: 'var(--base-text-weight-normal, 400)',
@@ -107,7 +107,7 @@ const View = ({ userName }: Props): JSX.Element => {
           >
             <span
               title={`${t('global_clickToshow')} ${t('component_openSourcePartnersNetwork_title')}`}
-              className="Label"
+              className="hypercrx-label"
               style={{
                 color: 'var(--color-fg-default)',
                 fontWeight: 'var(--base-text-weight-normal, 400)',
@@ -140,7 +140,7 @@ const View = ({ userName }: Props): JSX.Element => {
           >
             <span
               title={`${t('global_clickToshow')} ${t('component_openSourceInterestsNetwork_title')}`}
-              className="Label"
+              className="hypercrx-label"
               style={{
                 color: 'var(--color-fg-default)',
                 fontWeight: 'var(--base-text-weight-normal, 400)',
