@@ -29,12 +29,8 @@ let PRDetail: PRDetail = {
 };
 let meta: RepoMeta;
 let platform: string;
-const pullRequestTabSelectors = [
-  'a[data-tab-item="pull-requests"]',
-  '#pull-requests-tab',
-  'a[href$="/pulls"][data-selected-links*="repo_pulls"]',
-  'a[href$="/pulls"]',
-];
+const pullRequestTabSelector = 'a[data-tab-item="pull-requests"]';
+const pullRequestFallbackSelectors = ['#pull-requests-tab', 'a[href$="/pulls"][data-selected-links*="repo_pulls"]'];
 
 const getData = async () => {
   PRDetail.PROpened = await getPROpened(platform, repoName);
@@ -45,7 +41,13 @@ const getData = async () => {
   meta = (await metaStore.get(platform, repoName)) as RepoMeta;
 };
 const getPullRequestTab = () => {
-  const $tabs = $(pullRequestTabSelectors.join(',')).filter((_, element) => !element.closest('template'));
+  const $primaryTabs = $(pullRequestTabSelector).filter((_, element) => !element.closest('template'));
+  const $visiblePrimaryTabs = $primaryTabs.filter(':visible');
+  if ($visiblePrimaryTabs.length > 0 || $primaryTabs.length > 0) {
+    return ($visiblePrimaryTabs.length > 0 ? $visiblePrimaryTabs : $primaryTabs).first();
+  }
+
+  const $tabs = $(pullRequestFallbackSelectors.join(',')).filter((_, element) => !element.closest('template'));
   const $visibleTabs = $tabs.filter(':visible');
 
   return ($visibleTabs.length > 0 ? $visibleTabs : $tabs).first();
@@ -55,8 +57,11 @@ const init = async (): Promise<void> => {
   platform = getPlatform();
   repoName = getRepoName();
   await getData();
-  await elementReady(pullRequestTabSelectors.join(','));
+  await elementReady([pullRequestTabSelector, ...pullRequestFallbackSelectors].join(','));
   const $prTab = getPullRequestTab();
+  if ($prTab.length === 0) {
+    return;
+  }
   const placeholderElement = $('<div class="NativePopover" />').appendTo('body')[0];
   createRoot(placeholderElement).render(
     <NativePopover anchor={$prTab} width={340} arrowPosition="top-middle">
