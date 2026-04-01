@@ -29,7 +29,7 @@ describe('getInterval', () => {
 
 describe('judgeInterval', () => {
   it('registers zoom handler and updates xAxis minInterval', () => {
-    const option = { xAxis: [] as { minInterval?: any }[] };
+    const option = { xAxis: [{}] as { minInterval?: any }[] };
     let zoomHandler: ((params: any) => void) | undefined;
 
     const instance = {
