@@ -13,12 +13,7 @@ const flush = async () => {
 };
 
 const loadFeatureManager = async (opts: LoadOptions = {}) => {
-  const {
-    featureEnabled = true,
-    shouldRun = true,
-    is404 = false,
-    isRestorationVisit = false,
-  } = opts;
+  const { featureEnabled = true, shouldRun = true, is404 = false, isRestorationVisit = false } = opts;
 
   vi.resetModules();
 
