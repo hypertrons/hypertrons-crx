@@ -49,6 +49,26 @@ test.describe('extension popup page', () => {
     await expect(settingsButton).toBeEnabled();
   });
 
+  test('settings button supports keyboard activation', async () => {
+    const page = await context.newPage();
+    await page.goto(`chrome-extension://${extensionId}/popup.html`);
+
+    const settingsButton = page.getByRole('button', { name: 'Settings' });
+    await settingsButton.focus();
+
+    const [optionsPage] = await Promise.all([context.waitForEvent('page'), page.keyboard.press('Enter')]);
+    await expect(optionsPage).toHaveURL(/options\.html/);
+  });
+
+  test('popup does not render options-only controls', async () => {
+    const page = await context.newPage();
+    await page.goto(`chrome-extension://${extensionId}/popup.html`);
+
+    await expect(page.locator('input[type="checkbox"]')).toHaveCount(0);
+    await expect(page.locator('input[type="radio"]')).toHaveCount(0);
+    await expect(page.locator('.token-options')).toHaveCount(0);
+  });
+
   test('popup renders without errors', async () => {
     const page = await context.newPage();
 

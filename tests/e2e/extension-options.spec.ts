@@ -68,6 +68,13 @@ test.describe('extension options page', () => {
     await expect(chineseRadio).toBeChecked();
   });
 
+  test('language component renders exactly two locale radios', async () => {
+    const page = await context.newPage();
+    await page.goto(`chrome-extension://${extensionId}/options.html`);
+
+    await expect(page.locator('input[type="radio"]')).toHaveCount(2);
+  });
+
   test('feature checkboxes are present and interactive', async () => {
     const page = await context.newPage();
     await page.goto(`chrome-extension://${extensionId}/options.html`);
@@ -101,12 +108,54 @@ test.describe('extension options page', () => {
     expect(buttonCount).toBeGreaterThanOrEqual(1);
   });
 
+  test('token components render expected controls and are interactive', async () => {
+    const page = await context.newPage();
+    await page.goto(`chrome-extension://${extensionId}/options.html`);
+
+    const tokenSections = page.locator('.token-options');
+    await expect(tokenSections).toHaveCount(2);
+
+    for (let i = 0; i < 2; i++) {
+      const section = tokenSections.nth(i);
+      await expect(section.locator('input[type="text"][disabled]')).toHaveCount(1);
+      await expect(section.locator('button')).toHaveCount(2);
+
+      const bindButton = section.locator('button').first();
+      const unbindButton = section.locator('button').nth(1);
+      await expect(bindButton).toBeEnabled();
+      await expect(unbindButton).toBeEnabled();
+
+      // Unbind should be safe to click even when no account is currently bound.
+      await unbindButton.click();
+      await expect(section.locator('input[type="text"][disabled]')).toHaveCount(1);
+    }
+  });
+
+  test('tooltip trigger components are rendered and interactive', async () => {
+    const page = await context.newPage();
+    await page.goto(`chrome-extension://${extensionId}/options.html`);
+
+    const tooltipIcons = page.locator('.tooltip-icon');
+    const iconCount = await tooltipIcons.count();
+    expect(iconCount).toBeGreaterThan(0);
+
+    await tooltipIcons.first().hover();
+    await expect(page.locator('.ant-tooltip')).toBeVisible();
+  });
+
   test('about section has github link', async () => {
     const page = await context.newPage();
     await page.goto(`chrome-extension://${extensionId}/options.html`);
 
     const githubLink = page.locator('a[href*="github.com"]');
     await expect(githubLink).toBeVisible();
+  });
+
+  test('options page does not render popup-only settings button', async () => {
+    const page = await context.newPage();
+    await page.goto(`chrome-extension://${extensionId}/options.html`);
+
+    await expect(page.getByRole('button', { name: 'Settings' })).toHaveCount(0);
   });
 
   test('page renders without errors', async () => {
