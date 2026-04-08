@@ -46,10 +46,27 @@ CrxWebpackPlugin.prototype.apply = function (compiler) {
 CrxWebpackPlugin.prototype.package = function () {
   var self = this;
   var manifestPath = join(self.contentPath, 'manifest.json');
+  var sourceManifestPath = join(self.contentPath, '..', 'src', 'manifest.json');
+  var packageJsonPath = join(self.contentPath, '..', 'package.json');
 
   return (async function () {
     if (!fs.existsSync(manifestPath)) {
-      throw new Error('Cannot package extension because build artifact is missing: ' + manifestPath);
+      if (!fs.existsSync(sourceManifestPath) || !fs.existsSync(packageJsonPath)) {
+        throw new Error('Cannot package extension because build artifact is missing: ' + manifestPath);
+      }
+
+      const sourceManifest = JSON.parse(await fs.promises.readFile(sourceManifestPath, 'utf8'));
+      const packageJson = JSON.parse(await fs.promises.readFile(packageJsonPath, 'utf8'));
+
+      const generatedManifest = {
+        description: packageJson.description,
+        version: packageJson.version,
+        ...sourceManifest,
+      };
+
+      await mkdirp(self.contentPath);
+      await fs.promises.writeFile(manifestPath, JSON.stringify(generatedManifest));
+      self.logger.warn('manifest.json was missing in build output; generated fallback manifest for packaging');
     }
 
     await self.crx.load(self.contentPath);
