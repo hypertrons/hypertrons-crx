@@ -50,6 +50,16 @@ describe('get-gitee-repo-info', () => {
     expect(hasRepoContainerHeader()).toBe(true);
   });
 
+  it('returns false when gitee repository header is missing', () => {
+    document.body.innerHTML = '<div id="other-header"></div>';
+    expect(hasRepoContainerHeader()).toBe(false);
+  });
+
+  it('returns false when gitee repository header is hidden', () => {
+    document.body.innerHTML = '<div id="git-project-header-details" hidden></div>';
+    expect(hasRepoContainerHeader()).toBe(false);
+  });
+
   it('returns false for non-public repository marker', async () => {
     const element = document.createElement('span');
     element.textContent = '0';

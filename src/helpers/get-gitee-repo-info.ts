@@ -18,7 +18,7 @@ export async function isRepoRoot() {
 }
 export function hasRepoContainerHeader() {
   const headerElement = $('#git-project-header-details');
-  return headerElement && !headerElement.attr('hidden');
+  return headerElement.length > 0 && !headerElement.attr('hidden');
 }
 
 /**

@@ -59,6 +59,16 @@ describe('get-github-repo-info', () => {
     expect(hasRepoContainerHeader()).toBe(true);
   });
 
+  it('returns false when repository container header is missing', () => {
+    document.body.innerHTML = '<div id="other-header"></div>';
+    expect(hasRepoContainerHeader()).toBe(false);
+  });
+
+  it('returns false when repository container header is hidden', () => {
+    document.body.innerHTML = '<div id="repository-container-header" hidden></div>';
+    expect(hasRepoContainerHeader()).toBe(false);
+  });
+
   it('returns public repo status from meta and repo detection', async () => {
     document.head.innerHTML = '<meta name="octolytics-dimension-repository_public" content="true" />';
     mocks.elementReady.mockResolvedValue(true);
