@@ -37,39 +37,34 @@ function CrxWebpackPlugin(options) {
 CrxWebpackPlugin.prototype.apply = function (compiler) {
   var self = this;
   self.logger = compiler.getInfrastructureLogger('crx-webpack-plugin');
-  return compiler.hooks.done.tap('crx-webpack-plugin', function () {
-    self.package.call(self);
+  return compiler.hooks.done.tapPromise('crx-webpack-plugin', async function () {
+    await self.package.call(self);
   });
 };
 
 // package the extension
 CrxWebpackPlugin.prototype.package = function () {
   var self = this;
-  self.crx.load(self.contentPath).then(function () {
-    self.crx.pack().then(function (buffer) {
-      mkdirp(self.outputPath)
-        .then((made) => {
-          var updateXML = self.crx.generateUpdateXML();
-          fs.writeFile(self.updateFile, updateXML, function (err) {
-            if (err) {
-              self.logger.error(err);
-              throw err;
-            }
-            self.logger.info('wrote updateFile to ' + self.updateFile);
-            fs.writeFile(self.crxFile, buffer, function (err) {
-              if (err) {
-                self.logger.error(err);
-                throw err;
-              }
-              self.logger.info('wrote crxFile to ' + self.crxFile);
-            });
-          });
-        })
-        .catch((err) => {
-          self.logger.error(err);
-          throw err;
-        });
-    });
+  var manifestPath = join(self.contentPath, 'manifest.json');
+
+  return (async function () {
+    if (!fs.existsSync(manifestPath)) {
+      throw new Error('Cannot package extension because build artifact is missing: ' + manifestPath);
+    }
+
+    await self.crx.load(self.contentPath);
+    var buffer = await self.crx.pack();
+    await mkdirp(self.outputPath);
+
+    var updateXML = self.crx.generateUpdateXML();
+    await fs.promises.writeFile(self.updateFile, updateXML);
+    self.logger.info('wrote updateFile to ' + self.updateFile);
+
+    await fs.promises.writeFile(self.crxFile, buffer);
+    self.logger.info('wrote crxFile to ' + self.crxFile);
+  })().catch((err) => {
+    self.logger.error(err);
+    throw err;
   });
 };
 
