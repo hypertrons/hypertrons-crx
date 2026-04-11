@@ -55,7 +55,7 @@ export function getRepoNameByUrl() {
 
 export function hasRepoContainerHeader() {
   const headerElement = $('#repository-container-header');
-  return headerElement && !headerElement.attr('hidden');
+  return headerElement.length > 0 && !headerElement.attr('hidden');
 }
 
 export function getRepoSidebarSection() {
