@@ -111,7 +111,7 @@
     "vitest": "^2.1.9",
     "webpack": "^5.104.1",
     "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^5.2.1"
+    "webpack-dev-server": "^5.2.4"
   },
   "resolutions": {
     "@types/react": "^18.2.8",
