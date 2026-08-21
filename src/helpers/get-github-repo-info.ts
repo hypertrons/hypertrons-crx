@@ -10,9 +10,10 @@ const repoSidebarSectionSelectors = [
   '.Layout-sidebar .BorderGrid-cell .hide-sm.hide-md',
   '.BorderGrid-cell > .hide-sm.hide-md',
   '.BorderGrid-cell .hide-sm.hide-md',
+  '.hide-sm.hide-md',
 ];
 
-const repoSidebarMarkerSelector = [
+export const repoSidebarMarkerSelector = [
   'a[href$="/stargazers"]',
   'a[href$="/watchers"]',
   'a[href$="/forks"]',
@@ -69,7 +70,8 @@ export function getRepoSidebarSection() {
 export function getRepoSidebarBorderGrid() {
   const $sidebarSection = getRepoSidebarSection();
   if ($sidebarSection.length > 0) {
-    return $sidebarSection.closest('.BorderGrid').first();
+    const $borderGrid = $sidebarSection.closest('.BorderGrid').first();
+    return $borderGrid.length > 0 ? $borderGrid : $sidebarSection.parent();
   }
 
   const $borderGrids = $('.Layout-sidebar .BorderGrid, .BorderGrid')
@@ -77,6 +79,27 @@ export function getRepoSidebarBorderGrid() {
     .filter((_, element) => $(element).find(repoSidebarMarkerSelector).length > 0);
 
   return pickFirstVisible($borderGrids);
+}
+
+export function observeRepoSidebarReplacement(featureId: string, repoName: string, remount: () => void) {
+  const observerRoot = getRepoSidebarBorderGrid().parent()[0];
+  if (!observerRoot) {
+    return;
+  }
+
+  const observer = new MutationObserver(() => {
+    if (document.getElementById(featureId) || getRepoName() !== repoName) {
+      return;
+    }
+
+    requestAnimationFrame(() => {
+      if (!document.getElementById(featureId) && getRepoName() === repoName) {
+        observer.disconnect();
+        remount();
+      }
+    });
+  });
+  observer.observe(observerRoot, { childList: true, subtree: true });
 }
 
 export async function isRepoRoot() {

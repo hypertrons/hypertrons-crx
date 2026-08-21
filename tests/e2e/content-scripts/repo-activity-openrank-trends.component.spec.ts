@@ -28,6 +28,10 @@ test.describe('content script component: repo activity openrank trends', () => {
 
     // ECharts canvases should be rendered
     expect(await trendRow.locator('canvas').count()).toBeGreaterThan(0);
+
+    // GitHub may replace its React-managed sidebar after the extension mounts.
+    await trendRow.evaluate((element) => element.remove());
+    await expect(trendRow).toHaveCount(1);
   });
 
   test('does not render on non-root repository pages', async () => {
