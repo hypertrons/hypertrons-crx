@@ -6,8 +6,11 @@ import elementReady from 'element-ready';
 import {
   getRepoName,
   getRepoSidebarBorderGrid,
+  getRepoSidebarSection,
   isPublicRepoWithMeta,
   isRepoRoot,
+  observeRepoSidebarReplacement,
+  repoSidebarMarkerSelector,
 } from '../../../../helpers/get-github-repo-info';
 import { getActivity, getOpenrank } from '../../../../api/repo';
 import { RepoMeta, metaStore } from '../../../../api/common';
@@ -38,19 +41,24 @@ const createTrendRow = () => {
   newBorderGridRow.id = featureId;
   newBorderGridRow.className = 'BorderGrid-row';
   const newBorderGridCell = document.createElement('div');
-  newBorderGridCell.className = 'BorderGrid-cell';
+  newBorderGridCell.className = 'BorderGrid-cell hypercrx-repo-activity-openrank-trends-content';
   newBorderGridRow.appendChild(newBorderGridCell);
 
   return { row: newBorderGridRow, cell: newBorderGridCell };
 };
 
 const mountTrendRow = (row: HTMLElement) => {
-  const $borderGrid = getRepoSidebarBorderGrid();
-  if ($borderGrid.length === 0) {
+  const $sidebarContainer = getRepoSidebarBorderGrid();
+  if ($sidebarContainer.length === 0) {
     return false;
   }
 
-  $borderGrid.append(row);
+  if (!$sidebarContainer.is('.BorderGrid')) {
+    row.className = getRepoSidebarSection().attr('class') || 'hide-sm hide-md';
+    $(row).children().first().removeClass('BorderGrid-cell');
+  }
+
+  $sidebarContainer.append(row);
   return true;
 };
 
@@ -58,11 +66,20 @@ const init = async (): Promise<void> => {
   platform = getPlatform();
   repoName = getRepoName();
   await getData();
-  await elementReady('.BorderGrid, .BorderGrid-cell, .Layout-sidebar');
+  await elementReady(repoSidebarMarkerSelector);
 
   const { row, cell } = createTrendRow();
   renderTo(cell);
-  mountTrendRow(row);
+  if (!mountTrendRow(row)) {
+    return;
+  }
+  observeRepoSidebarReplacement(featureId, repoName, () => {
+    const { row, cell } = createTrendRow();
+    renderTo(cell);
+    if (!mountTrendRow(row)) {
+      return;
+    }
+  });
 };
 
 const restore = async () => {
@@ -73,8 +90,8 @@ const restore = async () => {
     await getData();
   }
   // rerender the chart or it will be empty
-  await elementReady('.BorderGrid, .BorderGrid-cell, .Layout-sidebar');
-  let container = $(`#${featureId}`).children('.BorderGrid-cell')[0];
+  await elementReady(repoSidebarMarkerSelector);
+  let container = $(`#${featureId}`).children()[0];
 
   if (!container) {
     const { row, cell } = createTrendRow();

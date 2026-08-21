@@ -35,6 +35,7 @@ import {
   getRepoName,
   getRepoNameByPage,
   getRepoNameByUrl,
+  getRepoSidebarBorderGrid,
   hasRepoContainerHeader,
   isPublicRepo,
   isPublicRepoWithMeta,
@@ -67,6 +68,18 @@ describe('get-github-repo-info', () => {
   it('returns false when repository container header is hidden', () => {
     document.body.innerHTML = '<div id="repository-container-header" hidden></div>';
     expect(hasRepoContainerHeader()).toBe(false);
+  });
+
+  it('finds the Primer repository sidebar without relying on generated class names', () => {
+    document.body.innerHTML = `
+      <aside data-testid="primer-sidebar">
+        <div class="hide-sm hide-md">
+          <a href="/owner/repo/stargazers">Stars</a>
+        </div>
+      </aside>
+    `;
+
+    expect(getRepoSidebarBorderGrid().attr('data-testid')).toBe('primer-sidebar');
   });
 
   it('returns public repo status from meta and repo detection', async () => {

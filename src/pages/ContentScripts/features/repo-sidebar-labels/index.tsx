@@ -1,6 +1,12 @@
 import features from '../../../../feature-manager';
 import elementReady from 'element-ready';
-import { getRepoName, getRepoSidebarSection, isPublicRepoWithMeta } from '../../../../helpers/get-github-repo-info';
+import {
+  getRepoName,
+  getRepoSidebarSection,
+  isPublicRepoWithMeta,
+  observeRepoSidebarReplacement,
+  repoSidebarMarkerSelector,
+} from '../../../../helpers/get-github-repo-info';
 import { Label, RepoMeta, metaStore } from '../../../../api/common';
 import { createRoot } from 'react-dom/client';
 import OpenDiggerLabel from './OpenDiggerLabel';
@@ -10,7 +16,10 @@ import $ from 'jquery';
 import isGithub from '../../../../helpers/is-github';
 import { getPlatform } from '../../../../helpers/get-platform';
 const featureId = features.getFeatureID(import.meta.url);
+const markerId = `${featureId}-marker`;
 let platform: string;
+let repoName: string;
+let labels: Label[] = [];
 const getLabels = async (repoName: string) => {
   const meta = (await metaStore.get(platform, repoName)) as RepoMeta;
   // filtered all xxx-n and n is not 0
@@ -20,12 +29,16 @@ const getLabels = async (repoName: string) => {
 };
 
 const renderTags = (labels: Label[]) => {
+  if (document.getElementById(markerId)) {
+    return;
+  }
+
   const $sidebarSection = getRepoSidebarSection();
   if ($sidebarSection.length === 0) {
     return;
   }
 
-  let githubTagContainer = $sidebarSection.find('.topic-tag.topic-tag-link').parent().first();
+  let githubTagContainer = $sidebarSection.find('.topic-tag.topic-tag-link, a[href^="/topics/"]').parent().first();
   // some repositories don't have tags, create a tag container for our tags
   if (githubTagContainer.length === 0) {
     githubTagContainer = $('<div class="f6"></div>');
@@ -51,7 +64,6 @@ const renderTags = (labels: Label[]) => {
   }
   for (const label of labels) {
     const id = `opendigger-label-${label.id}`;
-    // if the tag already exists, skip
     if (document.getElementById(id)) {
       continue;
     }
@@ -59,15 +71,21 @@ const renderTags = (labels: Label[]) => {
     createRoot(labelElement).render(<OpenDiggerLabel label={label} />);
     githubTagContainer.append(labelElement);
   }
+
+  const marker = document.createElement('span');
+  marker.id = markerId;
+  marker.hidden = true;
+  githubTagContainer.append(marker);
 };
 
 const init = async (): Promise<void> => {
   platform = getPlatform();
-  const repoName = getRepoName();
-  await elementReady('.BorderGrid-cell, .Layout-sidebar');
-  const labels = await getLabels(repoName);
+  repoName = getRepoName();
+  await elementReady(repoSidebarMarkerSelector);
+  labels = (await getLabels(repoName)) ?? [];
   if (labels && labels.length > 0) {
     renderTags(labels);
+    observeRepoSidebarReplacement(markerId, repoName, () => renderTags(labels));
   }
 };
 
